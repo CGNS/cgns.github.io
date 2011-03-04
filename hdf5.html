@@ -1,0 +1,114 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.75 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>CFD General Notation System</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+&nbsp;
+<table BORDER=0 CELLSPACING=5 CELLPADDING=5 WIDTH="100%" >
+<tr>
+<td WIDTH="180"><a href="http://www.cgns.org/"><img SRC="cgns.gif" ALT="CGNS logo" BORDER=0 height=111 width=180 align=CENTER></a></td>
+
+<td ALIGN=CENTER>
+<h1>
+<font color="#000000">CFD General Notation System<br>
+Switch to HDF5</font></h1>
+</td>
+</tr>
+
+<tr>
+<td COLSPAN="2">
+<hr></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP WIDTH="180">
+<table BORDER CELLSPACING=0 CELLPADDING=5 WIDTH="100%" >
+<tr>
+<td VALIGN=TOP>
+<p><b>CGNS site pages</b>
+<br><a href="index.html">CGNS Home</a>
+<br><a href="WhatIsCGNS.html">What is CGNS?</a>
+<br><a href="starting.html">Getting Started</a>
+<br><a href="news.html">Latest News</a>
+<br><b><font color=red>Switch to HDF5</font></b>&nbsp;
+<br><a href="steering.html">Steering Committee</a>
+<br><a href="Implementations.html">Implementations</a>
+<br><a href="CGNStalk.html">Discussion Group</a>
+<br><a href="download.html">Download</a>
+<br><a href="Utilities.html">Contributed Utilities</a>
+<br><a href="CGNSFiles.html">Example CGNS Files</a>
+<br><a href="Proposals.html">Proposed Extensions</a>
+<br><a href="FAQs.html">FAQs</a>
+<p><b>Documentation pages</b>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/index.html">Documentation Home</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/index.html#Papers">Papers and Slides</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/index.html#Minutes">Meeting Minutes</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/user/index.html">User's Guide</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/overview/index.html">Overview</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/sids/index.html">SIDS</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/filemap/index.html">SIDS-to-ADF</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/index.html">Mid-Level Library</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/adf/index.html">ADF Guide</a>
+<p><b>SourceForge pages</b>
+<br><a href="http://sourceforge.net/projects/cgns/">SourceForge CGNS Page</a>
+<br><a href="http://sourceforge.net/cvs/?group_id=74444">CVS Information</a>
+<br><a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=74444&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo" /></a>
+</td>
+</tr>
+</table>
+</td>
+
+<td VALIGN=TOP>The CGNS implementation of SIDS, so-called MLL, was originally
+built using a file format called ADF (Advanced Data Format).&nbsp; This
+format was based on a common file format system previously in use at McDonnell
+Douglas.&nbsp; The ADF has worked extremely well, requiring little repair,
+upgrade, or maintenance over the last decade.
+<p>However, ADF does not have parallel I/O or data compression capabilities,
+and does not have the support and tools that the storage format HDF5
+offers.&nbsp; HDF5, supported by 
+<a href="http://www.hdfgroup.org/HDF5/">The HDF Group</a>,
+has rapidly grown to become a world-wide format standard
+for storing scientific data.&nbsp; HDF5 has parallel capability as well
+as a broader support base than ADF.&nbsp; (The HDF Group is a spin-off from NCSA, as
+described on the HDF Group website.)
+<p>Therefore, the CGNS Steering Committee has made the decision to adopt
+HDF5 as the default (official) data storage mechanism.&nbsp; 
+However, because it is possible to easily support both ADF
+and HDF5 formats simultaneously (giving the user the capability to choose
+between them), we will continue to support both indefinitely.
+<p>If the user links to HDF5 (version 1.8 or later) when compiling CGNS Version 3.1 or later,
+then by <i>default</i> the software will write HDF5 files (although the user can
+force the writing of ADF files instead if desired).  The software can read either
+format without the user having to do anything.
+<p>To summarize,
+the following is our goal: The CGNS Steering Committee considers HDF5 to
+be its official, recommended storage format.&nbsp; However, ADF will continue
+to be available for use, with the CGNS mid-level library capable of (1)
+using either format and (2) translating back and forth between the two.
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<h5><p><font color=green>NOTE:  In the initial implementation of HDF5 in CGNS (CGNS Version 2.5), the index ordering for HDF5
+was done incorrectly.  CGNS uses the Fortran-convention for index ordering (1st index 
+varies fastest), whereas the de-facto HDF5 standard is the C-indexing convention.
+As a result of this implementation error, partial reads and writes only worked when ADF was being used 
+as the underlying database manager. They did not work correctly with HDF5.
+Furthermore, HDF5 multi-index arrays created with CGNS would not be read correctly by non-CGNS software.
+Other than this, users would not have noticed any problems with the HDF5 implementation because the CGNS software was
+internally consistent.
+Beginning with CGNS Version 2.5.4 software, this bug has been corrected.  Also, Version 2.5.4 and later
+software can read old CGNS HDF5 files, and automatically detect and correct the
+index inversion (transparent to the user).</font></p></h5>
+<h5><p><font color=green>NOTE: if building CGNS with an HDF5 version <u>earlier</u> than 1.8, then links will not work
+when using HDF5 file type.</font></p></h5> </td>
+</tr>
+</table>
+
+</body>
+</html>

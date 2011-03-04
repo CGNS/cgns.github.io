@@ -1,0 +1,284 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.75 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>CFD General Notation System</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+&nbsp;
+<table BORDER=0 CELLSPACING=5 CELLPADDING=5 WIDTH="100%" >
+<tr>
+<td WIDTH="180"><a href="http://www.cgns.org/"><img SRC="cgns.gif" ALT="CGNS logo" BORDER=0 height=111 width=180 align=CENTER></a></td>
+
+<td ALIGN=CENTER>
+<h1>
+<font color="#000000">CFD General Notation System<br>
+Latest News</font></h1>
+</td>
+</tr>
+
+<tr>
+<td COLSPAN="2">
+<hr></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP WIDTH="180">
+<table BORDER CELLSPACING=0 CELLPADDING=5 WIDTH="100%" >
+<tr>
+<td VALIGN=TOP>
+<p><b>CGNS site pages</b>
+<br><a href="index.html">CGNS Home</a>
+<br><a href="WhatIsCGNS.html">What is CGNS?</a>
+<br><a href="starting.html">Getting Started</a>
+<br><b><font color=red>Latest News</font></b>&nbsp;
+<br><a href="hdf5.html">Switch to HDF5</a>
+<br><a href="steering.html">Steering Committee</a>
+<br><a href="Implementations.html">Implementations</a>
+<br><a href="CGNStalk.html">Discussion Group</a>
+<br><a href="download.html">Download</a>
+<br><a href="Utilities.html">Contributed Utilities</a>
+<br><a href="CGNSFiles.html">Example CGNS Files</a>
+<br><a href="Proposals.html">Proposed Extensions</a>
+<br><a href="FAQs.html">FAQs</a>
+<p><b>Documentation pages</b>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/index.html">Documentation Home</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/index.html#Papers">Papers and Slides</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/index.html#Minutes">Meeting Minutes</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/user/index.html">User's Guide</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/overview/index.html">Overview</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/sids/index.html">SIDS</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/filemap/index.html">SIDS-to-ADF</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/index.html">Mid-Level Library</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/adf/index.html">ADF Guide</a>
+<p><b>SourceForge pages</b>
+<br><a href="http://sourceforge.net/projects/cgns/">SourceForge CGNS Page</a>
+<br><a href="http://sourceforge.net/cvs/?group_id=74444">CVS Information</a>
+<br><a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=74444&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo" /></a>
+</td>
+</tr>
+</table>
+</td>
+
+<td VALIGN=TOP>
+<p><b>March 1, 2011</b>: Version 3.1 has been officially released.
+This release includes 64-bit capability. The changes from version 3.0 beta is the 
+reordering of the element types to put PYRA_13 after MIXED and the 64-bit support. 
+Most of the documentation has been updated to identify the changes.
+
+<p><b>Feb 1, 2011</b>: Version 3.1 has recently been committed to the SVN repository on
+SourceForge.  It has not been bundled up for release yet, but interested users can
+access it from the SVN repository.
+This version has true 64-bit capabilities, which overcomes the previous 32-bit
+integer limitation and allows the writing of <u>very</u> large grids.  UserGuide example
+codes have also been updated to V3.1, to be able to take advantage of the 64-bit capability.
+
+<p><b>May 25, 2010</b>: Version 3.0.8 (Beta) has been released as a tarred source release 
+on SourceForge. Parallel CGNS Version 0.2.0 (Alpha) is now available as well. 
+A <a href="https://sourceforge.net/apps/mediawiki/cgns">CGNS MediaWiki page</a> has been 
+created.
+
+<p><b>August 26, 2009</b>: Version 3.0.5 (Beta) released. This Beta version
+is intended for users to perform preliminary testing. Many
+changes have been made from 2.5, but a few of the more noticeable ones include the
+following:  (1) Build system has been changed from autotools to CMake,
+(2) Moving forward the HDF5 back-end will have preference, 
+(3) cgnscalc and cgnssh have been disabled since they do not currently work.
+The new beta can be downloaded from the subversion repository at
+SourceForge.
+
+<p><b>August 22, 2009</b>: Version 2.5.4 released.  
+This release fixes a long standing issue of memory leakage in the CGNS library
+when closing a file or deleting a node. It also removes the internal storage
+of element data when reading and writing, and uses the user supplied buffer
+instead. In the case of partial reads and writes however, the element data is
+currently reloaded into memory to do the operations.
+
+<p><b>March 11, 2007</b>: Version 2.5.3 released. This version changes
+the mispelled Celcius to Celsius, fixes handling of soft links when rewriting the 
+CGNS file, and fixes a number of gcc compiler warnings.
+
+<p><b>September 11, 2007</b>: A new instructor-led AIAA short course is being offered starting
+at the Aerospace Sciences Meeting in Reno, NV, January 5-6, 2008: "Effective Use 
+of the CFD General Notation System (CGNS) for Commercial and Research Applications."
+A description can be found by going to:
+<a href="http://www.aiaa.org">www.aiaa.org</a>.
+Click on "Courses & Training", then "Schedule".  The CGNS course is listed under
+the Heading: January 2008.  Or go directly to:
+<a href="http://www.aiaa.org/content.cfm?pageid=161&lumeetingid=1976&viewpd=overview">Summary of Short Course</a>.
+
+<p><b>September 7, 2007</b>: Version 2.5 taken off beta status.
+This new release adds "CG_"
+prefixes to the C preprocessor defines MODE_xxx, Null, and UserDefined. For
+example, MODE_READ is now CG_MODE_READ and Null is now CG_Null. The old
+defines are still currently supported. Support has been added to build the
+cgns library as a DLL under Windows. The NormalIndex arguments to
+cg_boco_info, cg_boco_normal_write are now optional (pass as 0 or NULL to
+ignore). Moved some of the CGNS utility programs, such as cgnscheck, to the
+subdirectory 'tools' in the cgns distribution. This may now be built without
+building cgnstools.  Also, final release of cgnsib_2.4 made (primarily an 
+update of version number from 2.42 to 2.46, and some minor bug
+fixes). The last digit on the version number is now ignored when reporting
+that a file was created with a newer version than the current library.
+Finally, in cgnstools, changed cgnsplot to use a tree layout instead of lists, and
+added a cutting plane for viewing mesh cross-sections. Fixed a long standing
+bug in cgns_interpolate which was causing that program to work incorrectly
+or crash. Also added a VTK file export routine for CGNS files.
+
+<p><b>October 5, 2006</b>: Version 2.5 (beta) of the CGNS library has been released
+(cgnslib_2.5-1.tar.gz). This fixes problems with partial read and
+writes, and adds some additional capabilities (goto operation enhancements,
+type names, new cgns file checker, setting path to search for links, and
+new routine for configuring CGNS).  Documentation is not available yet.
+Look in the "tests" subdirectory at "test_partial.c" and "test_goto.c" for
+examples of the use of these routines.
+In addition, there are 2 other new releases for download from SourceForge:
+(1) cgnslib_2.4-5.tar.gz: This release fixes some problems 
+with ADF on Windows 64 bit machines, and
+adds a -64 option to the configure.bat file. (2) cgnstools-2-5-1.tar.gz:  
+Adds support for CGNS version 2.5. Configures the Tcl/Tk GUI to use the
+current color scheme rather than a "Windows" type color scheme. Fixes some
+minor bugs and adds some improvement to the cgnscheck program. Allows
+reading of both HDF5 and ADF - based CGNS files (requires the adf2hdf and
+hdf2adf convertor programs). 
+
+<p><b>Spring, 2006</b>: There are two special
+CGNS "events" planned for the American Institute of
+Aeronautics and Astronautics (AIAA) meeting being held
+5-8 June 2006 in San Francisco.
+The first is a Panel discussion, tentatively titled
+"CGNS Practical Applications in CFD". This will occur
+during the regular AIAA sessions at the conference.
+The second is a "CGNS Tutorial Session", currently
+scheduled for Wednsday, 7 June 2006 in the evening. This
+session will be conducted in two parts: (1) Basic usage
+of CGNS (including examples for structured and unstructured
+grids), and (2) Advanced topics (tentatively including
+HDF-5 usage, parallel implementation, and SIDS high level
+representation).  The tutorial session will be taught by
+five experienced users/developers of CGNS and will be
+a <b>great</b> way to either get a basic introduction or to
+refine your knowledge of CGNS.
+Note that AIAA charges a registration fee
+for conference attendance, but there is no additional fee
+to attend the CGNS events.
+More information about the AIAA
+conference can be found at:
+<a href="http://www.aiaa.org">www.aiaa.org</a>.
+Click on "Conferences & Events", then click on
+"36th AIAA Fluid Dynamics Conference and Exhibit".
+
+<p><b>August 23, 2005</b>: New releases of Version 2.3 and
+2.4 of the CGNS library and CGNStools. This is the final release for Version
+2.3 - Version 2.4 is now the official version. The CGNS library releases
+fixed a bug in cg_family_write and others where the wrong file (when multiple
+are open) might be accessed or a segfault occur. Added unstructured mesh
+rind to Version 2.4, and support for that in CGNSplot and cgnscheck. Improved
+the Fortran to C interface, particularly under Windows, Also fixed some
+minor bugs in the CGNStools and improved the cgnscheck program.
+
+<p><b>August 8, 2005</b>: CGNStalk discussion list moved from
+<i>cgnstalk@grc.nasa.gov</i>
+to <i>cgnstalk@lists.nasa.gov.</i>
+
+<p><b>May 14, 2005</b>: Version 2.4 (Revision 2) of the CGNS library released.
+The HDF5 interface (ADFH) may now be selected at build time with the configuration
+script. Fixed some bugs.
+
+<p><b>December 2, 2004</b>: Version 2.4 (beta) of the CGNS library has
+been released. This version includes the extensions by Intelligent Light.
+These extensions include 8 base units, partial read/write, Electromagnetics,
+1tot1 connectivity properties, and extensions to the FamilyBC, BCDataSet
+and UserDefinedData. Preliminary documentation for these extensions in
+the form of PDF files is also available for download.&nbsp;
+
+<p><b>October 1, 2004</b>: Released an update to Version 2.3 of the CGNS
+library. This update fixes some problems with MLL routines returning the
+wrong error code (or terminating prematurely). Also, checks are now performed
+when creating a CGNS file to prevent writing a file which fails to read.
+A new version of cgnstools has also been released with improvements to
+both adfviewer and cgnsplot. The cgnscheck program has been significantly
+improved. It should now check the validity of all CGNS 2.3 nodes.&nbsp;
+
+<p><b>March 22, 2004</b>: ADFH has been released as beta. This is a complete
+implementation of CGNS using HDF5 instead of ADF.&nbsp;
+
+<p><b>January 22, 2004</b>: Version 2.3 of the CGNS library has been released.
+The major changes in this version over that of 2.2 is a significant speedup
+in reading and writing when dealing with a large number of zones and the
+reimplementation of ElementList and ElementRange for specifying boundary
+conditions.&nbsp;
+
+<p><b>December 13, 2003</b>: An initial prototype has been released which
+replaces ADF with HDF5. Thanks to Marc Poinot at Onera and Greg Power's
+group at Arnold. The source is currently only available with CVS as module
+<i>adfh</i>.&nbsp;
+
+<p><b>September 28, 2003</b>: CGNS library Version 2.3 beta release. This
+version currently adds no additional functionality to that of Version 2.2,
+but speeds up read/write times by orders of magnitude when a large number
+of zones are present.&nbsp;
+
+<p><b>May 10, 2003</b>: <font color="#000000">CGNS Version 2.2 has been
+released.</font>
+
+<p><font color="#000000"><b>May 3, 2003</b>: The CGNS source code is now
+available as a download of the latest release or anonymous CVS access to
+the current beta version at <a href="http://sourceforge.net/projects/cgns/">SourceForge.net</a>.
+There is now a GNU configure script for configuring compiler options.</font>
+
+<p><font color="#000000"><b>January 23, 2003</b>: The CGNS documentation
+and Technical Papers link now points to a single website location at <a href="http://www.grc.nasa.gov/WWW/cgns/">NASA
+Glenn</a>. All documentation, papers and the minutes of the CGNS Steering
+Committee meetings are available there.</font>
+
+<p><font color="#000000"><b>September 18, 2002</b>:&nbsp; Minutes of the
+CGNS Steering Committee meetings and teleconferences are available at the
+<a href="http://www.grc.nasa.gov/www/cgns/index.html#Minutes">NASA
+Glenn website</a>.&nbsp;</font>
+
+<p><font color="#000000"><b>January 16, 2002</b>: AIAA 2002-0752, "<a href="http://www.grc.nasa.gov/WWW/cgns/papers/aiaa02-0752.pdf">CFD
+General Notation System (CGNS): Status and Future Directions</a>" presented
+at the 40th Aerospace Sciences Meeting &amp; Exhibit, Reno, Nevada.</font>
+
+<p><font color="#000000"><b>December 1, 2000</b>: Release of Version 2.0
+beta 2 which supports grid motion and iterative or time accurate data.</font>
+
+<p><font color="#000000"><b>October 31, 2001</b>: Review the new "</font><a href="http://www.grc.nasa.gov/WWW/cgns/user/index.html">User's
+Guide to CGNS</a><font color="#000000">" created by Chris Rumsey of NASA
+Langley Research Center.</font>
+
+<p><font color="#000000"><b>January 18, 2002</b>: The latest revision of
+the <a href="ISO.html">draft ISO standard</a> is available for review.</font>
+
+<p><font color="#000000"><b>October 18, 2000</b>: CGNS has now its own
+discussion group. Users can exchange opinions and experiences via <a href="CGNStalk.html">CGNS
+Talk</a>.</font>
+
+<p><font color="#000000"><b>March 15, 2000</b>: Added support for MIXED
+element sections.</font>
+
+<p><font color="#000000"><b>January 10, 2000</b>: The CGNS Steering Committee
+becomes a sub-committee of the AIAA Committee</font>
+<br><font color="#000000">on Standards.</font>
+
+<p><font color="#000000"><b>January 12, 2000</b>: AIAA 2000-0681, "<a href="http://www.grc.nasa.gov/WWW/cgns/papers/aiaa00-0681.pdf">Advances
+in the CGNS Database Standard for Aerodynamics and</a></font>
+<br><font color="#000000"><a href="http://www.grc.nasa.gov/WWW/cgns/papers/aiaa00-0681.pdf">CFD.</a>"
+presented at the 38th Aerospace Sciences Meeting &amp; Exhibit, Reno, Nevada.</font>
+
+<p><font color="#000000"><b>October 14, 1999</b>: The <a href="http://www.grc.nasa.gov/www/cgns/charter/charter.pdf">CGNS
+Steering Committee Charter</a> has been unanimously adopted at the CGNS
+Meeting at UTRC, East Hartford.</font>
+
+<p><font color="#000000"><b>September 1999</b>: The CGNS Library and the
+ADF File Browser are now available on <i>Windows NT</i> and <i>Linux</i>
+!!!</font></td>
+</tr>
+</table>
+
+</body>
+</html>

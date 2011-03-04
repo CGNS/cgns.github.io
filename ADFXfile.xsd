@@ -1,0 +1,239 @@
+<?xml version="1.0" ?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://www.cgns.org/ADFXfile"
+  xmlns:ADFX="http://www.cgns.org/ADFXfile"
+  elementFormDefault="unqualified"
+  attributeFormDefault="unqualified"
+>
+
+<xs:element name="ADFXfile">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="ADFX:RootNode" />
+    </xs:sequence>
+    <xs:attribute name="Version" type="xs:float" default="1.0" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="RootNode">
+  <xs:complexType>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="ADFX:DataNode" />
+      <xs:element ref="ADFX:ContNode" />
+      <xs:element ref="ADFX:LinkNode" />
+      <xs:element ref="ADFX:NullNode" />
+    </xs:choice>
+    <xs:attribute name="ID" type="xs:ID" use="required" />
+    <xs:attribute name="Name" type="xs:string" default="/" />
+    <xs:attribute name="Label" type="xs:string" default="ADF-XML RootNode" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="DataNode">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element ref="ADFX:C1" />
+        <xs:element ref="ADFX:I4" />
+        <xs:element ref="ADFX:U4" />
+        <xs:element ref="ADFX:R4" />
+        <xs:element ref="ADFX:R8" />
+        <xs:element ref="ADFX:B64" />
+      </xs:choice>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ADFX:DataNode" />
+        <xs:element ref="ADFX:ContNode" />
+        <xs:element ref="ADFX:LinkNode" />
+        <xs:element ref="ADFX:NullNode" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="ID" type="xs:ID" use="required" />
+    <xs:attribute name="PID" type="xs:IDREF" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="Label" type="xs:string" use="required" />
+    <xs:attribute name="DataType" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="C1" />
+          <xs:enumeration value="I4" />
+          <xs:enumeration value="U4" />
+          <xs:enumeration value="R4" />
+          <xs:enumeration value="R8" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Dimensions" use="required">
+      <xs:simpleType>
+        <xs:list itemType="xs:positiveInteger" />
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="ContNode">
+  <xs:complexType>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="ADFX:DataNode" />
+      <xs:element ref="ADFX:ContNode" />
+      <xs:element ref="ADFX:LinkNode" />
+      <xs:element ref="ADFX:NullNode" />
+    </xs:choice>
+    <xs:attribute name="ID" type="xs:ID" use="required" />
+    <xs:attribute name="PID" type="xs:IDREF" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="Label" type="xs:string" use="required" />
+    <xs:attribute name="DataType" type="xs:string" fixed="MT" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="LinkNode">
+  <xs:complexType>
+    <xs:choice>
+      <xs:element ref="ADFX:LK" />
+      <xs:element ref="ADFX:B64" />
+    </xs:choice>
+    <xs:attribute name="ID" type="xs:ID" use="required" />
+    <xs:attribute name="PID" type="xs:IDREF" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="Label" type="xs:string" />
+    <xs:attribute name="DataType" type="xs:string" fixed="LK" />
+    <xs:attribute name="Dimensions" type="xs:positiveInteger" use="required" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="NullNode">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:choice minOccurs="0">
+        <xs:element ref="ADFX:C1" />
+        <xs:element ref="ADFX:I4" />
+        <xs:element ref="ADFX:U4" />
+        <xs:element ref="ADFX:R4" />
+        <xs:element ref="ADFX:R8" />
+        <xs:element ref="ADFX:LK" />
+        <xs:element ref="ADFX:B64" />
+      </xs:choice>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ADFX:DataNode" />
+        <xs:element ref="ADFX:ContNode" />
+        <xs:element ref="ADFX:LinkNode" />
+        <xs:element ref="ADFX:NullNode" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="ID" type="xs:string" />
+    <xs:attribute name="PID" type="xs:string" />
+    <xs:attribute name="Name" type="xs:string" />
+    <xs:attribute name="Label" type="xs:string" />
+    <xs:attribute name="DataType" type="xs:string" />
+    <xs:attribute name="Dimensions" type="xs:string" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="C1">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Size" type="xs:nonNegativeInteger" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:simpleType name="I4type">
+  <xs:list itemType="xs:int" />
+</xs:simpleType>
+
+<xs:element name="I4">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="ADFX:I4type">
+        <xs:attribute name="Size" type="xs:nonNegativeInteger" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:simpleType name="U4type">
+  <xs:list itemType="xs:unsignedInt" />
+</xs:simpleType>
+
+<xs:element name="U4">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="ADFX:U4type">
+        <xs:attribute name="Size" type="xs:nonNegativeInteger" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:simpleType name="R4type">
+  <xs:list itemType="xs:float" />
+</xs:simpleType>
+
+<xs:element name="R4">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="ADFX:R4type">
+        <xs:attribute name="Size" type="xs:nonNegativeInteger" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:simpleType name="R8type">
+  <xs:list itemType="xs:double" />
+</xs:simpleType>
+
+<xs:element name="R8">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="ADFX:R8type">
+        <xs:attribute name="Size" type="xs:nonNegativeInteger" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="LK">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Size" type="xs:nonNegativeInteger" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="B64">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:base64Binary">
+        <xs:attribute name="Size" type="xs:nonNegativeInteger" />
+        <xs:attribute name="ByteOrder" use="required">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="LE" />
+              <xs:enumeration value="BE" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="DataType">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="C1" />
+              <xs:enumeration value="I4" />
+              <xs:enumeration value="U4" />
+              <xs:enumeration value="R4" />
+              <xs:enumeration value="R8" />
+              <xs:enumeration value="LK" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>

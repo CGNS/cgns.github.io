@@ -1,0 +1,211 @@
+<!-- Home Page for CGNS ADF User's Guide -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<span class=nav><b>ADF&nbsp;User's&nbsp;Guide</b></span>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<br><br>
+<table>
+<tr>
+   <td><img src="../logo/cgns_color.gif" width=150 alt="CGNS logo">
+   <td><tt>&nbsp;&nbsp;</tt>
+   <td><h1>CFD&nbsp;General&nbsp;Notation&nbsp;System<br>
+       ADF&nbsp;User's&nbsp;Guide</h1>
+</table>
+<h1><small><small>Document Version 1.1.1</small></small></h1>
+
+<p>
+ADF is the database manager which underlies CGNS.
+This document defines the structure of an ADF file, and describes in
+detail the ADF Core, a library of low-level routines used
+to store and retrieve data in an ADF file.
+
+<p>
+The PDF form of the <a href="adf.pdf">ADF User's Guide</a>
+(498K, 128 pages) was created using
+<a href="http://www.tug.org/applications/pdftex/">pdfTeX</a>
+<img src="../external.png" alt="external link"> and the
+<a href="http://www.tug.org/applications/hyperref/manual.html">hyperref</a>
+<img src="../external.png" alt="external link"> package, and is designed
+to be printed.
+The PDF file may be viewed and/or printed using a variety
+of freely available software packages, including
+<a href="http://www.adobe.com/products/acrobat/readstep.html">Acrobat
+Reader</a> <img src="../external.png" alt="external link">,
+<a href="http://www.cs.wisc.edu/~ghost/">GhostScript</a>
+<img src="../external.png" alt="external link">, and
+<a href="http://www.foolabs.com/xpdf/">xpdf</a>
+<img src="../external.png" alt="external link">.
+The HTML form is designed for interactive use, and the contents
+are listed below.
+
+<ul>
+<li> <a href="intro.html">Introduction</a>
+<li> <a href="library.html">The ADF Software Library</a>
+<li> <a href="glossary.html">ADF Glossary of Terms</a>
+<li> <a href="history.html">History of ADF Version Releases</a>
+<li> <a href="arch.html">ADF File System Architectures</a>
+<li> <a href="versions.html">ADF File Version Control Numbering</a>
+<li> <a href="design.html">ADF Design Considerations</a>
+<li> <a href="conventions.html">ADF Conventions and Implementations</a>
+<li> <a href="errors.html">ADF Error Messages</a>
+<li> <a href="defaults.html">Default Values and Sizes and Limits of Dimensions and Arrays</a>
+<li> <a href="subs_database.html">Database-Level Routines</a>
+     <ul>
+     <li> <tt><a href="subs_database.html#Database_Open">ADF_Database_Open</a></tt> -
+          Open a database
+     <li> <tt><a href="subs_database.html#Database_Close">ADF_Database_Close</a></tt> -
+          Close an opened database
+     <li> <tt><a href="subs_database.html#Database_Delete">ADF_Database_Delete</a></tt> -
+          Delete an existing database
+     <li> <tt><a href="subs_database.html#Database_Get_Format">ADF_Database_Get_Format</a></tt> -
+          Get the data format in an existing database
+     <li> <tt><a href="subs_database.html#Database_Set_Format">ADF_Database_Set_Format</a></tt> -
+          Set the data format in an existing database
+     </ul>
+<li> <a href="subs_structure.html">Data Structure and Management Routines</a>
+     <ul>
+     <li> <tt><a href="subs_structure.html#Create">ADF_Create</a></tt> -
+          Create a node
+     <li> <tt><a href="subs_structure.html#Delete">ADF_Delete</a></tt> -
+          Delete a node
+     <li> <tt><a href="subs_structure.html#Children_Names">ADF_Children_Names</a></tt> -
+          Get the child names of a node
+     <li> <tt><a href="subs_structure.html#Number_of_Children">ADF_Number_of_Children</a></tt> -
+          Get the number of children of a node
+     <li> <tt><a href="subs_structure.html#Get_Node_ID">ADF_Get_Node_ID</a></tt> -
+          Get a unique identifier of a node
+     <li> <tt><a href="subs_structure.html#Get_Name">ADF_Get_Name</a></tt> -
+          Get the name of a node
+     <li> <tt><a href="subs_structure.html#Put_Name">ADF_Put_Name</a></tt> -
+          Put (change) the name of a node
+     <li> <tt><a href="subs_structure.html#Move_Child">ADF_Move_Child</a></tt> -
+          Change a parent (move a child)
+     <li> <tt><a href="subs_structure.html#Link">ADF_Link</a></tt> -
+          Create a link
+     <li> <tt><a href="subs_structure.html#Is_Link">ADF_Is_Link</a></tt> -
+          Test if a node is a link
+     <li> <tt><a href="subs_structure.html#Get_Link_Path">ADF_Get_Link_Path</a></tt> -
+          Get the path information from a link
+     <li> <tt><a href="subs_structure.html#Get_Root_ID">ADF_Get_Root_ID</a></tt> -
+          Get the root ID of the ADF file
+     </ul>
+<li> <a href="subs_query.html">Data Query Routines</a>
+     <ul>
+     <li> <tt><a href="subs_query.html#Get_Label">ADF_Get_Label</a></tt> -
+          Get a label
+     <li> <tt><a href="subs_query.html#Set_Label">ADF_Set_Label</a></tt> -
+          Set a label
+     <li> <tt><a href="subs_query.html#Get_Data_Type">ADF_Get_Data_Type</a></tt> -
+          Get the data type
+     <li> <tt><a href="subs_query.html#Get_Number_of_Dimensions">ADF_Get_Number_of_Dimensions</a></tt> -
+          Get the number of dimensions
+     <li> <tt><a href="subs_query.html#Get_Dimension_Values">ADF_Get_Dimension_Values</a></tt> -
+          Get the dimension values of a node
+     <li> <tt><a href="subs_query.html#Put_Dimension_Information">ADF_Put_Dimension_Information</a></tt> -
+          Set the data type and dimension information
+     </ul>
+<li> <a href="subs_io.html">Data I/O Routines</a>
+     <ul>
+     <li> <tt><a href="subs_io.html#Read_Data">ADF_Read_Data</a></tt> -
+          Read the data from a node (with partial capabilities)
+     <li> <tt><a href="subs_io.html#Read_All_Data">ADF_Read_All_Data</a></tt> -
+          Read all the data into a contiguous memory space
+     <li> <tt><a href="subs_io.html#Read_Block_Data">ADF_Read_Block_Data</a></tt> -
+          Read a contiguous block of data from a node
+     <li> <tt><a href="subs_io.html#Write_Data">ADF_Write_Data</a></tt> -
+          Write the data to a node (with partial capabilities)
+     <li> <tt><a href="subs_io.html#Write_All_Data">ADF_Write_All_Data</a></tt> -
+          Write all the data from a contiguous memory space
+     <li> <tt><a href="subs_io.html#Write_Block_Data">ADF_Write_Block_Data</a></tt> -
+          Write a contiguous block of data to a node
+     </ul>
+<li> <a href="subs_misc.html">Miscellaneous Routines</a>
+     <ul>
+     <li> <tt><a href="subs_misc.html#Flush_to_Disk">ADF_Flush_to_Disk</a></tt> -
+          Flush the data to a disk
+     <li> <tt><a href="subs_misc.html#Database_Garbage_Collection">ADF_Database_Garbage_Collection</a></tt> -
+          Garbage collection
+     <li> <tt><a href="subs_misc.html#Error_Message">ADF_Error_Message</a></tt> -
+          Return an error message
+     <li> <tt><a href="subs_misc.html#Set_Error_State">ADF_Set_Error_State</a></tt> -
+          Set the error state
+     <li> <tt><a href="subs_misc.html#Get_Error_State">ADF_Get_Error_State</a></tt> -
+          Get the error state
+     <li> <tt><a href="subs_misc.html#Database_Version">ADF_Database_Version</a></tt> -
+          Get the ADF file version ID
+     <li> <tt><a href="subs_misc.html#Library_Version">ADF_Library_Version</a></tt> -
+          Get the ADF library version ID
+     </ul>
+<li> <a href="sampleFortran.html">Sample Fortran Program</a>
+<li> <a href="sampleC.html">Sample C Program</a>
+</ul>
+
+<p>
+The complete <a href="adf.tar.gz">ADF User's Guide in HTML form</a>
+is also available for installation on a local system.
+This is a gzip'ed tar file (57K, 318K gunzip'ed), and may be downloaded
+by clicking on the link while holding down the shift key, assuming your
+browser supports this capability.
+A dialogue box will appear for you to specify the directory and file name.
+To unpack the contents, do
+<pre>
+   gunzip -c adf.tar.gz | tar xvf -
+</pre>
+The files will be extracted and stored in the directory <i>adf</i>.
+Point your browser to the local file <i>adf/index.html</i> to
+display the <i>ADF User's Guide</i> home page.
+Note that this does not include the PDF form of the manual.
+Note also that some links, to other manuals, etc., may not work.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<p>
+This document was derived from an earlier PDF version of the document,
+dated 5/7/98.
+<!--#include virtual="../include/footer_big.html" -->
+Last updated 6 Sep 2005
+
+</body>
+</html>

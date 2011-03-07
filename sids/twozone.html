@@ -1,0 +1,874 @@
+<!-- CGNS SIDS document - Structured Two-Zone Flat Plate Example -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Structured Two-Zone Flat Plate Example </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<span class=nav><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></span>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Structured Two-Zone Flat Plate Example</h2>
+
+<ul>
+<li> <a href="#flatplate_layout">Overall Layout</a>
+<li> <a href="#flatplate_grid">Grid Coordinates</a>
+<li> <a href="#flatplate_flowfield">Flowfield Solution</a>
+<li> <a href="#flatplate_connectivity">Interface Connectivity</a>
+<li> <a href="#flatplate_bc">Boundary Conditions</a>
+<li> <a href="#flatplate_refstate">Global Reference State</a>
+<li> <a href="#flatplate_eqs">Equation Description</a>
+</ul>
+
+<p>
+This section describes a complete database for a sample test case.
+The test case is compressible turbulent flow past a flat plat at zero
+incidence.
+The domain is divided into two zones as shown in the figure below.
+The interface between the two zones is 1-to-1.
+
+<br><br>
+<center>
+<img src="twozone.figs/plate.gif"
+     alt="Diagram showing zone sizes, coordinates, and boundary conditions"
+     longdesc="twozone.figs/plate.html">
+<br><br>
+Two-Zone Flat Plate Test Case
+</center>
+
+<p>
+The database description includes the following:
+<ul>
+<li> <a href="#flatplate_layout">range of indices within each zone</a>
+<li> <a href="#flatplate_grid">grid coordinates</a> of vertices
+<li> <a href="#flatplate_flowfield">flowfield solution</a> at cell
+     centers including a row of ghost-cells along each boundary; the
+     flowfield includes the conservation variables and a turbulent
+     transport variable
+<li> <a href="#flatplate_connectivity">multizone interface connectivity
+     information</a>
+<li> <a href="#flatplate_bc">boundary condition information</a>
+<li> <a href="#flatplate_refstate">reference state</a>
+<li> <a href="#flatplate_eqs">description of the compressible
+     Navier-Stokes equations</a> including one-equation turbulence model
+</ul>
+Each of these items is described in separate sections to make the
+information more readable.
+The same database is presented in each section, but only that
+information needed for the particular focus is included.
+The overall layout of the database is presented in the following section.
+
+<p>
+All data for this test case is nondimensional and is normalized
+consistently by the following (dimensional) quantities: plate length
+<i>L</i>, freestream static density <i>&rho;</i><sub>&infin;</sub>,
+freestream static speed of sound <i>c</i><sub>&infin;</sub>, and
+freestream static temperature <i>T</i><sub>&infin;</sub>.
+The fact that the database is completely nondimensional is reflected in
+the value of the globally set data class.
+
+<a name="flatplate_layout"></a>
+<h3>Overall Layout</h3>
+
+<p>
+This section describes the overall layout of the database.
+Included are the cell dimension and physical dimension of the grid, the
+globally set data class, the global reference state and flow-equations
+description, and data pertaining to each zone.
+Each zone contains the grid size, grid coordinates, flow solution,
+multizone interfaces and boundary conditions.
+All entities given by <tt>{{*}}</tt> are expanded in subsequent
+sections.
+Note that because this example contains structured zones,
+<tt>IndexDimension</tt> = <tt>CellDimension</tt> = 3 in each zone.
+<pre>
+CGNSBase_t TwoZoneCase =
+  {{
+  int CellDimension = 3 ;
+  int PhysicalDimension = 3 ;
+
+  DataClass_t DataClass = NormalizedByUnknownDimensional ;
+
+  <a href="#ReferenceState">ReferenceState_t ReferenceState = {{*}} ;</a>
+  
+  <a href="#FlowEquationSet">FlowEquationSet_t&lt;3&gt; FlowEquationSet = {{*}} ;</a>
+
+  !  CellDimension = 3, PhysicalDimension = 3
+  Zone_t&lt;3,3&gt; Zone1 =
+    {{
+    int VertexSize = [25,65,3] ;
+    int CellSize   = [24,64,2] ;
+    int VertexSizeBoundary = [0,0,0];
+
+    ZoneType_t ZoneType = Structured;
+    
+    !  IndexDimension = 3
+    <a href="#GridCoordinates1">GridCoordinates_t&lt;3,VertexSize&gt; GridCoordinates = {{*}} ;</a>
+    
+    <a href="#FlowSolution1">FlowSolution_t&lt;3,VertexSize,CellSize&gt; FlowSolution = {{*}} ;</a>
+    
+    <a href="#ZoneGridConnectivity1">ZoneGridConnectivity_t&lt;3,3&gt; ZoneGridConnectivity = {{*}} ;</a>
+  
+    <a href="#ZoneBC1">ZoneBC_t&lt;3,3&gt; ZoneBC = {{*}} ;</a>
+    }} ;        ! end Zone1
+  
+  !  CellDimension = 3, PhysicalDimension = 3
+  Zone_t&lt;3,3&gt; Zone2 =
+    {{
+    int VertexSize = [49,65,3] ;
+    int CellSize   = [48,64,2] ;
+    int VertexSizeBoundary = [0,0,0];
+
+    ZoneType_t ZoneType = Structured;
+    
+    !  IndexDimension = 3
+    <a href="#GridCoordinates2">GridCoordinates_t&lt;3,VertexSize&gt; GridCoordinates = {{*}} ;</a>
+    
+    FlowSolution_t&lt;3,VertexSize,CellSize&gt; FlowSolution = {{*}} ;
+    
+    <a href="#ZoneGridConnectivity2">ZoneGridConnectivity_t&lt;3,3&gt; ZoneGridConnectivity = {{*}} ;</a>
+  
+    <a href="#ZoneBC2">ZoneBC_t&lt;3,3&gt; ZoneBC = {{*}} ;</a>
+    }} ;        ! end Zone2
+  }} ;          ! end TwoZoneCase
+</pre>
+
+<a name="flatplate_grid"></a>
+<h3>Grid Coordinates</h3>
+
+<p>
+This section describes the grid-coordinate entities for each zone.
+Since the coordinates are all nondimensional, the individual
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities do not
+include a data-class qualifier; instead, this information is derived
+from the globally set data class.
+The grid-coordinate entities for zone 2 are abbreviated.
+<pre>
+CGNSBase_t TwoZoneCase =
+  {{
+  int CellDimension = 3 ;
+  int PhysicalDimension = 3 ;
+
+  DataClass_t DataClass = NormalizedByUnknownDimensional ;
+
+  !  CellDimension = 3, PhysicalDimension = 3
+  Zone_t&lt;3,3&gt; Zone1 =
+    {{
+    int VertexSize = [25,65,3] ;
+    int CellSize   = [24,64,2] ;
+    int VertexSizeBoundary = [0,0,0];
+
+    ZoneType_t ZoneType = Structured;
+
+    <a name="GridCoordinates1">!  IndexDimension = 3</a>
+    !  VertexSize = [25,65,3]
+    GridCoordinates_t&lt;3, [25,65,3]&gt; GridCoordinates =
+      {{
+      DataArray_t&lt;real, 3, [25,65,3]&gt; CoordinateX =
+        {{
+        Data(real, 3, [25,65,3]) = (((x(i,j,k), i=1,25), j=1,65), k=1,3) ;
+        }} ;
+
+      DataArray_t&lt;real, 3, [25,65,3]&gt; CoordinateY =
+        {{
+        Data(real, 3, [25,65,3]) = (((y(i,j,k), i=1,25), j=1,65), k=1,3) ;
+        }} ;
+
+      DataArray_t&lt;real, 3, [25,65,3]&gt; CoordinateZ =
+        {{
+        Data(real, 3, [25,65,3]) = (((z(i,j,k), i=1,25), j=1,65), k=1,3) ;
+        }} ;
+      }} ;      ! end Zone1/GridCoordinates
+    }} ;        ! end Zone1
+
+  !  CellDimension = 3, PhysicalDimension = 3
+  Zone_t&lt;3,3&gt; Zone2 =
+    {{
+    int VertexSize = [49,65,3] ;
+    int CellSize   = [48,64,2] ;
+    int VertexSizeBoundary = [0,0,0];
+
+    ZoneType_t ZoneType = Structured;
+
+    <a name="GridCoordinates2">!  IndexDimension = 3</a>
+    !  VertexSize = [49,65,3]
+    GridCoordinates_t&lt;3, [49,65,3]&gt; GridCoordinates =
+      {{
+      DataArray_t&lt;real, 3, [49,65,3]&gt; CoordinateX = {{*}} ;
+      DataArray_t&lt;real, 3, [49,65,3]&gt; CoordinateY = {{*}} ;
+      DataArray_t&lt;real, 3, [49,65,3]&gt; CoordinateZ = {{*}} ;
+      }} ;      ! end Zone2/GridCoordinates
+    }} ;        ! end Zone2
+  }} ;          ! end TwoZoneCase
+</pre>
+
+<a name="flatplate_flowfield"></a>
+<h3>Flowfield Solution</h3>
+
+<p>
+This section provides a description of the flowfield solution including
+the conservation variables and the Spalart-Allmaras turbulent-transport
+quantity (<i>&nu;</i><sub>SA</sub>).
+The flowfield solution is given at cell centers with a single row of
+ghost-cell values along each boundary.
+
+<p>
+As with the case for grid coordinates, the flow solution is
+nondimensional, and this fact is derived from the globally set data
+class.
+The normalizations for each flow variable are,
+<center>
+<i>&rho;</i>&prime;<sub><i>ijk</i></sub> = <i>&rho;</i><sub><i>ijk</i></sub> / <i>&rho;</i><sub>&infin;</sub>
+<br><br>
+(<i>&rho;u</i>)&prime;<sub><i>ijk</i></sub> = (<i>&rho;u</i>)<sub><i>ijk</i></sub> / (<i>&rho;</i><sub>&infin;</sub><i>c</i><sub>&infin;</sub>)
+<br><br>
+(<i>&rho;e</i><sub>0</sub>)&prime;<sub><i>ijk</i></sub> = (<i>&rho;e</i><sub>0</sub>)<sub><i>ijk</i></sub> / (<i>&rho;</i><sub>&infin;</sub><i>c</i><sub>&infin;</sub><sup>2</sup>)
+<br><br>
+(<i>&nu;</i><sub>SA</sub>)&prime;<sub><i>ijk</i></sub> = (<i>&nu;</i><sub>SA</sub>)<sub><i>ijk</i></sub> / (<i>c</i><sub>&infin;</sub><i>L</i>)
+</center>
+<br>
+where primed quantities are nondimensional and all others are dimensional.
+
+<p>
+Only the <tt>Density</tt> entity for zone 1 is fully described in the
+following.
+The momentum, energy and turbulence solution are abbreviated.
+The entire flow-solution data for zone 2 is also abbreviated.
+<pre>
+CGNSBase_t TwoZoneCase =
+  {{
+  int CellDimension = 3 ;
+  int PhysicalDimension = 3 ;
+
+  DataClass_t DataClass = NormalizedByUnknownDimensional ;
+
+  !  CellDimension = 3, PhysicalDimension = 3
+  Zone_t&lt;3,3&gt; Zone1 =
+    {{
+    int VertexSize = [25,65,3] ;
+    int CellSize   = [24,64,2] ;
+    int VertexSizeBoundary = [0,0,0];
+
+    ZoneType_t ZoneType = Structured;
+
+    <a name="FlowSolution1">!  IndexDimension = 3</a>
+    !  VertexSize = [25,65,3]
+    !  CellSize   = [24,64,2]
+    FlowSolution_t&lt;3, [25,65,3], [24,64,2]&gt; FlowSolution =
+      {{
+      GridLocation_t GridLocation = CellCenter ;
+
+      !  IndexDimension = 3
+      Rind_t&lt;3&gt; Rind = 
+        {{
+        int[6] RindPlanes = [1,1,1,1,1,1] ;
+        }} ;
+
+      !  IndexDimension = 3
+      !  DataSize = CellSize + [2,2,2] = [26,66,4]
+      DataArray_t&lt;real, 3, [26,66,4]&gt; Density =
+        {{
+        Data(real, 3, [26,66,4]) = (((rho(i,j,k), i=0,25), j=0,65), k=0,3) ;
+        }} ;
+
+      DataArray_t&lt;real, 3, [26,66,4]&gt; MomentumX = {{*}} ;
+      DataArray_t&lt;real, 3, [26,66,4]&gt; MomentumY = {{*}} ;
+      DataArray_t&lt;real, 3, [26,66,4]&gt; MomentumZ = {{*}} ;
+      DataArray_t&lt;real, 3, [26,66,4]&gt; EnergyStagnationDensity = {{*}} ;
+      DataArray_t&lt;real, 3, [26,66,4]&gt; TurbulentSANutilde = {{*}} ;
+      }} ;      ! end Zone1/FlowSolution
+    }} ;        ! end Zone1
+
+  Zone_t&lt;3,3&gt; Zone2 = {{*}} ;
+  }} ;          ! end TwoZoneCase
+</pre>
+
+<a name="flatplate_connectivity"></a>
+<h3>Interface Connectivity</h3>
+
+<p>
+This section describes the interface connectivity between zones 1 and 2;
+it also includes the <i>k</i>-plane periodicity for each zone (which is
+essentially an interface connectivity of a zone onto itself).
+Each interface entity is repeated with the receiver and donor-zone roles
+reversed; this includes the periodic <i>k</i>-plane interfaces.
+Since each interface is a complete zone face, the
+<a href="cnct.html#GridConnectivity1to1"><tt>GridConnectivity1to1_t</tt></a>
+entities are named after the face.
+
+<p>
+Because of the orientation of the zones, the index transformation
+matrices (<a href="cnct.html#Transform"><tt>Transform</tt></a>) for all
+interfaces are diagonal.
+This means that each matrix is its own inverse, and the value of
+<tt>Transform</tt> is the same for every pair of interface entities.
+<pre>
+CGNSBase_t TwoZoneCase =
+  {{
+  int CellDimension = 3 ;
+  int PhysicalDimension = 3 ;
+
+
+  !  -----  ZONE 1 Interfaces  ------
+
+  !  CellDimension = 3, PhysicalDimension = 3
+  Zone_t&lt;3,3&gt; Zone1 =
+    {{
+    int VertexSize = [25,65,3] ;
+    int CellSize   = [24,64,2] ;
+    int VertexSizeBoundary = [0,0,0];
+
+    ZoneType_t ZoneType = Structured;
+
+    <a name="ZoneGridConnectivity1">!  IndexDimension = 3, CellDimension = 3</a>
+    ZoneGridConnectivity_t&lt;3,3&gt; ZoneGridConnectivity =
+      {{
+ 
+      !  IndexDimension = 3
+      GridConnectivity1to1_t&lt;3&gt; IMax =                ! ZONE 1 IMax
+        {{
+        int[3] Transform = [1,2,3] ;
+        IndexRange_t&lt;3&gt; PointRange =
+          {{
+          int[3] Begin = [25,1 ,1] ;
+          int[3] End   = [25,65,3] ;
+          }} ;
+        IndexRange_t&lt;3&gt; PointRangeDonor =
+          {{
+          int[3] Begin = [1,1 ,1] ;
+          int[3] End   = [1,65,3] ;
+          }} ;
+        Identifier(Zone_t) ZoneDonorName = Zone2 ;
+        }} ;
+
+      GridConnectivity1to1_t&lt;3&gt; KMin =                ! ZONE 1 KMin 
+        {{
+        int[3] Transform = [1,2,-3] ;
+        IndexRange_t&lt;3&gt; PointRange =
+          {{
+          int[3] Begin = [1 ,1 ,1] ;
+          int[3] End   = [25,65,1] ;
+          }} ;
+        IndexRange_t&lt;3&gt; PointRangeDonor =
+          {{
+          int[3] Begin = [1 ,1 ,3] ;
+          int[3] End   = [25,65,3] ;
+          }} ;
+        Identifier(Zone_t) ZoneDonorName = Zone1 ;
+        }} ;
+
+      GridConnectivity1to1_t&lt;3&gt; KMax =                ! ZONE 1 KMax 
+        {{
+        int[3] Transform = [1,2,-3] ;
+        IndexRange_t&lt;3&gt; PointRange =
+          {{
+          int[3] Begin = [1 ,1 ,3] ;
+          int[3] End   = [25,65,3] ;
+          }} ;
+        IndexRange_t&lt;3&gt; PointRangeDonor =
+          {{
+          int[3] Begin = [1 ,1 ,1] ;
+          int[3] End   = [25,65,1] ;
+          }} ;
+        Identifier(Zone_t) ZoneDonorName = Zone1 ;
+        }} ;
+      }} ;      ! end Zone1/ZoneGridConnectivity
+    }} ;        ! end Zone1
+
+
+   !  -----  ZONE 2 Interfaces  ------
+
+  !  CellDimension = 3, PhysicalDimension = 3
+   Zone_t&lt;3,3&gt; Zone2 =
+    {{
+    int VertexSize = [49,65,3] ;
+    int CellSize   = [48,64,2] ;
+    int VertexSizeBoundary = [0,0,0];
+
+    ZoneType_t ZoneType = Structured;
+
+    <a name="ZoneGridConnectivity2">!  IndexDimension = 3, CellDimension = 3</a>
+    ZoneGridConnectivity_t&lt;3,3&gt; ZoneGridConnectivity =
+      {{
+ 
+     !  IndexDimension = 3
+      GridConnectivity1to1_t&lt;3&gt; IMin =                ! ZONE 2 IMin
+        {{
+        int[3] Transform = [1,2,3] ;
+        IndexRange_t&lt;3&gt; PointRange =
+          {{
+          int[3] Begin = [1,1 ,1] ;
+          int[3] End   = [1,65,3] ;
+          }} ;
+        IndexRange_t&lt;3&gt; PointRangeDonor =
+          {{
+          int[3] Begin = [25,1 ,1] ;
+          int[3] End   = [25,65,3] ;
+          }} ;
+        Identifier(Zone_t) ZoneDonorName = Zone1 ;
+        }} ;
+
+      GridConnectivity1to1_t&lt;3&gt; KMin =                ! ZONE 2 KMin 
+        {{
+        int[3] Transform = [1,2,-3] ;
+        IndexRange_t&lt;3&gt; PointRange =
+          {{
+          int[3] Begin = [1 ,1 ,1] ;
+          int[3] End   = [49,65,1] ;
+          }} ;
+        IndexRange_t&lt;3&gt; PointRangeDonor =
+          {{
+          int[3] Begin = [1 ,1 ,3] ;
+          int[3] End   = [49,65,3] ;
+          }} ;
+        Identifier(Zone_t) ZoneDonorName = Zone2 ;
+        }} ;
+
+      GridConnectivity1to1_t&lt;3&gt; KMax =                ! ZONE 2 KMax 
+        {{
+        int[3] Transform = [1,2,-3] ;
+        IndexRange_t&lt;3&gt; PointRange =
+          {{
+          int[3] Begin = [1 ,1 ,3] ;
+          int[3] End   = [49,65,3] ;
+          }} ;
+        IndexRange_t&lt;3&gt; PointRangeDonor =
+          {{
+          int[3] Begin = [1 ,1 ,1] ;
+          int[3] End   = [49,65,1] ;
+          }} ;
+        Identifier(Zone_t) ZoneDonorName = Zone2 ;
+        }} ;
+      }} ;      ! end Zone2/ZoneGridConnectivity
+    }} ;        ! end Zone2
+  }} ;          ! end TwoZoneCase
+</pre>
+
+<a name="flatplate_bc"></a>
+<h3>Boundary Conditions</h3>
+
+<p>
+Boundary conditions for the flat plate case are described in this
+section.
+The minimal information necessary is included in each boundary
+condition; this includes the boundary-condition type and BC-patch
+specification.
+The lone exception is the viscous wall, which is isothermal
+and has an imposed temperature profile (given by the array
+<tt>temperatureprofile()</tt>).
+For all other boundary conditions a flow solver is free to impose
+appropriate BC-data since none is provided in the following.
+The imposed BC-data for all cases should be evaluated at the globally
+set reference state, since no other reference states have been
+specified.
+
+<p>
+No boundary condition descriptions are provided for the multizone
+interface or for the <i>k</i>-plane periodicity in each zone.
+All relevant information is provided for these interfaces in the
+<a href="cnct.html#GridConnectivity1to1"><tt>GridConnectivity1to1_t</tt></a>
+entities of the <a href="#flatplate_connectivity">previous section</a>.
+
+<p>
+The practice of naming <a href="bc.html#BC"><tt>BC_t</tt></a> entities
+after the face is followed.
+<pre>
+CGNSBase_t TwoZoneCase =
+  {{
+  int CellDimension = 3 ;
+  int PhysicalDimension = 3 ;
+
+  DataClass_t DataClass = NormalizedByUnknownDimensional ;
+
+  !  -----  ZONE 1 BC's  ------
+
+  !  CellDimension = 3, PhysicalDimension = 3
+  Zone_t&lt;3,3&gt; Zone1 =
+    {{
+    int VertexSize = [25,65,3] ;
+    int CellSize   = [24,64,2] ;
+    int VertexSizeBoundary = [0,0,0];
+
+    ZoneType_t ZoneType = Structured;
+
+    <a name="ZoneBC1">!  IndexDimension = 3, PhysicalDimension = 3</a>
+    ZoneBC_t&lt;3,3&gt; ZoneBC =
+      {{
+ 
+      !  IndexDimension = 3, PhysicalDimension = 3
+      BC_t&lt;3,3&gt; IMin =                                  !  ZONE 1 IMin
+        {{
+        BCType_t BCType = BCInflowSubsonic ;
+        IndexRange_t&lt;3&gt; PointRange = 
+          {{
+          int[3] Begin = [1,1 ,1] ;
+          int[3] End   = [1,65,3] ;
+          }} ;
+        }} ;
+
+      BC_t&lt;3,3&gt; JMin =                                  !  ZONE 1 JMin
+        {{
+        BCType_t BCType = BCSymmetryPlane ;
+        IndexRange_t&lt;3&gt; PointRange = 
+          {{
+          int[3] Begin = [1 ,1,1] ;
+          int[3] End   = [25,1,3] ;
+          }} ;
+        }} ;
+
+      BC_t&lt;3,3&gt; JMax =                                  !  ZONE 1 JMax
+        {{
+        BCType_t BCType = BCOutFlowSubsonic ;
+        IndexRange_t&lt;3&gt; PointRange = 
+          {{
+          int[3] Begin = [1 ,65,1] ;
+          int[3] End   = [25,65,3] ;
+          }} ;
+        }} ;
+      }} ;      ! end Zone1/ZoneBC
+    }} ;        ! end Zone1
+    
+ 
+  !  -----  ZONE 2 BC's  ------
+
+  !  CellDimension = 3, PhysicalDimension = 3
+  Zone_t&lt;3,3&gt; Zone2 =
+    {{
+    int VertexSize = [49,65,3] ;
+    int CellSize   = [48,64,2] ;
+    int VertexSizeBoundary = [0,0,0];
+
+    ZoneType_t ZoneType = Structured;
+
+    <a name="ZoneBC2">!  IndexDimension = 3, PhysicalDimension = 3</a>
+    ZoneBC_t&lt;3,3&gt; ZoneBC =
+      {{
+ 
+      !  IndexDimension = 3, PhysicalDimension = 3
+      BC_t&lt;3,3&gt; IMax =                                  !  ZONE 2 IMax
+        {{
+        BCType_t BCType = BCOutflowSubsonic ;
+        IndexRange_t&lt;3&gt; PointRange = 
+          {{
+          int[3] Begin = [49,1 ,1] ;
+          int[3] End   = [49,65,3] ;
+          }} ;
+        }} ;    ! end Zone2/ZoneBC/IMax
+
+      BC_t&lt;3,3&gt; JMin =                                  !  ZONE 2 JMin
+        {{
+        BCType_t BCType = BCWallViscous ;
+        IndexRange_t&lt;3&gt; PointRange = 
+          {{
+          int[3] Begin = [1 ,1,1] ;
+          int[3] End   = [49,1,3] ;
+          }} ;
+        
+        !  ListLength = 49*3 = 147
+        BCDataSet&lt;147&gt; BCDataSet =
+          {{
+          BCTypeSimple_t BCTypeSimple = BCWallViscousIsothermal ;
+
+          !  Data array length = ListLength = 147
+          BCData_t&lt;147&gt; DirichletData = 
+            {{
+            DataArray_t&lt;real, 1, 147&gt; Temperature =
+              {{
+              Data(real, 1, 147) = (temperatureprofile(n), n=1,147) ;
+              }} ;
+            }} ;
+          }} ;
+        }} ;    ! end Zone2/ZoneBC/JMin
+
+      BC_t&lt;3,3&gt; JMax =                                  !  ZONE 2 JMax
+        {{
+        BCType_t BCType = BCOutFlowSubsonic ;
+        IndexRange_t&lt;3&gt; PointRange = 
+          {{
+          int[3] Begin = [1 ,65,1] ;
+          int[3] End   = [49,65,3] ;
+          }} ;
+        }} ;    ! end Zone2/ZoneBC/JMax
+
+      }} ;      ! end Zone2/ZoneBC
+    }} ;        ! end Zone2
+  }} ;          ! end TwoZoneCase
+</pre>
+
+<a name="flatplate_refstate"></a>
+<h3>Global Reference State</h3>
+
+<p>
+This section provides a description of the freestream reference state.
+As previously stated, all data is nondimensional including all reference
+state quantities.
+The dimensional plate length <i>L</i> and freestream scales
+<i>&rho;</i><sub>&infin;</sub>, <i>c</i><sub>&infin;</sub> and 
+<i>T</i><sub>&infin;</sub> are used for normalization.
+
+<p>
+The freestream Mach number is 0.5 and the Reynolds number is
+10<sup>6</sup> based on freestream velocity and kinematic viscosity and
+the plate length.
+These are the only nondimensional parameters included in the reference
+state.
+The defining scales for each parameter are also included; these defining
+scales are nondimensional.
+
+<p>
+Using consistent normalization, the following nondimensional freestream
+quantities are defined:
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline>
+   <td><i>&rho;</i>&prime;<sub>&infin;</sub> = 1<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>(<i>&rho;</i><sub>0</sub>)&prime;<sub>&infin;</sub> =
+       <i>&rho;</i>&prime;<sub>&infin;</sub> &Gamma;<sup>1/(<i>&gamma;</i>&minus;1)</sup><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>L</i>&prime; = 1
+<tr valign=baseline>
+   <td><i>c</i>&prime;<sub>&infin;</sub> = 1<td>
+   <td>(<i>c</i><sub>0</sub>)&prime;<sub>&infin;</sub> =
+       <i>c</i>&prime;<sub>&infin;</sub> &Gamma;<sup>1/2</sup><td>
+   <td><i>u</i>&prime;<sub>&infin;</sub> = <i>M</i><sub>&infin;</sub> = 0.5
+<tr valign=baseline>
+   <td><i>T</i>&prime;<sub>&infin;</sub> = 1<td>
+   <td>(<i>T</i><sub>0</sub>)&prime;<sub>&infin;</sub> =
+       <i>T</i>&prime;<sub>&infin;</sub> &Gamma;<td>
+   <td><i>v</i>&prime;<sub>&infin;</sub> = 0
+<tr valign=baseline>
+   <td><i>p</i>&prime;<sub>&infin;</sub> = 1 / <i>&gamma;</i><td>
+   <td>(<i>p</i><sub>0</sub>)&prime;<sub>&infin;</sub> =
+       <i>p</i>&prime;<sub>&infin;</sub> &Gamma;<sup><i>&gamma;</i>/(<i>&gamma;</i>&minus;1)</sup><td>
+   <td><i>w</i>&prime;<sub>&infin;</sub> = 0
+<tr valign=baseline>
+   <td><i>e</i>&prime;<sub>&infin;</sub> = 1 / <i>&gamma;</i>(<i>&gamma;</i>&minus;1)<td>
+   <td>(<i>e</i><sub>0</sub>)&prime;<sub>&infin;</sub> =
+       <i>e</i>&prime;<sub>&infin;</sub> &Gamma;<td>
+   <td><i>&nu;</i>&prime;<sub>&infin;</sub> =
+       <i>u</i>&prime;<sub>&infin;</sub><i>L</i>&prime; / <i>Re</i> =
+       5&times;10<sup>&minus;7</sup>
+<tr valign=baseline>
+   <td><i>h</i>&prime;<sub>&infin;</sub> = 1 / (<i>&gamma;</i>&minus;1)<td>
+   <td>(<i>h</i><sub>0</sub>)&prime;<sub>&infin;</sub> =
+       <i>h</i>&prime;<sub>&infin;</sub> &Gamma;<td>
+   <td><i>s</i>&prime;<sub>&infin;</sub> =
+       <i>p</i>&prime;<sub>&infin;</sub> / (<i>&rho;</i>&prime;<sub>&infin;</sub>)<sup><i>&gamma;</i></sup> =
+       1 / <i>&gamma;</i>
+</table>
+</center>
+<br>
+where &Gamma; &equiv;
+1 + (<i>&gamma;</i>&minus;1)<i>M</i><sub>&infin;</sub><sup>2</sup> / 2
+based on <i>M</i><sub>&infin;</sub> = 0.5 and <i>&gamma;</i> = 1.4.
+
+<p>
+Except for the nondimensional parameters Mach number and Reynolds
+number, all <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+entities are abbreviated.
+<pre>
+CGNSBase_t TwoZoneCase =
+  {{
+
+  DataClass_t DataClass = NormalizedByUnknownDimensional ;
+
+  <a name="ReferenceState">ReferenceState_t ReferenceState = </a>
+    {{
+    Descriptor_t ReferenceStateDescription =
+      {{
+      Data(char, 1, 10) = "Freestream" ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 1&gt; Mach =
+      {{
+      Data(real, 1, 1) = 0.5 ;
+      DataClass_t DataClass = NondimensionalParameter ;
+      }} ;
+    DataArray_t&lt;real, 1, 1&gt; Mach_Velocity      = {{ 0.5 }} ;
+    DataArray_t&lt;real, 1, 1&gt; Mach_VelocitySound = {{ 1 }} ;
+
+    DataArray_t&lt;real, 1, 1&gt; Reynolds =
+      {{
+      Data(real, 1, 1) = 1.0e+06 ;
+      DataClass_t DataClass = NondimensionalParameter ;
+      }} ;
+    DataArray_t&lt;real, 1, 1&gt; Reynolds_Velocity           = {{ 0.5 }} ;
+    DataArray_t&lt;real, 1, 1&gt; Reynolds_Length             = {{ 1. }} ;
+    DataArray_t&lt;real, 1, 1&gt; Reynolds_ViscosityKinematic = {{ 5.0E-07 }} ;
+
+    DataArray_t&lt;real, 1, 1&gt; Density                 = {{ 1. }} ;
+    DataArray_t&lt;real, 1, 1&gt; LengthReference         = {{ 1. }} ;
+    DataArray_t&lt;real, 1, 1&gt; VelocitySound           = {{ 1. }} ;
+    DataArray_t&lt;real, 1, 1&gt; VelocityX               = {{ 0.5 }} ;
+    DataArray_t&lt;real, 1, 1&gt; VelocityY               = {{ 0 }};
+    DataArray_t&lt;real, 1, 1&gt; VelocityZ               = {{ 0 }} ;
+    DataArray_t&lt;real, 1, 1&gt; Pressure                = {{ 0.714286 }} ;
+    DataArray_t&lt;real, 1, 1&gt; Temperature             = {{ 1. }} ;
+    DataArray_t&lt;real, 1, 1&gt; EnergyInternal          = {{ 1.785714 }} ;
+    DataArray_t&lt;real, 1, 1&gt; Enthalpy                = {{ 2.5 }} ;
+    DataArray_t&lt;real, 1, 1&gt; EntropyApprox           = {{ 0.714286 }} ;
+
+    DataArray_t&lt;real, 1, 1&gt; DensityStagnation       = {{ 1.129726 }} ;
+    DataArray_t&lt;real, 1, 1&gt; PressureStagnation      = {{ 0.847295 }} ;
+    DataArray_t&lt;real, 1, 1&gt; EnergyStagnation        = {{ 1.875 }} ;
+    DataArray_t&lt;real, 1, 1&gt; EnthalpyStagnation      = {{ 2.625 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TemperatureStagnation   = {{ 1.05 }} ;
+    DataArray_t&lt;real, 1, 1&gt; VelocitySoundStagnation = {{ 1.024695 }} ;
+
+    DataArray_t&lt;real, 1, 1&gt; ViscosityKinematic      = {{ 5.0E-07 }} ;
+    }} ;
+  }} ;          ! end TwoZoneCase
+</pre>
+
+<a name="flatplate_eqs"></a>
+<h3>Equation Description</h3>
+
+<p>
+This section provides a description of the flow equations used to solve
+the problem.
+The flow equation set is turbulent, compressible 3-D Navier-Stokes with
+the Spalart-Allmaras (S-A) one-equation turbulence model.
+The thin-layer Navier-Stokes diffusion terms are modeled; only diffusion
+in the <i>j</i>-coordinate direction is included.
+
+<p>
+A perfect gas assumption is made with <i>&gamma;</i> = 1.4; based on the
+normalization used in this database, the nondimensional scales defining
+<i>&gamma;</i> are
+(<i>c<sub>p</sub></i>)&prime; = 1 / (<i>&gamma;</i>&minus;1) and
+(<i>c<sub>v</sub></i>)&prime; = 1 / <i>&gamma;</i>(<i>&gamma;</i>&minus;1).
+The molecular viscosity is obtained from Sutherland's Law.
+In order to nondimensionalize the viscosity formula, standard atmospheric
+conditions are assumed (i.e., <i>T</i><sub>&infin;</sub> = 288.15 K).
+A constant Prandtl number assumption is made for the thermal conductivity
+coefficient; <i>Pr</i> = 0.72.
+The defining scales of <i>Pr</i> are evaluated at freestream conditions; the
+nondimensional thermal conductivity is <i>k</i>&prime;<sub>&infin;</sub> = 
+<i>&mu;</i>&prime;<sub>&infin;</sub>(<i>c<sub>p</sub></i>)&prime; / <i>Pr</i>.
+
+<p>
+The Navier-Stokes equations are closed with an eddy viscosity assumption 
+using the S-A model.
+A turbulent Prandtl number of <i>Pr<sub>t</sub></i> = 0.9 is prescribed.
+All parameters not provided are defaulted.
+
+<p>
+Except for the nondimensional parameters <i>&gamma;</i> and
+<i>Pr</i>, all <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+entities are abbreviated.
+<pre>
+CGNSBase_t TwoZoneCase =
+  {{
+  int CellDimension = 3 ;
+  int PhysicalDimension = 3 ;
+
+  DataClass_t DataClass = NormalizedByUnknownDimensional ;
+
+  <a name="FlowEquationSet">!  CellDimension = 3</a>
+  FlowEquationSet_t&lt;3&gt; FlowEquationSet = 
+    {{
+    int EquationDimension = 3
+    
+    !  CellDimension = 3 ;
+    GoverningEquations_t&lt;3&gt; GoverningEquations =
+      {{
+      GoverningEquationsType_t GoverningEquationsType = NSTurbulent ;
+      
+      int[6] DiffusionModel = [0,1,0,0,0,0] ;
+      }} ;
+      
+    GasModel_t GasModel =
+      {{
+      GasModelType_t GasModelType = CaloricallyPerfect ;
+      
+      DataArray_t&lt;real, 1, 1&gt; SpecificHeatRatio =
+        {{
+        Data(real, 1, 1) = 1.4 ;
+        DataClass_t DataClass = NondimensionalParameter ;
+        }} ;
+      DataArray_t&lt;real, 1, 1&gt; SpecificHeatRatio_Pressure = {{ 2.5 }} ;
+      DataArray_t&lt;real, 1, 1&gt; SpecificHeatRatio_Volume   = {{ 1.785714 }} ;
+      }} ;
+
+    ViscosityModel_t ViscosityModel =
+      {{
+      ViscosityModelType_t ViscosityModelType = SutherLandLaw ;
+      
+      DataArray_t&lt;real, 1, 1&gt; SutherLandLawConstant       = {{ 0.38383 }} ;
+      DataArray_t&lt;real, 1, 1&gt; TemperatureReference        = {{ 1.05491 }} ;
+      DataArray_t&lt;real, 1, 1&gt; ViscosityMolecularReference = {{ 5.0E-07 }} ;
+      }} ;
+
+    ThermalConductivityModel_t ThermalConductivityModel =
+      {{
+      ThermalConductivityModelType_t ThermalConductivityModelType = 
+        ConstantPrandtl ;
+      
+      DataArray_t&lt;real, 1, 1&gt; Prandtl = 
+        {{
+        Data(real, 1, 1) = 0.72 ;
+        DataClass_t DataClass = NondimensionalParameter ;
+        }} ;
+      DataArray_t&lt;real, 1, 1&gt; Prandtl_ThermalConductivity  = {{ 1.73611E-0.6 }} ;
+      DataArray_t&lt;real, 1, 1&gt; Prandtl_ViscosityMolecular   = {{ 5.0E-0.7 }} ;
+      DataArray_t&lt;real, 1, 1&gt; Prandtl_SpecificHeatPressure = {{ 2.5 }} ;
+      }} ;
+
+    TurbulenceClosure_t TurbulenceClosure =
+      {{
+      TurbulenceClosureType_t TurbulenceClosureType = EddyViscosity ;
+      
+      DataArray&lt;real, 1, 1&gt; PrandtlTurbulent = {{ 0.90 }} ;
+      }} ;
+      
+    TurbulenceModel_t&lt;3&gt; TurbulenceModel =
+      {{
+      TurbulenceModelType_t TurbulenceModelType = 
+        OneEquation_SpalartAllmaras ;
+      
+      int[6] DiffusionModel = [0,1,0,0,0,0] ;
+      }} ;      
+    }} ;        ! end FlowEquationSet
+  }} ;          ! TwoZoneCase
+</pre>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 12 Feb 2002
+
+</body>
+</html>

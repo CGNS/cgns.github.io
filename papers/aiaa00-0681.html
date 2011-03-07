@@ -1,0 +1,1271 @@
+<!-- HTML input file for AIAA 2000-0681 -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgns.css" rel="stylesheet" type="text/css">
+<title>AIAA 2000-0681</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>
+AIAA-2000-0681<br>
+Advances in the CGNS Database Standard for Aerodynamics and CFD
+</h1>
+
+<p>
+Diane M. A. Poirier<br>
+<i>ICEM CFD Engineering, Berkeley, CA<br>
+Software Engineer, Member AIAA.</i>
+
+<p>
+Robert H. Bush<br>
+<i>United Technologies Research Center, East Hartford, CT<br>
+Group Leader, Simulation and Modeling, Associate Fellow AIAA.</i>
+
+<p>
+Raymond R. Cosner<br>
+<i>Boeing Phantom Works, St. Louis, MO<br>
+Senior Technical Fellow, Associate Fellow AIAA.</i>
+
+<p>
+Christopher L. Rumsey<br>
+<i>NASA Langley Research Center, Hampton, VA<br>
+Research Scientist, Associate Fellow AIAA.</i>
+
+<p>
+Douglas R. McCarthy<br>
+<i>Boeing Commercial Airplane Group, Seattle, WA<br>
+Principal Engineer, Member AIAA.</i>
+
+<p>
+[<i>This material is declared work of the U.S. Government and is
+not subject to copyright protection in the United States.</i>]
+
+<h2>Abstract</h2>
+
+<p>
+The CFD General Notation System (CGNS) standard has grown significantly
+since its first public release in May 1998. The Standard Interface Data
+Structures (SIDS) and corresponding Application Programming Interface
+(API) have been extended to support unstructured analysis data and
+geometry-to-mesh association. Several other extensions are currently
+under review: rigid grid motion, deforming grid, timeaccurate and
+iterative data, chemistry, multigrid, rotating coordinate systems,
+periodic boundary conditions, wall functions, 2D axisymmetry and
+Cartesian data. In parallel with the growth of the CGNS standard,
+the CGNS governing body has evolved into an independent entity and
+established its own charter. Efforts have also been undertaken to
+promote CGNS as the ISO standard for the recording of aerodynamic
+data. This paper reviews the progress made by CGNS over the past
+eighteen months. It first describes the technical advances in the
+CGNS database standard, followed by an overview of the new CGNS
+organization. Then the status of the CGNS in the ISO standardization
+process is presented, as well as a review of implementation and
+dissemination of CGNS.
+
+<h2>1. Introduction</h2>
+
+<p>
+The CGNS (CFD General Notation System) project originated during 1994
+through a series of meetings that addressed improved transfer of NASA
+technology to industry. A principal impediment in this process was
+the disparity in I/O formats employed by various flow codes, grid
+generators, and other utilities, and CGNS was conceived as a means to
+promote "plug-and-play" CFD.  Agreement was reached to develop CGNS
+at Boeing, under NASA Contract NAS1-20267, with active participation
+by a team of CFD researchers from NASA's Langley, Lewis (now Glenn),
+and Ames Research Centers, McDonnell Douglas Corporation (now part of
+Boeing), and Boeing Commercial Airplane Group.  This team, which was
+joined by ICEM CFD Engineering Corporation of Berkeley, California in
+1997, undertook the core of the development. However, in the spirit of
+creating a completely open and broadly accepted standard, all interested
+parties were encouraged to participate; the US Air Force and Arnold
+Engineering Development Center were notably present. From the beginning,
+the purpose was to develop a system that could be distributed freely,
+including all documentation, software and source code. This goal has now
+been fully realized; further, as described below, control of CGNS has
+been completely transferred to a public forum known as the CGNS Steering
+Committee.
+
+<p>
+The specific purpose of CGNS was to provide a standard for recording and
+recovering computer data associated with the numerical solution of the
+equations of fluid dynamics. The intent was to facilitate the exchange
+of CFD data between sites, between applications codes, and across
+computing platforms, and to stabilize the archiving of CFD data. The
+format implemented by this standard was to be (1) general, (2) portable,
+(3) expandable, and (4) durable.
+
+<p>
+The resulting system today consists of a collection of conventions,
+and software implementing those conventions, for the storage and
+retrieval of CFD data.  The system consists of two parts: (1) a standard
+format for recording the data, and (2) software that reads, writes,
+and modifies data in that format. The format is a conceptual entity
+established by the documentation; the software is a physical product
+supplied to enable developers to access and produce data recorded in
+that format.
+
+<p>
+The principal target is the data normally associated with compressible
+viscous flow (i.e., the Navier-Stokes equations), but the standard is
+also applicable to subclasses such as Euler and potential flows, and
+superclasses such as chemically reacting flows. The initial release
+addressed multi-block grids, flow fields, boundary conditions, and
+block-to-block connection information, as well as a number of auxiliary
+items, such as non-dimensionalization, reference states, and equation
+set specifications. This stage of development was summarized in
+reference 6.  The current paper describes the extensions undertaken
+since, including unstructured mesh, moving grids, connections to
+geometry definition, and chemistry.
+
+<p>
+It is worth noting that extensibility is a fundamental design
+characteristic of the system, which in principal could be used for
+other disciplines of computational field physics, such as acoustics or
+electromagnetics, given the willingness of the cognizant scientific
+community to define the conventions.
+
+<p>
+The standard format, or paper convention, part of CGNS consists of two
+fundamental pieces. The first, known as the Standard Interface Data
+Structures (SIDS) (Ref. 2), describes in detail the intellectual content
+of the information to be stored. It defines, for example, the precise
+meaning of a "boundary condition". The second, known as the File Mapping
+(Ref. 4), defines the exact location in a CGNS file where the data is to
+be stored.
+
+<p>
+The implementation, or software, part of CGNS likewise consists of two
+separate entities. CGNS files are read and written by a stand-alone
+database manager called ADF (Advanced Data Format) (Ref. 3).  ADF
+manages a tree-like data structure, implemented as a binary file. Since
+the format of this file is completely controlled by ADF, and since ADF
+is written in ANSI C (FORTRAN wrappers are provided), these files and
+ADF itself are portable to any environment which supports ANSI C. ADF is
+available separately and constitutes a useful tool for the storage of
+large quantities of scientific data.
+
+<p>
+ADF, however, implements no knowledge of CFD or of the File Mapping. To
+simplify access to CGNS files, a second layer of software known
+as the Mid-Level Library (Ref. 5) is provided. This layer is in
+effect an API, or Application Programming Interface for CFD. The API
+incorporates knowledge of the CFD data structures, their meaning and
+their location in the file, enabling applications such as flow codes
+and grid generators to access the data in familiar terms. The API is
+therefore the piece of the CGNS system most visible to applications
+developers. Like ADF, the API is written in ANSI C; all public API
+routines have FORTRAN counterparts.
+
+<p>
+The overall architecture of CGNS is that of shared files accessible by
+the various software tools common to CFD: solvers, grid generators,
+field visualizers, and postprocessors. These applications must
+be modified, using the API, to be able to access CGNS data. Each
+application then serves as an editor of the data, adding to, modifying
+or interpreting it according to that application's specific role.
+The user, or a locally developed user interface, remains responsible for
+executing the required actions and for the disposition of the files.
+
+<p>
+The CGNS elements are documented individually. Visitors to the main
+web site, www.CGNS.org, will find all documentation, as well as the
+software, both compiled and source code. For those new to CGNS, the
+Overview (Ref. 1) and the CGNS System paper (Ref. 6) are recommended.
+
+<h2>2. Advances in the CGNS System</h2>
+
+<p>
+The first release of the CGNS standard supported structured topology,
+where multi-block connectivity could be either one-to-one abutting,
+mismatched abutting or overset. It defined standards for the
+storage of grid coordinates, flow solutions, boundary conditions,
+convergence history, and reference state. Dimensional units and
+non-dimensionalization information could be associated with each type of
+data. Additionally, it provided conventions for archiving the governing
+equations including the gas, viscosity, thermal conductivity, turbulence
+and diffusion models. It also provided for the recording of descriptive
+data throughout the file.
+
+<p>
+Following this first release, the project to add support for
+unstructured topology and geometry-to-mesh association was immediately
+undertaken. Proposals were collected and the CGNS team organized
+meetings with CFD researchers familiar with unstructured topology
+and/or geometry data.  New data structures were defined and added to
+the standard to hold the additional information, and the CGNS library
+was augmented to support the new data structures.  Paragraphs
+<a href="#para2.1">2.1</a> and <a href="#para2.2">2.2</a> describe the
+implementation of the unstructured topology and geometry-to-mesh
+association in the CGNS standard.
+
+<p>
+Several other extensions are currently under work at various stages of
+maturity. The proposals for adding support for rigid grid motion, point
+by point grid motion (deforming grid), and iterative or time-accurate
+data are pending final approval and will be the next addition to the
+CGNS API. These new data structures are described in paragraphs
+<a href="#para2.3">2.3</a>, <a href="#para2.4">2.4</a>, and
+<a href="#para2.5">2.5</a>. Other proposals still at the discussion
+level include the addition of chemistry, multigrid, rotating
+coordinates, periodic boundary conditions, wall functions, 2D
+axisymmetry and Cartesian data.
+
+<h3>2.1 Unstructured Analysis Data</h3>
+
+<p>
+This section describes how the addition of unstructured data was
+incorporated to the CGNS system, and how it affected the Standard
+Interface Data Structures (SIDS).
+
+<p>
+There are basically two major differences between the way structured
+and unstructured mesh data are recorded.  In a structured mesh, a
+node is identified with its computational coordinates. A node has
+as many computational coordinates as there are dimensions in the
+mesh. For example, in a 3D grid, any node position in the mesh is
+uniquely defined giving three computational coordinates. The physical
+coordinate vectors and all the field vectors (solution, discrete
+boundary conditions, etc.) use the computational coordinates of each
+node as array indices. However, the mapping of the physical coordinates
+to the computational coordinates is only possible in a structured
+grid. In an unstructured grid, the nodes are simply given a number from
+1 to N, where N is the number of nodes.
+
+<p>
+The second major difference in the way structured and unstructured
+grids are recorded is the element definition.  In a structured grid,
+the elements can always be recomputed easily using the computational
+coordinates, and therefore they are usually not written in the data
+file.  For an unstructured grid, the element connectivity can not be
+easily built, so this additional information is generally added to the
+data file. The element information typically includes the element type
+or shape, and the list of nodes for each element.
+
+<p>
+In order to conciliate the differences between structured and
+unstructured mesh files, two new parameters were introduced. The SIDS
+already defined the expression <tt>IndexDimension</tt> as the number
+of computational coordinates required to uniquely define a node in a
+mesh.  For structured grids, this number equals the dimension of the
+mesh cells. For unstructured grid, only one index is necessary to
+locate a node in the mesh, regardless of the dimension of the mesh
+cells. The parameter <tt>IndexDimension</tt> is no longer sufficient to
+indicate the dimensionality of the cells. Therefore a second dimensional
+parameter called <tt>CellDimension</tt> was defined. For structured
+meshes, <tt>CellDimension</tt> and <tt>IndexDimension</tt> are always
+equal, but for unstructured grids, they differ when the cells have two
+or more dimensions.
+
+<p>
+To define a vector in a mesh, such as the normal vector to a mesh
+face, one needs to know the number of dimensions in the physical
+space. For example, the surface mesh around an aircraft is composed
+of bi-dimensional cells (faces or shell elements), but expressing
+the normal vectors to these cells requires three-dimensional
+physical coordinates. This leads to the definition of a third
+dimensional parameter, the <tt>PhysicalDimension</tt>. In addition
+to the topolgy type (structured or unstructured), these three
+parameters, <tt>IndexDimension</tt>, <tt>CellDimension</tt> and
+<tt>PhysicalDimension</tt>, are necessary to uniquely define a
+particular mesh type. For example, an unstructured surface mesh on an
+aircraft implies that:
+<pre>
+   IndexDimension=1
+   CellDimension=2
+   PhysicalDimension=3
+</pre>
+
+<p>
+Table 1 summarizes all possible combinations of these parameters for
+structured and unstructured grids.
+
+<p>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+<b>Table 1. Dimensional parameters for all mesh types</b>
+<br><br>
+</caption>
+<tr align=left><td colspan=7><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>Mesh type<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>IndexD<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>CellD<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>PhysD
+<tr align=left><td colspan=7><hr width=100% noshade>
+<tr valign=baseline>
+   <td scope=row>3D structured<td>
+   <td align=center>3<td>
+   <td align=center>3<td>
+   <td align=center>3
+<tr valign=baseline>
+   <td scope=row>2D structured in 2D space<td>
+   <td align=center>2<td>
+   <td align=center>2<td>
+   <td align=center>2
+<tr valign=baseline>
+   <td scope=row>2D structured in 3D space<td>
+   <td align=center>2<td>
+   <td align=center>2<td>
+   <td align=center>3
+<tr valign=baseline>
+   <td scope=row>1D structured in 1D space<td>
+   <td align=center>1<td>
+   <td align=center>1<td>
+   <td align=center>1
+<tr valign=baseline>
+   <td scope=row>1D structured in 2D space<td>
+   <td align=center>1<td>
+   <td align=center>1<td>
+   <td align=center>2
+<tr valign=baseline>
+   <td scope=row>1D structured in 3D space<td>
+   <td align=center>1<td>
+   <td align=center>1<td>
+   <td align=center>3
+<tr valign=baseline>
+   <td scope=row>3D unstructured<td>
+   <td align=center>1<td>
+   <td align=center>3<td>
+   <td align=center>3
+<tr valign=baseline>
+   <td scope=row>2D unstruct. in 2D space<td>
+   <td align=center>1<td>
+   <td align=center>2<td>
+   <td align=center>2
+<tr valign=baseline>
+   <td scope=row>2D unstruct. in 3D space<td>
+   <td align=center>1<td>
+   <td align=center>2<td>
+   <td align=center>3
+<tr valign=baseline>
+   <td scope=row>1D unstruct. in 1D space<td>
+   <td align=center>1<td>
+   <td align=center>1<td>
+   <td align=center>1
+<tr valign=baseline>
+   <td scope=row>1D unstruct. in 2D space<td>
+   <td align=center>1<td>
+   <td align=center>1<td>
+   <td align=center>2
+<tr valign=baseline>
+   <td scope=row>1D unstruct. in 3D space<td>
+   <td align=center>1<td>
+   <td align=center>1<td>
+   <td align=center>3
+<tr align=left><td colspan=7><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+The definition of the new dimensional parameters <tt>CellDimension</tt>
+and <tt>PhysicalDimension</tt> allowed using most of the existing SIDS
+with minimal changes when adding support for unstructured grids. By
+selecting the appropriate dimensional parameter to set the size of data
+arrays, the same data structures can be used for both structured and
+unstructured cases. For example, the number of nodes can be recorded in
+the array:
+<pre>
+   Nnodes[IndexDimension]
+</pre>
+
+<p>
+For a 3D-structured grid, this automatically leads to a 3D array
+containing the number of nodes in each of the three computational
+directions. On the other hand, it results in a mono-dimensional
+array for a 3D-unstructured grid. The solution vector and grid
+coordinates are also recorded in arrays of <tt>IndexDimension</tt>
+dimensions. Therefore, their definition is independent of the
+mesh type as well. The new parameters <tt>CellDimension</tt> and
+<tt>PhysicalDimension</tt> also fulfill the purpose of generalizing
+the data structures for both topology types.  The connectivity between
+zones is defined using interpolation coefficients to locate each
+point of a zone in the neighboring zone. The number of coefficients
+required is equal to <tt>CellDimension</tt>, independently of the mesh
+type. Similarly, position vectors or normal vectors are defined using
+the dimensional parameter <tt>PhysicalDimension</tt> in both types of
+meshes.
+
+<p>
+As a result, the unstructured zones were introduced into the CGNS system
+without the need to define a new data structure specific to unstructured
+mesh. Not only does this simplify the SIDS, but it also facilitates
+the API and its implementation. As before, a <tt>CGNSBase_t</tt>
+data structure may contain one to several zones. The only difference
+now is that some of these zones may be structured, while others are
+unstructured.
+
+<p>
+To accommodate the definition of unstructured zones, two new children
+were added to the <tt>Zone_t</tt> data structure, as shown in Figure 1.
+
+<a name="f:fig1"></a>
+<br><br>
+<center>
+<img src="aiaa00-0681/fig1.png"
+     alt="Zone Data Structure"
+     longdesc="aiaa00-0681/fig1.html">
+<br><br>
+<b>Fig. 1 Zone Data Structure</b>
+</center>
+
+<p>
+The node <tt>ZoneType_t</tt> records if the zone is structured
+or unstructured. It simply holds the data-name identifier
+<tt>Structured</tt> or <tt>Unstructured</tt>. The other new child is the
+data structure <tt>Elements_t</tt> that holds the element information
+for unstructured grids. A zone may contain several <tt>Elements_t</tt>
+data structures. Each <tt>Elements_t</tt> data structure holds several
+child nodes, as illustrated in Figure 2.
+
+<a name="f:fig2"></a>
+<br><br>
+<center>
+<img src="aiaa00-0681/fig2.png"
+     alt="Elements Data Structure"
+     longdesc="aiaa00-0681/fig2.html">
+<br><br>
+<b>Fig. 2 Elements Data Structure</b>
+</center>
+
+<p>
+The <tt>ElementRange</tt> node contains the index of the first and
+last elements defined in the <tt>ElementConnectivity_t</tt> array. The
+elements are indexed with a global numbering system for all element
+sections in the same <tt>Zone_t</tt> data structure.  They are also
+listed as a continuous list of element numbers within a single element
+section. These element indices may be used elsewhere in the database
+to define a boundary condition patch, or to specify zone to zone
+connectivity. <tt>ElementType_t</tt> is an enumeration of the supported
+element types.
+<pre>
+   ElementType_t := enumeration(
+      Null, NODE, BAR_2, BAR_3,
+      TRI_3, TRI_6, QUAD_4, QUAD_8, QUAD_9,
+      TETRA_4, TETRA_10, PYRA_5, PYRA_14,
+      PENTA_6, PENTA_15, PENTA_18,
+      HEXA_8, HEXA_20, HEXA_27, NGON_<i>n</i>);
+</pre>
+where <tt>NGON_<i>n</i></tt> is used to express a polygon of n nodes.
+
+<p>
+<tt>ElementSizeBoundary</tt> indicates if the elements are
+sorted, and how many boundary elements are recorded. By default,
+<tt>ElementSizeBoundary</tt> is set to zero, indicating that
+the elements are not sorted. If the elements are sorted,
+<tt>ElementSizeBoundary</tt> is set to the number of elements at
+the boundary, and the boundary elements are listed first in the
+<tt>ElementConnectivity</tt> array.
+
+<p>
+For face elements in 3D, or bar elements in 2D, information regarding
+the parent cells may be recorded. <tt>ParentData</tt> holds the parent
+cell numbers of a face element, and the face position within these
+parent elements. At the boundaries, the second parent is set to zero.
+
+<h3>2.2 Geometry-to-Mesh Association</h3>
+
+<p>
+Another important segment of the CFD data is the description of the
+geometry data. The definition of the underlying geometry is mandatory to
+perform operations such as mesh refinement or coarsening. It may also be
+necessary in various post-processors for the analysis and display of the
+results. This section describes how the geometry-to-mesh association was
+incorporated in the CGNS system.
+
+<p>
+The goal in the CGNS geometry specification is to connect the geometry
+definition of the various components of a model to the computational
+grid. It enables the recovery of the geometry corresponding to a given
+mesh surface, or vice versa.
+
+<p>
+The CGNS team decided not to create a new geometry file format, but
+rather to link to the existing ones. This approach offers several
+advantages with respect to incorporating the CGNS system into existent
+software applications.  Most CFD users have already adopted a CAD
+system file format, which is most likely intricately connected to their
+software. Agreeing to change to a new CAD file format could imply major
+rewriting of several CFD software tools. At the very least, translators
+would be needed to interface back and forth between each CAD file format
+and a new CGNS standard. This would make the implementation of the new
+standard more laborious.
+
+<p>
+In addition, most existing CAD file formats have proven to be effective
+and sufficient to accurately define the geometry data and to facilitate
+data exchange between sites and applications. To create a new format
+would duplicate existing work. For these reasons, it was decided
+that the CAD geometric entities described in the CAD database would
+not be redefined within the CGNS file. Instead the CGNS system would
+incorporate the geometry-to-grid connectivity by referring directly to
+the geometric entities defined in these CAD files.
+
+<p>
+Since there is rarely a 1-to-1 connection between mesh regions and
+geometric entities, the geometry-to-mesh associations are set through
+one layer of indirection.  Rather than mapping the geometry data
+directly to the mesh entities, the association is made indirectly using
+a layer of objects called CFD families. A CFD family may be composed of
+one or several mesh regions (blocks or boundary condition patches). In
+the corresponding CAD file, the same family is represented by a group
+of geometric entities such as b-spline curves and surfaces, on which
+the mesh faces are projected. Each family is contained solely within a
+single CAD database.
+
+<p>
+The association between a node and a CFD family is easily made
+invariable under most CAD modeling operations. The association
+between a node and a specific CAD entity can not. Therefore one of
+the main advantages of this layer of indirection concept is that the
+mesh density and geometric entities may be modified without altering
+the association between nodes and families, or between families and
+geometric entities.  This is very beneficial when handling boundary
+conditions and properties. Instead of setting boundary conditions
+directly on mesh entities, they can be associated with the families
+(<tt>FamilyBC_t</tt>). Since the families are stable in the sense
+that they are not subject to operations such as geometric changes,
+modification of mesh topology, mesh refinement or coarsening, the
+boundary conditions do not need to be redefined each time the model is
+modified.
+
+<p>
+For the purpose of defining properties, families are also supported on
+groups of interior mesh elements. For example, a 3D mesh may comprise
+several CFD families of 3D elements, and several CFD families of
+boundary elements. The families of 3D elements are typically used to
+specify volume properties, e.g. material properties such as porosity,
+while those containing 2D elements serve primarily to define boundary
+conditions.
+
+<p>
+The implementation of the geometry-to-mesh association implied a few
+additions to the SIDS. The most important one was to create a new data
+structure to hold the CFD family data. The new data structure is called
+<tt>Family_t</tt> and is added to the <tt>CGNSBase_t</tt> structure for
+each CFD family of the model. Figure 3 shows the layout of this data
+structure within the CGNS hierarchical database.
+
+<a name="f:fig3"></a>
+<br><br>
+<center>
+<img src="aiaa00-0681/fig3.png"
+     alt="Family Data Structure"
+     longdesc="aiaa00-0681/fig3.html">
+<br><br>
+<b>Fig. 3 Family Data Structure</b>
+</center>
+
+<p>
+The <tt>Family_t</tt> data structure contains the name of the file
+where the geometry is stored (<tt>GeometryFile_t</tt>), as well as
+the geometry format (<tt>GeometryFormat_t</tt>) in which the file is
+written (IGES, SDRC, Unigraphics, Pro-Engineer, etc.). In addition,
+one may specify for each CFD family, the name of the geometry entities
+(<tt>GeometryEntity_t</tt>) to be associated with the family. There may
+be one to several geometry entities for a given family. If no geometry
+entity is specified, it is assumed by default that the family name and
+the geometry entity name are the same.
+
+<p>
+Node and family association is implemented by assigning a
+<tt>FamilyName</tt> to a group of nodes of the computational grid. The
+family name consists of an alphanumeric string.  A <tt>FamilyName</tt>
+is an optional attribute to each zone and boundary condition patch. It
+is stored within the CGNS file under the zone (<tt>Zone_t</tt>) or the
+boundary condition (<tt>BC_t</tt>) data structures.
+
+<p>
+The following three sections describes proposals for the addition of
+rigid grid motion, arbitrary grid motion and iterative or time-accurate
+data. These proposals are mature and should be soon incorporated to the
+API.
+
+<h3>2.3 Grid Motion</h3>
+
+<p>
+The addition of rigid body motion data to the CGNS file
+enables the use of moving grids such as might be required for
+turbo-machinery applications. The mesh location is determined
+without the need to alter the original mesh definition recorded
+under <tt>GridCoordinates_t</tt>. A new data structure named
+<tt>RigidGridMotion_t</tt> is created to record the necessary data
+defining a rigid translation and/or rotation of the grid coordinates.
+
+<p>
+It is proposed that the rigid grid motion be recorded
+independently for each zone of the CGNS base.  Therefore the
+<tt>RigidGridMotion_t</tt> data structure would be added under each
+zone data structure (<tt>Zone_t</tt>). There may be zero to several
+<tt>RigidGridMotion_t</tt> nodes under a <tt>Zone_t</tt> node.  The
+multiple rigid grid motion definitions may be associated with different
+iterations or time steps in the computation. This association is
+recorded under the <tt>IterativeOrTemporalData_t</tt> data structure
+(paragraph <a href="#para2.5">2.5</a>).
+
+<p>
+The <tt>RigidGridMotion_t</tt> data structure is illustrated in Figure 4.
+
+<a name="f:fig4"></a>
+<br><br>
+<center>
+<img src="aiaa00-0681/fig4.png"
+     alt="Rigid Grid Motion Data Structure"
+     longdesc="aiaa00-0681/fig4.html">
+<br><br>
+<b>Fig. 4 Rigid Grid Motion Data Structure</b>
+</center>
+
+<p>
+<tt>RigidGridMotionType_t</tt> is an enumeration type that describes the
+type of rigid grid motion. It may be set to either <tt>ConstantRate</tt>
+or <tt>VariableRate</tt>. <tt>ConstantRate</tt> is used when the
+<tt>RigidVelocity</tt> and <tt>RigidRotationRate</tt> are both constant
+and at least one is nonzero.  OriginLocation holds the physical
+coordinates of the origin before and after the rigid grid motion. The
+<tt>RigidRotationAngle</tt> node records the rotation angles about each
+axis of the translated coordinate system. <tt>RigidVelocity</tt> is the
+velocity vector of the origin translation and <tt>RigidRotationRate</tt>
+is the rotation rate vector about the axis of the translated coordinate
+system.
+
+<p>
+Additional optional elements are <tt>DataClass_t</tt>,
+<tt>DimensionalUnits_t</tt> and <tt>Descriptor_t</tt>. Any number
+of <tt>DataArray_t</tt> nodes may also be recorded under the
+<tt>RigidGridMotion_t</tt> data structure to support data not covered by
+this specification.
+
+<h3>2.4 Arbitrary Grid Motion</h3>
+
+<p>
+The <tt>ArbitraryGridMotion_t</tt> data structure allows the CGNS file
+to contain information about arbitrary grid deformations such as might
+be required for unsteady aeroelastic applications. If not present, the
+grid is assumed to be rigid.
+
+<p>
+It is proposed that the arbitrary grid motion be recorded
+independently for each zone of the CGNS base. Therefore the
+<tt>ArbitraryGridMotion_t</tt> data structure would be added under each
+zone data structure (<tt>Zone_t</tt>). There may be zero to several
+<tt>ArbitraryGridMotion_t</tt> nodes under a <tt>Zone_t</tt> node. The
+multiple arbitrary grid motion definition may be associated with
+different iterations or time steps in the computation. This association
+is recorded under the <tt>IterativeOrTemporalData_t</tt> data structure
+(paragraph <a href="#para2.5">2.5</a>).
+
+<p>
+The <tt>ArbitraryGridMotion_t</tt> data structure is illustrated in
+Figure 5.
+
+<a name="f:fig5"></a>
+<br><br>
+<center>
+<img src="aiaa00-0681/fig5.png"
+     alt="Arbitrary Grid Motion Data Structure"
+     longdesc="aiaa00-0681/fig5.html">
+<br><br>
+<b>Fig. 5 Arbitrary Grid Motion Data Structure</b>
+</center>
+
+<p>
+The <tt>DataArray_t</tt> nodes are used to store the components of
+the grid velocity vector. Table 2 lists the new data-name identifiers
+proposed to record these vectors in the Cartesian, cylindrical,
+spherical, and auxiliary coordinate systems.
+
+<p>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+<b>Table 2. Name Identifiers for the Nodes Velocity</b>
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Nodes Velocity<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>GridVelocityX</tt><td>
+   <td>x-component<td>
+   <td>L/T
+<tr valign=baseline>
+   <td><tt>GridVelocityY</tt><td>
+   <td>y-component<td>
+   <td>L/T
+<tr valign=baseline>
+   <td><tt>GridVelocityZ</tt><td>
+   <td>z-component<td>
+   <td>L/T
+<tr valign=baseline>
+   <td><tt>GridVelocityR</tt><td>
+   <td>R-component<td>
+   <td>L/T
+<tr valign=baseline>
+   <td><tt>GridVelocityTheta</tt><td>
+   <td>Theta-component<td>
+   <td>&alpha;/T
+<tr valign=baseline>
+   <td><tt>GridVelocityPhi</tt><td>
+   <td>Phi-component<td>
+   <td>&alpha;/T
+<tr valign=baseline>
+   <td><tt>GridVelocityXi</tt><td>
+   <td>Xi-component<td>
+   <td>L/T
+<tr valign=baseline>
+   <td><tt>GridVelocityEta</tt><td>
+   <td>Eta-component<td>
+   <td>L/T
+<tr valign=baseline>
+   <td><tt>GridVelocityZeta</tt><td>
+   <td>Zeta-component<td>
+   <td>L/T
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+<tt>ArbitraryGridMotionType_t</tt> is an enumeration type that
+describes the type of arbitrary grid motion. The type is either
+<tt>NonDeformingGrid</tt> or <tt>DeformingGrid</tt>. The only required
+element of the <tt>ArbitraryGridMotion_t</tt> data structure is
+the <tt>ArbitraryGridMotionType</tt>. Thus, even if a deforming
+grid application does not require the storage of grid velocity
+data, the <tt>ArbitraryGridMotion_t</tt> node must exist, with
+<tt>ArbitraryGridMotionType</tt> set to <tt>DeformingGrid</tt>, to
+indicate that the mesh coordinates after deformation are recorded under
+the given zone.
+
+<p>
+The <tt>DataClass_t</tt>, <tt>DimensionalUnits_t</tt> and
+<tt>Descriptor_t</tt> nodes may optionally be specified under the
+<tt>RigidGridMotion_t</tt> nodes. <tt>Rind</tt> is an optional field
+that indicates the number of rind planes included in the grid velocity
+data. It only applies to structured zones. The <tt>GridLocation</tt>
+specifies the location of the velocity data with respect to the grid;
+if absent, the data is assumed to coincide with grid vertices (i.e.
+<tt>GridLocation = Vertex</tt>).
+
+<p>
+In addition to the creation of the <tt>ArbitraryGridMotion_t</tt>
+data structure to record the velocity of each grid point, it is
+proposed to allow multiple <tt>GridCoordinates_t</tt> nodes under
+a <tt>Zone_t</tt>. This enables the storage of the instantaneous
+grid locations at different time steps or iterations. The original
+grid coordinates definition, as currently defined in the SIDS,
+remains unchanged with the name <tt>GridCoordinates</tt>. Point
+by point grid velocity implies a deformation (or potentially only
+motion) of the grid points relative to each other. Because the
+original grid coordinates definition is to remain unchanged, any
+deformed coordinates are to be written with a different name (e.g.,
+<tt>GridCoordinates1</tt> or another user-defined name) and are to
+be pointed to using the <tt>GridCoordinatesPointers</tt> in the data
+structure <tt>IterativeOrTemporalData_t</tt> (paragraph
+<a href="#para2.5">2.5</a>).
+
+<h3>2.5 Iterative and Time-Accurate Data</h3>
+
+<p>
+In order to keep a record of time dependent or iterative
+solutions and mesh data, a new data structure called
+<tt>IterativeOrTemporalData_t</tt> is defined. This new data structure
+contains information relative to each time step or iteration stored.
+
+<p>
+It is proposed that the interative and time-accurate _data structure
+be recorded independently for each zone of the CGNS base. Therefore it
+would be added under each zone data structure (<tt>Zone_t</tt>). There
+may be zero to several <tt>IterativeOrTemporalData_t</tt> nodes under a
+<tt>Zone_t</tt> node.
+
+<p>
+Several different simulation types may be recorded under CGNS, but
+all zones under the same CGNS base must have the same simulation
+type. It is proposed to add a new <tt>Descriptor_t</tt> node under
+the <tt>CGNSBase_t</tt> data structure to specify which simulation
+type is recorded in the base. The <tt>Descriptor_t</tt> node named
+<tt>SimulationType</tt> holds a simulation type identifier such as
+<tt>NonTimeAccurate</tt> or <tt>TimeAccurate</tt>.
+
+<p>
+The <tt>IterativeOrTemporalData_t</tt> data structure is illustrated in
+Figure 6.
+
+<a name="f:fig6"></a>
+<br><br>
+<center>
+<img src="aiaa00-0681/fig6.png"
+     alt="Iterative or Temporal Data Structure"
+     longdesc="aiaa00-0681/fig6.html">
+<br><br>
+<b>Fig. 6 Iterative or Temporal Data Structure</b>
+</center>
+
+<p>
+The number of time steps or the number of iterations is a
+required element of this data structure, and is recorded in
+the field <tt>NumberOfSteps</tt>. <tt>TimeValues</tt> or
+<tt>IterationValues</tt> must also be defined. If both are used, there
+must be a one-to-one correspondence between them. The data arrays
+<tt>RigidGridMotionPointers</tt>, <tt>GridCoordinatesPointers</tt>,
+<tt>FlowSolutionsPointers</tt> and <tt>ArbitraryGridMotionPointers</tt>
+are optional. Their purpose is to associate with each time step or
+iteration the appropriate data structures for rigid grid motion,
+arbitrary grid motion, grid coordinates and flow solutions. They
+refer by name to data structures within the current zone. The name
+"<tt>Null</tt>" is used when a particular time or iteration does not
+have a corresponding data structure to point to.
+
+<p>
+The <tt>DataClass_t</tt>, <tt>DimensionalUnits_t</tt> and
+<tt>Descriptor_t</tt> nodes may optionally be specified under the
+<tt>IterativeOrTemporalData_t</tt> nodes. In addition, any number of
+<tt>DataArray_t</tt> node is allowed.  These should be used to record
+data not covered by this specification.
+
+<p>
+The data structures defining rigid grid motion, arbitrary grid motion
+and iterative or time-accurate data are the first proposals to follow
+the extension review process recently established by the CGNS Steering
+Committee.  The following section describes the new organization
+governing CGNS, and how CGNS users may submit proposals for extensions
+to the existing standard.
+
+<h2>3. CGNS Steering Committee</h2>
+
+<p>
+The CGNS Steering Committee has been formed to ensure the continuation
+of the CFD General Notation System. The Committee has adopted a
+Charter that was approved by the Committee on 21 October 1999. The
+Charter lays out the mission, organization and governing principles
+of the Steering Committee. The Charter can be found at the CGNS web
+site, at www.CGNS.org.  In summary, the Charter defines several
+responsibilities of the CGNS Steering Committee that support its
+fundamental mission. They include:
+
+<ul>
+<li> maintaining the software implementing the Standard, documentation
+     of the Standard and an open web site to disseminate information on
+     the Standard,
+<li> providing mechanisms for the evolution of the Standard,
+<li> promoting the acceptance of the Standard,
+<li> providing user services, and
+<li> determining the means to fund activities in support of the Standard.
+</ul>
+
+<p>
+The CGNS Steering Committee is organized as a voluntary organization
+that governs by consensus. The Committee meets at a minimum of once per
+year, and is represented by a Chairperson. The Chairperson coordinates
+activities, facilitate meetings and serves as a focal point for the
+Committee. The Charter explicitly states that all parties are welcome
+to bring forward issues and participate in the development of the
+Standard, whether or not they are members of the Steering Committee. The
+CGNS Steering Committee is made up of representatives from specific
+institutions, rather than individuals. Membership on the Committee
+is currently limited to 15 institutions that participate in the
+development, maintenance, distribution and use of the Standard. The
+initial members of the Steering Committee are:
+
+<ul>
+<li> NASA Ames
+<li> NASA Langley
+<li> NASA Glenn
+<li> Boeing Commercial
+<li> Boeing Phantom Works
+<li> Boeing Space & Communications
+<li> United Technologies Research Center
+<li> ICEM CFD Engineering
+<li> Fluent, Inc.
+<li> Rolls-Royce Allison
+<li> US Air Force
+<li> ADAPCO
+</ul>
+
+<p>
+The CGNS Charter also defines Standing Committees to which the Steering
+Committee may delegate responsibilities.  These committees make
+recommendations to the Steering Committee, which retains the authority
+to make final decisions. The current Standing Committees are:
+
+<ul>
+<li> Outreach/Membership Team
+<li> Documentation Committee
+<li> Software Focal Point
+</ul>
+
+<p>
+The Software Focal Point is the prime source for maintaining and
+distributing the existing documentation and software, and developing and
+distributing new software resulting from extensions to the standard.
+
+<p>
+The CGNS Charter also lays out the governing principles that are to be
+followed. In general, the Charter calls on the Committee to adhere to
+the philosophy used for "free software", as defined under the
+GNU Lesser Public License.  In particular, the freedom to:
+
+<ul>
+<li> Run the program, for any purpose (freedom 0)
+<li> Study how the program works, and adapt it to ones needs (freedom 1)
+<li> Redistribute copies so one can help their neighbor (freedom 2)
+<li> Improve the program, and release improvements to the public, so that
+     the whole community benefits (freedom 3)
+</ul>
+
+<p>
+These freedoms promote the promulgation of the CGNS Standard by allowing
+users the freedom to redistribute copies, with or without modifications,
+either gratis or charging a fee for distribution, to anyone anywhere.
+
+<p>
+The Charter also calls for changes and additions to the Standard. CGNS
+has been developed with the key concepts of flexibility and
+extensibility in mind. In order to address a perceived need or
+deficiency in the Standard, a proposal must be submitted to the
+Steering Committee. The proposal is then presented in an open and
+public forum, and includes a draft of changes to the SIDS and File
+Mappings. Finally, the Steering Committee is responsible for accepting,
+altering or rejecting the proposal, and determines the timetable for
+implementation. The primary requirement for any proposal is to maintain
+code compatibility with the existing Standard.
+
+<h2>4. Migration to an ISO standard</h2>
+
+<p>
+The Boeing Company has been a participant from the start in the
+development of the CGNS standard for CFD data.  For many years, Boeing
+also has taken an active role in the development of ISO standards for
+the exchange of engineering data. In February 1998, Boeing initiated an
+activity to establish an evolved form of the CGNS data standard as an
+ISO standard for archiving and exchanging aerodynamic data. Boeing's
+plan to lead the development of this standard was presented to ISO
+Technical Committee 184 (Industrial Automation Systems and Integration),
+Subcommittee 4 (Industrial Data), Working Group 3 (Product Modeling)
+during their meeting in January 1999.
+
+<p>
+In November 1999, Boeing presented to this Working Group a formal
+proposal for development of an aerodynamics data exchange standard. This
+proposal has been accepted by the ISO organization. The effort to
+develop an Aerodynamics Application Protocol (AP) is now formally
+sanctioned as an ongoing ISO project. The end product will be an
+ISO/STEP AP2xx (200-series number not yet assigned).
+
+<p>
+The cognizant ISO subcommittee (SC4 - Industrial Data) consists of
+seventeen voting member countries.  Decisions throughout this process
+are made on the basis of one country, one vote. The seven stages in
+developing an ISO Application Protocol (AP) standard (Ref. 7) are:
+
+<ol>
+<li> <u>Preliminary Stage</u> - Planning for possible standardization
+     projects (accomplished 1998-99).
+<li> <u>Proposal Stage</u> - Culminates in approval to start a new AP
+     project (completed November 1999).
+<li> <u>Preparatory Stage</u> - Develop a Working Draft and a New Work
+     Item (planned completion October 2000).
+<li> <u>Committee Stage</u> - Consensus is achieved on a Committee Draft
+     (planned to start October 2000).
+<li> <u>Enquiry Stage</u> - Vote on Draft International Standard.
+<li> <u>National Stage</u> - Vote on Final Draft International Standard.
+<li> <u>Publication Stage</u> - ISO publishes the International Standard.
+</ol>
+
+<p>
+The ISO approval process specifies a schedule for advancing through
+these stages. Most ISO standards projects begin with an idea and a
+clean sheet of paper.  CGNS, however, is at a far more advanced state.
+Therefore, it is believed that this initiative can advance through the
+approval stages at an accelerated pace. The ISO approval "clock" begins
+running when the New Work Item is approved. Current plans anticipate
+this approval in October 2000. Table 3 display the ISO required schedule
+and planned completion dates, based on this assumed approval date.
+
+<p>
+The current plan is to focus first on completion of the CFD data
+standard based on CGNS. However, the ultimate scope also will encompass
+other forms of aerodynamic and fluid dynamic digital data, including
+wind tunnel data and flight test data. Once the CFD portion of the AP
+standard is in place, we anticipate extending the AP by amendments to
+include these additional types of data.  The schedule presented above
+applies to the initial standards process, not to the process of planned
+amendments.
+
+<p>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+<b>Table 3. Schedule of ISO Standardization Milestones</b>
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>Milestone<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>ISO Required Completion Date<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Planned Completion Date
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td>New Work Item (NWI)<td>
+   <td>Oct 2000<td>
+   <td>Oct 2000
+<tr valign=baseline>
+   <td>Working Draft<td>
+   <td>Apr 2001 (6 mo. from NWI)<td>
+   <td>Oct 2000
+<tr valign=baseline>
+   <td>Committee Draft<td>
+   <td>Oct 2002 (2 yr. from NWI)<td>
+   <td>Apr 2001 ?
+<tr valign=baseline>
+   <td>Final Draft International Standard<td>
+   <td>Oct 2003 (3 yr. from NWI)<td>
+   <td>2002 ?
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+Based on initial feedback from ISO subcommittee members, the scope
+also should extend beyond aerospace aerodynamics to include ground
+vehicle fluid dynamics and ship hydrodynamics. In a planning meeting
+held in December 1999, a decision was taken to accept this requested
+increase in scope. Accordingly, the project has been re-titled from
+"Aerodynamics AP" to "Fluid Dynamics AP". However, the planning sequence
+is unchanged: to establish a CFD data exchange standard first (in accord
+with the schedule presented above), and to extend the data exchange
+standard subsequently to accommodate other types of digital data in
+fluid dynamics.
+
+<p>
+In the process of reaching agreement on an ISO standard, it is
+anticipated that significant modifications may be proposed based
+on the current CGNS standard. People or organizations wishing to
+participate in this process are invited to contact the CGNS Steering
+Committee, or the third author of this paper (Cosner) via e-mail at
+raymond.r.cosner@boeing.com.
+
+<h2>5. Dissemination & Implementation</h2>
+
+<p>
+CGNS has been welcome by the CFD community worldwide. The effort
+of standardizing the data exchange format for aerodynamic data is
+considered by most a necessity long overdue. Since its first release in
+May 1998, the CFD General Notation System has received an overwhelming
+support from Academia, Industry, and Research Agencies. At the time of
+writing, 240 users from over 25 countries have registered at the CGNS
+web site. In addition to implementing the CGNS standard into their own
+applications, several users participate actively in new extensions to
+the CGNS system.
+
+<p>
+The CGNS Steering Committee is aware of several CFD applications, from
+both research and commercial organizations in U.S.A. and Europe, having
+implemented or interfaced with the CGNS standard successfully:
+
+<ul>
+<li> PEGASUS/OVERFLOW - NASA Ames Research Center
+<li> CFL3D - NASA Langley Research Center
+<li> Visual3 - M.I.T. and ICEM CFD Engineering
+<li> Plot3D - NASA Ames Research Center
+<li> NPARC - NPARC Alliance
+<li> TLNS3D - Boeing Seattle and NASA Langley Research Center
+<li> ICEM CFD HEXA - ICEM CFD Engineering
+<li> WIND - NPARC Alliance
+<li> GASP V4 - Aerosoft, Inc.
+<li> CFF - Boeing St-Louis
+<li> UPS - NASA Langley Research Center
+<li> HYDRA CFD - Oxford University and Rolls-Royce
+<li> ADPAC - Rolls-Royce Allison
+<li> Cart3D - NASA Ames Research Center
+<li> APPT - Boeing Rocketdyne
+<li> EURANUS - NUMECA International
+<li> FIELDVIEW - Intelligent Light
+<li> Tecplot - AMTEC Engineering, Inc.
+</ul>
+
+<p>
+Figure 7 illustrates an example of a typical CGNS file. It is given
+to provide the reader with an idea of the type of information that
+goes into a CGNS file and how it is organized. This particular example
+is from the structured-grid CFL3D code. It is for a one-zone grid
+(to keep the example relatively short), and does not include grid
+connectivity information, which would be necessary for multiple zone
+grids or a single zone grid that connected with itself. Each ADF node is
+represented with its name and label (name/label). However, when the only
+difference between the name and label is "<tt>_t</tt>", the name has
+been omitted.
+<pre>
+   ROOT node
+   + CGNSLibraryVersion_t
+   + Base/CGNSBase_t
+     + Zone1/Zone_t
+       + ZoneType_t
+       + GridCoordinates_t
+         + CoordinateX/DataArray_t
+         + CoordinateY/DataArray_t
+         + CoordinateZ/DataArray_t
+       + ZoneBC_t
+         + Ilo_Seg1/BC_t
+           + PointRange/IndexRange_t
+           + CFL3Dtype/Descriptor_t
+         + ...(other boundary conditions...)
+       + FlowSolution_t
+         + GridLocation_t
+         + Rind_t
+         + Density/DataArray_t
+         + VelocityX/DataArray_t
+         + ...(other solution arrays)
+       + FlowEquationSet_t
+         + EquationDimension/"int"
+         + GoverningEquations_t
+         + DiffusionModel/"int[1+...+IndexDimension]"
+         + GasModel_t
+         + ViscosityModel_t
+         + ThermalConductivityModel_t
+         + TurbulenceClosure_t
+         + TurbulenceModel_t
+     + GlobalConvergenceHistory/ConvergenceHistory_t
+       + RSDMassRMS/DataArray_t
+       + CoefLift/DataArray_t
+       + ...(other convergence parameters)
+     + DataClass_t
+     + ReferenceState_t
+       + Mach/DataArray_t
+       + Reynolds/DataArray_t
+       + VelocitySound/DataArray_t
+       + ViscosityKinematic/DataArray_t
+       + Density/DataArray_t
+       + Length/DataArray_t
+       + ...(other reference parameters)
+</pre>
+<tt>&nbsp;&nbsp;&nbsp;</tt><b>Fig. 7 Example of Implementation</b>
+
+<p>
+The CGNS system was designed to provide a complete description of
+CFD data, so that others could unambiguously read and use it. This
+example is a 3-D case in which volume data is recorded. The parameters
+<tt>CellDimension</tt> and <tt>PhysicalDimension</tt> are stored in the
+<tt>CGNSBase_t</tt> node, while <tt>IndexDimension</tt> is recorded
+for each zone. The <tt>Zone_t</tt> node contains information about the
+zone's grid size, for example, (2 &times; 65 &times; 97) vertices and
+(1 &times; 64 &times; 96) cells. <tt>ZoneType_t</tt> in this example
+specifies <tt>Structured</tt>, and the grid coordinates are written
+under <tt>GridCoordinates_t</tt>.
+
+<p>
+The boundary conditions are specified under <tt>ZoneBC_t</tt>. For
+example, the data for the boundary patch "<tt>Ilo_Seg1</tt>" might be
+<tt>BCSymmetryPlane</tt>. <tt>IndexRange_t</tt> gives the index range
+over which this boundary condition applies. Note that in this example,
+the user has also added the descriptor node under <tt>ZoneBC_t</tt>
+called <tt>CFL3DType</tt>. This node is not part of the CGNS standard,
+but rather was added for convenience in order to tie in the CGNS
+boundary condition identifier with a type specific to the CFL3D
+code. Descriptors like this may be sprinkled throughout the CGNS
+file. They provide an easy way to add descriptive comments to a file for
+the benefit of present or future readability. Their existence in no way
+limits the ability of others to read and use the file.
+
+<p>
+Flow solution information is stored in data arrays under the
+<tt>FlowSolution_t</tt> data structure. CFL3D gives this information
+at cell centers; thus, <tt>GridLocation_t</tt> specifies
+<tt>CellCenter</tt> in the example. The node <tt>Rind_t</tt> indicates
+the number of rind cells (ghost cells) at which flow solution
+information is also given. For example, if there is one rind cell
+specified at <tt>jlo</tt> and one at <tt>jhi</tt>, then the expected
+dimensions of the data arrays in this example would be (i &times; j
+&times; k) = (1 &times; 64 + 2 &times; 96).
+
+<p>
+The <tt>FlowEquationSet_t</tt> node contains information about
+how the solution was run. In the example presented here,
+<tt>EquationDimension</tt> is 3, <tt>GoverningEquations</tt>
+is <tt>NSTurbulent</tt>, <tt>GasModel</tt> is <tt>Ideal</tt>,
+<tt>ViscosityModel</tt> is <tt>SutherlandLaw</tt>,
+<tt>ThermalConductivityModel</tt> is <tt>ConstantPrandtl</tt>,
+<tt>TurbulenceClosure</tt> is <tt>EddyViscosity</tt>, and
+<tt>TurbulenceModel</tt> is <tt>OneEquation_SpalartAllmaras</tt>. The
+node <tt>DiffusionModel</tt> indicates whether thin-layer or full
+Navier-Stokes was used, and in which index directions.
+
+<p>
+The convergence history may be stored for each individual zone or
+globally under the <tt>CGNSBase_t</tt> node, as shown in this example.
+<tt>DataClass_t</tt> specifies the type of data given. The class of data
+used by the CFL3D code is <tt>NormalizedByUnknownDimensional</tt>. Then,
+further information regarding the reference quantities is given
+under <tt>ReferenceState_t</tt>. The nodes <tt>VelocitySound</tt>,
+<tt>ViscosityKinematic</tt>, <tt>Density</tt> and <tt>Length</tt>
+give the reference levels by which all quantities in the file have
+been nondimensionalized. Other nodes such as <tt>Prandtl</tt>,
+<tt>Temperature</tt>, and <tt>SpecificHeatRatio</tt> also appear in the
+file but have been left off in the example for the sake of brevity.
+
+<h2>6. Conclusion</h2>
+
+<p>
+This paper described the advances in the CGNS database standard for
+aerodynamics and CFD. Since 1994, CGNS has grown into a data standard
+sufficient to support the majority of CFD applications while providing
+for easy data exchange between sites, computing environments and
+applications. Since the initial public release of the CGNS documentation
+and software in May 1998, additions to the standard included the
+incorporation of unstructured topology and mesh-to-geometry association.
+
+<p>
+In parallel to the growth of the standard, the CGNS organization
+has been transformed into an open and public committee whose main
+purposes is to ensure the continuation of CGNS. The CGNS Steering
+committee has adopted in 1999 a Charter defining its governing rules
+and mission. In addition to the maintenance of the current standard,
+the CGNS Steering Committee has the responsibility to allow for the
+growth of the standard. To that effect, proposals for modifications
+and extensions of the standard may be submitted by anyone. Three new
+proposals for rigid and arbitrary grid motions, as well as time-accurate
+data, have been reviewed and developed according to the extension
+process defined in the new adopted Charter.  These proposals are at
+their last stage of approval before being officially incorporated to the
+CGNS standard.
+
+<p>
+The CGNS standard is also the object of an ISO standardization effort
+for Fluid Dynamics data. This project, initiated by the Boeing Company,
+has been accepted by the ISO organization and is now advancing to the
+third stage of the ISO approval process.
+
+<h2>References</h2>
+
+<ol>
+<li> CGNS Team, "The CGNS System Overview and Entry Level Document",
+     Draft, Version 1.0, May 1998.
+<li> Allmaras, S., "CGNS Standard Interface Data Structures", Draft, May
+     1997.
+<li> CGNS Team, "The ADF User's Guide", May 1997.
+<li> CGNS Team, "SIDS-to-ADF File Mapping Manual", Version 1.1, June 1999.
+<li> Poirier, D., "CGNS Mid-Level Library", December 1999.
+<li> Poirier, D., Allmaras, S., McCarthy, D., Smith, M.,  Enomoto,
+     F., "The CGNS System", 39th AIAA Fluid Dynamics Conference,
+     AIAA-98-3007, Albuquerque, NM, June 1998.
+<li> "Guidelines for the Development and Approval of STEP Application
+     Protocols," document number ISO TC 184/SC4 N535:1998(E), dated 18
+     December 1998.
+</ol>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 22 Jan 2008
+
+</body>
+</html>

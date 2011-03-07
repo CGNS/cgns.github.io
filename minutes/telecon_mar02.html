@@ -1,0 +1,234 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+13 March 2002<br>
+2:00pm Eastern Time<br><br>
+
+Telecon Number: (334) 262-0740, participant code: 491863
+
+<p>
+The meeting was called to order at 2:00pm.
+The <a href="#attendees">attendees</a> are listed below.
+
+<p>
+The minutes of the last meeting, in Reno 15 January 2002 were approved
+as posted on the Web.
+
+<ul>
+<li> <b>Charter Business</b> - Bob Bush introduced three people who have
+        requested to attend Steering Committee meetings.  These were:
+        <br><br>
+	Prof. Habashi - McGill U.<br>
+	Dr. Sebastin Peron - Newmerical<br>
+	Dr. Francois Morency - McGill U.
+        <br><br>
+        They were unable to attend the telecon.  In addition, Ed Hall
+        the RR-Allison voting member of the Steering Committee has moved
+        to GE Corporate R&amp;D center.  We hope he will remain active on
+        the CGNS committee.  Kurt Weber has replaced Ed as the voting
+        member for RR-Allison.
+<br><br>
+<li> <b>ISO Status</b> - Ray Cosner provided a brief overview of the
+        status of the ISO certification effort.  There was a 1 week
+        meeting in February where all parts of the new standard were
+        reviewed.  There were minor changes to Parts 52 and 53, it is
+        felt that with these changes they are ready for the Committee
+        Draft stage.  Part 110 - the CFD specific portions were reviewed
+        and much of the contents moved to AP 237.  It was decided to
+        eliminate part 110 and just include all its contents into AP
+        237.  Completion of the ISO certification process for the fluid
+        dynamics standard is now expected to occur in the fall of 2004.
+
+        <p>
+        Ray also noted that Peter Wilson (the guiding force behind
+        formatting the standard for ISO acceptance) will be retiring at
+        the end of 2003.
+
+        <p>
+        After some discussion it was decided to move a proposed CGNS
+        committee review of the ISO drafts to the fall of 2002.  This
+        is to accommodate attendance and hosting by the US lead ISO
+        representative, having the drafts further, and more information
+        about a potential combination of the fluids and finite element
+        standards.
+<br><br>
+<li> <b>Documentation</b> - Charlie Towne gave an overview of the
+        documentation status.  A beta version of the documentation,
+        that is consistent with the beta version of the software, is
+        available on the web.  He is working on updating the ADF manual
+        with un-documented extensions by Mark Fisher, and re-writing
+        the Overview document.  The AIAA standard document (SIDS
+        re-formatted) is being worked by the AIAA.  We anticipate
+        receiving the draft soon for voting and acceptance.
+
+        <p>
+        We had an invitation to participate in a panel session at
+        the Grid Generation Conference in Hawaii in June 2002.  John
+        Chawner indicated that he was planning to attend and offered to
+        represent the committee on the panel.
+
+        <p>
+        Marc Poinot will be presenting a paper on pyCGNS at the
+        Aerospace PDE conference in Amsterdam.  We offered to provide
+        any CGNS material that might help him in his presentation.
+<br><br>
+<li> <b>Extensions</b> - The Links, User Defined Data and Chemistry
+        extensions have been implemented and are available in the beta
+        version (2.1 beta 2) on the web.
+
+        <p>
+        There were some issues checking in new code to CVS from
+        a PC system.  These involved the different handling of
+        &lt;<tt>CR</tt>&gt; between PC and Unix.  The CVS system flagged
+        these as differences, resulting in 100% changes for code being
+        checked in.  This defeats the purpose of the history tracking,
+        so all routines were checked in through a Unix system. David
+        Edwards and Diane Poirier will draft an update procedure to
+        guide future efforts.
+
+        <p>
+        Diane sent out a message to all registered users.  Of 599 sent,
+        118 were not found.  She is 'cleaning out' the registered user
+        list.
+
+        <p>
+        Bob Bush briefly summarized recent activity for turbomachinery
+        extensions including Rotating Coordinates, Periodic Boundary
+        Conditions, and Interface Type.  Dave Schowalter expressed
+        interest in these extensions.  He will look at the latest
+        updates on the web, and Bob Bush will try to tie him into future
+        discussions.
+
+        <p>
+        Marc Poinot briefly described his extensions of the ADF library
+        to include the ability to maintain an in-memory representation
+        of the tree.  This should facilitate MPI implementations.  The
+        extensions were implemented as a small number of new calls that
+        can be used in place of existing calls.  The new calls provide
+        the ability to specify if the data is in memory or on disk.
+        Shawn Fuller indicated that he has used the extensions, but
+        that the level of parallelism is too coarse for his immediate
+        needs.  Marc has provided the libraries and documentation on the
+        web, and we have provided links to the site from the CGNS site.
+        We will extend the ADF library to include these capabilities
+        depending on usage and user experience.
+
+        <p>
+        There was brief discussion on extending the units to include a
+        number unit (moles) and charge unit (electron).  Thus far, we do
+        not have an immediate need to make these extensions, so we will
+        wait.  In addition, the ISO standards should have a definition
+        of various units.  Ray Cosner will track down how and what units
+        are tracked by the ISO community.  This can be incorporated into
+        CGNS, or we can wait until the ISO capabilities are available.
+<br><br>
+<li> <b>Related Software</b> - There is a link to the PyCGNS software
+        from the CGNS web site, along with his presentation from Reno.
+
+        <p>
+        Manuel Kessler has loaded the C++ interface on the web via
+        sourceforge.  We will add a link to the CGNS web site to this
+        library and its documentation.  Manuel would be very interested
+        in any feedback that anyone can provide.
+
+        <p>
+        Bruce Wedan introduced himself and briefly described his Tcl/Tk
+        ADF viewer.  Chris Rumsey and Diane Poirier have used the viewer
+        and like it's functionality.  The viewer is based strictly on
+        ADF, but knows about some CGNS structures.  The viewer has been
+        posted on the web under the Utilities page.  Bruce will look at
+        packaging a self extracting NT version also.
+
+        <p>
+        Christian Lundh has also contributed a viewer via CGNSTalk.
+        He was not available at the telecon, and no one present has
+        experience with his viewer.
+
+        <p>
+        There was some discussion of if we could use this or a similar
+        capability to make money to support committee activities
+        (development, support, etc.).  Since we are a sub-committee of
+        the AIAA, and they have many commercial products, perhaps there
+        is an avenue to pursue.  It was also noted that we must respect
+        the wishes of the developers who may have intended software to
+        remain Open Source.  This will require further discussion, and a
+        champion.
+<br><br>
+<li> <b>Next Meeting</b> - It was suggested that we convene a meeting at
+        the summer fluids conference in St. Louis the week of 24 June.
+        Chris Rumsey offered to help set up the meeting.  Bob Bush will
+        see if he can attend the meeting.
+</ul>
+
+<p>
+There being no additional issues, the meeting was adjourned.
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Bob Bush
+<tr valign=baseline><td>
+   <td>Dave Schowalter
+<tr valign=baseline><td>
+   <td>Shawn Fuller
+<tr valign=baseline><td>
+   <td>Manuel Kessler
+<tr valign=baseline><td>
+   <td>Chris Rumsey
+<tr valign=baseline><td>
+   <td>Diane Poirier
+<tr valign=baseline><td>
+   <td>Ray Cosner
+<tr valign=baseline><td>
+   <td>John Chawner
+<tr valign=baseline><td>
+   <td>Francis Enomoto
+<tr valign=baseline><td>
+   <td>Bruce Wedan
+<tr valign=baseline><td>
+   <td>Charlie Towne
+<tr valign=baseline><td>
+   <td>David Edwards
+<tr valign=baseline><td>
+   <td>Marc Poinot
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 14 Mar 2002
+
+</body>
+</html>

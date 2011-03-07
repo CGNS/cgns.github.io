@@ -1,0 +1,209 @@
+<!-- CGNS SIDS document - Design Philosophy -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Design Philosophy </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<span class=nav><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Design Philosophy of Standard Interface Data Structures</h2>
+
+<p>
+The major design goal of the SIDS is a comprehensive and unambiguous
+description of the "intellectual content" of information that must be
+passed from code to code in a multizone Navier-Stokes analysis system.
+This information includes grids, flow solutions, multizone interface
+connectivity, boundary conditions, reference states and dimensional
+units or normalization associated with data.
+
+<h4>Implications of CFD Data Sets</h4>
+
+<p>
+The goal is description of the data sets typical of CFD analysis, which
+tend to contain a small number of extremely large data arrays.
+This has a number of implications for both the design of the SIDS and
+the ultimate physical files where the data resides.
+The first is that any I/O system built for CFD analysis must be designed
+to efficiently store and process large data arrays.
+This is reflected in the SIDS, which includes provisions for describing
+large data arrays.
+
+<p>
+The second implication is that the nature of the data sets allows for
+thorough description of the data with relatively little storage overhead
+and performance penalty.
+For example, the flow solution of a CFD analysis may contain several
+millions of quantities.
+Therefore, with little penalty it is possible to include information
+describing the flow variables stored, their location in the grid, and
+dimensional units or nondimensionalization associated with the data.
+The SIDS take advantage of this situation and includes an extensive
+description of the information stored in the database.
+
+<p>
+The third implication of CFD data sets is that files containing a CFD
+database are almost always required to be binary - ASCII storage of CFD
+data involves excessive storage and performance penalties.
+This means the files are not readable by humans and the information
+contained in them is not directly modifiable by text editors and such.
+This is reflected in the syntax of the SIDS, which tends to be verbose
+and thorough; whereas, directly modifiable ASCII file formats would tend
+to foster a more brief syntax.
+
+<p>
+It is important to note that the description of information by the SIDS
+is independent of physical file formats.
+However, it is targeted towards implementation using the ADF Core
+library.
+Some of the language components used to define the SIDS are meant to
+directly map into elements of an ADF node.
+
+<a name="topology"></a>
+<h4>Topologically Based Hierarchical Database</h4>
+
+<p>
+An early decision in the CGNS project was that any new CFD I/O standard
+should include a hierarchical database, such as a tree or directed
+graph.
+The SIDS describe a hierarchical database, precisely defining both the
+data and their hierarchical relationships.
+
+<p>
+There are two major alternatives to organizing a CFD hierarchy:
+topologically based and data-type based.
+In a topologically based graph, overall organization is by; information
+pertaining to a particular zone, including its grid coordinates or flow
+solution, hangs off the zone.
+In a data-type based graph, organization is by related data.
+For example, there would be two nodes at the same level, one for grid
+coordinates and another for the flow solution.
+Hanging off each of these nodes would be separate lists of the zones.
+
+<a name="f:hierarchy"></a>
+<br><br>
+<center>
+<img src="design.figs/tree.gif"
+     alt="Nodes in a sample CGNS database">
+<br><br>
+Sample Topologically Based CFD Hierarchy
+</center>
+
+<p>
+The hierarchy described in this document is topologically based; a
+simplified illustration of the database hierarchy is shown in the above
+figure.
+Hanging off the <a href="cgnsbase.html#CGNSBase">root "node"</a> of the
+database is a node containing global
+<a href="misc.html#ReferenceState">reference-state information</a>,
+such as freestream conditions, and a list of
+<a href="cgnsbase.html#Zone">nodes for each zone</a>.
+The figure shows the nodes that hang off the first zone; similar nodes
+would hang off of each zone in the database.
+Nodes containing the physical-coordinate data arrays (<i>x</i>, <i>y</i>
+and <i>z</i>) for the first zone are shown hanging off the
+<a href="gridflow.html#GridCoordinates">"grid coordinates" node</a>.
+Likewise, nodes containing the first zone's flow-solution data arrays
+hang off the <a href="gridflow.html#FlowSolution">"flow solution" node</a>.
+The figure also depicts nodes containing <a href="cnct.html">multizone
+interface connectivity</a> and <a href="bc.html">boundary condition
+information</a> for the first zone; subnodes hanging off each of these
+are not pictured.
+
+<h4>Additional Design Objectives</h4>
+
+<p>
+The data structures comprising the SIDS are the result of several
+additional design objectives:
+
+<p>
+One objective is to minimize duplication of data within the hierarchy.
+Many parameters, such as the grid size of a zone, are defined in only
+one location.
+This avoids implementation problems arising from data duplication within
+the physical file containing the database; these problems include
+simultaneous update of all copies and error checking when two copies of
+a data quantity are found to be different.
+One consequence of minimizing data duplication is that information at
+lower levels of the hierarchy may not be completely decipherable without
+access to information at higher levels.
+For example, the grid size is defined in the
+<a href="cgnsbase.html#Zone">zone structure</a>, but this parameter
+is needed in several substructures to define the size of grid and
+flow-solution data arrays.
+Therefore, these substructures are not autonomous and deciphering
+information within them requires access to information contained in the
+zone structure itself.
+The SIDS must reflect this cascade of information within the database.
+
+<p>
+Another objective is elimination of nonsensical descriptions of the data.
+The SIDS have been carefully developed to avoid data qualifiers and
+other optional descriptive information that could be inconsistent.
+This has led to the use of specialized structures for certain
+CFD-related information.
+One example is a single-purpose
+<a href="gridflow.html#GridCoordinates">structure for defining physical
+grid coordinates</a> of a zone.
+It is possible to define the grid coordinates, flow solution and
+any other field quantities within a zone by a generic discrete-data
+structure.
+However, this requires the generic structure to include information
+defining the grid location of the data (e.g., the data is located at
+vertices or cell centers).
+Using the generic structure to describe the grid coordinates leads to a
+possible inconsistency.
+By definition the physical coordinates that define the grid are located
+at vertices, and including an optional qualifier that states otherwise
+makes no sense.
+
+<p>
+A final objective is to allow documentation inclusion throughout the 
+database.
+The SIDS contain a <a href="build.html#Descriptor">uniform documentation
+mechanism</a> for all major structures in the hierarchy.
+However, this document establishes no conventions for using the
+documentation mechanism.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 25 Oct 2001
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+#! /bin/sh
+#
+# makehtml - create compressed tar file containing HTML documentation
+#            for a specified document
+#
+# Author: Charlie Towne (towne@lerc.nasa.gov)
+
+#set -vx
+
+version='1.0, 8 June 2001'
+
+usage='USAGE: makehtml directory'
+
+# Check for specified directory
+if [ $# -eq 0 ]
+then
+   echo 'Error: No directory specified' >& 2
+   echo $usage >& 2
+   exit 1
+fi
+
+# Set directory name
+directory=$1
+
+# Check for valid directory
+if [ ! -d $directory ]
+then
+   echo "Error: Directory $directory doesn't exist" >& 2
+   exit 1
+fi
+
+# Create the tar file
+case $directory in
+   adf)          tar cvf adf.tar \
+                     adf/adf.css adf/*html adf/*.gif;;
+   cgnstools)    tar cvf cgnstools.tar \
+                     cgnstools/cgnstools.css cgnstools/index.html cgnstools/adfviewer cgnstools/cgnsplot cgnstools/utilities ;;
+   charter)      tar cvf charter.tar \
+                     charter/charter.css charter/*html;;
+   filemap)      tar cvf filemap.tar \
+                     filemap/filemap.css filemap/*html filemap/figures;;
+   filemap_hdf)  tar cvf filemap_hdf.tar \
+                     filemap_hdf/filemap_hdf.css filemap_hdf/*html filemap_hdf/figures;;
+   logo)         tar cvf logo.tar \
+                     logo/cgns*;;
+   midlevel)     tar cvf midlevel.tar \
+                     midlevel/midlevel.css midlevel/*html;;
+   overview)     tar cvf overview.tar \
+                     overview/overview.css overview/*html;;
+   sids)         tar cvf sids.tar \
+                     sids/sids.css sids/*html sids/*eqs sids/*figs;;
+   user)         tar cvf user.tar \
+                     user/user.css user/*html user/figures;;
+esac
+
+# Compress it, show the sizes, and move it into the directory
+gzip $directory.tar
+gzip -l $directory.tar.gz
+if [ $directory != minutes -a $directory != papers -a $directory != slides ]
+then
+   mv $directory.tar.gz $directory
+fi
+
+echo "$directory.tar.gz - done"

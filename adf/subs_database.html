@@ -1,0 +1,447 @@
+<!-- ADF User's Guide - ADF Library Of Subroutines -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - ADF Library Of Subroutines </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<span class=nav><b>Database-Level&nbsp;Routines</b></span>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Database-Level Routines</h2>
+
+<ul>
+<li> <tt><a href="#Database_Open">ADF_Database_Open</a></tt> -
+     Open a database
+<li> <tt><a href="#Database_Close">ADF_Database_Close</a></tt> -
+     Close an opened database
+<li> <tt><a href="#Database_Delete">ADF_Database_Delete</a></tt> -
+     Delete an existing database
+<li> <tt><a href="#Database_Get_Format">ADF_Database_Get_Format</a></tt> -
+     Get the data format in an existing database
+<li> <tt><a href="#Database_Set_Format">ADF_Database_Set_Format</a></tt> -
+     Set the data format in an existing database
+</ul>
+
+<a name="Database_Open"></a>
+<h3>Open a Database</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Database_Open"><br>
+<tt>ADF_Database_Open (filename,status,format,root_ID,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Database_Open</tt>
+    <td align=center><tt>ADFDOPN</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const char *filename</tt><br>
+                         <tt>const char *status</tt><br>
+                         <tt>const char *format</tt>
+    <td width=41% nowrap><tt>character*(*) filename</tt><br>
+                         <tt>character*(*) status</tt><br>
+                         <tt>character*(*) format</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>double *root_ID</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>real*8 root_ID</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>filename</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>A legal file name that may include a relative or absolute path
+       where it is directly usable by the C <tt>fopen()</tt> system
+       routine (no environment expansion is done).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>status</i></tt><td>
+   <td>Similar to a Fortran <tt>OPEN()</tt> status.
+       Input is required: there is no default.
+       Allowable values are:<br><br>
+       <table cellspacing=0 cellpadding=0 border=0>
+       <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+          <td><tt>READ_ONLY</tt></td><td><tt>&nbsp;&nbsp;</tt></td>
+          <td>File must exist; writing is not allowed.
+       <tr valign=baseline><td></td>
+          <td><tt>OLD</tt></td><td></td>
+          <td>File must exist; reading and writing are allowed.
+       <tr valign=baseline><td></td>
+          <td><tt>NEW</tt></td><td></td>
+          <td>File must not exist.
+       <tr valign=baseline><td></td>
+          <td><tt>SCRATCH</tt></td><td></td>
+          <td>Temporary new file is created with a system name, and
+              <tt><i>filename</i></tt> is ignored.
+              The temporary file is deleted when the program exits or
+              the file is closed.
+       <tr valign=baseline><td></td>
+          <td><tt>UNKNOWN</tt></td><td></td>
+          <td><tt>OLD</tt> if file exists or else <tt>NEW</tt> is used.
+       </table>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>format</i></tt><td>
+   <td>Specifies the numeric format for the file.
+       This field is used only when a file is created and is ignored
+       when <tt><i>status</i></tt> = <tt>OLD</tt>.
+       Allowable values are:<br><br>
+       <table cellspacing=0 cellpadding=0 border=0>
+       <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+          <td><tt>NATIVE</tt></td><td><tt>&nbsp;&nbsp;</tt></td>
+          <td>Use the native numeric format of the computer that creates
+              the file.
+              This is the default for a new file if the input string for
+              format is null.
+              Note that if the native numeric format is not one of the
+              supported formats listed here, then the file cannot be
+              read on machines using any other format.
+       <tr valign=baseline><td></td>
+          <td><tt>IEEE_BIG</tt></td><td></td>
+          <td>Use the IEEE big endian format.
+       <tr valign=baseline><td></td>
+          <td><tt>IEEE_LITTLE</tt></td><td></td>
+          <td>Use the IEEE little endian format.
+       <tr valign=baseline><td></td>
+          <td><tt>CRAY</tt></td><td></td>
+          <td>Use the native CRAY format.
+       </table>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>root_ID</i></tt><td>
+   <td>The root identity of the database.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Database_Open</tt>, opens a new or existing database.
+If links to other ADF files exist in the current file, they will be
+opened only as required.
+Using this routine is similar to opening a file in Fortran with the
+corresponding clarifiers, such as whether it is <tt>READ_ONLY</tt>,
+<tt>OLD</tt>, <tt>NEW</tt>, or named as <tt>SCRATCH</tt> file.
+
+<p>
+The format of the file, which is ignored when the status of the file is
+<tt>OLD</tt>, is used when the file is first created.
+Big endian is a binary format in which the most significant byte or bit
+comes first, whereas in little endian, the most significant byte or bit
+comes last.
+To specify the format more explicitly, you can use the following formats:
+<pre>
+   IEEE_BIG_32
+   IEEE_BIG_64
+   IEEE_LITTLE_32
+   IEEE_LITTLE_64
+</pre>
+for IEEE big or little endian formats.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+This example opens a new database using the native format of the host
+computer.
+Note that the default format is specified by using the empty string.
+In the C programming language, a null string could have been used.
+
+<pre>
+   PROGRAM TEST
+      CHARACTER*(80) MSG
+      REAL*8 RID
+      INTEGER IERR
+      CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+      IF (IERR .GT. 0) THEN
+         CALL ADFERR(IERR,MSG)
+         PRINT *,MSG
+         STOP
+      ENDIF
+      STOP
+      END
+</pre>
+
+<a name="Database_Close"></a>
+<h3>Close a Database</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Database_Close"><br>
+<tt>ADF_Database_Close (root_ID,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Database_Close</tt>
+    <td align=center><tt>ADFDCLO</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double *root_ID</tt>
+    <td width=41% nowrap><tt>real*8 root_ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>root_ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The root identification of the database.
+       This can be a valid node ID for this database.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Database_Close</tt>, closes an existing database,
+as well as the other ADF files that may be attached through links.
+For example, if there is another ADF file that is opened and linked to
+this database, only the file stream associated with this database will
+be closed.
+This routine is similar to the close of a file in Fortran.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+This example closes a database.
+Note that while the root ID is used in the call to <tt>ADFDCLO</tt>, any
+valid node ID for this file will work.
+Also, in general, it is not necessary to close open ADF files when the
+program exits normally.
+The standard shutdown procedures will flush all buffers and bring files
+up to date.
+The primary use of <tt>ADFDCLO</tt> is to clean up file tables or to
+release unused files.
+
+<pre>
+   PROGRAM TEST
+      CHARACTER*(80) MSG
+      REAL*8 RID
+      INTEGER IERR
+      CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+      IF (IERR .GT. 0) THEN
+         CALL ADFERR(IERR,MSG)
+         PRINT *,MSG
+         STOP
+      ENDIF
+      .
+      ...<i>do useful stuff (hopefully)</i>
+      .
+      CALL ADFDCLO(RID,IERR)
+      STOP
+      END
+</pre>
+
+<a name="Database_Delete"></a>
+<h3>Delete a File</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Database_Delete"><br>
+<tt>ADF_Database_Delete (filename,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Database_Delete</tt>
+    <td align=center><tt>ADFDDEL</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const char *filename</tt>
+    <td width=41% nowrap><tt>character*(*) filename</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>filename</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>A legal file name of an existing ADF database.
+       The filename may include a relative or absolute path where it
+       is directly usable by the C <tt>fopen()</tt> system routine (no
+       environment expansion is done).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Database_Delete</tt>, deletes an existing database
+file.
+It does not delete links referenced in the database.
+This routine is similar to the deletion of a file in Fortran.
+
+<br><br>
+<em>Note: This routine will be implemented in a future release.</em>
+
+<a name="Database_Get_Format"></a>
+<h3>Get the Data Format</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Database_Get_Format"><br>
+<tt>ADF_Database_Get_Format (root_ID,format,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Database_Get_Format</tt>
+    <td align=center><tt>ADFDGF</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double *root_ID</tt>
+    <td width=41% nowrap><tt>real*8 root_ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>char *format</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>character*(*) format</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>root_ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Any valid node ID for the given ADF file.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>format</i></tt><td>
+   <td>The format for the file.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Database_Get_Format</tt>, gets the data format for
+an existing database.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+This example opens an existing ADF database, creates a new node, and
+then uses the node ID for the new node to ask what the file type is.
+Note that the file <tt><i>format</i></tt> is ignored because the
+database already exists.
+
+<pre>
+   PROGRAM TEST
+      CHARACTER*(80) MSG
+      CHARACTER*(32) FORM
+      REAL*8 RID,CID
+      INTEGER IERR
+      CALL ADFDOPN('db.adf','OLD',' ',RID,IERR)
+      IF (IERR .GT. 0) THEN
+         CALL ADFERR(IERR,MSG)
+         PRINT *,MSG
+         STOP
+      ENDIF
+      CALL ADFCRE(RID,'junk_node',CID,IERR)
+      CALL ADFDGF(CID,FORM,IERR)
+      PRINT *,'FILE FORMAT = ',FORM
+      STOP
+      END
+</pre>
+
+<a name="Database_Set_Format"></a>
+<h3>Set the Data Format</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Database_Set_Format"><br>
+<tt>ADF_Database_Set_Format (root_ID,format,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Database_Set_Format</tt>
+    <td align=center><tt>ADFDSF</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double *root_ID</tt>
+    <td width=41% nowrap><tt>real*8 root_ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>const char *format</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>character*(*) format</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>root_ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The root identity of the database.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>format</i></tt><td>
+   <td>The numeric format for the file.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Database_Set_Format</tt>, sets the data format in
+an existing database.
+
+<br><br>
+<em>Note: Use with extreme caution. This routine is needed only for the
+data conversion utilities and not intended for the general user.</em>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 9 Oct 2002
+
+</body>
+</html>

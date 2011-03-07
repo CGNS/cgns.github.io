@@ -1,0 +1,269 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgnstools.css" rel="stylesheet" type="text/css">
+<title>Customization</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../../cgnstools/index.html"><span class=nav><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></span></a>)
+<br><br>
+(<a href="../adfviewer/index.html"><span class=nav><b>ADFviewer</b></span></a>)
+(<a href="../cgnsplot/index.html"><b>CGNSplot</b></a>)
+(<a href="../utilities/index.html"><b>Utilities</b></a>)
+<br><br>
+(<a href="../adfviewer/menu.html"><b>Menu&nbsp;Items</b></a>)
+(<a href="../adfviewer/toolbar.html"><b>Toolbar&nbsp;Buttons</b></a>)
+(<a href="../adfviewer/separator.html"><b>Separator&nbsp;Bar</b></a>)
+(<a href="../adfviewer/nodetree.html"><b>Node&nbsp;Tree</b></a>)
+(<a href="../adfviewer/nodedesc.html"><b>Node&nbsp;Description</b></a>)
+(<a href="../adfviewer/linkdesc.html"><b>Link&nbsp;Description</b></a>)
+(<a href="../adfviewer/datadesc.html"><b>Data&nbsp;Description</b></a>)
+(<a href="../adfviewer/nodedata.html"><b>Node&nbsp;Data</b></a>)
+(<a href="../adfviewer/buttons.html"><b>Buttons</b></a>)
+(<span class=nav><b>Customization</b></span>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Customization</h2>
+
+<p>ADFviewer currently allows a certain amount of customization
+by way of specifying new menu items. This is done through a menu
+file (a file with the extension <em>mnu</em>), which is read at
+startup. When the menu items are selected, a user-defined TCL
+script and/or external program will be executed.</p>
+
+<p>The following is an example of a menu file (<em>utilities.mnu</em>),
+which comes from the CGNS utility programs package.</p>
+
+<pre>File:separator
+
+# File-&gt;Import menu
+
+File:Import:PLOT3D import plot3d_to_cgns plot3d_import plot3d.tcl
+File:Import:Tecplot import tecplot_to_cgns tecplot_import tecplot.tcl
+File:Import:Patran import patran_to_cgns patran_import patran.tcl
+File:Import:User import
+
+# File-&gt;Export menu
+
+File:Export:PLOT3D export cgns_to_plot3d plot3d_export plot3d.tcl
+File:Export:Tecplot export cgns_to_tecplot tecplot_export tecplot.tcl
+File:Export:User export
+
+# Utilities
+
+&quot;Utilities:Solution Location&quot; convert convert_location \
+    convert_location convert.tcl
+&quot;Utilities:Solution Variables&quot; convert convert_variables \
+    convert_variables convert.tcl
+Utilities:Dimensionalization convert convert_dataclass \
+    convert_dimensional convert.tcl
+
+Utilities:separator
+
+&quot;Utilities:Extract Subset&quot; convert extract_subset extract_subset util.tcl
+Utilities:Interpolation convert interpolate_cgns interpolate_cgns util.tcl
+</pre>
+
+<p>This adds two cascade menus to the <em>File</em> menu (<em>Import</em>
+and <em>Export</em>), and creates a new toplevel menu item, <em>Utilities</em>,
+as shown below.</p>
+
+<p><img src="images/custom_menu.gif" width="330" height="262"
+        alt="ADFviewer customized menus"></p>
+
+<h3>Format</h3>
+
+<p>Each new menu entry is specified as</p>
+
+<pre>menu  <em>type</em>  <em>command</em>  <em>TCLscript</em>  <em>TCLfile</em></pre>
+
+<p>where <em>menu</em> is required and the others are optional.
+The values are white-space separated, so an input that contains
+spaces must be enclosed in double-quotes (&quot;). Blank lines
+and comments in the file are ignored and an input line may be
+continued to the next line with the back-slash character (\) at
+the end of the line. Comments are indicated with the # character,
+which causes everything to the end of the line to be ignored.</p>
+
+<dl>
+    <dt><strong>menu</strong></dt>
+    <dd>This specifies the new menu item to be created. The menu
+        hierarchy is given by a colon (:) separated list of menu
+        items. The last element in the list is the label for the
+        new menu item. If the last item is <em>separator</em>,
+        then a separator bar is created in the parent menu. If
+        the list contains white-space, then it must be enclosed
+        in double-quotes (&quot;). See the example above for
+        clarification of how the menu specification relates to
+        the created menu item.</dd>
+    <dt><strong>type</strong></dt>
+    <dd>This identifies the type of menu item. This identifier is
+        used to define the default panel used if a TCL script is
+        not specified and how the menu item is handled by
+        ADFviewer. The currently recognized types are <em>import</em>,
+        <em>export</em>, <em>convert utility</em>, and <em>command</em>.
+        The default panel and behavior for each of these is
+        described below under <a href="#MenuTypes">Menu Types.</a>
+        If <strong>type</strong> does not match any of the
+        recognized types, it is assumed to be <em>command</em>.</dd>
+    <dt><strong>command</strong></dt>
+    <dd>The name of the executable and command line options, if
+        any. If a full path to the executable is not given, then
+        ADFviewer will search for it first in the directory where
+        ADFviewer is installed, then in subdirectories <em>bin</em>
+        and <em>$ARCH</em> (ARCH environment variable), and
+        lastly in the directories given by the <em>PATH</em>
+        environment variable. If command line options are to be
+        given, these should be given after the executable name,
+        and the entire specification enclosed in double-quotes
+        (&quot;).</dd>
+    <dt><strong>TCLscript</strong></dt>
+    <dd>The name of aTCL procedure to invoke for this menu item.
+        This allows a custom panel to be created, which will be
+        displayed when the menu item is selected. If not
+        specified, then one of the default panels will be
+        displayed, based on the menu <strong>type</strong>.</dd>
+    <dt><strong>TCLfile</strong></dt>
+    <dd>The name of the file containing <strong>TCLscript</strong>.
+        If specified, this file will be sourced before executing
+        the script. As an alternative, the <strong>TCLfile</strong>
+        may be specified in the <strong>tclIndex</strong> file in
+        the directory containing the ADFviewer scripts, following
+        standard TCL/TK practices.</dd>
+</dl>
+
+<h3><a name="MenuTypes">Menu Types</a></h3>
+
+<p>The following menu types are currently recognized by ADFviewer.
+The default panels shown for each type will be invoked by
+ADFviewer in the case that a TCL script has not been specified
+for the menu item.</p>
+
+<h4>import</h4>
+
+<blockquote>
+    <p>Import routines read a non-CGNS file, and convert it to a
+    CGNS file. An example of this is the <strong>plot3d_to_cgns</strong>
+    program, which reads a PLOT3D file and writes out a CGNS file.
+    This menu item will always be enabled in the ADFviewer GUI.
+    The following shows the default panel for import menu items.</p>
+    <p><img src="images/import.gif" width="426" height="221"
+    alt="Default import panel"> </p>
+    <p>The specification in the menu file in this case was</p>
+    <pre>&quot;Test:My Import&quot; import &quot;import_my_file option1 option2&quot;</pre>
+    <p><font face="Courier New">W</font>hen the <em>Accept</em>
+    button is selected, the import command will be executed as</p>
+    <pre>import_my_file option1 option2 InputFile CGNSoutput</pre>
+    <p>If the command is successfull, then the ADFviewer will
+    read and display the CGNS file. </p>
+</blockquote>
+
+<h4>export</h4>
+
+<blockquote>
+    <p>Export routines read a CGNS file, and convert it to a non-CGNS
+    format. An example of this is the <strong>cgns_to_plot3d</strong>
+    program, which reads a CGNS file and writes a PLOT3D file.
+    This menu item will only be enabled after a CGNS file has
+    been read into ADFviewer. The following shows the default
+    panel for export menu items.</p>
+    <p><img src="images/export.gif" width="426" height="221"
+    alt="Default export panel"> </p>
+    <p>The specification in the menu file in this case was</p>
+    <pre>&quot;Test:My Export&quot; export export_cgns</pre>
+    <p><font face="Courier New">W</font>hen the <em>Accept</em>
+    button is selected, the export command will be executed as</p>
+    <pre>export_cgns CGNSinput OutputFile</pre>
+    <p>If any options are specified, they will appear after the
+    executable name and before the CGNS input file name.</p>
+</blockquote>
+
+<h4>convert</h4>
+
+<blockquote>
+    <p>This class of routines read a CGNS file, operate on it in
+    some way, and then write a new CGNS file. An example is the <strong>convert_location</strong>
+    utility program which converts between cell-center and vertex
+    based solutions. This menu item will only be enabled after a
+    CGNS file has been read into ADFviewer. The following shows
+    the default panel for convert menu items.</p>
+    <p><img src="images/convert.gif" width="426" height="221"
+    alt="Default convert panel"></p>
+    <p>The specification in the menu file in this case was</p>
+    <pre>&quot;Test:My Conversion&quot; convert convert_cgns</pre>
+    <p><font face="Courier New">W</font>hen the <em>Accept</em>
+    button is selected, the convert command will be executed as</p>
+    <pre>convert_cgns CGNSinput CGNSoutput</pre>
+    <p>If any options are specified, they will appear after the
+    executable name and before the CGNS input file name.</p>
+</blockquote>
+
+<h4>utility</h4>
+
+<blockquote>
+    <p>A utility processes a CGNS file, such as the <strong>cgnscheck</strong>
+    program which reads a CGNS file and checks for SIDS
+    compliance. This menu item will only be enabled after a CGNS
+    file has been read into ADFviewer. The following shows the
+    default panel for utility menu items.</p>
+    <p><img src="images/utility.gif" width="426" height="222"
+    alt="Default utility panel"></p>
+    <p>The specification in the menu file in this case was</p>
+    <pre>&quot;Test:My Utility&quot; utility print_cgns</pre>
+    <p><font face="Courier New">W</font>hen the <em>Accept</em>
+    button is selected, the utility command will be executed as</p>
+    <pre>print_cgns CGNSinput</pre>
+    <p>If any options are specified, they will appear after the
+    executable name and before the CGNS input file name. If <em>Run
+    Command in Background</em> is selected, then ADFviewer will
+    execute the command, but not wait for the command to finish.</p>
+</blockquote>
+
+<h4>command</h4>
+
+<blockquote>
+    <p>This is the default behavior for a menu item if the type
+    is not one of <em>import</em>, <em>export</em>, <em>convert</em>
+    or <em>utility</em>. A command is simply executed by
+    ADFviewer and the menu item is always enabled. The following
+    shows the default panel for command menu items.</p>
+    <p><img src="images/command.gif" width="426" height="193"
+    alt="Default command panel"></p>
+    <p>The specification in the menu file in this case was</p>
+    <pre>&quot;Test:My Command&quot; command &quot;run_command options&quot;</pre>
+    <p><font face="Courier New">W</font>hen the <em>Accept</em>
+    button is selected, the command will be executed as</p>
+    <pre>run_command options</pre>
+    <p>If <em>Run Command in Background</em> is selected, then
+    ADFviewer will execute the command, but not wait for the
+    command to finish.</p>
+</blockquote>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../../include/footer_small.html" -->
+Last updated 15 May 2003
+
+</body>
+</html>

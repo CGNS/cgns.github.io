@@ -1,0 +1,1363 @@
+<!-- HTML input file for AIAA 2002-0752 -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgns.css" rel="stylesheet" type="text/css">
+<title>AIAA 2002-0752</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>
+AIAA-2002-0752<br>
+CFD General Notation System (CGNS): Status and Future Directions
+</h1>
+
+<p>
+Steve M. Legensky<br>
+<i>Intelligent Light, Lyndhurst, NJ<br>
+Manager, Senior Member AIAA</i>
+
+<p>
+David E. Edwards<br>
+<i>Intelligent Light, Lyndhurst, NJ<br>
+Manager, Senior Member AIAA</i>
+
+<p>
+Robert H. Bush<br>
+<i>Pratt &amp; Whitney Aircraft, East Hartford, CT<br>
+Engineer, Associate Fellow AIAA</i>
+
+<p>
+Diane M. A. Poirier<br>
+<i>ICEM CFD Engineering, Berkeley, CA<br>
+Engineer, Member AIAA</i>
+
+<p>
+Christopher L. Rumsey<br>
+<i>NASA Langley Research Center, Hampton, VA<br>
+Scientist, Associate Fellow AIAA</i>
+
+<p>
+Raymond R. Cosner<br>
+<i>Boeing Phantom Works, St. Louis, MO<br>
+Senior Technical Fellow, Associate Fellow AIAA</i>
+
+<p>
+Charles E. Towne<br>
+<i>NASA Glenn Research Center, Cleveland, OH<br>
+Engineer, Member AIAA</i>
+
+<h2>Abstract</h2>
+
+<p>
+A limitation in today's Computational Fluid Dynamics (CFD) simulation
+systems is the lack of a standardized, robust, efficient data format to
+be used in the exchange of information between the various stages of a
+numerical simulation (grid generation, solver and post processing) using
+either in-house or commercial simulation tools. A committee consisting
+of participants from NASA, the aerospace industry and commercial
+software companies was formed to address this problem. The result of
+that effort is the development of the CFD General Notation System (CGNS)
+that was first released in May 1998. New functionality is currently
+being added to the CGNS system. The Standard Interface Data Structures
+(SIDS) and corresponding Application Programming Interface (API) are
+being extended to support chemistry and species, arbitrary user data
+and linked CGNS files. Version control has been added to allow CGNS
+source development by multiple organizations. An effort is underway for
+CGNS to be adopted as an ISO standard for the recording of aerodynamic
+data. This paper describes the current progress in CGNS since January
+2000, how it is being utilized today and the future directions for CGNS.
+
+<h2>1. Introduction</h2>
+
+<p>
+The CGNS (CFD General Notation System) project originated in 1994
+through a series of meetings that addressed improved transfer of NASA
+technology to industry. A principal impediment in this process was
+the disparity in I/O formats employed by various flow codes, grid
+generators, and other utilities, and CGNS was conceived as a means to
+promote "plug-and-play" CFD. Agreement was reached to develop CGNS at
+Boeing, under NASA Contract NAS1-20267, with active participation by a
+team of CFD researchers from NASA's Langley, Glenn, and Ames Research
+Centers, McDonnell Douglas Corporation (now part of Boeing), and Boeing
+Commercial Airplane Group. This team, which was joined by ICEM CFD
+Engineering Corporation of Berkeley, California in 1997, undertook
+the core of the development. However, in the spirit of creating a
+completely open and broadly accepted standard, all interested parties
+were encouraged to participate; the US Air Force and Arnold Engineering
+Development Center were notably present. In 1999, commercial software
+companies such as Fluent, CD ADAPCO, Intelligent Light, and NUMECA began
+to participate with the CGNS team. The CGNS Steering Committee is now a
+subcommittee of the AIAA Committee on Standards.
+
+<p>
+From the beginning, the purpose was to develop a system that could be
+distributed freely, including all documentation, software and source
+code. This goal has now been fully realized; further, as described
+below, control of CGNS has been completely transferred to a public forum
+known as the CGNS Steering Committee.
+
+<p>
+The specific purpose of CGNS was to provide a standard for recording and
+recovering computer data associated with the numerical solution of the
+equations of fluid dynamics. The intent was to facilitate the exchange
+of CFD data between sites, between applications codes, and across
+computing platforms, and to stabilize the archiving of CFD data. The
+format implemented by this standard was to be (1) general, (2) portable,
+(3) expandable, and (4) durable.
+
+<p>
+The resulting system today consists of a collection of conventions,
+and software implementing those conventions, for the storage and
+retrieval of CFD data.  The system consists of two parts: (1) a standard
+format for recording the data, and (2) software that reads, writes,
+and modifies data in that format. The format is a conceptual entity
+established by the documentation; the software is a physical product
+supplied to enable developers to access and produce data recorded in
+that format.
+
+<p>
+The principal target is the data normally associated with compressible
+viscous flow (i.e., the Navier-Stokes equations), but the standard
+is also applicable to subclasses such as Euler and potential flows,
+and superclasses such as chemically reacting flows. The initial
+release addressed structured multi-block grids, flow fields, boundary
+conditions, and block-to-block connection information, as well as a
+number of auxiliary items, such as non-dimensionalization, reference
+states, and equation set specifications. This stage of development was
+summarized in reference 6.
+
+<p>
+It is worth noting that extensibility is a fundamental design
+characteristic of the system, which in principle could be used for
+other disciplines of computational field physics, such as acoustics or
+electromagnetics, given the willingness of the cognizant scientific
+community to define the conventions.
+
+<p>
+The standard format, or paper convention, part of CGNS consists of two
+fundamental pieces. The first, known as the Standard Interface Data
+Structures (SIDS) (Ref. 2), describes in detail the intellectual content
+of the information to be stored. It defines, for example, the precise
+meaning of a "boundary condition". The second, known as the File Mapping
+(Ref. 4), defines the exact location in a CGNS file where the data is to
+be stored.
+
+<p>
+The implementation, or software, part of CGNS likewise consists of two
+separate entities. CGNS files are read and written by a stand-alone
+database manager called ADF (Advanced Data Format) (Ref. 3). ADF manages
+a tree-like data structure, implemented as a binary file.  Since the
+format of this file is completely controlled by ADF, and since ADF is
+written in ANSI C (FORTRAN wrappers are provided), these files and ADF
+itself are portable to any environment that supports ANSI C.  ADF is
+available separately and constitutes a useful tool for the storage of
+large quantities of scientific data.
+
+<p>
+ADF, however, implements no knowledge of CFD or of the File Mapping. To
+simplify access to CGNS files, a second layer of software known
+as the Mid-Level Library (Ref. 5) is provided. This layer is in
+effect an API, or Application Programming Interface for CFD. The API
+incorporates knowledge of the CFD data structures, their meaning and
+their location in the file, enabling applications such as flow codes
+and grid generators to access the data in familiar terms. The API is
+therefore the piece of the CGNS system most visible to application
+developers. Like ADF, the API is written in ANSI C; all public API
+routines have FORTRAN counterparts.
+
+<p>
+Figure 1 illustrates an example of a typical CGNS file.  It is given to
+provide the reader with an idea of the type of information that goes
+into a CGNS file and how it is organized. This example is from the
+structured-grid NASA Langley CFL3D code (Ref. 9). It is for a one-zone
+grid and does not include grid connectivity information.  Each ADF node
+is represented with its name and label (name/label). However, when the
+only difference between the name and label is "_t", the name has been
+omitted. The boundary conditions are specified under ZoneBC_t. Note
+that in this example, the user has also added the descriptor node
+under ZoneBC_t called CFL3DType. The information recorded under this
+node is not part of the CGNS standard, but rather was added for
+convenience in order to tie in the CGNS boundary condition identifier
+with a type specific to the CFL3D code. Descriptors like this may be
+sprinkled throughout the CGNS file. They provide an easy way to add
+descriptive comments to a file for the benefit of present or future
+readability. Flow solution information is stored in data arrays under
+the FlowSolution_t data structure. CFL3D gives this information at cell
+centers; thus, GridLocation_t specifies CellCenter in the example. The
+node Rind_t indicates the number of rind cells (ghost cells) at which
+flow solution information is also given. The FlowEquationSet_t node
+contains information about how the solution was run. The convergence
+history may be stored for each individual zone or globally under the
+CGNSBase_t node, as shown in this example. DataClass_t specifies
+the type of data given. Further information regarding the reference
+quantities is given under ReferenceState_t.  The nodes VelocitySound,
+ViscosityKinematic, Density and Length give the reference levels by
+which all quantities in the file have been non-dimensionalized.
+
+<pre>
+   ROOT node
+   + CGNSLibraryVersion_t
+   + Base/CGNSBase_t
+     + Zone1/Zone_t
+       + ZoneType_t
+       + GridCoordinates_t
+         + CoordinateX/DataArray_t
+         + CoordinateY/DataArray_t
+         + CoordinateZ/DataArray_t
+       + ZoneBC_t
+         + Ilo_Seg1/BC_t
+           + PointRange/IndexRange_t
+           + CFL3Dtype/Descriptor_t
+         + ...(other boundary conditions...)
+       + FlowSolution_t
+         + GridLocation_t
+         + Rind_t
+         + Density/DataArray_t
+         + VelocityX/DataArray_t
+         + ...(other solution arrays)
+       + FlowEquationSet_t
+         + EquationDimension/"int"
+         + GoverningEquations_t
+         + DiffusionModel/"int[1+...+IndexDimension]"
+         + GasModel_t
+         + ViscosityModel_t
+         + ThermalConductivityModel_t
+         + TurbulenceClosure_t
+         + TurbulenceModel_t
+     + GlobalConvergenceHistory/ConvergenceHistory_t
+       + RSDMassRMS/DataArray_t
+       + CoefLift/DataArray_t
+       + ...(other convergence parameters)
+     + DataClass_t
+     + ReferenceState_t
+       + Mach/DataArray_t
+       + Reynolds/DataArray_t
+       + VelocitySound/DataArray_t
+       + ViscosityKinematic/DataArray_t
+       + Density/DataArray_t
+       + Length/DataArray_t
+       + ...(other reference parameters)
+</pre>
+<tt>&nbsp;&nbsp;&nbsp;</tt><b>Figure 1. Example of Implementation</b>
+
+<p>
+The overall architecture of CGNS is that of shared files accessible by
+the various software tools common to CFD: solvers, grid generators,
+field visualizers, and post processors. These applications must
+be modified, using the API, to be able to access CGNS data. Each
+application then serves as an editor of the data, adding to, modifying
+or interpreting it according to that application's specific role. The
+user, or a locally developed user interface, remains responsible for
+executing the required actions and for the disposition of the files.
+
+<p>
+In 1998, ICEM CFD Engineering released the first version of the API. It
+supported structured topology, where multi-block connectivity could be
+either one-to-one abutting, mismatched abutting or overset. It defined
+standards for the storage of grid coordinates, flow solutions, boundary
+conditions, convergence history, and reference state. Dimensional units
+and non-dimensionalization information could be associated with each
+type of data. Additionally, it provided conventions for archiving the
+governing equations including the gas, viscosity, thermal conductivity,
+turbulence and diffusion models. It also provided for the recording of
+descriptive data throughout the file.
+
+<p>
+Two subsequent revisions of the CGNS Mid-Level Library were released by
+ICEM CFD Engineering. In June 1999, support for unstructured topology
+and geometry-to-mesh association were added to the API.  Then in
+December 2000, rigid and arbitrary grid motion, as well as iterative or
+time-accurate data were implemented and released. Details of these CGNS
+extensions and data structures are given in Reference 8.
+
+<p>
+The CGNS elements are documented individually at the web site
+www.CGNS.org. All documentation as well as the software, both compiled
+and source code, is available at this web site. For those new to CGNS,
+the Overview (Ref. 1), the CGNS System paper (Ref. 6) and the CGNS
+User's Guide (Ref. 10) are recommended reading.
+
+<h2>2. Enhancements to the CGNS System</h2>
+
+<p>
+The following enhancements are currently being implemented into the CGNS
+system and scheduled for release in the first quarter of 2002:
+
+<ol>
+<li> Extension for Chemistry and Species
+<li> Extension for User-Defined Arrays
+<li> Linked CGNS Files
+<li> CGNS Version Control
+<li> HTML Documentation and Discussion Group
+</ol>
+
+<p>
+The enhancements include new functionality for CGNS as well as
+improvements for the support and development of CGNS. Several groups
+are working on these tasks. Intelligent Light is implementing the first
+three enhancements, ICEM CFD Engineering has implemented version control
+and NASA Glenn has implemented the web documentation and electronic
+mailing list.
+
+<p>
+The following subsections describe these new enhancements, how they
+are being incorporated into the CGNS system, and how they affect the
+Standard Interface Data Structures (SIDS).
+
+<h3>2.1 Chemistry and Species</h3>
+
+<p>
+The addition of chemistry and species data to the CGNS data file is
+necessary for many CFD simulations for turbomachinery and hypersonic
+flow.
+
+<p>
+The CGNS extension for chemistry and species is being developed with the
+following requirements:
+
+<ol>
+<li> Be backward compatible.
+<li> Keep the nodes for chemistry and species as simple and open as
+     possible. Chemistry and species can be extremely complicated and
+     specification of a standard to encompass all gas-fluid applications
+     areas is not presently feasible. The nodes to be developed are to
+     be open enough to allow the user to specify their specific models
+     through the utilization of descriptor nodes and UserDefined nodes.
+</ol>
+
+<p>
+This new CGNS extension requires modifying the structure of the
+GasModel_t node in FlowEquationSet.  Also the following new auxiliary
+nodes are being added to FlowEquationSet:
+
+<ul>
+<li> ThermalRelaxationModel_t
+<li> ChemicalKineticsModel_t
+</ul>
+
+<p>
+New data-name identifiers are being added for FlowSolution
+quantities. Modifications are being made to CGNS structures and
+Mid-Level library routines that utilize these nodes.
+
+<p>
+The extension for chemistry and species is currently in development.
+
+<h3>2.2 User-Defined Arrays</h3>
+
+<p>
+The inclusion of user-defined data of arbitrary dimensions to the CGNS
+data file allows users to efficiently store additional information into
+the CGNS file. CFD solver developers have requested this extension since
+CFD solvers have additional data that could not be easily stored in the
+CGNS file due to its structure. This extension allows solver specific
+data to be stored into the CGNS file.
+
+<p>
+This extension introduces UserDefinedData_t as a node type to the CGNS
+library. This provides a parent node for an arbitrary number of user
+defined (numerical) data arrays of arbitrary size to be written.
+
+<p>
+The reading and writing of these arrays are managed with the existing
+DataArray_t support. There may be any number of DataArray_t nodes for
+any number of UserDefinedData_t parents. There may be an arbitrary
+number of indexed UserDefinedData_t nodes under their parents.
+
+<p>
+UserDefinedData_t is supported under the following nodes:
+<pre>
+   ArbitraryGridMotion_t
+   BaseIterativeData_t
+   BC_t
+   BCData_t
+   BCDataSet_t
+   CGNSBase_t
+   ConvergenceHistory_t
+   DiscreteData_t
+   Elements_t
+   Family_t
+   FlowEquationSet_t
+   FlowSolution_t
+   GasModel_t
+   GeometryReference_t
+   GoverningEquations_t
+   GridConnectivity_t
+   GridConnectivity1to1_t
+   GridCoordinates_t
+   IntegralData_t
+   OversetHoles_t
+   ReferenceState_t
+   RigidGridMotion_t
+   ThermalConductivityModel_t
+   TurbulenceClosure_t
+   TurbulenceModel_t
+   ViscosityModel_t
+   Zone_t
+   ZoneBC_t
+   ZoneGridConnectivity_t
+   ZoneIterativeData_t
+</pre>
+
+<p>
+UserDefinedData_t is not supported under the nodes:
+<pre>
+   DataArray_t
+   DataConversion_t
+   Descriptor_t
+   DimensionalExponents_t
+   DimensionalUnits_t
+   IndexArray_t
+   Range_t
+   UserDefinedData_t
+</pre>
+
+<p>
+It has the following properties:
+<p>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td>UserDefinedData# (or user defined)
+<tr valign=baseline><td>
+   <td align=left>Label:<td>
+   <td>UserDefinedData_t
+<tr valign=baseline><td>
+   <td align=left>DataType:<td>
+   <td>MT
+<tr valign=baseline><td>
+   <td align=left>Cardinality:<td>
+   <td>0,N
+<tr valign=baseline><td>
+   <td align=left>Child Nodes:<td>
+   <td>Descriptor_t       (0,N)<br>
+       DataClass_t        (0,1)<br>
+       DimensionalUnits_t (0,1)<br>
+       DataArray_t
+</table>
+
+<p>
+Several API calls will manage the UserDefinedData_t nodes. They include:
+<pre>
+   C: ier = cg_user_data_write(char *user_data_name, int *Index)
+   F: call cg_user_data_write_f(user_data_name, Index, ier)
+</pre>
+where "<tt>C:</tt>" indicates a C routine and "<tt>F:</tt>" indicates a
+FORTRAN routine.
+
+<p>
+The routines above write a UserDefinedData_t node under the current
+location. The UserDefinedData_t node is given a name of up to 32
+characters. This name may be from the SIDS, but this is not a
+requirement. An Index value is returned indicating this is the Nth
+UserDefinedData_t under the current parent node.
+
+<p>
+The routines
+<pre>
+   C: ier = cg_nuser_data(int *nuser_data)
+   F: call cg_nuser_data_f(nuser_data, ier)
+</pre>
+return the number of UserDefinedData_t children under the current parent
+node.
+
+<p>
+Finally the routines
+<pre>
+   C: ier = cg_user_data_read(int Index, char *user_data_name)
+   F: call cg_user_data_read_f(Index, user_data_name, ier)
+</pre>
+read the indexed UserDefinedData_t name under the current location. The
+internal name string is copied to the character argument and assumes
+that this memory has been allocated. The name may be up to 32 characters
+in length. The data arrays can then be read or written with the existing
+API functions cg_array_read(_f) and cg_array_write(_f).
+
+<p>
+The extension for user-defined arrays has been implemented and is
+currently in testing.
+
+<h3>2.3 Links to other CGNS Files</h3>
+
+<p>
+A facility to support links to other CGNS files has been added to the
+CGNS library. These are wrappers around the ADF library routines to
+write and read links cast into the CGNS API.
+<pre>
+   C: ier = cg_link_write(char *nodename, char *filename, char *name_in_file)
+   F: call cg_link_write_f(nodename, filename, name_in_file, ier)
+</pre>
+where the routines have the following character input arguments:
+
+<p>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>nodename<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Name of the link node (e.g., 'GridCoordinates')
+<tr valign=baseline><td>
+   <td>filename<td>
+   <td>Filename to use for the link
+<tr valign=baseline><td>
+   <td>name_in_file<td>
+   <td>The name of the node which the link will point to (this can be a
+       simple or a compound name, e.g., 'Base/Zone 1/GridCoordinates')
+</table>
+
+<p>
+The cg_link_write and cg_link_write_f routines will create a link at
+the current location. The node linked to does not have to exist when
+the link is created (but it may exist and that is OK). However, when
+the link is used, an error will occur if the linked to node does not
+exist. If filename is blank (null), the link is assumed to be a location
+within the current file. The link is written in the location previously
+set by cg_goto or cg_goto_f.
+<pre>
+   C: ier = cg_is_link(int *path_length)
+   F: call cg_is_link_f(path_length, ier)
+</pre>
+where the routines have the following integer output argument:
+
+<p>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>path_length<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>0 if current node is not a link, otherwise the value is the
+       length of path string.
+</table>
+
+<p>
+The cg_is_link and cg_is_link_f routines test if a node is a link. If
+the actual data-type of the node is a link, it returns the link path
+length. Otherwise, it returns 0.  The link information is read from the
+location previously set by cg_goto or cg_goto_f.
+<pre>
+   C: ier = cg_link_read(char **filename, char **link_path)
+   F: call cg_link_read_f(filename, link_path, ier)
+</pre>
+where the routines have the following character output arguments:
+
+<p>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>filename<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Name of linked file
+<tr valign=baseline><td>
+   <td>link_path<td>
+   <td>Link path
+</table>
+
+<p>
+The cg_link_read and cg_link_read _f routines get path information
+from a link at the current location. If the node is a link-node,
+return the path information. Else, return an error. If the link
+points to a location in the current file, then a blank filename is
+returned. The link information is read from the location previously set
+by either cg_goto or cg_goto_f. When the C version is called the user is
+responsible for freeing memory.  This functionality has been implemented
+and is currently in testing.
+
+<h3>2.4 CGNS Version Control</h3>
+
+<p>
+One of the goals of the CGNS system is to provide the capability for
+multiple organizations to be involved in the direct development of
+CGNS. To accomplish this, a version control system is required during
+the software development. CVS was selected for the CGNS version control
+and has been implemented. Using CVS, you can record the history
+of your source files. This is crucial since bugs can occur when
+software is modified, and might not be detected for some time after the
+modification. With CVS, you can easily retrieve old versions to see
+exactly which change introduced the error. CVS stores all the versions
+of a file in a single file such that only differences between saved
+versions are stored. Every developer works in his/her own directory, and
+CVS merges the work when each developer is done. CVS is available from
+the Internet.
+
+<p>
+Access to the CVS controlled API source is given to developers selected
+by the CGNS Steering Committee, for implementation of predefined
+features. For more information see www.cvshome.org.
+
+<h3>2.5 HTML Documentation &amp; CGNSTalk</h3>
+
+<p>
+Previously sections of the CGNS documentation were provided as Adobe PDF
+files (SIDS, Overview, User's Guide, File Mapping Manual and the ADF
+User's Guide) and the Mid-Level Library manual was provided as a HTML
+document. NASA Glenn has revised all documents and made them available
+as either Adobe PDF or HTML files. All documentation is available on the
+Internet at www.CGNS.org. In November 2001, the web site recorded 2019
+page requests of the CGNS documentation from 430 distinct hosts in 33
+countries.
+
+<p>
+A new feature at www.CGNS.org is the introduction of a CGNSTalk
+electronic discussion group where CGNS users can post messages to
+the CGNS team and other users via this email mailing list. Users can
+register at the Website to be added to the mailing list. As of the first
+of January 2002, the mailing list has 85 subscribers from 17 countries
+and 23 different commercial organizations.
+
+<h2>3. CGNS is Open Software</h2>
+
+<p>
+The CGNS Steering Committee was formed to ensure the continuation of the
+CFD General Notation System.  The Committee created a charter that lays
+out the mission, organization and governing principles of the Steering
+Committee. The charter can be found at www.CGNS.org. The charter defines
+several responsibilities of the CGNS Steering Committee that support its
+fundamental mission. They include:
+<ul>
+<li> maintaining the software implementing the Standard, documentation
+     of the Standard and an open web site to disseminate information on
+     the Standard,
+<li> providing mechanisms for the evolution of the Standard,
+<li> promoting the acceptance of the Standard,
+<li> providing user services, and
+<li> determining the means to fund activities in support of the Standard.
+</ul>
+
+<p>
+The CGNS Steering Committee is organized as a voluntary organization
+that governs by consensus. The Committee meets at a minimum of once
+per year, and is represented by a Chairperson. The current Chairperson
+is Robert Bush of Pratt &amp; Whitney. The Chairperson coordinates
+activities, facilitates meetings and serves as a focal point for the
+Committee. The Charter explicitly states that all parties are welcome
+to bring forward issues and participate in the development of the
+Standard, whether or not they are members of the Steering Committee. The
+CGNS Steering Committee is made up of representatives from specific
+institutions, rather than individuals. The current members of the
+Steering Committee are:
+<ul>
+<li> Airbus
+<li> Boeing Commercial
+<li> Boeing Phantom Works
+<li> Boeing Space &amp; Communications
+<li> CD ADAPCO Group
+<li> Fluent, Inc.
+<li> ICEM CFD Engineering
+<li> Intelligent Light
+<li> NASA Ames
+<li> NASA Langley
+<li> NASA Glenn
+<li> NUMECA International
+<li> Pointwise, Inc
+<li> Pratt &amp; Whitney Aircraft
+<li> Rolls-Royce Allison
+<li> US Air Force
+</ul>
+
+<p>
+The CGNS charter also lays out the governing principles that are to be
+followed. In general, the charter calls on the Committee to adhere to
+the philosophy used for "free open software", as defined under the GNU
+Lesser Public License. In particular, the user can:
+<ul>
+<li> Run the program, for any purpose
+<li> Study how the program works, and adapt it to one's needs
+<li> Redistribute copies so one can help their neighbor
+<li> Improve the program, and release improvements to the public, so
+     that the whole community benefits
+</ul>
+This open software standard helps to promote the CGNS Standard by
+allowing users the freedom to redistribute copies, with or without
+modifications, either gratis or charging a fee for distribution, to
+anyone anywhere.
+
+<h2>4. Status of the ISO standards effort</h2>
+
+<p>
+The effort to establish an ISO/STEP standard (Ref. 7) for fluid dynamics
+data, based on CGNS, continues to progress.  In February 2001, ISO
+Standing Committee 4 (SC4), "Industrial Data", accepted the CGNS project
+as a New Work Item. As a consequence, this project was assigned the
+designator "AP (Application Protocol) 237 - Fluid Dynamics".
+
+<p>
+The ISO standards process is based on modular and reusable
+standards. This concept means, for example, there will only be one
+ISO standard for mesh-based data, and that standard will apply in
+any technical discipline that requires representation of mesh-based
+data. Therefore, any initiative that develops such a standard must do
+it in such a way to anticipate and facilitate future use of the data
+definitions and data structures by other disciplines. In the case of
+the Fluid Dynamics standard, mesh-based data structures are being
+defined for the first time, and therefore steps must be taken to avoid
+inadvertently producing a standard that meets the needs of the fluid
+dynamics community but is too limited to be of value to other technical
+communities. In this respect, modular and reusable standards, the ISO
+process has requirements that were not considered in developing the CGNS
+standard.
+
+<p>
+The ISO standards process also has strong requirements for integration
+into a formal product data management system. CGNS did not address
+such a requirement. To meet this need, we are taking various product
+data management structures first developed in AP 209 (Finite Element
+Analysis) and repackaging them in Part 53 as general structures for
+numerical analysis.
+
+<p>
+To accommodate these and other constraints, the Fluid Dynamics standard
+will consist of four parts, each of which will be developed and approved
+as a stand-alone ISO standard. These four parts are:
+
+<ul>
+<li> <b>AP 237 - Fluid Dynamics.</b>
+     This is the top-level standard, and it defines data types and
+     data structures that will be used throughout the field of fluid
+     dynamics (for example, in both computational and experimental fluid
+     dynamics).
+<li> <b>Part 110 - Computational Fluid Dynamics.</b>
+     This part defines data types and structures that are unique to
+     CFD, for example, grid-based discrete data, boundary conditions,
+     temporal and spatial iteration and convergence data.
+<li> <b>Part 52 - Mesh-Based Topology.</b>
+     This part defines structured and unstructured grids including
+     topology, connectivity, boundary conditions, cell and vertex
+     numbering schemes, etc.
+<li> <b>Part 53 - Numerical Analysis.</b>
+     This part defines links to product data management structures and
+     configuration control for numerical analysis, including linkage
+     between a specific analysis and a specific physical problem, a
+     specific nominal geometry model, and other features of numerical
+     analysis.
+</ul>
+
+<p>
+It is anticipated that eventually another 100-series part will be
+created, under AP 237, to address specialized needs for experimental
+data in fluid dynamics, complementing Part 110 for CFD data. We also
+anticipate creating a Usage Guide, which is not a formal part of the AP
+237 standard. This Usage Guide will consist of tips and examples, and it
+should be very useful to those seeking to use the standard. Usage Guides
+are not an ISO requirement, but they have been prepared for several
+other AP standards.
+
+<p>
+The AP 237 fluid dynamics standard is linked to AP 203 for geometric
+data, and AP 209 for finite element structural analysis data. At
+present, no ISO standards initiatives are in progress in other related
+areas that would utilize CFD data, for example, thermodynamics data,
+electromagnetics data, etc. If and when standards initiatives are
+launched in these areas, we expect they will be able to re-use Parts 52
+and 53.
+
+<p>
+The last meeting of the Engineering Analysis Committee, which is a part
+of SC4, occurred in October 2001. At that time, a completion schedule
+was projected for the four parts discussed above. It is expected that
+the three lower-level parts (52, 53, and 110) be completed and submitted
+for final ballot approval as International Standards in the second
+half of 2003. Preparation of the top-level AP 237 standard is a larger
+task, and it is projected that final balloting will occur in the second
+quarter of 2005. Each of these standards will reach "Draft International
+Standard" status about a year before the final ballot, and at that point
+the standards should be stable, and very close to their final form.
+
+<p>
+The intellectual content of the ISO AP 237 standard, and its subsidiary
+parts (52, 53, and 110), is being developed by the CGNS Steering
+Committee, which is also chartered as the CGNS subcommittee of the AIAA
+Committee on Standards for CFD. The mapping of this CGNS intellectual
+content into the requirements of the ISO standards process is being led
+by Raymond R.  Cosner, of The Boeing Company.
+
+<p>
+Extensive draft documents are available for all four parts of the
+Fluid Dynamics standard. Comments are welcomed on any aspect of these
+drafts. Copies of the draft documents, in Adobe Acrobat format, can be
+obtained by contacting any member of the AIAA Committee on Standards for
+CFD and are also posted on the web at www.CGNS.org.
+
+<p>
+In a related development, the AIAA Committee on Standards for CFD has
+agreed in June 2001 to publish the CGNS standard as an AIAA Recommended
+Practice.
+
+<h2>5. Utilization of CGNS</h2>
+
+<p>
+The global CFD community has welcomed CGNS since its introduction in
+1998. Engineers and scientists from academia, industry, and government
+organizations are utilizing the CFD General Notation System. At the time
+of writing, 591 users from over 25 countries have registered at the CGNS
+web site.
+
+<p>
+The CGNS Steering Committee is aware of several CFD applications from
+commercial, industrial and government organizations in United States
+and Europe that have implemented the CGNS standard successfully: Table
+I shows the organizations and CFD applications that are using CGNS. The
+table is organized to show the organizations broken down as either
+commercial, industrial or government. The table is also ordered to show
+the stage (grid generation, solver or post processor) of the simulation
+process that the application addresses. The table also shows if the
+application reads a CGNS file, writes a CGNS file or does both. CGNS
+is being utilized at government labs in United States, France and
+Germany (NASA, ONERA and DLR) indicating that CGNS is being accepted
+in the government research community. It is also observed from this
+table that the majority of the industrial and government organizations
+are exporting CGNS data files for their solver applications. They use
+commercial software tools for grid generation and post processing.
+
+<p>
+<center>
+<table border>
+<caption align=top>
+<b>Table I: Organizations and Applications Using CGNS</b>
+<br><br>
+</caption>
+<thead>
+<tr>
+   <th scope=col align=left>Organization
+   <th scope=col align=left>Application
+   <th scope=col>Grid Generator
+   <th scope=col>Solver
+   <th scope=col>Post Processor
+   <th scope=col>Read CGNS&nbsp;Files
+   <th scope=col>Write CGNS&nbsp;Files
+<tbody>
+<tr valign=baseline>
+   <th align=left scope=rowgroup colspan=7><i>Commercial</i>
+<tr valign=baseline>
+   <td nowrap>Advanced Visual Systems
+   <td>AVS/Express
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+   <td>&nbsp;
+<tr valign=baseline>
+   <td rowspan=2 scope=row>AEA
+   <td>CFX5
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td>CFX-TASCFlow
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td>Aerosoft, Inc.
+   <td>GASP V4
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+   <td align=center>x
+   <td align=center>x
+<tr valign=baseline>
+   <td>Amtec
+   <td>Tecplot
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+   <td>&nbsp;
+<tr valign=baseline>
+   <td>CD ADAPCO
+   <td>STARCD
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td rowspan=2 scope=row>CEI
+   <td>Ensight
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+   <td>&nbsp;
+<tr valign=baseline>
+   <td>Ensight Gold
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+   <td>&nbsp;
+<tr valign=baseline>
+   <td>Fluent, Inc.
+   <td>Fluent
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+   <td align=center>x
+   <td align=center>x
+<tr valign=baseline>
+   <td rowspan=2 scope=row>ICEM CFD
+   <td>ICEM CFD HEXA
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+<tr valign=baseline>
+   <td>OPTIMESH
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+<tr valign=baseline>
+   <td>ICEM CFD MIT
+   <td>Visual3
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+   <td>&nbsp;
+<tr valign=baseline>
+   <td>Intelligent Light
+   <td>FIELDVIEW
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+   <td>&nbsp;
+<tr valign=baseline>
+   <td rowspan=3 scope=row>NUMECA
+   <td>IGG
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td>EURANUS
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td>CFVIEW
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+   <td>
+<tr valign=baseline>
+   <td>Pointwise, Inc.
+   <td>GRIDGEN
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tbody>
+<tr valign=baseline>
+   <th align=left scope=rowgroup colspan=7><i>Government</i>
+<tr valign=baseline>
+   <td>DLR/MTU (Germany)
+   <td>TRACE
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td rowspan=3 scope=row>NASA Ames
+   <td>PEGASUS/OVERFLOW
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td>PLOT3D
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+   <td>&nbsp;
+<tr valign=baseline>
+   <td>Cart3D
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td>NASA Glenn
+   <td>NCC
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td rowspan=2 scope=row>NASA Langley
+   <td>CFL3D
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+<tr valign=baseline>
+   <td>UPS
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td rowspan=2 scope=row>NPARC Alliance
+   <td>NPARC
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td>WIND
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+<tr valign=baseline>
+   <td>ONERA (France)
+   <td>elsA
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td align=center>x
+   <td align=center>x
+<tbody>
+<tr valign=baseline>
+   <th align=left scope=rowgroup colspan=7><i>Industry</i>
+<tr valign=baseline>
+   <td nowrap>Boeing - Rocketdyne
+   <td>APPT
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td>Boeing - Seattle
+   <td>TLNS3D
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td>Boeing - St. Louis
+   <td>CFF
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td>Rolls-Royce Allison
+   <td>ADPAC
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+<tr valign=baseline>
+   <td>Rolls-Royce/Oxford
+   <td>HYDRA
+   <td>&nbsp;
+   <td align=center>x
+   <td>&nbsp;
+   <td>&nbsp;
+   <td align=center>x
+</table>
+</center>
+
+<p>
+A limitation in using CGNS in previous years was that the commercial
+software tools did not support CGNS.  However from Table I it is
+observed that the number of commercial applications using CGNS is on
+the same order as the number of industrial/government applications,
+indicating that the issue of commercial applications not supporting
+CGNS is starting to be resolved. The table shows over twenty diverse
+organizations are using CGNS indicating it is becoming a standard.
+
+<p>
+A survey was made to determine how various organizations use
+CGNS. Descriptions of CGNS utilization by Boeing, ONERA, Pratt &amp;
+Whitney and NASA Langley follow in the next subsections.
+
+<h3>Boeing</h3>
+
+<p>
+Boeing has identified the CGNS data standard as their common format for
+CFD data at the level of Euler and Navier-Stokes analysis methods. New
+tools and processes are being developed to conform to CGNS, and existing
+tools and processes are being converted to this standard. Boeing sees
+the primary benefits of using a common data standard, such as CGNS, in
+the following areas:
+<ul>
+<li> Enabling component tools in the CFD process to be used in any
+     combination according to the needs of the task at hand,
+<li> Avoiding the need for specialized data translation steps, which
+     often is the source of limitations or errors,
+<li> Establishing a standard interface to pass CFD data into downstream
+     processes, such as aerodynamic loads analysis, which is independent
+     of the tools used to produce the CFD data, and,
+<li> Establishing definitions and representations of the fluid
+     dynamics data in a CFD solution, such that the precise meaning
+     of each variable will be understood at any time in the future,
+     without reference to any notes - the file plus the CGNS standard
+     documentation defines the meaning of each element of data.
+</ul>
+
+<h3>ONERA</h3>
+
+<p>
+A sub-committee at ONERA (Ref. 11) is discussing object-oriented
+interfaces (most notably C++ and Python) to CGNS. While a general
+consensus has not been reached about the most sensible approach to
+define them, implementation for both languages is underway. Basic
+functionality is available and the full implementation (at least
+for C++) is expected to be publicly available in January 2002. The
+experience of the community with these preliminary efforts will guide
+the strategy of the CGNS Steering Committee regarding such alternative
+interfaces.
+
+<p>
+ONERA has also developed applications with CGNS.  The electromagnetism
+and radar departments use it to store data results. The aerodynamics and
+aeroacoustics simulation departments have developed Python (Ref. 13)
+tools and translated elsA (Ref. 12) validation cases database in a CGNS
+format. These tools are built on the freely available pyCGNS (Ref. 14)
+package.
+
+<p>
+The validation database contains grids, which have different formats
+for a given configuration (every other point, 2D/3D, multi-zone...),
+initialization data and solution data. The CGNS tree structure allows
+consistency between these files, for a given test case.  The link
+support allows the sharing of grids, initialization data and makes it
+possible to use several reference sessions of test with separate and
+structured solutions for each session. More than 300 test cases of the
+software validation have been translated.
+
+<p>
+The elsA software is expected to be fully CGNS compliant by the end
+of 2002. During this time, some studies have been planned in order to
+use CGNS as a basis for software interoperability with aeroelasticity
+solvers but also as a basis for large amount of data storage and
+retrieval.
+
+<h3>Pratt &amp; Whitney Aircraft</h3>
+
+<p>
+As a world leader in developing gas turbine engines for commercial
+and military propulsion applications, Pratt &amp; Whitney is on
+the forefront of enabling technologies and relies heavily on CFD
+generated data for product design. The broad range of CFD applications
+requires leveraging of proprietary, commercial, collaborative and
+government supplied tools to meet the diverse demands with the most
+up to date capabilities. CGNS will play a key role in bringing these
+tools together in a streamlined design system. CGNS will meet varied
+requirements for data archive, communication and process automation by
+providing a stable, efficient, consistent and industry standard means of
+representing CFD data.
+
+<p>
+The first step towards CFD data standardization at Pratt &amp;
+Whitney has been the development of conversion routines that do a
+full translation of grid, solution and boundary condition information
+between CGNS and the existing internal P&amp;W CFD data format. These
+conversion routines allow us to leverage all existing tools and
+processes to maintain capabilities while changing processes to
+utilize CGNS. Anticipated conversion of commercial, collaborative
+and government tools to CGNS will allow us to streamline our design
+processes by eliminating data conversion errors and the associated
+cycle time. Simultaneously, we will convert our proprietary tools and
+internal data representations to the CGNS standard. Full conversion will
+facilitate automation of design processes reliant on CFD by providing a
+consistent source and destination for the volumetric data generated.
+
+<h3>NASA Langley</h3>
+
+<p>
+CGNS capability has been added to the NASA Langley Research Center code
+CFL3D (Ref. 9) Version 6.0. Currently, the CGNS file is an optional file
+that replaces the old grid and restart files. The CGNS file not only
+contains all the information necessary for a restart run, but it also
+can be read and used by any utility with CGNS capability, including post
+processor plotting packages.  There are a few limitations and features
+particular to the current implementation in CFL3D, listed below.
+
+<p>
+In the current CGNS implementation, when CFL3D is run with mesh
+sequencing and is stopped at a level lower than the finest grid, there
+is no easy way to handle this with CGNS since the CGNS file contains the
+fine grid only. With "standard" CFL3D, the restart file would contain
+the coarser solution only. With CGNS, it was decided to write out
+the coarse-grid FlowSolution on the fine grid, with data repeated in
+neighboring cells. Hence, if you plot the solution, it will be identical
+to the coarse grid solution, only all the fine-grid gridpoints will be
+used. A descriptor node called "Information" under "FlowSolution" says
+something like: Every-2nd-cell solution (1 level down) to indicate that
+the solution is actually on a coarser level. There is currently no SIDS
+standard for handling this situation.
+
+<p>
+Note that in the current release, PATCHING and OVERSET information
+have not yet been included in the CGNS-part of CFL3D. In other words,
+the CGNS files are purposefully missing this information. The user can
+still run patched and overset cases with CGNS, but the patched/overset
+connectivity information is never put into the CGNS file itself. This
+is similar to the "normal" mode of running CFL3D. In the "normal" mode,
+the user must have available a grid file, restart file, patched-info
+file, and overset-info file when running with patched/overset. With
+CGNS, the user must have available a CGNS file, patched-info file, and
+overset-info file.
+
+<p>
+Multiple-time flow field information for time-accurate runs is currently
+not written to the CGNS file. Only the latest (most recent) flow field
+data, necessary for a clean restart, is given. For the time-being,
+standard PLOT3D-type files are always still output at the end of a
+run. This redundant output procedure will continue until CGNS is
+implemented more widely in post processor utilities.
+
+<p>
+CFL3D currently writes out solution information to the CGNS file both
+at cell centers as well as within one rind cell at all boundaries. This
+is necessary in the long-term so that plotting packages will be able
+to extract correct boundary data (e.g., velocity=0 on solid surfaces)
+from the CGNS file. However, note that at the current time the BCs are
+not updated immediately prior to writing out the CGNS file, so the rind
+cells are "behind" by one iteration; this can mean imperfect matching
+at interfaces or slightly non-zero velocities on solid surfaces when
+plotting from the CGNS file, particularly if the solution is far from
+convergence.
+
+<p>
+The CGNS implementation in CFL3D follows the recommendations outlined in
+Appendix D of Reference 10 to improve the likelihood that other external
+applications will be able to easily use the resulting CGNS files without
+a too-extensive array of checks and translators.
+
+<h2>6. Future Directions for CGNS</h2>
+
+<p>
+The CGNS charter calls for changes and additions to the CFD General
+Notation System. CGNS has been developed with the key concepts of
+flexibility and extensibility in mind. In order to address a perceived
+need or deficiency in the software, a proposal must be submitted to the
+CGNS Steering Committee. The proposal is then presented in an open and
+public forum.  The CGNS Steering Committee is responsible for accepting,
+altering or rejecting the proposal, and determines the timetable for
+implementation. The primary requirement for any proposal is to maintain
+code compatibility with the existing CGNS Standard.  Currently there are
+several proposed CGNS extensions still at the discussion level. They
+include the following features:
+
+<ul>
+<li> multigrid
+<li> rotating coordinates
+<li> periodic boundary conditions
+<li> wall functions
+<li> 2D axisymmetry data
+<li> Cartesian data
+<li> object-oriented interfaces
+<li> parallel implementation
+</ul>
+Several of these proposed extensions are posted on the web at
+www.CGNS.org. Proposals for modifications and extensions of CGNS may be
+submitted by anyone.
+
+<p>
+To expedite the implementation of the proposed extensions, one of
+the CGNS Steering Committee's long-term goals is to have multiple
+organizations involved in the development of CGNS. CGNS is "Open
+Software" similar to LINUX and is available to the public. Information
+on CGNS (source code, executables, sample CGNS files, documentation,
+etc.) can be found at www.CGNS.org.
+
+<p>
+Another long-term goal is to see CGNS used globally.  CGNS is currently
+not used at a significant level in Japan/Asia. We hope to promote its
+utilization through publications and the Internet. CGNS will be utilized
+in all parts of the world as more commercial applications adapt CGNS.
+
+<p>
+The CGNS standard is also the object of an ISO standardization effort
+for Fluid Dynamics data. This project has been accepted by the ISO
+organization and is progressing. Final balloting on the ISO AP 237
+standard is anticipated to occur in the second quarter of 2005.
+
+<p>
+Finally, the AIAA Committee on Standards for CFD has agreed in June 2001
+to publish the CGNS standard as an AIAA Recommended Practice.
+
+<h2>7. Concluding Remarks</h2>
+
+<p>
+This paper described the status of the CFD General Notation System. CGNS
+has grown into a data standard sufficient to support a majority of CFD
+applications while providing for easy data exchange between sites,
+computing environments and applications. New functionality is currently
+being added to the CGNS system. The Standard Interface Data Structures
+(SIDS) and corresponding Application Programming Interface (API) are
+being extended to support chemistry and species, arbitrary user data
+and linked CGNS files.  Version control has been added to allow CGNS
+source development by multiple organizations. The support of CGNS has
+been enhanced through providing CGNS documentation in either HTML or
+Adobe PDF files and a CGNS electronic discussion group where CGNS users
+can now post messages to the CGNS team and other users using this email
+mailing list. An effort is underway for CGNS to be adopted as an ISO
+standard for the recording of aerodynamic data. The utilization of CGNS
+by commercial, government and industrial organizations was reported with
+a focus on how CGNS is being used at Boeing, ONERA, Pratt &amp; Whitney
+and NASA Langley. Future directions and goals for CGNS were discussed.
+
+<h2>References</h2>
+
+<ol>
+<li> CGNS Team, "The CGNS System Overview and Entry Level Document",
+     Draft, Version 1.0, May 1998.
+<li> Allmaras, S., "CGNS Standard Interface Data Structures", Draft, May
+     1997.
+<li> CGNS Team, "The ADF User's Guide", May 1997.
+<li> CGNS Team, "SIDS-to-ADF File Mapping Manual", Version 1.1, June
+     1999.
+<li> Poirier, D., "CGNS Mid-Level Library", December 1999.
+<li> Poirier, D., Allmaras, S., McCarthy, D., Smith, M., Enomoto, F.,
+     "The CGNS System", AIAA Paper 98-3007, June 1998.
+<li> "Guidelines for the Development and Approval of STEP Application
+     Protocols," document number ISO TC 184/SC4N535:1998(E), dated 18
+     December 1998.
+<li> Poirier, D., Bush, R., Cosner, R., Rumsey, C., McCarthy, D.,
+     "Advances in the CGNS Database Standard for Aerodynamics and CFD",
+     AIAA Paper 2000-0681, January 2000.
+<li> Krist, S. L., Biedron, R. T., Rumsey, C. L., "CFL3D User's Manual
+     (Version 5.0)", NASA TM-1998-208444, June 1998.
+<li> Rumsey, C. L., Poirier, D. M. A., Bush, R. H., Towne, C. E., "A
+     User's Guide to CGNS", NASA/TM-2001-211236, October 2001.
+<li> http://www.onera.fr
+<li> Cambier, L. and Gazaix, M., "An Efficient Object Oriented Solution
+     to CFD Complexity", AIAA Paper 2002-0108, Jan. 2002.
+<li> http://www.python.org
+<li> http://elsa.onera.fr/CGNS/releases
+</ol>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 19 Dec 2007
+
+</body>
+</html>

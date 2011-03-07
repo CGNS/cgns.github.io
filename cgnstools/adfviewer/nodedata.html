@@ -1,0 +1,119 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgnstools.css" rel="stylesheet" type="text/css">
+<title>Node Data</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../../cgnstools/index.html"><span class=nav><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></span></a>)
+<br><br>
+(<a href="../adfviewer/index.html"><span class=nav><b>ADFviewer</b></span></a>)
+(<a href="../cgnsplot/index.html"><b>CGNSplot</b></a>)
+(<a href="../utilities/index.html"><b>Utilities</b></a>)
+<br><br>
+(<a href="../adfviewer/menu.html"><b>Menu&nbsp;Items</b></a>)
+(<a href="../adfviewer/toolbar.html"><b>Toolbar&nbsp;Buttons</b></a>)
+(<a href="../adfviewer/separator.html"><b>Separator&nbsp;Bar</b></a>)
+(<a href="../adfviewer/nodetree.html"><b>Node&nbsp;Tree</b></a>)
+(<a href="../adfviewer/nodedesc.html"><b>Node&nbsp;Description</b></a>)
+(<a href="../adfviewer/linkdesc.html"><b>Link&nbsp;Description</b></a>)
+(<a href="../adfviewer/datadesc.html"><b>Data&nbsp;Description</b></a>)
+(<span class=nav><b>Node&nbsp;Data</b></span>)
+(<a href="../adfviewer/buttons.html"><b>Buttons</b></a>)
+(<a href="../adfviewer/customize.html"><b>Customization</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Node Data</h2>
+
+<p>This panel displays the data associated with a node, and
+allows editing of the data. The panel is a simple text editor,
+and really only intended to be used to edit small amounts of data.
+</p>
+
+<p>The panel is filled in automatically when selecting a node
+from the <a href="nodetree.html">Node Tree</a> if <a
+href="menu.html#ConfigMenu">Auto Load Data</a> is enabled and the
+size of the the data is less than the <a
+href="menu.html#ConfigMenu">Auto Data Size</a> threshold. A read
+of the data may also be forced using the <a href="buttons.html">Read
+button</a>. </p>
+
+<p>In the case of multidimensional arrays, the data will shown in
+groups of the inner dimension, with successive groups on a new
+line. In order to prevent very long lines, which may cause a
+problem for the editor, the number of data values to be displayed
+per line is limited to a maximum value (default 10). This maximum
+value may be changed from the <a href="menu.html#ConfigMenu">Auto
+Data Size</a> setup window. The current value may also be changed
+by typing the new value in the <b>Values/Line</b> entry box,
+followed by the <i>Enter</i> key. </p>
+
+<p>The current line containing the insertion cursor is shown in
+the <b>Line</b> box. You may enter a new line number, followed by
+the <i>Enter</i> key to go to the line. This entry accepts
+arithmetic expressions, so you may type an expression like 75/3+1
+to go to the line containing the 75th data value. The number in
+parenthesis following the line number is the number of the data
+value which is first on the current line.</p>
+
+<p>The data in the following figure is dimensioned (3,60) and so
+is shown as 60 lines of 3 values each, and the cursor is
+currently on the 7th line, which contains data values 19, 20 and
+21. </p>
+
+<p><img src="images/nodedata.gif" width="380" height="172"
+        alt="Node Data panel"> </p>
+
+<p>When formatting the data for display, the C &quot;%g&quot;
+format is used for real data and the &quot;%d&quot; format for
+integer data. When converting the data for writing to the node,
+the C routines atof() and atoi() are used for real and integer
+data, respectively. Character data is treated as C strings. </p>
+
+<p>When creating a new node with the <a href="buttons.html">Create</a>
+button, the data values in this panel, will be used to assign
+data to the node. When modifying an existing node with the <a
+href="buttons.html">Modify</a> button, these values will be used
+if they exist, otherwise the actual node data is used. When doing
+data type conversions, this panel should generally be cleared of
+data. Therefore, the program will automatically clear this panel
+when the <b>Data Type</b> on the <a href="datadesc.html">Data
+Description</a> panel is changed. The <a href="buttons.html">Read</a>
+button may be used to reload the existing data if desired. </p>
+
+<p>When the <b>Node Label</b> in the <a href="nodedesc.html">Node
+Description</a> panel is a known CGNS type, clicking Mouse Button
+3 in this window will pop-up a panel which lists the data
+properties associated with the CGNS label type. If there is
+predefined data associated with the CGNS label type, then a list
+of these values will be presented instead, allowing selection of
+one of the predefined types. </p>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../../include/footer_small.html" -->
+Last updated 15 May 2003
+
+</body>
+</html>

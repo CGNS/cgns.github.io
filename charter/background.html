@@ -1,0 +1,288 @@
+<!-- CGNS Steering Committee Charter - Background -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="charter.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Charter - Background </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="index.html"><span class=nav><b>Steering&nbsp;Committee&nbsp;Charter</b></span></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<span class=nav><b>Background</b></span>)
+(<a href="mission.html"><b>Mission/Vision/Responsibilities</b></a>)
+(<a href="organization.html"><b>Organization/Bylaws</b></a>)
+(<a href="principles.html"><b>Standard&nbsp;and&nbsp;Software&nbsp;Governing&nbsp;Principles</b></a>)
+(<a href="license.html"><b>CGNS&nbsp;License</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Background</h2>
+
+<ul>
+<li> <a href="#history">History</a>
+<li> <a href="#management">Management</a>
+</ul>
+
+<a name="history"></a>
+<h3>History</h3>
+
+<p>
+In the early 1980s, the PLOT3D data format gained acceptance as a de
+<i>facto</i> standard to enable the storage and exchange of CFD data
+within analysis processes, and among collaborating organizations.
+This initial CFD data standard today continues to be the most common
+storage and exchange standard for CFD data, based on structured grids.
+
+<p>
+However, by the early 1990s several limitations in the PLOT3D standard
+had become apparent.
+Individual organizations were overcoming these limitations by defining
+extensions to the PLOT3D standard to meet their needs.
+These extensions were not coordinated among different organizations, and
+therefore data stored in these extended formats generally could not be
+utilized outside the originating organization.
+Further, the PLOT3D standard had not anticipated several key trends in
+CFD technology, such as unstructured grids, turbulence models based on
+solutions of partial differential equations, and the need to include
+chemical species concentrations as part of a CFD solution.
+Also, the PLOT3D format, which was originally developed simply
+to expedite post-processing (visualization) did not include
+self-documenting features.
+Therefore, it was necessary to rely on file-naming conventions or
+external notes to maintain awareness of the flow conditions and analyzed
+geometry of each PLOT3D data file.
+
+<p>
+The CGNS Data Standard was initially conceived in 1994 by
+<a href="http://www.nasa.gov/">NASA</a>,
+<a href="http://www.boeing.com/">Boeing</a>
+<img src="../external.png" alt="external link">, and then-McDonnell Douglas
+teams working under the Integrated Wing Design element of NASA's
+Advanced Subsonic Technology Program.
+The objective of this work was to greatly reduce the time required to
+design a transport wing.
+Implicit in this goal was increased extensive use of Computational
+Fluid Dynamics (CFD) and the possibility of collaborative analyses by
+many organizations.
+
+<p>
+To achieve this vision, it was necessary to establish a common data
+format suitable to meet the needs of production CFD tools in the mid- to
+late-1990s.
+This format would be used to enable interchange of data among different
+CFD-related tools and different computing platforms, and to provide a
+mechanism for archive and retrieval of CFD data.
+The chief tools that were taken into consideration for this goal were
+two structured-grid multi-block codes, OVERFLOW and TLNS3D.
+The available data standard, the PLOT3D format, was increasingly proving
+to be inadequate for this purpose.
+Some of these shortcomings included:
+
+<ul>
+<li> Requirement to read the entire file to retrieve any data.
+<li> No provision for multi-block connectivity data.
+<li> Requirement to convert to ASCII format to transfer data between
+     dissimilar computing platforms.
+<li> Lack of self-documentation; descriptive information must be
+     separately maintained outside the data file.
+</ul>
+
+<p>
+Several database options were considered by the NASA / Boeing /
+McDonnell Douglas team during the period December 1994 to March 1995.
+In March 1995, a decision was taken to build a new data standard called
+CGNS (Complex Geometry Navier Stokes).
+This standard was a "clean sheet" development, but it was heavily
+influenced by the McDonnell Douglas
+<a href="http://www.grc.nasa.gov/WWW/winddocs/cff/">Common File Format
+(CFF)</a> standard, which had been established and deployed in 1989 and
+significantly revised in 1992.
+
+<p>
+It should be noted that the CGNS data standard consists of two major
+elements:
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td nowrap><i>Data Content and Format</i><td><tt>&nbsp;&nbsp;</tt>
+   <td>The definition of the intellectual content of the data to
+       be represented in this standard, and the format of the
+       representation in the standard-conforming data file.
+<tr valign=baseline><td>
+   <td nowrap><i>Implementing Software</i><td>
+   <td>Software packages developed to ease the process of establishing
+       CGNS-compliant database references within an applications code.
+</table>
+
+<p>
+In accepted standards contexts such as ISO / STEP, the "standard"
+consists only of the first item, a definition of the data content and
+format.
+In this regard, the CGNS development team went beyond the traditional
+role in setting standards, by also developing software to easily
+implement the standard in a code.
+The implementing software, in turn, was developed in two layers:
+
+<ul>
+<li> Low-level routines to perform elementary operations on the
+     database, known as the <a href="../adf/index.html"><i>ADF
+     (Advanced Data Format) Library</i></a>.
+     This low-level ADF library performs basic direct I/O operations on
+     the file.
+     It does not have any built-in knowledge of the data structure or
+     the content of the data.
+     The user must provide this knowledge; thus, a user who writes
+     ADF calls must have a complete understanding of the CGNS data
+     structures and content.
+<br><br>
+<li> Higher-level routines to perform common operations required by a
+     CFD code, known as the <a href="../midlevel/index.html"><i>CGNS
+     Mid-Level Library</i></a>.
+     The CGNS Mid-Level Library is an Application Programming Interface
+     (API) that allows the use of CGNS data files without any knowledge
+     of the underlying data structures and file format.
+     The person who writes code using this mid-level library needs only
+     to have a general understanding of the standard data structure and
+     content.
+     The purpose of the mid-level library is to shield the user from the
+     complexity of the basic ADF calls, and to ensure that the data are
+     written in the proper structure to create a CGNS-compliant file.
+     With the release of CGNS Version 2.4, the Mid-Level Library may
+     be built using either ADF or
+     <a href="http://hdf.ncsa.uiuc.edu/HDF5/">HDF5</a>
+     <img src="../external.png" alt="external link"> as the underlying
+     database.
+</ul>
+
+<p>
+The data standards are controlled by two documents, which are available
+at the <a href="../index.html">CGNS Documentation Home Page</a>.
+These key control documents are:
+
+<ul>
+<li> <a href="../sids/index.html">Standard Interface Data Structures
+     (SIDS)</a>
+<li> <a href="../filemap/index.html">SIDS-to-ADF File Mapping Manual</a>, or
+     <a href="../filemap_hdf/index.html">SIDS-to-HDF File Mapping Manual</a>
+</ul>
+
+<p>
+The ADF library was developed during 1995, and the first large-scale
+deployment was made by (then) McDonnell Douglas - St. Louis in November
+1995, as part of an upgrade to the Common File Format system.
+During 1995-97, the NASA - Boeing - McDonnell Douglas team focused on
+adding content to the control documents, and laying out the requirements
+of the mid-level library.
+
+<p>
+At a review in June 1997, the CGNS team (NASA, Boeing, and McDonnell
+Douglas) determined that additional professional support would be
+required to produce an adequate mid-level library.
+Subcontracts were issued to the <a href="http://www-berkeley.ansys.com/">ICEM
+CFD Engineering Company</a> <img src="../external.png" alt="external link">,
+in Berkeley, CA, following this decision.
+ICEM CFD Engineering in effect became the lead organization for the
+development of the mid-level library.
+At this time, the acronym "CGNS" was re-defined to mean "CFD General
+Notation System", which was more in keeping with the evolved goals of
+this project.
+
+<p>
+An initial mid-level software library (version 1.0), which met the
+original goals of structured multi-block analysis codes, was released
+in May 1998.
+At this time, a decision also was taken whereby NASA and Boeing
+(McDonnell Douglas by this time had been absorbed by Boeing) would
+relinquish all rights to ICEM CFD Engineering.
+Concurrently, NASA and the informal CGNS committee determined that there
+was no need for export authority, so the CGNS standard, the ADF and
+mid-level library, and all supporting documentation could be distributed
+worldwide as freeware.
+Appropriate legal reviews and approvals were obtained at both NASA and
+Boeing to validate this decision.
+
+<p>
+At meetings in March, May, and October 1998, the mid-level library was
+extended to support a wide range of unstructured grid types.
+The SIDS document defining the standard was modified, and extended
+versions of the mid-level library were released at intervals in late
+1998 and early 1999.
+By May 1999, the extension to unstructured grids was released.
+
+<a name="management"></a>
+<h3>Management</h3>
+
+<p>
+Up to this time, all activities related to the development of the
+standard, the implementing software, and the related documentation had
+been coordinated and largely funded by NASA under the Advanced Subsonic
+Technology Program.
+In 1998, NASA took a decision that the Advanced Subsonic Technology
+program would end on September 30, 1999, which was approximately one
+year earlier than their original plan.
+Further, NASA indicated that they would not be able to manage the
+development of a standard or a software system such as CGNS, once it
+ceased to be the focus of an ongoing NASA program.
+
+<p>
+At this time, a number of U.S. and international organizations had
+established plans to use the CGNS standard and the ADF and
+mid-level library, and in several cases they had begun implementation.
+These organizations had a clear interest in the existence of an
+organization to coordinate future use and extensions of the CGNS
+standard and its supporting software and documentation.
+Also during this same period (1998-99), The Boeing Company launched an
+initiative to establish an <a href="http://cgns.sourceforge.net/ISO.html">ISO
+standard for aerodynamic data</a>
+<img src="../external.png" alt="external link">, to be based on the CGNS
+standard.
+However, in a best-case scenario CGNS will not become an ISO standard
+until roughly 2005-2006, and acceptance of CGNS as an ISO standard is
+not a certainty.
+It became clear that CGNS needed to find an organizational home, to
+coordinate its extension and utilization.
+
+<p>
+The organizations interested in the CGNS standard met in Hampton, VA,
+on May 20, 1999 to discuss options for a CGNS management organization.
+Out of this meeting, the CGNS Steering Committee was established.
+This Steering Committee is a voluntary organization to coordinate the
+further development and dissemination of the CGNS standard and its
+supporting software and documentation.
+In January 2000, the CGNS Steering Committee became an official
+subcommittee under the purview of the American Institute of Aeronautics
+and Astronautics (AIAA) Committee on Standards.
+The AIAA also distributes the CGNS SIDS document as an AIAA Recommended
+Practice.
+However, this AIAA affiliation does not preclude the CGNS committee from
+public dissemination of the SIDS and other CGNS documentation.
+
+<p>
+The following sections of this document present the vision of how the
+CGNS Steering Committee will operate.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 31 Aug 2005
+
+</body>
+</html>

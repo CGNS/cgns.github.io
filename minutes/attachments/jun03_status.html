@@ -1,0 +1,203 @@
+<!-- HTML input file for "Status of CFD General Notation System (CGNS)"
+     (attachment to minutes of June 2003 Steering Committee Meeting) -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../../cgns.css" rel="stylesheet" type="text/css">
+<title>Status of CFD General Notation System (CGNS)</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>Agenda</h1>
+
+<h2>CGNS meeting, June 24, 2003, Orlando, FL</h2>
+
+<ul>
+<li> Status of CGNS and outstanding issues
+<li> Discussion of recent issues raised on CGNStalk
+     <ul>
+     <li> UserDefined extension
+     <li> BCDataSet extension
+     <li> CGNSVersion
+     <li> Possible need for GridLocation=FaceCenter in
+          ZoneGridConnectivity
+     </ul>
+<li> Future directions, needs, and other issues
+</ul>
+
+<h1>Status of CFD General Notation System (CGNS)</h1>
+
+<p>
+Christopher L. Rumsey<br>
+June 24, 2003, Orlando FL
+
+<h2>Outline</h2>
+
+<ul>
+<li> Introduction
+<li> Recent accomplishments
+<li> Where we are
+<li> Current issues/needss
+<li> Where we are going
+</ul>
+
+<h2>What is CGNS?</h2>
+
+<ul>
+<li> Standard for defining &amp; storing CFD data
+     <ul>
+     <li> Self-descriptive
+     <li> Machine-independent
+     <li> Very general and extendable
+     <li> Administered by international steering committee
+     </ul>
+<li> AIAA recommended practice (AIAA R-101-2002)
+<li> In process of becoming international ISO standard
+<li> Free and open software
+<li> www.cgns.org
+</ul>
+
+<h2>Typical CGNS file</h2>
+
+<p>
+<center>
+<img src="jun03_status/fig1.png"
+     alt="Chart illustrating a typical CGNS file"
+     longdesc="jun03_status/fig1.html">
+</center>
+
+<h2>Makeup of CGNS</h2>
+
+<ul>
+<li> Standard Interface Data Structures (SIDS) is the core of CGNS -
+     defines the intellectual content
+<li> Low level implementation is currently Advanced Data Format (ADF)
+     <ul>
+     <li> Basic direct I/O operations
+     <li> Software has no knowledge of data structure or contents
+     <li> Tree-based (nodal parent/child) structure
+     </ul>
+<li> Mid-level library (MLL) is currently available for C and Fortran
+     <ul>
+     <li> This is what most users employ
+     <li> Software has some knowledge of SIDS
+     <li> C++ and Python extensions also available
+     </ul>
+</ul>
+
+<h2>Recent accomplishments</h2>
+
+<ul>
+<li> CGNS now maintained on and available from SourceForge
+     (sourceforge.net)
+<li> Latest version is 2.2
+<li> Utility "adfviewer" available for viewing &amp; translating CGNS
+     files
+<li> Extensive web-based and pdf documentation available
+<li> CGNStalk@grc.nasa.gov discussion group
+</ul>
+
+<h2>Where we are</h2>
+
+<ul>
+<li> SIDS &amp; software reliable and well-tested
+<li> Most current proposals for extension (to SIDS) are relatively
+     minor/specific
+<li> Acceptance as ISO standard is progressing (but stalled in 2003 due
+     to budgeting problem)
+<li> Many people beginning to use CGNS, but mostly as an "option" - it
+     has yet to gain full acceptance as a standard
+</ul>
+
+<h2>Current issues/needs</h2>
+
+<ul>
+<li> Replacement of underlying ADF with HDF5
+     <ul>
+     <li> Prototype (written by Poinot) is available
+     <li> Needs evaluation and further work
+     <li> Adds parallel capability and would help propel CGNS to wider
+          use/acceptance
+     </ul>
+<li> Need to reconcile ISO specs (STEP documents) with latest SIDS
+<li> New proposals for extension need review, then implementation
+</ul>
+
+<h2>Where we are going</h2>
+
+<ul>
+<li> Resolve current issues/needs (last slide)
+<li> Replace ADF with HDF5 for commonality and growth
+<li> Continue "advertising": Poinot et al. abstract submitted for Reno
+     2004, "Impact of CGNS on CFD Workflow"
+<li> Push to get more of the widely-used CFD codes to implement CGNS
+<li> Maintain an active &amp; diverse steering committee
+</ul>
+
+<h1>Discussion of recent issues raised on CGNSTalk</h1>
+
+<h2>UserDefined extension</h2>
+
+<ul>
+<li> Allow the following additional children:
+     <ul>
+     <li> PointRange, PointList, GridLocation, FamilyName, Ordinal
+     </ul>
+<li> Would need new MLL functions, e.g.:
+     <ul>
+     <li> cg_ptset_write, cg_ptset_read, cg_ptset_info
+     </ul>
+<li> Purpose: extends usefulness of UserDefined node
+</ul>
+
+<h2>BCDataSet extension</h2>
+
+<ul>
+<li> Allow the following additional children:
+     <ul>
+     <li> PointRange, PointList, GridLocation
+     </ul>
+<li> Would need new MLL functions, e.g.:
+     <ul>
+     <li> cg_ptset_write, cg_ptset_read, cg_ptset_info
+     </ul>
+<li> Purpose: allows auxiliary BC data info to reside at different grid
+     location from the indices that define the BC patch
+</ul>
+
+<h2>CGNSVersion issue</h2>
+
+<ul>
+<li> Problem: if write CGNS file without CGNSLibraryVersion node, then
+     reading the file using MLL can cause problems
+<li> Current fix: make CGNSLibraryVersion node mandatory part of CGNS
+     file (this is a fix to the documentation only)
+<li> Question: is a proposal for a separate CGNSVersion node needed?
+     <ul>
+     <li> Maybe not, because MLL and SIDS maintain the same numbering
+          (e.g., "2.2")
+     </ul>
+</ul>
+
+<h2>GridLocation issue</h2>
+
+<ul>
+<li> Currently, connectivity information is always with respect to the
+     vertices for abutting-type interfaces, and can be either Vertex or
+     CellCenter for overset-type
+<li> Should GridLocation=FaceCenter also be allowed?
+     <ul>
+     <li> Particularly desirable for unstructured grids
+     </ul>
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../../include/footer_small.html" -->
+Last updated 7 Feb 2008
+
+</body>
+</html>

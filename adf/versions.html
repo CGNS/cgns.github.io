@@ -1,0 +1,126 @@
+<!-- ADF User's Guide - ADF File Version Control Numbering -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - ADF File Version Control Numbering </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<span class=nav><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></span>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>ADF File Version Control Numbering</h2>
+
+<p>
+The ADF file version control number scheme is described below.
+The format for the version number is a field of six digits or characters:
+<pre>
+   AXXxxx
+</pre>
+where:
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>A</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Major revision number.
+       Major internal structure changes.
+       This number is not expected to change very often, if at all,
+       because the backward compatibility is only available by explicit
+       policy decision.
+       <br><br>
+       One alphabetic character.
+       <br><br>
+       Range of values: <tt>A-Z</tt>, <tt>a-z</tt>
+       <br><br>
+       In the unlikely event of reaching <tt>z</tt>, then use any other
+       unused printable ASCII character, except the blank or symbols
+       used by the "<i>what</i>" command 
+<pre>
+   @()#~>\
+</pre>
+<tr valign=baseline><td>
+   <td><tt>XX</tt><td>
+   <td>Minor revision number.
+       New features, minor changes, and bug fixes.
+       Backward but not forward compatible.
+       <br><br>
+       Two-digit hexadecimal number (uppercase letters).
+       <br><br>
+       Range of values: <tt>00-FF</tt>
+       <br><br>
+       Reset to <tt>00</tt> with changes in major revision number.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>xxx</tt><td>
+   <td>Incremental number.
+       Incremented with every new version of the library (even if no
+       changes are made to the file format).
+       Files are forward and backward compatible.
+       <br><br>
+       Three-digit hexadecimal number (lowercase letters).
+       <br><br>
+       Range of values: <tt>000-fff</tt>
+       <br><br>
+       Does not reset.
+</table>
+
+<p>
+The following definitions are used:
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Forward compatible<td><tt>&nbsp;&nbsp;</tt>
+   <td>Older versions of libraries can read and write to files created
+       by newer versions of libraries.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Backward compatible<td>
+   <td>Newer versions of libraries can read and write to files created
+       by older versions of libraries.
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 25 Oct 2001
+
+</body>
+</html>

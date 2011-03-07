@@ -1,0 +1,469 @@
+<!-- CGNS File Mapping Manual - SLL Mapping to HDF5 -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="filemap_hdf.css" rel="stylesheet" type="text/css">
+<title> CGNS SIDS-to-HDF File Mapping Manual - SLL Mapping to HDF5 </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="index.html"><span class=nav><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></span></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="brief.html"><b>Brief&nbsp;Description&nbsp;of&nbsp;CGNS</b></a>)
+(<a href="documentation.html"><b>CGNS&nbsp;Documentation</b></a>)
+(<a href="background.html"><b>CGNS&nbsp;Background</b></a>)
+(<span class=nav><b>SLL&nbsp;Mapping&nbsp;to&nbsp;HDF5</b></span>)
+(<a href="general.html"><b>General&nbsp;CGNS&nbsp;SLL&nbsp;Mapping&nbsp;Concepts</b></a>)
+(<a href="nodes.html"><b>Detailed&nbsp;CGNS&nbsp;Node&nbsp;Descriptions</b></a>)
+(<a href="figures.html"><b>CGNS&nbsp;File&nbsp;Mapping&nbsp;Figures</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>SLL Mapping to HDF5</h2>
+
+<ul>
+<li> <a href="#general">General Description of HDF5</a>
+<li> <a href="#dedicated">Dedicated HDF5 Structures</a>
+</ul>
+
+<p>
+The purpose of the current document is to describe the way in which CFD
+data is to be represented in an HDF5 data tree.
+To do this, it is necessary to first describe the HDF5 data structure
+itself in some detail.
+Therefore, a conceptual summary of HDF5 is given here in order to make
+the current document relatively independent, and to allow the reader to
+focus on those aspects of HDF5 which are essential to understanding the
+file mapping.
+
+<p>
+Any HDF5 file with a conformant mapping is <em>CGNS/HDF5</em> compliant.
+The mapping has been made using a <em>per-node</em> basis.
+Instead of having a new mapping dedicated to HDF5, we have made a
+mapping from the ADF nodes to a set of HDF5 groups.
+While this is not an optimal mapping, the use of such an HDF5 node
+allows us to re-use the ADF API without change.
+
+<p>
+The <a href="http://hdf.ncsa.uiuc.edu/HDF5/">HDF5 documentation</a>
+<img src="../external.png" alt="external link"> should be used as the
+authoritative references to resolve any issues not covered by this
+summary.
+
+<a name="general"></a>
+<h3>General Description of HDF5</h3>
+
+<p>
+The HDF5 library provides CGNS with a low level storage system.  
+This library is developed and maintained by the
+<a href="http://www.ncsa.uiuc.edu/">National Center for Supercomputing
+Applications</a> <img src="../external.png" alt="external link"> at the
+University of Illinois at Urbana-Champaign.
+It offers a free storage system, with support for a very large number of
+platforms used in the scientific world.
+This system is in charge of all physical features such as storage,
+compression, virtual access to data and many other services also useful
+for the CGNS users.
+
+<p>
+HDF5 allows a fine tuning of the physical devices, however, the SLL use
+of HDF5 forces all <em>property lists</em> to <tt>DEFAULT</tt> values.
+
+<p>
+Refer to the <a href="http://hdf.ncsa.uiuc.edu/HDF5/">HDF5 web site</a>
+<img src="../external.png" alt="external link"> for further information
+about HDF5.
+
+<a name="dedicated"></a>
+<h3>Dedicated HDF5 Structures</h3>
+
+<p>
+The <em>CGNS node</em> is an HDF5 group.
+It contains attributes, an optional dataset and optional child groups.
+This structure is required and can be extended by other implementors as
+long as the following requirements are fullfilled.
+
+<p>
+In a CGNS tree, most of the nodes are <em>normal</em> nodes.
+These nodes can optionally contain data and have other nodes as
+children.
+
+<p>
+There are special nodes, such as the root node and the nodes managing
+the <em>links</em>.
+These special link structures use the HDF5 mount system.
+It is not necessary for either the MLL or SLL users to understand the
+HDF5 mount system, but it should be understood by SLL implementors.
+
+<a name="nodemapping"></a>
+<h4>The CGNS Node Mapping</h4>
+
+<p>
+The CGNS node uses <em>groups</em> and <em>attributes</em> elements of
+HDF5.
+A basic CGNS node is composed of elements listed in the following table.
+The attribute names have been enclosed in square brackets, because the
+SLL uses private attributes with a leading <i>space</i> character.
+These brackets are not part of the names.
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Basic Node
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>GROUP<td><tt>&nbsp;&nbsp;</tt>
+   <td><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td>REQUIRED ATTRIBUTE<td>
+   <td><tt>[name]</tt><td>
+   <td><tt>U8LE[33]</tt>
+<tr valign=baseline>
+   <td>REQUIRED ATTRIBUTE<td>
+   <td><tt>[label]</tt><td>
+   <td><tt>U8LE[33]</tt>
+<tr valign=baseline>
+   <td>REQUIRED ATTRIBUTE<td>
+   <td><tt>[type]</tt><td>
+   <td><tt>U8LE[3]</tt>
+<tr valign=baseline>
+   <td>REQUIRED ATTRIBUTE<td>
+   <td><tt>[&nbsp;order]</tt><td>
+   <td><tt>H5T_NATIVE_INT</tt>
+<tr valign=baseline>
+   <td>OPTIONAL DATASET<td>
+   <td><tt>[&nbsp;data]</tt><td>
+   <td>
+</table>
+</center>
+
+<p>
+All the children groups of a node are understood as SLL children nodes
+of this node, unless the group name starts with a <em>space</em>
+character.
+The <em>dataset</em> contains the actual data of a node.
+In the case of a node without data (i.e. <tt>MT</tt> type), the dataset
+does not exist.
+
+<p>
+In addition to the attributes of a <em>normal</em> node, special
+attribute names are reserved for the root node, shown in the following
+table.
+The name of the root node is <tt>[HDF5 MotherNode]</tt>, its label is
+<tt>[Root Node of HDF5 File]</tt>, type is <tt>MT</tt>.
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Root Node
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>GROUP<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col><tt>[/]</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td>REQUIRED ATTRIBUTE<td>
+   <td><tt>[&nbsp;version]</tt><td>
+   <td><tt>U8LE[33]</tt>
+<tr valign=baseline>
+   <td>REQUIRED ATTRIBUTE<td>
+   <td><tt>[&nbsp;format]</tt><td>
+   <td><tt>U8LE[33]</tt>
+</table>
+</center>
+
+<p>
+The node hosting the link entries is a special node named
+<tt>[&nbsp;mount]</tt> without attributes nor data.
+This group should be a child of the root node, its absolute path is
+<tt>[/&nbsp;mount]</tt>.
+The group <tt>[&nbsp;mount]</tt> contains one group for each mounted
+file refered to by a link.
+Each entry has the attributes described in the table below. 
+The link node itself is a group with the special name
+<tt>[&nbsp;link]</tt>.
+This implementation is discussed further in the section describing the
+<a href="#linkmechs">link mechanism</a>.
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Link Node
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>GROUP<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col><tt>[/&nbsp;mount/&nbsp;*]</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td>REQUIRED ATTRIBUTE<td>
+   <td><tt>[&nbsp;refcnt]</tt><td>
+   <td><tt>H5T_NATIVE_INT</tt>
+<tr valign=baseline>
+   <td>REQUIRED ATTRIBUTE<td>
+   <td><tt>[&nbsp;file]</tt><td>
+   <td><tt>H5T_NATIVE_CHAR</tt>
+</table>
+</center>
+
+<a name="nodeid"></a>
+<h4>The Node ID</h4>
+
+<p>
+The node ID is a unique identifier assigned to each existing node by
+HDF5 when the file containing it is opened, and to new nodes as they are
+created.
+SLL inquiries generally return node IDs as a result and accept node IDs
+as input.
+By building a table of IDs, calling software can subsequently access
+specific nodes without further search.
+The Node ID is real and is not under user control, its lifetime is ended
+by the closing of the HDF5 file.
+
+<a name="nodename"></a>
+<h4>The Node Name</h4>
+
+<p>
+The node Name is a 32-byte character field which is user controllable.
+Its general use is to distinguish among the children of a given node;
+consequently, no two children of the same parent may have the same Name.
+Constraints related to the node name are detailed in the <i>General CGNS
+SLL Mapping Concepts</i> section, under
+<a href="general.html#nodename">Node Name</a>.
+
+<a name="label"></a>
+<h4>The Label</h4>
+
+<p>
+The Label is a 32-byte character field which is user controllable.
+SLL assigns no formal role to the Label, but the intent was to identify
+the structure of the included data.
+It is common for the various children of a single parent to store
+different instances of the same structure.
+Therefore, there is no prohibition against more than one child of the
+same parent having the same Label.
+
+<a name="datatype"></a>
+<h4>The Data Type</h4>
+
+<p>
+The Data Type is a 32-byte character field which specifies the type and
+precision of any data which is stored in the data field.
+Types provided by HDF5 are:
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data Types
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>Data Type<td><tt>&nbsp;&nbsp;</tt>
+   <th            scope=col>Notation<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>HDF5 Type
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td>No Data<td>
+   <td align=center><tt>MT</tt><td>
+   <td><tt>-</tt>
+<tr valign=baseline>
+   <td>Integer 32<td>
+   <td align=center><tt>I4</tt><td>
+   <td><tt>H5T_NATIVE_INT32</tt>
+<tr valign=baseline>
+   <td>Integer 64<td>
+   <td align=center><tt>I8</tt><td>
+   <td><tt>H5T_NATIVE_INT64</tt>
+<tr valign=baseline>
+   <td>Unsigned Integer 32<td>
+   <td align=center><tt>U4</tt><td>
+   <td><tt>H5T_NATIVE_UINT32</tt>
+<tr valign=baseline>
+   <td>Unsigned Integer 64<td>
+   <td align=center><tt>U8</tt><td>
+   <td><tt>H5T_NATIVE_UINT64</tt>
+<tr valign=baseline>
+   <td>Real 32<td>
+   <td align=center><tt>R4</tt><td>
+   <td><tt>H5T_NATIVE_FLOAT</tt>
+<tr valign=baseline>
+   <td>Real 64<td>
+   <td align=center><tt>R8</tt><td>
+   <td><tt>H5T_NATIVE_DOUBLE</tt>
+<tr valign=baseline>
+   <td>Complex 64<td>
+   <td align=center><tt>X4</tt><td>
+   <td><tt>-</tt>
+<tr valign=baseline>
+   <td>Complex 128<td>
+   <td align=center><tt>X8</tt><td>
+   <td><tt>-</tt>
+<tr valign=baseline>
+   <td>Character<td>
+   <td align=center><tt>C1</tt><td>
+   <td><tt>H5T_NATIVE_CHAR</tt>
+<tr valign=baseline>
+   <td>Byte<td>
+   <td align=center><tt>B1</tt><td>
+   <td><tt>H5T_NATIVE_UCHAR</tt>
+<tr valign=baseline>
+   <td>Link<td>
+   <td align=center><tt>LK</tt><td>
+   <td><tt>-</tt>
+</table>
+</center>
+<br>
+There is no mapping to HDF5 <tt>MT</tt> and <tt>LK</tt> types, because
+there is no actual <em>data space</em> associated with the nodes.
+The type information itself is stored in the node as the strings
+"<tt>MT</tt>" and "<tt>LK</tt>".
+The types <tt>X4</tt> and <tt>X8</tt> are also not mapped.
+
+<p>
+The data storage format is translated as described below.
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Native Formats
+<br><br>
+</caption>
+<tr align=left><td colspan=3><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>Native Format<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>HDF5 Type
+<tr align=left><td colspan=3><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>H5T_IEEE_F32BE</tt><td>
+   <td><tt>IEEE_BIG_32</tt>
+<tr valign=baseline>
+   <td><tt>H5T_IEEE_F32LE</tt><td>
+   <td><tt>IEEE_LITTLE_32</tt>
+<tr valign=baseline>
+   <td><tt>H5T_IEEE_F64BE</tt><td>
+   <td><tt>IEEE_BIG_64</tt>
+<tr valign=baseline>
+   <td><tt>H5T_IEEE_F64LE</tt><td>
+   <td><tt>IEEE_LITTLE_64</tt>
+</table>
+</center>
+
+<a name="dimensions"></a>
+<h4>The Number of Dimensions</h4>
+
+<p>
+The Data portion of a node is designed to store multi-dimensional arrays
+of data, each element of which is presumed to be of the Data Type
+specified.
+The Number of Dimensions specifies the number of integers required to
+reference a single datum within the array.
+
+<a name="dimvalues"></a>
+<h4>The Dimension Values</h4>
+
+<p>
+The Dimension Values are a list of integers expressing the actual sizes
+of the stored array in each of the dimensions specified.
+These dimensions are stored by the <em>dataspace</em> associated with
+the <em>dataset</em>; no other attributes contains these values.
+
+<a name="data"></a>
+<h4>The Data</h4>
+
+<p>
+In an HDF5 node, the portion of the node holding the actual stored data
+array is a <i>dataset</i>.
+
+<a name="childtable"></a>
+<h4>The Child Table</h4>
+
+<p>
+All groups of the current group are said to be the children of this
+group, except the groups with a name starting with a space character.
+Each of these children groups is a <em>normal</em> node (i.e. group).
+
+<p>
+Children may be identified by their names and labels, and, thence, by
+their node IDs once these have been determined.
+HDF5 provides no notion of order among children, but the SLL layer adds
+a creation order stored in the <tt>[&nbsp;order]</tt> attribute.
+This order is guaranteed to be the same from call to call, even after
+the file has been closed and re-opened.
+
+<p>
+Note that there is no <em>parent</em> table; that is, a node has no
+direct knowledge of its parent.
+Since calling software must open the file from the root, it presumably
+cannot access a child without having first accessed the parent.
+It is the responsibility of the calling software to record the node ID
+of the parent if this information will be required.
+
+<a name="linkmechs"></a>
+<h4>The link mechanism</h4>
+
+A <tt>LK</tt> typed node is a <em>link</em>.
+Such a node refers to another node elsewhere.
+In other words, the <em>link</em> has no child or contents, but is a
+name of a node somewhere in the current file or in another file.
+The <tt>LK</tt> typed node is said to be the <em>emph</em> node, while
+the node elsewhere is said to be the <em>destination</em> node.
+
+Is is the role of the SLL layer to insure consistency
+[in particular in order to avoid an acyclic graph]
+and transparency of the link mechanism, so that any <em>normal</em> node
+request to the <em>link</em> node is performed as if it is performed on
+the destination node.
+
+A <em>link</em> destination can be in the same file as the <em>link</em>
+source or in another file.
+In both cases, the <em>link</em> is made using an HDF5 soft link from
+source to destination.
+In the case of a destination in another file, the destination file is
+mounted in the <tt>[/&nbsp;mount]</tt>
+[absolute path]
+group and the soft link is made from the source to the destination now
+present in this mounted file.
+
+Each time a file is mounted, the <tt>[/&nbsp;refcnt]</tt>
+[absolute path]
+attribute is incremented.
+The file is unmounted if there is no reference to itself.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 1 Sep 2005
+
+</body>
+</html>

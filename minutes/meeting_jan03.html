@@ -1,0 +1,261 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Meeting Minutes</h2>
+
+6 January 2003<br>
+7:00pm<br>
+Reno, Nevada
+
+<br><br>
+<b>Call to order</b> -
+Bob Bush called the meeting to order at 7:00.
+
+<br><br>
+<b>Attendance</b> -
+There were 17 attendees, <a href="#attendees">listed below</a>.
+
+<br><br>
+<b>Approval of minutes of last meeting</b> -
+The minutes were approved as posted on the web.
+
+<br><br>
+<b>Charter Business</b> -
+Chris Rumsey of NASA Langley was elected as new chairperson of the CGNS
+steering committee.  He will serve a 2 year term.
+
+<br><br>
+<b>ISO Status</b> -
+Ray Cosner provided an overview of the ISO standard development effort.
+Hierarchically, the CGNS model consists of the following parts.  At
+the top is AP 237 (Fluid Dynamics Data).  Under this is Part 110 (CFD
+Models), which was at one time removed, but then restored in Oct 2002.
+Under this are Part 50 (Mathematical Constructs) - which already exists
+under ISO, Part 52 (Mesh Based Data), and Part 53 (Numerical Analysis).
+Under these 3 parts is Part 21 (Clear-Text Encoding) - which already
+exists under ISO.
+
+<p>
+By Ray's estimates, if all goes well AP 237, and Parts 52, and 53, and
+110 will be voted as draft international standards by Jun 03 - Mar 04,
+and voted as international standards by Jan 04 - May 05 (2/3 vote needed
+from 19 countries).  An alternative to Part 21 will need to be tackled
+in the future if the ISO standard is to include binary representation
+of data (currently the ISO standard is ASCII).  The committee had some
+discussion about this issue.  It was suggested that the committee
+advocate HDF 5 to replace ADF as the binary representation.  HDF 5 has
+many tools and capabilities, including parallel capabilities.  Also, ISO
+committee members are already leaning that way.  Ray would like to hear
+from anyone by the end of February 2003 if they have any concerns or
+issues about HDF 5.  Chris Rumsey agreed to solicit an e-mail exchange
+about HDF 5 between Powers, Edwards, Michal, Cosner, Bush, and Poinot.
+
+<p>
+The use of gzipped XML was also discussed as a possibility for ASCII
+representation.
+
+<p>
+Ray again suggested the need for a workshop (at Lockheed, Ft Worth)
+for CGNS steering committee members to go through the ISO documents in
+detail.  This workshop was originally suggested for Fall 2002, but was
+postponed.  It was also suggested that a subcommittee be formed to go
+through Part 52 in detail, and make sure that it is still aligned with
+the latest CGNS SIDS constructs.  Chris Rumsey agreed to solicit input
+from Bussoletti, Poirier, Michal, Bush, and Cosner on this issue.
+
+<p>
+Ray informed the committee that he has a new job within Boeing, and he
+will need to identify a new project leader at some point in the future
+to take over the CGNS ISO effort.
+
+<br><br>
+<b>Documentation</b> -
+Craig Day (standards engineer at AIAA) announced that the printed
+version of the SIDS document (Recommended Practice R-101-2002) is
+complete and is available from the AIAA on-line store. Charlie Towne
+could not be present, but indicated to the Chairman via e-mail that once
+the AIAA version is complete, he will update our version, labeling it as
+a Draft Recommended Practice and adding a link to the AIAA on-line store
+web site.  He will also make the AIAA version available as a PDF file.
+
+<p>
+Towne made a note that the Recommended Practice is basically version
+2.1.6 of the SIDS document, dated 2 Nov 2001, and corresponds to CGNS
+software release 2.0, Rev 3.  Version 2.1 of the software was released
+in May 2002; version 2.2 in beta, and may become "official" soon.  The
+Recommended Practice thus doesn't include the data structures for
+chemistry or user-defined data (in version 2.1 of the software), or the
+data structures for axisymmetry, rotating coordinates, special grid
+connectivity properties, special boundary condition properties, or
+gravity (in version 2.2 beta of the software).  It also doesn't include
+various corrections and clarifications that have been added in the last
+year or so.  Charlie suggests that once version 2.2 of the software
+becomes official (i.e., non-beta), that we update the AIAA Recommended
+Practice.  The revised documentation for Version 2.1 is now installed
+on the web in the default locations.  The older documentation is still
+available via other links.
+
+<br><br>
+<b>Extensions</b> -
+John Bussoletti mentioned that currently the SIDS is lacking in some
+respects for unstructured CFD representation.  For example, there is
+no official place to store number of edges.  These can be placed under
+UserDefined for the time being. Also it was mentioned that the SIDS
+currently does not allow an unstructured GridLocation to be anything
+other than Vertex or CellCenter.  Bussoletti said that he planned to
+eventually propose some changes to the way SIDS handles unstructured
+data sets, as official extensions.
+
+<br><br>
+<b>Related Software Status</b> -
+David Edwards reported that Intelligent Light recently won an SBIR Phase
+1 from NASA that involves CGNS usage in post-processing large data sets.
+
+<p>
+Bruce Wedan reported on the status of adfviewer and related tools.  He
+is still working on documentation of this software.  Through e-mail,
+Charlie Towne mentioned that he plans to update the web documentation to
+include adfviewer.  But he would like to wait until documentation for
+the additional utilities that Bruce wrote can also be made available,
+especially since they can be accessed through ADFViewer.
+
+<p>
+At the last Telecon, it was agreed that Version 2.2 would be removed
+from beta status as of January 2003.  However, Bruce has recently made a
+lot of minor changes to the API beta software, so the decision to remove
+the beta status has been deferred for the time being and will be taken
+up again at the next telecon.
+
+<p>
+The use of SourceForge as a possible location for distributing CGNS
+software (and for having outside users upload modifications and
+additions) was discussed.  For example, Kessler uses SourceForge to
+distribute CGNS++ (C++ interface for CGNS). Bruce Wedan agreed to look
+into this possibility.
+
+<br><br>
+<b>Issues</b> -
+New ideas were solicited for directions that the CGNS committee should
+take this year.  Some of the ideas (and needs) that surfaced were as
+follows:
+
+<ul>
+<li> Discussion of need for FORTRAN 95 extension - but we already have
+     2 mid-level libraries (C and C++) ... too many?  Hard to control
+     multiple versions?
+<li> Need for a tool to check for SIDS-compliance
+<li> Parallel implementation needed
+<li> May need better definition for chemistry - Mori Mani may eventually
+     help to define extensions as he delves deeper into it
+<li> Need for a move to HDF 5 as the binary representation
+<li> Need to keep existing users engaged - need more CFD codes to
+     implement and actively use CGNS
+</ul>
+
+<b>Summary of Action Items</b> -
+
+<ol>
+<li> Chris to initiate discussion for feedback on HDF 5, with Powers,
+     Edwards, Michal, Cosner, Bush, and Poinot.
+<li> Chris to initiate team to evaluate Part 52 with Bussoletti,
+     Poirier, Michal, Bush, and Cosner, to make sure it conforms (maps)
+     to the latest SIDS document.
+<li> Bruce to complete documentation of adfviewer and its new tools.
+     Charlie to put this documentation on the web site, when Bruce
+     finishes it.
+<li> Bruce to look into SourceForge as a possible alternative to
+     distributing CGNS software.
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Bob Bush<td><tt>&nbsp;&nbsp;</tt>
+   <td>Pratt &amp; Whitney
+<tr valign=baseline><td>
+   <td>Dan Dominik<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>David Edwards<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Chris Nelson<td>
+   <td>JE Sverdrup - AEDC
+<tr valign=baseline><td>
+   <td>John Dannenhoffer<td>
+   <td>Syracuse University
+<tr valign=baseline><td>
+   <td>Greg Power<td>
+   <td>AEDC
+<tr valign=baseline><td>
+   <td>John Bussoletti<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Ray Cosner<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Todd Michal<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Allan Grosvenor<td>
+   <td>NUMECA
+<tr valign=baseline><td>
+   <td>Siansay Padhiar<td>
+   <td>Pointwise, Inc.
+<tr valign=baseline><td>
+   <td>Theresa Benyo<td>
+   <td>NASA Glenn
+<tr valign=baseline><td>
+   <td>Manuel Kessler<td>
+   <td>University of Stuttgart
+<tr valign=baseline><td>
+   <td>Paul Batten<td>
+   <td>Metacomp Tech.
+<tr valign=baseline><td>
+   <td>Mori Mani<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Bruce Wedan<td>
+   <td>ICEM CFD
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 15 Jan 2003
+
+</body>
+</html>

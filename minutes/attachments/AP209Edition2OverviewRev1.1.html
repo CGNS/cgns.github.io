@@ -1,0 +1,173 @@
+<!-- HTML input file for "AP209 Edition 2 Overview"
+     (attachment to minutes of Nov 2007 Steering Committee Telecon) -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../../cgns.css" rel="stylesheet" type="text/css">
+<title>AP209 Edition 2 Overview</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>
+AP209 Edition 2 Overview<br>
+<small>Rev 1.1 - October, 2007</small>
+</h1>
+
+<h2>AP209 Edition 1 Background and Overview</h2>
+
+<p>
+The Design/Analysis integration problem is typified by the requirement
+to share geometric shape and analysis information in an iterative
+environment. The integration is made more difficult when composite
+structures become a part of the problem. Figure 1 illustrates the
+interconnectivity that this overview addresses. Most production systems
+currently employ specific point-to-point translators to enable this
+process, and very few analysis systems are able to seamlessly return
+geometric shape information to the design shape modeler. With composite
+structures there are the additional problems of calculating true fiber
+directions and ply flat patterns that are shared with the manufacturing
+process. All of this information needs to be shared with commercial or
+inhouse detailed analysis codes such as those for fastened joints and
+panel buckling.
+
+<p>
+<center>
+<img src="AP209Edition2OverviewRev1.1/fig1.png"
+     alt="Chart illustrating interconnectivity"
+     longdesc="AP209Edition2OverviewRev1.1/fig1.html">
+<br><br>
+Figure 1. Engineering design, analysis, and manufacturing information
+          interconnectivity
+</center>
+
+<p>
+Given this problem AP 209 Edition 1 was created to enable:
+<ul>
+<li> <b>Collaborative analysis and design</b>: Companies using different CAD
+     and FEA systems will be able to exchange engineering design and
+     analysis data using standard file formats. The same data schema
+     used to share information via standard file formats is also usable
+     to dynamically share information tool to tool.  Configuration
+     management data within the standard can ensure that design and
+     analysis activities carried out by the different teams relate to
+     the correct product versions.
+     <p>
+     It is possible to provide separate, but associated, versioning for
+     the product, the analysis idealisation of the product, and for the
+     finite element model.<br>
+<li> <b>Archiving of analysis and design data</b>: A company will be able to
+     archive associated, configuration managed CAD and FEA data in
+     standard format, confident that that data can be reused in the
+     future, whatever system changes have occurred. This is of special
+     importance where FEA has been used for product certification,
+     because additional analyses may be required to investigate
+     in-service problems.<br><br>
+<li> <b>Development of integrated systems</b>: A company will be able to
+     develop an integrated system combining design and analysis based
+     upon standard interfaces.  Such an integrated system may address
+     different analysis disciplines such as structural, thermal and
+     fluids, and may be used for design optimisation. The use of
+     standard interfaces will ensure that the system is not locked-in to
+     a particular system supplier.
+</ul>
+
+<p>
+AP 209 Edition 1 covers:
+<ul>
+<li> <b>Finite element data</b>: This includes models, analysis definitions and
+     load cases, and results. A model can be specified in as much detail
+     as required - if necessary down to the level of element shape
+     functions, discretisation points and integration rules. Static and
+     natural frequency analyses are within the initial scope.<br><br>
+<li> <b>Configuration management data</b>: A version of the finite element
+     model is linked to a version of the product. This ensures that the
+     correct finite element data may be associated with the correct
+     version of a product within a PDM (Product Data Management) system.<br><br>
+<li> <b>Product geometry</b>: Both the design geometry and the idealised
+     geometry created for analysis can be recorded. Nodes, finite
+     elements, their edges, faces and volumes can be explicitly
+     associated with aspects of the product geometry.  It is possible to
+     specify element properties, loadings or boundary conditions on a
+     curve, edge, surface, or volume of the geometric model.<br><br>
+<li> <b>Composite lay-up</b>: The lay-up of a composite part can be specified
+     in detail.  Shape, stacking sequence, and property information can
+     be supplied about individual plies and their fibre orientations.
+</ul>
+
+<h2>AP209 Edition 2</h2>
+
+<p>
+The second Edition of ISO 10303-209 (AP209) has integrated a generic
+Engineering Analysis capability complimented by specific CFD and
+generalized mesh based numerical analysis capabilities to the AP209
+Edition 1 classical Finite Element Analysis capabilities. The CFD
+capability is based upon the NASA/AIAA CGNS standard and the Volvo Aero
+EAR-model work. The generalized structured and unstructured analysis and
+mesh capabilities are based upon work done in the Generic Engineering
+Analysis Model (GEM) project from the European Union. In addition there
+is a complete discrete/continuous mathematical field representation
+capability that has been added based upon the Daved Talyor Labs/Boeing
+DT-NURBS package. All of these added capabilities have been integrated
+into the STEP common resources Parts 50, 51, 52, 53, 107, and 110 as
+a basis for use in Application Protocols. The intent is that AP209E2
+will now address a much wider set of multi-disciplinary analysis and
+optimization problems.
+
+<p>
+A high-level planning diagram that provides an overview of the contents
+of AP209E2 is shown in Figure 2. The SC4 community has gone to a
+modular approach to developing Application Protocols (APs) to promote
+integration and ease of re-use. Due the modularization of existing
+AP209 capabilities it is now possible to take advantage of this new SC4
+Modular Architecture by embedding the second edition of AP203 and get
+all the new shape, presentation, and GD&amp;T capabilities.
+
+<p>
+<center>
+<img src="AP209Edition2OverviewRev1.1/fig2.png"
+     alt="Overview chart for AP209E2"
+     longdesc="AP209Edition2OverviewRev1.1/fig2.html">
+<br><br>
+Figure 2. ISO 10303-209E2 High Level Overview
+</center>
+
+<p>
+Figures 3 and 4 provide a more detailed overview of the capabilities
+of AP209E2. Figure 3 illustrates the AP203E2 capabilities portion of
+AP209E2. Here there is more detail on the new Presentation, shape, and
+product characteristic capabilities. Note that the composite structure
+shape, structure, and material properties capabilities from the first
+edition of AP209 have now been incorporated into AP203E2. Figure 4
+shows more detail of the modular components of the classical Finite
+Element capability, and the added capabilities for generic structured
+and unstructured mesh based numerical analysis, CFD, and field based
+property definition.
+
+<p>
+<center>
+<img src="AP209Edition2OverviewRev1.1/fig3.png"
+     alt="Page 1 of chart illustrating AP209E2 planning model"
+     longdesc="AP209Edition2OverviewRev1.1/fig3.html">
+<br><br>
+Figure 3. AP209E2 Planning Model, Page 1 of 2
+</center>
+
+<p>
+<center>
+<img src="AP209Edition2OverviewRev1.1/fig4.png"
+     alt="Page 2 of chart illustrating AP209E2 planning model"
+     longdesc="AP209Edition2OverviewRev1.1/fig4.html">
+<br><br>
+Figure 4. AP209E2 Planning Model, Page 2 of 2
+</center>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../../include/footer_small.html" -->
+Last updated 8 Feb 2008
+
+</body>
+</html>

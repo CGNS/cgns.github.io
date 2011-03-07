@@ -1,0 +1,432 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Meeting Minutes</h2>
+
+12 January 2005<br>
+7:00 PM Pacific Time
+
+<p>
+<ol>
+<li> The meeting was called to order at 7:10 PM.
+     There were <a href="#attendees">19 attendees</a>, listed below.
+<p>
+<li> The minutes of the 17 November 2004 meeting were approved as posted
+     on the web site.
+<p>
+<li> Chair and Vice-Chair positions
+     <p>
+     <ol type="a">
+     <li> The 2-year term for Chair expired.
+          It was moved that Rumsey be reappointed as chair for a
+          second term (Jan 2005 - Jan 2007).
+          The motion carried.
+     <li> A discussion was held on the need for a Vice-Chair position.
+          The Vice-Chair would assist the Chair with his or her duties,
+          with the expectation of taking over the Chair position when
+          the current Chair's term expires.
+          Members were encouraged to consider applying for this
+          position; this subject will be further discussed at the next
+          telecon.
+     </ol>
+<p>
+<li> Status of previous action items:
+     <p>
+     <ol type="a">
+     <li> Towne will make changes in CGNS Charter document.
+          <ol type=i>
+          <li> Done.
+          </ol>
+     <li> Hauser will check into parallel issues regarding
+          time-dependent data.
+          <ol type=i>
+          <li> Can do time-dependent fine in parallel as long as set
+               total number of time steps up front
+          <li> Need to discuss certain issues with HDF5 people.
+               <u>Hauser will provide Rumsey a list of these.</u>
+          </ol>
+     <li> Rumsey will circulate CGNS flyer to steering committee for
+          comments.
+          <ol type=i>
+          <li> Done. One-page flyer produced and distributed at Reno
+               conference.
+          </ol>
+     <li> Poinot will work on completing SIDS-to-HDF5 documentation;
+          Wedan, Rumsey, Towne, Koziol will be reviewers.
+          <ol type=i>
+          <li> In process.  Documentation currently under review.
+               <u>Action item carries.</u>
+          </ol>
+     <li> Michal will check with other Boeing people to see if they can
+          test EM extension.
+          <ol type=i>
+          <li> Not done yet.  <u>Action item carries.</u>
+          </ol>
+     <li> Wedan will look into good way to implement the disabled
+          chunk-search fix in ADF.
+          <ol type=i>
+          <li> Done.  Change made permanent.  The only down side is that
+               the storage temporarily doubles during the write, with a
+               final slight (10%) increase in file size at the end.
+          </ol>
+     <li> Van der Weide will try deleting node and then writing (using
+          ADF) on one of his big test cases and report back.
+          <ol type=i>
+          <li> Done. No problems (no increase in file size) with this
+               process.
+          </ol>
+     <li> Rumsey will send e-mail to CGNSTalk about testing HDF5 version
+          of CGNS, and also will try to develop a list of what users there
+          are and what platforms they have tested on.
+          <ol type=i>
+          <li> Done. Only one response received. Discussion in HDF5
+               section below.
+          </ol>
+     <li> Wedan and Wall will work out details about extensions &amp; get
+          latest version in place for V2.4.
+          <ol type=i>
+          <li> Done.
+          </ol>
+     <li> Rumsey will initiate documentation on new extensions; Wall and
+          Towne will help.
+          <ol type=i>
+          <li> In process. <u>Action item carries.</u>
+          </ol>
+     </ol>
+<p>
+<li> ISO status/discussion:
+     <p>
+     <ol type="a">
+     <li> Status from Cosner (e-mail):
+          <ol type=i>
+          <li> No realistic prospect of regaining Boeing funding, and
+               thus Boeing participation, for this project.  Authority
+               to decide funding for ISO-STEP projects now rests
+               with a Boeing org that is focused on CAD tools for
+               mechanical/structural design.  They have no interest in
+               development of a fluid dynamics standard.
+          <li> ISO-STEP has decided to merge the draft CGNS-based fluids
+               standard into the existing standard for finite element
+               solid mechanics (AP 209), because there is a high degree
+               of common content. Therefore, the standard will be
+               discrete-element models for both fluids and solids.  This
+               effort is being led by Keith Hunten of Lockheed Martin,
+               Fort Worth.
+          <li> The combined fluids-solids standard will be released in a
+               new edition (update) of AP 209.  A release date has not
+               been established, but it is unlikely to be in 2005.
+          </ol>
+     <li> Committee held brief discussion on compatibility of CGNS with
+          the ISO version now that the ISO version may end up being
+          radically different.
+          <ol type=i>
+          <li> Will CGNS still achieve a certain level of compliance?
+          <li> Does the committee need another "ISO representative" to
+               keep track of the new developments?
+          <li> Decision for now to try to keep communication lines open.
+               <u>Rumsey to contact Keith Hunten of Lockheed Martin.</u>
+          </ol>
+     </ol>
+<p>
+<li> Documentation issues and CGNStalk issues (Towne):
+     <p>
+     <ol type="a">
+     <li> Status of V2.3 becoming revised AIAA recommended practice
+          <ol type=i>
+          <li> Day and Cawley said most of our committee members have
+               turned in their initial survey forms.  So far our
+               committee is made up of: 4 from Government, 6 from
+               Vendors, 7 from Users, and 2 from Academia. Day said that
+               this balance is good (no one group has more than 50%),
+               so there is no problem continuing with the balloting
+               process. The ballots (voting to adopt latest SIDS version
+               as AIAA recommended practice) will be e-mailed to
+               steering committee members soon.
+          </ol>
+     <li> Updated documentation for V2.4beta (SIDS, SIDS-to-ADF, and
+          MLL) is underway. <u>Towne will post changes for everyone to
+          check. Poinot's new SIDS-to-HDF5 document will also need to
+          eventually incorporate these changes.</u>
+     </ol>
+<p>
+<li> Software status/discussion (Wedan):
+     <p>
+     <ol type="a">
+     <li> V2.4beta still has not been announced.  Wedan plans to make
+          some additional changes and then officially announce it (also
+          see discussion in HDF5 section below).
+     </ol>
+<p>
+<li> HDF-5 status/discussion:
+     <p>
+     <ol type="a">
+     <li> Rumsey reported that Koziol (NCSA) e-mailed to say that they
+          were planning to implement "creation order" tracking of
+          objects in groups for the 1.8.0 release (due approximately
+          in March 2005).  He also continues to work on speedup for
+          the large number (thousands) of zones (which is still
+          significantly slower than ADF).
+     <li> Rumsey only received 1 response from users who tried the HDF5
+          version.  The comments were:
+          <ol type=i>
+          <li> it is not backward compatible
+          <li> the HDF5 version of the test files were 2-3 times larger
+               than the ADF files
+          </ol>
+     <li> Discussion of these issues
+          <ol type=i>
+          <li> Backward compatibility should be easily overcome through
+               converters between ADF and HDF5.  These converters
+               already exist.  Software should be able to incorporate
+               the converters.
+          <li> The issue of larger HDF5 files was noticed by other
+               people as well.  If only 1 zone, then the ADF and HDF5
+               files are usually of similar size.  It is with many zones
+               that they tend to be different. <u>Rumsey will contact
+               Koziol to make him aware of this issue.</u>
+          <li> To summarize, there appears to be 2 issues regarding
+               HDF5 that are "worse" than with ADF files: first is
+               excessively slow I/O when there are many (thousands) of
+               zones; second is larger file sizes, even for "standard"
+               files.
+          </ol>
+     <li> Discussion of switchover to HDF5
+          <ol type=i>
+          <li> Discussion about HDF5 two problems, and how they affect
+               our switchover.
+          <li> Creation ordering in CGNS can probably be thrown away.
+          <li> <u>Wedan will make change in CGNS HDF5 software so viewer can
+               read (see) character strings in the HDF5 files.</u>
+          <li> IL is looking at compression issues.  Legensky plans to
+               keep the committee informed about what they find.
+          <li> With new version of HDF5, links are a lot faster.
+          <li> Hauser currently has some parallel API calls, similar to
+               partial read/writes just added by IL.
+          <li> The (unchanged) <a href="#HDF5_todo">list of things to
+               do/consider prior to HDF5 switchover</a> is included below.
+          <li> Final decision of committee:
+               <ol type=l>
+               <li> Do not formally switchover to HDF5 yet.  We need to
+                    resolve some of the performance and size issues first.
+               <li> <u>V2.4beta will be modified by Wedan to include
+                    HDF5 as an option (at compile time).</u> This beta
+                    release can then undergo further testing.  We will
+                    re-evaluate formal switchover date in the future.
+               </ol>
+          </ol>
+     </ol>
+<p>
+<li> Extensions status/discussion (Wall, Wedan):
+     <p>
+     <ol type="a">
+     <li> Fiedler (UIUC) made suggestion in CGNSTalk about allowing Rind
+          for unstructured data. Apparently the change is easy.  <u>Wedan
+          will look into the change and will contact Rumsey about it.</u>
+          The change would also involve changes to the documentation.
+     <li> Issue about polyhedral cells brought up. CGNS currently cannot
+          handle them appropriately, and they are more and more in
+          use by commercial CFD codes. It may fit under "N-gon", but
+          additional info is needed (how ordered). <u>Michal will write a
+          first draft proposal to handle polyhedral cells.</u>
+     <li> Karman mentioned a needed capability for a particular
+          unstructured type that is currently missing.  <u>He will write
+          this up and send to Rumsey.</u>
+     </ol>
+<p>
+<li> Other issues:
+     <p>
+     <ol type="a">
+     <li> Review status of open items - deferred to a later meeting
+     <li> CGNS user's meeting
+          <ol type=i>
+          <li> tentative time for this will be at Reno 2006
+          <li> possibly have a short training session in one of the rooms
+          <li> possibly use extra space in exhibit hall (booth?)
+          <li> <u>Rumsey will look into these possibilities</u>
+          </ol>
+     <li> Next telecon: in roughly 2 months time
+     <li> 3 CGNS-related papers were presented at this Reno meeting:
+          2005-1381, 2005-1155, and 2005-0334.  <u>Hauser will send a PDF
+          of his paper to Towne to post.</u> <u>Poinot will send a PDF of his
+          paper to Towne to post.</u>  <u>Poinot will contact author of 0334
+          (Iepan) to obtain PDF to send to Towne to post.</u>
+     </ol>
+<p>
+<li> Meeting was adjourned at 9:10 PM.
+<p>
+<li> Summary of <u><b>action items</b></u>:
+     <p>
+     <ol type="a">
+     <li> Hauser will provide Rumsey a list of issues that need to be
+          discussed with the NCSA (HDF5) people.
+     <li> Poinot will work on completing SIDS-to-HDF5 documentation;
+          Wedan, Rumsey, Towne, Koziol will be reviewers. Will need
+          to eventually incorporate new extensions (see (d)).
+     <li> Michal will check with other Boeing people to see if they can
+          test EM extension.
+     <li> Towne will complete and post draft documentation on new
+          extensions.
+     <li> Rumsey will contact Keith Hunten of Lockheed Martin.
+     <li> Rumsey will contact Koziol to make him aware of issue of larger
+          size (factor 2-3) of HDF5 files.
+     <li> Wedan will make change in CGNS HDF5 software so viewer can read
+          (see) character strings in the HDF5 files.
+     <li> Wedan will modify V2.4beta to include HDF5 as an option (at
+          compile time), then will announce it.
+     <li> Wedan will look into change required to allow Rind data for
+          unstructured, and will contact Rumsey about it.
+     <li> Michal will write a first draft proposal to handle polyhedral
+          cells.
+     <li> Karman will write up description of need for a particular
+          unstructured type and send to Rumsey.
+     <li> Rumsey will look into possibility for CGNS user's meeting in
+          Reno 2006.
+     <li> Hauser will send PDF of his CGNS Reno paper to Towne to post.
+     <li> Poinot will send PDF of his CGNS Reno paper to Towne to post.
+     <li> Poinot will obtain PDF of Iepan's CGNS Reno paper and will
+          forward to Towne to post.
+     </ol>
+<p>
+<li> Summary of <b><u>open items</u></b> from prior meetings (these are
+     different from action items, in that they are open or unresolved
+     issues that we want to keep track of, but there are no specific
+     actions required of anyone at this point in time):
+     <p>
+     <ol type="a">
+     <li> With V3.0 release, eliminate the <tt>Pointlist/Range</tt> +
+          <tt>CellCenter</tt> possibility (and thus remove the need for
+          <tt>GridLocation</tt> under <tt>BC_t</tt>).  Next major
+          release of API will need to automatically make the
+          alteration (transparent to the user). Documentation (SIDS,
+          User's Guide, other?) will need to be changed.
+     <li> Resolve <a href="#HDF5_todo">HDF-5 "to-do" list</a>.
+     <li> Issue of 8 units - need consistency between
+          <tt>DimensionalUnits</tt> and <tt>DimensionalExponents</tt>.
+     <li> Eventually resolve any differences between SIDS and ISO/STEP.
+     <li> Question of need (or preference) to have alphanumeric sorting
+          of everything (like is currently done for zones)
+     <li> Need for developing certification process (official test for
+          compliance)
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Theresa Benyo<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>NASA GRC
+<tr valign=baseline><td>
+   <td>Bob Bush<td>
+   <td>Pratt &amp; Whitney
+<tr valign=baseline><td>
+   <td>Craig Day<td>
+   <td>AIAA
+<tr valign=baseline><td>
+   <td>Meredith Cawley<td>
+   <td>AIAA
+<tr valign=baseline><td>
+   <td>Dan Dominik<td>
+   <td>Boeing - Rocketdyne
+<tr valign=baseline><td>
+   <td>Matt Godo<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Thomas Hauser<td>
+   <td>Utah State
+<tr valign=baseline><td>
+   <td>Steve Karman<td>
+   <td>UT Chattanooga
+<tr valign=baseline><td>
+   <td>Steve Legensky<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Todd Michal<td>
+   <td>Boeing - St. Louis 
+<tr valign=baseline><td>
+   <td>Marc Poinot<td>
+   <td>ONERA
+<tr valign=baseline><td>
+   <td>Chris Reed<td>
+   <td>Lockheed Martin
+<tr valign=baseline><td>
+   <td>Don Roberts<td>
+   <td>Tecplot
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Greg Stuckert<td>
+   <td>Fluent
+<tr valign=baseline><td>
+   <td>Edwin Van der Weide<td>
+   <td>Stanford
+<tr valign=baseline><td>
+   <td>Stephane Viala<td>
+   <td>Airbus
+<tr valign=baseline><td>
+   <td>Bruce Wedan<td>
+   <td>ICEM CFD
+<tr valign=baseline><td>
+   <td>Nick Wyman<td>
+   <td>Pointwise
+</table>
+
+<a name="HDF5_todo"></a>
+<h2>Tentative to-do list in association with HDF-5 switchover</h2>
+
+<ul>
+<li> Complete and test parallel implementation
+<li> Complete and test API capability to automatically detect and switch
+     between ADF and HDF-5 (transparent to user?)
+<li> Assess/minimize impact on software vendors using CGNS
+<li> Make changes recommended by HDF-5 to improve usability with HDF-5
+     (e.g., character strings as opposed to character arrays)
+<li> HDF-5 must fix "creation tracking"
+<li> Assess compression capability of HDF-5
+<li> Create SIDS-to-HDF-5 documentation (Poinot)
+<li> CGNS configure scripts will need to be modified to check for
+     availability of appropriate HDF-5 libraries.
+<li> Possibly add flag-based options when opening CGNS files.  For
+     example: "follow links" vs. "don't follow links"; "use ADF" vs. "use
+     HDF-5"; "translate file automatically" vs. "leave the file as-is";
+     "compress" vs. "don't compress".
+<li> Look into eliminating need for ID's from MLL
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 18 Jan 2005
+
+</body>
+</html>

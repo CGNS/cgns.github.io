@@ -1,0 +1,233 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+11 May 2000<br>
+2:00pm Eastern Time
+
+<p>
+The meeting was called to order at 2:00 Eastern time.
+There were 13 attendees, <a href="#attendees">listed below</a>.
+
+<p>
+Bob Bush reviewed the minutes from the March telecon, noting that they
+have been posted on the web. Having no comments, the minutes were
+approved as posted.
+
+<ul>
+<li> A round-table discussion of the current implementation and usage
+     status of CGNS in various organizations was held to familiarize the
+     Committee with current activities.
+     <br><br>
+     <ul>
+     <li> Introduction of Charlie Towne, NASA GRC, as the new
+          documentation focal point. Charlie is currently merging
+          the SIDS and the SIDS_additions documents.  He creates the
+          document in LaTex, then convert it to PDF. He would be like to
+          also build an HTML version. This merging of the 2 documents
+          implies reviewing to whole SIDS which was written originally
+          only for multi-block. Chris Rumsey, Bob Bush and Diane Poirier
+          agreed to help by reviewing the merged document before it is
+          posted on the web.
+     <br><br>
+     <li> Introduction of Don Roberts - AMTEC Engineering: In 1 or 2
+          weeks, they are releasing a CGNS reader for Tecplot. Their
+          reader supports structured and unstructured data, with
+          solutions at cell centers or nodes. Experience to share with
+          others: Mentioned that the CGNS libraries should be stable,
+          and that they had compatibility problems between library
+          versions. Will ask the developer to send more details on this.
+     <br><br>
+     <li> Introduction of Jamil Appa - BAE and Denis Bertin -
+          Aerospatiale (both not present)
+     <br><br>
+     <li> ISO Status - Bob Bush presented for Boeing St-Louis: The
+          work continues. There is an informative meeting planned in
+          June between the ISO group and some members of the CGNS
+          committee. Are on schedule to present a draft standard at the
+          ISO meeting in October 2000. Peter Wilson (Boeing Seattle)
+          converted the SIDS to EXPRESS.
+     <br><br>
+     <li> John Chawner - Pointwise - They have been evaluating CGNS
+          since December 1999 and decided to implement it. GridGen
+          version 14 will have a CGNS writer.  Would like to volunteer
+          to be part of the CGNS Steering Committee. Bob said
+          that we will discuss adding new members at the Denver
+          conference. Questions he passed along from his developers:
+          <br><br>
+          <ul>
+          <li> Q: Are there any higher level documents to explain how to
+               create a CGNS file for a tetra mesh, for example?
+               <br>
+               A: Such document doesn't exist. The best thing to do is
+               to use the examples on the web.
+          <li> Q: Is there a data checker to see if the file is CGNS
+               compliant?
+               <br>
+               A: No, but if the file is readable in the CGNS API, or
+               if the file was written with the CGNS API, then it is
+               necessarily CGNS compliant. The ADF_edit file browser is
+               also a good tool for browsing a file and verifying its
+               content.
+          </ul>
+     <br>
+     <li> Michel Delanaye - Numeca - Numeca software released at the
+          end of April 2000 included their implementation of CGNS for
+          structured meshes and solutions.  They are working now on
+          implementing the interblock connectivity. Wants to present
+          a proposal for hierarchical elements in June. Steve Karman
+          (Lockeed) agreed to work with Michel on this proposal. Passed
+          along comments from his chemisty specialist who would like
+          CGNS to
+          <br><br>
+          <ul>
+          <li> interface with Chemkin
+          <li> Have curve fitting enthalpy and Cp
+          <li> Complex kinematics scheme
+          <li> Bob Bush suggested that we start with what we have, then
+               we can work on an extension proposal.
+          </ul>
+     </ul>
+<br>
+<li> <b>Extension Status (Diane Poirier)</b>
+     <br><br>
+     <ul>
+     <li> Web site enhancements: Add pages to collect data sets,
+          utilities and comments/experiences.
+     <br><br>
+     <li> Linux port: First release on April 26. It is being used by MTU
+          in Munich and by L.A.N.L.
+     <br><br>
+     <li> LINUX problem: gives memory error when using
+          <tt>cg_goto_f(...)</tt> and compiling the Fortran application
+          with the g77 compiler, but only when format statement for
+          prints is inside parenthesis. Works OK when separate format
+          statement is used.  For example:
+          <br><br>
+          <ul>
+          <li> Syntax that creates memory errors in function
+               <tt>cg_goto_f</tt> using g77 compiler:
+<pre>
+      write(6,'(a,i3)') 'a=',a
+</pre>
+          <li> Syntax that doesn't create any memory errors:
+<pre>
+      write(6,10) 'a=',a
+10    format(a,i3)
+</pre>
+          </ul> 
+     <li> Released - Unstructured Element Ordering on March 15.
+     <br><br>
+     <li> Status - Moving Grid specification: the CGNS lib version 1.3
+          is planned to be release in July and to include the API for
+          moving grid.
+     <br><br>
+     <li> Doug McCarthy to check if Boeing - St Louis has made any
+          headway with ADF linking problems.
+     </ul>
+<br>
+<li> <b>Solicit implementation paper for Reno 2000 (Bob Bush)</b> -
+     Most people not prepared to submit abstract for Reno 2001 on
+     CGNS implementations. Diane is planning a CGNS performance paper
+     however. Many agreed that an informal gathering/demo/discussion of
+     CGNS implementations at Reno may be feasible.
+<br><br>
+<li> <b>June Meeting (Bob Bush)</b>
+     <br><br>
+     <ul>
+     <li> Rescheduled for Wednesday night, tentatively at 7 p.m.  Advise
+          all to look for posting of room and time in Denver.
+     <br><br>
+     <li> Items on the agenda
+          <br><br>
+          <ul>
+          <li> Discuss addition of new members of the steering committee
+          <li> Plan and schedule for development through Jan 2000
+          <li> Implementation and release status reports
+          <li> Documentation status report
+          <li> Extensions status report
+          </ul>
+     </ul>
+</ul>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Bob Bush<td><tt>&nbsp;&nbsp;</tt>
+   <td>UTRC
+<tr valign=baseline><td>
+   <td>John Chawner<td>
+   <td>Pointwise
+<tr valign=baseline><td>
+   <td>Armen Darian<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Michel Delanaye<td>
+   <td>Numeca
+<tr valign=baseline><td>
+   <td>Dan Dominik<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Peter Dutton<td>
+   <td>Adapco
+<tr valign=baseline><td>
+   <td>David Edwards<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Steve Karman<td>
+   <td>Lockeed Martin
+<tr valign=baseline><td>
+   <td>Doug McCarthy<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Diane Poirier<td>
+   <td>ICEM CFD Engineering
+<tr valign=baseline><td>
+   <td>Don Roberts<td>
+   <td>Amtec
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Charlie Towne<td>
+   <td>NASA Glenn
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 5 Feb 2002
+
+</body>
+</html>

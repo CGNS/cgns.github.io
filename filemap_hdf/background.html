@@ -1,0 +1,198 @@
+<!-- CGNS File Mapping Manual - CGNS Background -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="filemap_hdf.css" rel="stylesheet" type="text/css">
+<title> CGNS SIDS-to-HDF File Mapping Manual - CGNS Background </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="index.html"><span class=nav><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></span></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="brief.html"><b>Brief&nbsp;Description&nbsp;of&nbsp;CGNS</b></a>)
+(<a href="documentation.html"><b>CGNS&nbsp;Documentation</b></a>)
+(<span class=nav><b>CGNS&nbsp;Background</b></span>)
+(<a href="hdfsummary.html"><b>SLL&nbsp;Mapping&nbsp;to&nbsp;HDF5</b></a>)
+(<a href="general.html"><b>General&nbsp;CGNS&nbsp;SLL&nbsp;Mapping&nbsp;Concepts</b></a>)
+(<a href="nodes.html"><b>Detailed&nbsp;CGNS&nbsp;Node&nbsp;Descriptions</b></a>)
+(<a href="figures.html"><b>CGNS&nbsp;File&nbsp;Mapping&nbsp;Figures</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>CGNS Background</h2>
+
+<ul>
+<li> <a href="#purpose">Purpose</a>
+<li> <a href="#history">Participation and Brief History</a>
+<li> <a href="#scope">Scope</a>
+<li> <a href="#specs">Specifications and Software Libraries</a>
+</ul>
+
+<p>
+The information in this section is supplied for the sake of
+completeness. It is identical with the information found in the
+<a href="../overview/index.html">Overview</a>.
+
+<a name="purpose"></a>
+<h3>Purpose</h3>
+
+<p>
+The purpose of CGNS is to provide a standard for recording and
+recovering computer data associated with the numerical solution of the
+equations of fluid dynamics. The format implemented by this standard is
+(1) general, (2) portable, (3) expandable, and (4) durable.
+
+<p>
+The CGNS system consists of a collection of conventions, and software
+implementing those conventions, for the storage and retrieval of
+CFD (computational fluid dynamics) data. The system consists of two
+parts: (1) a standard format for recording the data, and (2) software
+that reads, writes and modifies data in that format.  The format is a
+conceptual entity established by the documentation; the software is a
+physical product supplied to enable developers to access and produce
+data recorded in that format. The CGNS standard, applied through the use
+of the supplied software, is intended to do the following:
+
+<ul>
+<li> facilitate the exchange of CFD data
+     <ul>
+     <li> between sites.
+     <li> between applications codes.
+     <li> across computing platforms.
+     </ul>
+<li> stabilize the archiving of CFD data.
+</ul>
+
+<a name="history"></a>
+<h3>Participation and Brief History</h3>
+
+<p>
+The CGNS project originated around 1994-1995 through a series of
+meetings between <a href="http://www.boeing.com/">Boeing</a>
+<img src="../external.png" alt="external link"> and
+<a href="http://www.nasa.gov/">NASA</a> that addressed improved means for
+transferring NASA technology to industrial use. It was held that
+a principal impediment to technology transfer was the disparity
+in I/O formats employed by various flow codes, grid generators,
+and so forth. The CGNS system was conceived as a means to promote
+"plug-and-play" CFD.
+
+<p>
+Agreement was reached to develop CGNS at Boeing, under NASA Contract
+NAS1-20267, with active participation by a team of CFD researchers from
+
+<ul>
+<li> <a href="http://www.larc.nasa.gov/">NASA Langley Research Center</a>
+<li> <a href="http://www.grc.nasa.gov/">NASA Glenn Research Center</a>
+<li> <a href="http://www.arc.nasa.gov/">NASA Ames Research Center</a>
+<li> <a href="http://www.boeing.com/phantom/">Boeing St-Louis
+     (McDonnell-Douglas Corporation)</a>
+     <img src="../external.png" alt="external link">
+<li> <a href="http://www.boeing.com/commercial/index.html">Boeing
+     Commercial Airplane Group</a>
+     <img src="../external.png" alt="external link"> Aerodynamics
+<li> <a href="http://www.boeing.com/commercial/index.html">Boeing
+     Commercial Airplane Group</a>
+     <img src="../external.png" alt="external link"> Propulsion
+<li> <a href="http://www-berkeley.ansys.com/">ICEM CFD Engineering
+     Corporation</a> <img src="../external.png" alt="external link"> of
+     Berkeley, California
+</ul>
+Also participating in the discussions at various times have been
+researchers from
+<ul>
+<li> Defense and Space Group and Environmental Systems
+<li> <a href="http://www.arnold.af.mil/">Arnold Engineering
+     Development Center</a> <img src="../external.png" alt="external link">,
+     representing the
+     <a href="http://web.arnold.af.mil/nparc/">NPARC Alliance</a>
+     <img src="../external.png" alt="external link">
+<li> <a href="http://www.wpafb.af.mil/">Wright-Patterson Air
+     Force Base</a> <img src="../external.png" alt="external link">
+</ul>
+
+<a name="scope"></a>
+<h3>Scope</h3>
+
+<p>
+The principal target of CGNS is the data normally associated with
+compressible viscous flow (i.e., the Navier-Stokes equations), but the
+standard is also applicable to subclasses such as Euler and potential
+flows.
+
+<p>
+CGNS Version 1.0, released 5/15/98, was limited to problems described
+by multiblock structured grids. Version 1.1 addresses grids,
+flowfields, boundary conditions, and block-to-block connection
+information. Also included are a number of auxiliary items,
+including nondimensionalization, reference state, and equation set
+specifications. The extension to time-dependent flows and unstructured
+grids is addressed in Version 2. Also included are links between CGNS
+data and CAD geometry. Any mix of the following types of field data can
+be recorded:
+
+<ul>
+<li> nodal.
+<li> edge-centered.
+<li> face-centered.
+<li> cell-centered.
+</ul>
+Block connections can be of the following types:
+<ul>
+<li> contiguous (one-to-one).
+<li> abutting (patched mismatched).
+<li> overlapping (Chimera).
+</ul>
+
+<p>
+Much of the standard and the software is applicable to computational
+field physics in general. Disciplines other than fluid dynamics would
+need to augment the data definitions and storage conventions, but the
+fundamental database software, which provides platform independence, is
+not specific to fluid dynamics.
+
+<a name="specs"></a>
+<h3>Specifications and Software Libraries</h3>
+
+<p>
+The term <em>CGNS</em> includes specifications and software libraries.
+The libraries are provided in order to implement the data structure
+described in the specification.
+There are two libraries, <tt>MLL</tt> stands for the <em>Mid-level
+library</em> and <tt>SLL</tt> for the <em>Storage-level library</em>.
+
+<a name="example_node"></a>
+<p>
+<center>
+<img src="figures/Layers.gif"
+     alt="CGNS Specification and software libraries"
+     longdesc="figures/Layers.html">
+</center>
+
+<p>
+This <i>SIDS-to-HDF File Mapping Manual</i> describes both the
+<em>SLL node interface</em> and the <em>SLL mapping to HDF5</em>.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 11 July 2005
+
+</body>
+</html>

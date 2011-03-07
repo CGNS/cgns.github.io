@@ -1,0 +1,242 @@
+<!-- CGNS SIDS document - Introduction -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Introduction </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<span class=nav><b>Introduction</b></span>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Introduction</h2>
+
+<p>
+<a href="http://cgns.sourceforge.net/">CGNS (CFD General Notation System)</a>
+<img src="../external.png" alt="external link"> is a collection of
+conventions, along with software implementing those conventions, for the
+storage and retrieval of CFD (computational fluid dynamics) data.
+The CGNS system is designed to facilitate the exchange of data between
+sites and applications, as well as to help stabilize the archiving of
+fluid dynamic data.
+In today's environment, it is important in many technical arenas to
+maintain detailed records of scientific computations.
+CGNS was designed to help promote a long-lasting and extensible standard
+for this purpose.
+Many companies and institutions choose to adopt the CGNS standard in
+order to increase productivity by (1) reducing the time required to
+translate between data created and used by different applications, and
+(2) increasing the quality, longevity, and re-usability of archived
+data.
+
+<p>
+The CGNS standard is a conceptual entity established by the
+documentation.
+The CGNS software is a physical product supplied to enable writing and
+reading data according to this standard.
+All CGNS software is completely free and open to anyone.
+By using the supplied software, it is relatively easy for users to
+adhere to most of the standard described in detail in this document.
+
+<p>
+The CGNS project originated during 1994 through a series of meetings
+that addressed improved transfer of NASA technology to industry.
+A principal impediment in this process was the disparity in I/O formats
+employed by various flow codes, grid generators, and other utilities,
+and CGNS was conceived as a means to promote "plug-and-play" CFD.
+Agreement was reached to develop CGNS at
+<a href="http://www.boeing.com/">Boeing</a>
+<img src="../external.png" alt="external link">, under NASA Contract
+NAS1-20267, with active participation by a team of CFD researchers from
+NASA's <a href="http://www.larc.nasa.gov/">Langley</a>,
+<a href="http://www.grc.nasa.gov/">Lewis (now Glenn)</a>, and
+<a href="http://www.arc.nasa.gov/">Ames</a> Research Centers,
+McDonnell Douglas Corporation (now part of Boeing), and
+<a href="http://www.boeing.com/commercial/">Boeing Commercial Airplane
+Group</a> <img src="../external.png" alt="external link">.
+This team, which was joined by <a href="http://www-berkeley.ansys.com/">ICEM
+CFD Engineering Corporation</a>
+<img src="../external.png" alt="external link"> of Berkeley, California
+in 1997, undertook the core of the development.
+However, in the spirit of creating a completely open and broadly
+accepted standard, all interested parties were encouraged to
+participate; the <a href="http://www.af.mil/">US Air Force</a>
+<img src="../external.png" alt="external link"> and
+<a href="http://www.arnold.af.mil/">Arnold Engineering
+Development Center</a> <img src="../external.png" alt="external link">
+were notably present.
+From the beginning, the purpose was to develop a system that could be
+distributed freely, including all documentation, software and source
+code.
+This goal has now been fully realized; further, control of CGNS has been
+completely transferred to a public forum known as the CGNS Steering
+Committee.
+
+<p>
+The principal target is the data normally associated with compressible
+viscous flow (i.e., the Navier-Stokes equations), but the standard is
+also applicable to subclasses such as Euler and potential flows. The
+initial release addressed multi-zone grids, flow fields, boundary
+conditions, and zone-to-zone connection information, as well as a number
+of auxiliary items, such as non-dimensionalization, reference states,
+and equation set specifications. Extensions incorporated since then
+include unstructured mesh, connections to geometry definition,
+time-dependent flow, and support for multiple species and chemistry.
+
+<p>
+It is worth noting that extensibility is a fundamental design
+characteristic of the system, which in principal could be used for
+other disciplines of computational field physics, such as acoustics or
+electromagnetics, given the willingness of the cognizant scientific
+community to define the conventions.
+
+<p>
+The standard format, or paper convention, part of CGNS consists of
+two fundamental pieces. The first, known as the Standard Interface
+Data Structures (SIDS), describes in detail the intellectual content
+of the information to be stored. It defines, for example, the precise
+meaning of a "boundary condition".
+The second, known as the File Mapping (either
+<a href="../filemap/index.html">SIDS to ADF</a>, or
+<a href="../filemap_hdf/index.html">SIDS to HDF</a>, depending on the
+underlying database manager being used), defines the exact location in a
+CGNS file where the data is to be stored.
+
+<p>
+The implementation, or software, part of CGNS likewise consists of two
+separate entities.
+CGNS files are read and written by a stand-alone database manager, either
+<a href="../adf/index.html">ADF (Advanced Data Format)</a> or
+<a href="http://hdf.ncsa.uiuc.edu/HDF5/">HDF (Hierarchical Data Format)</a>
+<img src="../external.png" alt="external link">.
+The database manager implements a tree-like data structure, as a
+binary file.
+Since the format of this file is completely controlled by the database
+manager, and since ADF and HDF are both written in ANSI C (Fortran
+wrappers are provided), these files and the database manager itself are
+portable to any environment which supports ANSI C.
+Both ADF and HDF are available separately and constitute useful tools
+for the storage of large quantities of scientific data.
+
+<p>
+The underlying database manager, however, implements no knowledge of
+CFD or of the File Mapping.
+To simplify access to CGNS files, a second layer of software known as
+the <a href="../midlevel/index.html">Mid-Level Library</a> is provided.
+This layer is in effect an API, or Application Programming Interface for
+CFD.
+The API incorporates knowledge of the CFD data structures, their meaning
+and their location in the file, enabling applications such as flow codes
+and grid generators to access the data in familiar terms.
+The API is therefore the piece of the CGNS system most visible to
+applications developers.
+Like the ADF and HDF database managers, the Mid-Level Library is written
+in ANSI C; all public API routines have Fortran counterparts.
+
+<a name="intro:outline"></a>
+<h3>Outline of Document</h3>
+
+<p>
+This document includes the following sections:
+
+<dl>
+<dt><a href="design.html">Design Philosophy of Standard Interface Data Structures</a>
+<dd>
+Presents the major design philosophies used to develop the CGNS database
+and the encoding of this database into the SIDS; this section also
+provides an overview of the database hierarchy.
+<br><br>
+<dt><a href="conv.html">Conventions</a>
+<dd>
+Describes the C-like nomenclature conventions used to define the SIDS.
+This section also gives the conventions for structured
+grid indexing and unstructured element numbering, and the
+nomenclature for multizone interfaces.
+<br><br>
+<dt><a href="build.html">Building-Block Structure Definitions</a>
+<dd>
+Defines low-level building-block structures; these structures are used
+to define all higher-level structures.
+<br><br>
+<dt><a href="data.html">Data-Array Structure Definitions</a>
+<dd>
+Presents structures for defining data arrays, including dimensional-units
+and nondimensional information.
+<br><br>
+<dt><a href="cgnsbase.html">Hierarchical Structures</a>
+<dd>
+Defines the top levels of the CGNS hierarchy.
+<br><br>
+<dt><a href="gridflow.html">Grid Coordinates, Elements, and Flow Solution</a>
+<dd>
+Defines the grid-coordinate, elements, and flow-solution structures.
+<br><br>
+<dt><a href="cnct.html">Multizone Interface Connectivity</a>
+<dd>
+Defines the multizone interface connectivity structures.
+<br><br>
+<dt><a href="bc.html">Boundary Conditions</a>
+<dd>
+Defines boundary-condition structures.
+<br><br>
+<dt><a href="floweqn.html">Governing Flow Equations</a>
+<dd>
+Defines structures for describing governing flow equations.
+<br><br>
+<dt><a href="timedep.html">Time-Dependent Flow</a>
+<dd>
+Defines structures related to time-dependent flow.
+<br><br>
+<dt><a href="misc.html">Miscellaneous Data Structures</a>
+<dd>
+Defines miscellaneous structures.
+<br><br>
+<dt><a href="dataname.html">Conventions for Data-Name Identifiers</a>
+<dd>
+Provides naming conventions for data contained within the CGNS database.
+<br><br>
+<dt><a href="twozone.html">Structured Two-Zone Flat Plate Example</a>
+<dd>
+Contains a complete SIDS description of a structured-grid two-zone test case.
+</dl>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 14 Dec 2005
+
+</body>
+</html>

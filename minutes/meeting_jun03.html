@@ -1,0 +1,144 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Meeting Minutes</h2>
+
+24 June 2003<br>
+7:00 PM Eastern Daylight Time<br>
+Orlando, Florida (in conjunction with AIAA meeting)<br><br>
+
+<ol>
+<li> This general informational meeting and discussion was called to
+     order at 7:05 PM.
+     There were <a href="#attendees">8 attendees</a>, listed below.
+<br><br>
+<li> This was not an official steering committee meeting, so minutes
+     from the last telecon were not reviewed or approved.
+<br><br>
+<li> Current status of CGNS and outstanding issues
+     (<a href="attachments/jun03_status.html">HTML</a>,
+     <a href="attachments/jun03_status.pdf">PDF</a>) - was presented by
+     Rumsey
+<br><br>
+<li> Discussion of current issues:
+     <ol type="a">
+     <li> HDF-5
+          <ol type="i">
+          <li> AEDC is actively evaluating and working with Poinot's
+               HDF-5 prototype (summer intern Brian Pittman).
+          <li> Poinot has also expressed an interest in bringing it to
+               completion at some time in the future.
+          <li> Question raised: what will happen to existing CGNS files
+               that use ADF?  Will the MLL automatically switch them
+               over?  Or will an explicit translation step be necessary?
+               Will HDF-5 implementation be a new Version (3.0)?  Will
+               the MLL be able to read <tt>CGNSLibraryVersion_t</tt>
+               node if it is an HDF file (i.e., how will the MLL
+               software detect that the file is HDF-5 as opposed to
+               ADF)?
+          </ol>
+     <li> <tt>UserDefined</tt> extension - no issues.
+     <li> <tt>BCDataSet</tt> extension - will this proposal work for
+          unstructured datasets also?
+     <li> <a href="../sids/cgnsbase.html#CGNSLibraryVersion">CGNSVersion</a>
+          <ol type="i">
+          <li> The <tt>CGNSLibraryVersion</tt> automatically gets altered
+               (updated) by MLL when it opens an older file (Q: is this
+               true when going from V1 to V2?).
+          <li> Should there be a CGNSVersion number (under base) that
+               NEVER changes?  This would indicate what version was used
+               to write the particular base - kind of a way to document
+               the dataset.  But this gets confusing if V2 is ADF and V3
+               is HDF-5.  Do we really want to keep a file with part ADF
+               and part HDF-5?  This does not seem like a good idea.
+          </ol>
+     <li> <tt>GridLocation</tt>=<tt>FaceCenter</tt> in
+          <tt>ZoneGridConnectivity</tt>.
+          <ol type="i">
+          <li> This issue is for unstructured grids that connect
+               multiple zones.
+          <li> Seems reasonable to allow this, but will this work for
+               non-point-matched connectivity?
+          </ol>
+     <li> General issues:
+          <ol type="i">
+          <li> Confusion among attendees as to if/how CGNS allows
+               face-based info for unstructured to be stored (Partial
+               answer:  CGNS easily allows for defining face elements,
+               e.g. for use to define BCs at faces rather than at
+               vertices.  See the
+               <a href="../user/started.html#sec:unstrgrid">"Single-Zone
+               Unstructured Grid"</a> section in the
+               <a href="../user/index.html">User's Guide to CGNS</a>.)
+          <li> We probably need to review and update the
+               <a href="../charter/index.html">Charter</a>; some
+               of it is outdated.
+          </ol>
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Dan Dominik<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Bill Jones<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Steve Karman<td>
+   <td>UT Chattanooga
+<tr valign=baseline><td>
+   <td>Mori Mani<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Chris Nelson<td>
+   <td>AEDC
+<tr valign=baseline><td>
+   <td>Christopher Reed<td>
+   <td>LM Aero - Ft. Worth
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Tom Shih<td>
+   <td>Michigan State
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 30 June 2003
+
+</body>
+</html>

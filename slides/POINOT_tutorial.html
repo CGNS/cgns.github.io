@@ -1,0 +1,448 @@
+<!-- HTML input file for slides in "Python & In-memory CGNS trees"
+     section of CGNS tutorial -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgns.css" rel="stylesheet" type="text/css">
+<title>Python & In-memory CGNS trees</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>Python &amp; In-memory CGNS trees<br>
+Using CGNS trees for Code-coupling</h1>
+
+<p>
+Marc Poinot<br>
+Computational Fliud Dynamics and Aeroacoustics Dept.<br>
+ONERA<br>
+France<br>
+
+<h2>Code life cycle</h2>
+
+<ul>
+<li> Idea/Code/Test/Change
+     <ul>
+     <li> Prototype
+     <li> Test
+     <li> Pre/Post processing
+     <li> Code-coupling
+     <li> Parallel
+     </ul>
+<li> All you can do with another programming language
+     <ul>
+     <li> Interpreted
+     <li> Actually dedicated to code gluing
+     <li> Script languages are easily extensible
+     </ul>
+<li> Baseline for an Open System
+</ul>
+
+<h2>Python</h2>
+
+<ul>
+<li> Object-oriented interpreted language
+     <ul>
+     <li> Very easy to learn
+     <li> Clear syntax
+     <li> Powerful numerical extensions
+          <ul>
+          <li> Python/C/C++/Fortran arrays
+          </ul>
+     </ul>
+<li> Good candidate for code gluing
+     <ul>
+     <li> Pre &amp; post processing on CGNS data
+     <li> A scripting language
+     </ul>
+</ul>
+
+<h2>pyCGNS</h2>
+
+<ul>
+<li> Python wrapper on CGNS MLL and ADF
+     <ul>
+     <li> Straightforward mapping
+     <li> Use 100% python types
+          <ul>
+          <li> Lists, strings, integers, floats
+          <li> Numerical array
+               <ul>
+               <li> Contiguous C/Fortran array
+               <li> Points to actual memory zone
+               </ul>
+          </ul>
+     </ul>
+<li> Easy scripting
+     <ul>
+     <li> Perform CGNS calls on-the-fly
+     </ul>
+</ul>
+
+<h2>Python/CGNS tree</h2>
+
+<ul>
+<li> Tree representation
+     <ul>
+     <li> List of nodes
+     <li> Each node has...
+          <ul>
+          <li> A Name
+          <li> A Type
+          <li> A Value
+          <li> A list of sons
+          </ul>
+     <li> Generic CGNS low level node requirements (ADF/HDF5)
+     </ul>
+</ul>
+
+<pre>
+   ['Transform',(1, 2, 3),[],'int[IndexDimension]'],
+   ['PointRange',((1, 1, 1), (1, 9, 9)),[],'IndexRange_t'],
+   ['PointRangeDonor',((21, 1, 1), (21, 9, 9)),[],'IndexRange_t']
+</pre>
+
+<h2>File and memory</h2>
+
+<ul>
+<li> ADF/HDF5 file
+     <ul>
+     <li> open/read/write/close
+     <li> MLL keeps private tree structure in memory
+     <li> ADF is per-node but still private data structure
+     <li> PyCGNS only maps to this behaviour
+     </ul>
+<li> Python tree
+     <ul>
+     <li> The Python/CGNS tree is just another implementation
+     <li> Structure in memory but not a proprietary one
+     <li> Same interface/Different implementation
+     </ul>
+</ul>
+
+<h2>File and memory workflow</h2>
+
+<center>
+<img src="POINOT_tutorial/fig1.png"
+     alt="Diagram of file and memory workflow"
+     longdesc="POINOT_tutorial/fig1.html">
+</center>
+
+<h2>pyCGNS example</h2>
+
+<pre>
+   import CGNS
+   import numarray as N
+
+   x=y=z=N.zeros((3,5,7),'d')
+
+   a=CGNS.pyCGNS("newfile.cgns",CGNS.MODE_WRITE)
+
+   print a.error
+
+   idb=a.basewrite("Base",3,3)
+   idz=a.zonewrite(idb,"Zone 01",[3,5,7],CGNS.Structured)
+
+   a.coordwrite(idb,idz,CGNS.RealDouble,CGNS.CoordinateX,x)
+   a.coordwrite(idb,idz,CGNS.RealDouble,CGNS.CoordinateY,y)
+   a.coordwrite(idb,idz,CGNS.RealDouble,CGNS.CoordinateZ,z)
+
+   a.close()
+</pre>
+
+<h2>Scripting example: Prototypes</h2>
+
+<ul>
+<li> Can I do this and that with CGNS?
+     <ul>
+     <li> Just try it!
+     <li> Versatile testing support
+     </ul>
+</ul>
+
+<pre>
+   import CGNS
+   
+   f=CGNS.pyCGNS("hydro-result.cgns",CGNS.MODE_WRITE)
+   
+   f.basewrite("MASS2",3,3)
+   f.zonewrite(1,"Block01",(2,3,4,1,2,3,0,0,0),CGNS.Structured)
+   f.solwrite(1,1,"07-01-1944 06:00:00",CGNS.CellCenter)
+   f.fieldwrite(1,1,1,CGNS.RealDouble,"sediment",w)
+   f.goto(1,[(CGNS.Zone_t,1),(CGNS.FlowSolution_t,1),(CGNS.DataArray_t,1)])
+   f.descriptorwrite("Description","Text here")
+   f.descriptorwrite("Units","Text here")
+   
+   f.close()
+</pre>
+
+<h2>Scripting example: post-processing</h2>
+
+<ul>
+<li> Add links to actual grids
+     <ul>
+     <li> The computation sessions results are sharing the same grid
+     <li> No duplicates
+     <li> Post-processing adds links to the actual grid
+     <li> True MLL/ADF calls performed on file
+     </ul>
+</ul>
+
+<pre>
+   from CGNS import *
+   
+   a=pyCGNS("result-001.cgns",MODE_MODIFY)
+   
+   a.goto(1,[(Zone_t,1)])
+   a.linkwrite("GridCoordinates","grid.cgns","/Base/Zone/GridCoordinates")
+   
+   a.close()
+</pre>
+
+<h2>Scripting example: pre-processing</h2>
+
+<ul>
+<li> Structured grid seen as unstructured
+     <ul>
+     <li> Generates connectivity
+     <li> Read the file/Change in-memory tree/Send to code
+     </ul>
+</ul>
+
+<p>
+<center>
+<img src="POINOT_tutorial/fig2.png"
+     alt="Diagram of pre-processing scripting example"
+     longdesc="POINOT_tutorial/fig2.html">
+</center>
+
+<h2>Code-coupling</h2>
+
+<ul>
+<li> Blind connection to peer code
+     <ul>
+     <li> Open System: Public interface
+          <ul>
+          <li> Common baseline
+          <li> Restriction input/output
+          </ul>
+     <li> Use Bct for data exchange
+          <ul>
+          <li> Input/Output: BCDataset
+          <li> « Contact surface »
+          <li> Strong requirements for an arbitrary exchange mean
+          </ul>
+     </ul>
+<li> Efficiency
+     <ul>
+     <li> Memory +no data duplication
+     <li> Easy stub &amp; duplication
+     </ul>
+</ul>
+
+<h2>Code-coupling CGNS tree</h2>
+
+<center>
+<img src="POINOT_tutorial/fig3.png"
+     alt="Diagram of CGNS node tree with code-coupling"
+     longdesc="POINOT_tutorial/fig3.html">
+</center>
+
+<h2>Scripting example: code-coupling</h2>
+
+<pre>
+   import MpCCI
+
+   pathB="/FlatPlate/Fluid/ZoneBC/Wall:Heat/DataSet#01/NeumannData"
+   pathI=pathB+"/Temperature"
+   pathO=pathB+"/NormalHeatFlux"
+   it=E.iteration()
+
+   fqx=mcci.Parameter_info("Simulation_Fluid_2_Therm_Ratio",MpCCI.CCI_INT)
+
+   xp=xw.get(E.RUNTIME_TREE)
+   xf=X.retrieve(pathO,xp)
+   if ( xf and ((it % fqx ) == 0 )):
+       sd1=mcci.Parameter_info("Fluid_Private_Synchro_ID",MpCCI.CCI_INT)
+       ZID=mcci.Parameter_info("Global_Mesh_ID",MpCCI.CCI_INT)
+       BID=1
+       nnodes=len(xf[1].flat)
+       if ( (it % fqx ) == 0 ):
+         mcci.Put_nodes(ZID,BID,171,1,nnodes,0,None,MpCCI.CCI_DOUBLE,xf)
+         mcci.Reach_sync_point(sd1)
+
+   (rC,nC)=mcci.Get_nodes(ZoneID,BoundaryID,154,1,nnodes,0,None,MpCCI.CCI_DOUBLE)
+   ...
+   E.update((E.RUNTIME_TREE,rt)
+</pre>
+
+<h2>Scripting example: parallel</h2>
+
+<pre>
+   import elsApy    as E
+   from Scientific  import MPI
+
+   communicator=MPI.world.duplicate()
+   id = communicator.rank
+   if   ( id == 0 ): remoteId=1
+   elif ( id == 1 ): remoteId=0
+
+   datatree=E.get(E.RUNTIME_TREE)
+   temp=pickle.dumps(datatree)
+   communicator.nonblocking_send(temp, remoteId, id)
+   return,rank,tag=communicator.receiveString(None,None)
+   result=pickle.loads(return)
+
+   for l in result:
+     if (l[0] == "RunTimeTree"):
+       for ll in l[2]:
+         if (ll[0] == "Rotor#Output"):  ll[0]="Stator#Input"
+         if (ll[0] == "Stator#Output"): ll[0]="Rotor#Input"
+
+   E.update(E.RUNTIME_TREE,result)
+</pre>
+
+<h2>In-memory issues</h2>
+
+<ul>
+<li> Dedicated to a platform
+     <ul>
+     <li> One per platform: requires an API
+     <li> Translation mandatory between platforms
+          <ul>
+          <li> XDR-like
+          </ul>
+     </ul>
+<li> Best should be
+     <ul>
+     <li> Use an existing system
+          <ul>
+          <li> Python/Numeric (+Marshalling)
+          <li> HDF5 (?)
+          </ul>
+     </ul>
+</ul>
+
+<h2>Python/CGNS Tree interface</h2>
+
+<ul>
+<li> List of Python objects
+     <ul>
+     <li> MLL-like interface
+          <ul>
+          <li> <tt>NewBase</tt>
+          <li> <tt>NewZone</tt>
+          <li> <tt>NewGridCoordinates</tt>
+          <li> <tt>NewCoordinates</tt>
+          <li> <tt>NewDataArray</tt>
+          </ul>
+     <li> Numeric Python arrays
+     <li> Input/Output from MLL
+     <li> Use paths instead of ids
+          <ul>
+          <li> <tt>GetByExactPath</tt>
+          <li> <tt>GetByRegexpPath</tt>
+          <li> <tt>GetAllTreePath</tt>
+          </ul>
+     </ul>
+</ul>
+
+<pre>
+   T=CGNSTree()
+   base=newBase(T,"Base",3,3)
+   print T
+   getChildrenNameByPath(T,"/Base/Zone-002/GridCoordinates")
+</pre>
+
+<p>
+<pre>
+   [['CGNSLibraryVersion', 2.4, [], 'CGNSLibraryVersion_t'],
+    ['Base', array([3, 3]), [], 'CGNSBase_t']
+   ]
+</pre>
+
+<h2>Script example: Python/CGNS tree</h2>
+
+<pre>
+   T=C.newCGNS()
+
+   base=C.newBase(T,"Base",3,3)
+   size=(20,10,5)
+
+   z1=C.newZone(base,"Zone-001",size)
+   C.newCoordinates(z1,"CoordinatesX",x)
+   C.newCoordinates(z1,"CoordinatesY",y)
+
+   f=open("T01.py","w+")
+   f.write(str(T))
+   f.close()
+
+   clist=C.getChildrenNameByPath(T,"/Base/Zone-002/GridCoordinates")
+   for c in clist:
+     n=C.getByExactPath(T,"/Base/Zone-002/GridCoordinates/"+c)
+     print C.nodeName(n)
+     v=C.nodeValue(n)
+
+   print C.getChildrenType(T,"CGNSBase_t")
+   print C.getAllTreePath(T)
+   print C.getAllTreeType(T,"Zone_t")
+   print C.getAllTreeType(T,"DataArray_t")
+</pre>
+
+<h2>Workflow pre/post processing</h2>
+
+<ul>
+<li> Use tools operating on data trees
+     <ul>
+     <li> A data model is described by a grammar: SIDS
+     <li> Translate the grammar for existing tools
+          <ul>
+          <li> Relax-NG, BNF, ...
+          </ul>
+     </ul>
+<li> In-Memory data structre can be used for...
+     <ul>
+     <li> Perform tree verification
+     <li> Operate tree as ADT
+          <ul>
+          <li> Generate code:
+               <ul>
+               <li> MLL/ADF/HDF5/XML/SQL/XDR/...
+               </ul>
+          </ul>
+     </ul>
+</ul>
+
+<h2>More than float arrays...</h2>
+
+<ul>
+<li> CGNS is more than a storage mean...
+     <ul>
+     <li> CGNS as a data model
+          <ul>
+          <li> Store data the « CGNS way »
+               <ul>
+               <li> e.g. Map to 100% python objects
+               </ul>
+          <li> Tree with public definition
+          </ul>
+     <li> CGNS as component interface
+          <ul>
+          <li> Code-coupling data model
+          <li> Transfer whole tree instead of arrays
+               <ul>
+               <li> e.g. Memory buffer based system
+               </ul>
+          </ul>
+     </ul>
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 20 Dec 2007
+
+</body>
+</html>

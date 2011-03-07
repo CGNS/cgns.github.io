@@ -1,0 +1,333 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+25 March 2004<br>
+11:00 AM Eastern Time<br><br>
+
+<ol>
+<li> The meeting was called to order at 11:05 AM.  There were
+     <a href="#attendees">13 attendees</a>, listed below.
+<br><br>
+<li> The minutes of the <a href="meeting_jan04.html">7 January 2004
+     Reno meeting</a> were reviewed and approved as posted on the web
+     site.
+<br><br>
+<li> Status of previous action items:<br><br>
+     <ol type="a">
+     <li> Wedan to post latest and greatest HDF-5 version (including
+          link capability) to SourceForge.
+          <ul type=disc>
+          <li> done; SourceForge package is "adfh".
+               Users will also need to download HDF5 itself, and build it. 
+          </ul>
+     <li> Rumsey to check with Towne to see if documentation still
+          exists for <tt>ElementList</tt> and <tt>Range</tt> (removed
+          prior to V2).
+          <ul type=disc>
+          <li> done - some was there, and some was written
+          </ul>
+     <li> Wedan will look into issue of links further (perhaps can
+          modify open call so it does not follow links).
+          <ul type=disc>
+          <li> looked into it - will take some considerable work, so not
+               done yet (<u>keep as open item</u>)
+          </ul>
+     <li> Rumsey will finalize updated CGNS Charter and send to Towne to
+          post.
+          <ul type=disc>
+          <li> done
+          </ul>
+     <li> Wedan will prepare V2.3 for official release - need to
+          coordinate with change to SIDS for <tt>ElementList</tt> and
+          <tt>Range</tt>.
+          <ul type=disc>
+          <li> done, but documentation still needs to be taken off beta
+               status
+          </ul>
+     <li> Wedan will look into formally archiving all old versions of
+          the software.
+          <ul type=disc>
+          <li> old versions have been archived on ICEM's machines
+          <li> Wedan will post to SourceForge at some point in the future
+               (<u>action item carries</u>)
+          </ul>
+     <li> Wedan will remove the webpage containing binaries - in the
+          future, all software must be obtained through SourceForge.
+          <ul type=disc>
+          <li> done - now directs you to SourceForge or to old archived
+               files
+          </ul>
+     <li> Rumsey to send a summary of priority list of Proposals for
+          Extension to Edwards.
+          <ul type=disc>
+          <li> done
+          </ul>
+     </ol>
+<br>
+<li> ISO status/discussion (Cosner):<br><br>
+     <ol type="a">
+     <li> No change in status to report.  There is no hard "no"
+          regarding future funding, but not encouraging, either.  In the
+          ISO process, we are still good for 18 months more.
+     </ol>
+<br>
+<li> Documentation issues and CGNStalk issues (Towne):<br><br>
+     <ol type="a">
+     <li> Spam issue on CGNSTalk is still bothersome, but generally
+          tends to be only a few per week.  This is felt to be not worth
+          taking any action on yet.
+     <li> Current documentation is still V2.2 (2.3 is still in beta
+          status). <u>Towne will take V2.3 documentation out of beta
+          status</u>. The 2.2 documentation will be moved to the "prior
+          version" location, and the 2.1 documentation will be removed.
+     <li> For latest SIDS (i.e., consistent with CGNS Version 2.3)
+          as recommended practice, the formal review period will
+          begin near mid-April and will last approximately 1 month
+          (Craig Day at AIAA will set this up).  After that, a formal
+          CGNS Steering Committee ballot will be done to approve the
+          revision.
+     </ol>
+<br>
+<li> Software status/discussion (Wedan):<br><br>
+     <ol type="a">
+     <li> Discussion took place regarding <tt>ElementList</tt> and
+          <tt>Range</tt> capability, which was recently re-added
+          with V2.3.  By default, V2.3 SIDS allows both the use of
+          <tt>PointList/Range</tt> with <tt>GridLocation=CellCenter</tt>
+          OR the new <tt>ElementList/Range</tt> feature.  This is
+          currently how the V2.3 documentation reads.
+          <ul type=disc>
+          <li> Wedan has suggested eliminating the
+               <tt>Pointlist/Range</tt> + <tt>CellCenter</tt>
+               possibility (and thus removing the need for
+               <tt>GridLocation</tt> under <tt>BC_t</tt>).  So to
+               summarize, the two choices are:
+               <ol>
+               <li> allow existing usage of <tt>PointList/Range</tt>
+                    with <tt>GridLocation=CellCenter</tt> AND add new
+                    <tt>ElementList/Range</tt> capability (current
+                    default in V2.3), or:
+               <li> change SIDS so when <tt>PointList/Range</tt>
+                    are used, they mean vertices only; drop
+                    <tt>GridLocation</tt> from <tt>BC_t</tt>
+               </ol>
+          <li> An informal e-mail vote was split on the decision.
+               During the discussion here, most people felt it would
+               be better in the long run to go with Wedan's suggestion
+               (number 2).  Wedan could make the API automatically fix
+               files doing it the old way (transparent to the user), so
+               backward compatability will not be a problem.
+          <li> It was finally decided to go with Wedan's suggestion, but
+               only when the next major release occurs.  This way, there
+               is plenty of time to make changes in the beta releases
+               of the API (Wedan) and documentation (Towne) (<u>open
+               items</u>).
+          </ul>
+     <li> Discussion took place regarding recent discussion topic on
+          CGNSTalk about CGNS slowness on Linux.  It appears to be a
+          Linux Red Hat 8.0 problem, writing to a remotely-mounted
+          disk.  The suggestion was made that Red Hat 9.0 might fix the
+          problem.
+     </ol>
+<br>
+<li> HDF-5 status/discussion (Wedan):<br><br>
+     <ol type="a">
+     <li> Wedan has been in communication with someone from NCSA
+          (HDF-5); fixing bugs in HDF-5, looking at things that might
+          need changing in CGNS to improve its usability with HDF-5
+          (e.g.: character strings would be better for HDF-5 than
+          character arrays)
+     <li> Earlier HDF-5 problem writing over 150 children has been fixed
+          with a recent HDF-5 version
+     <li> Tracking creation order ("creation tracking") is still a
+          problem with HDF-5 - they will probably fix this
+     <li> Using HDF-5 rather than ADF is still slower and bigger (up to
+          4 times) for smaller files (less than 1-2 meg or so).  For
+          bigger files, the differences are smaller.  Performance should
+          also improve with new future versions of HDF-5.
+     <li> Wedan has not yet looked into compression capability of HDF-5
+          (<u>open item</u>)
+     <li> HDF-5 is still the direction we want to eventually go, because
+          (1) we don't need to maintain it, (2) it has parallel I/O
+          capability, and (3) lots of other people use it
+     <li> There is no current date planned for switching over.  We
+          need to be very sensitive to any possible impact on vendors
+          using CGNS. <u>Rumsey will form an informal task force to
+          begin looking at timing for this, and to develop a list of
+          things that need to be done prior to switching over (initial
+          volunteers are Hauser, Edwards, Hann, van der Weide, Wall,
+          Wedan - Poinot will also likely join).</u>
+     <li> Parallel I/O has not yet been implemented completely. Hauser
+          is currently still working on parallel capability of HDF-5
+          version.  He has a paper at an upcoming conference in May.
+          <u>Hauser will send his paper (and his earlier Reno paper) to
+          Towne to post.</u>
+     <li> There is currently a converter available that translates ADF
+          &lt;-&gt; HDF-5.
+     <li> Mid-level library currently cannot distinguish between ADF
+          and HDF-5.  If you try to read the wrong one, you will get an
+          error message.  Eventually, we will develop a converter to
+          make the conversion automatically.
+     <li> The HDF-5 version of CGNS will definitely remain as beta for
+          now.  The informal task force will help decide when it is most
+          to our advantage (and when we are ready) to switch officially.
+     </ol>
+<br>
+<li> Extensions status/discussion (Edwards):<br><br>
+     <ol type="a">
+     <li> Intelligent Light (Ken Wall) is starting on the agreed-upon
+          extensions (six of them), as part of their SBIR.  They are
+          starting with the <tt>UserDefined</tt> extension. They
+          still need to get CVS version of the software.  Testing
+          of <tt>UserDefined</tt> &amp; <tt>BCDataSet</tt> will
+          be done (at least) by Rumsey &amp; Poinot.  Testing of
+          Partial read/write, <tt>Family</tt> extension, and added
+          <tt>GridConnectivityProperty</tt> extension will be done
+          (at least) by van der Weide and Alonso.  Testing of
+          Electromagnetics will probably be done by Bush and Fisher.
+          Other people interested in testing the new extensions should
+          contact Rumsey, Edwards, or Wall.
+     <li> Testing of the new extensions will be done using both the
+          existing F77 example test codes, and also Wall will write
+          new tests for the new extensions, and will add them to the
+          repository of tests codes.
+     </ol>
+<br>
+<li> Other issues:<br><br>
+     <ol type="a">
+     <li> Poinot will be presenting a CGNS paper in Portland AIAA
+          meeting.
+     <li> <u>Rumsey will set up a CGNS meeting for Portland (probably
+          Wed PM).</u> Depending on the number of attendees, this may be
+          either informal (like last summer's meeting) or else will be a
+          regular steering committee meeting.
+     <li> Question came up regarding how to test if a file is
+          SIDS-compatible or not. Wedan has an incomplete method
+          available (needs more work).  Poinot has an XML CGNS
+          "compiler" he has been developing that performs check.
+     <li> Suggestion was made to add to the example files as well as
+          programs that generate example files to the CGNS website.
+          <u>Alonso and Hann will send Wedan some of their examples, and
+          Wedan will post them.</u>
+     </ol>
+<br>
+<li> Meeting was adjourned at 12:20 PM.<br><br>
+<li> Summary of <b><u>action items</u></b>:<br><br>
+     <ol type="a">
+     <li> Wedan will formally archive old versions of software on
+          SourceForge.
+     <li> Towne will take V2.3 documentation out of beta status.
+     <li> Rumsey will form an informal task force to begin looking
+          at timing for switch to HDF-5, and to develop a list of
+          things that need to be done prior to switching over (initial
+          volunteers are Hauser, Edwards, Hann, van der Weide, Wall,
+          Wedan - Poinot will also likely join).
+     <li> Hauser will send his May paper (and his earlier Reno paper) to
+          Towne to post.
+     <li> Rumsey will set up a CGNS meeting for Portland (probably Wed
+          PM).
+     <li> Alonso and Hann will send Wedan some of their examples of CGNS
+          files and programs that write/read them, and Wedan will post
+          them.
+     </ol>
+<br>
+<li> Summary of <b><u>open items</u></b> (these are different from
+     action items, in that they are open or unresolved issues that we
+     want to keep track of, but there are no specific actions required
+     of anyone at this point in time):<br><br>
+     <ol type="a">
+     <li> Issue of links causing slowdown (perhaps can modify open call
+          so it does not follow links).
+     <li> With next major release, eliminate the
+          <tt>Pointlist/Range</tt> + <tt>CellCenter</tt> possibility
+          (and thus remove the need for <tt>GridLocation</tt> under
+          <tt>BC_t</tt>).  Next major release of API will need to
+          automatically make the alteration (transparent to the
+          user). Documentation (SIDS, User's Guide, other?) will need to
+          be changed.
+     <li> Need to look into compression capability of HDF-5.
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Juan Alonso<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Stanford
+<tr valign=baseline><td>
+   <td>Ray Cosner<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Dan Dominik<td>
+   <td>Boeing - Rocketdyne
+<tr valign=baseline><td>
+   <td>David Edwards<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Richard Hann<td>
+   <td>Ansys/CFX
+<tr valign=baseline><td>
+   <td>Thomas Hauser<td>
+   <td>Utah State University
+<tr valign=baseline><td>
+   <td>Kevin Mack<td>
+   <td>ADAPCO
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Charlie Towne<td>
+   <td>NASA Glenn
+<tr valign=baseline><td>
+   <td>Edwin Van der Weide<td>
+   <td>Stanford
+<tr valign=baseline><td>
+   <td>Ken Wall<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Bruce Wedan<td>
+   <td>ICEM CFD
+<tr valign=baseline><td>
+   <td>Nick Wyman<td>
+   <td>Pointwise
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 2 Apr 2004
+
+</body>
+</html>

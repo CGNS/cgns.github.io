@@ -1,0 +1,193 @@
+<!-- ADF User's Guide - Introduction -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - Introduction </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<span class=nav><b>Introduction</b></span>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Introduction</h2>
+
+<ul>
+<li> <a href="#history">History of Project</a>
+<li> <a href="#other">Other Software Interfaces and ADF</a>
+<li> <a href="#organization">Organization of Manual</a>
+</ul>
+
+<p>
+Advanced Data Format (ADF) is a library of basic database management
+and I/O subroutines that implements a relatively simple hierarchical
+database.
+ADF is written in ANSI C to enhance portability of the software, and the
+design of the database allows for portability of files from platform to
+platform.
+There is also a Fortran interface.
+The files are self-describing (i.e., it is possible to browse files and
+determine their contents) and extensible (i.e., many different pieces of
+software on different platforms may add or modify information).
+
+<p>
+The routines allow the user to construct a
+<a href="library.html#f:example">tree structure</a> with their data.
+This structure is very similar to the directory structures of the UNIX
+or DOS operating systems.
+ADF also allows links between nodes within the same file or to different
+files.
+This feature works somewhat like "soft links" in the UNIX operating
+system.
+The major difference between the aforementioned directory structures and
+ADF is that the nodes not only contain information about their children
+(next lower-level nodes) but may also contain data.
+
+<p>
+The installation package includes the source code to ADF, the Fortran
+interface, sample files, and a simple file browser.
+
+<a name="history"></a>
+<h3>History of Project</h3>
+
+<p>
+ADF was developed as part of the <a href="http://cgns.sourceforge.net/">CFD
+General Notation System(CGNS)</a>
+<img src="../external.png" alt="external link"> project.
+The purpose of the CGNS project is to define the data models for
+Navier-Stokes based Computational Fluid Dynamics (CFD) technology,
+develop a set of standard interface data structures for those data
+models, and develop the software that will allow implementation of those
+data structures in existing and future CFD analysis tools.
+The CGNS system consists of a collection of conventions, and software
+conforming to these conventions, for the storage and retrieval of CFD
+data.
+Adherence to these conventions is intended to facilitate the exchange of
+CFD data between sites, between application codes such as solvers and
+grid generators, and across computing platforms.
+
+<p>
+Once the data models (called the <a href="../sids/index.html">Standard
+Interface Data Structures, or SIDS</a>) were defined, a project was started
+to write software that could faithfully reproduce that information on
+disk.
+ADF is the result of that project.
+While ADF was developed specifically for the CFD process, it is quite
+general and has no built-in knowledge of CFD; therefore, it should
+be applicable to storing any type of data that lends itself to a
+hierarchical definition.
+
+<a name="other"></a>
+<h3>Other Software Interfaces and ADF</h3>
+
+<p>
+Two other software packages were investigated as part of this project.
+The first database interface investigated was the
+<a href="http://hdf.ncsa.uiuc.edu/">Hierarchical Data Format (HDF)</a>
+<img src="../external.png" alt="external link"> developed at the
+<a href="http://www.ncsa.uiuc.edu/">National Center for Supercomputing
+Applications</a> <img src="../external.png" alt="external link"> at the
+University of Illinois.
+This database system has a large user base and support and has been
+in existence more than 6 years with utilities and graphical routines
+written with both a C and a Fortran interface.
+The limitation of HDF was that it was not truly hierarchical despite its
+name.
+Any hierarchy has to be built using naming conventions.
+Since the CGNS data models indicated a natural hierarchical structure,
+it seemed appropriate to develop database software that worked in that
+mode by design.
+The <a href="conventions.html">ADF design considerations</a> are
+summarized in a separate section.
+
+<p>
+The second was the
+<a href="http://www.grc.nasa.gov/WWW/winddocs/cff/">Common File Format
+(CFF)</a> developed by McDonnell Douglas Aerospace.
+CFF is a second-generation database management system that provides a
+unifying file structure for CFD data.
+The purpose of the Common File is to insulate the user from the myriad
+of different computer types that make up computer systems so that the
+user or application programmer may process a file from another machine
+without performing explicit conversions.
+CFF was written in Fortran; however, it was felt that portability and
+extensibility could be enhanced using C.
+Much of the experience gained from the McDonnell Douglas group is
+incorporated into ADF due to the cooperative efforts of personnel from
+the CFD group at McDonnell Douglas Aerospace.
+
+<a name="organization"></a>
+<h3>Organization of Manual</h3>
+
+<p>
+The main section of this manual explains the basics of the
+<a href="library.html">hierarchical structure of an ADF database</a>.
+In addition, the concept of a <a href="library.html#node">node</a> as
+the basic building block of the hierarchy is developed in detail.
+The remaining sections of this manual are extensive.
+They provide a <a href="glossary.html">glossary</a> of terms and
+conventions, as well as information related to the
+<a href="history.html">ADF version releases</a>,
+<a href="versions.html">version control numbering</a>, and
+<a href="arch.html">architectures</a> that are supported by ADF.
+There are two examples, <a href="sampleFortran.html">one in Fortran</a>
+and <a href="sampleC.html">one in C</a>, respectively, that implement
+the structure illustrated in the
+<a href="library.html#f:example">example database figure</a>.
+These examples should help familiarize the new user with ADF.
+Design considerations, file optimization, and portability issues are
+also discussed.
+The individual ADF core routines are described in detail.
+They are categorized into
+<a href="subs_database.html">database-level routines</a>,
+<a href="subs_structure.html">data structure and management subroutines</a>,
+<a href="subs_query.html">data query subroutines,
+<a href="subs_io.html">data I/O subroutines</a>, and some
+<a href="subs_misc.html">miscellaneous utility subroutines</a>.
+Numerous examples are included to clarify the use of each subroutine.
+Other sections provide a <a href="errors.html">summary of ADF error
+messages</a>, and list <a href="defaults.html">default values for
+various parameters and limits on dimensions of arrays</a>.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 25 Oct 2001
+
+</body>
+</html>

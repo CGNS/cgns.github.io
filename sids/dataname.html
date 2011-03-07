@@ -1,0 +1,1801 @@
+<!-- CGNS SIDS document - Conventions for Data-Name Identifiers -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Conventions for Data-Name Identifiers </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<span class=nav><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></span>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Conventions for Data-Name Identifiers</h2>
+
+<ul>
+<li> <a href="#dataname_grid">Coordinate Systems</a>
+<li> <a href="#dataname_flow">Flowfield Solution</a>
+<li> <a href="#dataname_turb">Turbulence Model Solution</a>
+<li> <a href="#dataname_nondim">Nondimensional Parameters</a>
+<li> <a href="#dataname_char">Characteristics and Riemann Invariants Based on 1-D Flow</a>
+<li> <a href="#dataname_force">Forces and Moments</a>
+<li> <a href="#dataname_timedep">Time-Dependent Flow</a>
+</ul>
+
+<p>
+Identifiers or names can be attached to
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities to
+identify and describe the quantity being stored.
+To facilitate communication between different application codes, we
+propose to establish a set of standardized data-name identifiers with
+fairly precise definitions.
+For any identifier in this set, the associated data should be
+unambiguously understood.
+In essence, this section proposes standardized terminology for labeling
+CFD-related data, including grid coordinates, flow solution, turbulence
+model quantities, nondimensional governing parameters, boundary
+condition quantities, and forces and moments.
+
+<p>
+We use the convention that all standardized identifiers denote
+scalar quantities; this is consistent with the intended use of the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> structure type
+to describe an array of scalars.
+For quantities that are vectors, such as velocity, their components are
+listed.
+
+<p>
+Included with the lists of standard data-name identifiers, the
+fundamental units of dimensions associated with that quantity are
+provided.
+The following notation is used for the fundamental units:
+<b>M</b> is mass, <b>L</b> is length, <b>T</b> is time,
+<b>&Theta;</b> is temperature, <b>&alpha;</b> is angle,
+and <b>I</b> is electric current.
+These fundamental units are directly associated with the elements of the
+<a href="build.html#DimensionalExponents"><tt>DimensionalExponents_t</tt></a>
+structure.
+For example, a quantity that has dimensions <b>ML</b>/<b>T</b>
+corresponds to <tt>MassExponent = +1</tt>, <tt>LengthExponent = +1</tt>,
+and <tt>TimeExponent = -1</tt>.
+
+<p>
+Unless otherwise noted, all
+quantities in the following sections denote floating-point data
+types, and the appropriate <tt>DataType</tt> structure parameter for
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> is <tt>real</tt>.
+
+<a name="dataname_grid"></a>
+<h3>Coordinate Systems</h3>
+
+<p>
+Coordinate systems for identifying physical location are as follows:
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>System<td><tt>&nbsp;&nbsp;</tt>
+   <th>3-D<td><tt>&nbsp;&nbsp;</tt>
+   <th>2-D
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td>Cartesian<td>
+   <td align=center>(<i>x</i>,<i>y</i>,<i>z</i>)<td>
+   <td align=center>(<i>x</i>,<i>y</i>) or (<i>x</i>,<i>z</i>) or (<i>y</i>,<i>z</i>)
+<tr valign=baseline>
+   <td>Cylindrical<td>
+   <td align=center>(<i>r</i>,<i>&theta;</i>,<i>z</i>)<td>
+   <td align=center>(<i>r</i>,<i>&theta;</i>)
+<tr valign=baseline>
+   <td>Spherical<td>
+   <td align=center>(<i>r</i>,<i>&theta;</i>,<i>&phi;</i>)<td>
+   <td align=center>
+<tr valign=baseline>
+   <td>Auxiliary<td>
+   <td align=center>(<i>&xi;</i>,<i>&eta;</i>,<i>&zeta;</i>)<td>
+   <td align=center>(<i>&xi;</i>,<i>&eta;</i>) or
+                    (<i>&xi;</i>,<i>&zeta;</i>) or
+                    (<i>&eta;</i>,<i>&zeta;</i>)
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+<br>
+Associated with these coordinate systems are the following unit vector 
+conventions:
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline>
+   <td><i>x</i>-direction:&nbsp;<i><b>e</b><sub>x</sub></i><td><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>r</i>-direction:&nbsp;<i><b>e</b><sub>r</sub></i><td><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>&xi;</i>-direction:&nbsp;<i><b>e</b><sub>&xi;</sub></i>
+<tr valign=baseline>
+   <td><i>y</i>-direction:&nbsp;<i><b>e</b><sub>y</sub></i><td>
+   <td><i>&theta;</i>-direction:&nbsp;<i><b>e</b><sub>&theta;</sub></i><td>
+   <td><i>&eta;</i>-direction:&nbsp;<i><b>e</b><sub>&eta;</sub></i>
+<tr valign=baseline>
+   <td><i>z</i>-direction:&nbsp;<i><b>e</b><sub>z</sub></i><td>
+   <td><i>&phi;</i>-direction:&nbsp;<i><b>e</b><sub>&phi;</sub></i><td>
+   <td><i>&zeta;</i>-direction:&nbsp;<i><b>e</b><sub>&zeta;</sub></i>
+</table>
+</center>
+<br>
+Note that <i><b>e</b><sub>r</sub></i>, <i><b>e</b><sub>&theta;</sub></i>
+and <i><b>e</b><sub>&phi;</sub></i> are functions of position.
+
+<p>
+We envision that one of the "standard" coordinate systems (cartesian,
+cylindrical or spherical) will be used within a zone (or perhaps the
+entire database) to define grid coordinates and other related data.
+The auxiliary coordinates will be used for special quantities, including
+<a href="#dataname_force">forces and moments</a>, which may not be
+defined in the same coordinate system as the rest of the data.
+When auxiliary coordinates are used, a transformation must also be
+provided to uniquely define them.
+For example, the transform from cartesian to orthogonal auxiliary
+coordinates is,
+
+<br><br>
+<center>
+<img src="dataname.eqs/transform.gif"
+     alt="Equation of transformation from cartesian to orthogonal auxiliary coordinates"
+     longdesc="dataname.eqs/transform.html">
+</center>
+<br>
+where <b>T</b> is an orthonormal matrix (2&times;2 in 2-D and 3&times;3
+in 3-D).
+
+<p>
+In addition, normal and tangential coordinates are often used to define
+boundary conditions and data related to surfaces.
+The normal coordinate
+is identified as <i>n</i> with the unit vector <i><b>e</b><sub>n</sub></i>.
+
+<p>
+The data-name identifiers defined for coordinate systems are listed in
+the following table.
+All represent real <tt>DataType</tt>s, except for <tt>ElementConnectivity</tt>
+and <tt>ParentData</tt>, which are integer.
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Coordinate Systems
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>CoordinateX</tt><td>
+   <td><i>x</i><td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>CoordinateY</tt><td>
+   <td><i>y</i><td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>CoordinateZ</tt><td>
+   <td><i>z</i><td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>CoordinateR</tt><td>
+   <td><i>r</i><td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>CoordinateTheta</tt><td>
+   <td><i>&theta;</i><td>
+   <td align=center><b><i>&alpha;</i></b>
+<tr valign=baseline>
+   <td><tt>CoordinatePhi</tt><td>
+   <td><i>&phi;</i><td>
+   <td align=center><b><i>&alpha;</i></b>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>CoordinateNormal</tt><td>
+   <td>Coordinate in direction of <i><b>e</b><sub>n</sub></i><td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>CoordinateTangential</tt><td>
+   <td>Tangential coordinate (2-D only)<td>
+   <td align=center><b>L</b> 
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>CoordinateXi</tt><td>
+   <td><i>&xi;</i><td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>CoordinateEta</tt><td>
+   <td><i>&eta;</i><td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>CoordinateZeta</tt><td>
+   <td><i>&zeta;</i><td>
+   <td align=center><b>L</b>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>CoordinateTransform</tt><td>
+   <td>Transformation matrix (<b>T</b>)<td>
+   <td align=center>-
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>InterpolantsDonor</tt><td>
+   <td>Interpolation factors<td>
+   <td align=center>-
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>ElementConnectivity</tt><td>
+   <td>Nodes making up an element<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>ParentData</tt><td>
+   <td>Element parent identification<td>
+   <td align=center>-
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<a name="dataname_flow"></a>
+<h3>Flowfield Solution</h3>
+
+<p>
+This section describes data-name identifiers for typical Navier-Stokes
+solution variables.
+The list is obviously incomplete, but should suffice for initial
+implementation of the CGNS system.
+The variables
+listed in this section are dimensional or raw quantities; nondimensional
+parameters and coefficients based on these variables are discussed in
+the section <a href="#dataname_nondim">Nondimensional Parameters</a>.
+
+<p>
+We use fairly universal notation for state variables.
+Static quantities are measured with the fluid at speed: static density
+(<i>&rho;</i>), static pressure
+(<i>p</i>), static temperature (<i>T</i>), static internal energy per
+unit mass (<i>e</i>), static enthalpy per unit mass (<i>h</i>), entropy
+(<i>s</i>), and static speed of sound (<i>c</i>).
+We also approximate the true entropy by the function
+<i>s</i><sub>app</sub> = <i>p</i> / <i>&rho;<sup>&gamma;</sup></i>
+(this assumes an ideal gas).
+The velocity is <b><i>q</i></b> = <i>u<b>e</b><sub>x</sub></i> +
+<i>v<b>e</b><sub>y</sub></i> + <i>w<b>e</b><sub>z</sub></i>,
+with magnitude <i>q</i> = (<b><i>q</i></b> &sdot; <b><i>q</i></b>)<sup>1/2</sup>.
+Stagnation quantities are obtained by bringing the fluid isentropically
+to rest; these are identified by a subscript "<sub>0</sub>".
+The term "total" is also used to refer to stagnation quantities.
+
+<p>
+Conservation variables are density, momentum
+(<i>&rho;<b>q</b></i> = <i>&rho;u<b>e</b><sub>x</sub></i> +
+<i>&rho;v<b>e</b><sub>y</sub></i> + <i>&rho;w<b>e</b><sub>z</sub></i>),
+and stagnation energy per unit volume
+(<i>&rho;e</i><sub>0</sub>).
+
+<p>
+For <a href="gridflow.html#RotatingCoordinates">rotating coordinate
+systems</a>, <i>u</i>, <i>v</i>, and <i>w</i> are the <i>x</i>,
+<i>y</i>, and <i>z</i> components of the velocity vector in the inertial
+frame; <b><i>&omega;</i></b> is the rotation rate vector; <b><i>R</i></b>
+is a vector from the center of rotation to the point of interest; and
+<i><b>w</b><sub>r</sub></i> = <b><i>&omega;</i></b> &times; <b><i>R</i></b>
+is the rotational velocity vector of the rotating frame of
+reference, with components <i>w<sub>rx</sub></i>, <i>w<sub>ry</sub></i>,
+and <i>w<sub>rz</sub></i>.
+
+<p>
+Molecular diffusion and heat transfer introduce the molecular viscosity
+(<i>&mu;</i>), kinematic viscosity (<i>&nu;</i>) and thermal conductivity
+coefficient (<i>k</i>).
+These are obtained from the state variables through auxiliary
+correlations.
+For a perfect gas, <i>&mu;</i> and <i>k</i> are functions of static
+temperature only.
+
+<p>
+The Navier-Stokes equations involve the strain tensor
+(<img align=bottom src="dataname.eqs/strain.gif" alt="S double bar">) and
+the shear-stress tensor
+(<img align=bottom src="dataname.eqs/stress.gif" alt="tau double bar">).
+Using indicial notation, the
+3-D cartesian components of the strain tensor are,
+
+<br><br>
+<center>
+<img src="dataname.eqs/straineq.gif"
+     alt="Equation for strain tensor"
+     longdesc="dataname.eqs/straineq.html">
+</center>
+<br>
+and the stress tensor is, 
+
+<br><br>
+<center>
+<img src="dataname.eqs/stresseq.gif"
+     alt="Equation for stress tensor"
+     longdesc="dataname.eqs/stresseq.html">
+</center>
+<br>
+where (<i>x</i><sub>1</sub>,<i>x</i><sub>2</sub>,<i>x</i><sub>3</sub>) =
+(<i>x</i>,<i>y</i>,<i>z</i>) and
+(<i>u</i><sub>1</sub>,<i>u</i><sub>2</sub>,<i>u</i><sub>3</sub>) =
+(<i>u</i>,<i>v</i>,<i>w</i>).
+The bulk viscosity is usually approximated as
+<i>&lambda;</i> = &minus;2<i>&mu;</i>/3.
+
+<p>
+Reynolds averaging of the Navier-Stokes equations introduce Reynolds
+stresses (&minus;<i>&rho;</i>(<i>u</i>&prime;<i>v</i>&prime;)<sub>ave</sub>,
+etc.) and turbulent heat flux terms
+(&minus;<i>&rho;</i>(<i>u</i>&prime;<i>e</i>&prime;)<sub>ave</sub>,
+etc.), where primed quantities are instantaneous fluctuations.
+These quantities are obtained from auxiliary turbulence closure models.
+Reynolds-stress models formulate transport equations for the Reynolds
+stresses directly; whereas, eddy-viscosity models correlate the Reynolds
+stresses with the mean strain rate,
+<center>
+&minus;(<i>u</i>&prime;<i>v</i>&prime;)<sub>ave</sub> =
+   <i>&nu;<sub>t</sub></i> (&part;<i>u</i>/&part;<i>y</i> + &part;<i>v</i>/&part;<i>x</i>)
+</center>
+<br>
+where <i>&nu;<sub>t</sub></i> is the kinematic eddy viscosity.
+The eddy viscosity is either correlated to mean flow quantities by
+algebraic models or by auxiliary transport models.
+An example two-equation turbulence transport model is the
+<i>k</i>-<i>&epsilon;</i>
+model, where transport equations are formulated for the turbulent kinetic
+energy (<i>k</i> = [(<i>u</i>&prime;<i>u</i>&prime;)<sub>ave</sub> +
+(<i>v</i>&prime;<i>v</i>&prime;)<sub>ave</sub> +
+(<i>w</i>&prime;<i>w</i>&prime;)<sub>ave</sub>] / 2)
+and turbulent dissipation (<i>&epsilon;</i>).
+
+<p>
+Skin friction evaluated at a surface is the dot product of the shear
+stress tensor with the surface normal:
+
+<br><br>
+<center>
+<img src="dataname.eqs/skinfriction.gif"
+     alt="tau vector = tau double bar dot n hat">
+</center>
+<br>
+Note that skin friction is a vector.
+
+<p>
+The data-name identifiers defined for flow solution quantities are listed
+below.
+
+<p>
+Note that for some vector quantities, like momentum, the table only
+explicitly lists data-name identifiers for the <i>x</i>, <i>y</i>, and <i>z</i>
+components, and for the magnitude.
+It should be understood, however, that for any vector quantity with a
+standardized data name "<tt>Vector</tt>", the following standardized data
+names are also defined:
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>VectorX</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td><i>x</i>-component of vector
+<tr valign=baseline><td>
+   <td><tt>VectorY</tt><td>
+   <td><i>y</i>-component of vector
+<tr valign=baseline><td>
+   <td><tt>VectorZ</tt><td>
+   <td><i>z</i>-component of vector
+<tr valign=baseline><td>
+   <td><tt>VectorR</tt><td>
+   <td>Radial component of vector
+<tr valign=baseline><td>
+   <td><tt>VectorTheta</tt><td>
+   <td><i>&theta;</i>-component of vector
+<tr valign=baseline><td>
+   <td><tt>VectorPhi</tt><td>
+   <td><i>&phi;</i>-component of vector
+<tr valign=baseline><td>
+   <td><tt>VectorMagnitude</tt><td>
+   <td>Magnitude of vector
+<tr valign=baseline><td>
+   <td><tt>VectorNormal</tt><td>
+   <td>Normal component of vector
+<tr valign=baseline><td>
+   <td><tt>VectorTangential</tt><td>
+   <td>Tangential component of vector (2-D only)
+</table>
+
+<p>
+Also note that some data-name identifiers used with multi-species flows
+include the variable string <i>Symbol</i>, which represents either the
+chemical symbol for a species, or a defined name for a mixture.
+See the section describing the
+<a href="floweqn.html#ChemicalKineticsModel"><tt>ChemicalKineticsModel</tt>
+data structure</a> for examples and a
+<a href="floweqn.html#t:id_chemicalkineticssymbols">table of defined
+names</a>.
+
+<br><br>
+<a name="t:id_flow"></a>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Flow Solution Quantities
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>Potential</tt><td>
+   <td>Potential: &nabla;&phi; = <b><i>q</i></b><td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>StreamFunction</tt><td>
+   <td>Stream function (2-D): &nabla; &times; &psi; = <b><i>q</i></b><td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>Density</tt><td>
+   <td>Static density (<i>&rho;</i>)<td>
+   <td align=center><b>M</b>/<b>L</b><sup>3</sup>
+<tr valign=baseline>
+   <td><tt>Pressure</tt><td>
+   <td>Static pressure (<i>p</i>)<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>Temperature</tt><td>
+   <td>Static temperature (<i>T</i>)<td>
+   <td align=center><b>&Theta;</b>
+<tr valign=baseline>
+   <td><tt>EnergyInternal</tt><td>
+   <td>Static internal energy per unit mass (<i>e</i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>Enthalpy</tt><td>
+   <td>Static enthalpy per unit mass (<i>h</i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>Entropy</tt><td>
+   <td>Entropy (<i>s</i>)<td>
+   <td align=center><b>ML</b><sup>2</sup>/(<b>T</b><sup>2</sup><b>&Theta;</b>)
+<tr valign=baseline>
+   <td><tt>EntropyApprox</tt><td>
+   <td>Approximate entropy (<i>s</i><sub>app</sub> = <i>p</i> / <i>&rho;<sup>&gamma;</sup></i>)<td>
+   <td align=center nowrap><b>L</b><sup>3<i>&gamma;</i>&minus;1</sup>/(<b>M</b><sup><i>&gamma;</i>&minus;1</sup><b>T</b><sup>2</sup>)
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>DensityStagnation</tt><td>
+   <td>Stagnation density (<i>&rho;</i><sub>0</sub>)<td>
+   <td align=center><b>M</b>/<b>L</b><sup>3</sup>
+<tr valign=baseline>
+   <td><tt>PressureStagnation</tt><td>
+   <td>Stagnation pressure (<i>p</i><sub>0</sub>)<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>TemperatureStagnation</tt><td>
+   <td>Stagnation temperature (<i>T</i><sub>0</sub>)<td>
+   <td align=center><b>&Theta;</b>
+<tr valign=baseline>
+   <td><tt>EnergyStagnation</tt><td>
+   <td>Stagnation energy per unit mass (<i>e</i><sub>0</sub>)<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>EnthalpyStagnation</tt><td>
+   <td>Stagnation enthalpy per unit mass (<i>h</i><sub>0</sub>)<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>EnergyStagnationDensity</tt><td>
+   <td>Stagnation energy per unit volume (<i>&rho;e</i><sub>0</sub>)<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>VelocityX</tt><td>
+   <td><i>x</i>-component of velocity (<i>u</i> = <i><b>q</b> &middot; <b>e</b><sub>x</sub></i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>VelocityY</tt><td>
+   <td><i>y</i>-component of velocity (<i>v</i> = <i><b>q</b> &sdot; <b>e</b><sub>y</sub></i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>VelocityZ</tt><td>
+   <td><i>z</i>-component of velocity (<i>w</i> = <i><b>q</b> &sdot; <b>e</b><sub>z</sub></i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>VelocityR</tt><td>
+   <td>Radial velocity component (<i><b>q</b> &sdot; <b>e</b><sub>r</sub></i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>VelocityTheta</tt><td>
+   <td>Velocity component in <i>&theta;</i> direction (<i><b>q</b> &sdot; <b>e</b><sub>&theta;</sub></i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>VelocityPhi</tt><td>
+   <td>Velocity component in <i>&phi;</i> direction (<i><b>q</b> &sdot; <b>e</b><sub>&phi;</sub></i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>VelocityMagnitude</tt><td>
+   <td>Velocity magnitude (<i>q</i> = (<b><i>q</i></b> &sdot; <b><i>q</i></b>)<sup>1/2</sup>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>VelocityNormal</tt><td>
+   <td>Normal velocity component (<i><b>q</b> &sdot; <b>n</b></i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>VelocityTangential</tt><td>
+   <td>Tangential velocity component (2-D)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>VelocitySound</tt><td>
+   <td>Static speed of sound<td>
+   <td align=center><b>L</b>/<b>T</b>      
+<tr valign=baseline>
+   <td><tt>VelocitySoundStagnation</tt><td>
+   <td>Stagnation speed of sound<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>MomentumX</tt><td>
+   <td><i>x</i>-component of momentum (<i>&rho;u</i>)<td>
+   <td align=center><b>M</b>/(<b>L</b><sup>2</sup><b>T</b>)
+<tr valign=baseline>
+   <td><tt>MomentumY</tt><td>
+   <td><i>y</i>-component of momentum (<i>&rho;v</i>)<td>
+   <td align=center><b>M</b>/(<b>L</b><sup>2</sup><b>T</b>)
+<tr valign=baseline>
+   <td><tt>MomentumZ</tt><td>
+   <td><i>z</i>-component of momentum (<i>&rho;w</i>)<td>
+   <td align=center><b>M</b>/(<b>L</b><sup>2</sup><b>T</b>)
+<tr valign=baseline>
+   <td><tt>MomentumMagnitude</tt><td>
+   <td>Magnitude of momentum (<i>&rho;q</i>)<td>
+   <td align=center><b>M</b>/(<b>L</b><sup>2</sup><b>T</b>)
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>RotatingVelocityX</tt><td>
+   <td><i>x</i>-component of velocity, relative to rotating frame (<i>u<sub>rx</sub></i> = <i>u</i> &minus; <i>w<sub>rx</sub></i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>RotatingVelocityY</tt><td>
+   <td><i>y</i>-component of velocity, relative to rotating frame (<i>u<sub>ry</sub></i> = <i>v</i> &minus; <i>w<sub>ry</sub></i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>RotatingVelocityZ</tt><td>
+   <td><i>z</i>-component of velocity, relative to rotating frame (<i>u<sub>rz</sub></i> = <i>w</i> &minus; <i>w<sub>rz</sub></i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>RotatingMomentumX</tt><td>
+   <td><i>x</i>-component of momentum, relative to rotating frame (<i>&rho;u<sub>rx</sub></i>)<td>
+   <td align=center><b>M</b>/(<b>L</b><sup>2</sup><b>T</b>)
+<tr valign=baseline>
+   <td><tt>RotatingMomentumY</tt><td>
+   <td><i>y</i>-component of momentum, relative to rotating frame (<i>&rho;u<sub>ry</sub></i>)<td>
+   <td align=center><b>M</b>/(<b>L</b><sup>2</sup><b>T</b>)
+<tr valign=baseline>
+   <td><tt>RotatingMomentumZ</tt><td>
+   <td><i>z</i>-component of momentum, relative to rotating frame (<i>&rho;u<sub>rz</sub></i>)<td>
+   <td align=center><b>M</b>/(<b>L</b><sup>2</sup><b>T</b>)
+<tr valign=baseline>
+   <td><tt>RotatingVelocityMagnitude</tt><td>
+   <td>Velocity magnitude in rotating frame (<i>q<sub>r</sub></i> = (<i>u<sub>rx</sub></i> + <i>u<sub>ry</sub></i> + <i>u<sub>rz</sub></i>)<sup>1/2</sup>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>RotatingPressureStagnation</tt><td>
+   <td>Stagnation pressure in rotating frame<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>RotatingEnergyStagnation</tt><td>
+   <td>Stagnation energy per unit mass in rotating frame ((<i>e</i><sub>0</sub>)<sub><i>r</i></sub>)<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>RotatingEnergyStagnationDensity</tt><td>
+   <td>Stagnation energy per unit volume in rotating frame (<i>&rho;</i>(<i>e</i><sub>0</sub>)<sub><i>r</i></sub>)<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>RotatingEnthalpyStagnation</tt><td>
+   <td>Stagnation enthalpy per unit mass in rotating frame, rothalpy<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>EnergyKinetic</tt><td>
+   <td>(<i>u</i><sup>2</sup> + <i>v</i><sup>2</sup> + <i>w</i><sup>2</sup>)/2 = <i>q</i><sup>2</sup>/2<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>PressureDynamic</tt><td>
+   <td><i>&rho;q</i><sup>2</sup>/2<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>SoundIntensityDB</tt><td>
+   <td>Sound intensity level in decibels,
+       10 log<sub>10</sub>(<i>I</i>/<i>I<sub>ref</sub></i>) =
+       20 log<sub>10</sub>(<i>p</i>/<i>p<sub>ref</sub></i>), where
+       <i>I</i> is the sound power per unit area,
+       <i>I<sub>ref</sub></i> = 10<sup>&minus;12</sup> watts/m<sup>2</sup>
+       is the reference sound power per unit area,
+       <i>p</i> is the pressure wave amplitude, and
+       <i>p<sub>ref</sub></i> = 2&times;10<sup>&minus;5</sup> N/m<sup>2</sup>
+       is the reference pressure.<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>SoundIntensity</tt><td>
+   <td>Sound intensity (i.e., sound power per unit area, <i>I</i>)<td>
+   <td align=center><b>M</b>/<b>T</b><sup>3</sup>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>VorticityX</tt><td>
+   <td><i>&omega;<sub>x</sub></i> = 
+       &part;<i>w</i>/&part;<i>y</i> &minus; &part;<i>v</i>/&part;<i>z</i> =
+       <i><b>&omega;</b> &sdot; <b>e</b><sub>x</sub></i><td>
+   <td align=center><b>T</b><sup>&minus;1</sup>
+<tr valign=baseline>
+   <td><tt>VorticityY</tt><td>
+   <td><i>&omega;<sub>y</sub></i> = 
+       &part;<i>u</i>/&part;<i>z</i> &minus; &part;<i>w</i>/&part;<i>x</i> =
+       <i><b>&omega;</b> &sdot; <b>e</b><sub>y</sub></i><td>
+   <td align=center><b>T</b><sup>&minus;1</sup>
+<tr valign=baseline>
+   <td><tt>VorticityZ</tt><td>
+   <td><i>&omega;<sub>z</sub></i> = 
+       &part;<i>v</i>/&part;<i>x</i> &minus; &part;<i>u</i>/&part;<i>y</i> =
+       <i><b>&omega;</b> &sdot; <b>e</b><sub>z</sub></i><td>
+   <td align=center><b>T</b><sup>&minus;1</sup>
+<tr valign=baseline>
+   <td><tt>VorticityMagnitude</tt><td>
+   <td><i>&omega;</i> = (<b><i>&omega;</i></b> &times; <b><i>&omega;</i></b>)<sup>1/2</sup><td>
+   <td align=center><b>T</b><sup>&minus;1</sup>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>SkinFrictionX</tt><td>
+   <td><i>x</i>-component of skin friction (<i><b>&tau;</b> &sdot; <b>e</b><sub>x</sub></i>)<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>SkinFrictionY</tt><td>
+   <td><i>y</i>-component of skin friction (<i><b>&tau;</b> &sdot; <b>e</b><sub>y</sub></i>)<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>SkinFrictionZ</tt><td>
+   <td><i>z</i>-component of skin friction (<i><b>&tau;</b> &sdot; <b>e</b><sub>z</sub></i>)<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>SkinFrictionMagnitude</tt><td>
+   <td>Skin friction magnitude ((<b><i>&tau;</i></b> &times; <b><i>&tau;</i></b>)<sup>1/2</sup>)<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>VelocityAngleX</tt><td>
+   <td>Velocity angle (arccos(<i>u</i>/<i>q</i>) &isin; [0,180&deg;])<td>
+   <td align=center><b><i>&alpha;</i></b>
+<tr valign=baseline>
+   <td><tt>VelocityAngleY</tt><td>
+   <td>arccos(<i>v</i>/<i>q</i>)<td>
+   <td align=center><b><i>&alpha;</i></b>
+<tr valign=baseline>
+   <td><tt>VelocityAngleZ</tt><td>
+   <td>arccos(<i>w</i>/<i>q</i>)<td>
+   <td align=center><b><i>&alpha;</i></b>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>VelocityUnitVectorX</tt><td>
+   <td><i>x</i>-component of velocity unit vector (<i><b>q</b> &sdot; <b>e</b><sub>x</sub></i> / <i>q</i>)<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>VelocityUnitVectorY</tt><td>
+   <td><i>y</i>-component of velocity unit vector (<i><b>q</b> &sdot; <b>e</b><sub>y</sub></i> / <i>q</i>)<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>VelocityUnitVectorZ</tt><td>
+   <td><i>z</i>-component of velocity unit vector (<i><b>q</b> &sdot; <b>e</b><sub>z</sub></i> / <i>q</i>)<td>
+   <td align=center>-
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>MassFlow</tt><td>
+   <td>Mass flow normal to a plane (<i>&rho<b>q</b> &sdot; <b>n</b></i>)<td>
+   <td align=center><b>M</b>/(<b>L</b><sup>2</sup><b>T</b>)
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>ViscosityKinematic</tt><td>
+   <td>Kinematic viscosity (<i>&nu;</i> = <i>&mu;</i>/<i>&rho;</i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>ViscosityMolecular</tt><td>
+   <td>Molecular viscosity (<i>&mu;</i>)<td>
+   <td align=center><b>M</b>/(<b>LT</b>)
+<tr valign=baseline>
+   <td><tt>ViscosityEddyKinematic</tt><td>
+   <td>Kinematic eddy viscosity (<i>&nu;<sub>t</sub></i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>ViscosityEddy</tt><td>
+   <td>Eddy viscosity (<i>&mu;<sub>t</sub></i>)<td>
+   <td align=center><b>M</b>/(<b>LT</b>)
+<tr valign=baseline>
+   <td><tt>ThermalConductivity</tt><td>
+   <td>Thermal conductivity coefficient (<i>k</i>)<td>
+   <td align=center><b>ML</b>/(<b>T</b><sup>3</sup><b>&Theta;</b>)
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>PowerLawExponent</tt><td>
+   <td>Power-law exponent (<i>n</i>) in molecular viscosity or
+       thermal conductivity model<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>SutherlandLawConstant</tt><td>
+   <td>Sutherland's Law constant (<i>T<sub>s</sub></i>) in molecular
+       viscosity or thermal conductivity model<td>
+   <td align=center><b>&Theta;</b>
+<tr valign=baseline>
+   <td><tt>TemperatureReference</tt><td>
+   <td>Reference temperature (<i>T</i><sub>ref</sub>) in molecular
+       viscosity or thermal conductivity model<td>
+   <td align=center><b>&Theta;</b>
+<tr valign=baseline>
+   <td><tt>ViscosityMolecularReference</tt><td>
+   <td>Reference viscosity (<i>&mu;</i><sub>ref</sub>) in
+       molecular viscosity model<td>
+   <td align=center><b>M</b>/(<b>LT</b>)
+<tr valign=baseline>
+   <td><tt>ThermalConductivityReference</tt><td>
+   <td>Reference thermal conductivity (<i>k</i><sub>ref</sub>) in
+       thermal conductivity model<td>
+   <td align=center><b>ML</b>/(<b>T</b><sup>3</sup><b>&Theta;</b>)
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>IdealGasConstant</tt><td>
+   <td>Ideal gas constant (<i>R</i> = <i>c<sub>p</sub></i> &minus; <i>c<sub>v</sub></i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/(<b>T</b><sup>2</sup><b>&Theta;</b>)
+<tr valign=baseline>
+   <td><tt>SpecificHeatPressure</tt><td>
+   <td>Specific heat at constant pressure (<i>c<sub>p</sub></i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/(<b>T</b><sup>2</sup><b>&Theta;</b>)
+<tr valign=baseline>
+   <td><tt>SpecificHeatVolume</tt><td>
+   <td>Specific heat at constant volume (<i>c<sub>v</sub></i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/(<b>T</b><sup>2</sup><b>&Theta;</b>)
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>ReynoldsStressXX</tt><td>
+   <td>Reynolds stress &minus;<i>&rho;</i>(<i>u</i>&prime;<i>u</i>&prime;)<sub>ave</sub><td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>ReynoldsStressXY</tt><td>
+   <td>Reynolds stress &minus;<i>&rho;</i>(<i>u</i>&prime;<i>v</i>&prime;)<sub>ave</sub><td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>ReynoldsStressXZ</tt><td>
+   <td>Reynolds stress &minus;<i>&rho;</i>(<i>u</i>&prime;<i>w</i>&prime;)<sub>ave</sub><td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>ReynoldsStressYY</tt><td>
+   <td>Reynolds stress &minus;<i>&rho;</i>(<i>v</i>&prime;<i>v</i>&prime;)<sub>ave</sub><td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>ReynoldsStressYZ</tt><td>
+   <td>Reynolds stress &minus;<i>&rho;</i>(<i>v</i>&prime;<i>w</i>&prime;)<sub>ave</sub><td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>ReynoldsStressZZ</tt><td>
+   <td>Reynolds stress &minus;<i>&rho;</i>(<i>w</i>&prime;<i>w</i>&prime;)<sub>ave</sub><td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>MolecularWeight<i>Symbol</i></tt><td>
+   <td>Molecular weight for species <i>Symbol</i><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>HeatOfFormation<i>Symbol</i></tt><td>
+   <td>Heat of formation per unit mass for species <i>Symbol</i><td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>FuelAirRatio</tt><td>
+   <td>Fuel/air mass ratio<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>ReferenceTemperatureHOF</tt><td>
+   <td>Reference temperature for the heat of formation<td>
+   <td align=center><b>&Theta;</b>
+<tr valign=baseline>
+   <td><tt>MassFraction<i>Symbol</i></tt><td>
+   <td>Mass of species <i>Symbol</i>, divided by
+       total mass<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>LaminarViscosity<i>Symbol</i></tt><td>
+   <td>Laminar viscosity of species <i>Symbol</i><td>
+   <td align=center><b>M</b>/(<b>LT</b>)
+<tr valign=baseline>
+   <td><tt>ThermalConductivity<i>Symbol</i></tt><td>
+   <td>Thermal conductivity of species <i>Symbol</i><td>
+   <td align=center><b>ML</b>/(<b>T</b><sup>3</sup><b>&Theta;</b>)
+<tr valign=baseline>
+   <td><tt>EnthalpyEnergyRatio</tt><td>
+   <td>The ratio <i>&beta;</i> = <i>h</i> / <i>e</i> =
+       &int;<i><sup>T</sup><sub>T</i><sub>ref</sub></sub> <i>c<sub>p</sub> dT</i> /
+       &int;<i><sup>T</sup><sub>T</i><sub>ref</sub></sub> <i>c<sub>v</sub> dT</i>
+       for the mixture<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CompressibilityFactor</tt><td>
+   <td>The gas constant of the mixture divided by the freestream gas
+       constant, <i>Z</i> = <i>R</i> / <i>R</i><sub>&infin;</sub><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>VibrationalElectronEnergy</tt><td>
+   <td>Vibrational-electronic excitation energy per unit mass<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>HeatOfFormation</tt><td>
+   <td>Heat of formation per unit mass for the
+       entire mixture, <i>H</i>&nbsp;=&nbsp;&sum;<sup><i>n</i></sup><sub><i>i</i>=1</sub>&nbsp;<i>Y<sub>i</sub>&nbsp;H<sub>i</sub></i>,
+       where <i>n</i> is the number of species, <i>Y<sub>i</sub></i> is
+       the mass fraction of species <i>i</i>, and <i>H<sub>i</sub></i>
+       is the heat of formation for species <i>i</i> at the reference
+       temperature <tt>ReferenceTemperatureHOF</tt>.
+       This requires that <tt>ReferenceTemperatureHOF</tt> be
+       specified using the
+       <a href="floweqn.html#ChemicalKineticsModel"><tt>ChemicalKineticsModel</tt>
+       data structure</a>.<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>VibrationalElectronTemperature</tt><td>
+   <td>Vibrational electron temperature<td>
+   <td align=center><b>&Theta;</b>
+<tr valign=baseline>
+   <td><tt>SpeciesDensity<i>Symbol</i></tt><td>
+   <td>Density of species <i>Symbol</i><td>
+   <td align=center><b>M</b>/<b>L</b><sup>3</sup>
+<tr valign=baseline>
+   <td><tt>MoleFraction<i>Symbol</i></tt><td>
+   <td>Number of moles of species <i>Symbol</i> divided by the total
+       number of moles for all species<td>
+   <td align=center>-
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>Voltage</tt><td>
+   <td>Voltage<td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>TI</b>
+<tr valign=baseline>
+   <td><tt>ElectricFieldX</tt><td>
+   <td><i>x</i>-component of electric field vector<td>
+   <td align=center><b>ML</b>/<b>TI</b>
+<tr valign=baseline>
+   <td><tt>ElectricFieldY</tt><td>
+   <td><i>y</i>-component of electric field vector<td>
+   <td align=center><b>ML</b>/<b>TI</b>
+<tr valign=baseline>
+   <td><tt>ElectricFieldZ</tt><td>
+   <td><i>z</i>-component of electric field vector<td>
+   <td align=center><b>ML</b>/<b>TI</b>
+<tr valign=baseline>
+   <td><tt>MagneticFieldX</tt><td>
+   <td><i>x</i>-component of magnetic field vector<td>
+   <td align=center><b>I</b>/<b>L</b>
+<tr valign=baseline>
+   <td><tt>MagneticFieldY</tt><td>
+   <td><i>y</i>-component of magnetic field vector<td>
+   <td align=center><b>I</b>/<b>L</b>
+<tr valign=baseline>
+   <td><tt>MagneticFieldZ</tt><td>
+   <td><i>z</i>-component of magnetic field vector<td>
+   <td align=center><b>I</b>/<b>L</b>
+<tr valign=baseline>
+   <td><tt>CurrentDensityX</tt><td>
+   <td><i>x</i>-component of current density vector<td>
+   <td align=center><b>I</b>/<b>L</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>CurrentDensityY</tt><td>
+   <td><i>y</i>-component of current density vector<td>
+   <td align=center><b>I</b>/<b>L</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>CurrentDensityZ</tt><td>
+   <td><i>z</i>-component of current density vector<td>
+   <td align=center><b>I</b>/<b>L</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>ElectricConductivity</tt><td>
+   <td>Electrical conductivity<td>
+   <td align=center><b>ML</b>/<b>T</b><sup>3</sup><b>I</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>LorentzForceX</tt><td>
+   <td><i>x</i>-component of Lorentz force vector<td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>LorentzForceY</tt><td>
+   <td><i>y</i>-component of Lorentz force vector<td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>LorentzForceZ</tt><td>
+   <td><i>z</i>-component of Lorentz force vector<td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>JouleHeating</tt><td>
+   <td>Joule heating<td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>LengthReference</tt><td>
+   <td>Reference length <i>L</i><td>
+   <td align=center><b>L</b>
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<a name="dataname_turb"></a>
+<h3>Turbulence Model Solution</h3>
+
+<p>
+This section lists data-name identifiers for typical Reynolds-averaged
+Navier-Stokes turbulence model variables.
+Turbulence model solution quantities and model constants present a
+particularly difficult nomenclature problem - to be precise we need to
+identify both the variable and the model (and version) that it comes
+from.
+The list in the following table falls short in this respect.
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Typical Turbulence Models
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>TurbulentDistance</tt><td>
+   <td>Distance to nearest wall<td>
+   <td align=center><b>L</b>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>TurbulentEnergyKinetic</tt><td>
+   <td><i>k</i> = [(<i>u</i>&prime;<i>u</i>&prime;)<sub>ave</sub> +
+                   (<i>v</i>&prime;<i>v</i>&prime;)<sub>ave</sub> +
+                   (<i>w</i>&prime;<i>w</i>&prime;)<sub>ave</sub>] / 2<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>TurbulentDissipation</tt><td>
+   <td><i>&epsilon;</i><td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>3</sup>
+<tr valign=baseline>
+   <td><tt>TurbulentDissipationRate</tt><td>
+   <td><i>&epsilon;</i>/<i>k</i> = <i>&omega;</i><td>
+   <td align=center><b>T</b><sup>&minus;1</sup>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>TurbulentBBReynolds</tt><td>
+   <td>Baldwin-Barth one-equation model <i>R<sub>T</sub></i><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>TurbulentSANuTilde</tt><td>
+   <td>Spalart-Allmaras one-equation model <i>&nu;</i><sub>SA</sub><td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b>
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<a name="dataname_nondim"></a>
+<h3>Nondimensional Parameters</h3>
+
+<p>
+CFD codes are rich in nondimensional governing parameters, such as Mach
+number and Reynolds number, and nondimensional flowfield coefficients,
+such as pressure coefficient.
+The problem with these parameters is that their definitions and
+conditions that they are evaluated at can vary from code to code.
+Reynolds number is particularly notorious in this respect.
+
+<p>
+These parameters have posed us with a difficult dilemma.
+Either we impose a rigid definition for each and force all database
+users to abide by it, or we develop some methodology for describing the
+particular definition that the user is employing.
+The first limits applicability and flexibility, and the second adds
+complexity.
+We have opted for the second approach, but we include only enough
+information about the definition of each parameter to allow for
+conversion operations.
+For example, the Reynolds number includes velocity, length,
+and kinematic viscosity scales in its definition (i.e.,
+<i>Re</i>&nbsp;=&nbsp;<i>VL<sub>R</sub></i>/<i>&nu;</i>.
+The database description of Reynolds number includes these different
+scales.
+By providing these "definition components", any code that reads Reynolds
+number from the database can transform its value to an appropriate
+internal definition.
+These definition components are identified by appending a "<tt>_</tt>"
+to the data-name identifier of the parameter.
+
+<p>
+Definitions for nondimensional flowfield coefficients follow: the
+pressure coefficient is defined as,
+<center>
+<i>c<sub>p</sub></i> = (<i>p</i> &minus; <i>p</i><sub>ref</sub>) /
+   (<i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub> / 2)
+</center>
+<br>
+where <i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub> / 2
+is the dynamic
+pressure evaluated at some reference condition, and <i>p</i><sub>ref</sub>
+is some reference pressure.
+The skin friction coefficient is,
+<center>
+<b><i>c<sub>f</sub></i></b> = <b><i>&tau;</i></b> /
+   (<i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub> / 2)
+</center>
+<br>
+where <b><i>&tau;</i></b>
+is the shear stress or skin friction vector.
+Usually, <b><i>&tau;</i></b>
+is evaluated at the wall surface.
+
+<p>
+The data-name identifiers defined for nondimensional governing
+parameters and flowfield coefficients are listed in the following table.
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Nondimensional Parameters
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>Mach</tt><td>
+   <td>Mach number: <i>M</i> = <i>q</i>/<i>c</i><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>Mach_Velocity</tt><td>
+   <td>Velocity scale (<i>q</i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>Mach_VelocitySound</tt><td>
+   <td>Speed of sound scale (<i>c</i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>RotatingMach</tt><td>
+   <td>Mach number relative to rotating frame: <i>M<sub>r</sub></i> = <i>q<sub>r</sub></i>/<i>c</i><td>
+   <td align=center>-
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>Reynolds</tt><td>
+   <td>Reynolds number: <i>Re</i> = <i>VL<sub>R</sub></i>/<i>&nu;</i><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>Reynolds_Velocity</tt><td>
+   <td>Velocity scale (<i>V</i>)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>Reynolds_Length</tt><td>
+   <td>Length scale (<i>L<sub>R</sub></i>)<td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>Reynolds_ViscosityKinematic</tt><td>
+   <td>Kinematic viscosity scale (<i>&nu;</i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>Prandtl</tt><td>
+   <td>Prandtl number: <i>Pr</i> = <i>&mu;</i><i>c<sub>p</sub></i>/<i>k</i><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>Prandtl_ThermalConductivity</tt><td>
+   <td>Thermal conductivity scale (<i>k</i>)<td>
+   <td align=center><b>ML</b>/(<b>T</b><sup>3</sup><b>&Theta;</b>)
+<tr valign=baseline>
+   <td><tt>Prandtl_ViscosityMolecular</tt><td>
+   <td>Molecular viscosity scale (<i>&mu;</i>)<td>
+   <td align=center><b>M</b>/(<b>LT</b>)
+<tr valign=baseline>
+   <td><tt>Prandtl_SpecificHeatPressure</tt><td>
+   <td>Specific heat scale (<i>c<sub>p</sub></i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/(<b>T</b><sup>2</sup><b>&Theta;</b>)
+<tr valign=baseline>
+   <td><tt>PrandtlTurbulent</tt><td>
+   <td>Turbulent Prandtl number, <i>&rho;&nu;<sub>t</sub>c<sub>p</sub></i>/<i>k<sub>t</sub></i><td>
+   <td align=center>-
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>SpecificHeatRatio</tt><td>
+   <td>Specific heat ratio: <i>&gamma;</i> = <i>c<sub>p</sub></i>/<i>c<sub>v</sub></i><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>SpecificHeatRatio_Pressure</tt><td>
+   <td>Specific heat at constant pressure (<i>c<sub>p</sub></i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/(<b>T</b><sup>2</sup><b>&Theta;</b>)
+<tr valign=baseline>
+   <td><tt>SpecificHeatRatio_Volume</tt><td>
+   <td>Specific heat at constant volume (<i>c<sub>v</sub></i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/(<b>T</b><sup>2</sup><b>&Theta;</b>)
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>CoefPressure</tt><td>
+   <td><i>c<sub>p</sub></i><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefSkinFrictionX</tt><td>
+   <td><b><i>c<sub>f</sub></i></b> &sdot; <b><i>e</i></b><sub>x</sub><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefSkinFrictionY</tt><td>
+   <td><b><i>c<sub>f</sub></i></b> &sdot; <b><i>e</i></b><sub>y</sub><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefSkinFrictionZ</tt><td>
+   <td><b><i>c<sub>f</sub></i></b> &sdot; <b><i>e</i></b><sub>z</sub><td>
+   <td align=center>-
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>Coef_PressureDynamic</tt><td>
+   <td><i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub> / 2<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>Coef_PressureReference</tt><td>
+   <td><i>p</i><sub>ref</sub><td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<a name="dataname_char"></a>
+<h3>Characteristics and Riemann Invariants Based on 1-D Flow</h3>
+
+<p>
+Boundary condition specification for inflow/outflow or farfield
+boundaries often involves Riemann invariants or characteristics of the
+linearized inviscid flow equations.
+For an ideal compressible gas, these are typically defined as
+follows: Riemann invariants for an isentropic 1-D flow are,
+<center>
+[&part;/&part;<i>t</i> + (<i>u</i> &plusmn; <i>c</i>) &part;/&part;<i>x</i>]
+   [u &plusmn; 2<i>c</i> / (<i>&gamma;</i> &minus; 1)] = 0
+</center>
+<br>
+Characteristic variables for the 3-D Euler equations linearized about a
+constant mean flow are,
+<br><br>
+<center>
+[&part;/&part;<i>t</i> + &Lambda;<sub><i>n</i></sub> &part;/&part;<i>x</i>]
+   <i>W&prime;<sub>n</sub></i>(<i>x,t</i>) = 0
+&nbsp;&nbsp;&nbsp;&nbsp;<i>n</i> = 1, 2,  ..., 5
+</center>
+<br>
+where the characteristics and corresponding characteristic variables are
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>Characteristic<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>&Lambda;<sub><i>n</i></sub><td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col><i>W'<sub>n</sub></i>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td>Entropy<td>
+   <td align=center><i>u</i><td>
+   <td align=center><i>p</i>&prime; &minus; <i>&rho;</i>&prime;/<i>c</i><sup>2</sup>
+<tr valign=baseline>
+   <td>Vorticity<td>
+   <td align=center><i>u</i><td>
+   <td align=center><i>v</i>&prime;
+<tr valign=baseline>
+   <td>Vorticity<td>
+   <td align=center><i>u</i><td>
+   <td align=center><i>w</i>&prime;
+<tr valign=baseline>
+   <td>Acoustic<td>
+   <td align=center><i>u</i> &plusmn; <i>c</i><td>
+   <td align=center><i>p</i>&prime; &plusmn; <i>u</i>&prime;/<i>&rho;c</i>
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<br>
+Primed quantities are linearized perturbations, and the remainder are
+evaluated at the mean flow.
+The only non-zero mean-flow velocity component is <i>u</i>.
+The data-name identifiers defined for Riemann invariants and
+characteristic variables are listed in the following table.
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Characteristics and Riemann Invariants
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>RiemannInvariantPlus</tt><td>
+   <td><i>u</i> + 2<i>c</i> / (<i>&gamma;</i> &minus; 1)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>RiemannInvariantMinus</tt><td>
+   <td><i>u</i> &minus; 2<i>c</i> / (<i>&gamma;</i> &minus; 1)<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>CharacteristicEntropy</tt><td>
+   <td><i>p</i>&prime; &minus; <i>&rho;</i>&prime;/<i>c</i><sup>2</sup><td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>CharacteristicVorticity1</tt><td>
+   <td><i>v</i>&prime;<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>CharacteristicVorticity2</tt><td>
+   <td><i>w</i>&prime;<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>CharacteristicAcousticPlus</tt><td>
+   <td><i>p</i>&prime; + <i>u</i>&prime;/<i>&rho;c</i><td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>CharacteristicAcousticMinus</tt><td>
+   <td><i>p</i>&prime; &minus; <i>u</i>&prime;/<i>&rho;c</i><td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<a name="dataname_force"></a>
+<h3>Forces and Moments</h3>
+
+<p>
+Conventions for data-name identifiers for forces and moments are defined
+in this section.
+Ideally, forces and moments should be attached to geometric components
+or less ideally to surface grids.
+Currently, the standard mechanism for storing forces and moments is
+generally through the
+<a href="misc.html#ConvergenceHistory"><tt>ConvergenceHistory_t</tt></a>
+node, either attached to the entire configuration (under
+<a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a>) or attached to
+a zone (under <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a>).
+
+<p>
+Given a differential force <b><i>f</i></b>
+(i.e., a force per unit area), the force integrated over
+a surface is,
+<center>
+<b><i>F</i></b> =
+   <i>F<sub>x</sub><b>e</b><sub>x</sub></i> +
+   <i>F<sub>y</sub><b>e</b><sub>y</sub></i> +
+   <i>F<sub>z</sub><b>e</b><sub>z</sub></i> =
+   <i>&int; <b>f</b> dA</i>
+</center>
+<br>
+where <i><b>e</b><sub>x</sub></i>, <i><b>e</b><sub>y</sub></i> and
+<i><b>e</b><sub>z</sub></i> are
+the unit vectors in the <i>x</i>, <i>y</i> and <i>z</i> directions,
+respectively.
+The moment about a point <i><b>r</b></i><sub>0</sub>
+integrated over a surface is,
+<br><br>
+<center>
+<b><i>M</i></b> =
+   <i>M<sub>x</sub><b>e</b><sub>x</sub></i> +
+   <i>M<sub>y</sub><b>e</b><sub>y</sub></i> +
+   <i>M<sub>z</sub><b>e</b><sub>z</sub></i> =
+   <i>&int;</i> (<i><b>r</b></i> &minus; <i><b>r</b></i><sub>0</sub>)
+            &times; <i><b>f</b> dA</i>
+</center>
+<br>
+Lift and drag components of the integrated force are,
+<br><br>
+<center>
+<i>L</i> = <b><i>F</i></b> &sdot; <b><i>L</i></b>
+           &nbsp;&nbsp;&nbsp;&nbsp;
+<i>D</i> = <b><i>F</i></b> &sdot; <b><i>D</i></b>
+</center>
+<br>
+where <b><i>L</i></b> and
+<b><i>D</i></b> are the unit
+vectors in the positive lift and drag directions, respectively.
+
+<p>
+Lift, drag and moment are often computed in auxiliary coordinate frames
+(e.g., wind axes or stability axes).
+We introduce the convention that
+lift, drag and moment are computed in the
+(<i>&xi;</i>,
+<i>&eta;</i>,
+<i>&zeta;</i>)
+coordinate system.
+Positive drag is assumed parallel to the
+<i>&xi;</i>-direction (i.e.,
+<b><i>D</i></b> = <i><b>e</b><sub>&xi;</sub></i>);
+and positive lift is assumed parallel to the
+<i>&eta;</i>-direction (i.e.,
+<b><i>L</i></b> = <i><b>e</b><sub>&eta;</sub></i>).
+Thus, forces and moments defined in this auxiliary coordinate system are,
+<br><br>
+<center>
+<i>L</i> = <b><i>F</i></b> &sdot; <i><b>e</b><sub>&eta;</sub></i>
+           &nbsp;&nbsp;&nbsp;&nbsp;
+<i>D</i> = <b><i>F</i></b> &sdot; <i><b>e</b><sub>&xi;</sub></i>
+<br><br>
+<b><i>M</i></b> =
+   <i>M<sub>&xi;</sub><b>e</b><sub>&xi;</sub></i> +
+   <i>M<sub>&eta;</sub><b>e</b><sub>&eta;</sub></i> +
+   <i>M<sub>&zeta;</sub><b>e</b><sub>&zeta;</sub></i> =
+   <i>&int;</i> (<i><b>r</b></i> &minus; <i><b>r</b></i><sub>0</sub>)
+            &times; <i><b>f</b> dA</i>
+</center>
+
+<p>
+Lift, drag and moment coefficients in 3-D are defined as,
+<center>
+<i>C<sub>L</sub></i> = 
+   <i>L</i> / (<i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub><i>S</i><sub>ref</sub> / 2)
+&nbsp;&nbsp;&nbsp;&nbsp;
+<i>C<sub>D</sub></i> = 
+   <i>D</i> / (<i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub><i>S</i><sub>ref</sub> / 2)
+&nbsp;&nbsp;&nbsp;&nbsp;
+<b><i>C<sub>M</sub></i></b> = 
+   <b><i>M</i></b> / (<i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub><i>c</i><sub>ref</sub><i>S</i><sub>ref</sub> / 2)
+</center>
+<br>
+where <i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub> / 2
+is a reference
+dynamic pressure, <i>S</i><sub>ref</sub> is a reference area, and
+<i>c</i><sub>ref</sub> is a reference length.
+For a wing, <i>S</i><sub>ref</sub> is typically the wing area and
+<i>c</i><sub>ref</sub> is the mean aerodynamic chord.
+In 2-D, the sectional force coefficients are,
+<br><br>
+<center>
+<i>c<sub>l</sub></i> = 
+   <i>L</i>&prime; / (<i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub><i>c</i><sub>ref</sub> / 2)
+&nbsp;&nbsp;&nbsp;&nbsp;
+<i>c<sub>d</sub></i> = 
+   <i>D</i>&prime; / (<i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub><i>c</i><sub>ref</sub> / 2)
+&nbsp;&nbsp;&nbsp;&nbsp;
+<b><i>c<sub>m</sub></i></b> = 
+   <b><i>M</i></b>&prime; / (<i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub><i>c</i><sup>2</sup><sub>ref</sub> / 2)
+</center>
+<br>
+where the forces are integrated along a contour (e.g., an airfoil
+cross-section) rather than a surface.
+
+<p>
+The data-name identifiers and definitions provided for forces
+and moments and their associated coefficients are listed in
+the table below.
+For coefficients, the dynamic pressure and length scales used in the
+normalization are provided.
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Forces and Moments
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>ForceX</tt><td>
+   <td><i>F<sub>x</sub></i> = <b><i>F</i></b> &sdot; <b><i>e</i></b><sub><i>x</i></sub><td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>ForceY</tt><td>
+   <td><i>F<sub>y</sub></i> = <b><i>F</i></b> &sdot; <b><i>e</i></b><sub><i>y</i></sub><td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>ForceZ</tt><td>
+   <td><i>F<sub>z</sub></i> = <b><i>F</i></b> &sdot; <b><i>e</i></b><sub><i>z</i></sub><td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>ForceR</tt><td>
+   <td><i>F<sub>r</sub></i> = <b><i>F</i></b> &sdot; <b><i>e</i></b><sub><i>r</i></sub><td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>ForceTheta</tt><td>
+   <td><i>F<sub>&theta;</sub></i> = <b><i>F</i></b> &sdot; <b><i>e</i></b><sub><i>&theta;</i></sub><td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>ForcePhi</tt><td>
+   <td><i>F<sub>&phi;</sub></i> = <b><i>F</i></b> &sdot; <b><i>e</i></b><sub><i>&phi;</i></sub><td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>Lift</tt><td>
+   <td><i>L</i> or <i>L</i>'<td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>Drag</tt><td>
+   <td><i>D</i> or <i>D</i>'<td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>MomentX</tt><td>
+   <td><i>M<sub>x</sub></i> = <b><i>M</i></b> &sdot; <b><i>e</i></b><sub><i>x</i></sub><td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>MomentY</tt><td>
+   <td><i>M<sub>y</sub></i> = <b><i>M</i></b> &sdot; <b><i>e</i></b><sub><i>y</i></sub><td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>MomentZ</tt><td>
+   <td><i>M<sub>z</sub></i> = <b><i>M</i></b> &sdot; <b><i>e</i></b><sub><i>z</i></sub><td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>MomentR</tt><td>
+   <td><i>M<sub>r</sub></i> = <b><i>M</i></b> &sdot; <b><i>e</i></b><sub><i>r</i></sub><td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>MomentTheta</tt><td>
+   <td><i>M<sub>&theta;</sub></i> = <b><i>M</i></b> &sdot; <b><i>e</i></b><sub><i>&theta;</i></sub><td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>MomentPhi</tt><td>
+   <td><i>M<sub>&phi;</sub></i> = <b><i>M</i></b> &sdot; <b><i>e</i></b><sub><i>&phi;</i></sub><td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>MomentXi</tt><td>
+   <td><i>M<sub>&xi;</sub></i> = <b><i>M</i></b> &sdot; <b><i>e</i></b><sub><i>&xi;</i></sub><td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>MomentEta</tt><td>
+   <td><i>M<sub>&eta;</sub></i> = <b><i>M</i></b> &sdot; <b><i>e</i></b><sub><i>&eta;</i></sub><td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>MomentZeta</tt><td>
+   <td><i>M<sub>&zeta;</sub></i> = <b><i>r</i></b> &sdot; <b><i>e</i></b><sub><i>&zeta;</i></sub><td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>Moment_CenterX</tt><td>
+   <td><i>x</i><sub>0</sub> = <b><i>r</i></b><sub>0</sub> &sdot; <b><i>e</i></b><sub><i>x</i></sub><td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>Moment_CenterY</tt><td>
+   <td><i>y</i><sub>0</sub> = <b><i>r</i></b><sub>0</sub> &sdot; <b><i>e</i></b><sub><i>y</i></sub><td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>Moment_CenterZ</tt><td>
+   <td><i>z</i><sub>0</sub> = <b><i>r</i></b><sub>0</sub> &sdot; <b><i>e</i></b><sub><i>z</i></sub><td>
+   <td align=center><b>L</b>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>CoefLift</tt><td>
+   <td><i>C<sub>L</sub></i> or <i>c<sub>l</sub></i><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefDrag</tt><td>
+   <td><i>C<sub>D</sub></i> or <i>c<sub>d</sub></i><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefMomentX</tt><td>
+   <td><i><b>C<sub>M</sub></b></i> &sdot; <b><i>e</i></b><sub><i>x</i></sub>
+       or
+       <i><b>c<sub>m</sub></b></i> &sdot; <b><i>e</i></b><sub><i>x</i></sub><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefMomentY</tt><td>
+   <td><i><b>C<sub>M</sub></b></i> &sdot; <b><i>e</i></b><sub><i>y</i></sub>
+       or
+       <i><b>c<sub>m</sub></b></i> &sdot; <b><i>e</i></b><sub><i>y</i></sub><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefMomentZ</tt><td>
+   <td><i><b>C<sub>M</sub></b></i> &sdot; <b><i>e</i></b><sub><i>z</i></sub>
+       or
+       <i><b>c<sub>m</sub></b></i> &sdot; <b><i>e</i></b><sub><i>z</i></sub><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefMomentR</tt><td>
+   <td><i><b>C<sub>M</sub></b></i> &sdot; <b><i>e</i></b><sub><i>r</i></sub>
+       or
+       <i><b>c<sub>m</sub></b></i> &sdot; <b><i>e</i></b><sub><i>r</i></sub><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefMomentTheta</tt><td>
+   <td><i><b>C<sub>M</sub></b></i> &sdot; <b><i>e</i></b><sub><i>&theta;</i></sub>
+       or
+       <i><b>c<sub>m</sub></b></i> &sdot; <b><i>e</i></b><sub><i>&theta;</i></sub><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefMomentPhi</tt><td>
+   <td><i><b>C<sub>M</sub></b></i> &sdot; <b><i>e</i></b><sub><i>&phi;</i></sub>
+       or
+       <i><b>c<sub>m</sub></b></i> &sdot; <b><i>e</i></b><sub><i>&phi;</i></sub><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefMomentXi</tt><td>
+   <td><i><b>C<sub>M</sub></b></i> &sdot; <b><i>e</i></b><sub><i>&xi;</i></sub>
+       or
+       <i><b>c<sub>m</sub></b></i> &sdot; <b><i>e</i></b><sub><i>&xi;</i></sub><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefMomentEta</tt><td>
+   <td><i><b>C<sub>M</sub></b></i> &sdot; <b><i>e</i></b><sub><i>&eta;</i></sub>
+       or
+       <i><b>c<sub>m</sub></b></i> &sdot; <b><i>e</i></b><sub><i>&eta;</i></sub><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>CoefMomentZeta</tt><td>
+   <td><i><b>C<sub>M</sub></b></i> &sdot; <b><i>e</i></b><sub><i>&zeta;</i></sub>
+       or
+       <i><b>c<sub>m</sub></b></i> &sdot; <b><i>e</i></b><sub><i>&zeta;</i></sub><td>
+   <td align=center>-
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>Coef_PressureDynamic</tt><td>
+   <td><i>&rho;</i><sub>ref</sub><i>q</i><sup>2</sup><sub>ref</sub> / 2<td>
+   <td align=center><b>M</b>/(<b>LT</b><sup>2</sup>)
+<tr valign=baseline>
+   <td><tt>Coef_Area</tt><td>
+   <td><i>S</i><sub>ref</sub><td>
+   <td align=center><b>L</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>Coef_Length</tt><td>
+   <td><i>c</i><sub>ref</sub><td>
+   <td align=center><b>L</b>
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<a name="dataname_timedep"></a>
+<h3>Time-Dependent Flow</h3>
+
+<p>
+Data-name identifiers related to time-dependent flow include those
+associated with the storage of grid coordinates and flow solutions
+as a function of time level or iteration.
+Also included are identifiers for storing information defining
+both rigid and arbitrary (i.e., deforming) grid motion.
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Time-Dependent Flow
+<br><br>
+</caption>
+<tr align=left><td colspan=7><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col abbr="Type">Data Type<td><tt>&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=7><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>TimeValues</tt><td>
+   <td><tt>real</tt><td>
+   <td>Time values<td>
+   <td align=center><b>T</b>
+<tr valign=baseline>
+   <td><tt>IterationValues</tt><td>
+   <td><tt>int</tt><td>
+   <td>Iteration values<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>NumberOfZones</tt><td>
+   <td><tt>int</tt><td>
+   <td>Number of zones used for each recorded step<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>NumberOfFamilies</tt><td>
+   <td><tt>int</tt><td>
+   <td>Number of families used for each recorded step<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>ZonePointers</tt><td>
+   <td><tt>char</tt><td>
+   <td>Names of zones used for each recorded step<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>FamilyPointers</tt><td>
+   <td><tt>char</tt><td>
+   <td>Names of families used for each recorded step<td>
+   <td align=center>-
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>RigidGridMotionPointers</tt><td>
+   <td><tt>char</tt><td>
+   <td>Names of <tt>RigidGridMotion</tt> structures used for each
+       recorded step for a zone<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>ArbitraryGridMotionPointers</tt><td>
+   <td><tt>char</tt><td>
+   <td>Names of <tt>ArbitraryGridMotion</tt> structures used for each
+       recorded step for a zone<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>GridCoordinatesPointers</tt><td>
+   <td><tt>char</tt><td>
+   <td>Names of <tt>GridCoordinates</tt> structures used for each
+       recorded step for a zone<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>FlowSolutionPointers</tt><td>
+   <td><tt>char</tt><td>
+   <td>Names of <tt>FlowSolution</tt> structures used for each
+       recorded step for a zone<td>
+   <td align=center>-
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>OriginLocation</tt><td>
+   <td><tt>real</tt><td>
+   <td>Physical coordinates of the origin before and after a rigid
+       grid motion<td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>RigidRotationAngle</tt><td>
+   <td><tt>real</tt><td>
+   <td>Rotation angles about each axis of the translated coordinate
+       system for rigid grid motion<td>
+   <td align=center><b>&alpha;</b>
+<tr valign=baseline>
+   <td><tt>RigidVelocity</tt><td>
+   <td><tt>real</tt><td>
+   <td>Grid velocity vector of the origin translation for rigid grid motion<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>RigidRotationRate</tt><td>
+   <td><tt>real</tt><td>
+   <td>Rotation rate vector about the axis of the translated
+       coordinate system for rigid grid motion<td>
+   <td align=center><b>&alpha;</b>/<b>T</b>
+<tr valign=baseline><td><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>GridVelocityX</tt><td>
+   <td><tt>real</tt><td>
+   <td><i>x</i>-component of grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityY</tt><td>
+   <td><tt>real</tt><td>
+   <td><i>y</i>-component of grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityZ</tt><td>
+   <td><tt>real</tt><td>
+   <td><i>z</i>-component of grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityR</tt><td>
+   <td><tt>real</tt><td>
+   <td><i>r</i>-component of grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityTheta</tt><td>
+   <td><tt>real</tt><td>
+   <td><i>&theta;</i>-component of
+       grid velocity<td>
+   <td align=center><b>&alpha;</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityPhi</tt><td>
+   <td><tt>real</tt><td>
+   <td><i>&phi;</i>-component of
+       grid velocity<td>
+   <td align=center><b>&alpha;</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityXi</tt><td>
+   <td><tt>real</tt><td>
+   <td><i>&xi;</i>-component of
+       grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityEta</tt><td>
+   <td><tt>real</tt><td>
+   <td><i>&eta;</i>-component of
+       grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityZeta</tt><td>
+   <td><tt>real</tt><td>
+   <td><i>&zeta;</i>-component of
+       grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr align=left><td colspan=7><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 1 Mar 2006
+
+</body>
+</html>

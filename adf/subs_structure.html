@@ -1,0 +1,2145 @@
+<!-- ADF User's Guide - ADF Library Of Subroutines -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - ADF Library Of Subroutines </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<span class=nav><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></span>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Data Structure and Management Routines</h2>
+
+<ul>
+<li> <tt><a href="#Create">ADF_Create</a></tt> -
+     Create a node
+<li> <tt><a href="#Delete">ADF_Delete</a></tt> -
+     Delete a node
+<li> <tt><a href="#Children_Names">ADF_Children_Names</a></tt> -
+     Get the child names of a node
+<li> <tt><a href="#Number_of_Children">ADF_Number_of_Children</a></tt> -
+     Get the number of children of a node
+<li> <tt><a href="#Get_Node_ID">ADF_Get_Node_ID</a></tt> -
+     Get a unique identifier of a node
+<li> <tt><a href="#Get_Name">ADF_Get_Name</a></tt> -
+     Get the name of a node
+<li> <tt><a href="#Put_Name">ADF_Put_Name</a></tt> -
+     Put (change) the name of a node
+<li> <tt><a href="#Move_Child">ADF_Move_Child</a></tt> -
+     Change a parent (move a child)
+<li> <tt><a href="#Link">ADF_Link</a></tt> -
+     Create a link
+<li> <tt><a href="#Is_Link">ADF_Is_Link</a></tt> -
+     Test if a node is a link
+<li> <tt><a href="#Get_Link_Path">ADF_Get_Link_Path</a></tt> -
+     Get the path information from a link
+<li> <tt><a href="#Get_Root_ID">ADF_Get_Root_ID</a></tt> -
+     Get the root ID of the ADF file
+</ul>
+
+<a name="Create"></a>
+<h3>Create a Node</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Create"><br>
+<tt>ADF_Create (PID,name,ID,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Create</tt>
+    <td align=center><tt>ADFCRE</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double PID</tt><br>
+                         <tt>const char *name</tt>
+    <td width=41% nowrap><tt>real*8 PID</tt><br>
+                         <tt>character*(*) name</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>double *ID</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>PID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>ID of the parent node of the created child node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>name</i></tt><td>
+   <td>Name of the parent node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>ID</i></tt><td>
+   <td>The ID of the newly created child node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Create</tt>, creates a new node (not a link) as a
+child of a given parent node.
+
+<p>
+Default node header values in this new node are:
+<ul>
+<li> label = blank
+<li> number of subnodes = 0
+<li> datatype = <tt>MT</tt>
+<li> number of dimensions = 0
+<li> data = <tt>NULL</tt>
+</ul>
+
+<u><i>Example</i></u>
+
+<p>
+This example opens a database and creates a node under the root node.
+Note that the default values for a newly created node are label = <tt>''</tt>,
+datatype = <tt>MT</tt>, dimension = <tt>null</tt>, data = none.
+These are reset as required using the routines
+<a href="subs_query.html#Set_Label"><tt>ADFSLB</tt></a>,
+<a href="subs_query.html#Put_Dimension_Information"><tt>ADFPDIM</tt></a> and
+<a href="subs_io.html#Write_All_Data"><tt>ADFWALL</tt></a>/<a href="subs_io.html#Write_Data"><tt>ADFWRIT</tt></a>.
+Note also that the root node is named "<tt>ADF MotherNode</tt>".
+This name is generated when the database is first opened.
+If desired, it could be reset using <a href="#Put_Name"><tt>ADFPNAM</tt></a>.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) NODNAM
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,PID,CID
+         INTEGER I,J,IERR,NUMCLD
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+   C
+   C *** CREATE NODES AT FIRST LEVEL
+   C
+         DO 150 I = 1,3
+            WRITE(NODNAM,'(A7,I1)')'PARENT.',I
+            CALL ADFCRE(RID,NODNAM,PID,IERR)
+   C
+   C ****** CREATE NODES AT SECOND LEVEL
+   C
+            NUMCLD = I*I
+            DO 110 J = 1,NUMCLD
+               WRITE(NODNAM,'(A6,I1,A1,I1)')'CHILD.',I,'x',J
+               CALL ADFCRE(PID,NODNAM,CID,IERR)
+     110    CONTINUE
+   C
+   C ****** PRINT NODE NAMES JUST CREATED
+   C
+            CALL PRTCLD(PID)
+     150 CONTINUE
+   C
+   C *** PRINT NAMES OF NODES ATTACHED TO ROOT NODE
+   C
+         CALL PRTCLD(RID)
+   C
+         STOP
+         END
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+   C
+   C *** CHECK ERROR CONDITION
+   C
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+
+         SUBROUTINE PRTCLD(PID)
+   C
+   C *** PRINT TABLE OF CHILDREN GIVEN A PARENT NODE-ID
+   C
+         PARAMETER (MAXCLD=10)
+         PARAMETER (MAXCHR=32)
+         REAL*8 PID
+         CHARACTER*(MAXCHR) NODNAM,NDNMS(MAXCLD)
+         CALL ADFGNAM(PID,NODNAM,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFNCLD(PID,NUMC,IERR)
+         CALL ERRCHK(IERR)
+         WRITE(*,120)NODNAM,NUMC
+     120 FORMAT(/,' PARENT NODE NAME = ',A,/,
+        X       '     NUMBER OF CHILDREN = ',I2,/,
+        X       '     CHILDREN NAMES: ')
+         NLEFT = NUMC
+         ISTART = 1
+   C     --- TOP OF DO-WHILE LOOP
+     130 CONTINUE
+            CALL ADFCNAM(PID,ISTART,MAXCLD,LEN(NDNMS),
+        X                NUMRET,NDNMS,IERR)
+            CALL ERRCHK(IERR)
+            WRITE(*,140)(NDNMS(K),K=1,NUMRET)
+     140    FORMAT(2(8X,A))
+            NLEFT = NLEFT - MAXCLD
+            ISTART = ISTART + MAXCLD
+         IF (NLEFT .GT. 0) GO TO 130
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   PARENT NODE NAME = PARENT.1
+       NUMBER OF CHILDREN =  1
+       CHILDREN NAMES:
+          CHILD.1.1
+
+   PARENT NODE NAME = PARENT.2
+       NUMBER OF CHILDREN =  4
+       CHILDREN NAMES:
+          CHILD.2.1                               CHILD.2.2
+          CHILD.2.3                               CHILD.2.4
+
+   PARENT NODE NAME = PARENT.3
+       NUMBER OF CHILDREN =  9
+       CHILDREN NAMES:
+          CHILD.3.1                               CHILD.3.2
+          CHILD.3.3                               CHILD.3.4
+          CHILD.3.5                               CHILD.3.6
+          CHILD.3.7                               CHILD.3.8
+          CHILD.3.9
+
+   PARENT NODE NAME = ADF MotherNode
+       NUMBER OF CHILDREN =  3
+       CHILDREN NAMES:
+          PARENT.1                                PARENT.2
+          PARENT.3
+</pre>
+
+<a name="Delete"></a>
+<h3>Delete a Node</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Delete"><br>
+<tt>ADF_Delete (PID,ID,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Delete</tt>
+    <td align=center><tt>ADFDEL</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double PID</tt><br>
+                         <tt>const double ID</tt><br>
+    <td width=41% nowrap><tt>real*8 PID</tt><br>
+                         <tt>real*8 ID</tt><br>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>PID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node's parent.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>ID</i></tt><td>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+In general, this routine, <tt>ADF_Delete</tt>, deletes a node and all of
+its children.
+Given the starting node, a recursive search is done down the hierarchy,
+deleting all nodes.
+If a "link" is encountered during the deletion (i.e., the specified node
+or any of its children), then the link is deleted, and the downward
+search stops.
+That is, the link information is deleted, but not the actual node it
+refers to.
+
+<p>
+To understand the deletion of a node that is a link, it must be
+remembered that a link is merely a reference to another node.
+Therefore, the deletion of a node that is a link is the deletion of that
+reference, not the referred node itself.
+The reason for this is that a link may actually point to data in another
+file that may be owned by another user.
+Therefore, it would not be proper for ADF to try to delete that node.
+Therefore, ADF stops at the link.
+
+<p>
+When a node is deleted, any links that reference it are left "dangling."
+In other words, the existing links to the node still reference the node,
+but if ADF is asked to resolve that reference, it will determine that
+the referred to node doesn't exist and will return an error flag.
+
+<p>
+Note that the parent ID of the node to be deleted is required.
+This is due to the fact that child nodes do not know the ID of their
+parent node.
+Thus when a node is deleted, in order for the child table of the parent
+to be updated properly, the parent ID must be supplied as an input.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+This example opens a database and creates three nodes attached to the
+root node.
+It also generates nodes to each of these base nodes.
+Then one of the base nodes is deleted.
+Not only is the node "<tt>PARENT.2</tt>" deleted; all of its children
+are deleted at the same time.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) NODNAM
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,PID,CID
+         INTEGER I,J,IERR,NUMCLD
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+   C
+   C *** CREATE NODES AT FIRST LEVEL
+   C
+         DO 150 I = 1,3
+            WRITE(NODNAM,'(A7,I1)')'PARENT.',I
+            CALL ADFCRE(RID,NODNAM,PID,IERR)
+   C
+   C ****** CREATE NODES AT SECOND LEVEL
+   C
+            NUMCLD = I*I
+            DO 110 J = 1,NUMCLD
+               WRITE(NODNAM,'(A6,I1,A1,I1)')'CHILD.',I,'.',J
+               CALL ADFCRE(PID,NODNAM,CID,IERR)
+     110    CONTINUE
+     150 CONTINUE
+   C
+   C *** PRINT NAMES OF NODES ATTACHED TO ROOT NODE
+   C
+         CALL PRTCLD(RID)
+   C
+   C *** PRINT NAMES OF CHILDREN UNDER PARENT.2
+   C
+         CALL ADFGNID(RID,'PARENT.2',PID,IERR)
+         CALL PRTCLD(PID)
+   C
+   C *** NOW DELETE PARENT.2
+   C
+         CALL ADFDEL(RID,PID,IERR)
+         CALL PRTCLD(RID)
+   C
+   C *** JUST FOR GRINS, LOOK FOR CHILDREN UNDER ORIGINAL ID
+   C
+         CALL ADFGNID(RID,'/PARENT.2/CHILD.2.1',CID,IERR)
+         CALL ERRCHK(IERR)
+   C
+         STOP
+         END
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+   C
+   C *** CHECK ERROR CONDITION
+   C
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+
+         SUBROUTINE PRTCLD(PID)
+   C
+   C *** PRINT TABLE OF CHILDREN GIVEN A PARENT NODE-ID
+   C
+         PARAMETER (MAXCLD=10)
+         PARAMETER (MAXCHR=32)
+         REAL*8 PID
+         CHARACTER*(MAXCHR) NODNAM,NDNMS(MAXCLD)
+         CALL ADFGNAM(PID,NODNAM,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFNCLD(PID,NUMC,IERR)
+         CALL ERRCHK(IERR)
+         WRITE(*,120)NODNAM,NUMC
+     120 FORMAT(/,' PARENT NODE NAME = ',A,/,
+        X       '     NUMBER OF CHILDREN = ',I2,/,
+        X       '     CHILDREN NAMES:')
+         NLEFT = NUMC
+         ISTART = 1
+   C     --- TOP OF DO-WHILE LOOP
+     130 CONTINUE
+            CALL ADFCNAM(PID,ISTART,MAXCLD,LEN(NDNMS),
+        X                NUMRET,NDNMS,IERR)
+            CALL ERRCHK(IERR)
+            WRITE(*,140)(NDNMS(K),K=1,NUMRET)
+     140    FORMAT(2(8X,A))
+            NLEFT = NLEFT - MAXCLD
+            ISTART = ISTART + MAXCLD
+         IF (NLEFT .GT. 0) GO TO 130
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   PARENT NODE NAME = ADF MotherNode
+       NUMBER OF CHILDREN = 3
+       CHILDREN NAMES:
+          PARENT.1                                PARENT.2
+          PARENT.3
+
+   PARENT NODE NAME = PARENT.2
+       NUMBER OF CHILDREN = 4
+       CHILDREN NAMES:
+          CHILD.2.1                               CHILD.2.2
+          CHILD.2.3                               CHILD.2.4
+
+   PARENT NODE NAME = ADF MotherNode
+       NUMBER OF CHILDREN = 2
+       CHILDREN NAMES:
+          PARENT.1                                PARENT.3
+
+   ADF 29: Specified child is NOT a child of the specified parent.
+  IOT Trap
+  Abort - core dumped
+</pre>
+
+<a name="Children_Names"></a>
+<h3>Get the Names of the Child Nodes</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Children_Names"><br>
+<tt>ADF_Children_Names (PID,istart,imax_num,imax_name_length,inum_ret,names,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Children_Names</tt>
+    <td align=center><tt>ADFCNAM</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double PID</tt><br>
+                         <tt>const int istart</tt><br>
+                         <tt>const int imax_num</tt><br>
+                         <tt>const int imax_name_length</tt>
+    <td width=41% nowrap><tt>real*8 PID</tt><br>
+                         <tt>integer istart</tt><br>
+                         <tt>integer imax_num</tt><br>
+                         <tt>integer imax_name_length</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *inum_ret</tt><br>
+                         <tt>char *names</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer inum_ret</tt><br>
+                         <tt>character*(*) names</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>PID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the parent node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>istart</i></tt><td>
+   <td>The <i>n</i>th child's name (to start with the first, use
+       <tt><i>istart</i></tt> = 1).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>imax_num</i></tt><td>
+   <td>The maximum number of names to return.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>imax_name_length</i></tt><td>
+   <td>The number of characters allocated to hold the name of each
+       child node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>inum_ret</i></tt><td>
+   <td>The number of names returned.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>names</i></tt><td>
+   <td>The names of the children.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Children_Names</tt>, returns the child names
+directly associated with a parent node.
+The names of the children are not guaranteed to be returned in any
+particular order.
+For example, if four child nodes were created in the order:
+<tt>node1</tt>, <tt>node2</tt>, <tt>node3</tt>, <tt>node4</tt>, when the
+call to <tt>ADFCNAM</tt> is made, there is no guarantee that the order
+of the node names in the character array names will be the same.
+
+<p>
+The reason for not guaranteeing node ordering has to do with efficient
+use of disk space.
+Although the concept of "linked lists" works fine in central memory, it
+is not particularly efficient on disk.
+Therefore, static tables are used to maintain parent/child lists.
+The order in which children names are returned is the order found in the
+static table.
+If a child node is deleted, an empty slot is created and will be used by
+the next child node created under that parent node.
+
+<p>
+The indexing of a child is Fortran-like and begins with 1, but as noted
+above, this does not imply a notion of node ordering.
+To start with a child node listed as the first index, use an
+<tt><i>istart</i></tt> value of 1.
+
+<br><br>
+<u><i>C Programming Notes</i></u>
+
+<ul>
+<li> Node names can be up to 32 characters.
+     ADF appends the null (<tt>\0</tt>) character to the end of each
+     node name.
+     Therefore, at least 33 characters should be allocated for each node
+     name to be returned.
+<li> <tt><i>imax_name_length</i></tt> is used to "stride" through the
+     character array passed to ADF.
+     For example, if 50 characters per name were allocated, the first
+     character of the first name would be in the first allocated byte
+     (position [0]), and the second name would start in the 51st byte
+     (position [50]) and so on.
+     The length of the individual names can be determined using the
+     <tt>strlen</tt> function.
+</ul>
+
+<u><i>Fortran Programming Notes</i></u>
+
+<ul>
+<li> Node names can be up to 32 characters.
+     The returned names are left justified and blank filled within the
+     array.
+     No null (<tt>\0</tt>) character is appended to the name; therefore,
+     an appropriate declaration would be <tt>CHARACTER*(32)</tt>.
+</ul>
+
+<a name="ex:Children_Names"></a>
+<u><i>Example</i></u>
+
+<p>
+This example creates three nodes attached to the root node.
+It then creates a varying number of child nodes under each of the base
+nodes.
+Lastly, it queries the database to find out how many children were
+created and then gets the child names.
+The thing to notice in this example is that the character array
+<tt>NDNMS</tt> is not large enough to hold all the names under
+<tt>PARENT.3</tt>.
+The array <tt>NDNMS</tt> will hold only five names at a time; therefore,
+a loop was set up to read a subset of the name list during each pass.
+Note also that the call to <tt>ADFCNAM</tt> may request more names than
+are present.
+If this occurs, the routine will return all that is available in the
+output array <tt><i>names</i></tt> and return that number in the
+<tt><i>inum_ret</i></tt> variable.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCLD=5)
+         PARAMETER (NDATA=10)
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) NODNAM,NDNMS(MAXCLD)
+   C
+   C     RID - ROOT ID
+   C     CID - CHILD ID
+   C     PID - PARENT ID
+   C
+         REAL*8 RID,CID,PID
+         INTEGER I,J,K,IERR,NUMCLD,NLEFT,ISTART
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('DB.ADF','NEW',' ',RID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** CREATE NODES AT FIRST LEVEL
+   C
+         DO 150 I = 1,3
+            WRITE(NODNAM,'(A7,I1)')'PARENT.',I
+            CALL ADFCRE(RID,NODNAM,PID,IERR)
+            CALL ERRCHK(IERR)
+   C
+   C ****** CREATE NODES AT SECOND LEVEL
+   C
+            NUMCLD = I*I
+            DO 110 J = 1,NUMCLD
+               WRITE(NODNAM,'(A6,I1,A1,I1)')'CHILD.',I,'.',J
+               CALL ADFCRE(PID,NODNAM,CID,IERR)
+               CALL ERRCHK(IERR)
+     110    CONTINUE
+   C
+   C ****** GET NUMBER AND NAMES OF CHILDREN JUST CREATED
+   C        AND PRINT THEM OUT
+   C
+            CALL ADFGNAM(PID,NODNAM,IERR)
+            CALL ERRCHK(IERR)
+            CALL ADFNCLD(PID,NUMC,IERR)
+            CALL ERRCHK(IERR)
+            WRITE(*,120)I,NODNAM,NUMC
+     120    FORMAT(' LEVEL = ',I2,' PARENT NODE NAME = ',A,/,
+        X          '     NUMBER OF CHILDREN = ',I2,/,
+        X          '     CHILDREN NAMES:')
+            NLEFT = NUMC
+            ISTART = 1
+   C        --- TOP OF DO-WHILE LOOP
+     130    CONTINUE
+               CALL ADFCNAM(PID,ISTART,MAXCLD,LEN(NDNMS),
+        X                   NUMRET,NDNMS,IERR)
+               CALL ERRCHK(IERR)
+               PRINT *,' FETCHED: ',NUMRET,' NAMES'
+               WRITE(*,140)(NDNMS(K),K=1,NUMRET)
+     140       FORMAT(8X,A)
+               NLEFT = NLEFT - MAXCLD
+               ISTART = ISTART + MAXCLD
+            IF (NLEFT .GT. 0) GO TO 130
+     150 CONTINUE
+         STOP
+         END
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   PARENT = 1 PARENT NODE NAME = PARENT.1
+       NUMBER OF CHILDREN =  1
+       CHILDREN NAMES:
+        FETCHED            1 NAMES
+          CHILD.1.1
+
+   PARENT = 2 PARENT NODE NAME = PARENT.2
+       NUMBER OF CHILDREN =  4
+       CHILDREN NAMES:
+        FETCHED            4 NAMES
+          CHILD.2.1
+          CHILD.2.2
+          CHILD.2.3
+          CHILD.2.4
+
+   PARENT = 3 PARENT NODE NAME = PARENT.3
+       NUMBER OF CHILDREN =  9
+       CHILDREN NAMES:
+        FETCHED            5 NAMES
+          CHILD.3.1
+          CHILD.3.2
+          CHILD.3.3
+          CHILD.3.4
+          CHILD.3.5
+        FETCHED            4 NAMES
+          CHILD.3.6
+          CHILD.3.7
+          CHILD.3.8
+          CHILD.3.9
+</pre>
+
+<a name="Number_of_Children"></a>
+<h3>Get the Number of Children Names</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Number_of_Children"><br>
+<tt>ADF_Number_of_Children (PID,num_children,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Number_of_Children</tt>
+    <td align=center><tt>ADFNCLD</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double PID</tt>
+    <td width=41% nowrap><tt>real*8 PID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *num_children</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer num_children</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>PID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the parent node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>num_children</i></tt><td>
+   <td>The number of children directly associated with this node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Number_of_Children</tt>, returns the number of
+child names directly associated with a parent node.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+See the <a href="#ex:Children_Names">example for <tt>ADF_Children_Names</tt></a>.
+
+<a name="Get_Node_ID"></a>
+<h3>Get the ID of a Child Node</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Get_Node_ID"><br>
+<tt>ADF_Get_Node_ID (PID,name,ID,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Get_Node_ID</tt>
+    <td align=center><tt>ADFGNID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double PID</tt><br>
+                         <tt>const char *name</tt>
+    <td width=41% nowrap><tt>real*8 PID</tt><br>
+                         <tt>character*(*) name</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>double *ID</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>PID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the parent node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>name</i></tt><td>
+   <td>The name of the node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>ID</i></tt><td>
+   <td>The ID of the named node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Get_Node_ID</tt>, returns the ID of a child node,
+given the parent node ID and the name of the child node.
+To return the ID of the root node in an ADF file, use any known ID in
+the ADF file and a name of "<tt>/</tt>".
+The syntax for <tt><i>name</i></tt> is essentially the same as the "path
+name" within the UNIX operating system.
+It might look like <tt>/level.1/level.2/node</tt>.
+The name of the node may be one of two forms.
+If the name begins with a "<tt>/</tt>", then the name is relative to the
+root node for the associated database.
+If the name does not begin with a "<tt>/</tt>", then the name is
+relative to the parent node associated with the given PID.
+
+<p>
+To return the ID of the root node an ADF file, use any known ID in the
+ADF file and a name of "<tt>/</tt>".
+
+<a name="ex:Get_Node_ID"></a>
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+This example illustrates the various ways to access a node.
+Note that when a full path is specified (i.e., a leading slash
+"<tt>/</tt>" is specified), all that is required for the ID is any valid
+ID for the associated database.
+It will probably be clearer to others if the root ID is used in that
+situation.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) NODNAM
+   C
+   C     RID - ROOT ID
+   C     AL1ID - LEVEL 1 ID
+   C     AL2ID - LEVEL 2 ID
+   C     AL3ID - LEVEL 3 ID
+   C     CID - CHILD ID
+   C
+         REAL*8 RID,AL1ID,AL2ID,AL3ID,CID
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('DB.ADF','NEW',' ',RID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** CREATE NODE AT FIRST LEVEL
+   C
+         CALL ADFCRE(RID,'LEVEL.1',AL1ID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** CREATE NODE AT SECOND LEVEL
+   C
+         CALL ADFCRE(AL1ID,'LEVEL.2',AL2ID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** CREATE NODE AT THIRD LEVEL
+   C
+         CALL ADFCRE(AL2ID,'LEVEL.3',AL3ID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** EQUIVALENT WAYS TO GET THE LOWER LEVEL NODE ID
+   C
+   C ****** FULL PATH NAME
+   C
+         CALL ADFGNID(RID,'/LEVEL.1/LEVEL.2/LEVEL.3',CID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFGNAM(CID,NODNAM,IERR)
+         PRINT *,' '
+         PRINT *,' FULL PATH EXAMPLE: ROOT NODE ID: NODE NAME = ',NODNAM
+   C
+   C ****** FULL PATH NAME - GIVEN ANY VALID NODE ID FOR FILE
+   C
+         CALL ADFGNID(AL3ID,'/LEVEL.1/LEVEL.2/LEVEL.3',CID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFGNAM(CID,NODNAM,IERR)
+         PRINT *,' '
+         PRINT *,' FULL PATH EXAMPLE - VALID NODE ID: NODE NAME = ',NODNAM
+   C
+   C ****** PARTIAL PATH NAME
+   C
+         CALL ADFGNID(AL1ID,'LEVEL.2/LEVEL.3',CID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFGNAM(CID,NODNAM,IERR)
+         PRINT *,' '
+         PRINT *,' PARTIAL PATH EXAMPLE: NODE NAME = ',NODNAM
+   C
+   C ****** DIRECT USE OF PARENT ID
+   C
+         CALL ADFGNID(AL2ID,'LEVEL.3',CID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFGNAM(CID,NODNAM,IERR)
+         PRINT *,' '
+         PRINT *,' GIVEN PARENT NAME EXAMPLE: NODE NAME = ',NODNAM
+         STOP
+         END
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   FULL PATH EXAMPLE: ROOT NODE ID: NODE NAME = LEVEL.3
+
+   FULL PATH EXAMPLE - VALID NODE ID: NODE NAME = LEVEL.3
+
+   PARTIAL PATH EXAMPLE: NODE NAME = LEVEL.3
+
+   GIVEN PARENT NAME EXAMPLE: NODE NAME = LEVEL.3
+</pre>
+
+<a name="Get_Name"></a>
+<h3>Get the Name of a Node</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Get_Name"><br>
+<tt>ADF_Get_Name (ID,name,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Get_Name</tt>
+    <td align=center><tt>ADFGNAM</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>char *name</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>character*(*) name</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>name</i></tt><td>
+   <td>The simple name of the node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Get_Name</tt>, returns the 32-character name of a
+node, given the node's ID.
+In C, the name will be null terminated after the last nonblank
+character; therefore, 33 characters should be used (32 for the name,
+plus 1 for the null).
+In Fortran, the null character is not returned; therefore, the character
+variable declaration for name should be for 32 characters (e.g.,
+<tt>CHARACTER*(32) NAME</tt>).
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+See the <a href="#ex:Get_Node_ID">example for <tt>ADF_Get_Node_ID</tt></a>.
+
+<a name="Put_Name"></a>
+<h3>Put a Name on a Node</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Put_Name"><br>
+<tt>ADF_Put_Name (PID,ID,name,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Put_Name</tt>
+    <td align=center><tt>ADFPNAM</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double PID</tt><br>
+                         <tt>const double ID</tt><br>
+                         <tt>const char *name</tt>
+    <td width=41% nowrap><tt>real*8 PID</tt><br>
+                         <tt>real*8 ID</tt><br>
+                         <tt>character*(*) name</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>PID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node's parent.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>ID</i></tt><td>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>name</i></tt><td>
+   <td>The new name of the node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Put_Name</tt>, changes the name of a node.
+
+<p>
+Note that the parent ID of the node to be deleted is required.
+This is due to the fact that child nodes do not know the ID of their
+parent node.
+Thus, when a node is deleted, in order for the child table of the parent
+to be updated properly, the parent ID must be supplied as an input.
+
+<br><br>
+<em>Warning: If the node is pointed to by a link node, changing the node's name will
+break the link.</em>
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+This example illustrates the creation of a node with an initial name.
+Later, the name of the node is changed.
+The routine <tt>ADFCNAM</tt> is used to get the new name from the
+parent's information table.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) NODNAM,CLDNAM
+   C
+   C     RID - ROOT ID
+   C     CID - CHILD ID
+   C
+         REAL*8 RID,AL1ID,AL2ID,AL3ID,CID
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)-*9+
+   C
+         CALL ERRCHK(IERR)
+   C
+   C *** CREATE NODE
+   C
+         CALL ADFCRE(RID,'LEVEL.1',CID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** GET NODE NAME AND CHECK PARENTS TABLE
+   C
+         CALL ADFGNAM(CID,NODNAM,IERR)
+         CALL ERRCHK(IERR)
+         PRINT *,' '
+         PRINT *,' NODE NAME = ',NODNAM
+         CALL ADFCNAM(RID,1,1,LEN(CLDNAM),
+        X             NUMRET,CLDNAM,IERR)
+         CALL ERRCHK(IERR)
+         PRINT *,' NODE NAME IN PARENTS TABLE = ',CLDNAM
+   C
+   C *** CHANGE THE NODE NAME
+   C
+         CALL ADFPNAM(RID,CID,'NEW_NAME',IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** GET NEW NODE NAME AND CHECK PARENTS TABLE
+   C
+         CALL ADFGNAM(CID,NODNAM,IERR)
+         CALL ERRCHK(IERR)
+         PRINT *,' '
+         PRINT *,' NEW NODE NAME = ',NODNAM
+         CALL ADFCNAM(RID,1,1,LEN(CLDNAM),
+        X             NUMRET,CLDNAM,IERR)
+         CALL ERRCHK(IERR)
+         PRINT *,' NODE NAME IN PARENTS TABLE = ',CLDNAM
+         STOP
+         END
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   NODE NAME     = LEVEL.1
+   NODE NAME IN PARENTS TABLE = LEVEL.1
+
+   NEW NODE NAME = NEW_NAME
+   NODE NAME IN PARENTS TABLE = NEW_NAME
+</pre>
+
+<a name="Move_Child"></a>
+<h3>Move a Child Node to a Different Parent</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Move_Child"><br>
+<tt>ADF_Move_Child (PID,ID,NPID,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Move_Child</tt>
+    <td align=center><tt>ADFMOVE</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double PID</tt><br>
+                         <tt>const double ID</tt><br>
+                         <tt>double NPID</tt>
+    <td width=41% nowrap><tt>real*8 PID</tt><br>
+                         <tt>real*8 ID</tt><br>
+                         <tt>real*8 NPID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>PID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>ID of the node's current parent.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>ID</i></tt><td>
+   <td>ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>NPID</i></tt><td>
+   <td>ID of the node's new parent.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Move_Child</tt>, deletes the given child node from
+the current parent's child table and adds it to the new parent's child
+table.
+<tt>ADF_Move_Child</tt> is restricted to moves within the same physical
+file.
+If the node is pointed to by a link-node, moving the node's name will
+break the link.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+This example creates a simple hierarchy.
+It then picks up a node from its original parent and moves it to a new
+parent node.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) NODNAM
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,PID,CID,PID1,PID3
+         INTEGER I,J,IERR
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** CREATE NODES AT FIRST LEVEL
+   C
+         WRITE(*,100)
+     100 FORMAT(/,' *** ORIGINAL DATABASE SETUP ***')
+         DO 150 I = 1,3
+            WRITE(NODNAM,'(A7,I1)')'PARENT.',I
+            CALL ADFCRE(RID,NODNAM,PID,IERR)
+            CALL ERRCHK(IERR)
+   C
+   C ****** CREATE NODES AT SECOND LEVEL
+   C
+            NUMCLD = I*I
+            DO 110 J = 1,NUMCLD
+               WRITE(NODNAM,'(A6,I1,A1,I1)')'CHILD.',I,'.',J
+               CALL ADFCRE(PID,NODNAM,CID,IERR)
+               CALL ERRCHK(IERR)
+     110    CONTINUE
+   C
+   C ****** GET NUMBER AND NAMES OF CHILDREN JUST CREATED
+   C        AND PRINT THEM OUT
+   C
+            CALL PRTCLD(PID)
+     150 CONTINUE
+   C
+   C *** PICK UP NODE /PARENT.3/CHILD.3.4 AND MOVE IT
+   C     TO /PARENT.1
+   C
+         CALL ADFGNID(RID,'PARENT.3',PID3,IERR)
+         CALL ERRCHK(IERR)
+   C
+         CALL ADFGNID(PID3,'CHILD.3.4',CID,IERR)
+         CALL ERRCHK(IERR)
+   C
+         CALL ADFGNID(RID,'PARENT.1',PID1,IERR)
+         CALL ERRCHK(IERR)
+   C
+         CALL ADFMOVE(PID3,CID,PID1,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** CHECK TO MAKE SURE THE NODE WAS ACTUALLY MOVED
+   C
+         WRITE(*,160)
+     160 FORMAT(/,'*** PARENT.1 AND PARENT.3 AFTER MOVE ***')
+         CALL PRTCLD(PID1)
+         CALL PRTCLD(PID3)
+   C
+         STOP
+         END
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+   C
+   C *** CHECK ERROR CONDITION
+   C
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+
+         SUBROUTINE PRTCLD(PID)
+   C
+   C *** PRINT TABLE OF CHILDREN GIVEN A PARENT NODE-ID
+   C
+         PARAMETER (MAXCLD=10)
+         PARAMETER (MAXCHR=32)
+         REAL*8 PID
+         CHARACTER*(MAXCHR) NODNAM,NDNMS(MAXCLD)
+         CALL ADFGNAM(PID,NODNAM,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFNCLD(PID,NUMC,IERR)
+         CALL ERRCHK(IERR)
+         WRITE(*,120)NODNAM,NUMC
+     120 FORMAT(/,' PARENT NODE NAME = ',A,/,
+        X       '     NUMBER OF CHILDREN = ',I2,/,
+        X       '     CHILDREN NAMES:')
+         NLEFT = NUMC
+         ISTART = 1
+   C     --- TOP OF DO-WHILE LOOP
+     130 CONTINUE
+            CALL ADFCNAM(PID,ISTART,MAXCLD,LEN(NDNMS),
+        X                NUMRET,NDNMS,IERR)
+            CALL ERRCHK(IERR)
+            WRITE(*,140)(NDNMS(K),K=1,NUMRET)
+     140    FORMAT(2(8X,A))
+            NLEFT = NLEFT - MAXCLD
+            ISTART = ISTART + MAXCLD
+         IF (NLEFT .GT. 0) GO TO 130
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   *** ORIGINAL DATABASE SETUP ***
+
+   PARENT NODE NAME = PARENT.1
+       NUMBER OF CHILDREN =  1
+       CHILDREN NAMES:
+          CHILD.1.1
+
+   PARENT NODE NAME = PARENT.2
+       NUMBER OF CHILDREN =  4
+       CHILDREN NAMES:
+          CHILD.2.1                       CHILD.2.2
+          CHILD.2.3                       CHILD.2.4
+
+   PARENT NODE NAME = PARENT.3
+       NUMBER OF CHILDREN =  9
+       CHILDREN NAMES:
+          CHILD.3.1                       CHILD.3.2
+          CHILD.3.3                       CHILD.3.4
+          CHILD.3.5                       CHILD.3.6
+          CHILD.3.7                       CHILD.3.8
+          CHILD.3.9
+
+   *** PARENT.1 AND PARENT.3 AFTER MOVE ***
+
+   PARENT NODE NAME = PARENT.1
+       NUMBER OF CHILDREN =  2
+       CHILDREN NAMES:
+          CHILD.1.1                       CHILD.3.4
+
+   PARENT NODE NAME = PARENT.3
+       NUMBER OF CHILDREN =  8
+       CHILDREN NAMES:
+          CHILD.3.1                       CHILD.3.2
+          CHILD.3.3                       CHILD.3.5
+          CHILD.3.6                       CHILD.3.7
+          CHILD.3.8                       CHILD.3.9
+</pre>
+
+<a name="Link"></a>
+<h3>Create a Link to a Node</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Link"><br>
+<tt>ADF_Link (PID,name,file,name_in_file,ID,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Link</tt>
+    <td align=center><tt>ADFLINK</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double PID</tt><br>
+                         <tt>const char *name</tt><br>
+                         <tt>const char *file</tt><br>
+                         <tt>const char *name_in_file</tt>
+    <td width=41% nowrap><tt>real*8 PID</tt><br>
+                         <tt>character*(*) name</tt><br>
+                         <tt>character*(*) file</tt><br>
+                         <tt>character*(*) name_in_file</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>double ID</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>PID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node's parent.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>name</i></tt><td>
+   <td>The name of the link node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>file</i></tt><td>
+   <td>The file name to use for the link directly usable by a C
+       <tt>open()</tt> routine.
+       If blank (null), the link is assumed to be within the same file
+       as the parent (<tt><i>PID</i></tt>).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>name_in_file</i></tt><td>
+   <td>The name of the node that the link will point to.
+       This can be a simple or a compound node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>ID</i></tt><td>
+   <td>The ID of the created node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Link</tt>, will create a link (reference) to a
+node somewhere within the same ADF database file or another ADF database
+file.
+The node that the newly created link node refers to (points to) does not
+have to exist when the link is created.
+The ADF library does not check to make sure that the referenced node
+actually exists at the time <tt>ADF_Link</tt> is called.
+However, when information from the referenced node is requested by
+routines such as <a href="subs_query.html#Get_Label"><tt>ADF_Get_Label</tt></a>
+or <a href="subs_io.html#Read_Data"><tt>ADF_Read_Data</tt></a>, the
+referenced node is then accessed.
+If the referenced node is not in existence at that time, an error will
+occur.
+<tt>ADF_Link</tt> behaves like a "soft link" in the UNIX operating system.
+
+<br><br>
+<u><i>Example 1</i></u>
+
+<p>
+This example creates a link to another node that exists in the same
+physical file.
+Note that the length of <tt><i>name_in_file</i></tt> is not limited to 32
+characters but can be any length required to fully specify the desired
+node.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) NODNAM,NODLBL,TSTLBL
+         CHARACTER*(72) FN,PATH
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,PID,CID,PID1,PID3
+         INTEGER I,J,IERR
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** CREATE NODES AT FIRST LEVEL
+   C
+         WRITE(*,100)
+     100 FORMAT(/,' *** ORIGINAL DATABASE SETUP ***')
+         DO 150 I = 1,3
+            WRITE(NODNAM,'(A7,I1)')'PARENT.',I
+            CALL ADFCRE(RID,NODNAM,PID,IERR)
+            CALL ERRCHK(IERR)
+   C
+   C ****** CREATE NODES AT SECOND LEVEL
+   C
+            NUMCLD = I*I
+            DO 110 J = 1,NUMCLD
+               WRITE(NODNAM,'(A6,I1,A1,I1)')'CHILD.',I,'.',J
+               CALL ADFCRE(PID,NODNAM,CID,IERR)
+               CALL ERRCHK(IERR)
+               WRITE(NODLBL,105)I,J
+     105       FORMAT('LABEL STRING IN CHILD.',I1,'.',I1)
+               CALL ADFSLB(CID,NODLBL,IERR)
+               CALL ERRCHK(IERR)
+     110    CONTINUE
+   C
+   C ****** GET NUMBER AND NAMES OF CHILDREN JUST CREATED
+   C        AND PRINT THEM OUT
+   C
+            CALL PRTCLD(PID)
+     150 CONTINUE
+   C
+   C *** LINK NODE /PARENT.3/CHILD.3.4 TO /PARENT.1
+   C
+         CALL ADFGNID(RID,'PARENT.1',PID1,IERR)
+         CALL ERRCHK(IERR)
+   C
+         CALL ADFLINK(PID1,'LINKED_NODE',' ',
+        X             '/PARENT.3/CHILD.3.4',CID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** CHECK TO MAKE SURE THE NODE WAS ACTUALLY LINKED
+   C
+         WRITE(*,160)
+     160 FORMAT(/,'*** PARENT.1 AFTER LINK ***')
+         CALL PRTCLD(PID1)
+   C
+   C *** FOR FINAL CONFIRMATION, GET ORIGINAL LABEL
+   C     GOING THROUGH NEW LINK
+   C
+         CALL ADFGLB(CID,TSTLBL,IERR)
+         CALL ERRCHK(IERR)
+         WRITE(*,170)TSTLBL
+     170 FORMAT(/,'LINKED_NODE LABEL = ',A)
+   C
+         STOP
+         END
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+   C
+   C *** CHECK ERROR CONDITION
+   C
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+
+         SUBROUTINE PRTCLD(PID)
+   C
+   C *** PRINT TABLE OF CHILDREN GIVEN A PARENT NODE-ID
+   C
+         PARAMETER (MAXCLD=10)
+         PARAMETER (MAXCHR=32)
+         REAL*8 PID
+         CHARACTER*(MAXCHR) NODNAM,NDNMS(MAXCLD)
+         CALL ADFGNAM(PID,NODNAM,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFNCLD(PID,NUMC,IERR)
+         CALL ERRCHK(IERR)
+         WRITE(*,120)NODNAM,NUMC
+     120 FORMAT(/,' PARENT NODE NAME = ',A,/,
+        X       '     NUMBER OF CHILDREN = ',I2,/,
+        X       '     CHILDREN NAMES:')
+         NLEFT = NUMC
+         ISTART = 1
+   C     --- TOP OF DO-WHILE LOOP
+     130 CONTINUE
+            CALL ADFCNAM(PID,ISTART,MAXCLD,LEN(NDNMS),
+        X                NUMRET,NDNMS,IERR)
+            CALL ERRCHK(IERR)
+            WRITE(*,140)(NDNMS(K),K=1,NUMRET)
+     140    FORMAT(2(8X,A))
+            NLEFT = NLEFT - MAXCLD
+            ISTART = ISTART + MAXCLD
+         IF (NLEFT .GT. 0) GO TO 130
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   *** ORIGINAL DATABASE SETUP ***
+
+   PARENT NODE NAME = PARENT.1
+       NUMBER OF CHILDREN =  1
+       CHILDREN NAMES:
+          CHILD.1.1
+
+   PARENT NODE NAME = PARENT.2
+       NUMBER OF CHILDREN =  4
+       CHILDREN NAMES:
+          CHILD.2.1                       CHILD.2.2
+          CHILD.2.3                       CHILD.2.4
+
+   PARENT NODE NAME = PARENT.3
+       NUMBER OF CHILDREN =  9
+       CHILDREN NAMES:
+          CHILD.3.1                       CHILD.3.2
+          CHILD.3.3                       CHILD.3.4
+          CHILD.3.5                       CHILD.3.6
+          CHILD.3.7                       CHILD.3.8
+          CHILD.3.9
+
+   *** PARENT.1 AFTER LINK ***
+
+   PARENT NODE NAME = PARENT.1
+       NUMBER OF CHILDREN =  2
+       CHILDREN NAMES:
+          CHILD.1.1                       LINKED_NODE
+
+   LINKED_NODE LABEL = LABEL STRING IN CHILD.3.4
+</pre>
+
+<u><i>Example 2</i></u>
+
+<p>
+This example illustrates the linking of nodes across files.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) TSTLBL
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,PID,CID
+         INTEGER IERR
+   C
+   C *** 1.) OPEN 1ST DATABASE
+   C     2.) CREATE TWO NODES
+   C     3.) PUT LABEL ON 2ND NODE
+   C     4.) CLOSE DATABASE
+   C
+         CALL ADFDOPN('db1.adf','NEW',' ',RID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFCRE(RID,'DB1_NODE1',PID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFCRE(PID,'DB1_NODE2',CID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFSLB(CID,'LABEL IN FILE.1: NODE2',IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFDCLO(RID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** 1.) OPEN 2ND DATABASE
+   C
+         CALL ADFDOPN('db2.adf','NEW',' ',RID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFCRE(RID,'DB2_NODE1',PID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFCRE(PID,'DB2_NODE2',CID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** LINK NODE /DB1_NODE1/DB1_NODE2 TO /DB2_NODE1
+   C
+         CALL ADFLINK(PID,'LINKED_NODE','db1.adf',
+        X             '/DB1_NODE1/DB1_NODE2',CID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** CHECK TO MAKE SURE THE NODE WAS ACTUALLY LINKED
+   C
+         WRITE(*,160)
+     160 FORMAT(/,'*** PARENT AFTER LINK ***')
+         CALL PRTCLD(PID)
+   C
+   C *** FOR FINAL CONFIRMATION, GET ORIGINAL LABEL
+   C     GOING THROUGH NEW LINK
+   C
+         CALL ADFGLB(CID,TSTLBL,IERR)
+         CALL ERRCHK(IERR)
+         WRITE(*,170)TSTLBL
+     170 FORMAT(/,'LINKED_NODE LABEL = ',A)
+   C
+         STOP
+         END
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+   C
+   C *** CHECK ERROR CONDITION
+   C
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+
+         SUBROUTINE PRTCLD(PID)
+   C
+   C *** PRINT TABLE OF CHILDREN GIVEN A PARENT NODE-ID
+   C
+         PARAMETER (MAXCLD=10)
+         PARAMETER (MAXCHR=32)
+         REAL*8 PID
+         CHARACTER*(MAXCHR) NODNAM,NDNMS(MAXCLD)
+         CALL ADFGNAM(PID,NODNAM,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFNCLD(PID,NUMC,IERR)
+         CALL ERRCHK(IERR)
+         WRITE(*,120)NODNAM,NUMC
+     120 FORMAT(/,' PARENT NODE NAME = ',A,/,
+        X       '     NUMBER OF CHILDREN = ',I2,/,
+        X       '     CHILDREN NAMES:')
+         NLEFT = NUMC
+         ISTART = 1
+   C     --- TOP OF DO-WHILE LOOP
+     130 CONTINUE
+            CALL ADFCNAM(PID,ISTART,MAXCLD,LEN(NDNMS),
+        X                NUMRET,NDNMS,IERR)
+            CALL ERRCHK(IERR)
+            WRITE(*,140)(NDNMS(K),K=1,NUMRET)
+     140    FORMAT(2(8X,A))
+            NLEFT = NLEFT - MAXCLD
+            ISTART = ISTART + MAXCLD
+         IF (NLEFT .GT. 0) GO TO 130
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   *** PARENT AFTER LINK ***
+
+   PARENT NODE NAME = DB2_NODE1
+       NUMBER OF CHILDREN =  2
+       CHILDREN NAMES:
+          DB2_NODE2                       LINKED_NODE
+
+  LINKED_NODE LABEL = LABEL IN FILE.1: NODE2
+</pre>
+
+<a name="Is_Link"></a>
+<h3>See If the Node Is a Link</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Is_Link"><br>
+<tt>ADF_Is_Link (ID,link_path_length,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Is_Link</tt>
+    <td align=center><tt>ADFISLK</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *link_path_length</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer link_path_length</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>link_path_length</i></tt><td>
+   <td>This returned value is zero if the node is not a link.
+       If the node referenced by <tt><i>ID</i></tt> is a link within the
+       same file, the number of characters in the path is returned.
+       If the node referenced by <tt><i>ID</i></tt> is a link in another
+       file, the sum of the number of characters in the referenced file
+       name and the number of characters in the path + 1 is returned.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Is_Link</tt>, tests to see if the node is a link.
+If the actual data type of the node is <tt>LK</tt> (created with
+<a href="#Link"><tt>ADF_Link</tt></a>), the routine returns the link
+path length; otherwise it returns 0.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+This example creates a link into a second file, and then calls
+<tt>ADF_Is_Link</tt> to determine whether the requested node is indeed a
+link or a normal node.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) TSTLBL
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,PID,CID
+         INTEGER IERR
+   C
+   C *** 1.) OPEN 1ST DATABASE
+   C     2.) CREATE TWO NODES
+   C     3.) PUT LABEL ON 2ND NODE
+   C     4.) CLOSE DATABASE
+   C
+         CALL ADFDOPN('db1.adf','NEW',' ',RID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFCRE(RID,'DB1_NODE1',PID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFCRE(PID,'DB1_NODE2',CID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFDCLO(RID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** 1.) OPEN 2ND DATABASE
+   C
+         CALL ADFDOPN('db2.adf','NEW',' ',RID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFCRE(RID,'DB2_NODE1',PID,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFCRE(PID,'DB2_NODE2',CID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** LINK NODE FILE 1:/DB1_NODE1/DB1_NODE2 TO /DB2_NODE1
+   C
+         CALL ADFLINK(PID,'LINKED_NODE','db1.adf',
+        X             '/DB1_NODE1/DB1_NODE2',CID,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** CHECK TO MAKE SURE THE NODE WAS ACTUALLY LINKED
+   C
+         CALL ADFISLK(CID,LEN,IERR)
+         CALL ERRCHK(IERR)
+         PRINT *,' PATH LENGTH FROM LINK IS: ',LEN
+   C
+         STOP
+         END
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+   C
+   C *** CHECK ERROR CONDITION
+   C
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   PATH LENGTH FROM LINK IS:           28
+</pre>
+
+<a name="Get_Link_Path"></a>
+<h3>Get the Path Information From a Link</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Get_Link_Path"><br>
+<tt>ADF_Get_Link_Path (ID,file,name_in_file,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Get_Link_Path</tt>
+    <td align=center><tt>ADFGLKP</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>char *file</tt><br>
+                         <tt>char *name_in_file</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>character*(*) file</tt><br>
+                         <tt>character*(*) name_in_file</tt><br>
+                         <tt>int *error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>file</i></tt><td>
+   <td>The file name to use for the link.
+       It is directly usable by the C <tt>open()</tt> routine.
+       If blank (null), the link is within the same file.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>name_in_file</i></tt><td>
+   <td>The name of the node that the link points to.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Get_Link_Path</tt>, gets the path information from
+a link.
+If the node is a link node, the routine returns the path information;
+otherwise it returns an error.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+This example opens two ADF files.
+A link is created in the second file (<i>db2.adf</i>) that references a
+node in the first file (<i>db1.adf</i>).
+<tt>ADFGLKP</tt> is used to extract the file name and path that the link
+actually points to.
+It is not anticipated that this information will be useful to the normal
+user.
+For most applications, it is best to allow ADF to resolve the link
+internally, transparent to the user.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) TSTLBL
+         CHARACTER*(40) FILENM,PATH
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,PID,CID
+         INTEGER IERR
+   C
+   C *** 1.) OPEN 1ST DATABASE
+   C     2.) CREATE TWO NODES
+   C     3.) PUT LABEL ON 2ND NODE
+   C     4.) CLOSE DATABASE
+   C
+         CALL ADFDOPN('db1.adf','NEW',' ',RID,IERR)
+         CALL ADFCRE(RID,'DB1_NODE1',PID,IERR)
+         CALL ADFCRE(PID,'DB1_NODE2',CID,IERR)
+         CALL ADFDCLO(RID,IERR)
+   C
+   C *** 1.) OPEN 2ND DATABASE
+   C
+         CALL ADFDOPN('db2.adf','NEW',' ',RID,IERR)
+         CALL ADFCRE(RID,'DB2_NODE1',PID,IERR)
+         CALL ADFCRE(PID,'DB2_NODE2',CID,IERR)
+   C
+   C *** LINK NODE FILE 1:/DB1_NODE1/DB1_NODE2 TO /DB2_NODE1
+   C
+         CALL ADFLINK(PID,'LINKED_NODE','db1.adf',
+        X             '/DB1_NODE1/DB1_NODE2',CID,IERR)
+   C
+   C *** CHECK TO MAKE SURE THE NODE WAS ACTUALLY LINKED
+   C
+         CALL ADFGLKP(CID,FILENM,PATH,IERR)
+         PRINT *,' INFORMATION FROM LINK:'
+         PRINT *,' FILE: ',FILENM
+         PRINT *,' PATH: ',PATH
+   C
+         STOP
+         END
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+   C
+   C *** CHECK ERROR CONDITION
+   C
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+
+         SUBROUTINE PRTCLD(PID)
+   C
+   C *** PRINT TABLE OF CHILDREN GIVEN A PARENT NODE-ID
+   C
+         PARAMETER (MAXCLD=10)
+         PARAMETER (MAXCHR=32)
+         REAL*8 PID
+         CHARACTER*(MAXCHR) NODNAM,NDNMS(MAXCLD)
+         CALL ADFGNAM(PID,NODNAM,IERR)
+         CALL ERRCHK(IERR)
+         CALL ADFNCLD(PID,NUMC,IERR)
+         CALL ERRCHK(IERR)
+         WRITE(*,120)NODNAM,NUMC
+     120 FORMAT(/,' PARENT NODE NAME = ',A,/,
+        X       '     NUMBER OF CHILDREN = ',I2,/,
+        X       '     CHILDREN NAMES:')
+         NLEFT = NUMC
+         ISTART = 1
+   C     --- TOP OF DO-WHILE LOOP
+     130 CONTINUE
+            CALL ADFCNAM(PID,ISTART,MAXCLD,LEN(NDNMS),
+        X                NUMRET,NDNMS,IERR)
+            CALL ERRCHK(IERR)
+            WRITE(*,140)(NDNMS(K),K=1,NUMRET)
+     140    FORMAT(2(8X,A))
+            NLEFT = NLEFT - MAXCLD
+            ISTART = ISTART + MAXCLD
+         IF (NLEFT .GT. 0) GO TO 130
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   INFORMATION FROM LINK:
+   FILE: db1.adf
+   PATH: /DB1_NODE1/DB1_NODE2
+</pre>
+
+<a name="Get_Root_ID"></a>
+<h3>Get the Root ID for the ADF System</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Get_Root_ID"><br>
+<tt>ADF_Get_Root_ID (ID,root_ID,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Get_Root_ID</tt>
+    <td align=center><tt>ADFGRID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>double root_ID</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>real*8 root_ID</tt><br>
+                         <tt>int *error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Any valid node ID for the given ADF database.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>root_ID</i></tt><td>
+   <td>The ID of the root node
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Get_Root_ID</tt>, returns the root ID for an ADF
+file when given any valid node ID for that file.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+This example illustrates that the root node ID can be obtained at any
+time by using a currently valid node ID for that file.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) NODNAM,ROOTNM
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,PID,CID,TESTID
+         INTEGER I,J,IERR,NUMCLD
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+         CALL ADFGNAM(RID,ROOTNM,IERR)
+         PRINT *,' AFTER OPENING FILE, ROOT NAME = ',ROOTNM
+   C
+   C *** CREATE NODES AT FIRST LEVEL
+   C
+         DO 150 I = 1,2
+            WRITE(NODNAM,'(A7,I1)')'PARENT.',I
+            CALL ADFCRE(RID,NODNAM,PID,IERR)
+            TESTID = 0.0
+            ROOTNM =''
+            CALL ADFGRID(PID,TESTID,IERR)
+            CALL ADFGNAM(TESTID,ROOTNM,IERR)
+            WRITE(*,100)NODNAM,ROOTNM
+     100    FORMAT('USING NODE ID FROM: ',A,
+        X          ' ROOT NAME = ',A)
+   C
+   C ****** CREATE NODES AT SECOND LEVEL
+   C
+            NUMCLD = 2*I
+            DO 110 J = 1,NUMCLD
+               WRITE(NODNAM,'(A6,I1,A1,I1)')'CHILD.',I,'.',J
+               CALL ADFCRE(PID,NODNAM,CID,IERR)
+               TESTID = 0.0
+               ROOTNM =''
+               CALL ADFGRID(PID,TESTID,IERR)
+               CALL ADFGNAM(TESTID,ROOTNM,IERR)
+               WRITE(*,100)NODNAM,ROOTNM
+     110    CONTINUE
+     150 CONTINUE
+   C
+         STOP
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+    AFTER OPENING FILE, ROOT NAME = ADF MotherNode
+   USING NODE ID FROM: PARENT.1          ROOT NAME = ADF MotherNode
+   USING NODE ID FROM: CHILD.1.1         ROOT NAME = ADF MotherNode
+   USING NODE ID FROM: CHILD.1.2         ROOT NAME = ADF MotherNode
+   USING NODE ID FROM: PARENT.2          ROOT NAME = ADF MotherNode
+   USING NODE ID FROM: CHILD.2.1         ROOT NAME = ADF MotherNode
+   USING NODE ID FROM: CHILD.2.2         ROOT NAME = ADF MotherNode
+   USING NODE ID FROM: CHILD.2.3         ROOT NAME = ADF MotherNode
+   USING NODE ID FROM: CHILD.2.4         ROOT NAME = ADF MotherNode
+</pre>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 9 Oct 2002
+
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!-- ADF User's Guide - The ADF Software Library -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - ADF Software Library </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<span class=nav><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></span>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>The ADF Software Library</h2>
+
+<ul>
+<li> <a href="#node">ADF Node Attributes</a>
+<li> <a href="#acquiring">Acquiring the Software and Documentation</a>
+</ul>
+
+<p>
+The ADF library is a hierarchical database system that is built around
+the concept of a "node".
+Each node contains information about itself and its ancestors and
+possibly data (e.g., arrays, vectors, character strings, etc.).
+Each of these nodes, in turn, can be connected to an arbitrary number of
+children, each of which is itself a node.
+In this system, an ADF node contains user-accessible information related
+to identification, name, type, and amount of data associated with it,
+and pointers to child nodes.
+Basic nodal information includes:
+
+<ul>
+<li> a unique ID (essentially a file location pointer)
+<li> a name (character string) used to describe the node and its data
+<li> a label (character string) an additional field used to describe the
+     node and its data.
+     It is analogous to, but not exactly the same as, the name.
+<li> information describing the type and amount of data
+<li> data
+<li> IDs of child nodes
+</ul>
+
+<p>
+There are no restrictions on the number of child nodes that a node can
+have associated with it in the ADF database.
+This structure allows the construction of a hierarchical database as
+shown in the figure below.
+As illustrated in the figure, it is possible to reference nodes in a
+second file (<i>ADF_File_Two</i>) from the original file
+(<i>ADF_File_One</i>).
+This is the concept of "linking."
+
+<a name="f:example"></a>
+<p>
+<center>
+<img src="adf_figure.gif"
+     alt="Example database showing node connections and links"
+     longdesc="adf_figure.html">
+<br><br>
+Example Database Hierarchy of Nodes
+</center>
+
+<p>
+A node knows about itself and its children, but it does not know
+anything about its parent.
+This means that it is possible to traverse "down" the tree by making
+queries about what lies below the current node, but it is not possible
+to traverse "up" the tree by making queries about nodes above a given
+node.
+If it is desired to move back up the tree, the user must keep track of
+that information.
+
+<p>
+All ADF files start with the root node, named "ADF MotherNode".
+This node is created automatically when a new file is opened.
+There is only one root node in an ADF file.
+
+<a name="node"></a>
+<h3>ADF Node Attributes</h3>
+
+<p>
+There is a single building block called a node (see the
+<a href="#f:example">example database</a> figure) used to construct the
+hierarchical structure.
+Each node may have zero to many subnodes that are associated with it, as
+well as its own data.
+The following are a list of attributes accessible by the user for a node
+in the ADF hierarchical database system.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Child Table<td><tt>&nbsp;&nbsp;</tt>
+   <td>A table of file pointers and names for each of the node's
+       children.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Data<td>
+   <td>The data associated with a node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Data Type<td>
+   <td>A 32-byte character field, blank filled, case sensitive.
+       Specifies the type of data (e.g., real, integer, complex)
+       associated with this node.
+       The <a href="#t:datatype">supported data types</a> are listed below.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Dimensions<td>
+   <td>An integer vector containing the number of elements within
+       each dimension.
+       For example, if the array <tt>A</tt> was declared (Fortran) as
+       <tt>A(10,20)</tt>, the Dimension vector would contain two entries
+       (10,20).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>ID<td>
+   <td>A unique identifier to access a given node within a file.
+       This field contains sufficient information for ADF to locate the
+       node within a file.
+       For any given node, the ID is generated only after the file it
+       resides in has been opened by a program and the user requests
+       information about the node.
+       The ID is valid only within the program that opened the file and
+       while that file is open.
+       If the file is closed and reopened, the ID for any given node
+       will be different.
+       Within different programs, the node ID for the same node will be
+       different.
+       The ID is never actually written into a file.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Label<td>
+   <td>A 32-byte character field.
+       The rules for Labels are identical to those for Names.
+       Unlike names, Labels do not have to be unique.
+       The Label field was introduced to allow "data typing" similar to
+       the "typedef" concept in C.
+       Using the Label field in this way allows programs to know some
+       additional information about the use of the node itself or its
+       child nodes and to call specific subroutines to read the data or
+       react in specific ways upon detection of the type.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Name<td>
+   <td>A 32-byte character field.
+       The names of child nodes directly attached to a parent node must
+       be unique.
+       For example, in the <a href="#f:example">example database
+       figure</a>, all nodes directly attached to N3 must have unique names.
+       When a request to create a new node is made, ADF checks the
+       requested name against the other names of the child nodes of the
+       specified parent.
+       If the requested name is not unique, ADF returns an error.
+       <br><br>
+       Legal characteristics of a name are a A-Z, a-z, 0-9, and special
+       characters (ASCII values from 32 to 126, except for the forward
+       slash "/" (ASCII number 47)).
+       Names will be blank filled to 32 bytes; they are case sensitive.
+       Leading blanks are discarded and trailing blanks are ignored,
+       whereas internal blanks are significant.
+       <br><br>
+       <em>Note</em>: Names passed to ADF from C must have the null "\0"
+       character appended to them.
+       Names returned from ADF through the C interface will have the
+       null character appended to them.
+       Therefore, C programs should allocate 33 bytes for any Name in
+       order to accommodate the null character.
+       <br><br>
+       Fortran programs can allocate 32 characters for Names.
+       The Fortran interface takes care of adding or removing the null
+       character as required.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Names of Subnodes<td>
+   <td>A list of names of the subnodes (children) of a node.
+       (This is the information contained in the child table.)
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Number of Dimensions<td>
+   <td>The dimensionality of the data.
+       ADF views all data as an array and can handle from zero (i.e., no
+       data) to 12 dimensions.
+       A "0" is used if the data type is empty.
+       Thus, a scalar is viewed as a vector with one dimension and
+       length 1.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Number of Subnodes<td>
+   <td>The number of child nodes directly attached to any given node.
+       Each node can have zero or more child nodes directly associated
+       with it.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Pointer<td>
+   <td>An address, from the point of view of a programming language.
+       Pointers are like jumps, leading from one part of the data
+       structure to another.
+</table>
+
+<a name="t:datatype"></a>
+<p>
+The following table lists the data types supported by CGNS.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left scope=col><u>Data Type</u><th><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col><u>Notation</u>
+<tr valign=baseline><td>
+   <td>No Data<td>
+   <td><tt>MT</tt> (i.e., eMpTy)
+<tr valign=baseline><td>
+   <td>Integer 32<td>
+   <td><tt>I4</tt>
+<tr valign=baseline><td>
+   <td>Integer 64<td>
+   <td><tt>I8</tt>
+<tr valign=baseline><td>
+   <td>Unsigned Integer 32<td>
+   <td><tt>U4</tt>
+<tr valign=baseline><td>
+   <td>Unsigned Integer 64<td>
+   <td><tt>U8</tt>
+<tr valign=baseline><td>
+   <td>Real 32<td>
+   <td><tt>R4</tt>
+<tr valign=baseline><td>
+   <td>Real 64<td>
+   <td><tt>R8</tt>
+<tr valign=baseline><td>
+   <td>Complex 64<td>
+   <td><tt>X4</tt>
+<tr valign=baseline><td>
+   <td>Complex 128<td>
+   <td><tt>X8</tt>
+<tr valign=baseline><td>
+   <td>Character (unsigned byte)<td>
+   <td><tt>C1</tt>
+<tr valign=baseline><td>
+   <td>Byte (unsigned byte)<td>
+   <td><tt>B1</tt>
+<tr valign=baseline><td>
+   <td>Link<td>
+   <td><tt>LK</tt>
+</table>
+
+<a name="datatypedefs"></a>
+<h4>Data Type Definitions</h4>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Structure<td><tt>&nbsp;&nbsp;</tt>
+   <td>It is possible to define a "structure" in ADF similar to the way
+       that "struct" is defined in the C programming language.
+       ADF will treat each instance of the structure as a single
+       instance of data.
+       A structure is described by using a string.
+       For example: "<tt>I4,I4,R8,R4</tt>".
+       <br><br>
+       <i>Notes:</i>
+       <ul>
+       <li> Structures can be only as complex as can be described in 32
+            characters.
+       <li> This construct is not very portable; therefore, its use is
+            highly discouraged.
+       </ul>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Character<td>
+   <td>A character type is intended for ASCII-type character information.
+       There may be different system architectures that use different
+       representations for translating data.
+       Byte data type should be used for pure byte or bit data usage.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Precision<td>
+   <td>The <tt>R4</tt> and <tt>R8</tt> are single and double precision,
+       respectively, on a 32-bit system architecture.
+       On the Cray, single precision is <tt>R8</tt> and double precision
+       may be <tt>R8</tt> or <tt>R16</tt>, depending on the compile
+       settings.
+       ADF tracks the number of bits to guarantee precision.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Link<td>
+   <td>A link is denoted by "<tt>LK</tt>" in the table of
+       <a href="#t:datatype">supported data types</a> and defines the
+       linkage between nodes and subnodes.
+       A link provides a mechanism for referring to a node that
+       physically resides in a different part of the hierarchy or a
+       different file.
+       A link within ADF parallels a soft link in the UNIX operating
+       system in that it does not guarantee that the referenced node
+       exists.
+       ADF will "resolve" the link only when information is requested
+       about the linked node.
+</table>
+
+<a name="acquiring"></a>
+<h3>Acquiring the Software and Documentation</h3>
+
+<p>
+The ADF software is distributed as part of the CGNS Library, available
+from <a href="http://sourceforge.net/projects/cgns">SourceForge</a>
+<img src="../external.png" alt="external link">.
+This manual, as well as the other CGNS documentation, is available in
+both HTML and PDF format from the <a href="../index.html">CGNS
+documentation web site</a>.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 13 May 2003
+<a href="http://www.grc.nasa.gov/Doc/grcwebpolicies.html">Privacy Policy and Important Notices</a>
+
+</body>
+</html>

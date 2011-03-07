@@ -1,0 +1,1174 @@
+<!-- ADF User's Guide - ADF Library Of Subroutines -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - ADF Library Of Subroutines </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<span class=nav><b>Data&nbsp;I/O&nbsp;Routines</b></span>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Data I/O Routines</h2>
+
+<ul>
+<li> <tt><a href="#Read_Data">ADF_Read_Data</a></tt> -
+     Read the data from a node (with partial capabilities)
+<li> <tt><a href="#Read_All_Data">ADF_Read_All_Data</a></tt> -
+     Read all the data into a contiguous memory space
+<li> <tt><a href="#Read_Block_Data">ADF_Read_Block_Data</a></tt> -
+     Read a contiguous block of data from a node
+<li> <tt><a href="#Write_Data">ADF_Write_Data</a></tt> -
+     Write the data to a node (with partial capabilities)
+<li> <tt><a href="#Write_All_Data">ADF_Write_All_Data</a></tt> -
+     Write all the data from a contiguous memory space
+<li> <tt><a href="#Write_Block_Data">ADF_Write_Block_Data</a></tt> -
+     Write a contiguous block of data to a node
+</ul>
+
+<em>Note:</em> For all data I/O routines, the system is based on
+indexing starting from 1 and not 0.
+(That is, the first element in an array is indexed as 1 and not zero.)
+
+<a name="Read_Data"></a>
+<h3>Read the Data From a Node Having Stride Capabilities</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Read_Data"><br>
+<tt>ADF_Read_Data (ID,s_start[],s_end[],s_stride[],m_num_dims,m_dims[],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_start[],m_end[],m_stride[],data,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Read_Data</tt></b>
+    <td align=center><b><tt>ADFREAD</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt><br>
+                  <tt>const int s_start[]</tt><br>
+                  <tt>const int s_end[]</tt><br>
+                  <tt>const int s_stride[]</tt><br>
+                  <tt>const int m_num_dims</tt><br>
+                  <tt>const int m_dims[]</tt><br>
+                  <tt>const int m_start[]</tt><br>
+                  <tt>const int m_end[]</tt><br>
+                  <tt>const int m_stride[]</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt><br>
+                  <tt>integer s_start()</tt><br>
+                  <tt>integer s_end()</tt><br>
+                  <tt>integer s_stride()</tt><br>
+                  <tt>integer m_num_dims</tt><br>
+                  <tt>integer m_dims(m_num_dims)</tt><br>
+                  <tt>integer m_start(m_num_dims)</tt><br>
+                  <tt>integer m_end(m_num_dims)</tt><br>
+                  <tt>integer m_stride(m_num_dims)</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>char *data</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>character*(*) data</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>s_start[]</i></tt><td>
+   <td>The starting index to use for each dimension of the array within
+       the database node (1D array; i.e., list of indices).
+       The maximum number of dimensions an array is allowed in ADF is 12.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>s_end[]</i></tt><td>
+   <td>The ending index to use for each dimension of the array within
+       the database node (1D array; i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>s_stride[]</i></tt><td>
+   <td>The stride value to use for each dimension of the array within
+       the database node (1D array; i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>m_num_dims</i></tt><td>
+   <td>The number of dimensions to use in memory.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>m_dims[]</i></tt><td>
+   <td>The dimension values to use for the array in memory (1D array;
+       i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>m_start[]</i></tt><td>
+   <td>The starting index to use for each dimension of the array in
+       memory (1D array; i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>m_end[]</i></tt><td>
+   <td>The ending index to use for each dimension of the array in
+       memory (1D array; i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>m_stride[]</i></tt><td>
+   <td>The stride value to use for each dimension of the array in
+       memory (1D array; i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>data</i></tt><td>
+   <td>The starting address of the data in memory.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Read_Data</tt>, provides general purpose read
+capabilities.
+It allows for a general specification of the starting location within
+the data well as fixed step lengths (strides) through the data from the
+initial position.
+This capability works for both the data on disk and the data being
+stored in memory.
+One set of integer vectors (<tt><i>s_start</i></tt>, etc.) is used to
+describe the mapping of the data within the node, and a second set
+of integer vectors (<tt><i>m_start</i></tt>) is used to describe the
+mapping of the desired data within memory.
+
+<p>
+There can be a significant performance penalty for using
+<tt>ADF_Read_Data</tt> when compared with
+<a href="#Read_All_Data"><tt>ADF_Read_All_Data</tt></a>.
+If performance is a major consideration, it is best to organize
+data to take advantage of the speed of <tt>Adf_Read_All_Data</tt>.
+
+<p>
+The data are stored in both memory and on disk in "Fortran ordering."
+That is, the first index varies the fastest.
+
+<p>
+<tt>ADF_Read_Data</tt> will not accept "negative" indexing.
+That is, it is not possible to reverse the ordering of the data from the
+node into memory.
+
+<p>
+Be careful when writing data using
+<a href="#Write_All_Data"><tt>ADF_Write_All_Data</tt></a> and then using
+<tt>ADF_Read_Data</tt> to randomly access the data.
+<tt>ADF_Write_All_Data</tt> takes a starting address in memory and
+writes <i>N</i> words to disk, making no assumption as to the order of
+the data.
+<tt>ADF_Read_Data</tt> assumes that the data have Fortran-like ordering
+to navigate through the data in memory and on disk.
+It assumes that the first dimension varies the fastest.
+It would be easy for a C program to use the default array ordering
+(last dimension varying fastest) and write the data out using
+<tt>ADF_Write_All_Data</tt>.
+Then another program might use <tt>ADF_Read_Data</tt> to access a
+subsection of the data, and the routine would not return what was
+expected.
+
+<br><br>
+<em>Note:</em>
+If all the data type of the node is a compound data type, such as
+("<tt>I4[3],R8</tt>"), the partial capabilities will access one or more
+of these 20-byte data entities.
+You cannot access a subset of an occurrence of the data type.
+
+<br><br>
+<em>Note:</em>
+See the section on <a href="design.html#fortran">Fortran character
+array portability</a>.
+
+<br><br>
+<u><i>Example 1</i></u>
+
+<p>
+This example shows <tt>ADFREAD</tt> being used to emulate the same
+capabilities as those in <a href="#Read_All_Data"><tt>ADFRALL</tt></a>.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXROW=10)
+         PARAMETER (MAXCOL=3)
+   C
+         REAL R4ARRI(MAXROW,MAXCOL)
+         REAL R4ARRO(MAXROW,MAXCOL)
+         INTEGER IDIMI(2),IDIMO(2)
+         INTEGER IDBEG(2),IDEND(2),IDINCR(2)
+         INTEGER IMBEG(2),IMEND(2),IMINCR(2)
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,CID
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+   C
+   C *** GENERATE SOME DATA
+   C
+         IDIMI(1) = MAXROW
+         IDIMI(2) = MAXCOL
+         DO 200 ICOL = 1,MAXCOL
+            DO 100 IROW = 1,MAXROW
+               R4ARRI(IROW,ICOL) = 2.0*ICOL*IROW
+     100    CONTINUE
+     200 CONTINUE
+         PRINT *,' ORIGINAL ARRAY:'
+         WRITE(*,300)((R4ARRI(I,J),J=1,MAXCOL),I=1,MAXROW)
+     300 FORMAT(3(5X,F10.2))
+   C
+   C *** GENERATE A NODE AND PUT DATA IN IT
+   C
+         CALL ADFCRE(RID,'NODE 1',CID,IERR)
+         CALL ADFSLB(CID,'LABEL FOR NODE 1',IERR)
+         CALL ADFPDIM(CID,'R4',2,IDIMI,IERR)
+         CALL ADFWALL(CID,R4ARRI,IERR)
+   C
+   C *** GET INFORMATION FROM NODE
+   C
+   C *** GET DATA FROM NODE (EXACTLY EQUIVALENT TO ADFRALL)
+   C
+         IDBEG(1) = 1
+         IDEND(1) = MAXROW
+         IDINCR(1) = 1
+   C
+         IDBEG(2) = 1
+         IDEND(2) = MAXCOL
+         IDINCR(2) = 1
+   C
+         IDIMO(1) = MAXROW
+         IDIMO(2) = MAXCOL
+   C
+         IMBEG(1) = 1
+         IMEND(1) = MAXROW
+         IMINCR(1) = 1
+   C
+         IMBEG(2) = 1
+         IMEND(2) = MAXCOL
+         IMINCR(2) = 1
+         CALL ADFREAD(CID,IDBEG,IDEND,IDINCR,
+        X             2,IDIMO,IMBEG,IMEND,IMINCR,
+        X             R4ARRO,IERR)
+         CALL ERRCHK(IERR)
+   C
+         PRINT *,' ARRAY PULLED FROM DISK USING ADFREAD:'
+         WRITE(*,300)((R4ARRO(I,J),J=1,MAXCOL),I=1,MAXROW)
+   C
+         STOP
+         END
+
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+   C
+   C *** CHECK ERROR CONDITION
+   C
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   ORIGINAL ARRAY:
+             2.00           4.00           6.00
+             4.00           8.00          12.00
+             6.00          12.00          18.00
+             8.00          16.00          24.00
+            10.00          20.00          30.00
+            12.00          24.00          36.00
+            14.00          28.00          42.00
+            16.00          32.00          48.00
+            18.00          36.00          54.00
+            20.00          40.00          60.00
+
+   ARRAY PULLED FROM DISK USING ADFREAD:
+             2.00           4.00           6.00
+             4.00           8.00          12.00
+             6.00          12.00          18.00
+             8.00          16.00          24.00
+            10.00          20.00          30.00
+            12.00          24.00          36.00
+            14.00          28.00          42.00
+            16.00          32.00          48.00
+            18.00          36.00          54.00
+            20.00          40.00          60.00
+</pre>
+
+<u><i>Example 2</i></u>
+
+<p>
+This example illustrates some of the flexibility available with
+<tt>ADF_Read_Data</tt>.
+An array is created and written to disk using
+<a href="#Write_All_Data"><tt>ADFWALL</tt></a>.
+Then every other entry in the second column is read back into every
+other element of a vector.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXROW=10)
+         PARAMETER (MAXCOL=3)
+   C
+         REAL R4ARRI(MAXROW,MAXCOL),R4VECO(MAXROW)
+         INTEGER IDIMD(2)
+         INTEGER IDBEG(2),IDEND(2),IDINCR(2)
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,CID
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+   C
+   C *** GENERATE SOME DATA
+   C
+         IDIMD(1) = MAXROW
+         IDIMD(2) = MAXCOL
+         DO 200 ICOL = 1,MAXCOL
+            DO 100 IROW = 1,MAXROW
+               R4ARRI(IROW,ICOL) = 2.0*ICOL*IROW
+     100    CONTINUE
+     200 CONTINUE
+   C
+         DO 250 I = 1,MAXROW
+            R4VECO(I) = 0.0
+     250 CONTINUE
+   C
+         PRINT *,' ORIGINAL ARRAY:'
+         WRITE(*,300)((R4ARRI(I,J),J=1,MAXCOL),I=1,MAXROW)
+     300 FORMAT(3(5X,F10.2))
+   C
+   C *** GENERATE A NODE AND PUT DATA IN IT
+   C
+         CALL ADFCRE(RID,'NODE 1',CID,IERR)
+         CALL ADFSLB(CID,'LABEL FOR NODE 1',IERR)
+         CALL ADFPDIM(CID,'R4',2,IDIMD,IERR)
+         CALL ADFWALL(CID,R4ARRI,IERR)
+   C
+   C *** GET DATA FROM NODE USING STRIDED READ
+   C
+   C ****** TAKE EVERY OTHER NUMBER FROM THE 2ND COLUMN OF THE ARRAY
+   C        AND PUT IT IN SEQUENTIALLY IN A VECTOR IN MEMORY
+   C
+   C *** DATABASE STRIDE INFORMATION
+   C
+         IDBEG(1) = 1
+         IDEND(1) = MAXROW
+         IDINCR(1) = 2
+   C
+         IDBEG(2) = 2
+         IDEND(2) = 2
+         IDINCR(2) = 1
+   C
+   C *** MEMORY STRIDE INFORMATION
+   C
+         NDIMM = 1
+         IDIMM = MAXROW
+         IMBEG = 1
+         IMEND = MAXROW
+         IMINCR = 2
+   C
+         CALL ADFREAD(CID,IDBEG,IDEND,IDINCR,
+        X             NDIMM,IDIMM,IMBEG,IMEND,IMINCR,
+        X             R4VECO,IERR)
+         CALL ERRCHK(IERR)
+   C
+         PRINT *,' VECTOR WITH DATA EXTRACTED FROM ARRAY'
+         WRITE(*,400)(R4VECO(J),J=1,MAXROW)
+     400 FORMAT(3(5X,F10.2))
+   C
+         STOP
+         END
+
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+   C
+   C *** CHECK ERROR CONDITION
+   C
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   ORIGINAL ARRAY:
+             2.00           4.00           6.00
+             4.00           8.00          12.00
+             6.00          12.00          18.00
+             8.00          16.00          24.00
+            10.00          20.00          30.00
+            12.00          24.00          36.00
+            14.00          28.00          42.00
+            16.00          32.00          48.00
+            18.00          36.00          54.00
+            20.00          40.00          60.00
+   VECTOR WITH DATA EXTRACTED FROM ARRAY
+             4.00           0.00          12.00
+             0.00          20.00           0.00
+            28.00           0.00          36.00
+             0.00
+</pre>
+
+<a name="Read_All_Data"></a>
+<h3>Read All the Data From a Node</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Read_All_Data"><br>
+<tt>ADF_Read_All_Data (ID,data,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Read_All_Data</tt></b>
+    <td align=center><b><tt>ADFRALL</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>char *data</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>character*(*) data</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>data</i></tt><td>
+   <td>The starting address of the data in memory.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Read_All_Data</tt>, reads all data from a node.
+It reads all the node's data and returns them into a contiguous memory
+space.
+
+<p>
+The disk performance of <tt>ADF_Read_All_Data</tt> is very good.
+The routine issues a single read command to the system for the entire
+data set; therefore, it is as fast as the system can return the data.
+
+<br><br>
+<em>Note:</em>
+See the section on <a href="design.html#fortran">Fortran character
+array portability</a>.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+See the <a href="subs_query.html#ex:Get_Data_Type">example for
+<tt>ADF_Get_Data_Type</tt></a>.
+
+<a name="Read_Block_Data"></a>
+<h3>Read a Contiguous Block of Data From a Node</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Read_Block_Data"><br>
+<tt>ADF_Read_Block_Data (ID,b_start,b_end,data,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Read_Block_Data</tt></b>
+    <td align=center><b><tt>ADFRBLK</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt><br>
+                         <tt>const long b_start</tt><br>
+                         <tt>const long b_end</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt><br>
+                         <tt>integer b_start</tt><br>
+                         <tt>integer b_end</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>char *data</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>character*(*) data</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>b_start</i></tt><td>
+   <td>The starting point of the block in token space.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>b_end</i></tt><td>
+   <td>The ending point of the block in token space.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>data</i></tt><td>
+   <td>The starting address of the data in memory.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Read_Block_Data</tt>, reads a block of data from a
+node and returns it into a contiguous memory space.
+
+<br><br>
+<em>Note:</em>
+See the section on <a href="design.html#fortran">Fortran character
+array portability</a>.
+
+<br><br>
+<a name="Write_Data"></a>
+<h3>Write the Data to a Node Having Stride Capabilities</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Write_Data"><br>
+<tt>ADF_Write_Data (ID,s_start[],s_end[],s_stride[],m_num_dims,m_dims[],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_start[],m_end[],m_stride[],data,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Write_Data</tt></b>
+    <td align=center><b><tt>ADFWRIT</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt><br>
+                  <tt>const int s_start[]</tt><br>
+                  <tt>const int s_end[]</tt><br>
+                  <tt>const int s_stride[]</tt><br>
+                  <tt>const int m_num_dims</tt><br>
+                  <tt>const int m_dims[]</tt><br>
+                  <tt>const int m_start[]</tt><br>
+                  <tt>const int m_end[]</tt><br>
+                  <tt>const int m_stride[]</tt><br>
+                  <tt>char *data</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt><br>
+                  <tt>integer s_start()</tt><br>
+                  <tt>integer s_end()</tt><br>
+                  <tt>integer s_stride()</tt><br>
+                  <tt>integer m_num_dims</tt><br>
+                  <tt>integer m_dims(m_num_dims)</tt><br>
+                  <tt>integer m_start(m_num_dims)</tt><br>
+                  <tt>integer m_end(m_num_dims)</tt><br>
+                  <tt>integer m_stride(m_num_dims)</tt><br>
+                  <tt>character*(*) data</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>s_start[]</i></tt><td>
+   <td>The starting index to use for each dimension of the array within
+       the database node (1D array; i.e., list of indices).
+       The maximum number of dimensions an array is allowed in ADF is 12.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>s_end[]</i></tt><td>
+   <td>The ending index to use for each dimension of the array within
+       the database node (1D array; i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>s_stride[]</i></tt><td>
+   <td>The stride value to use for each dimension of the array within
+       the database node (1D array; i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>m_num_dims</i></tt><td>
+   <td>The number of dimensions to use in memory.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>m_dims[]</i></tt><td>
+   <td>The dimension values to use for the array in memory (1D array;
+       i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>m_start[]</i></tt><td>
+   <td>The starting index to use for each dimension of the array in
+       memory (1D array; i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>m_end[]</i></tt><td>
+   <td>The ending index to use for each dimension of the array in
+       memory (1D array; i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>m_stride[]</i></tt><td>
+   <td>The stride value to use for each dimension of the array in
+       memory (1D array; i.e., list of indices).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>data</i></tt><td>
+   <td>The starting address of the data in memory.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Write_Data</tt>, provides general purpose write
+capabilities.
+It allows offsets and strides within both the data in memory and the
+node on disk.
+One set of integer vectors (<tt><i>s_start</i></tt>, etc.) is used to
+describe the mapping of the data within the node, and a second set of
+integer vectors (<tt><i>m_start</i></tt>, etc.) is used to describe the
+mapping of the desired data within memory.
+
+<p>
+There can be a significant performance penalty for using
+<tt>ADF_Write_Data</tt> when compared with
+<a href="#Write_All_Data"><tt>ADF_Write_All_Data</tt></a>.
+If performance is a major consideration, it is best to organize
+data to take advantage of the speed of <tt>ADF_Write_All_Data</tt>.
+
+<p>
+The data are stored in both memory and on disk in "Fortran ordering."
+That is, the first index varies the fastest.
+
+<p>
+<tt>ADF_Write_Data</tt> will not accept "negative" indexing.
+That is, it is not possible to reverse the ordering of the data from the
+node into memory.
+
+<p>
+Be careful when using
+<a href="#Read_All_Data"><tt>ADF_Read_All_Data</tt></a> to randomly
+access data that has been written using <tt>ADF_Write_Data</tt>.
+<tt>ADF_Read_All_Data</tt> takes a starting address in memory and takes
+<i>N</i> contiguous words from disk, making no assumption as to the
+order of the data.
+<tt>ADF_Write_Data</tt> assumes that the data have Fortran-like ordering
+to navigate through the data on disk and in memory.
+It assumes that the first dimension varies the fastest.
+
+<br><br>
+<em>Note:</em>
+See the section on <a href="design.html#fortran">Fortran character
+array portability</a>.
+
+<br><br>
+<u><i>Example 1</i></u>
+
+<p>
+This example uses <tt>ADF_Write_Data</tt> to perform exactly the same
+task as <a href="#Write_All_Data"><tt>ADF_Write_All_Data</tt></a>.
+<tt>ADF_Write_All_Data</tt> should be used whenever possible for
+performance reasons.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+         PARAMETER (MAXROW=10)
+         PARAMETER (MAXCOL=3)
+   C
+         CHARACTER*(MAXCHR) NODNAM,LABL
+         CHARACTER*(MAXCHR) DTYPE
+         REAL R4ARRI(MAXROW,MAXCOL)
+         REAL R4ARRO(MAXROW,MAXCOL)
+         INTEGER IDIMI(2),IDIMO(2)
+         INTEGER IDBEG(2),IDEND(2),IDINCR(2)
+         INTEGER IMBEG(2),IMEND(2),IMINCR(2)
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,CID
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+   C
+   C *** GENERATE SOME DATA
+   C
+         IDIMI(1) = MAXROW
+         IDIMI(2) = MAXCOL
+         DO 200 ICOL = 1,MAXCOL
+            DO 100 IROW = 1,MAXROW
+               R4ARRI(IROW,ICOL) = 2.0*ICOL*IROW
+     100    CONTINUE
+     200 CONTINUE
+         PRINT *,' ORIGINAL ARRAY:'
+         WRITE(*,300)((R4ARRI(I,J),J=1,MAXCOL),I=1,MAXROW)
+     300 FORMAT(3(5X,F10.2))
+   C
+   C *** GENERATE A NODE AND PUT DATA IN IT
+   C     THIS IS EXACTLY EQUIVALENT TO USING ADFWALL
+   C
+         CALL ADFCRE(RID,'NODE 1',CID,IERR)
+         CALL ADFSLB(CID,'LABEL FOR NODE 1',IERR)
+         CALL ADFPDIM(CID,'R4',2,IDIMI,IERR)
+   C
+         IDBEG(1) = 1
+         IDEND(1) = MAXROW
+         IDINCR(1) = 1
+   C
+         IDBEG(2) = 1
+         IDEND(2) = MAXCOL
+         IDINCR(2) = 1
+   C
+         IDIMO(1) = MAXROW
+         IDIMO(2) = MAXCOL
+   C
+         IMBEG(1) = 1
+         IMEND(1) = MAXROW
+         IMINCR(1) = 1
+   C
+         IMBEG(2) = 1
+         IMEND(2) = MAXCOL
+         IMINCR(2) = 1
+   C
+         CALL ADFWRIT(CID,IDBEG,IDEND,IDINCR,2,IDIMO,IMBEG,
+        X             IMEND,IMINCR,R4ARRI,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** GET INFORMATION FROM NODE
+   C
+         CALL ADFGNAM(CID,NODNAM,IERR)
+         CALL ADFGLB(CID,LABL,IERR)
+         CALL ADFGDT(CID,DTYPE,IERR)
+         CALL ADFGND(CID,NDIM,IERR)
+         CALL ADFGDV(CID,IDIMO,IERR)
+         CALL ADFRALL(CID,R4ARRO,IERR)
+         CALL ERRCHK(IERR)
+   C
+         PRINT *,' '
+         PRINT *,' NODE NAME            = ',NODNAM
+         PRINT *,' LABEL                = ',LABL
+         PRINT *,' DATA TYPE            = ',DTYPE
+         PRINT *,' NUMBER OF DIMENSIONS = ',NDIM
+         PRINT *,' DIMENSIONS           = ',IDIMO
+         PRINT *,' ADFRALL DATA:'
+         WRITE(*,300)((R4ARRO(I,J),J=1,MAXCOL),I=1,MAXROW)
+   C
+         STOP
+         END
+
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+   C
+   C *** CHECK ERROR CONDITION
+   C
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   ORIGINAL ARRAY:
+             2.00           4.00           6.00
+             4.00           8.00          12.00
+             6.00          12.00          18.00
+             8.00          16.00          24.00
+            10.00          20.00          30.00
+            12.00          24.00          36.00
+            14.00          28.00          42.00
+            16.00          32.00          48.00
+            18.00          36.00          54.00
+            20.00          40.00          60.00
+
+   NODE NAME            = NODE 1
+   LABEL                = LABEL FOR NODE 1
+   DATA TYPE            = R4
+   NUMBER OF DIMENSIONS =            2
+   DIMENSIONS           =           10           3
+   ADFRALL DATA:
+             2.00           4.00           6.00
+             4.00           8.00          12.00
+             6.00          12.00          18.00
+             8.00          16.00          24.00
+            10.00          20.00          30.00
+            12.00          24.00          36.00
+            14.00          28.00          42.00
+            16.00          32.00          48.00
+            18.00          36.00          54.00
+            20.00          40.00          60.00
+</pre>
+
+<u><i>Example 2</i></u>
+
+<p>
+This example illustrates the capability to write a full matrix to an ADF
+file and then use <tt>ADF_Write_Data</tt> to rewrite selected portions
+of the matrix with new data from a much smaller data structure.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+         PARAMETER (MAXROW=10)
+         PARAMETER (MAXCOL=3)
+   C
+         CHARACTER*(MAXCHR) NODNAM,LABL
+         CHARACTER*(MAXCHR) DTYPE
+         REAL R4ARRI(MAXROW,MAXCOL),R4VEC(MAXCOL)
+         REAL R4ARRO(MAXROW,MAXCOL)
+         INTEGER IDIMI(2),IDIMO(2),IDIMM(2)
+         INTEGER IDBEG(2),IDEND(2),IDINCR(2)
+         INTEGER IMBEG(2),IMEND(2),IMINCR(2)
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,CID
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+   C
+   C *** GENERATE SOME DATA
+   C
+         IDIMI(1) = MAXROW
+         IDIMI(2) = MAXCOL
+         DO 200 ICOL = 1,MAXCOL
+            DO 100 IROW = 1,MAXROW
+               R4ARRI(IROW,ICOL) = 2.0*ICOL*IROW
+     100    CONTINUE
+            R4VEC(ICOL) = 2.2*ICOL
+     200 CONTINUE
+         PRINT *,' ORIGINAL ARRAY:'
+         WRITE(*,300)((R4ARRI(I,J),J=1,MAXCOL),I=1,MAXROW)
+     300 FORMAT(3(5X,F10.2))
+   C
+   C *** GENERATE A NODE AND WRITE THE ARRAY IN IT
+   C
+         CALL ADFCRE(RID,'NODE 1',CID,IERR)
+         CALL ADFSLB(CID,'LABEL FOR NODE 1',IERR)
+         CALL ADFPDIM(CID,'R4',2,IDIMI,IERR)
+         CALL ADFWALL(CID,R4ARRI,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** GET INFORMATION FROM NODE (JUST TO PROVE ITS RIGHT)
+   C
+         CALL ADFGNAM(CID,NODNAM,IERR)
+         CALL ADFGLB(CID,LABL,IERR)
+         CALL ADFGDT(CID,DTYPE,IERR)
+         CALL ADFGND(CID,NDIM,IERR)
+         CALL ADFGDV(CID,IDIMO,IERR)
+         CALL ADFRALL(CID,R4ARRO,IERR)
+         CALL ERRCHK(IERR)
+   C
+         PRINT *,' '
+         PRINT *,' NODE NAME            = ',NODNAM
+         PRINT *,' LABEL                = ',LABL
+         PRINT *,' DATA TYPE            = ',DTYPE
+         PRINT *,' NUMBER OF DIMENSIONS = ',NDIM
+         PRINT *,' DIMENSIONS           = ',IDIMO
+         PRINT *,' ORIGINAL DATA ON DISK:'
+         WRITE(*,300)((R4ARRO(I,J),J=1,MAXCOL),I=1,MAXROW)
+   C
+   C *** NOW, USING A VECTOR WITH NEW DATA IN IT, SCATTER
+   C     IT INTO THE DATABASE (THIS MODIFIES THE 5TH ROW
+   C     OF THE MATRIX)
+   C
+         IDBEG(1)  = 5
+         IDEND(1)  = 5
+         IDINCR(1) = 1
+   C
+         IDBEG(2)  = 1
+         IDEND(2)  = MAXCOL
+         IDINCR(2) = 1
+   C
+         NMDIM = 1
+         IDIMM(1)  = MAXCOL
+         IMBEG(1)  = 1
+         IMEND(1)  = MAXCOL
+         IMINCR(1) = 1
+   C
+         CALL ADFWRIT(CID,IDBEG,IDEND,IDINCR,
+        X             NMDIM,IDIMM,IMBEG,IMEND,IMINCR,
+        X             R4VEC,IERR)
+         CALL ERRCHK(IERR)
+   C
+   C *** NOW PULL THE REVISED ARRAY OFF DISK AND PRINT IT
+   C
+         CALL ADFRALL(CID,R4ARRO,IERR)
+         CALL ERRCHK(IERR)
+   C
+         PRINT *,' '
+         PRINT *,' AFTER SCATTER:'
+         WRITE(*,300)((R4ARRO(I,J),J=1,MAXCOL),I=1,MAXROW)
+   C
+   STOP
+   END
+
+   C
+   C ************* SUBROUTINES ****************
+   C
+         SUBROUTINE ERRCHK(IERR)
+   C
+   C *** CHECK ERROR CONDITION
+   C
+         CHARACTER*80 MESS
+         IF (IERR .GT. 0) THEN
+            CALL ADFERR(IERR,MESS)
+            PRINT *,MESS
+            CALL ABORT('ADF ERROR')
+         ENDIF
+         RETURN
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   ORIGINAL ARRAY:
+             2.00           4.00           6.00
+             4.00           8.00          12.00
+             6.00          12.00          18.00
+             8.00          16.00          24.00
+            10.00          20.00          30.00
+            12.00          24.00          36.00
+            14.00          28.00          42.00
+            16.00          32.00          48.00
+            18.00          36.00          54.00
+            20.00          40.00          60.00
+
+   NODE NAME            = NODE 1
+   LABEL                = LABEL FOR NODE 1
+   DATA TYPE            = R4
+   NUMBER OF DIMENSIONS =            2
+   DIMENSIONS           =           10            3
+   ORIGINAL DATA ON DISK:
+             2.00           4.00           6.00
+             4.00           8.00          12.00
+             6.00          12.00          18.00
+             8.00          16.00          24.00
+            10.00          20.00          30.00
+            12.00          24.00          36.00
+            14.00          28.00          42.00
+            16.00          32.00          48.00
+            18.00          36.00          54.00
+            20.00          40.00          60.00
+   AFTER SCATTER:
+             2.00           4.00           6.00
+             4.00           8.00          12.00
+             6.00          12.00          18.00
+             8.00          16.00          24.00
+             2.20           4.40           6.60
+            12.00          24.00          36.00
+            14.00          28.00          42.00
+            16.00          32.00          48.00
+            18.00          36.00          54.00
+            20.00          40.00          60.00
+</pre>
+
+<a name="Write_All_Data"></a>
+<h3>Write All the Data to a Node</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Write_All_Data"><br>
+<tt>ADF_Write_All_Data (ID,data,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Write_All_Data</tt></b>
+    <td align=center><b><tt>ADFWALL</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt><br>
+                         <tt>const char *data</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt><br>
+                         <tt>character*(*) data</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>data</i></tt><td>
+   <td>The starting address of the data in memory.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Write_All_Data</tt>, writes all data to a node.
+It copies all the node's data from a contiguous memory space into a
+contiguous disk space.
+
+<p>
+The disk performance of <tt>ADF_Write_All_Data</tt> is very good.
+The routine issues a single write command to the system for the entire
+data set; therefore, it is as fast as the system can put the data on
+disk.
+
+<br><br>
+<em>Note:</em>
+See the section on <a href="design.html#fortran">Fortran character
+array portability</a>.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+See the <a href="subs_query.html#ex:Get_Data_Type">example for
+<tt>ADF_Get_Data_Type</tt></a>.
+
+<a name="Write_Block_Data"></a>
+<h3>Write a Contiguous Block of Data To a Node</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Write_Block_Data"><br>
+<tt>ADF_Write_Block_Data (ID,b_start,b_end,data,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Write_Block_Data</tt></b>
+    <td align=center><b><tt>ADFWBLK</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt><br>
+                         <tt>const long b_start</tt><br>
+                         <tt>const long b_end</tt><br>
+                         <tt>char *data</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt><br>
+                         <tt>integer b_start</tt><br>
+                         <tt>integer b_end</tt><br>
+                         <tt>character*(*) data</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>b_start</i></tt><td>
+   <td>The starting point of the block in token space.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>b_end</i></tt><td>
+   <td>The ending point of the block in token space.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>data</i></tt><td>
+   <td>The starting address of the data in memory.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Write_Block_Data</tt>, writes a contiguous block
+of data from memory to a node.
+
+<br><br>
+<em>Note:</em>
+See the section on <a href="design.html#fortran">Fortran character
+array portability</a>.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 9 Oct 2002
+
+</body>
+</html>

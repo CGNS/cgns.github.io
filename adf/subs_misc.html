@@ -1,0 +1,561 @@
+<!-- ADF User's Guide - ADF Library Of Subroutines -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - ADF Library Of Subroutines </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<span class=nav><b>Miscellaneous&nbsp;Routines</b></span>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Miscellaneous Routines</h2>
+
+<ul>
+<li> <tt><a href="#Flush_to_Disk">ADF_Flush_to_Disk</a></tt> -
+     Flush the data to a disk
+<li> <tt><a href="#Database_Garbage_Collection">ADF_Database_Garbage_Collection</a></tt> -
+     Garbage collection
+<li> <tt><a href="#Error_Message">ADF_Error_Message</a></tt> -
+     Return an error message
+<li> <tt><a href="#Set_Error_State">ADF_Set_Error_State</a></tt> -
+     Set the error state
+<li> <tt><a href="#Get_Error_State">ADF_Get_Error_State</a></tt> -
+     Get the error state
+<li> <tt><a href="#Database_Version">ADF_Database_Version</a></tt> -
+     Get the ADF file version ID
+<li> <tt><a href="#Library_Version">ADF_Library_Version</a></tt> -
+     Get the ADF library version ID
+</ul>
+
+<a name="Flush_to_Disk"></a>
+<h3>Flush the Data to the Disk</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Flush_to_Disk"><br>
+<tt>ADF_Flush_to_Disk (ID,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Flush_to_Disk</tt></b>
+    <td align=center><b><tt>ADFFTD</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Flush_to_Disk</tt>, flushes data to disk; it is
+used to force any modified information to be flushed to the physical
+disk.
+This ensures that data will not be lost if a program aborts.
+The control of when to flush all data to disk is provided to the user
+rather than flushing the data every time it is modified, which would
+result in reduced performance.
+
+<a name="Database_Garbage_Collection"></a>
+<h3>Redistribute the Data Within a File</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Database_Garbage_Collection"><br>
+<tt>ADF_Database_Garbage_Collection (ID,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Database_Garbage_Collection</tt></b>
+    <td align=center><b><tt>ADFDGC</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Database_Garbage_Collection</tt>, redistributes
+the data within a file to use free space within the file.
+This free space is not located at the end of the file, and it may have
+been created during node deletions or other file operations.
+Neighboring free spaces will be merged.
+
+<br><br>
+<em>Note:</em> For better file compaction, a utility could be written to
+copy an ADF file into a newly created ADF file without wasted space.
+
+<br><br>
+<em>Note:</em> This routine is currently not implemented.
+
+<a name="Error_Message"></a>
+<h3>Get a Description of the Error</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Error_Message"><br>
+<tt>ADF_Error_Message (error_code,error_string)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Error_Message</tt></b>
+    <td align=center><b><tt>ADFERR</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const int error_code</tt>
+    <td width=41% nowrap><tt>integer error_code</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>char *error_string</tt>
+    <td width=41% nowrap><tt>character*(*) error_string</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>error_code</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The <a href="errors.html">error return code</a> from
+       any ADF routine.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_string</i></tt><td>
+   <td>An 80-byte description for the specified error.
+       If <tt>ADF_Error_Message</tt> cannot find a message corresponding
+       to the input <tt>error_code</tt>, the error string "<tt>Unknown
+       error#<i>nnn</i></tt>" will be returned.
+</table>
+
+<p>
+This routine, <tt>ADF_Error_Message</tt>, returns a textual error
+message when given the error return code from any ADF routine.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+See the <a href="#ex:Set_Error_State">example for
+<tt>ADF_Set_Error_State</tt></a>.
+
+<a name="Set_Error_State"></a>
+<h3>Set the Error State Flag</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Set_Error_State"><br>
+<tt>ADF_Set_Error_State (error_state,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Set_Error_State</tt></b>
+    <td align=center><b><tt>ADFSES</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const int error_state</tt>
+    <td width=41% nowrap><tt>integer error_state</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>error_state</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Flag specifying the action to take when an error occurs; 0 to
+       return the error code and continue, 1 to abort.
+       The default is 0.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Set_Error_State</tt>, sets the error state flag.
+This flag controls the error handling convention for all ADF routines:
+either return the error codes or print an error message and abort the
+program on error.
+The flag covers all open ADF files associated with the current program,
+and it is not done on a file-by-file basis.
+The default state for the ADF interface is to return error codes and not
+abort.
+
+<a name="ex:Set_Error_State"></a>
+<br><br>
+<u><i>Example</i></u>
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) NODNAM
+         CHARACTER*(80) MESS
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,CID1,CID2
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+   C
+   C *** CREATE 2 NODES
+   C
+         CALL ADFCRE(RID,'NODE 1',CID1,IERR)
+         CALL ADFCRE(RID,'NODE 2',CID2,IERR)
+   C
+         CALL ADFGES(IDEFS,IERR)
+         PRINT *,' DEFAULT ERROR STATE = ',IDEFS
+   C
+   C *** REQUEST NODE NAME FOR A NODE THAT DOES NOT EXIST
+   C
+         PRINT *,' *** ON ERROR CONTINUE'
+         CALL ADFGNAM(CID3,NODNAM,IERR)
+         CALL ADFERR(IERR,MESS)
+         PRINT *,'     ADF ERROR OCURRED, MESSAGE: ',MESS
+         PRINT *,' '
+   C
+   C *** SET ABORT ON ERROR FLAG
+   C
+         INEWS = 1
+         CALL ADFSES(INEWS,IERR)
+         PRINT *,' *** ABORT ON ERROR SET'
+   C
+   C *** REQUEST NODE NAME FOR A NODE THAT DOES NOT EXIST
+   C
+         CALL ADFGNAM(CID3,NODNAM,IERR)
+         PRINT *,' HELLO WORLD'
+   C
+         STOP
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   DEFAULT ERROR STATE =            0
+     *** ON ERROR CONTINUE
+         ADF ERROR OCURRED, MESSAGE:
+   ADF 10: ADF file index out of legal range.
+
+     *** ABORT ON ERROR SET
+   ADF 10: ADF file index out of legal range.
+   ADF Aborted: Exiting
+</pre>
+
+<a name="Get_Error_State"></a>
+<h3>Get the Error State</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Get_Error_State"><br>
+<tt>ADF_Get_Error_State (error_state,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Get_Error_State</tt></b>
+    <td align=center><b><tt>ADFGES</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap>&nbsp;
+    <td width=41% nowrap>&nbsp;
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_state</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_state</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>error_state</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Flag specifying the action to take when an error occurs; 0 to
+       return the error code and continue, 1 to abort.
+       The default is 0.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Get_Error_State</tt>, returns the currently set
+error state.
+
+<br><br>
+<u><i>Example</i></u>
+
+<pre>
+   PROGRAM TEST
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+   C
+   C *** CHECK THE DEFAULT ERROR STATE
+   C
+         CALL ADFGES(IDEFS,IERR)
+   C
+   C *** SET THE ERROR STATE TO ABORT ON ERROR
+   C
+         CALL ADFSES(1,IERR)
+   C
+   C *** MAKE SURE STATE WAS SET AS DESIRED
+   C
+         CALL ADFGES(NDEFS,IERR)
+   C
+   C *** PRINT OUT RESULTS
+   C
+         PRINT *,' DEFAULT ERROR STATE = ',IDEFS
+         PRINT *,' RESET ERROR STATE   = ',NDEFS
+   C
+         STOP
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   DEFAULT ERROR STATE =            0
+   RESET ERROR STATE   =            1
+</pre>
+
+<a name="Database_Version"></a>
+<h3>Get the Version Number of the ADF Library
+That Created the ADF Database</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Database_Version"><br>
+<tt>ADF_Database_Version (root_ID,version,creation_date,modification_date,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Database_Version</tt></b>
+    <td align=center><b><tt>ADFDVER</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>constant double root_ID</tt>
+    <td width=41% nowrap><tt>real*8 root_ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>char *version</tt><br>
+                         <tt>char *creation_date</tt><br>
+                         <tt>char *modification_date</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>character*(*)version</tt><br>
+                         <tt>character*(*) creation_date</tt><br>
+                         <tt>character*(*) modification_date</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>root_ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the root node in the ADF file.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>version</i></tt><td>
+   <td>A 32-byte character string containing the version ID.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>creation_date</i></tt><td>
+   <td>A 32-byte character string containing the creation date of the file.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>modification_date</i></tt><td>
+   <td>A 32-byte character string containing the last modification date of
+       the file.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Database_Version</tt>, returns the version number
+of the ADF library that created an ADF database, the file creation date
+and time, and the last modification date and time.
+A modified ADF database will take on the version ID of the current ADF
+library version if it is higher than the version indicated in the file.
+On return, "version" contains a six-character string.
+The meaning of the characters are described in detail in the section
+<a href="versions.html">"ADF File Version Control Numbering"</a>.
+
+<a name="ex:Database_Version"></a>
+<br><br>
+<u><i>Example</i></u>
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) NODNAM
+         CHARACTER*(MAXCHR) CVER,LVER,CDATE,MDATE
+         CHARACTER*(80) MESS
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,CID1,CID2
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+   C
+   C *** CREATE 2 NODES
+   C
+         CALL ADFCRE(RID,'NODE 1',CID1,IERR)
+         CALL ADFCRE(RID,'NODE 2',CID2,IERR)
+   C
+         CALL ADFDVER(RID,CVER,CDATE,MDATE,IERR)
+         CALL ADFLVER(LVER,IERR)
+         PRINT *,' VERSION INFORMATION:'
+         PRINT *,'    ADF LIBRARY USED FOR CREATION: ',CVER
+         PRINT *,'    CREATION DATE                : ',CDATE
+         PRINT *,'    MODIFICATION DATE            : ',MDATE
+         PRINT *,'    ADF LIBRARY BEING USED       : ',LVER
+   C
+         STOP
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   VERSION INFORMATION:
+      ADF LIBRARY USED FOR CREATION: ADF Database Version A01007
+      CREATION DATE                : Thu Apr 24 15:41:55 1997
+      MODIFICATION DATE            : Thu Apr 24 15:41:55 1997
+      ADF LIBRARY BEING USED       : ADF Library  Version C01
+</pre>
+
+<a name="Library_Version"></a>
+<h3>Get the Version Number of the ADF Library
+That the Application Program is Currently Using</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Library_Version"><br>
+<tt>ADF_Library_Version (version,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><b><tt>ADF_Library_Version</tt></b>
+    <td align=center><b><tt>ADFLVER</tt></b>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap>&nbsp;
+    <td width=41% nowrap>&nbsp;
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>char *version</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>character*(*) version</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>version</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>A 32-byte character string containing the ADF library version ID
+       information.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Library_Version</tt>, gets the ADF library version
+number.
+This is the version number of the ADF library that the application
+program is currently using.
+For this routine, the format of the version ID is "<tt>ADF Library
+Version A<i>XXXxxx</i></tt>".
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+See the <a href="#ex:Database_Version">example for
+<tt>ADF_Database_Version</tt></a>.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 9 Oct 2002
+
+</body>
+</html>

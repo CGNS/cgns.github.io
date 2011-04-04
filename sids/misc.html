@@ -52,6 +52,7 @@
 <li> <a href="#Family">Family Data Structure Definition: <tt>Family_t</tt></a>
 <li> <a href="#GeometryReference">Geometry Reference Structure Definition: <tt>GeometryReference_t</tt></a>
 <li> <a href="#FamilyBC">Family Boundary Condition Structure Definition: <tt>FamilyBC_t</tt></a>
+<li> <a href="#FamilyBCDataSet">Family Boundary Condition Data Set Structure Definition: <tt>FamilyBCDataSet_t</tt></a>
 <li> <a href="#UserDefinedData">User-Defined Data Structure Definition: <tt>UserDefinedData_t</tt></a>
 <li> <a href="#Gravity">Gravity Data Structure Definition: <tt>Gravity_t</tt></a>
 </ul>
@@ -384,12 +385,16 @@ in the data arrays.
 All data contained within this structure must be defined at the same
 grid location and have the same amount of rind-point data.
 <pre>
-  DiscreteData_t&lt; int IndexDimension, int VertexSize[IndexDimension], 
+  DiscreteData_t&lt; int CellDimension, int IndexDimension,
+                  int VertexSize[IndexDimension],
                   int CellSize[IndexDimension] &gt; :=
     {
     List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
 
     GridLocation_t GridLocation ;                                      (o/d)
+
+    IndexRange&lt;IndexDimension&gt; PointRange ;                            (o)
+    IndexArray&lt;IndexDimension, ListLength[], int&gt; PointList ;          (o)
 
     Rind_t&lt;IndexDimension&gt; Rind ;                                      (o/d)
 
@@ -415,31 +420,34 @@ grid location and have the same amount of rind-point data.
      Legitimate names must be unique within a given instance of
      <tt>DiscreteData_t</tt> and shall not include the names
      <tt>DataClass</tt>, <tt>DimensionalUnits</tt>, <tt>GridLocation</tt>,
-     or <tt>Rind</tt>.
+     <tt>PointList</tt>, <tt>PointRange</tt>, or <tt>Rind</tt>.
 <li> There are no required fields for <tt>DiscreteData_t</tt>.
      <a href="build.html#GridLocation"><tt>GridLocation</tt></a> has a
      default of <tt>Vertex</tt> if absent.
      <a href="build.html#Rind"><tt>Rind</tt></a> also has a default if
      absent; the default is equivalent to having an instance of
      <tt>Rind</tt> whose <tt>RindPlanes</tt> array contains all zeros.
+<li> Both of the fields <tt>PointRange</tt> and <tt>PointList</tt> are optional.
+     Only one of these two fields may be specified.
 <li> The structure parameter <tt>DataType</tt> must be consistent with the
      data stored in the <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
      entities.
 <li> For unstructured zones
      <a href="build.html#GridLocation"><tt>GridLocation</tt></a>
      options are limited to <tt>Vertex</tt> or <tt>CellCenter</tt>,
-     meaning that solution data may only be expressed at these
-     locations.
-     The data arrays must follow the node ordering if
-     <tt>GridLocation&nbsp;=&nbsp;Vertex</tt>, and the element ordering
-     if <tt>GridLocation&nbsp;=&nbsp;CellCenter</tt>.
+     unless one of <tt>PointRange</tt> or <tt>PointList</tt> is present.
+<li> Indexing of data within the
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a> structures,
+     must be consistent with the associated numbering of vertices or elements.
 </ol>
 
 <p>
-<tt>DiscreteData_t</tt> requires three structure parameters;
+<tt>DiscreteData_t</tt> requires four structure parameters;
+<tt>CellDimension</tt> identifies the dimensionality of cells or elements,
 <tt>IndexDimension</tt> identifies the dimensionality of the grid size
 arrays, and <tt>VertexSize</tt> and <tt>CellSize</tt> are the number of
 core vertices and cells, respectively, in each index direction.
+For unstructured zones, <tt>IndexDimension</tt> is always 1.
 
 <p>
 The arrays of discrete data are stored in the list of
@@ -450,6 +458,68 @@ absent, the data is assumed to coincide with grid vertices (i.e.,
 <tt>GridLocation = Vertex</tt>).
 All data within a given instance of <tt>DiscreteData_t</tt> must reside at the
 same grid location.
+
+<p>
+For structured grids, the value of <tt>GridLocation</tt> alone specifies the
+location and indexing of the discrete. Vertices are explicity indexed.
+Cell centers and face centers are indexed using the minimum of the connecting
+vertex indices, as described in the section
+<a href="conv.html#structgrid">Structured Grid Notation and Indexing Conventions</a>.
+
+<p>
+For unstructured grids, the value of <tt>GridLocation</tt> alone specifies
+location and indexing of discrete data only for vertex and cell-centered data.
+The reason for this is that element-based grid connectivity provided in the
+<a href="#Elements"><tt>Elements_t</tt></a> data structures explicitly indexes only
+vertices and cells. For data stored at alternate grid locations (e.g. edges),
+additional connectivity information is needed. This is provided by the optional
+fields <tt>PointRange</tt> and <tt>PointList</tt>; these refer to vertices,
+edges, faces or cell centers, depending on the values of <tt>CellDimension</tt>
+and <tt>GridLocation</tt>. The following table shows these relations.
+
+<center>
+<table cellspacing=0 cellpadding=3 border>
+<tr align=center>
+  <th rowspan=2>CellDimension</th>
+  <th colspan=4>GridLocation</th>
+</tr><tr align=center>
+  <th>Vertex</th>
+  <th>EdgeCenter</th>
+  <th>*FaceCenter</th>
+  <th>CellCenter</th>
+</tr><tr align=center>
+  <td>1</td>
+  <td>vertices</td>
+  <td>-</td>
+  <td>-</td>
+  <td>cells (line elements)</td>
+</tr><tr align=center>
+  <td>2</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>-</td>
+  <td>cells (area elements)</td>
+</tr><tr align=center>
+  <td>3</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>faces</td>
+  <td>cells (volume elements)</td>
+</tr>
+</table>
+</center>
+
+<p>
+<i>Note</i>: In the table, *FaceCenter stands for the possible types:
+<tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, <tt>KFaceCenter</tt>,
+or <tt>FaceCenter</tt>.
+
+<p>
+Although intended for edge or face-based discrete data for unstructured grids,
+the fields <tt>PointRange/List</tt> may also be used to (redundantly) index vertex
+and cell-centered data. In all cases, indexing of flow solution data corresponds
+to the element numbering as defined in the <a href="#Elements"><tt>Elements_t</tt></a>
+data structures.
 
 <p>
 <a href="build.html#Rind"><tt>Rind</tt></a> is an optional field
@@ -464,7 +534,7 @@ They are not required to contain the same number of rind planes or
 elements.
 Also, the location of any flow-solution rind points is assumed to be
 consistent with the location of the core flow solution points (e.g.,
-if <tt><a href="build.html#GridLocation">GridLocation</a> = CellCenter</tt>,
+if <tt>GridLocation = CellCenter</tt>,
 rind points are assumed to be located at fictitious cell centers).
 
 <p>
@@ -485,12 +555,30 @@ data structure allows arbitrary user-defined data to be stored in
 restrictions or implicit meanings imposed on these node types at other
 node locations.
 
+<h4>FUNCTION <tt>ListLength[]</tt>:</h4>
+
+return value: <tt>int</tt>
+<br>
+dependencies: <tt>PointList</tt>, <tt>PointRange[]</tt>
+
+<p>
+<tt>DiscreteData_t</tt> requires the structure function <tt>ListLength</tt>,
+which is used to specify the number of entities (e.g. vertices) corresponding
+to a given <tt>PointRange</tt> or <tt>PointList</tt>. If <tt>PointRange</tt> is
+specified, then <tt>ListLength</tt> is obtained from the number of points
+(inclusive) between the beginning and ending indices of <tt>PointRange</tt>.
+If <tt>PointList</tt> is specified, then <tt>ListLength</tt> is the number of
+indices in the list of points. In this situation, <tt>ListLength</tt> becomes
+a user input along with the indices of the list <tt>PointList</tt>.
+By <i>user</i> we mean the application code that is generating the CGNS
+database.
+
 <h4>FUNCTION <tt>DataSize[]</tt>:</h4>
 
 return value: one-dimensional <tt>int</tt> array of length <tt>IndexDimension</tt>
 <br>
 dependencies: <tt>IndexDimension</tt>, <tt>VertexSize[]</tt>, <tt>CellSize[]</tt>,
-              <tt>GridLocation</tt>, <tt>Rind</tt>
+              <tt>GridLocation</tt>, <tt>Rind</tt>, <tt>ListLength[]</tt>
 
 <p>
 The function <tt>DataSize[]</tt> is the size of discrete-data arrays.
@@ -751,22 +839,17 @@ volume properties as well.
     {
     BCType_t BCType;                                                   (r)
 
-    List( BCDataSet_t&lt;ListLength&gt; BCDataSet1 ... BCDataSetN ) ;        (o)
+    List( FamilyBCDataSet_t&lt;ListLength&gt; BCDataSet1 ... BCDataSetN ) ;  (o)
     } ;
 </pre>
 
 <i>Notes</i>
 
 <ol>
-<li> Default names for the <a href="bc.html#BCDataSet"><tt>BCDataSet_t</tt></a>
+<li> Default names for the <a href="#FamilyBCDataSet"><tt>FamilyBCDataSet_t</tt></a>
      list are as shown; users may choose other legitimate names.
      Legitimate names must be unique within a given instance
      of <tt>FamilyBC_t</tt> and shall not include the name <tt>BCType</tt>.
-<li> When <a href="bc.html#BCDataSet"><tt>BCDataSet_t</tt></a>
-     structures are used to define boundary conditions for a CFD
-     family, the use of <tt>GridLocation</tt>, <tt>PointRange</tt>, and
-     <tt>PointList</tt> in the <tt>BCDataSet_t</tt> structures is not
-     allowed.
 </ol>
 
 <p>
@@ -780,7 +863,7 @@ CFD family.
 <p>
 The <tt>FamilyBC_t</tt> structure provides for a list of
 boundary-condition data sets.
-In general, the proper <a href="bc.html#BCDataSet"><tt>BCDataSet_t</tt></a>
+In general, the proper <a href="#FamilyBCDataSet"><tt>FamilyBCDataSet_t</tt></a>
 instance to impose on the CFD family is determined by the
 <a href="bc.html#t:BCType_assoc"><tt>BCType</tt> association table</a>.
 The mechanics of determining the proper data set to impose is described
@@ -791,15 +874,96 @@ Condition Data Sets</a>.
 For a few boundary conditions, such as a symmetry plane or polar
 singularity, the value of <a href="bc.html#BCType"><tt>BCType</tt></a>
 completely describes the equations to impose, and no instances of
-<a href="bc.html#BCDataSet"><tt>BCDataSet_t</tt></a> are needed.
+<a href="#FamilyBCDataSet"><tt>FamilyBCDataSet_t</tt></a> are needed.
 For "simple" boundary conditions, where a single set of Dirichlet and/or
-Neumann data is applied, a single <tt>BCDataSet_t</tt> will likely appear
+Neumann data is applied, a single <tt>FamilyBCDataSet_t</tt> will likely appear
 (although this is not a requirement).
 For "compound" boundary conditions, where the equations to impose
 are dependent on local flow conditions, several instances of
-<tt>BCDataSet_t</tt> will likely appear; the procedure for choosing
+<tt>FamilyBCDataSet_t</tt> will likely appear; the procedure for choosing
 the proper data set is more complex as described in the section
 <a href="bc.html#BCType_assoc">Matching Boundary Condition Data Sets</a>.
+
+<a name="FamilyBCDataSet"></a>
+<h3>Family Boundary Condition Data Set Structure Definition: <tt>FamilyBCDataSet_t</tt></h3>
+
+<p>
+<tt>FamilyBCDataSet_t</tt> contains Dirichlet and Neumann data for a single set
+of boundary-condition equations. Its intended use is for simple boundary-condition types,
+where the equations imposed do not depend on local flow conditions.
+
+<pre>
+  FamilyBCDataSet_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                  (o)
+
+    BCTypeSimple_t BCTypeSimple ;                                       (r)
+
+    BCData_t<1> DirichletData ;                                         (o)
+    BCData_t<1> NeumannData ;                                           (o)
+
+    ReferenceState_t ReferenceState ;                                   (o)
+
+    DataClass_t DataClass ;                                             (o)
+
+    DimensionalUnits_t DimensionalUnits ;                               (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;   (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a
+     given instance of <tt>FamilyBCDataSet_t</tt> and shall not include the names
+     <tt>BCTypeSimple</tt>, <tt>DataClass</tt>, <tt>DimensionalUnits</tt>,
+     <tt>DirichletData</tt>, <tt>NeumannData</tt> or <tt>ReferenceState</tt>.
+<li> <tt>BCTypeSimple</tt> is the only required field. All other fields are optional.
+</ol>
+
+<p>
+<a href="bc.html#BCType"><tt>BCTypeSimple</tt></a> specifies the boundary-condition type,
+which gives general information on the boundary-condition equations to be enforced.
+<tt>BCTypeSimple</tt> is also used for matching boundary condition data sets as discussed
+in the section <a href="bc.html#BCType_assoc">Matching Boundary Condition Data Sets</a>.
+
+<p>
+Boundary-condition data is separated by equation type into Dirichlet and Neumann conditions.
+Dirichlet boundary conditions impose the value of the given variables, whereas Neumann boundary
+conditions impose the normal derivative of the given variables. The mechanics of specifying Dirichlet
+and Neumann data for boundary conditions is covered in section
+<a href="bc.html#BC_specdata">Boundary Condition Specification Data</a>.
+
+<p>
+The substructures <tt>DirichletData</tt> and <tt>NeumannData</tt> contain boundary-condition data
+defined as globally constant over the family.
+
+<p>
+Reference quantities applicable to the set of boundary-condition data are contained in the
+<a href="#ReferenceState"><tt>ReferenceState</tt></a> structure.
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the default for the class of
+data contained in the boundary condition data. If the boundary conditions contain dimensional data,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> may be
+used to describe the system of dimensional units employed. If present, these three entities take
+precedence of all corresponding entities at higher levels of the hierarchy,
+following the standard <a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a> data structure allows arbitrary
+user-defined data to be stored in <tt>Descriptor_t</tt> and <tt>DataArray_t</tt>
+children without the restrictions or implicit meanings imposed on these
+node types at other node locations.
+
+<p>
+Note that <tt>FamilyBCDataSet_t</tt> is similar to the data structure
+<a href="bc.html#BCDataSet"><tt>BCDataSet_t</tt></a>. The
+primary difference is that <tt>FamilyBCDataSet_t</tt> only allows for globally
+constant Dirichlet and Neumann data.
 
 <a name="UserDefinedData"></a>
 <h3>User-Defined Data Structure Definition: <tt>UserDefinedData_t</tt></h3>

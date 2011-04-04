@@ -265,11 +265,12 @@ the boundary-condition data.
 All boundary-condition information pertaining to a given zone is
 contained in the <tt>ZoneBC_t</tt> structure.
 <pre>
-  ZoneBC_t&lt; int IndexDimension, int PhysicalDimension &gt; :=
+  ZoneBC_t&lt; int CellDimension, int IndexDimension, int PhysicalDimension &gt; :=
     {
     List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
 
-    List( BC_t&lt;IndexDimension, int PhysicalDimension&gt; BC1 ... BCN ) ;  (o)
+    List( BC_t&lt;CellDimension, IndexDimension, int PhysicalDimension&gt;
+          BC1 ... BCN ) ;                                              (o)
 
     ReferenceState_t ReferenceState ;                                  (o)
 
@@ -297,7 +298,7 @@ contained in the <tt>ZoneBC_t</tt> structure.
 </ol>
 
 <p>
-<tt>ZoneBC_t</tt> requires two structure parameters,
+<tt>ZoneBC_t</tt> requires three structure parameters, <tt>CellDimension</tt>,
 <tt>IndexDimension</tt> and <tt>PhysicalDimension</tt>, which are passed
 onto all <a href="#BC"><tt>BC_t</tt></a> substructures.
 
@@ -367,7 +368,7 @@ The structure also contains information describing the normal vector to
 the BC surface patch.
 
 <pre>
-  BC_t&lt; int IndexDimension, int PhysicalDimension &gt; :=
+  BC_t&lt; int CellDimension, int IndexDimension, int PhysicalDimension &gt; :=
     {
     List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
 
@@ -375,17 +376,16 @@ the BC surface patch.
 
     GridLocation_t GridLocation ;                                      (o/d)
 
-    IndexRange_t&lt;IndexDimension&gt; PointRange ;                          (r:o:o:o)
-    IndexArray_t&lt;IndexDimension, ListLength, int&gt; PointList ;          (o:r:o:o)
-    IndexRange_t&lt;IndexDimension&gt; ElementRange ;                        (o:o:r:o)
-    IndexArray_t&lt;IndexDimension, ListLength, int&gt; ElementList ;        (o:o:o:r)
+    IndexRange_t&lt;IndexDimension&gt; PointRange ;                          (r:o)
+    IndexArray_t&lt;IndexDimension, ListLength[], int&gt; PointList ;        (o:r)
 
     int[IndexDimension] InwardNormalIndex ;                            (o)
 
-    IndexArray_t&lt;PhysicalDimension, ListLength, real&gt;
+    IndexArray_t&lt;PhysicalDimension, ListLength[], real&gt;
        InwardNormalList ;                                              (o)
 
-    List( BCDataSet_t&lt;ListLength&gt; BCDataSet1 ... BCDataSetN ) ;        (o)
+    List( BCDataSet_t&lt;CellDimension, IndexDimension, ListLength[], GridLocation&gt;
+          BCDataSet1 ... BCDataSetN ) ;                                (o)
 
     BCProperty_t BCProperty ;                                          (o)
 
@@ -406,7 +406,7 @@ the BC surface patch.
 <i>Notes</i>
 
 <ol>
-<li> Default names for the 
+<li> Default names for the
      <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
      <a href="#BCDataSet"><tt>BCDataSet_t</tt></a>, and
      <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
@@ -414,61 +414,18 @@ the BC surface patch.
      Legitimate names must be unique within a given instance of
      <tt>BC_t</tt> and shall not include the names <tt>BCProperty</tt>,
      <tt>BCType</tt>, <tt>DataClass</tt>, <tt>DimensionalUnits</tt>,
-     <tt>ElementList</tt>, <tt>ElementRange</tt>, <tt>FamilyName</tt>,
-     <tt>GridLocation</tt>, <tt>InwardNormalIndex</tt>,
+     <tt>FamilyName</tt>, <tt>GridLocation</tt>, <tt>InwardNormalIndex</tt>,
      <tt>InwardNormalList</tt>, <tt>Ordinal</tt>, <tt>PointList</tt>,
      <tt>PointRange</tt>, or <tt>ReferenceState</tt>.
-<li> The patch on which the boundary condition is to be
-     applied is specified by one of <tt>PointRange</tt>, <tt>PointList</tt>,
-     <tt>ElementRange</tt>, or <tt>ElementList</tt>.
-     Only one of these may be specified.
-<li> <tt>PointRange</tt> and <tt>PointList</tt> refer to either vertices
-     or cell faces, depending on the value of
-     <a href="build.html#GridLocation"><tt>GridLocation</tt></a>.
-     <tt>GridLocation</tt> may be set to <tt>Vertex</tt>,
-     <tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, <tt>KFaceCenter</tt>,
-     or <tt>FaceCenter</tt>.
-     If <tt>GridLocation</tt> is absent, then its default value is
-     <tt>Vertex</tt>.
-
-     <p>
-     When <a href="build.html#GridLocation"><tt>GridLocation</tt></a>
-     is set to <tt>Vertex</tt>, then <tt>PointList</tt> or
-     <tt>PointRange</tt> refer to node indices, for both structured and
-     unstructured grids.
-     These node indices define the BC patch.
-     In particular, it should be noted that these points can be
-     interpreted in one of two ways - the finite-difference sense and
-     the finite-volume sense.
-     In the finite-difference sense, the points are defined as specific
-     point locations at which the BC patch is enforced.
-     In the finite-volume sense, the points define the boundary
-     surrounding the BC patch region; thus, the indices are used
-     to define the logical region in index-space within which the
-     particular BC patch is defined.
-     This latter case means that the edges of the BC patches may be
-     multiply defined, but the areas which are enclosed are unique.
-     There is no mechanism currently included in this standard to
-     differentiate between these two interpretations.
-     Both are allowed.
-
-     <p>
-     When <tt>GridLocation</tt> is set to <tt>FaceCenter</tt>, then
-     <tt>PointList</tt> or <tt>PointRange</tt> refer to face elements.
-     Face elements are indexed using different methods depending if the
-     zone is structured or unstructured.
-     For a structured zone, face elements are indexed using the minimum
-     of the connecting vertex indices, as described in the section
-     <a href="conv.html#structgrid">Structured Grid Notation and
-     Indexing Conventions</a>.
-     For an unstructured zone, face elements are indexed using their
-     element numbering, as defined in the
-     <a href="gridflow.html#Elements"><tt>Elements_t</tt></a> data
-     structures.
-<li> <tt>ElementRange</tt> and <tt>ElementList</tt> always refer to
-     cell faces, and
-     <a href="build.html#GridLocation"><tt>GridLocation</tt></a> is
-     ignored.
+<li> <a href="build.html#GridLocation"><tt>GridLocation</tt></a> is optional;
+     if absent its default value is <tt>Vertex</tt>.
+     For 2-D grids (<tt>CellDimension = 2</tt>), <tt>GridLocation</tt> may take
+     the additional value of <tt>EdgeCenter</tt>.
+     For 3-D grids (<tt>CellDimension = 3</tt>), <tt>GridLocation</tt> may take
+     the additional values of <tt>EdgeCenter</tt>, <tt>FaceCenter</tt>,
+     <tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, or <tt>KFaceCenter</tt>.
+<li> One of <tt>PointRange</tt> or <tt>PointList</tt> must be specified but not
+     both. They must define a face subrange of the zone.
 <li> <tt>InwardNormalIndex</tt> is only an option for structured grids.
      For unstructured grid boundaries, it should not be used.
      <tt>InwardNormalIndex</tt> may have only one nonzero element, whose
@@ -477,20 +434,13 @@ the BC surface patch.
 <li> <tt>InwardNormalList</tt> contains a list of vectors normal to the
      BC patch pointing into the interior of the zone.
      It is a function of <tt>PhysicalDimension</tt> and
-     <a href="#ListLength"><tt>ListLength</tt></a>.
+     <a href="#ListLength"><tt>ListLength[]</tt></a>.
      The vectors are located at the vertices of the BC patch when
-     <tt>PointRange</tt> or <tt>PointList</tt> is used with
-     <a href="build.html#GridLocation"><tt>GridLocation</tt></a> set
-     to <tt>Vertex</tt>.
-     They are located at cell-face midpoints when <tt>PointRange</tt>
-     or <tt>PointList</tt> is used with
-     <a href="build.html#GridLocation"><tt>GridLocation</tt></a> set
-     to <tt>FaceCenter</tt> (or <tt>IFaceCenter</tt>, etc.), or when
-     <tt>ElementRange</tt> or <tt>ElementList</tt> is used.
+     <a href="build.html#GridLocation"><tt>GridLocation</tt></a> is set
+     to <tt>Vertex</tt>. Otherwise, they are located at edge/face midpoints.
      The vectors are not required to have unit magnitude.
-<li> If a range (<tt>PointRange</tt> or <tt>ElementRange</tt>) and
-     <tt>InwardNormalList</tt> are specified, an ordering
-     convention is needed for indices on the BC patch.
+<li> If <tt>PointRange</tt> and <tt>InwardNormalList</tt> are specified,
+     an ordering  convention is needed for indices on the BC patch.
      An ordering convention is also needed if a range is specified and
      local data is present in the
      <a href="#BCDataSet"><tt>BCDataSet_t</tt></a> substructures.
@@ -503,10 +453,70 @@ type, which gives general information on the boundary-condition
 equations to be enforced.
 
 <p>
-The BC patch may be specified by <tt>PointRange</tt> or
-<tt>ElementRange</tt> if it constitutes a logically rectangular region.
-In all other cases, <tt>PointList</tt> or <tt>ElementList</tt> should be
-used to list the vertices or cell faces making up the BC patch.
+The BC patch may be specified by <tt>PointRange</tt> if it constitutes a
+logically rectangular region. In all other cases, <tt>PointList</tt> should be
+used to list the vertices or cell edges/faces making up the BC patch.
+When <tt>GridLocation</tt> is set to <tt>Vertex</tt>, then <tt>PointList</tt>
+or <tt>PointRange</tt> refer to vertex indices, for both structured and
+unstructured grids. When <tt>GridLocation</tt> is set to <tt>EdgeCenter</tt>,
+then <tt>PointRange/List</tt> refer to edge elements. For 3-D grids, when
+<tt>GridLocation</tt> is set to <tt>FaceCenter</tt>, <tt>IFaceCenter</tt>, etc.,
+then <tt>PointRange/List</tt> refer to face elements. The interpretation of
+<tt>PointRange/List</tt> is summarized in the table below:
+
+<center>
+<table cellspacing=0 cellpadding=3 border>
+<tr align=center>
+  <th rowspan=2>CellDimension</th>
+  <th colspan=3>GridLocation</th>
+</tr><tr align=center>
+  <th>Vertex</th>
+  <th>EdgeCenter</th>
+  <th>*FaceCenter</th>
+</tr><tr align=center>
+  <td>1</td>
+  <td>vertices</td>
+  <td>-</td>
+  <td>-</td>
+</tr><tr align=center>
+  <td>2</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>-</td>
+</tr><tr align=center>
+  <td>3</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>faces</td>
+</tr>
+</table>
+</center>
+
+<p>
+<i>Note</i>: In the table, *FaceCenter stands for the possible types:
+<tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, <tt>KFaceCenter</tt>,
+or <tt>FaceCenter</tt>.
+
+<p>
+For structured grids, face centers are indexed using the minimum of the connecting
+vertex indices, as described in
+<a href="conv.html#structgrid">Structured Grid Notation and Indexing Conventions</a>.
+For unstructured grids, edge and face elements are indexed using their
+element numbering as defined in the
+<a href="gridflow.html#Elements"><tt>Elements_t</tt></a> data structures.
+
+<p>
+The BC patch defined by <tt>PointRange/List</tt> is a surface region over which
+the particular set of boundary conditions is applied. However, in the current
+standard there is no mechanism to specify whether boundary conditions are enforced
+in the weak or strong form. If boundary conditions are imposed using collocation
+(i.e., strong form), there is also no requirement that they be imposed at the same
+locations used to define the BC patch (via <tt>PointRange/List</tt>).
+In the case when BC patches are defined in terms of vertices (or edges in 3-D),
+then the bounding vertices will be located on multiple BC patches.
+If boundary conditions are imposed using collocation at vertices, then for
+this case there is no mechanism to determine which BC patch takes precedence
+for any of these bounding vertices.
 
 <a name="InwardNormalIndex"></a>
 <p>
@@ -521,33 +531,32 @@ non-zero element.
 For exterior faces of a zone in 3-D, <tt>InwardNormalIndex</tt> should take the
 following values:
 
-<br><br>
 <center>
 <table cellspacing=0 cellpadding=0 border=0>
-<tr align=left><td colspan=3><hr width=100% noshade>
+<tr align=left><td colspan=7><hr width=100% noshade>
 <tr valign=baseline>
    <th scope=col>Face<td><tt>&nbsp;&nbsp;</tt>
    <th scope=col><tt>InwardNormalIndex</tt>
-<tr align=left><td colspan=3><hr width=100% noshade>
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <th scope=col>Face<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col><tt>InwardNormalIndex</tt>
+<tr align=left><td colspan=7><hr width=100% noshade>
 <tr valign=baseline>
    <td align=center><i>i</i>-min<td>
    <td align=center>[+1,0,0]<td>
-<tr valign=baseline>
    <td align=center><i>i</i>-max<td>
    <td align=center>[&minus;1,0,0]
 <tr valign=baseline>
    <td align=center><i>j</i>-min<td>
    <td align=center>[0,+1,0]<td>
-<tr valign=baseline>
    <td align=center><i>j</i>-max<td>
    <td align=center>[0,&minus;1,0]
 <tr valign=baseline>
    <td align=center><i>k</i>-min<td>
    <td align=center>[0,0,+1]<td>
-<tr valign=baseline>
    <td align=center><i>k</i>-max<td>
    <td align=center>[0,0,&minus;1]
-<tr align=left><td colspan=3><hr width=100% noshade>
+<tr align=left><td colspan=7><hr width=100% noshade>
 </table>
 </center>
 
@@ -642,34 +651,29 @@ sequential values from 1 to <i>N</i> without holes or repetitions.
 Use of <tt>Ordinal</tt> is discouraged and is on a user-beware basis.
 
 <a name="ListLength"></a>
-<h4>FUNCTION <tt>ListLength</tt>:</h4>
+<h4>FUNCTION <tt>ListLength[]</tt>:</h4>
 
 return value: <tt>int</tt>
 <br>
-dependencies: <tt>PointRange</tt>, <tt>PointList</tt>, <tt>ElementRange</tt>,
-              <tt>ElementList</tt>
+dependencies: <tt>PointRange</tt>, <tt>PointList</tt>
 
 <p>
 <tt>BC_t</tt> requires the structure function <tt>ListLength</tt>, which
-is used to specify the number of vertices or cell faces corresponding to
-a given <tt>PointRange</tt>, <tt>PointList</tt>, <tt>ElementRange</tt>,
-or <tt>ElementList</tt>.
-If <tt>PointRange</tt> is specified, then <tt>ListLength</tt> is
+is used to specify the number of vertices or edge/face elements making up the
+BC patch. If <tt>PointRange</tt> is specified, then <tt>ListLength</tt> is
 obtained from the number of points (inclusive) between the beginning and
 ending indices of <tt>PointRange</tt>.
 If <tt>PointList</tt> is specified, then <tt>ListLength</tt> is the
 number of indices in the list of points.
 In this situation, <tt>ListLength</tt> becomes a user input along with the
 indices of the list <tt>PointList</tt>.
-By "user" we mean the application code that is generating the CGNS
+By <i>user</i> we mean the application code that is generating the CGNS
 database.
-If <tt>ElementRange</tt> or <tt>ElementList</tt> is specified, then
-<tt>ListLength</tt> is defined by the cell faces making up the BC patch.
 
 <p>
 <tt>ListLength</tt> is also the number of elements in the list
 <tt>InwardNormalList</tt>.
-Note that syntactically <tt>PointList/ElementList</tt> and
+Note that syntactically <tt>PointList</tt> and
 <tt>InwardNormalList</tt> must have the same number of elements.
 
 <p>
@@ -687,14 +691,15 @@ Its intended use is for simple boundary-condition types, where the
 equations imposed do not depend on local flow conditions.
 
 <pre>
-  BCDataSet_t&lt; int ListLength &gt; :=
+  BCDataSet_t&lt; int CellDimension, int IndexDimension,
+    int ListLengthParameter, GridLocation_t GridLocationParameter &gt; :=
     {
     List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
 
     BCTypeSimple_t BCTypeSimple ;                                      (r)
 
-    BCData_t&lt;ListLength&gt; DirichletData ;                               (o)
-    BCData_t&lt;ListLength&gt; NeumannData ;                                 (o)
+    BCData_t&lt;ListLengthBCData[]&gt; DirichletData ;                       (o)
+    BCData_t&lt;ListLengthBCData[]&gt; NeumannData ;                         (o)
 
     GridLocation_t GridLocation ;                                      (o/d)
 
@@ -704,7 +709,7 @@ equations imposed do not depend on local flow conditions.
     ReferenceState_t ReferenceState ;                                  (o)
 
     DataClass_t DataClass ;                                            (o)
-                
+
     DimensionalUnits_t DimensionalUnits ;                              (o)
 
     List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
@@ -728,47 +733,24 @@ equations imposed do not depend on local flow conditions.
      All other fields are optional and the
      <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> list
      may be empty.
-<li> <tt>GridLocation</tt>, <tt>PointRange</tt>, and <tt>PointList</tt>
-     may only be used when <tt>BCDataSet_t</tt> is located below a
-     <tt>Zone_t</tt> structure in the database hierarchy, and thus has a
-     parent <a href="#BC"><tt>BC_t</tt></a> structure.
-     <tt>GridLocation</tt>, <tt>PointRange</tt>, and <tt>PointList</tt>
-     do not apply when <tt>BCDataSet_t</tt> is located below a
-     <a href="misc.html#FamilyBC"><tt>FamilyBC_t</tt></a> structure.
-<li> <tt>PointRange</tt> and <tt>PointList</tt> refer to either vertices
-     or cell faces, depending on the value of
-     <a href="build.html#GridLocation"><tt>GridLocation</tt></a>.
-     <tt>GridLocation</tt> may be set to <tt>Vertex</tt>,
-     <tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, <tt>KFaceCenter</tt>,
-     <tt>FaceCenter</tt>, <tt>CellCenter</tt>, or <tt>EdgeCenter</tt>.
-     When <a href="build.html#GridLocation"><tt>GridLocation</tt></a>
-     is set to <tt>Vertex</tt>, then <tt>PointList</tt> or
-     <tt>PointRange</tt> refer to node indices, for both structured and
-     unstructured grids.
-     When <tt>GridLocation</tt> is set to <tt>FaceCenter</tt>, then
-     <tt>PointList</tt> or <tt>PointRange</tt> refer to face elements.
-<li> If <tt>GridLocation</tt> is absent, then 
-     <tt>PointRange</tt> and <tt>PointList</tt> are ignored.
-     Similarly, if both <tt>PointRange</tt> and <tt>PointList</tt> are
-     absent, then <tt>GridLocation</tt> is ignored.
-     In both cases, boundary conditions are to be applied at the
-     locations defining the BC patch in the parent
-     <a href="#BC"><tt>BC_t</tt></a> structure.
-<li> Only one of <tt>PointRange</tt> and <tt>PointList</tt> may be
-     specified.
+<li> <tt>GridLocation</tt> is optional; if absent its default value is
+     <tt>GridLocationParameter</tt>. For 2-D grids (<tt>CellDimension = 2</tt>),
+     <tt>GridLocation</tt> may take the values of <tt>Vertex</tt> or <tt>EdgeCenter</tt>.
+     For 3-D grids (<tt>CellDimension = 3</tt>), <tt>GridLocation</tt> may take
+     the values of <tt>Vertex</tt>, <tt>EdgeCenter</tt>, <tt>FaceCenter</tt>,
+     <tt>IFaceCenter</tt>, <tt>JFaceCenter</tt> or <tt>KFaceCenter</tt>.
+<li> <tt>PointRange</tt> and <tt>PointList</tt> are both optional; only one of
+     them may be specified. They must define a face subrange of the zone.
 </ol>
 
 <p>
-If neither <tt>PointRange</tt> or <tt>PointList</tt> is specified,
-the structure parameter <tt>ListLength</tt> must be passed into
-<tt>BCDataSet_t</tt>, and specifies the number of vertices or cell faces
-making up the BC patch.
-If <tt>PointRange</tt> or <tt>PointList</tt> is specified
-in <tt>BCDataSet_t</tt>, the structure function
-<a href="#ListLength"><tt>ListLength</tt></a> is used to compute the
-corresponding number of vertices or cell faces.
-In either case, <tt>ListLength</tt> is passed into the <tt>BCData_t</tt>
-structure, specifying the length of arrays containing BC data.
+<tt>BCDataSet_t</tt> requires the structure parameters <tt>CellDimension</tt>,
+<tt>IndexDimension</tt>, <tt>ListLengthParameter</tt>, and <tt>GridLocationParameter</tt>.
+These are all used to control the grid location and length of data arrays in the
+<tt>Dirichlet</tt> and <tt>Neumann</tt> substructures.
+They are inputs for the structure functions
+<a href="#ListLength_bcdataset"><tt>ListLength[]</tt></a> and
+<a href="#ListLengthBCData"><tt>ListLengthBCData[]</tt></a> defined below.
 
 <p>
 <a href="#BCType"><tt>BCTypeSimple</tt></a> specifies the boundary-condition
@@ -788,21 +770,18 @@ conditions is covered in the section <a href="#BC_specdata">Boundary
 Condition Specification Data</a>.
 
 <p>
-The substructures <a href="#BCData"><tt>DirichletData</tt> and
-<tt>NeumannData</tt></a> contain boundary-condition data which may be
-constant over the BC patch or defined locally at each vertex or cell
-face of the patch.
-For locally-defined data, the locations at which the boundary
-conditions are to be applied may be specified by <tt>PointRange</tt> or
-<tt>PointList</tt>, together with <tt>GridLocation</tt>.
-There should be a correspondence between the locations defined under
-<tt>BCDataset_t</tt> and the locations defined under the parent
-<a href="#BC"><tt>BC_t</tt></a> structure.
-For example, if the BC patch in a structured grid is defined by
-vertices, then the <tt>BCDataSet</tt> information must either exist at
-the same vertex locations (for <tt>GridLocation</tt> = <tt>Vertex</tt>),
-or else must exist at the corresponding cell face locations (for
-<tt>GridLocation</tt> = <tt>FaceCenter</tt>).
+The substructures <a href="#BCData"><tt>DirichletData</tt></a> and
+<a href="#BCData"><tt>NeumannData</tt></a> contain boundary-condition data
+which may be constant over the BC patch, or defined locally at each vertex or
+edge/face of the patch. Locally defined data may be specified in one of two ways.
+If <tt>GridLocation</tt>, <tt>PointRange</tt> and <tt>PointList</tt> are
+all absent, then the data is defined consistent with the BC patch specification
+of the parent <a href="#BC"><tt>BC_t</tt></a> structure. In this case,
+the location of the locally defined data is given by <tt>GridLocationParameter</tt>
+and the length of the data arrays are given by <tt>ListLengthParameter</tt>.
+If <tt>GridLocation</tt> and one of <tt>PointRange</tt> or <tt>PointList</tt>
+is present, then the length of the data arrays is given by
+<a href="#ListLength_bcdataset"><tt>ListLength[]</tt></a>.
 
 <p>
 Reference quantities applicable to the set of boundary-condition data are
@@ -823,6 +802,45 @@ data structure allows arbitrary user-defined data to be stored in
 <tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
 restrictions or implicit meanings imposed on these node types at other
 node locations.
+
+<a name="ListLength_bcdataset"></a>
+<h4>FUNCTION <tt>ListLength[]</tt>:</h4>
+
+return value: <tt>int</tt>
+<br>
+dependencies: <tt>PointRange</tt>, <tt>PointList</tt>
+
+<p>
+<tt>BCDataSet_t</tt> requires the structure function <tt>ListLength</tt>, which
+is used to specify the length of locally defined <tt>Dirichlet</tt> and
+<tt>Neumann</tt> data arrays when the grid location of these quatities differs
+from that of the BC patch definition. If <tt>PointRange</tt> is specified,
+then <tt>ListLength</tt> is obtained from the number of points (inclusive)
+between the beginning and ending indices of <tt>PointRange</tt>.
+If <tt>PointList</tt> is specified, then <tt>ListLength</tt> is the
+number of indices in the list of points.
+In this situation, <tt>ListLength</tt> becomes a user input along with the
+indices of the list <tt>PointList</tt>.
+By <i>user</i> we mean the application code that is generating the CGNS
+database.
+
+<p>
+If neither <tt>PointRange</tt> or <tt>PointList</tt> is specified in a
+particular <tt>BCDataSet_t</tt> substructure, <tt>ListLength</tt> must
+be passed into it to determine the length of BC data arrays.
+
+<a name="ListLengthBCData"></a>
+<h4>FUNCTION <tt>ListLengthBCData[]</tt>:</h4>
+
+return value: <tt>int</tt>
+<br>
+dependencies: <tt>ListLengthParameter</tt>, <tt>PointRange</tt>, <tt>PointList</tt>
+
+<p>
+<tt>BCDataSet_t</tt> also requires the structure function <tt>ListLengthBCData</tt>.
+If <tt>PointRange</tt> or <tt>PointList</tt> is present, then <tt>ListLengthBCData</tt>
+takes the value of <tt>ListLength</tt>. If both are absent, then it takes
+the value <tt>ListLengthParameter</tt>.
 
 <a name="BCData"></a>
 <h3>Boundary Condition Data Structure Definition: <tt>BCData_t</tt></h3>
@@ -845,14 +863,14 @@ section.
     {
     List( Descriptor_t  Descriptor1 ... DescriptorN ) ;                (o)
 
-    List( DataArray_t&lt;DataType, 1, 1&gt;     
+    List( DataArray_t&lt;DataType, 1, 1&gt;
           DataGlobal1 ... DataGlobalN ) ;                              (o)
 
-    List( DataArray_t&lt;DataType, 1, ListLength&gt;       
+    List( DataArray_t&lt;DataType, 1, ListLength&gt;
           DataLocal1 ... DataLocalN ) ;                                (o)
 
     DataClass_t DataClass ;                                            (o)
-                
+
     DimensionalUnits_t DimensionalUnits ;                              (o)
 
     List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
@@ -1512,7 +1530,7 @@ The real distinctions between
 <ul>
 <li> <tt>BCTypeSimple_t</tt> identifiers always match themselves;
      <tt>BCTypeCompound_t</tt> identifiers never match themselves.<br><br>
-<li> <tt>BCTypeSimple_t</tt> identifiers always produce a single match; 
+<li> <tt>BCTypeSimple_t</tt> identifiers always produce a single match;
      <tt>BCTypeCompound_t</tt> will produce multiple matches.<br><br>
 <li> The usage rule for <tt>BCTypeSimple_t</tt> identifiers is always
      trivial - apply the single matching data set regardless of local
@@ -1741,8 +1759,8 @@ boundary-condition type.
 <p>
 Symmetry plane for a patch on the <i>i</i>-min face of a 3-D structured zone.
 <pre>
-  !  IndexDimension = 3
-  BC_t&lt;3,3&gt; BC1 =
+  !  CellDimension = 3, IndexDimension = 3
+  BC_t&lt;3,3,3&gt; BC1 =
     {{
     BCType_t BCType = BCSymmetryPlane ;
 
@@ -1770,8 +1788,8 @@ entire wall is specified to be 273 K.
 The BC patch is on the <i>j</i>-min face and is bounded by the indices
 (1,1,1) and (33,1,9).
 <pre>
-  !  IndexDimension = 3
-  BC_t&lt;3,3&gt; BC2 =
+  !  CellDimension = 3, IndexDimension = 3
+  BC_t&lt;3,3,3&gt; BC2 =
     {{
     BCType_t BCType = BCWallViscousIsothermal ;
 
@@ -1792,10 +1810,10 @@ The BC patch is on the <i>j</i>-min face and is bounded by the indices
         DataArray_t&lt;real, 1, 1&gt; Temperature =
           {{
           Data(real, 1, 1) = 273. ;
-          
+
           DataClass_t DataClass = Dimensional ;
 
-          DimensionalUnits_t DimensionalUnits = 
+          DimensionalUnits_t DimensionalUnits =
             {{
             MassUnits        = MassUnitsNull ;
             LengthUnits      = LengthUnitsNull ;
@@ -1887,13 +1905,15 @@ A velocity profile is specified at face midpoints, given by the array
 <tt>v_inflow(j)</tt>.
 No dimensional or nondimensional information is provided.
 <pre>
-  !  IndexDimension = 2
-  BC_t&lt;2,?&gt; BC3 =
+  !  CellDimension = 2, IndexDimension = 2
+  BC_t&lt;2,2,?&gt; BC3 =
     {{
     BCType_t BCType = BCInflowSubsonic ;
 
-    IndexRange_t&lt;2&gt; ElementRange = 
-      {{ 
+    GridLocation_t GridLocation = FaceCenter ;
+
+    IndexRange_t&lt;2&gt; PointRange =
+      {{
       int[2] Begin = [1,2] ;
       int[2] End   = [1,6] ;
       }} ;
@@ -1906,13 +1926,13 @@ No dimensional or nondimensional information is provided.
       !  Data array length = ListLength = 5
       BCData_t&lt;5&gt; DirichletData =
         {{
-        DataArray_t&lt;real, 1, 1&gt; EntropyApprox = 
-          {{ 
+        DataArray_t&lt;real, 1, 1&gt; EntropyApprox =
+          {{
           Data(real, 1, 1) = 0.94 ;
           }} ;
 
-        DataArray_t&lt;real, 1, 1&gt; EnthalpyStagnation = 
-          {{ 
+        DataArray_t&lt;real, 1, 1&gt; EnthalpyStagnation =
+          {{
           Data(real, 1, 1) = 2.85 ;
           }} ;
 
@@ -1940,8 +1960,8 @@ and the values are provided.
 <tt>v_inflow()</tt>.
 The length of the array is given by
 <a href="#ListLength"><tt>ListLength</tt></a>, which represents
-the number of cell faces because <tt>BC3</tt> is specified using
-<tt>ElementRange</tt>.
+the number of cell faces because <tt>BC3</tt> is specified using the value
+of <tt>FaceCenter</tt> for <tt>GridLocation</tt>.
 Note that the beginning and ending indices on the array
 <tt>v_inflow()</tt> are unimportant (they are user inputs); there just
 needs to be five values provided.
@@ -1955,8 +1975,8 @@ Outflow boundary condition with unspecified normal Mach number for an
 pressure is specified; for supersonic outflow, no boundary-condition
 equations are specified.
 <pre>
-  !  IndexDimension = 3
-  BC_t&lt;3,3&gt; BC4 =
+  !  CellDimension = 3, IndexDimension = 3
+  BC_t&lt;3,3,3&gt; BC4 =
     {{
     BCType_t BCType = BCOutflow ;
 
@@ -2017,8 +2037,8 @@ is the correct data set to apply?
 <p>
 The actual global data value for static pressure is not provided; an
 abbreviated form of the <tt>Pressure</tt> entity is shown.
-This example also uses the "<tt>?</tt>" notation for unused             
-data-array-length structure parameters.                                 
+This example also uses the "<tt>?</tt>" notation for unused
+data-array-length structure parameters.
 
 <a name="ex:bc5"></a>
 <h4>Example - Farfield</h4>
@@ -2033,7 +2053,8 @@ quantities.
 None of the extrapolated quantities for the different boundary condition
 possibilities need be stated.
 <pre>
-  BC_t&lt;2,2&gt; BC5 =
+  !  CellDimension = 2, IndexDimension = 2
+  BC_t&lt;2,2,2&gt; BC5 =
     {{
     BCType_t BCType = BCFarfield ;
 
@@ -2050,7 +2071,7 @@ possibilities need be stated.
       {{
       BCTypeSimple_t BCTypeSimple = BCInflowSubsonic ;
 
-      BCData&lt;?&gt; DirichletData = 
+      BCData&lt;?&gt; DirichletData =
         {{
         DataArray_t&lt;real, 1, 1&gt; CharacteristicEntropy      = {{ }} ;
         DataArray_t&lt;real, 1, 1&gt; CharacteristicVorticity1   = {{ }} ;
@@ -2067,7 +2088,7 @@ possibilities need be stated.
       {{
       BCTypeSimple_t BCTypeSimple = BCOutflowSubsonic ;
 
-      BCData&lt;?&gt; DirichletData = 
+      BCData&lt;?&gt; DirichletData =
         {{
         DataArray_t&lt;real, 1, 1&gt; CharacteristicAcousticMinus = {{ }} ;
         }} ;
@@ -2132,8 +2153,8 @@ temperature for the entire wall is specified to be 273 K.
 The BC patch is on the <i>j</i>-min face and is bounded by the indices
 (1,1,1) and (33,1,9).
 <pre>
-  !  IndexDimension = 3
-  BC_t&lt;3,3&gt; BC2 =
+  !  CellDimension = 3, IndexDimension = 3
+  BC_t&lt;3,3,3&gt; BC2 =
     {{
     BCType_t BCType = BCWallViscousIsothermal ;
 
@@ -2162,10 +2183,10 @@ The BC patch is on the <i>j</i>-min face and is bounded by the indices
         DataArray_t&lt;real, 1, 1&gt; Temperature =
           {{
           Data(real, 1, 1) = 273. ;
-          
+
           DataClass_t DataClass = Dimensional ;
 
-          DimensionalUnits_t DimensionalUnits = 
+          DimensionalUnits_t DimensionalUnits =
             {{
             MassUnits        = MassUnitsNull ;
             LengthUnits      = LengthUnitsNull ;
@@ -2206,7 +2227,7 @@ global data, so the value of <tt>ListLength</tt> is unused.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 23 Feb 2011
+Last updated 03 April 2011
 
 </body>
 </html>

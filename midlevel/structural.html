@@ -52,6 +52,7 @@
      <li> <tt><b>cg_base_write</b></tt> - Create and/or write to a CGNS base node
      <li> <tt><b>cg_nbases</b></tt> - Get number of CGNS base nodes in file
      <li> <tt><b>cg_base_read</b></tt> - Read CGNS base information
+     <li> <tt><b>cg_cell_dim</b></tt> - Get the cell dimension for the CGNS base
      </ul>
 <li> <a href="#zone">Zone Information</a>
      <ul>
@@ -59,6 +60,7 @@
      <li> <tt><b>cg_nzones</b></tt> - Get number of zones in base
      <li> <tt><b>cg_zone_read</b></tt> - Read zone information
      <li> <tt><b>cg_zone_type</b></tt> - Get type of zone (structured or unstructured)
+     <li> <tt><b>cg_index_dim</b></tt> - Get the index dimension for the CGNS zone
      </ul>
 <li> <a href="#simulationtype">Simulation Type</a>
      <ul>
@@ -97,6 +99,10 @@
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *phys_dim</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_cell_dim(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=out><i>int *cell_dim</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
         <tt><b>call cg_base_write_f(<span class=in>fn</span>, <span class=in>basename</span>, <span class=in>cell_dim</span>, <span class=in>phys_dim</span>, <span class=out><i>B</i></span>, <span class=out><i>ier</i></span>)</b></tt>
@@ -108,6 +114,10 @@
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_base_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=out><i>basename</i></span>, <span class=out><i>cell_dim</i></span>, <span class=out><i>phys_dim</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_cell_dim_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=out><i>cell_dim</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
@@ -131,7 +141,8 @@
    <td>Name of the base.
 <tr valign=baseline><td>
    <td><tt>cell_dim</tt><td>
-   <td>Dimension of the cells; 3 for volume cells, 2 for surface cells.
+   <td>Dimension of the cells; 3 for volume cells, 2 for surface cells
+       and 1 for line cells.
 <tr valign=baseline><td>
    <td><tt>phys_dim</tt><td>
    <td>Number of coordinates required to define a vector in the field.
@@ -174,6 +185,10 @@
         <tt><b><span class=out><i>ier</i></span> = cg_zone_type(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=out><i>ZoneType_t *zonetype</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_index_dim(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=out><i>int *index_dim</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
         <tt><b>call cg_zone_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>zonename</span>, <span class=in>size</span>, <span class=in>zonetype</span>, <span class=out><i>Z</i></span>, <span class=out><i>ier</i></span>)</b></tt>
@@ -189,6 +204,10 @@
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_zone_type_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=out><i>zonetype</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_index_dim_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=out><i>index_dim</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
@@ -259,6 +278,11 @@
    <td><tt>zonetype</tt><td>
    <td>Type of the zone.
        The admissible types are <tt>Structured</tt> and <tt>Unstructured</tt>.
+<tr valign=baseline><td>
+   <td><tt>index_dim</tt><td>
+   <td>Index dimension for the zone. For Structured zones, this will
+       be the base cell dimension and for Unstructured zones it will
+       be 1</td>
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.
@@ -333,7 +357,7 @@ retrieval.</em>
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 23 Feb 2011
+Last updated 30 March 2011
 
 </body>
 </html>

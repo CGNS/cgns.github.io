@@ -1403,6 +1403,51 @@ grids.
    <td><a href="../sids/gridflow.html#DataSize_flow"><tt>DataSize</tt></a>
 </table>
 
+<a name="ZoneSubRegion"></a>
+<h4><tt>ZoneSubRegion_t</tt></h4>
+
+<p>
+The <tt>ZoneSubRegion_t</tt> node allows for the ability to give flowfield or
+other information over a subset of the entire zone in a CGNS file.
+This subset may be over a portion of a boundary, or it may be over a portion
+of the entire field.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td>User defined
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/gridflow.html#ZoneSubRegion"><tt>ZoneSubRegion_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt>I4</tt>
+<tr valign=baseline><td>
+   <th align=left>Dimension:<td>
+   <td>1
+<tr valign=baseline><td>
+   <th align=left>Dimension&nbsp;Values:<td>
+   <td><tt>1</tt>
+<tr valign=baseline><td>
+   <th align=left>Data:<td>
+   <td>RegionCellDimension
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/ZoneSubRegion.html"><tt>ZoneSubRegion_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,<i>N</i>
+<tr valign=baseline><td>
+   <th align=left>Parameters:<td>
+   <td><tt>IndexDimension</tt>, <tt>VertexSize</tt>, <tt>CellSize</tt>
+<tr valign=baseline><td>
+   <th align=left>Functions:<td>
+   <td><a href="../sids/gridflow.html#DataSize_flow"><tt>DataSize</tt></a>
+</table>
+
 <a name="connectivitygroup"></a>
 <h4>Connectivity Group</h4>
 
@@ -1791,9 +1836,11 @@ the intent is that it should be specified by a single child of type
 <h4><tt>ZoneGridConnectivity_t</tt></h4>
 
 <p>
-Each <tt>Zone_t</tt> node may have at most one child of type
+Each <tt>Zone_t</tt> node may have zero or more children of type
 <tt>ZoneGridConnectivity</tt>. It holds no data, but serves as the point
 below which all connectivity data associated with the zone can be found.
+Multiple <tt>ZoneGridConnectivity_t</tt> nodes may be used to specify
+time-dependent changes in the connectivity information.
 
 <br><br>
 <table cellspacing=0 cellpadding=0 border=0>
@@ -1801,7 +1848,7 @@ below which all connectivity data associated with the zone can be found.
 <br><br>
 <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
    <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
-   <td><tt>ZoneGridConnectivity</tt>
+   <td><tt>ZoneGridConnectivity or user defined</tt>
 <tr valign=baseline><td>
    <th align=left>Label:<td>
    <td><a href="../sids/cnct.html#ZoneGridConnectivity"><tt>ZoneGridConnectivity_t</tt></a>
@@ -1813,7 +1860,7 @@ below which all connectivity data associated with the zone can be found.
    <td>See <a href="figures/ZoneGridConnectivity.html"><tt>ZoneGridConnectivity_t</tt> figure</a>
 <tr valign=baseline><td>
    <th align=left>Cardinality:<td>
-   <td>0,1
+   <td>0,N
 <tr valign=baseline><td>
    <th align=left>Parameters:<td>
    <td><tt>IndexDimension</tt>, <tt>CellDimension</tt>
@@ -3400,7 +3447,7 @@ linked nodes.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 27 July 2006
+Last updated 30 March 2011
 
 </body>
 </html>

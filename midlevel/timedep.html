@@ -69,6 +69,14 @@
      <li> <tt><b>cg_n_arbitrary_motions</b></tt> - Get number of <tt>ArbitraryGridMotion_t</tt> nodes
      <li> <tt><b>cg_arbitrary_motion_read</b></tt> - Read <tt>ArbitraryGridMotion_t</tt> node
      </ul>
+<li> <a href="#zconn">Zone Grid Connectivity</a>
+     <ul>
+     <li> <tt><b>cg_nzconns</b></tt> - Get number of <tt>ZoneGridConnectivity_t</tt> nodes
+     <li> <tt><b>cg_zconn_read</b></tt> - Read <tt>ZoneGridConnectivity_t</tt> node
+     <li> <tt><b>cg_zconn_write</b></tt> - Create <tt>ZoneGridConnectivity_t</tt> node
+     <li> <tt><b>cg_zconn_set</b></tt> - Set the current <tt>ZoneGridConnectivity_t</tt> node
+     <li> <tt><b>cg_zconn_get</b></tt> - Get the current <tt>ZoneGridConnectivity_t</tt> node
+     </ul>
 </ul>
 
 <a name="biter"></a>
@@ -353,11 +361,119 @@
    <td>Error status.
 </table>
 
+<a name="zconn"></a>
+<h3>Zone Grid Connectivity</h3>
+
+<i>Node</i>: <tt>ZoneGridConnectivity_t</tt>
+             (<a href="../sids/cnct.html#ZoneGridConnectivity">SIDS</a>,
+              <a href="../filemap/nodes.html#ZoneGridConnectivity">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_nzconns(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=out><i>int *nzconns</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_zconn_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int ZC</span>, <span class=out><i>char *zcname</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_zconn_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>const char *zcname</span>, <span class=out><i>int *ZC</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_zconn_set(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int ZC</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_zconn_get(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=out><i>int *ZC</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_nzconns_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=out><i>nzconns</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_zconn_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>ZC</span>, <span class=out><i>zcname</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_zconn_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>zcname</span>, <span class=out><i>ZC</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_zconn_set_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>ZC</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_zconn_get(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=out><i>ZC</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>fn</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><tt>B</tt><td>
+   <td>Base index number, where 1 &le; <tt>B</tt> &le; <tt>nbases</tt>.
+<tr valign=baseline><td>
+   <td><tt>Z</tt><td>
+   <td>Zone index number, where 1 &le; <tt>Z</tt> &le; <tt>nzones</tt>.
+<tr valign=baseline><td>
+   <td><tt>ZC</tt><td>
+   <td>ZoneGridConnectivity index number, where 1 &le; <tt>ZC</tt> &le; <tt>nzconns</tt>.
+<tr valign=baseline><td>
+   <td><tt>nzconns</tt><td>
+   <td>Number of ZoneGridConnectivity_t nodes under Zone <tt>Z</tt>.
+<tr valign=baseline><td>
+   <td><tt>zcname</tt><td>
+   <td>Name of the ZoneGridConnectivity node,</td>
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+This allows for the specification of multiple <tt>ZoneGridConnectivity_t</tt>
+nodes. If these functions are not used, or <tt>cg_zconn_write</tt>
+is called once with a <tt>zcname</tt> of <tt>ZoneGridConnectivity</tt>,
+then there will be no differences from previous versions of the
+CGNS library. However, with multiple <tt>ZoneGridConnectivity_t</tt>
+nodes, there is an implicit <i>current</i> <tt>ZoneGridConnectivity_t</tt>
+node on which subsequent grid connectivity functions will operate,
+i.e. <tt>cg_conn_read/write</tt> or <tt>cg_1to1_read/write</tt>.
+
+<p>
+The functions <tt>cg_zconn_read</tt> and <tt>cg_zconn_write</tt>
+will implicity set the <i>current</i> <tt>ZoneGridConnectivity_t</tt>
+node, while <tt>cg_zconn_set</tt> explicitly sets it. The functions
+<tt>cg_nzconns</tt> and <tt>cg_zconn_get</tt> do not change it.
+
+<p>
+The time-dependent changes to the connectivities may then be recorded
+in the <tt>ZoneInterativeData_t</tt> node as an array of
+<tt>ZoneGridConnectivityPointers</tt>.
+
 <p>
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 04 Feb 2011
+Last updated 25 March 2011
 
 </body>
 </html>

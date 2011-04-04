@@ -203,39 +203,20 @@
 <tr valign=baseline><td>
    <td><tt>ptset_type</tt><td>
    <td>The extent of the boundary condition may be defined using a range
-       of points or elements, or using a discrete list of all points or
-       elements at which the boundary condition is applied.
-       Depending on the method used, the possible values for
-       <tt>ptset_type</tt> are:<br><br>
-       <table cellspacing=0 cellpadding=0 noborder>
-       <tr valign=baseline>
-          <th align=left scope=col><tt>ptset_type</tt></td><td><tt>&nbsp;&nbsp;</tt></td>
-          <th align=left scope=col>Method
-       <tr valign=baseline>
-          <td><tt>PointRange</tt></td><td><tt>&nbsp;&nbsp;</tt></td>
-          <td>Range of points or elements
-       <tr valign=baseline>
-          <td><tt>PointList</tt></td><td></td>
-          <td>List of points or elements
-       <tr valign=baseline>
-          <td><tt>ElementRange</tt></td><td><tt>&nbsp;&nbsp;</tt></td>
-          <td>Range of elements
-       <tr valign=baseline>
-          <td><tt>ElementList</tt></td><td></td>
-          <td>List of elements
-       </table><br>
-       Note that when <tt>ptset_type</tt> is <tt>ElementRange</tt> or
-       <tt>ElementList</tt>, the <tt>pnts</tt> values (see below) are
-       assumed to be element indices.
-       When <tt>ptset_type</tt> is <tt>PointRange</tt> or
-       <tt>PointList</tt>, the choice of point or element indices is
-       determined by <tt>GridLocation_t</tt> under the <tt>BC_t</tt>
-       node.
-       The value of <tt>GridLocation_t</tt> must be read or written by
+       of points or elements using <tt>PointRange</tt>, or using a
+       discrete list of all points or elements at which the boundary
+       condition is applied using <tt>PointList</tt>.
+       <br><br>
+       When the boundary condition is to be applied anywhere other than points,
+       then <tt>GridLocation_t</tt> under the <tt>BC_t</tt> node must
+       be used to indicate this.
+       The value of <tt>GridLocation_t</tt> may be read or written by
+       <tt>cg_boco_gridlocation_read</tt> and <tt>cg_boco_gridlocation_write</tt>.
+       As in previous versions of the library, this may also be done by
        first using <a href="navigating.html#goto"><tt>cg_goto</tt></a>
        to access the <tt>BC_t</tt> node, then using
-       <a href="location.html#gridlocation"><tt>cg_gridlocation_read</tt>
-       or <tt>cg_gridlocation_write</tt></a>.
+       <a href="location.html#gridlocation"><tt>cg_gridlocation_read</tt></a>
+       or <a href="location.html#gridlocation"><tt>cg_gridlocation_write</tt></a>.
 <tr valign=baseline><td>
    <td><tt>npnts</tt><td>
    <td>Number of points or elements defining the boundary
@@ -284,13 +265,28 @@
 <tr valign=baseline><td>
    <td><tt>location</tt><td>
    <td>Grid location used in the definition of the point set.
-       The currently admissible locations are <tt>Vertex</tt>,
-       <tt>FaceCenter</tt>, <tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>,
-       and <tt>KFaceCenter</tt>.
+       The currently admissible locations are <tt>Vertex</tt> (the default
+       if not given). For 2-D grids, <tt>EdgeCenter</tt> is also allowed,
+       and for 3-D grids, the additional values of <tt>FaceCenter</tt>,
+       <tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, and <tt>KFaceCenter</tt>
+       may be used.
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.
 </table>
+
+<br>
+<i>Notes:</i> (see CPEX 0031)
+<ul>
+<li> The use of <tt>ElementList</tt> and <tt>ElementRange</tt> for
+     <tt>ptset_type</tt> is deprecated and should not be used
+     in new code. These are still currently accepted, but will be internally
+     replaced with the appropriate values of <tt>PointList/PointRange</tt>
+     and <tt>GridLocation_t</tt>.
+<li> <tt>CellCenter</tt> for <tt>GridLocation</tt> is also deprecated. If used,
+     the value will be replaced by <tt>EdgeCenter</tt> for 2-D grids or
+     <tt>FaceCenter</tt> for 3-D grids.
+</ul>
 
 <a name="bcdataset"></a>
 <h3>Boundary Condition Datasets</h3>

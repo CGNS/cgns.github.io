@@ -47,6 +47,7 @@
 <li> <a href="#IterativeData">Iterative Data Structure Definitions</a>
 <li> <a href="#RigidGridMotion">Rigid Grid Motion Structure Definition: <tt>RigidGridMotion_t</tt></a>
 <li> <a href="#ArbitraryGridMotion">Arbitrary Grid Motion Structure Definition: <tt>ArbitraryGridMotion_t</tt></a>
+<li> <a href="#ZoneGridConnectivity">Zone Grid Connectivities
 <li> <a href="#Examplestimedep">Examples for Time-Dependent Flow</a>
 </ul>
 
@@ -192,6 +193,10 @@ the simulation, and is defined as follows:
        GridCoordinatesPointers ;                                       (o)
     DataArray_t&lt;char, 2, [32, NumberOfSteps]&gt;
        FlowSolutionPointers ;                                          (o)
+    DataArray_t&lt;char, 2, [32, NumberOfSteps]&gt;
+       ZoneGridConnectivityPointers ;                                  (o)
+    DataArray_t&lt;char, 2, [32, NumberOfSteps]&gt;
+       ZoneSubRegionPointers ;                                         (o)
 
     List( DataArray_t&lt;&gt; DataArray1 ... DataArrayN ) ;                  (o)
 
@@ -217,7 +222,8 @@ the simulation, and is defined as follows:
      of <tt>ZoneIterativeData_t</tt> and shall not include the names
      <tt>ArbitraryGridMotionPointers</tt>, <tt>DataClass</tt>,
      <tt>DimensionalUnits</tt>, <tt>FlowSolutionPointers</tt>,
-     <tt>GridCoordinatesPointers</tt>, or <tt>RigidGridMotionPointers</tt>.
+     <tt>GridCoordinatesPointers</tt>, <tt>RigidGridMotionPointers</tt>,
+     <tt>ZoneGridConnectivityPointers</tt>, or <tt>ZoneSubRegionPointers</tt>.
 </ol>
 
 <p>
@@ -634,6 +640,15 @@ It is identical to the function
 <a href="gridflow.html#DataSize_flow"><tt>DataSize[]</tt></a> defined for
 <a href="gridflow.html#FlowSolution"><tt>FlowSolution_t</tt></a>.
 
+<a name="ZoneGridConnectivity"></a>
+<h3>Zone Grid Connectivities</h3>
+
+Multiple <a href="cnct.html#ZoneGridConnectivity"><tt>ZoneGridConnectivity_t</tt></a>
+nodes may be used to specify time-dependent changes in the connectivity information
+associated with the zone. The time variation is the recorded in the
+<a href="#ZoneIterativeData"><tt>ZoneIterativeData_t</tt></a> node as
+<tt>ZoneGridConnectivityPointers</tt>.
+
 <a name="Examplestimedep"></a>
 <h3>Examples for Time-Dependent Flow</h3>
 
@@ -955,7 +970,7 @@ Each indentation represents a level down (a child) from the parent node.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 04 Feb 2011
+Last updated 02 April 2011
 
 </body>
 </html>

@@ -16,11 +16,13 @@
 (<a href="charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
 (<a href="overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
 (<a href="user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
-(<a href="sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
-(<a href="filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
-(<a href="filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
 (<a href="midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
-(<a href="adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="cgio/index.html"><b>CGIO&nbsp;Manual</b></a>)
+(<a href="adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="python/index.html"><b>Python&nbsp;Implementation</b></a>)
 (<a href="cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
 <br><br>
 (<a href="whatsnew.html"><b>What's&nbsp;New?</b></a>)
@@ -205,10 +207,9 @@ Documentation is also available for
           permission) at the CGNS Documentation web site.
           <!--See email in "cgnsaiaa" folder from me to Craig Day (23
           Sep 2002) and from Craig Day to me (21 Oct 2002)-->
-<p><a name="filemapping"></a>
-<dt> <b><a href="filemap/index.html">SIDS-to-ADF File Mapping Manual</a><br>
-        <a href="filemap_hdf/index.html">SIDS-to-HDF File Mapping Manual</a><br>
-        SIDS-to-Python File Mapping Manual</b> (not available in HTML format yet)
+<p>
+<a name="filemapping"></a>
+<dt> <b><a href="filemap/index.html">SIDS File Mapping Manual</a></b><br>
      <dd> Specifies the exact manner in which, under CGNS conventions,
           the CFD data structures (the SIDS) are to be stored in, i.e.,
           mapped onto, the file structure provided by the database
@@ -216,16 +217,34 @@ Documentation is also available for
           The <i>File Mapping Manual</i>, together with the information
           in the <i>Standard Interface Data Structures</i> (SIDS),
           defines the content and organization of a CGNS database.
-          [<a href="filemap/filemap.pdf">SIDS-to-ADF Manual, PDF</a>,
-          <a href="filemap_hdf/filemap_hdf.pdf">SIDS-to-HDF Manual, PDF</a>,
-          <a href="filemap_python/sidstopython.pdf">SIDS-to-Python Manual, PDF</a>]
+          [<a href="filemap/filemap.pdf">PDF</a>]
 <p>
-<dt> <b><a href="adf/index.html">Advanced Data Format (ADF) User's Guide</a></b>
+<dt> <b><a href="cgio/index.html">CGIO Manual</a></b>
+     <dd> The CGIO routines provide low-level access to the underlying
+          database manager (ADF or HDF5), that may be used to store and
+          retrieve data. It is patterned along the lines of the orginal
+          ADF core routines, but works for both ADF and HDF5 transparently
+          to the user. This document describes in detail the CGIO core
+          routines used to store and retrieve the data from the
+          database manager. [<a href="cgio/cgio.pdf">PDF</a>]
+<p>
+<dt> <b><a href="adf/index.html">ADF Implementation and User's Guide</a></b>
      <dd> ADF is the original underlying database manager for CGNS.
           This document defines the structure of an ADF file, and
           describes in detail the ADF Core, a library of low-level
           routines used to store and retrieve data in an ADF file.
           [<a href="adf/adf.pdf">PDF</a>]
+<p>
+<dt> <b><a href="hdf5/index.html">HDF5 Implementation</a></b>
+     <dd> HDF5 is now the default database manager for CGNS. (When built
+          with HDF5 support). This document describes the interface
+          between the <i>SIDS File Mapping</i> and the HDF5 database manager.
+          [<a href="hdf5/hdf5.pdf">PDF</a>]
+<p>
+<dt> <b><a href="python/index.html">Python Implementation</a></b>
+     <dd> This document describes the interface
+          between the <i>SIDS File Mapping</i> and Python as a database manager.
+          [<a href="python/python.pdf">PDF</a>]
 <p>
 <dt> <b><a href="cgnstools/index.html">CGNS Tools and Utilities</a></b>
      <dd> A variety of tools and utilities for viewing, editing, and

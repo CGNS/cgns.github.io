@@ -19,7 +19,7 @@
 (<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
 (<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
 (<a href="index.html"><span class=nav><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></span></a>)
-(<a href="../cgio/index.html"><b>CGIO&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
 (<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
 (<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
 (<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
@@ -31,8 +31,6 @@
 (<a href="general.html"><b>General&nbsp;CGNS&nbsp;File&nbsp;Mapping&nbsp;Concepts</b></a>)
 (<a href="nodes.html"><b>Detailed&nbsp;CGNS&nbsp;Node&nbsp;Descriptions</b></a>)
 (<a href="figures.html"><b>CGNS&nbsp;File&nbsp;Mapping&nbsp;Figures</b></a>)
-(<a href="adfsummary.html"><b>Summary&nbsp;Description&nbsp;of&nbsp;ADF</b></a>)
-(<a href="hdfsummary.html"><b>Summary&nbsp;Description&nbsp;of&nbsp;HDF5</b></a>)
 </center>
 </small>
 <a name="endnav"></a>
@@ -59,12 +57,12 @@ The main documents currently available are:
 <ul>
 <li> <a href="#overview">CGNS Overview and Entry-Level Document</a>
 <li> <a href="#user">A User's Guide to CGNS</a>
-<li> <a href="#adf">ADF User's Guide</a>
-<li> <a href="#hdf">HDF Documentation</a>
-<li> <a href="#sids">Standard Interface Data Structures</a>
-<li> <a href="#filemap">SIDS-to-ADF File Mapping Manual</a> (this document)
-<li> <a href="#filemap_hdf">SIDS-to-HDF File Mapping Manual</a>
 <li> <a href="#midlevel">CGNS Mid-Level Library</a>
+<li> <a href="#sids">Standard Interface Data Structures</a>
+<li> <a href="#filemap">SIDS File Mapping Manual</a> (this document)
+<li> <a href="#cgio">CGIO User's Guide</a>
+<li> <a href="#adf">ADF Implementation</a>
+<li> <a href="#hdf">HDF Implementation</a>
 </ul>
 
 <a name="description"></a>
@@ -100,59 +98,17 @@ The guide provides a concise overview of many of the most commonly-used
 features of the SIDS, and gives coding examples using the CGNS Mid-Level
 Library to write and read simple CGNS files.
 
-<a name="adf"></a>
-<h4>ADF User's Guide</h4>
+<a name="midlevel"></a>
+<h4>CGNS Mid-Level Library</h4>
 
 <p>
-The <a href="../adf/index.html"><i>ADF User's Guide</i></a> describes
-one of the underlying database managers, ADF (Advanced Data Format),
-which may be used to create CGNS files.
-ADF is a binary format, based on a simple tree structure.
-In principal, nearly any kind of data could be stored in ADF format.
-ADF was, however, especially designed for the storage of large
-quantities of scientific data in a platform-independent and
-randomly-accessible manner.
-The "ADF Core" is a set of portable routines which store and retrieve
-data in ADF format.
-These routines are written in C, but Fortran versions are also provided.
-The <i>ADF User's Guide</i> describes both the ADF format and the ADF Core
-routines in detail.
-
-<p>
-Because the CGNS File Mapping depends intimately on the format of the
-underlying database manager, a <a href="adfsummary.html">summary of ADF
-data structures</a> is provided.
-
-<p>
-It should be emphasized that ADF, with its Core routines, constitutes a
-very general stand-alone database manager which is not directly related
-to CFD. It can therefore be used to store any kind of data <em>once it has
-been specified where to place that data within the ADF format</em>.
-This File Mapping document describes the CGNS conventions governing that
-placement for CFD-specific data.
-
-<a name="hdf"></a>
-<h4>HDF Documentation</h4>
-
-<p>
-HDF5 (Hierarchical Data Format) is another underlying database manager
-that may be used to create CGNS files, and is developed and maintained
-by the <a href="http://www.ncsa.uiuc.edu/">National Center for
-Supercomputing Applications</a>
-<img src="../external.png" alt="external link">at the University of
-Illinois at Urbana-Champaign.
-Documentation for HDF5 is available at the
-<a href="http://hdf.ncsa.uiuc.edu/HDF5/">HDF5 Home Page</a>
-<img src="../external.png" alt="external link">.
-
-<p>
-Like ADF, HDF5 is a binary format, based on a tree structure,
-designed for the storage of large quantities of scientific data in a
-platform-independent and randomly-accessible manner.
-Also like ADF, HDF5 can be used to store any kind of data.
-The <a href="../filemap_hdf/index.html">SIDS-to-HDF File Mapping Manual</a>
-describes the CGNS conventions governing the placement of CFD-specific
-data within the HDF5 format.
+The <a href="../midlevel/index.html"><i>CGNS Mid-Level Library</i></a>
+document describes a set of routines which store and retrieve the CFD
+data objects defined in the SIDS.
+Their purpose is to provide CGNS compliant I/O without the need for
+detailed programming in the ADF or HDF Core.
+These "mid-level routines" are designed to be inserted directly into
+applications codes, such as flow solvers and grid generators.
 
 <a name="sids"></a>
 <h4>Standard Interface Data Structures</h4>
@@ -189,22 +145,84 @@ be stored in any sufficiently general format, given a mapping onto that
 format.
 
 <a name="filemap"></a>
-<h4>SIDS-to-ADF File Mapping Manual</h4>
+<h4>SIDS File Mapping Manual</h4>
 
 <p>
-The <a href="../filemap/index.html"><i>SIDS-to-ADF File Mapping Manual</i></a>
+The <a href="../filemap/index.html"><i>SIDS File Mapping Manual</i></a>
 specifies the exact manner in which, under CGNS conventions, CFD data
 structures (the SIDS) are to be stored in, i.e., mapped onto, the file
-structure provided by the ADF database manager.
+structure provided by a database manager.
 Adherence to the mapping conventions guarantees uniform meaning
-and location of CFD data within ADF files, and thereby allows the
+and location of CFD data within database files, and thereby allows the
 construction of universal software to read and write the data.
 
-<a name="filemap_hdf"></a>
-<h4>SIDS-to-HDF File Mapping Manual</h4>
+<a name="cgio"></a>
+<h4>CGIO User's Guide</h4>
 
 <p>
-The <a href="../filemap_hdf/index.html"><i>SIDS-to-HDF File Mapping Manual</i></a>
+The <a href="../cgio/index.html"><i>CGIO User's Guide</i></a> describes the
+interface between the SIDS File Mapping and an underlying database
+manager. It also documents the low-level routines that provide this
+functionality as used in the Mid-Level Library. This is the preferred
+way to access the database directly if additional requirements beyond
+those provided by the MLL are needed.
+
+<a name="adf"></a>
+<h4>ADF Implementation</h4>
+
+<p>
+The <a href="../adf/index.html"><i>ADF User's Guide</i></a> describes
+one of the underlying database managers, ADF (Advanced Data Format),
+which may be used to create CGNS files.
+ADF is a binary format, based on a simple tree structure.
+In principal, nearly any kind of data could be stored in ADF format.
+ADF was, however, especially designed for the storage of large
+quantities of scientific data in a platform-independent and
+randomly-accessible manner.
+The "ADF Core" is a set of portable routines which store and retrieve
+data in ADF format.
+These routines are written in C, but Fortran versions are also provided.
+The <i>ADF User's Guide</i> describes both the ADF format and the ADF Core
+routines in detail.
+
+<p>
+Because the CGNS File Mapping depends intimately on the format of the
+underlying database manager, a <a href="adfsummary.html">summary of ADF
+data structures</a> is provided.
+
+<p>
+It should be emphasized that ADF, with its Core routines, constitutes a
+very general stand-alone database manager which is not directly related
+to CFD. It can therefore be used to store any kind of data <em>once it has
+been specified where to place that data within the ADF format</em>.
+This File Mapping document describes the CGNS conventions governing that
+placement for CFD-specific data.
+
+<a name="hdf"></a>
+<h4>HDF Implementation</h4>
+
+<p>
+HDF5 (Hierarchical Data Format) is another underlying database manager
+that may be used to create CGNS files, and is developed and maintained
+by the <a href="http://www.ncsa.uiuc.edu/">National Center for
+Supercomputing Applications</a>
+<img src="../external.png" alt="external link">at the University of
+Illinois at Urbana-Champaign.
+Documentation for HDF5 is available at the
+<a href="http://hdf.ncsa.uiuc.edu/HDF5/">HDF5 Home Page</a>
+<img src="../external.png" alt="external link">.
+
+<p>
+Like ADF, HDF5 is a binary format, based on a tree structure,
+designed for the storage of large quantities of scientific data in a
+platform-independent and randomly-accessible manner.
+Also like ADF, HDF5 can be used to store any kind of data.
+The <a href="../filemap_hdf/index.html">SIDS-to-HDF File Mapping Manual</a>
+describes the CGNS conventions governing the placement of CFD-specific
+data within the HDF5 format.
+
+<p>
+The <a href="../hdf5/index.html"><i>SIDS-to-HDF File Mapping Manual</i></a>
 is similar to the current document, and specifies the mapping from the
 SIDS to the file structure provided by the HDF5 database manager.
 
@@ -228,18 +246,6 @@ required to obtain such a representation is not important.]
 Adherence to the mapping conventions guarantees uniform meaning
 and location of CFD data within HDF5 files, and thereby allows the
 construction of universal software to read and write the data.
-
-<a name="midlevel"></a>
-<h4>CGNS Mid-Level Library</h4>
-
-<p>
-The <a href="../midlevel/index.html"><i>CGNS Mid-Level Library</i></a>
-document describes a set of routines which store and retrieve the CFD
-data objects defined in the SIDS.
-Their purpose is to provide CGNS compliant I/O without the need for
-detailed programming in the ADF or HDF Core.
-These "mid-level routines" are designed to be inserted directly into
-applications codes, such as flow solvers and grid generators.
 
 <a name="which"></a>
 <h3>Which Documents Do You Need?</h3>

@@ -56,8 +56,8 @@
      <li> <tt><b>cg_nbocos</b></tt> - Get number of boundary condition in zone
      <li> <tt><b>cg_boco_info</b></tt> - Get boundary condition info
      <li> <tt><b>cg_boco_read</b></tt> - Read boundary condition data and normals
-     <li> <tt><b>cg_boco_gridlocation_write</b></tt> - Write boundary condition location and normals
-     <li> <tt><b>cg_boco_gridlocation_read</b></tt> - Read boundary condition location and normals
+     <li> <tt><b>cg_boco_gridlocation_write</b></tt> - Write boundary condition location
+     <li> <tt><b>cg_boco_gridlocation_read</b></tt> - Read boundary condition location
      </ul>
 <li> <a href="#bcdataset">Boundary Condition Datasets</a>
      <ul>
@@ -223,11 +223,10 @@
    <td><tt>npnts</tt><td>
    <td>Number of points or elements defining the boundary
        condition region.
-       For a <tt>ptset_type</tt> of <tt>PointRange</tt> or
-       <tt>ElementRange</tt>, <tt>npnts</tt> is always two.
-       For a <tt>ptset_type</tt> of <tt>PointList</tt> or
-       <tt>ElementList</tt>, <tt>npnts</tt> is
-       the number of points or elements in the list.
+       For a <tt>ptset_type</tt> of <tt>PointRange</tt>,
+       <tt>npnts</tt> is always two.
+       For a <tt>ptset_type</tt> of <tt>PointList</tt>,
+       <tt>npnts</tt> is the number of points or elements in the list.
 <tr valign=baseline><td>
    <td><tt>pnts</tt><td>
    <td>Array of point or element indices defining the boundary condition region.
@@ -285,7 +284,7 @@
      in new code. These are still currently accepted, but will be internally
      replaced with the appropriate values of <tt>PointList/PointRange</tt>
      and <tt>GridLocation_t</tt>.
-<li> <tt>CellCenter</tt> for <tt>GridLocation</tt> is also deprecated. If used,
+<li> <tt>CellCenter</tt> for <tt>GridLocation_t</tt> is also deprecated. If used,
      the value will be replaced by <tt>EdgeCenter</tt> for 2-D grids or
      <tt>FaceCenter</tt> for 3-D grids.
 </ul>

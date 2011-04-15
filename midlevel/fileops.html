@@ -223,8 +223,9 @@ Consequently, if is omitted, the CGNS file is not written properly.
 In order to reduce memory usage and improve execution speed,
 large arrays such as grid coordinates or flow solutions are not actually
 stored in memory.
-Instead, only their ADF (or HDF) ID numbers are kept in memory for future
-reference. An attempt is also made to do the same with
+Instead, only basic information about the node is kept,
+while reads and writes of the data is directly to and from the
+application's memory. An attempt is also made to do the same with
 unstructured mesh element data.
 
 <p>
@@ -239,9 +240,12 @@ The CGNS file identified by <tt>fn</tt> may be saved to a different filename
 and type using <tt>cg_save_as</tt>. In order to save as an HDF5 file,
 the library must have been built with HDF5 support. ADF support is always
 built. The
-function <tt>cg_set_file_type</tt> sets the default. The function
+function <tt>cg_set_file_type</tt> sets the default file type for
+newly created CGNS files. The function
 <tt>cg_get_file_type</tt> returns the file type for the CGNS file
-identified by <tt>fn</tt>.
+identified by <tt>fn</tt>. If the CGNS library is built as 32-bit,
+the additional file type, <tt>CG_FILE_ADF2</tt>, is available.
+This allows creation of a 2.5 compatible CGNS file.
 
 <a name="configure"></a>
 <h3>Configuring CGNS Internals</h3>

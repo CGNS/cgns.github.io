@@ -150,14 +150,14 @@
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b>call cg_sol_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>solname</i></span>, <span class=out><i>location</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b>call cg_sol_ptset_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>solname</span>, <span class=in>location</span>, <span class=in>ptset_type</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>npnts</span>, <span class=cgin>pnts</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
-<tr><td nowrap>
-        <tt><b>call cg_sol_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>solname</i></span>, <span class=out><i>location</i></span>, <span class=out><i>ier</i></span>)</b></tt>
-    <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_sol_ptset_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>ptset_type</i></span>, <span class=cgout><i>npnts</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
@@ -204,22 +204,22 @@
        and <tt>KFaceCenter</tt>.
 <tr valign=baseline><td>
    <td><tt>ptset_type</tt><td>
-   <td>Type of point set defining the interface in the current zone;
+   <td>Type of point set defining the interface in the current solution;
        either <tt>PointRange</tt> or <tt>PointList</tt>.
 <tr valign=baseline><td>
    <td><tt>npnts</tt><td>
-   <td>Number of points defining the interface in the current zone.
+   <td>Number of points defining the interface in the current solution.
        For a <tt>ptset_type</tt> of <tt>PointRange</tt>, <tt>npnts</tt>
        is always two.
        For a <tt>ptset_type</tt> of <tt>PointList</tt>, <tt>npnts</tt> is
        the number of points in the <tt>PointList</tt>.
 <tr valign=baseline><td>
    <td><tt>pnts</tt><td>
-   <td>Array of points defining the interface in the current zone.
+   <td>Array of points defining the interface in the current solution.
 <tr valign=baseline><td>
    <td><tt>data_dim</tt><td>
    <td>Number of dimensions defining the solution data. If a
-       <tt>PointSet</tt> has been defined, this will be 1, otherwise
+       point set has been defined, this will be 1, otherwise
        this will be the current zone index dimension.</td>
 <tr valign=baseline><td>
    <td><tt>dim_vals</tt><td>
@@ -235,27 +235,27 @@ The above functions are used to create, and get information about,
 
 <p>
 Solution data may be specified over the entire zone, as in previous
-versions of the library, using <tt>cg_sol_write()</tt> or over
-a patch region of the zone using <tt>cg_sol_ptset_write()</tt>.
+versions of the library, using <tt>cg_sol_write</tt> or over
+a patch region of the zone using <tt>cg_sol_ptset_write</tt>.
 The two are mutually exclusive. In the first case, the size of
 the solution data is determined by the size of the zone, the
 grid location, and rind data (if any) as in previous versions.
 In the second case the solution data size is entirely determined
 by the <tt>PointList/PointRange</tt> patch. In order to determine which of
 the two forms in which the solution data was written, use
-<tt>cg_sol_ptset_info()</tt>. If the solution is over the entire
+<tt>cg_sol_ptset_info</tt>. If the solution is over the entire
 zone, <tt>ptset_type</tt> will be returned as <tt>CG_Null</tt>
 and <tt>npnts</tt> as 0. Otherwise, <tt>ptset_type</tt> will
-be eithe <tt>PointList</tt> or <tt>PointRange</tt>, and the
+be either <tt>PointList</tt> or <tt>PointRange</tt>, and the
 number of points will be returned in <tt>npnts</tt>.
 
 <p>
 To assist in determining the size of the solution data,
-the function <tt>cg_sol_size()</tt> has been added. For a solution
+the function <tt>cg_sol_size</tt> has been added. For a solution
 defined over the full zone, <tt>data_dim</tt> returns the index
 dimension for the zone, and <tt>dim_vals</tt> specifies the
 dimensions of the data, corrected for the grid location type
-and rind data. If a <tt>PointSet</tt> patch has been specified,
+and rind data. If a point set patch has been specified,
 <tt>data_dim</tt> will be 1 and <tt>dim_vals</tt> will contain
 the total size of the patch.
 
@@ -528,32 +528,32 @@ indices for the returned array values will be wrong.
    <td>Name of <tt>DiscreteData_t</tt> data structure.
 <tr valign=baseline><td>
    <td><tt>location</tt><td>
-   <td>Grid location where the solution is recorded.
+   <td>Grid location where the discrete data is recorded.
        The current admissible locations are <tt>Vertex</tt>,
        <tt>CellCenter</tt>, <tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>,
        and <tt>KFaceCenter</tt>.
 <tr valign=baseline><td>
    <td><tt>ptset_type</tt><td>
-   <td>Type of point set defining the interface in the current zone;
+   <td>Type of point set defining the interface for the discrete data;
        either <tt>PointRange</tt> or <tt>PointList</tt>.
 <tr valign=baseline><td>
    <td><tt>npnts</tt><td>
-   <td>Number of points defining the interface in the current zone.
+   <td>Number of points defining the interface for the discrete data.
        For a <tt>ptset_type</tt> of <tt>PointRange</tt>, <tt>npnts</tt>
        is always two.
        For a <tt>ptset_type</tt> of <tt>PointList</tt>, <tt>npnts</tt> is
-       the number of points in the <tt>PointList</tt>.
+       the number of points in the list.
 <tr valign=baseline><td>
    <td><tt>pnts</tt><td>
-   <td>Array of points defining the interface in the current zone.
+   <td>Array of points defining the interface for the discrete data.
 <tr valign=baseline><td>
    <td><tt>data_dim</tt><td>
-   <td>Number of dimensions defining the solution data. If a
-       <tt>PointSet</tt> has been defined, this will be 1, otherwise
+   <td>Number of dimensions defining the discrete data. If a
+       point set has been defined, this will be 1, otherwise
        this will be the current zone index dimension.</td>
 <tr valign=baseline><td>
    <td><tt>dim_vals</tt><td>
-   <td>The array of <tt>data_dim</tt> dimensions for the solution data.</td>
+   <td>The array of <tt>data_dim</tt> dimensions for the discrete data.</td>
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.
@@ -597,7 +597,7 @@ To read and write the discrete data, use
         <tt><b><span class=out><i>ier</i></span> = cg_subreg_info(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=out><i>char *regname</i></span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *dimension</i></span>, <span class=out><i>GridLocation_t *location</i></span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>PointSetType_t *ptset_type</i></span>, <span class=cgout><i>cgsize_t *npnts</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *bcname_len</i></span>, <span class=out><i>int *bcname_len</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *bcname_len</i></span>, <span class=out><i>int *gcname_len</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -636,7 +636,7 @@ To read and write the discrete data, use
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_subreg_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>regname</i></span>, <span class=out><i>dimension</i></span>, <span class=out><i>location</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ptset_type</i></span>, <span class=cgout><i>npnts</i></span>, <span class=out><i>bcname_len</i></span>, <span class=out><i>bcname_len</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ptset_type</i></span>, <span class=cgout><i>npnts</i></span>, <span class=out><i>bcname_len</i></span>, <span class=out><i>gcname_len</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -685,10 +685,10 @@ To read and write the discrete data, use
    <td>ZoneSubRegion index number, where 1 &le; <tt>S</tt> &le; <tt>nsubregs</tt>.
 <tr valign=baseline><td>
    <td><tt>nsubregs</tt><td>
-   <td>Number of ZoneSubRegion_t nodes under Zone <tt>Z</tt>.
+   <td>Number of <tt>ZoneSubRegion_t</tt> nodes under Zone <tt>Z</tt>.
 <tr valign=baseline><td>
    <td><tt>regname</tt><td>
-   <td>Name of the ZoneSubRegion node,</td>
+   <td>Name of the <zz>ZoneSubRegion_t</tt> node,</td>
 <tr valign=baseline><td>
    <td><tt>dimension</tt><td>
    <td>Dimensionality of the subregion, 1 for lines, 2 for faces,
@@ -700,30 +700,31 @@ To read and write the discrete data, use
        <tt>CellCenter</tt>.
 <tr valign=baseline><td>
    <td><tt>ptset_type</tt><td>
-   <td>Type of point set defining the interface in the current zone;
+   <td>Type of point set defining the interface for the subregion data;
        either <tt>PointRange</tt> or <tt>PointList</tt>.
 <tr valign=baseline><td>
    <td><tt>npnts</tt><td>
-   <td>Number of points defining the interface in the current zone.
+   <td>Number of points defining the interface for the subregion data.
        For a <tt>ptset_type</tt> of <tt>PointRange</tt>, <tt>npnts</tt>
        is always two.
        For a <tt>ptset_type</tt> of <tt>PointList</tt>, <tt>npnts</tt> is
        the number of points in the <tt>PointList</tt>.
 <tr valign=baseline><td>
    <td><tt>pnts</tt><td>
-   <td>Array of points defining the interface in the current zone.
+   <td>Array of points defining the interface  for the subregion data.
 <tr valign=baseline><td>
    <td><tt>bcname</tt><td>
-   <td>name of a BC_t node which defines the ZoneSubRegion.</td>
+   <td>The name of a <tt>BC_t</tt> node which defines the subregion.</td>
 <tr valign=baseline><td>
    <td><tt>gcname</tt><td>
-   <td>name of a GridConnectivity_t node which defines the ZoneSubRegion.</td>
+   <td>The name of a <tt>GridConnectivity_t</tt> or
+       <tt>GridConnectivity1to1_t</tt> node which defines the subregion.</td>
 <tr valign=baseline><td>
    <td><tt>bcname_len</tt><td>
-   <td>String length of <tt>bcname</tt> which defines the ZoneSubRegion.</td>
+   <td>String length of <tt>bcname</tt>.</td>
 <tr valign=baseline><td>
    <td><tt>gcname_len</tt><td>
-   <td>String length of <tt>gcname</tt> which defines the ZoneSubRegion.</td>
+   <td>String length of <tt>gcname</tt>.</td>
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.
@@ -732,20 +733,21 @@ To read and write the discrete data, use
 <p>
 These functions allow for the specification of Zone subregions. The
 subregion may be specified as either the name of an existing
-<tt>BC_t</tt> node (<tt>cg_subreg_bcname_write()</tt>), an
+<tt>BC_t</tt> node (<tt>cg_subreg_bcname_write</tt>), an
 existing <tt>GridConnectivity_t</tt> or <tt>GridConnectivity1to1_t</tt>
-node (<tt>cg_subreg_gcname_write()</tt>), or as a PointSet/PointRange
-(<tt>cg_subreg_ptset_write()</tt>). These specifications are mutually
-exclusive. To determine the type of the ZoneSubRegion, use
-<tt>cg_subreg_info()</tt>. If the subregion is of type <tt>PointSet</tt>,
+node (<tt>cg_subreg_gcname_write</tt>), or as a <tt>PointSet/PointRange</tt>
+(<tt>cg_subreg_ptset_write</tt>). These specifications are mutually
+exclusive. To determine the type of the subregion, use
+<tt>cg_subreg_info</tt>. If the subregion is a point set,
 then <tt>ptset_type</tt> will indicate the point set type (either
 <tt>PointList</tt> or <tt>PointRange</tt>) and <tt>npts</tt> will be
 set to the number of points to define the region. Otherwise,
 <tt>ptset_type</tt> will be set to <tt>CG_Null</tt> and
 <tt>npnts</tt> will be 0. In this case, one of <tt>bcname_len</tt>
 or <tt>gcname_len</tt> will be non-zero, indicating whether the
-ZoneSubRegion references a BC_t node (<tt>bcname_len</tt> non-zero) or
-GridConnectivity_t node (<tt>gcname_len</tt> non-zero).
+ZoneSubRegion references a <tt>BC_t</tt> node
+(<tt>bcname_len</tt> non-zero) or
+<tt>GridConnectivity_t</tt> node (<tt>gcname_len</tt> non-zero).
 
 <p>
 <hr size=4 width=75%>

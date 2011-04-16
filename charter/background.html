@@ -154,6 +154,19 @@ The implementing software, in turn, was developed in two layers:
      ADF calls must have a complete understanding of the CGNS data
      structures and content.
 <br><br>
+      When CGNS Version 2.4 was released, support for
+      <a href="../hdf5/index.html"><i>HDF5 (Hierarchical Data Format)</i></a>
+      as the underlying database was added.
+      The ADF routines were "mapped" to equivalent HDF5
+      routines, and the Mid-Level Library could be built using
+      either ADF or HDF5.
+<br><br>
+      With the release of CGNS Version 3.1, new low-level were
+      created (<a href="../cgio/index.html"><i>the CGIO interface</i></a>)
+      as a replacement for the direct ADF calls. This interface supports
+      both ADF and HDF5 simultaneously
+      and transfarently to the application code.
+<br><br>
 <li> Higher-level routines to perform common operations required by a
      CFD code, known as the <a href="../midlevel/index.html"><i>CGNS
      Mid-Level Library</i></a>.
@@ -164,13 +177,9 @@ The implementing software, in turn, was developed in two layers:
      to have a general understanding of the standard data structure and
      content.
      The purpose of the mid-level library is to shield the user from the
-     complexity of the basic ADF calls, and to ensure that the data are
+     complexity of the basic database manager calls,
+     and to ensure that the data are
      written in the proper structure to create a CGNS-compliant file.
-     With the release of CGNS Version 2.4, the Mid-Level Library may
-     be built using either ADF or
-     <a href="http://hdf.ncsa.uiuc.edu/HDF5/">HDF5</a>
-     <img src="../external.png" alt="external link"> as the underlying
-     database.
 </ul>
 
 <p>
@@ -179,10 +188,8 @@ at the <a href="../index.html">CGNS Documentation Home Page</a>.
 These key control documents are:
 
 <ul>
-<li> <a href="../sids/index.html">Standard Interface Data Structures
-     (SIDS)</a>
-<li> <a href="../filemap/index.html">SIDS-to-ADF File Mapping Manual</a>, or
-     <a href="../filemap_hdf/index.html">SIDS-to-HDF File Mapping Manual</a>
+<li> <a href="../sids/index.html">Standard Interface Data Structures (SIDS)</a>
+<li> <a href="../filemap/index.html">SIDS File Mapping Manual</a>
 </ul>
 
 <p>

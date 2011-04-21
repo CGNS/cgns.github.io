@@ -64,7 +64,8 @@ Figures</a>, constitutes a complete description of the CGNS database
 structure, together with detailed descriptions of the contents of each
 attribute of each node.
 It is intended to be suitable as a reference for anyone implementing
-CGNS using the <a href="../adf/index.html">ADF Core</a>, but should also
+CGNS within their own database manager or using the
+<a href="../cgio/index.html">CGIO Core Routines</a>. It should also
 be of interest to those wishing to understand exactly where information
 is stored within a CGNS database.
 
@@ -215,7 +216,7 @@ achieving it is to make the desired integer either the name or part of
 the name. In fact, if, for example, individual zones are left unnamed,
 the default convention will provide names of <tt>Zone1</tt>, <tt>Zone2</tt>,
 etc. Alternatively, the character strings "<tt>1</tt>", "<tt>2</tt>",
-..., are legal names. ADF or CGNS software, of course, will return
+..., are legal names. The CGNS software, of course, will return
 these as strings. This may necessitate type conversion or parsing before
 the names can be used as integer indices.
 
@@ -1431,7 +1432,7 @@ of the entire field.
    <td>1
 <tr valign=baseline><td>
    <th align=left>Dimension&nbsp;Values:<td>
-   <td><tt>1</tt>
+   <td>1
 <tr valign=baseline><td>
    <th align=left>Data:<td>
    <td>RegionCellDimension
@@ -1838,7 +1839,7 @@ the intent is that it should be specified by a single child of type
 
 <p>
 Each <tt>Zone_t</tt> node may have zero or more children of type
-<tt>ZoneGridConnectivity</tt>. It holds no data, but serves as the point
+<tt>ZoneGridConnectivity_t</tt>. It holds no data, but serves as the point
 below which all connectivity data associated with the zone can be found.
 Multiple <tt>ZoneGridConnectivity_t</tt> nodes may be used to specify
 time-dependent changes in the connectivity information.
@@ -2901,6 +2902,45 @@ particular CFD family.
    <td>0,1
 </table>
 
+<a name="FamilyBCDataSet"></a>
+<h4><tt>FamilyBCDataSet_t</tt></h4>
+
+<p>
+A <tt>FamilyBCDataSet_t</tt> node contains Dirichlet and Neumann
+data for a single set of boundary condition equations to be applied
+to a Family. It's intended use is for simple boundary condition types,
+where the equations imposed do not depend on local flow conditions.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td>User defined
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/misc.html#FamilyBCDataSet"><tt>FamilyBCDataSet_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt>C1</tt>
+<tr valign=baseline><td>
+   <th align=left>Dimension:<td>
+   <td>1
+<tr valign=baseline><td>
+   <th align=left>Dimension&nbsp;Values:<td>
+   <td>Length of string
+<tr valign=baseline><td>
+   <th align=left>Data:<td>
+   <td><tt>BCTypeSimple</tt> value
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/FamilyBCDataSet.html"><tt>FamilyBCDataSet_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,<i>N</i>
+</table>
+
 <a name="GeometryReference"></a>
 <h4><tt>GeometryReference_t</tt></h4>
 
@@ -3260,9 +3300,9 @@ conditions, and a variety of auxiliary data.
 
 <p>
 The <tt>CGNSBase_t</tt> node is by definition the highest level node in
-the database, and is located directly below the ADF root node.
+the database, and is located directly below the database root node.
 It provides entry into all other data.
-Multiple <tt>CGNSBase_t</tt> nodes are allowed in an ADF file.
+Multiple <tt>CGNSBase_t</tt> nodes are allowed in a file.
 The particular database being accessed is determined by the name
 of the <tt>CGNSBase_t</tt> node.
 
@@ -3392,8 +3432,8 @@ unstructured.
 <h4><tt>CGNSLibraryVersion_t</tt></h4>
 
 <p>
-An ADF file containing a CGNS database also contains, directly below
-the ADF root node, a <tt>CGNSLibraryVersion_t</tt> node.
+A file containing a CGNS database also contains, directly below
+the root node, a <tt>CGNSLibraryVersion_t</tt> node.
 This node stores the version number of the CGNS standard with which
 the file is consistent, and is created automatically when the file is
 created or modified using the <a href="../midlevel/index.html">CGNS
@@ -3402,7 +3442,7 @@ Note that this node is not actually part of the CGNS database, since
 it is not located below a <tt>CGNSBase_t</tt> node.
 
 <p>
-Note that an ADF file may contain multiple CGNS databases, but there is
+Note that a file may contain multiple CGNS databases, but there is
 only one <tt>CGNSLibraryVersion_t</tt> node.
 It is assumed that the version number in the <tt>CGNSLibraryVersion_t</tt>
 node is applicable to all the CGNS databases in the file.

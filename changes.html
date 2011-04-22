@@ -43,13 +43,22 @@
 <li> <a href="#user">A User's Guide to CGNS</a>
 <li> <a href="#midlevel">Mid-Level Library</a>
 <li> <a href="#sids">Standard Interface Data Structures</a>
-<li> <a href="#filemap">SIDS-to-ADF File Mapping Manual</a>
-<li> <a href="#filemap_hdf">SIDS-to-HDF File Mapping Manual</a>
-<li> <a href="#filemap_python">SIDS-to-Python File Mapping Manual</a>
-<li> <a href="#adf">Advanced Data Format (ADF) User's Guide</a>
+<li> <a href="#filemap">SIDS File Mapping Manual</a>
+<li> <a href="#cgio">CGIO User's Guide</a>
+<li> <a href="#adf">ADF Implementation</a>
+<li> <a href="#hdf">HDF5 Implementation</a>
+<li> <a href="#python">Python Implementation</a>
 <li> <a href="#cgnstools">CGNS Tools and Utilities</a>
 <li> <a href="#charter">Steering Committee Charter</a>
 </ul>
+
+<em>Note</em>: The SIDS-to-ADF, SIDS-to-HDF, and SIDS-to-Python File
+Mapping Manuals not longer exist. Instead, the context associated with
+mapping the SIDS to a general database manager has been put in the
+documentation <i>SIDS File Mapping Manual</i>, and the details of
+implementation (content) into <i>ADF Implementation</i>,
+<i>HDF5 Implementation</i>, and <i>Python Implementation</i>. The
+header above, and sections below, reflect these changes.
 
 <p>
 This document summarizes the change history for the CGNS documentation.
@@ -624,6 +633,14 @@ A bit more detail about the changes may be available in the
     <td>23&nbsp;Mar&nbsp;2011<td>
     <td>Added cg_boco_gridlocation_read and write functions to
         <a href="midlevel/bc.html">Mid-Level Library</a>.
+<tr valign=baseline><td>
+    <td>3.1.7<td>
+    <td>3.1<td>
+    <td>21&nbsp;Apr&nbsp;2011<td>
+    <td>Updated to reflect implementation of
+        CPEX 0027 (<a href="midlevel/timedep.html#zconn">Time-dependent Connectivities</a>),
+        CPEX 0030 (<a href="midlevel/solution.html#subregion">Regions</a>),
+        and CPEX 0031 (General SIDS Improvements).
 </table>
 
 <a name="sids"></a>
@@ -1045,7 +1062,7 @@ A bit more detail about the changes may be available in the
         (6) changes in <a href="sids/bc.html#BCDataSet">BCDataSet_t</a>,
         (7) added CellDimension and revamped usage of PointList and PointRange
         in <a href="sids/misc.html#DiscreteData">DiscreteData_t</a>,
-        (8) changes in <a href="sids/misc.html#FamilyBC">FamilyBC_t</a>, 
+        (8) changes in <a href="sids/misc.html#FamilyBC">FamilyBC_t</a>,
         (9) creation of new <a href="sids/misc.html#FamilyBCDataSet">FamilyBCDataSet_t</a>,
         (10) changes in <a href="sids/timedep.html#ZoneGridConnectivity">Zone Grid Connectivities</a>, and
         (11) and addition of ZoneGridConnectivityPointers and ZoneSubRegionPointers
@@ -1053,7 +1070,7 @@ A bit more detail about the changes may be available in the
 </table>
 
 <a name="filemap"></a>
-<h3>SIDS-to-ADF File Mapping Manual</h3>
+<h3>SIDS File Mapping Manual</h3>
 
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=bottom><th><tt>&nbsp;&nbsp;&nbsp;</tt>
@@ -1135,7 +1152,7 @@ A bit more detail about the changes may be available in the
     <td>2.4.1<td>
     <td>2.4<td>
     <td>1&nbsp;Sep&nbsp;2005<td>
-    <td>Minor modifications in the 
+    <td>Minor modifications in the
         <a href="filemap/brief.html">Brief Description of CGNS</a>,
         <a href="filemap/documentation.html">CGNS Documentation</a>, and
         <a href="filemap/adfsummary.html">Summary Description of ADF</a>
@@ -1169,10 +1186,80 @@ A bit more detail about the changes may be available in the
     <td>3.1<td>
     <td>02&nbsp;Mar&nbsp;2011<td>
     <td>Change in version numbers only, to reflect the release of CGNS Version 3.1 in Mar, 2011.
+<tr valign=baseline><td>
+    <td>3.1.3<td>
+    <td>3.1<td>
+    <td>21&nbsp;Apr&nbsp;2011<td>
+    <td>Removed all references to ADF and made the document consistent with
+        specifying context rather than content.
+        Changed <a href="filemap/figures/Zone.html">Zone figure</a> to
+        reflect multiple <tt>ZoneGridConnectivities</tt> now allowed (CPEX 0027)
+        and <tt>ZoneSubRegions</tt> (CPEX 0030).
+        Added <a href="filemap/figures/ZoneSubRegion.html">ZoneSubRegion figure</a> (CPEX 0030)
+        and <a href="filemap/figures/FamilyBCDataSet.html">FamilyBCDataSet figure</a> (CPEX 0031).
+        Modified <a href="filemap/figures/BC.html">BC figure</a>,
+        <a href="filemap/figures/FamilyBC.html">FamilyBC figure</a>,
+        <a href="filemap/figures/FlowSolution.html">FlowSolution or DiscreteData figure</a>
+        as per CPEX 0031.
 </table>
 
-<a name="filemap_hdf"></a>
-<h3>SIDS-to-HDF File Mapping Manual</h3>
+<a name="cgio"></a>
+<h3>CGIO User's Guide</h3>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=bottom><th><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <th align=left scope=col><b>Document<br>
+        Version</b><th>&nbsp;&nbsp;
+    <th align=left scope=col><b>CGNS<br>
+        Version</b><th>&nbsp;&nbsp;
+    <th align=left valign=bottom scope=col><b>Date</b><th>&nbsp;&nbsp;
+    <th align=left valign=bottom scope=col><b>Change</b>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+    <td>3.1.3<td>
+    <td>3.1<td>
+    <td>21&nbsp;Apr&nbsp;2011<td>
+    <td>Original version
+</table>
+
+<a name="adf"></a>
+<h3>ADF Implementation</h3>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=bottom><th><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <th align=left scope=col><b>Document<br>
+        Version</b><th>&nbsp;&nbsp;
+    <th align=left valign=bottom scope=col><b>Date</b><th>&nbsp;&nbsp;
+    <th align=left valign=bottom scope=col><b>Change</b>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+    <td>1.0<td>
+    <td>7&nbsp;May&nbsp;1998<td>
+    <td>Original version
+<tr valign=baseline><td>
+    <td>1.1<td>
+    <td>15&nbsp;Mar&nbsp;2002<td>
+    <td>Addition of
+        <a href="adf/subs_io.html#Read_Block_Data"><tt>ADF_Read_Block_Data</tt></a> and
+        <a href="adf/subs_io.html#Write_Block_Data"><tt>ADF_Write_Block_Data</tt></a>
+<tr valign=baseline><td>
+    <td>1.1.1<td>
+    <td>13&nbsp;May&nbsp;2003<td>
+    <td>Modified the section on <a href="adf/library.html#acquiring">Acquiring
+        the Software and Documentation</a> to reflect the current use of
+        SourceForge for distribution.
+<tr valign=baseline><td>
+    <td>1.1.2<td>
+    <td>21&nbsp;Apr&nbsp;2011<td>
+    <td>Moved the adfsummary.html document from <i>SIDS File Mapping</i>
+        to here. The intent is to have this document describe the
+        implementation of the <i>SIDS File Mapping</i> within the
+        ADF database manager. The PDF file has not changed as it is still
+        the <i>ADF User's Guide</i>
+</table>
+
+<a name="hdf"></a>
+<h3>HDF5 Implementation</h3>
 
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=bottom><th><tt>&nbsp;&nbsp;&nbsp;</tt>
@@ -1217,10 +1304,21 @@ A bit more detail about the changes may be available in the
     <td>3.1<td>
     <td>02&nbsp;Mar&nbsp;2011<td>
     <td>Change in version numbers only, to reflect the release of CGNS Version 3.1 in Mar, 2011.
+<tr valign=baseline><td>
+    <td>3.1.3<td>
+    <td>3.1<td>
+    <td>21&nbsp;Apr&nbsp;2011<td>
+    <td>Moved the hdfsummary.html document from <i>SIDS File Mapping</i>
+        to here. Removed all the file mapping figures,
+        leaving just the implementation details. This documentation was
+        also moved from the <i>filemap_hdf</i> directory to <i>hdf5</i>.
+        The intent is to have this document describe the
+        implementation of the <i>SIDS File Mapping</i> within the
+        HDF5 database manager.
 </table>
 
-<a name="filemap_python"></a>
-<h3>SIDS-to-Python File Mapping Manual</h3>
+<a name="python"></a>
+<h3>Python Implementation</h3>
 
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=bottom><th><tt>&nbsp;&nbsp;&nbsp;</tt>
@@ -1236,34 +1334,15 @@ A bit more detail about the changes may be available in the
     <td>3.1<td>
     <td>03&nbsp;Mar&nbsp;2011<td>
     <td>Original version
-</table>
-
-<a name="adf"></a>
-<h3>Advanced Data Format (ADF) User's Guide</h3>
-
-<table cellspacing=0 cellpadding=0 border=0>
-<tr valign=bottom><th><tt>&nbsp;&nbsp;&nbsp;</tt>
-    <th align=left scope=col><b>Document<br>
-        Version</b><th>&nbsp;&nbsp;
-    <th align=left valign=bottom scope=col><b>Date</b><th>&nbsp;&nbsp;
-    <th align=left valign=bottom scope=col><b>Change</b>
-<tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
-    <td>1.0<td>
-    <td>7&nbsp;May&nbsp;1998<td>
-    <td>Original version
-<tr valign=baseline><td>
-    <td>1.1<td>
-    <td>15&nbsp;Mar&nbsp;2002<td>
-    <td>Addition of
-        <a href="adf/subs_io.html#Read_Block_Data"><tt>ADF_Read_Block_Data</tt></a> and
-        <a href="adf/subs_io.html#Write_Block_Data"><tt>ADF_Write_Block_Data</tt></a>
-<tr valign=baseline><td>
-    <td>1.1.1<td>
-    <td>13&nbsp;May&nbsp;2003<td>
-    <td>Modified the section on <a href="adf/library.html#acquiring">Acquiring
-        the Software and Documentation</a> to reflect the current use of
-        SourceForge for distribution.
+    <td>3.1.2<td>
+    <td>3.1<td>
+    <td>21&nbsp;Apr&nbsp;2011<td>
+    <td>No changes to the Python PDF files, just changes to index.html.
+        This documentation was also moved from the <i>filemap_python</i>
+        directory to <i>python</i>.The intent is to have this document
+        describe the implementation of the <i>SIDS File Mapping</i>
+        within Python.
 </table>
 
 <a name="cgnstools"></a>
@@ -1394,13 +1473,19 @@ A bit more detail about the changes may be available in the
         section.
         This is now available at the <a href="http://www.cgns.org/">CGNS
         web site</a>.
+<tr valign=baseline><td>
+    <td>3.1.1<td>
+    <td>21&nbsp;Apr&nbsp;2011<td>
+    <td>Changed <i>SIDS-to-ADF File Mapping</i> to <i>SIDS File Mapping</i>
+        and added reference to <i>CGIO User's Manual</i>. Also updated
+        document number to correspond to CGNS Version number.
 </table>
 
 <p>
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="include/footer_big.html" -->
-Last updated 23 Mar 2011
+Last updated 21 Apr 2011
 
 </body>
 </html>

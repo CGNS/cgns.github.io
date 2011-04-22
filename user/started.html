@@ -1756,7 +1756,7 @@ c  have been defined as inflow (real working code would check!):
       enddo
 c  write boundary conditions for ilo face
       call cg_boco_write_f(index_file,index_base,index_zone,'Ilo',
-     + BCTunnelInflow,ElementList,icount,ipnts,index_bc,ier)
+     + BCTunnelInflow,PointList,icount,ipnts,index_bc,ier)
 c  we know that for the unstructured zone, the following face elements
 c  have been defined as outflow (real working code would check!):
       nelem_start=2689
@@ -1768,7 +1768,7 @@ c  have been defined as outflow (real working code would check!):
       enddo
 c  write boundary conditions for ihi face
       call cg_boco_write_f(index_file,index_base,index_zone,'Ihi',
-     + BCExtrapolate,ElementList,icount,ipnts,index_bc,ier)
+     + BCExtrapolate,PointList,icount,ipnts,index_bc,ier)
 c  we know that for the unstructured zone, the following face elements
 c  have been defined as walls (real working code would check!):
       nelem_start=2817
@@ -1780,8 +1780,17 @@ c  have been defined as walls (real working code would check!):
       enddo
 c  write boundary conditions for wall faces
       call cg_boco_write_f(index_file,index_base,index_zone,'Walls',
-     + BCWallInviscid,ElementList,icount,ipnts,index_bc,ier)
+     + BCWallInviscid,PointList,icount,ipnts,index_bc,ier)
 c
+c  the above are all face-center locations for the BCs - must indicate this,
+c  otherwise Vertices will be assumed!
+      do ibc=1,index_bc
+c  (the following call positions you in BC_t - it assumes there
+c  is only one Zone_t and one ZoneBC_t - real working code would check!)
+        call cg_goto_f(index_file,index_base,ier,'Zone_t',1,
+     +    'ZoneBC_t',1,'BC_t',ibc,'end')
+        call cg_gridlocation_write_f(FaceCenter,ier)
+      enddo
 c  close CGNS file
       call cg_close_f(index_file,ier)
 </pre>
@@ -1789,21 +1798,22 @@ c  close CGNS file
 
 <p>
 Note that we assume here that we know in advance the element numbers
-associated with each of the boundaries.
-We have written these element numbers as a <tt>ElementList</tt>,
-but, because they are in order, we could just as easily have used
-<tt>ElementRange</tt> instead.
+associated with each of the boundaries.  We have written these element
+numbers as a <tt>PointList</tt>, but, because they are in order, we could
+just as easily have used <tt>PointRange</tt> instead.
 In that case, only two <tt>ipnts</tt> values would be needed, equal to
 <tt>nelem_start</tt> and <tt>nelem_end</tt>, and <tt>icount</tt> would be 2.
+Finally, note that
+the <tt>GridLocation_t</tt> node under <tt>BC_t</tt> must be written using
+the API call <tt>cg_goto_f</tt> (which positions you
+correctly in the tree) followed by <tt>cg_gridlocation_write_f</tt>.
 
-Note that it is also allowable to use <tt>PointList</tt>
-or <tt>PointRange</tt> <em>in addition to</em> setting
-<tt>GridLocation</tt> to <tt>FaceCenter</tt>.
-This combination has the meaning of pointing to elements rather than to
-vertices because, by default, boundary conditions are assumed to apply
-at vertices (nodes); but when <tt>GridLocation</tt> is something other
-than <tt>Vertex</tt>, then the boundary conditions for an unstructured
-zone no longer refer to nodes, but to elements.
+<p>
+Note that the use of <tt>ElementList</tt> and <tt>ElementRange</tt> (recommended in
+previous versions of CGNS) has been
+deprecated and should not be used in new code.
+These are still accepted, but will be internally replaced with the
+appropriate values of <tt>PointList/PointRange</tt> and <tt>GridLocation_t</tt>.
 
 <p>
 A portion of the layout of the CGNS file for the <tt>ZoneBC_t</tt>
@@ -1833,7 +1843,7 @@ the entire layout of the file.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 01 Feb 2011
+Last updated 22 April 2011
 
 </body>
 </html>

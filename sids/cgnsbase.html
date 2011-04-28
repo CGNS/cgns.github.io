@@ -84,9 +84,8 @@ version number.
 <p>
 Physically, this version number is located directly under the root node
 of the file.
-The <a href="../filemap/nodes.html#CGNSLibraryVersion">SIDS-to-ADF</a>
-(or <a href="../filemap_hdf/nodes.html#CGNSLibraryVersion">SIDS-to-HDF</a>)
-File Mapping Manual defines this location more precisely.
+The <a href="../filemap/nodes.html#CGNSLibraryVersion">SIDS File Mapping
+Manual</a> defines this location more precisely.
 
 <p>
 Historically, the version number was used to describe the version of
@@ -386,7 +385,7 @@ For unstructured zones, the element connectivity may also be recorded.
 
     List( RigidGridMotion_t RigidGridMotion1 ... RigidGridMotionN ) ;  (o)
 
-    List( ArbitraryGridMotion_t
+    List( ArbitraryGridMotion_t&lt;IndexDimension, VertexSize, CellSize&gt;
           ArbitraryGridMotion1 ... ArbitraryGridMotionN ) ;            (o)
 
     FamilyName_t FamilyName ;                                          (o)
@@ -400,9 +399,12 @@ For unstructured zones, the element connectivity may also be recorded.
     List( IntegralData_t IntegralData1 ... IntegralDataN ) ;           (o)
 
     List( ZoneGridConnectivity_t&lt;IndexDimension, CellDimension&gt;
-       ZoneGridConnectivity1 ... ZoneGridConnectivityN ) ;             (o)
+          ZoneGridConnectivity1 ... ZoneGridConnectivityN ) ;          (o)
 
-    ZoneBC_t&lt;CellDimension, IndexDimension, PhysicalDimension&gt; ZoneBC ;               (o)
+    List( ZoneSubRegion_t&lt;IndexDimension, VertexSize, CellSize&gt;
+          ZoneSubRegion1 ... ZoneSubRegionN ) ;                        (o)
+
+    ZoneBC_t&lt;CellDimension, IndexDimension, PhysicalDimension&gt; ZoneBC ;(o)
 
     ZoneIterativeData_t&lt;NumberOfSteps&gt; ZoneIterativeData ;             (o)
 
@@ -546,6 +548,11 @@ in the list of <a href="misc.html#IntegralData"><tt>IntegralData_t</tt></a>
 structures.
 It is envisioned that these structures will be seldom used in practice
 but are provided nonetheless.
+
+<p>
+The <a href="gridflow.html#ZoneSubRegion"><tt>ZoneSubRegion_t</tt></a> node
+allows flowfield or other information to be specified over a subset
+of the entire zone.
 
 <p>
 For unstructured zones only, the node-based
@@ -759,7 +766,7 @@ level and thereafter omitted when outputting data.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 04 Feb 2011
+Last updated 28 Apr 2011
 
 </body>
 </html>

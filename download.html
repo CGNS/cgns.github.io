@@ -96,17 +96,22 @@ The source code may
 downloaded (from SourceForge) as a gzipped, tar file:  <br>
 <ul>
 <li>
-<a href="http://prdownloads.sourceforge.net/cgns/cgnslib_3.1-3.tar.gz?download"><b>CGNS Version 3.1-3</b></a> (cgnslib_3.1-3.tar.gz) -
-Release 3 of Version 3.1 software. Includes 64-bit integer capability.
-<a href="http://www.hdfgroup.org/HDF5/">HDF5</a> is now the default file type, when CGNS is built with HDF5
-version 1.8 or later.  (CGNS can always read or write both HDF5 and ADF
-file types.) This release implements the bug fixes by Xiangmin Jiao (Jim), and adds
-two new functions to more easily read and write GridLocation data for boundary conditions,
+<a href="http://prdownloads.sourceforge.net/cgns/cgnslib_3.1.3-2.tar.gz?download">
+<b>CGNS Version 3.1.3</b></a> (cgnslib_3.1.3-2.tar.gz) -
+Release 2 of Version 3.1.3 software. Includes 64-bit integer capability.
+<a href="http://www.hdfgroup.org/HDF5/">HDF5</a> is now the default file type,
+when CGNS is built with HDF5 version 1.8 or later.
+(CGNS can always read or write both HDF5 and ADF
+file types.) Version 3.1.3 implements the bug fixes by Xiangmin Jiao (Jim),
+and adds two new functions to more easily read and write GridLocation data
+for boundary conditions,
 <tt>cg_boco_gridlocation_read</tt> and <tt>cg_boco_gridlocation_write</tt>.
 It also includes the implementation of CPEX 0027 (Time-dependent Connectivities),
 CPEX 0030 (Zone Sub-Regions) and CPEX 0031 (General SIDS Improvements), along
 with the alpha release of Parallel CGNS.
 These are described in the online documentation.
+<p>
+Release 2 fixes the Fortran element name ordering bug.
 </li>
 </ul>
 
@@ -137,11 +142,22 @@ F77_examples</a></b> - Fortran CGNS examples.</li>
 <a href="http://prdownloads.sourceforge.net/cgns/UserGuideCodeV3.1.2.tar.gz?download">
 UserGuideCode 3.1.2</a></b> - examples from the <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/user/index.html">CGNS
 User Guide</a>.</li>
+</ul>
 
 <p>
 Other CGNS related software and older versions of the library are also available.
 (NOTE: if building CGNS with an HDF5 version <u>earlier</u> than 1.8, then links will not work
 when using HDF5 file type.)
+
+<h2>Known Bugs</h2>
+
+<ul>
+<li>The ElementTypeName data array is incorrectly ordered in
+    <tt>cgnslib_f.h</tt>, resulting in the wrong element name
+    for element types greater than <tt>PYRA_5</tt>
+    (download file cgnslib_3.1-3.tar.gz). This is fixed in the
+    current release (cgnslib_3.1.3-2.tar.gz).</li>
+</ul>
 
 </tr>
 </table>

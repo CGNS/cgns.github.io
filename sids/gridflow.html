@@ -1486,14 +1486,15 @@ one may wish to store additional data on surfaces. In this case, the
 <p>
 <tt>PointRange/List</tt> refer to vertices, edges, faces or cell centers,
 depending on the values of <tt>RegionCellDimension</tt> and <tt>GridLocation</tt>.
-Note that it is the dimensionality of the subregion (i.e. <tt>RegionCellDimension</tt>),
-rather than the dimensionality of the zone in which it is embedded
-(i.e. <tt>CellDimension</tt> of the zone), that determines the types of elements
+Note that it is both the dimensionality of the zone (<tt>CellDimension</tt>)
+as well as the dimensionality of the subregion (<tt>RegionCellDimension</tt>),
+that determines the types of elements
 permissible in <tt>PointRange/List</tt>. The following table shows these relations.
 
 <center>
 <table cellspacing=0 cellpadding=3 border>
 <tr align=center>
+  <th rowspan=2>CellDimension</th>
   <th rowspan=2>RegionCellDimension</th>
   <th colspan=4>GridLocation</th>
 </tr><tr align=center>
@@ -1503,17 +1504,41 @@ permissible in <tt>PointRange/List</tt>. The following table shows these relatio
   <th>CellCenter</th>
 </tr><tr align=center>
   <td>1</td>
+  <td>1</td>
   <td>vertices</td>
   <td>-</td>
   <td>-</td>
   <td>cells (line elements)</td>
 </tr><tr align=center>
   <td>2</td>
+  <td>1</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>-</td>
+  <td>-</td>
+</tr><tr align=center>
+  <td>2</td>
+  <td>2</td>
   <td>vertices</td>
   <td>edges</td>
   <td>-</td>
   <td>cells (area elements)</td>
 </tr><tr align=center>
+  <td>3</td>
+  <td>1</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>-</td>
+  <td>-</td>
+</tr><tr align=center>
+  <td>3</td>
+  <td>2</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>faces</td>
+  <td>-</td>
+</tr><tr align=center>
+  <td>3</td>
   <td>3</td>
   <td>vertices</td>
   <td>edges</td>
@@ -1761,7 +1786,7 @@ Under Zone_t:
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 02 April 2011
+Last updated 06 Jun 2011
 
 </body>
 </html>

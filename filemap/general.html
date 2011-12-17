@@ -39,7 +39,7 @@
 
 <ul>
 <li> <a href="#filestructure">Conceptual Structure of a CGNS Database</a>
-<li> <a href="#nodetructure">The Structure of a Node</a>
+<li> <a href="#nodestructure">The Structure of a Node</a>
 <li> <a href="#nodeuse">Use of Nodes in CGNS</a>
 <li> <a href="#cgns_databases">CGNS Databases</a>
 <li> <a href="#internal">Internal Organization of a CGNS Database</a>
@@ -308,7 +308,11 @@ this data to a "C" application.
 <h4>The Dimension Values</h4>
 
 The Dimension Values are a list of integers expressing the actual sizes
-of the stored array in each of the dimensions specified.
+of the stored array in each of the dimensions specified. With the
+introduction of 64-bit capability with CGNS Version 3.1.3, these
+dimensions are stored internally as 64-bit integers, regardless of the
+compilation mode (32 or 64-bit mode). They are returned to the
+application, however, as <span class=cgsize>cgsize_t</span> variables.
 
 <p>
 In the case of rectangular

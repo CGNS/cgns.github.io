@@ -584,7 +584,7 @@ the node is found; that is, they are structure parameters.
 For example, the SIDS specify that the Data Type of <tt>DataArray_t</tt>
 is a structure parameter, "<tt>DataType</tt>", which may assume
 any of the values "<tt>I<i>n</i></tt>", "<tt>R<i>n</i></tt>",
-"<tt>C<i>n</i></tt>", or "<tt>bit</tt>".
+or "<tt>C<i>n</i></tt>".
 
 <p>
 The other two attributes of <tt>DataArray_t</tt>, <tt>Dimensions</tt>
@@ -646,8 +646,13 @@ and only if</em> it is one of the SIDS-defined quantities.
 <p>
 Integer array nodes perform the same function as nodes of type
 <tt>DataArray_t</tt>, but store integer instead of real arrays. They are
-always of type <tt>int[]</tt>, with the dimensions and values given either
-explicitly in the appropriate fields, or as parameters or functions.
+always of type <tt>int[]</tt> or <tt><span class=cgsize>cgsize_t</span>[]</tt>,
+with the dimensions and values given either
+explicitly in the appropriate fields, or as parameters or functions. The
+<tt><span class=cgsize>cgsize_t</span></tt> data type is used wherever
+there is the potential of exceeding the size limit for a
+32-bit integer (<tt>I4</tt>), such as <tt>PointList</tt>,
+<tt>PointRange</tt>, and <tt>ElementRange</tt>.
 
 <br><br>
 <table cellspacing=0 cellpadding=0 border=0>
@@ -662,7 +667,7 @@ explicitly in the appropriate fields, or as parameters or functions.
       or <tt>int[1 + ... + IndexDimension]</tt>
 <tr valign=baseline><td>
    <th align=left>DataType:<td>
-   <td><tt>I4</tt>
+   <td><tt>I4</tt> or <tt><span class=cgsize>cgsize_t</span></tt>
 <tr valign=baseline><td>
    <th align=left>Dimension:<td>
    <td>1
@@ -817,7 +822,7 @@ for overset grids.
    <td><a href="../sids/build.html#IndexRange"><tt>IndexRange_t</tt></a>
 <tr valign=baseline><td>
    <th align=left>DataType:<td>
-   <td><tt>I4</tt>
+   <td><tt><span class=cgsize>cgsize_t</span></tt>
 <tr valign=baseline><td>
    <th align=left>Dimension:<td>
    <td>2
@@ -860,7 +865,7 @@ to <tt>IndexRange_t</tt>.
    <td><a href="../sids/build.html#IndexArray"><tt>IndexArray_t</tt></a>
 <tr valign=baseline><td>
    <th align=left>DataType:<td>
-   <td><tt>I4</tt>, or (for <tt>InwardNormalList</tt>) <tt>R4</tt> or <tt>R8</tt>
+   <td><tt><span class=cgsize>cgsize_t</span></tt>, or (for <tt>InwardNormalList</tt>) <tt>R4</tt> or <tt>R8</tt>
 <tr valign=baseline><td>
    <th align=left>Dimension:<td>
    <td>2
@@ -3273,7 +3278,7 @@ conditions, and a variety of auxiliary data.
    <td><a href="../sids/cgnsbase.html#Zone"><tt>Zone_t</tt></a>
 <tr valign=baseline><td>
    <th align=left>DataType:<td>
-   <td><tt>I4</tt>
+   <td><tt><span class=cgsize>cgsize_t</span></tt>
 <tr valign=baseline><td>
    <th align=left>Dimension:<td>
    <td>2

@@ -120,7 +120,7 @@
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_boco_info(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int BC</span>, <span class=out><i>char *boconame</i></span>,<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>BCType_t *bocotype</i></span>, <span class=out><i>PointSetType_t *ptset_type</i></span>, <span class=cgout><i>cgsize_t *npnts</i></span>,<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *NormalIndex</i></span>, <span class=cgout><i>cgsize_t *NormalListFlag</i></span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *NormalIndex</i></span>, <span class=cgout><i>cgsize_t *NormalListSize</i></span>,<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>DataType_t *NormalDataType</i></span>, <span class=out><i>int *ndataset</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
@@ -154,7 +154,7 @@
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_boco_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>BC</span>, <span class=out><i>boconame</i></span>, <span class=out><i>bocotype</i></span>, <span class=out><i>ptset_type</i></span>,<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>npnts</i></span>, <span class=out><i>NormalIndex</i></span>, <span class=out><i>NormalListFlag</i></span>, <span class=out><i>NormalDataType</i></span>, <span class=out><i>ndataset</i></span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>npnts</i></span>, <span class=out><i>NormalIndex</i></span>, <span class=out><i>NormalListSize</i></span>, <span class=out><i>NormalDataType</i></span>, <span class=out><i>ndataset</i></span>,<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
@@ -243,16 +243,16 @@
        of the boundary condition patch normal.
 <tr valign=baseline><td>
    <td><tt>NormalListFlag</tt><td>
-   <td>For <tt>cg_boco_normal_write</tt>, <tt>NormalListFlag</tt> is a
-       flag indicating if the normals are defined in <tt>NormalList</tt>;
-       1 if they are defined, 0 if they're not.
-       <br><br>
-       For <tt>cg_boco_info</tt>, if the normals are defined in
-       <tt>NormalList</tt>, <tt>NormalListFlag</tt> is the number of points
+   <td>Flag indicating if the normals are defined in <tt>NormalList</tt>
+       and are to be written out; 1 if they are defined, 0 if they're not.
+<tr valign=baseline><td>
+   <td><tt>NormalListSize</tt><td>
+   <td>If the normals are defined in <tt>NormalList</tt>,
+       <tt>NormalListSize</tt> is the number of points
        in the patch times <tt>phys_dim</tt>, the number of coordinates
        required to define a vector in the field.
        If the normals are not defined in <tt>NormalList</tt>,
-       <tt>NormalListFlag</tt> is 0.
+       <tt>NormalListSize</tt> is 0.
 <tr valign=baseline><td>
    <td><tt>NormalDataType</tt><td>
    <td>Data type used in the definition of the normals.

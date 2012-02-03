@@ -69,6 +69,11 @@
      <li> <tt><b>cg_set_path</b></tt> - Set the CGNS link search path
      <li> <tt><b>cg_add_path</b></tt> - Add to the CGNS link search path
      </li></ul>
+</li><li> <a href="#cgiointer">Interfacing with CGIO</a>
+     <ul>
+     <li> <tt><b>cg_get_cgio</b></tt> - get the CGIO index number
+     <li> <tt><b>cg_root_id</b></tt> - get the root node ID
+     </li></ul>
 </li></ul>
 
 <a name="openclose"></a>
@@ -405,11 +410,70 @@ for linked files. The links need to be either absolute or relative
 pathnames. As a result, it is recommended that the search path
 options not be used as they may be removed in future versions.
 
+<a name="cgiointer"></a>
+<h3>Interfacing with CGIO</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_get_cgio(<span class=in>int fn</span>, <span class=out><i>int *cgio_num</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_root_id(<span class=in>int fn</span>, <span class=out><i>double *rootid</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_get_cgio_f(<span class=in>fn</span>, <span class=out><i>cgio_num</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_root_id_f(<span class=in>fn</span>, <span class=out><i>rootid</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>fn</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><tt>cgio_num</tt><td>
+   <td>CGIO indentifier for the CGNS file.
+<tr valign=baseline><td>
+   <td><tt>rootid</tt><td>
+   <td>Root node identifier for the CGNS file.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+These allow for the use of the <a href="../cgio/index.html">low-level
+CGIO functions</a> in conjunction with the Mid Level Library.
+The function <tt>cg_get_cgio</tt> returns the CGIO database identifier
+for the specified CGNS file, which is used in the CGIO routines.
+The root node identifier for the CGNS file
+is returned by <tt>cg_root_id</tt>.
+
 <p>
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 09 Dec 2011
+Last updated 02 Feb 2012
 
 </body>
 </html>

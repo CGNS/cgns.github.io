@@ -692,6 +692,8 @@ to the CAD databases.
 
     RotatingCoordinates_t RotatingCoordinates ;                        (o)
 
+    List( FamilyName_t FamilyName1 ... FamilyNameN ) ;                 (o)
+
     List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
 
     int Ordinal ;                                                      (o)
@@ -729,6 +731,10 @@ to the CAD databases.
      BC patch or a zone in the data structure
      <a href="bc.html#BC"><tt>BC_t</tt></a> or
      <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a>, respectively.
+<li> A hierarchy of families is possible through the list of <tt>FamilyName_t</tt>
+     nodes. These nodes contain both a user defined node name and a
+     family name. The node name <tt>FamilyParent</tt> may be used to specify
+     the family name for the parent of the current <tt>Family_t</tt> node.
 <li> <tt>Ordinal</tt> is defined in the SIDS as a user-defined integer with no
      restrictions on the values that it can contain.
      It may be used here to attribute a number to the family.
@@ -1096,7 +1102,7 @@ node locations.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 05 April 2011
+Last updated 10 April 2012
 
 </body>
 </html>

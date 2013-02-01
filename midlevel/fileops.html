@@ -291,6 +291,10 @@ This allows creation of a 2.5 compatible CGNS file.
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
+        <tt><b>call cg_exit_on_errors_f(<span class=in>flag</span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b>call cg_set_compress_f(<span class=in>compress</span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
@@ -332,6 +336,9 @@ This allows creation of a 2.5 compatible CGNS file.
    <td><tt>path</tt><td>
    <td>Pathname to search for linked to files when opening a
        file with external links.
+<tr valign=baseline><td>
+   <td><tt>flag</tt><td>
+   <td>Fortran flag to set automatic exit in the case of error.
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.
@@ -401,7 +408,12 @@ functions built on top of <tt>cg_configure</tt>.
 
 <p>
 There is no Fortran counterpart to function <tt>cg_configure</tt> or
-<tt>cg_error_handler</tt>.
+<tt>cg_error_handler</tt>. The Fortran function <tt>cg_exit_on_error_f</tt>
+routine be be used in place of <tt>cg_error_handler</tt>. If <tt>flag</tt>
+is non-zero, then when an error is encountered, the library will print
+the error message and exit with an code of 1. Setting <tt>flag</tt> to
+zero (the default) prevents this and the error is returned to the user
+code.
 
 <p>
 <i>Note:</i> The HDF5 implementation does not support search paths

@@ -292,19 +292,23 @@ This allows creation of a 2.5 compatible CGNS file.
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
-        <tt><b>call cg_set_compress_f(<span class=in>compress</span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_exit_on_errors_f(<span class=in>flag</span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_get_compress_f(<span class=out><i>compress</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_set_compress_f(<span class=in>compress</span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_set_path_f(<span class=in>path</span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_get_compress_f(<span class=out><i>compress</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_add_path_f(<span class=in>path</span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_set_path_f(<span class=in>path</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_add_path_f(<span class=in>path</span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 </table>
@@ -333,6 +337,9 @@ This allows creation of a 2.5 compatible CGNS file.
    <td><tt>path</tt><td>
    <td>Pathname to search for linked to files when opening a
        file with external links.
+<tr valign=baseline><td>
+   <td><tt>flag</tt><td>
+   <td>Fortran flag to set automatic exit in the case of error.
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.
@@ -363,13 +370,15 @@ The currently supported options and expected values are:
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_COMPRESS</tt><td>
-   <td>When a CGNS file is closed after being opened in modify mode, the
-       normal operation of the CGNS library is to rewrite the file if
-       there is unused space.
-       This happens when nodes have been rewritten or deleted.
-       Setting <tt>value</tt> to 0 will prevent the library from
-       rewriting the file, and setting it to 1 will force the rewrite.
-       The default value is &minus;1.
+   <td><b>Note:</b> Prior versions of the libary would automatically rewrite
+       the CGNS file when it was closed after being opened in modify mode
+       if there was unused space. This is no longer done, due to possible
+       conflicts when using parallel I/O. The previous behavior may be
+       recovered by setting <tt>value</tt> to a positive integer. In this
+       case the file will be rewritten if the number of node deletions or
+       modifications are equal to or exceed this number. Setting
+       <tt>value</tt> to a negative number will force the rewrite
+       when the file is closed. The default value is 0 (no rewrite).
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_SET_PATH</tt><td>
@@ -402,7 +411,12 @@ functions built on top of <tt>cg_configure</tt>.
 
 <p>
 There is no Fortran counterpart to function <tt>cg_configure</tt> or
-<tt>cg_error_handler</tt>.
+<tt>cg_error_handler</tt>. The Fortran function <tt>cg_exit_on_error_f</tt>
+routine be be used in place of <tt>cg_error_handler</tt>. If <tt>flag</tt>
+is non-zero, then when an error is encountered, the library will print
+the error message and exit with an code of 1. Setting <tt>flag</tt> to
+zero (the default) prevents this and the error is returned to the user
+code.
 
 <p>
 <i>Note:</i> The HDF5 implementation does not support search paths

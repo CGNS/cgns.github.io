@@ -1,0 +1,584 @@
+<!-- HTML input file for "The CGNS System" slides -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgns.css" rel="stylesheet" type="text/css">
+<title>The CGNS System</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>
+The CGNS System<br>
+<small>Standard for Aerodynamic Data</small>
+</h1>
+
+<p>
+Armin Wulf<br>
+ICEM CFD Engineering<br>
+January 13 1999
+
+<h2>Overview</h2>
+
+<ul>
+<li> Introduction
+<li> Brief History of the CGNS Project
+<li> CGNS Conceptual Entity: The SIDS
+<li> CGNS Physical Entities:
+     <ul>
+     <li> The ADF Core
+     <li> The CGNS Library
+     </ul>
+<li> Examples of Implementation
+<li> Current Development
+<li> Future Development
+<li> Conclusion
+</ul>
+
+<h2>Introduction</h2>
+
+<ul>
+<li> Objective: To offer the opportunity for seamless communication
+     of CFD analysis data between sites, applications and system
+     architectures.
+<li> Motivation: The disparity of data file format reduces the cost
+     effectiveness of CFD while impairing its development.
+<li> Definition: The CFD General Notation System (CGNS) was conceived to
+     provide a general, portable and extensible standard for the storage
+     and retrieval of CFD analysis data.
+<li> CGNS Elements:
+     <ul>
+     <li> Conceptual entity: Collection of conventions for the archiving
+          of CFD data.
+     <li> Physical entity: Software that performs I/O operations in
+          accordance with the defined concepts.
+     </ul>
+</ul>
+
+<h2>Brief History of the CGNS Project</h2>
+
+<ul>
+<li> 1994-1995:
+     <ul>
+     <li> Series of meetings between Boeing and NASA addressing means of
+          improving technology transfer from NASA to Industry: The main
+          impediment to technology transfer is the disparity of file
+          formats.
+     </ul>
+<li> 1995-1998:
+     <ul>
+     <li> Development of the CGNS System (SIDS, ADF) at Boeing Seattle,
+          under NASA Contract with participation from:
+          <ul>
+          <li> Boeing Commercial Aircraft Group, Seattle
+          <li> NASA Ames/Langley/Lewis Research Centers
+          <li> Boeing St-Louis (former McDonnell Douglas Corporation)
+          <li> Arnold Engineering Development Center, for the NPARC
+               Alliance
+          <li> Wright-Patterson Air Force Base
+          <li> ICEM CFD Engineering Corporation
+          </ul>
+     </ul>
+<li> 1997-1998:
+     <ul>
+     <li> Development of the CGNS Library.
+     <li> Institution of the CGNS website (http://www.cgns.org) and
+          first official release of the CGNS software and documentation.
+     </ul>
+</ul>
+
+<h2>CGNS Conceptual Entity:<br>
+The Standard Interface Data Structures (SIDS)</h2>
+
+<ul>
+<li> The SIDS constitutes the essence of CGNS. It defines:
+     <ul>
+     <li> The intellectual content of CFD-related data
+     <li> The organizational data structure
+     <li> The naming conventions
+     </ul>
+<li> Principal Characteristics of the SIDS:
+     <ul>
+     <li> Hierarchical data structure
+     <li> Highly descriptive way of recording the data
+     <li> Ability to include unlimited documentation
+     <li> Complete and explicit problem description
+     <li> Layered so that much of the data structures are optional
+     </ul>
+</ul>
+
+<h2>CGNS High Levels Chart</h2>
+
+<center>
+<img src="aiaa99-Reno-vg/fig1.png"
+     alt="Chart showing high-level structures (i.e., nodes) in a CGNS file"
+     longdesc="aiaa99-Reno-vg/fig1.html">
+</center>
+
+<h2>Grid Coordinates, Flow Solutions and Zone Connectivity Data Structures</h2>
+
+<center>
+<img src="aiaa99-Reno-vg/fig2.png"
+     alt="Chart showing grid coordinate, zone connectivity, and flow solution nodes with their children"
+     longdesc="aiaa99-Reno-vg/fig2.html">
+</center>
+
+<h2>Zone Boundary Conditions Data Structure</h2>
+
+<center>
+<img src="aiaa99-Reno-vg/fig3.png"
+     alt="Chart showing zone boundary conditions node with its children"
+     longdesc="aiaa99-Reno-vg/fig3.html">
+</center>
+
+<h2>Globally Applicable Data and Precedence</h2>
+
+<center>
+<img src="aiaa99-Reno-vg/fig4.png"
+     alt="Chart illustrating precedence rules and scope within the hierarchy"
+     longdesc="aiaa99-Reno-vg/fig4.html">
+</center>
+
+<h2>CGNS Physical Entities</h2>
+
+<ul>
+<li> The (ADF) Core:
+     <ul>
+     <li> The Advanced Data Format (ADF) Core is a set of software
+          routines performing I/O operations to/from an extremely
+          general database system consisting of ADF files.
+     </ul>
+<li> The CGNS Library:
+     <ul>
+     <li> The CGNS Library is an Application Programming Interface
+          facilitating higher level access of the data contained in an
+          ADF database. The CGNS Library is built on top of the ADF Core
+          and does not perform any direct I/O operation.
+     </ul>
+</ul>
+
+<h2>ADF Core Characteristics</h2>
+
+<ul>
+<li> Hierarchical data structure
+     <ul>
+     <li> Quickly traversed and sorted
+     <li> No need to process irrelevant data
+     </ul>
+<li> Based on a single data structure called an ADF node
+<li> Directed graph
+<li> May encompass several ADF files through the use of links
+<li> ADF database is self describing
+<li> Supports any type of data (integer, real, character, complex, byte,
+     link ...)
+<li> Software written in ANSI C to insure its portability
+<li> Complete Fortran and C interface
+<li> Stored in compact C binary format
+<li> Independent of system architectures (Cray/Unicos, Sun/Solaris,
+     SGI/IRIX, IBM/AIX, DEC-Alpha/OSF, Intel/Paragon)
+<li> Universal database (not specific to CFD only)
+</ul>
+
+<h2>ADF Core</h2>
+
+<center>
+<img src="aiaa99-Reno-vg/fig5.png"
+     alt="Chart illustrating ADF file structure with links"
+     longdesc="aiaa99-Reno-vg/fig5.html">
+</center>
+
+<h2>ADF Node Content</h2>
+
+<ul>
+<li> <b>ID</b>: A unique identifier to access a node within a file.
+<li> <b>Name</b>: A character field used to name the node. It must be
+     unique for a given parent.
+<li> <b>Label</b>: A character field used to described the type of
+     information contained in the node.
+<li> <b>Data type</b>: A character field specifying the type of data
+     (e.g. real, complex) associated with the node.
+<li> <b>Number of dimensions</b>: The dimensionality of the data.
+<li> <b>Dimensions</b>: An integer vector containing the number of
+     elements within each dimension.
+<li> <b>Data</b>: The data associated with the node.
+<li> <b>Number of sub-nodes</b>: The number of children directly
+     attached to a node.
+<li> <b>Name of sub-nodes</b>: The list of children names.
+</ul>
+
+<h2>Functions of the ADF Core</h2>
+
+<p>
+The ADF Core is composed of 34 low level functions performing
+the following operations:
+<ul>
+<li> open or close ADF file
+<li> read or set the data binary format
+<li> get the root-id or a node-id
+<li> create, delete or move a node
+<li> create, read or test a node link
+<li> get the children of a node
+<li> read or write the constituents of a node: name, label, data type,
+     dimension, dimension vector and data
+<li> perform version and error control%
+</ul>
+
+<h2>SIDS-to-ADF Mapping of Upper Levels</h2>
+
+<center>
+<img src="aiaa99-Reno-vg/fig6.png"
+     alt="Chart illustrating contents of upper-level nodes"
+     longdesc="aiaa99-Reno-vg/fig6.html">
+</center>
+
+<h2>The Library Reflects Precisely the SIDS and Mapping</h2>
+
+<ol>
+<li> SIDS
+<pre>
+   CGNSBase_t: = {
+   int IndexDimension;
+   List (Zone_t<IndexDimension>Zone1,...ZoneN);
+   ...}
+
+   Zone_t<IndexDimension> : = {
+      int[IndexDimension] VertexSize, CellSize;
+      ...}
+</pre>
+<li> Mapping SIDS to ADF
+     <p>
+     For <tt>CGNSBase_t</tt>,
+     <ul>
+     <li> Name = <tt>BaseName</tt>
+     <li> Label = <tt>CGNSBase_t</tt>
+     <li> Data type = <tt>I4</tt>
+     <li> Dimension = 1
+     <li> Data = <tt>IndexDimension</tt>
+     </ul>
+     <p>
+     For <tt>Zone_t</tt>,
+     <ul>
+     <li> Name = ZoneName
+     <li> Label = <tt>Zone_t</tt>
+     <li> Data type = <tt>I4</tt>
+     <li> Dimensions = <tt>IndexDim</tt> &times; 2
+     <li> Data = <tt>ZoneSize[]</tt> = <tt>VertexSize[], CellSize[]</tt>
+     </ul>
+<br>
+<li> Mid-Level Library Functions
+<pre>
+   int cg_nbases(int FileNo, int *nbases);
+
+   int cg_base_read(int FileNo, int BaseNo, char *BaseName, int *IndexDimension);
+
+   int cg_nzones(int FileNo, int BaseNo, int *nzones);
+
+   int cg_zone_read(int FileNo, int BaseNo, int ZoneNo, char *ZoneName, int *ZoneSize);
+</pre>
+</ol>
+
+<h2>CGNS Library Design Philosophy</h2>
+
+<ul>
+<li> Communication Storage Media &lt;=&gt; Internal Database
+<pre>
+   int cg_open(char *filename, int mode, int *fn);
+   int cg_close(int fn);
+</pre>
+<li> Internal Representation<br>
+     C-Structures Organized Hierarchically (SIDS)
+<p>
+<li> Communication Internal Database <=> User-Application<br>
+     46 Functions
+<p>
+<li> Exception: Large Arrays<br>
+     Keep ADF-ID in Internal Database Instead of Entire Array
+     <ul>
+     <li> Reduce memory usage
+     <li> Improve execution speed
+     </ul>
+</ul>
+
+<h2>Data Flow</h2>
+
+<center>
+<img src="aiaa99-Reno-vg/fig7.png"
+     alt="Chart illustrating data flow between a user application and CGNS software"
+     longdesc="aiaa99-Reno-vg/fig7.html">
+</center>
+
+<h2>CGNS Library: General Remarks</h2>
+
+<ul>
+<li> C &amp; Fortran functions<br>
+     C: <tt>cg_<i>name</i></tt><br>
+     Fortran: <tt>cg_<i>name</i>_f</tt>
+<p>
+<li> Error Status = <tt>ier</tt>. If <tt>ier!=0</tt>, error detected.<br>
+     C: return value<br>
+     Fortran: extra argument
+<p>
+<li> Platform Independent<br>
+     CRAY, SGI-IRIX, DEC-Alpha, SunOS, HP, IBM
+</ul>
+
+<h2>Examples of Implementation</h2>
+
+<ol>
+<li> Read bases, zones &amp; coordinates
+<pre>
+   cg_open(filename, MODE_READ, &amp;fn);
+
+   cg_nbases(fn, &amp;nbases);
+
+   for (B=1; B&lt;=nbases; B++) {
+      cg_base_read(fn, B, BaseName, &amp;IndexDim);
+      cg_nzones(fn, B, &amp;nzones);
+      for (Z=1; Z&lt;=nzones; Z++) {
+
+         cg_zone_read(fn, B, Z, ZoneName, ZoneSize)
+
+         cg_coord_read(fn, B, Z, "CoordinateX", RealSingle,
+                       RangeMin, RangeMax, X);
+      }
+   }
+   cg_close(fn);
+</pre>
+
+<li> Read solutions
+
+<p>
+Given <tt>fn, B, Z</tt>:
+<pre>
+   cg_nsols(fn, B, Z, nsolutions);
+
+   for (S=1, S&lt;=nsolutions, S++) {
+
+      cg_sol_info(fn, B, Z, S, SolutionName, GridLocation);
+
+      cg_nfields(fn, B, Z, S, nfields);
+
+      for (F=1; F&lt;=nfields; F++) {
+         cg_field_info(fn, B, Z, S, F, DataType, FieldName);
+
+         cg_field_read(fn, B, Z, S, FieldName, RealDouble,
+                       RangeMin, RangeMax, DataArray);
+      }
+   }
+<pre>
+</ol>
+
+<h2>Status</h2>
+
+<ul>
+<li> Completed (Version 1.0)
+     <ul>
+     <li> Specification &amp; software for ADF
+     <li> SIDS for multi-block structured
+     <li> API for multi-block structured
+     <li> ADF-Edit file browser
+     <li> Website at www.cgns.org: centralizes distribution of software
+          and information, and tracks users (54 as of October 18 1998)
+     <li> CGNS-online exchange to/from CGNS-Support@CGNS.org for online
+          help, gathering of suggestions, bug reports, etc.
+     </ul>
+<li> In progress (Version 1.1)
+     <ul>
+     <li> SIDS for unstructured and hybrid meshes
+     <li> SIDS for geometry links
+     <li> API for unstructured and geometry data
+     </ul>
+</ul>
+
+<h2>Current Development</h2>
+
+<ol>
+<li> Extension to Unstructured Meshes
+     <ul type=disc>
+     <li> Use existing CGNS hierarchy as much as possible.  Incorporate
+          changes only where needed to support unstructured grids.
+     <li> Define new unstructured-grid zones
+          <ul type=circle>
+          <li> same as structured-grid zones except for connectivity
+               information
+          </ul>
+     <li> Define unstructured-grid connectivity information
+          <ul type=circle>
+          <li> element based connectivity
+          <li> arranged by element type
+          </ul>
+     </ul>
+
+     <p>
+     <center>
+     <img src="aiaa99-Reno-vg/fig8.png"
+          alt="Chart showing ZoneUnstructured_t node with its children"
+          longdesc="aiaa99-Reno-vg/fig8.html">
+     </center>
+
+     <p>
+     <u>Unstructured Zone</u>
+     <ul type=disc>
+     <li> Vertex size: number of nodes
+     <li> Cell size: number of elements of highest dimension
+     </ul>
+
+     <p>
+     <u>Element Sections</u>
+     <ul type=disc>
+
+     <li> Section name: unique for a zone
+     <li> Element type: <tt>Hexa_8</tt>, <tt>Tetra_4</tt>, <tt>Penta_6</tt>,
+          <tt>Quad_4</tt>, <tt>Tri_3</tt>, etc...
+<pre>
+   NPE = NodePerElement(ElementType)
+</pre>
+     <li> Start and end index: element number of first and last elements
+<pre>
+   nelem = end - start + 1
+</pre>
+     <li> Elements array:
+<pre>
+   node(1,1),	  node(1,2)	 ... node(1,NPE)
+   node(nelem,1), node(nelem,2), ... node(nelem,NPE)
+</pre>
+     </ul>
+<li> Add Geometry-to-Mesh Association
+     <ul type=disc>
+     <li> Necessary for
+          <ul type=circle>
+          <li> Quick response to design changes
+          <li> Mesh adaptation
+          <li> Analysis and Display of Results
+          </ul>
+     <li> Objectives
+          <ul type=circle>
+          <li> Compatible to the CGNS System
+          <li> Minimum Changes to the Existing SIDS
+          <li> Reference data in CAD Files
+          <li> Associate CAD Data to Mesh, Solution Data and Boundary
+               Conditions
+          </ul>
+     </ul>
+
+     <p>
+     <center>
+     <img src="aiaa99-Reno-vg/fig9.png"
+          alt="Chart illustrating geometry-to-mesh association"
+          longdesc="aiaa99-Reno-vg/fig9.html">
+     </center>
+
+     <p>
+     <ul type=disc>
+     <li> Rarely a 1-to-1 connection between mesh regions &amp;
+          geometric entities.
+     <li> Association independent of changes to mesh &amp; geometry.
+     <li> Boundary conditions &amp; material properties can be defined
+          on families
+          <ul type=circle>
+          <li> Independent of mesh and geometry.
+          <li> Defined only once.
+          </ul>
+     </ul>
+</ol>
+
+<h2>Future Actions</h2>
+
+<ol>
+<li> Build a User Base
+     <ul type=disc>
+     <li> Advertise CGNS more
+          <ul type=circle>
+          <li> Give presentations at different organizations
+          <li> Send a newsletter or leaflet to CFD groups
+          <li> Advertise in Aerospace America
+          <li> Submit to web search engines
+          <li> Get e-mail lists from various government and industrial
+               organizations, and send CGNS information
+          </ul>
+     <li> Help implementing CGNS in key solvers, at NASA, Boeing, Gov't
+          Labs...
+          <ul type=circle>
+          <li> Work together with solver developers to implement CGNS in
+               their code
+          <li> Provide training
+          <li> Make available examples of applications on the web
+          </ul>
+     </ul>
+<p>
+<li> Future Development Issues
+     <ul type=disc>
+     <li> Extend supported data
+          <ul type=circle>
+          <li> Chemistry, Electromagnetic (Maxwell)
+          <li> Experimental data e.g. pressure paint, flight test
+               recording...
+          <li> Add boundary conditions: Special topologies (C-grid),
+               periodic...
+          <li> Specialized data structures for Cartesian Grid support
+          </ul>
+     <li> Give access to geometry data
+          <ul type=circle>
+          <li> Link to CAPRI
+          <li> Link to geometry evaluator &amp; repair kit
+          </ul>
+     <li> Unstructured and hybrid mesh tools
+          <ul type=circle>
+          <li> Provide alternate connectivity representations, via quick
+               sorting routines
+          <li> Cell, face, edge, vertices neighboring information
+          <li> Compression techniques
+          </ul>
+     <li> Data tools
+          <ul type=circle>
+          <li> Data set interrogator: inventory of cell types, assess
+               compatibility with specific codes, etc.
+          <li> Data consistency check: element quality, b.c., coupling,...
+          <li> Graphical User Interface to view the file content
+               (similar to Windows-Explorer)
+          </ul>
+     <li> Computer related issues:
+          <ul type=circle>
+          <li> Run time data management (as in PV3)
+          <li> Parallel handling (MPI or shared memory)
+          </ul>
+     <li> ISO Standard
+          <ul type=circle>
+          <li> Documentation and code development to meet further
+               standardization requirements
+          </ul>
+     </ul>
+</ol>
+
+<h2>Conclusion</h2>
+
+<ul>
+<li> defines conventions for an extremely complete problem description
+<li> hierarchical data structure optimizes the performance of the data
+     exchange
+<li> machine independent compact binary data files
+<li> most data structures are supported by the CGNS library
+<li> version 1.0 available at www.cgns.org.
+<li> implemented successfully in CFL3D, OVERFLOW, ICEM-CFD Visual3,
+     PEGASUS, ICEM-CFD Output-Interfaces, as well as translators for
+     Plot3D, NPARC, TLNS3D, WIND
+<li> version 1.1 planned for end of December 1998 includes:
+     <ul>
+     <li> CGNS Library coverage of the entire SIDS
+     <li> Geometry-to-Mesh Association and Unstructured Mesh
+     </ul>
+<li> supports seamless communication of analysis data between user sites
+     system architectures, and CFD applications.
+<li> should lead to the development of shared, reusable software
+     selected on technical merit without concern for I/O compatibility.
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 23 Jan 2008
+
+</body>
+</html>

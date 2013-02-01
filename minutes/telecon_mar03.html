@@ -1,0 +1,278 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+20 March 2003<br>
+11:00 AM Eastern Time<br><br>
+
+<ol>
+<li> The meeting was called to order at 11:05 AM.
+     There were <a href="#attendees">12 attendees</a>, listed below.
+<br><br>
+<li> The minutes of the 6 January 2003 Reno meeting were reviewed and
+     approved as posted on the web site.
+<br><br>
+<li> Status of Reno action items:<br><br>
+     <ol type="a">
+     <li> HDF-5: Everyone agrees it is a good idea to eventually
+          replace ADF with HDF-5.  HDF-5 has the following advantages:
+          it has large following and support, it possesses parallel
+          capabilities, and it has strong possibility to becoming an
+          accepted ISO standard.  The two major issues for us are
+          backward compatibility and doing the work itself.  Marc
+          Poinot has a prototype available now (off the PyCGNS website
+          <a href="http://elsa.onera.fr/CGNS/releases/">&lt;http://elsa.onera.fr/CGNS/releases/&gt;</a>
+          <img src="../external.png" alt="external link">),
+          but it needs a lot of testing and has some limitations (like
+          missing system services such as error management).  Ignoring
+          links, Marc estimates it might take approximately 1 month to
+          complete work on it, but he personally doesn't have the time
+          to do it now.  Bruce Wedan and Chris Rumsey agreed to take a
+          look at the prototype as it currently stands.
+     <li> Part 52: Nothing done.  The ISO effort currently on standby
+          within Boeing.  An evaluation of the ISO parts by the CGNS
+          committee will also require active participation from at
+          least one of the Boeing people who is working with the STEP
+          documents.
+     <li> ADFVIEWER documentation and SourceForge:  The documentation is
+          complete and is on SourceForge, but there are currently still
+          some wrinkles to work out with SourceForge to make it work
+          for anonymous users.  Bruce Wedan will send the documentation
+          separately to Charlie Towne.  Bruce will also give information
+          to Chris Rumsey so he can try accessing CGNS from SourceForge.
+          For SourceForge, copyright is not an issue - we are protected.
+          The software continues to be under the GNU lesser public
+          license.  Once CGNS is accessible through SourceForge, the
+          current plan is that Bruce (and perhaps one other person
+          outside of ICEM?) will control and grant write privileges to
+          certain people.  Bruce also is developing shell scripts that
+          run through the mid-level-library test cases.
+     </ol>
+<br>
+<li> ISO Status - Ray Cosner reported that there was a problem with the
+     2003 budget for ISO at Boeing that has resulted in the project
+     currently being put on hold.  Thus there was no progress at the
+     last ISO meeting in early March.  The budget problem should
+     hopefully be resolved soon.  There is a STEP meeting next week, and
+     another ISO meeting in June.
+<br><br>
+<li> Documentation - Charlie Towne will put in the
+     <a href="#sids_mods">changes (clarifications) suggested by
+     Chris</a> in the BC section of the SIDS, shown below.  Also,
+     Charlie says the documentation for utilities is currently buried
+     (difficult to find / get to).  He will correct this.
+<br><br>
+<li> Discussion on extensions:<br><br>
+     <ol type="a">
+     <li> There appears to be a need for allowing <tt>GridLocation</tt>
+          and <tt>PointRange</tt>/<tt>PointList</tt> under
+          <tt>UserDefinedData_t</tt>.  Chris will write up a proposal
+          for extension and have Bruce post it.  There has also arisen
+          a proposal from Florent Cayre of SNECMA in France, regarding
+          additional specification of GridLocation for data deep under
+          <tt>BC_t</tt>.  Chris also agreed to write up this proposal
+          and pass it on to Bruce to post.
+     <li> Regarding tools to check for SIDS compliance, there are now
+          two separate tools in process of being developed.  One (by
+          Marc Poinot) is in conjunction with PyCGNS and performs all
+          parts of a compliance check (syntactic and semantic parts).
+          Checking a CGNS file is a compiler-like tool, and a compiler
+          has a syntactic part that can be done using XML.  The second
+          tool (by Bruce Wedan) checks physical data, and can be used in
+          conjunction with adfviewer.
+     </ol>
+<br>
+<li> Software Status:  Version 2.2 is ready to come off Beta status.
+     Bruce will remove the Beta status as soon as SourceForge is working
+     for CGNS.  In the future, CGNS will be obtainable only from
+     SourceForge, and no longer from the ICEM website (the ICEM cite
+     will point to SourceForge).  As soon as the beta status is removed,
+     Bruce will notify Charlie so Charlie can revise the documentation.
+<br><br>
+<li> Other issues:<br><br>
+     <ol type="a">
+     <li> Greg Stuckert mentioned a colleague with questions regarding
+          CGNS's capability to handle material properties and different
+          equations of state.  Bob Bush said he believed that the SIDS
+          currently handles these, but also recommended that the person
+          submit a detailed question to cgnstalk, so that someone could
+          more properly respond and point to where in the SIDS it is
+          covered.
+     <li> Charlie Towne will look into capability for archiving of
+          cgnstalk questions and responses.
+     <li> Marc Poinot reported on a recent meeting of the French CGNS
+          User's group.  Many large companies met.  Each has its own way
+          of using the standard.  Mostly, CGNS is currently used for its
+          intellectual content (SIDS part).
+     <li> The possibility of doing an AIAA paper for Reno 2004 was
+          discussed. Marc Poinot and Chris Rumsey agreed to think about
+          it, and perhaps submit something together if possible.
+     </ol>
+<br>
+<li> Next Telecon will probably be in mid-May.  There will likely also
+     be a CGNS meeting at the summer AIAA Meeting in Orlando.  Craig Day
+     is the person to contact for reserving a room, which should not
+     conflict with the Standards committee meeting (Tom Shih).
+<br><br>
+<li> Meeting was adjourned at 12:15 PM.
+<br><br>
+<li> Summary of action items:<br><br>
+     <ol type="a">
+     <li> Bruce Wedan and Chris Rumsey to check out Poinot's HDF-5
+          prototype.
+     <li> Bruce Wedan to send adfviewer documentation to Charlie Towne.
+     <li> Bruce Wedan to send SourceForge info to Chris Rumsey so Chris
+          can try to access CGNS from it.
+     <li> Charlie Towne to make <a href="#sids_mods">changes to SIDS</a>.
+     <li> Charlie Towne to improve accessibility of utility
+          documentation.
+     <li> Chris Rumsey to write 2 proposals for extensions:
+          additional capability for <tt>UserDefinedData</tt>, and
+          <tt>GridLocation</tt> deep under <tt>BC_t</tt> and have them
+          posted.
+     <li> Bruce Wedan to get CGNS up and working on SourceForge - and
+          notify Charlie Towne when it is ready so he can update the
+          documentation (beta status will come off at the same time).
+     <li> Charlie Towne to look into archiving cgnstalk questions and
+          responses.
+     <li> Chris Rumsey and Marc Poinot to discuss offline the
+          possibility for a Reno 2004 CGNS paper.
+     <li> Chris Rumsey to arrange for CGNS meeting room in Orlando.
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Bob Bush<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Pratt &amp; Whitney
+<tr valign=baseline><td>
+   <td>Thierry Chevalier<td>
+   <td>Airbus
+<tr valign=baseline><td>
+   <td>Ray Cosner<td>
+   <td>Boeing Phantom
+<tr valign=baseline><td>
+   <td>Ed Hall<td>
+   <td>GE Research Center
+<tr valign=baseline><td>
+   <td>Kevin Mack<td>
+   <td>ADAPCO
+<tr valign=baseline><td>
+   <td>Marc Poinot<td>
+   <td>ONERA
+<tr valign=baseline><td>
+   <td>Greg Power<td>
+   <td>USAF/AEDC
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Greg Stuckert<td>
+   <td>Fluent
+<tr valign=baseline><td>
+   <td>Charlie Towne<td>
+   <td>NASA Glenn
+<tr valign=baseline><td>
+   <td>Kurt Weber<td>
+   <td>Rolls-Royce
+<tr valign=baseline><td>
+   <td>Bruce Wedan<td>
+   <td>ICEM CFD Engineering
+</table>
+
+<a name="sids_mods"></a>
+<h2>Proposed changes/additions to SIDS</h2>
+
+<ol>
+<li> Re-wording of <a href="../sids/bc.html#ZoneBC">Sect 9.2</a> in SIDS
+     after notes:<br><br>
+
+     OLD:<br>
+     Boundary-condition information for a single patch is contained in the
+     <tt>BC_t</tt> structure.
+     All boundary-condition information pertaining to a given zone is
+     contained in the list of <tt>BC_t</tt> structure entities.
+     If a zone contains <i>N</i> boundary-condition patches, then <i>N</i>
+     separate instances of <tt>BC_t</tt> must be provided in the
+     <tt>ZoneBC_t</tt> entity for the zone.
+<br><br>
+     NEW:<br>
+     Boundary-condition information for a single patch is contained in the
+     <tt>BC_t</tt> structure.
+     All boundary-condition information pertaining to a given zone is
+     contained in the list of <tt>BC_t</tt> structure entities.
+     If a zone contains <i>N</i> boundary-condition patches, then <i>N</i>
+     <FONT color="#009900">(and only <i>N</i>)</FONT> separate instances
+     of <tt>BC_t</tt> must be provided in the <tt>ZoneBC_t</tt> entity
+     for the zone.
+     <FONT color="#009900">That is, each boundary-condition patch must
+     be represented by a single <tt>BC_t</tt> entity.</FONT>
+<br><br>
+<li> Expansion of <a href="../sids/bc.html#BC">Sect. 9.3</a> (on
+     <tt>BC_t</tt>), note 2 in SIDS:<br><br>
+
+     OLD:<br>
+     When <tt>GridLocation</tt> is set to <tt>Vertex</tt>, then
+     <tt>PointList</tt> or <tt>PointRange</tt> refer to node indices,
+     for both structured and unstructured grids.
+     When <tt>GridLocation</tt> is set to <tt>FaceCenter</tt> ... etc...
+<br><br>
+     NEW:<br>
+     When <tt>GridLocation</tt> is set to <tt>Vertex</tt>, then
+     <tt>PointList</tt> or <tt>PointRange</tt> refer to node indices,
+     for both structured and unstructured grids.
+     <FONT color="#009900">These node indices define the BC patch.
+     In particular, it should
+     be noted that these points can be interpreted in one of two ways:
+     the finite-difference sense and the finite-volume sense.  In the
+     finite-difference sense, the points are defined as specific point
+     locations at which the BC patch is enforced.  In the finite-volume
+     sense, the points define the boundary surrounding the BC patch
+     region; thus, the indices are used to define the logical region
+     in index-space within which the particular BC patch is defined.
+     This latter case means that the edges of the BC patches may be
+     multiply-defined, but the areas which are enclosed are unique.
+     There is no mechanism currently included in this standard to
+     differentiate between these two interpretations.  Both are allowed.</FONT>
+     When <tt>GridLocation</tt> is set to <tt>FaceCenter</tt> ... etc...
+</ol>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 26 Mar 2003
+
+</body>
+</html>

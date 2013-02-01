@@ -1,0 +1,185 @@
+<!-- CGIO Manual - Library Of Subroutines -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="cgio.css" rel="stylesheet" type="text/css">
+<title> CGIO User's Guide - Link Management Routines </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="index.html"><span class=nav><b>CGIO&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="library.html"><b>The&nbsp;CGIO&nbsp;Software&nbsp;Library</b></a>)
+(<a href="database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="structure.html"><b>Data&nbsp;Structure&nbsp;Management&nbsp;Routines</b></a>)
+(<span class=nav><b>Link&nbsp;Management&nbsp;Routines</b></span>)
+(<a href="node.html"><b>Node&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="dataio.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages&nbsp;and&nbsp;Routines</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="examples.html"><b>Example&nbsp;Programs</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Link Management Routines</h2>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_is_link(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=out><i>int *link_len</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_link_size(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=out><i>int *file_len</i>, <span class=out><i>int *name_len</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_create_link(<span class=in>int cgio_num</span>, <span class=in>double pid</span>, <span class=in>const char *name</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>const char *filename</span>, <span class=in>const char *name_in_file</span>, <span class=out><i>double *id</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_get_link(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=out><i>char *filename</i></span>, <span class=out><i>char *name_in_file</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cgio_is_link_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=out><i>link_len</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_link_size_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=out><i>file_len</i>, <span class=out><i>name_len</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_create_link_f(<span class=in>cgio_num</span>, <span class=in>pid</span>, <span class=in>name</span>, <span class=in>filename</span>, <span class=in>name_in_file</span>, <span class=out><i>id</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_get_link_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=out><i>filename</i></span>, <span class=out><i>name_in_file</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>cgio_num</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Indentifier for the open database file.
+<tr valign=baseline><td>
+   <td><tt>id</tt><td>
+   <td>Node identifier.
+<tr valign=baseline><td>
+   <td><tt>pid</tt><td>
+   <td>Parent node identifier.
+<tr valign=baseline><td>
+   <td><tt>link_len</tt><td>
+   <td>Total length of the link information (<tt>file_len + name_len</tt>).
+<tr valign=baseline><td>
+   <td><tt>file_len</tt><td>
+   <td>Length of the name of the linked-to file.
+       This will be 0 if this is an internal link.
+<tr valign=baseline><td>
+   <td><tt>name_len</tt><td>
+   <td>Length of the pathname of the linked-to node.
+<tr valign=baseline><td>
+   <td><tt>name</tt><td>
+   <td>Name of the link node.
+<tr valign=baseline><td>
+   <td><tt>filename</tt><td>
+   <td>Name of the linked-to file. If creating an internal link, then this
+       should be <tt>NULL</tt> or an empty string. When reading an internal
+       link, this will be returned as an empty string.
+<tr valign=baseline><td>
+   <td><tt>name_in_file</tt><td>
+   <td>Pathname of the linked-to node.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<h2>Function Descriptions</h2>
+
+<dl>
+
+<a name="is_link"></a>
+<dt><tt>cgio_is_link</tt>
+<dd>Determines if the node indentified by <tt>id</tt> in the database given by
+    <tt>cgio_num</tt> is a link or not. The function returns 0 if successfull,
+    else an error code. If this node is a link, then the total length of the
+    linked-to file and node information in returned in <tt>link_len</tt>.
+    If the node is not a link, <tt>link_len</tt> will be 0.
+
+<dt>&nbsp;<dd>
+<a name="link_size"></a>
+<dt><tt>cgio_link_size</tt>
+<dd>Gets the size of the linked-to file name in <tt>file_len</tt> and the
+    node pathname length in <tt>name_len</tt> for the node identified by
+    <tt>id</tt> in the database given by <tt>cgio_num</tt>. The function
+    returns 0 for success, else an error code. If this is an internal link
+    (link to a node in the same database), then <tt>file_len</tt> will be
+    returned as 0.
+
+<dt>&nbsp;<dd>
+<a name="create_link"></a>
+<dt><tt>cgio_create_link</tt>
+<dd>Creates a link node as a child of the parent node identified by <tt>pid</tt>
+    in the database given by <tt>cgio_num</tt>. The name of the node is given
+    by <tt>name</tt>, the name of the linked-to file by <tt>filename</tt>, and
+    the pathname to the linked-to node by <tt>name_in_file</tt>. If this is an
+    internal link (link to a node in the same database), then <tt>filename</tt>
+    should be defined as <tt>NULL</tt> or an empty string. The function
+    returns 0 and the indentifier of the new node in <tt>id</tt> on success,
+    otherwise an error code is returned.
+
+<dt>&nbsp;<dd>
+<a name="get_link"></a>
+<dt><tt>cgio_get_link</tt>
+<dd>Gets the link information for the node identified by <tt>id</tt> in the
+    database given by <tt>cgio_num</tt>. If successfull, the function returns
+    0 and the linked-to file name in <tt>filename</tt> and the node pathname
+    in <tt>name_in_file</tt>. These strings are '0'-terminated, and thus
+    should be dimensioned at least (<tt>file_len + 1</tt>) and
+    (<tt>name_len + 1</tt>), respectively If this is an internal link
+    (link to a node in the same database), then <tt>filename</tt> will be an
+    empty string. The maximum length for a file name is given by
+    <tt>CGIO_MAX_FILE_LENGTH</tt> (1024) and for a link pathname by
+    <tt>CGIO_MAX_LINK_LENGTH</tt> (4096).
+
+</dl>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 09 April 2011
+
+</body>
+</html>

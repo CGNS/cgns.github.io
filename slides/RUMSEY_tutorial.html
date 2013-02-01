@@ -1,0 +1,683 @@
+<!-- HTML input file for slides in "Introduction, Overview, and Basic
+     Usage" section of CGNS tutorial -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgns.css" rel="stylesheet" type="text/css">
+<title>CGNS Introduction, Overview, and Basic Usage</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>CFD General Notation System (CGNS)<br>
+Tutorial Session</h1>
+
+<h2>Agenda</h2>
+
+<table>
+<tr valign=top><td scope=row>7:00-7:30
+    <td><tt>&nbsp;&nbsp;</tt>
+    <td>Introduction, overview, and basic usage<br>
+        C. Rumsey (NASA Langley)
+<tr valign=top><td scope=row>7:30-7:50
+    <td><tt>&nbsp;&nbsp;</tt>
+    <td>Usage for structured grids<br>
+        B. Wedan (ANSYS - ICEM)
+<tr valign=top><td scope=row>7:50-8:10
+    <td><tt>&nbsp;&nbsp;</tt>
+    <td>Usage for unstructured grids<br>
+        E. van der Weide (Stanford University)
+<tr valign=top><td scope=row>8:20-8:40
+    <td><tt>&nbsp;&nbsp;</tt>
+    <td>HDF5 usage and parallel implementation<br>
+        T. Hauser (Utah State University)
+<tr valign=top><td scope=row>8:40-9:00
+    <td><tt>&nbsp;&nbsp;</tt>
+    <td>Python and in-memory CGNS trees<br>
+        M. Poinot (ONERA)
+<tr valign=top><td scope=row>9:00-9:30
+    <td><tt>&nbsp;&nbsp;</tt>
+    <td> Discussion and question/answer period
+</table>
+
+<h1>CFD General Notation System (CGNS)<br>
+Introduction, overview, and basic usage</h1>
+
+<p>
+Christopher L. Rumsey<br>
+NASA Langley Research Center<br>
+Chair, CGNS Steering Committee
+
+<h2>Outline</h2>
+
+<ul>
+<li> Introduction
+<li> Overview of CGNS
+     <ul>
+     <li> What it is
+     <li> History
+     <li> How it works, and how it can help
+     <li> The future
+     </ul>
+<li> Basic usage
+     <ul>
+     <li> Getting it and making it work for you
+     <li> Simple example
+     <li> Aspects for data longevity
+     </ul>
+</ul>
+
+<h2>Introduction</h2>
+
+<ul>
+<li> CGNS provides a general, portable, and extensible standard for the
+     storage and retrieval of CFD analysis data
+<li> Principal target is data normally associated with computed
+     solutions of the Navier-Stokes equations &amp; its derivatives
+<li> But applicable to computational field physics in general (with
+     augmentation of data definitions and storage conventions)
+</ul>
+
+<h2>What is CGNS?</h2>
+
+<ul>
+<li> Standard for defining &amp; storing CFD data
+     <ul>
+     <li> Self-descriptive
+     <li> Machine-independent
+     <li> Very general and extendable
+     <li> Administered by international steering committee
+     </ul>
+<li> AIAA recommended practice (AIAA R-101-2002)
+<li> In process of becoming part of international ISO standard
+<li> Free and open software
+<li> Well-documented
+<li> Discussion forum: cgnstalk@lists.nasa.gov
+<li> Website: http://www.cgns.org
+</ul>
+
+<h2>History</h2>
+
+<ul>
+<li> CGNS was started in the mid-1990s as a joint effort between NASA,
+     Boeing, and McDonnell Douglas
+     <ul>
+     <li> Under NASA's Advanced Subsonic Technology (AST) program
+     </ul>
+<li> Arose from need for common CFD data format for improved
+     collaborative analyses between multiple organizations
+     <ul>
+     <li> Existing formats, such as PLOT3D, were incomplete, cumbersome
+          to share between different platforms, and not self-descriptive
+          (poor for archival purposes)
+     </ul>
+<li> Initial development was heavily influenced by McDonnell Douglas'
+     "Common File Format", which had been in use since 1989
+<li> Version 1.0 of CGNS released in May 1998
+<li> After AST funding ended in 1999, CGNS steering committee was formed
+     <ul>
+     <li> Voluntary public forum
+     <li> International members from government, industry, academia
+     <li> Formally became a sub-committee of AIAA Committee on Standards
+          in 2000
+     </ul>
+<li> Initial efforts by Boeing to make CGNS an international ISO-STEP
+     standard (1999-2002)
+     <ul>
+     <li> Stalled due to lack of funding
+     <li> Instead, the existing ISO standard AP209 (finite element solid
+          mechanics) is being rewritten (AP209E2) to include CGNS as
+          well as an integrated engineering analysis framework (headed
+          by Lockheed-Martin)
+     </ul>
+</ul>
+
+<h2>Steering committee</h2>
+
+<ul>
+<li> CGNS Steering committee is a public forum
+<li> Responsibilities include (1) maintaining software, documentation,
+     and website, (2) ensuring free distribution, and (3) promoting
+     acceptance
+<li> Current steering committee make-up (20 members):
+     <ul>
+     <li> ADAPCO
+     <li> ANSYS-CFX
+     <li> Aerospatiale Matra Airbus
+     <li> Boeing - IDS/PW
+     <li> Boeing Commercial
+     <li> Boeing IDS
+     <li> Fluent
+     <li> ANSYS-ICEM
+     <li> Intelligent Light
+     <li> NASA Glenn
+     <li> NASA Langley
+     <li> ONERA
+     <li> Pacific NW Laboratory
+     <li> Pointwise
+     <li> Pratt &amp; Whitney
+     <li> Pratt &amp; Whitney - Rocketdyne
+     <li> Rolls-Royce Allison
+     <li> Stanford University
+     <li> U.S. Air Force / AEDC
+     <li> Utah State University
+     </ul>
+</ul>
+
+<h2>CGNS main features</h2>
+
+<ul>
+<li> Hierarchical data structure: quickly traversed and sorted, no need
+     to process irrelevant data
+<li> Files stored in compact C binary format
+<li> Layered so that many of the data structures are optional
+<li> ADF or HDF5 database: universal and self-describing
+<li> Data may encompass multiple files through the use of links
+<li> Portable ANSI C software, with complete Fortran and C interfaces
+<li> Architecture-independent application programming interface (API) -
+     written as a mid-level library (MLL)
+</ul>
+
+<h2>CGNS File Layout</h2>
+
+<center>
+<img src="RUMSEY_tutorial/fig1.png"
+     alt="CGNS file layout"
+     longdesc="RUMSEY_tutorial/fig1.html">
+</center>
+
+<h2>Makeup of CGNS</h2>
+
+<ul>
+<li> Standard Interface Data Structures (SIDS) is the core of CGNS -
+     defines the intellectual content
+     <ul>
+     <li> Defines what goes in the "boxes" and how they are organized
+     </ul>
+<li> Original low level implementation is Advanced Data Format (ADF)
+     <ul>
+     <li> Basic direct I/O operations
+     <li> Software has no knowledge of data structure or contents
+     <li> Tree-based (nodal parent/child) structure
+     </ul>
+<li> Low level implementation is migrating toward HDF5 format
+     <ul>
+     <li> HDF5 is already available as an option
+     <li> HDF5 is well-supported (NCSA), widely used, and has parallel
+          I/O capability
+     <li> This will be the official recommended format, although ADF
+          will also continue to be supported, and MLL will translate
+          between the two
+     </ul>
+<li> Mid-level library (MLL) is currently available for C and Fortran
+     <ul>
+     <li> This is what most users employ
+     <li> Software has some knowledge of SIDS
+     <li> C++ and Python extensions also available 
+     </ul>
+</ul>
+
+<h2>How CGNS works</h2>
+
+<ul>
+<li> Users must download the CGNS software
+     <ul>
+     <li> This includes ADF software (basic I/O operations in binary
+          format)
+     <li> Also includes MLL software (for ease of implementation)
+     <li> Users wishing to use HDF5 instead of ADF must download this
+          separately (MLL will work with either ADF or HDF5)
+     </ul>
+<li> Users are encouraged to use the MLL to read and write their data
+     (helps ensure CGNS-compatibility)
+<li> Files are portable across computer platforms
+<li> Tools (such as adfviewer) allow user to "see" what is in the CGNS
+     file
+<li> Many commercial pre- and post-processing software support CGNS
+     format
+</ul>
+
+<h2>Typical view of CGNS file using ADFviewer</h2>
+
+<center>
+<img src="RUMSEY_tutorial/fig2.png"
+     alt="ADFviewer window"
+     longdesc="RUMSEY_tutorial/fig2.html">
+</center>
+
+<h2>Typical CGNS file</h2>
+
+<center>
+<img src="RUMSEY_tutorial/fig3.png"
+     alt="Layout of typical CGNS file"
+     longdesc="RUMSEY_tutorial/fig3.html">
+</center>
+
+<h2>Cons and Pros</h2>
+
+<ul>
+<li> Cons
+     <ul>
+     <li> Although there are rules, there are also many options and a
+          certain amount of freedom
+          <ul>
+          <li> Example: GridLocation = Vertex vs. CellCenter
+          <li> Example: data can be stored dimensional or nondimensional
+          <li> Example: optional use of Rind cells
+          </ul>
+     <li> This flexibility places more responsibility on the CGNS reader
+          to figure out how to make use of what is in the file
+     <li> Attempted balance between too rigid and too flexible
+     </ul>
+<li> Pros
+     <ul>
+     <li> As more people use it, more tools get developed to handle the
+          flexibility
+     <li> Can be as simple as storing only "grid + flow solution", or as
+          complex as storing <em>everything</em> needed to run/describe
+          a case
+     <li> Longevity and infinite extensibility
+     </ul>
+</ul>
+
+<h2>How CGNS can help you</h2>
+
+<ul>
+<li> Improves longevity (archival quality) of data
+     <ul>
+     <li> Self-descriptive (more on this later)
+     <li> Machine-independent
+     </ul>
+<li> Easy to share data files between sites
+     <ul>
+     <li> Eliminates need to translate between different data formats
+     <li> Rigorous standard means less ambiguity about what the data
+          means
+     </ul>
+<li> Saves time and money
+     <ul>
+     <li> For example, easy to set-up CFD runs because files include
+          grid coordinates, connectivity, and BC information
+     </ul>
+<li> Easily extendible to include additional types of data
+     <ul>
+     <li> Solver-specific or user-specific data can easily be written
+          &amp; read - file remains CGNS-compliant (others can still
+          read it!)
+     <li> Once defined &amp; agreed upon, new data standards can be added
+     </ul>
+</ul>
+
+<h2>Status/where CGNS is headed</h2>
+
+<ul>
+<li> Latest version is 2.4
+<li> As of Aug 2005, the CGNSTalk mailing list had 161 participants from
+     21 different countries and at least 80 different organizations
+<li> Over 11,000 CGNS downloads from SourceForge over last 3 years
+     (average of 408 per month over last 1 year)
+<li> Many people have expressed interest in CGNS from outside of the
+     traditional aerodynamics community
+     <ul>
+     <li> E.g., computational physiology, electromagnetics
+     </ul>
+<li> Parallel I/O (through HDF5) will be available soon
+<li> CGNS is already in many widely-used commercial visualization
+     products, e.g.,  Tecplot, Fieldview, ICEM-CFD (reader for Paraview
+     being worked)
+<li> Continuous process: approval and implementation of extensions for
+     handling new capabilities
+</ul>
+
+<h2>Getting CGNS</h2>
+
+<ul>
+<li> Go to <u>http://www.cgns.org</u> and follow instructions
+     <ul>
+     <li> Or go directly to <u>http://www.SourceForge.net</u>
+     <li> You can get the official released version (currently 2.4), or
+          use CVS to keep up with the latest fixes
+     <li> E.g.: cgnslib_2.4-4.tar.gz (or cgnslib_2.4-4.zip for Windows)
+     <li> Follow instructions in README file to compile
+     </ul>
+<li> Also highly recommended (from same place):
+     <ul>
+     <li> cgnstools (tools for viewing/editing)
+     <li> CGNS Users Guide (practical entry-level manual for getting
+          started with CGNS - includes simple source codes)
+     </ul>
+</ul>
+
+<h2>Basics of using CGNS</h2>
+
+<ul>
+<li> Simple example: opening, closing, writing, &amp; reading Base
+<li> Aspects for data longevity
+     <ul>
+     <li> Boundary conditions
+     <li> Convergence history
+     <li> Descriptor nodes
+     <li> Data &amp; equation descriptions
+     <li> Flowfield variables
+     </ul>
+</ul>
+
+<h2>Opening/closing file &amp; writing Base</h2>
+
+<ul>
+<li> C
+<pre>
+   cg_open("grid.cgns", MODE_WRITE, <u>&amp;indexf</u>);
+   basename="Base";
+   icelldim=3; /* dimensionality of cell (3 for volume cell) */
+   iphysdim=3; /* number of coordinates (3 for 3-D) */
+   cg_base_write(indexf, basename, icelldim, iphysdim, <u>&amp;indexb</u>);
+   ...
+   cg_close(indexf);
+</pre>
+<li> Fortran
+<pre>
+   call cg_open_f('grid.cgns', MODE_WRITE, <u>indexf</u>, <u>ier</u>)
+   basename='Base'
+   icelldim=3
+   iphysdim=3
+   call cg_base_write_f(indexf, basename, icelldim, iphysdim, <u>indexb</u>, <u>ier</u>)
+   ...
+   call cg_close_f(indexf, <u>ierr</u>)
+</pre>
+</ul>
+
+<h2>What the file looks like ...</h2>
+
+<center>
+<img src="RUMSEY_tutorial/fig4.png"
+     alt="CGNS file with root, CGNSLibraryVersion_t, and CGNSBase_t nodes"
+     longdesc="RUMSEY_tutorial/fig4.html">
+</center>
+
+<p>
+Notes: icelldim = dimensionality of cell (2 for face, 3 for volume),
+iphysdim = no. of coordinates required to define a node position (1 for
+1-D, 2 for 2-D, 3 for 3-D)
+
+<h2>What the file looks like in adfviewer ...</h2>
+
+<center>
+<img src="RUMSEY_tutorial/fig5.png"
+     alt="ADFviewer window with root, CGNSLibraryVersion_t, and CGNSBase_t nodes"
+     longdesc="RUMSEY_tutorial/fig5.html">
+</center>
+
+<h2>Reading the Base</h2>
+
+<ul>
+<li> C
+<pre>
+   cg_open('grid.cgns', MODE_READ, <u>&amp;indexf</u>);
+   cg_nbases(indexf, <u>&amp;nbases</u>);
+   for (i=1; i <= nbases; i++)
+      {cg_base_read(indexf, i, <u>basename</u>, <u>&amp;icelldim</u>, <u>&amp;iphysdim</u>);}
+   cg_close(indexf);
+</pre>
+<li> Fortran
+<pre>
+   call cg_open_f('grid.cgns', MODE_READ, <u>indexf</u>, <u>ier</u>)
+   call cg_nbases_f(indexf, <u>nbases</u>, <u>ier</u>)
+   do i=1,nbases
+      call cg_base_read_f(indexf, i, <u>basename</u>, <u>icelldim</u>, <u>iphysdim</u>, <u>ier</u>)
+   enddo
+   call cg_close_f(indexf, <u>ier</u>)
+</pre>
+</ul>
+
+<h2>Aspects for data longevity</h2>
+
+<h3>boundary conditions</h3>
+
+<ul>
+<li> BCs are included in the CGNS file
+<li> Including BCs makes it easier for someone else to duplicate the
+     same flow conditions
+<li> Eliminates doubt as to how the solution was run, when later looking
+     at the file
+<li> BCs can be simple or have high level of detail
+     <ul>
+     <li> Minimum: list of points and their BC type (name)
+     <li> Can also include Dirichlet or Neumann-type data
+     </ul>
+</ul>
+
+<center>
+<img src="RUMSEY_tutorial/fig6.png"
+     alt="ADFviewer window with boundary condition node"
+     longdesc="RUMSEY_tutorial/fig6.html">
+</center>
+
+<h3>convergence history</h3>
+
+<ul>
+<li> GlobalConvergenceHistory tracks history of residual(s), forces,
+     moments, etc.
+<li> Part of a complete record of the flow solution, easily readable by
+     others
+</ul>
+
+<center>
+<img src="RUMSEY_tutorial/fig7.png"
+     alt="ADFviewer window with convergence history node"
+     longdesc="RUMSEY_tutorial/fig7.html">
+</center>
+
+<h3>descriptor nodes</h3>
+
+<ul>
+<li> Allow user to add notes, descriptions, important factors associated
+     with the particular run, etc.
+<li> As part of the permanent record, descriptor nodes make the file
+     potentially more useful/meaningful in the future
+<li> Full inclusion of flow solver input deck(s) is particularly useful
+<li> Eliminates doubt as to how the solution was run, when later looking
+     at the file
+</ul>
+
+<center>
+<img src="RUMSEY_tutorial/fig8.png"
+     alt="ADFviewer window with descriptor node for flow solution"
+     longdesc="RUMSEY_tutorial/fig8.html">
+</center>
+
+<p>
+<center>
+<img src="RUMSEY_tutorial/fig9.png"
+     alt="ADFviewer window with descriptor node containing input file"
+     longdesc="RUMSEY_tutorial/fig9.html">
+</center>
+
+<h3>data &amp; equation descriptions</h3>
+
+<ul>
+<li> Documents the dimensionality &amp; units (or normalization) of the
+     data
+<li> Reference state and flow solution method become part of permanent
+     record
+<li> Eliminates doubt as to what the variables represent and how the
+     solution was run, when later looking at the fileo
+</ul>
+
+<center>
+<img src="RUMSEY_tutorial/fig10.png"
+     alt="ADFviewer window with DataClass node"
+     longdesc="RUMSEY_tutorial/fig10.html">
+</center>
+
+<p>
+<center>
+<img src="RUMSEY_tutorial/fig11.png"
+     alt="ADFviewer window with Reynolds number node"
+     longdesc="RUMSEY_tutorial/fig11.html">
+</center>
+
+<p>
+<center>
+<img src="RUMSEY_tutorial/fig12.png"
+     alt="ADFviewer window with governing equations node"
+     longdesc="RUMSEY_tutorial/fig12.html">
+</center>
+
+<h3>flowfield variables</h3>
+
+<ul>
+<li> As many flowfield variables as desired can be stored; for example:
+     <ul>
+     <li> Conserved and/or primitive variables
+     <li> Plus all turbulence quantities, eddy viscosity, distance
+          functions, species mass fractions, or other flowfield
+          quantities of interest
+     </ul>
+<li> Eliminates having to go back and restart or reconstruct when you
+     want to obtain nonstandard quantities
+</ul>
+
+<h2>Some final comments</h2>
+
+<ul>
+<li> A CGNS file can be as full or as sparse as you want to make it
+     <ul>
+     <li> The fuller it is, the more complete and archival the file
+     <li> Always easy to read only the parts you want
+     </ul>
+<li> Easy to build CGNS into existing processes
+     <ul>
+     <li> Start by writing only the "basic" elements of CGNS file
+          (e.g., grid, flow solution, connectivity, and BCs) as a
+          postprocessing file for flow visualization
+     <li> Gradually add to completeness of file
+     <li> Eventually, CGNS file can replace your restart file, if
+          desired
+     </ul>
+</ul>
+
+<h2>Conclusions</h2>
+
+<ul>
+<li> CGNS is a well-established, stable format with worldwide
+     acceptance, use, and support
+<li> Provides seamless communication of data between applications,
+     sites, and system architectures
+<li> Supported by many commercial visualization and CFD vendors
+<li> Extensible and flexible - easily adapted to other fields of
+     computational physics through specification in the SIDS
+<li> Backward compatible with previous versions; forward compatible
+     within major release numbers
+<li> Allows new software development to focus on important matters,
+     rather than on time-consuming data I/O, storage, and compatibility
+     issues
+<li> CGNS is the best thing since sliced bread!
+</ul>
+
+<center>
+<img src="RUMSEY_tutorial/fig13.png"
+     alt="Picture of sliced bread">
+</center>
+
+<h2>Auxiliary slides</h2>
+
+<h2>Writing structured grids</h2>
+
+<pre>
+   double x[kdim][kdim][idim], y[kdim][jdim][idim], z[kdim][jdim][idim];
+   int isize[3][3];
+   strcpy(zonename,"Zone 1");
+   /* vertex size (structured grid example) */
+   isize[0][0]=idim;
+   isize[0][1]=jdim;
+   isize[0][2]=kdim;
+   /* cell size (structured grid example) */
+   isize[1][0]=isize[0][0]-1;
+   isize[1][1]=isize[0][1]-1;
+   isize[1][2]=isize[0][2]-1;
+   /* boundary vertex size (always zero for structured) */
+   isize[2][0]=0;
+   isize[2][1]=0;
+   isize[2][2]=0;
+   /* create zone */
+   cg_zone_write(indexf, indexb, zonename, isize[0], Structured, <u>&amp;indexz</u>);
+   /* write grid coordinates */
+   cg_coord_write(indexf, indexb, indexz, RealDouble, "CoordinateX", x, <u>&amp;indexcx</u>);
+   cg_coord_write(indexf, indexb, indexz, RealDouble, "CoordinateY", y, <u>&amp;indexcy</u>);
+   cg_coord_write(indexf, indexb, indexz, RealDouble, "CoordinateZ", z, <u>&amp;indexcz</u>);
+</pre>
+
+<h2>What the file looks like ...</h2>
+
+<center>
+<img src="RUMSEY_tutorial/fig14.png"
+     alt="CGNS file with zone and grid coordinates nodes"
+     longdesc="RUMSEY_tutorial/fig14.html">
+</center>
+
+<h2>What the file looks like in adfviewer ...</h2>
+
+<center>
+<img src="RUMSEY_tutorial/fig15.png"
+     alt="ADFviewer window with zone and grid coordinates nodes"
+     longdesc="RUMSEY_tutorial/fig15.html">
+</center>
+
+<h2>Writing unstructured grids</h2>
+
+<pre>
+   /* this is an example for HEXA_8 (cube-like) elements
+   double x[maxnodes], y[maxnodes], z[maxnodes];
+   int isize[3], ielem[maxelem][8];
+   strcpy(zonename,"Zone 1");
+   /* vertex size (unstructured grid example) */
+   isize[0]=inodedim;
+   /* cell size (unstructured grid example) */
+   isize[1]=icelldim;
+   /* boundary vertex size (zero if elements not sorted) */
+   isize[2]=ivbdy;
+   /* create zone */
+   cg_zone_write(indexf, indexb, zonename, isize, Unstructured, <u>&amp;indexz</u>);
+   /* write grid coordinates */
+   cg_coord_write(indexf, indexb, indexz, RealDouble, "CoordinateX", x, <u>&amp;indexcx</u>);
+   cg_coord_write(indexf, indexb, indexz, RealDouble, "CoordinateY", y, <u>&amp;indexcy</u>);
+   cg_coord_write(indexf, indexb, indexz, RealDouble, "CoordinateZ", z, <u>&amp;indexcz</u>);
+   /* write element connectivity */
+   cg_section_write(indexf, indexb, indexz, "Elem", HEXA_8, nelem_start, nelem_end,
+      nbdyelem, ielem[0], <u>&amp;indexe</u>);
+</pre>
+
+<h2>Element connectivity for HEXA_8</h2>
+
+<center>
+<img src="RUMSEY_tutorial/fig16.png"
+     alt="Figure showing node numbers for HEXA_8 element"
+     longdesc="RUMSEY_tutorial/fig16.html">
+</center>
+
+<h2>What the file looks like ... (below Base)</h2>
+
+<center>
+<img src="RUMSEY_tutorial/fig17.png"
+     alt="CGNS file with zone, grid coordinates, and element nodes"
+     longdesc="RUMSEY_tutorial/fig17.html">
+</center>
+
+<h2>What the file looks like in adfviewer ...</h2>
+
+<center>
+<img src="RUMSEY_tutorial/fig18.png"
+     alt="ADFviewer window with zone, grid coordinates, and element nodes"
+     longdesc="RUMSEY_tutorial/fig18.html">
+</center>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 19 Dec 2007
+
+</body>
+</html>

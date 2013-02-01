@@ -1,0 +1,174 @@
+<!-- ADF User's Guide - ADF Conventions and Implementations -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - ADF Conventions and Implementations </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;Manual</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;Implementation</b></span></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<span class=nav><b>Conventions&nbsp;and&nbsp;Implementations</b></span>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>ADF Conventions and Implementations</h2>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>C<td><tt>&nbsp;&nbsp;</tt>
+   <td>All input strings are to be null terminated.
+       All returned strings will have the trailing blanks removed and
+       will be null terminated.
+       Variables declared to hold Names, Labels, and Data-Types should
+       be at least 33 characters long.
+       <i>ADF.h</i> has a number of variables defined.
+       An example declaration would be:
+       <pre>
+   char name[ADF_NAME_LENGTH+1];
+       </pre>
+<tr valign=baseline><td>
+   <td>Fortran<td>
+   <td>Strings will be determined using inherited length.
+       Returned strings will be blank filled to the specified length.
+       All returned names will be left justified and blank filled on the
+       right.
+       There will be no null character.
+       An example declaration would be:
+       <pre>
+   PARAMETER ADF_NAME_LENGTH=32
+   CHARACTER*(ADF_NAME_LENGTH) NAME
+       </pre>
+<tr valign=baseline><td>
+   <td>ID<td>
+   <td>A unique identifier to access a given node within a file.
+       This 8-byte field contains sufficient information for ADF to
+       locate the node within a file.
+       For any given node, the ID is generated only after the file it
+       resides in has been opened by a program and the user requests
+       information about the node.
+       The ID is valid only within the program that opened the file and
+       while that file is open.
+       If the file is closed and reopened, the ID for any given node
+       will be different.
+       Within different programs, the node ID for the same node will be
+       different.
+       The ID is not ever actually written into a file.
+       <br><br>
+       The declaration for variables that will hold node IDs should be
+       for an 8-byte real number.
+       <br><br>
+       The ID is actually a 64-bit combination of a system-generated
+       file index along with the block and offset of the location of the
+       node on the disk.
+       In general, users do not need to know the internal coding of this
+       information.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>error_return</tt><td>
+   <td>The error code for the ADF routines is the following:
+       <br><br>
+       <table cellspacing=0 cellpadding=0 border=0>
+       <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+          <td>&minus;1</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td>No error.
+       <tr valign=baseline><td></td>
+          <td><i>n</i>&nbsp;(&gt;&nbsp;0)</td><td></td>
+          <td>ADF error code.
+              The routine
+              <a href="subs_misc.html#Error_Message"><tt>ADF_Error_Message</tt></a>
+              is used to get a textual description of the error.
+       <tr valign=baseline><td></td>
+          <td>0</td><td></td>
+          <td>ADF should never return the value zero.
+       </table>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Indexing<td>
+   <td>All indexing is Fortran-like in that the starting index is 1 and
+       the last is <tt>N</tt> for <i>N</i> items in an index or array
+       dimension.
+       The array structure is assumed to be the same as in Fortran
+       with the first array dimension varying the fastest and the last
+       dimension varying the slowest.
+       <br><br>
+       The index starting at one is used in
+       <a href="subs_io.html#Read_Data"><tt>ADF_Read_Data</tt></a>,
+       <a href="subs_io.html#Write_Data"><tt>ADF_Write_Data</tt></a>, and
+       <a href="subs_structure.html#Children_Names"><tt>ADF_Children_Names</tt></a>.
+       <br><br>
+       The user should be aware of the differences in array indexing
+       between Fortran and C.
+       The subroutines
+       <a href="subs_io.html#Read_All_Data"><tt>ADF_Read_All_Data</tt></a> and
+       <a href="subs_io.html#Write_All_Data"><tt>ADF_Write_All_Data</tt></a>
+       merely take a pointer to the beginning of the data, compute how
+       much data is to be read/written, and process as many bytes as
+       have been requested.
+       Thus, these routines effectively make a copy of memory onto disk
+       or vice versa.
+       Given this convention, it is possible for a C program to
+       use standard C conventions for array indexing and use
+       <tt>ADF_Write_All_Data</tt> to store the array on disk.
+       Then a Fortran program might use <tt>ADF_Read_All_Data</tt> to
+       read the data set.
+       Unless the user is aware of the structure of the data, it is
+       possible for the array to be transposed relative to what is
+       expected.
+       <br><br>
+       The implications of the assumed array structure convention can be
+       quite subtle.
+       The subroutines <tt>ADF_Write_Data</tt> and
+       <tt>ADF_Read_Data</tt> assume the Fortran array structure in
+       order to index the data.
+       Again, unless the user is aware of the implications of this, it
+       is possible to write an array on disk and later try to change a
+       portion of the data and not change the correct numbers.
+       <br><br>
+       As long as users are aware of how their data structure maps onto
+       ADF, there will not be any problems.
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 25 Oct 2001
+
+</body>
+</html>

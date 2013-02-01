@@ -1,0 +1,76 @@
+<!-- A User's Guide to CGNS - Troubleshooting -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="user.css" rel="stylesheet" type="text/css">
+<title> A User's Guide to CGNS - Troubleshooting</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="index.html"><span class=nav><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></span></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="started.html"><b>Getting&nbsp;Started</b></a>)
+(<a href="additional.html"><b>Additional&nbsp;Information</b></a>)
+(<span class=nav><b>Troubleshooting</b></span>)
+(<a href="faq.html"><b>Frequently&nbsp;Asked&nbsp;Questions</b></a>)
+(<a href="examples.html"><b>Example&nbsp;Computer&nbsp;Codes</b></a>)
+(<a href="sids.html"><b>Overview&nbsp;of&nbsp;the&nbsp;SIDS</b></a>)
+(<a href="plot3d.html"><b>Guideline&nbsp;for&nbsp;PLOT3D&nbsp;Variables</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Troubleshooting</h2>
+
+<h3>Handling Errors</h3>
+
+The API has an extensive number of checks for errors, relating both to
+invalid data input as well as SIDS-noncompliance.
+However, it is not guaranteed that the API will catch all problems prior
+to reaching the core level. Even then, additional errors can arise due
+to I/O or invalid input. The list of errors that can arise in the CGIO
+or database manager core routines may be found in the
+<a href="../cgio/errors.html#messages">CGIO User's Guide</a>.
+
+If an error occurs, the message given by API or core routine
+should hopefully be descriptive enough to point to the source of the
+error.
+
+<h3>Known Problems</h3>
+
+One known problem that can occur, which is not so much a problem as it
+is a restriction, relates to links.
+If a user makes a link from one CGNS file to another, then the linked
+file <em>must</em> have write permission if the user wishes to open the
+linking file in <tt>CG_MODE_MODIFY</tt> or <tt>CG_MODE_WRITE</tt> mode.
+In other words, opening a CGNS file in <tt>CG_MODE_MODIFY</tt> or
+<tt>CG_MODE_WRITE</tt> mode implies that the <em>entire</em> CGNS
+hierarchy, including links (since they are transparent), is accessible
+in that mode.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 25 Apr 2011
+
+</body>
+</html>

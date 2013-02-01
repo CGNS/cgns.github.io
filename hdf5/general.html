@@ -1,0 +1,502 @@
+<!-- CGNS File Mapping Manual - General CGNS File Mapping Concepts -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="hdf5.css" rel="stylesheet" type="text/css">
+<title> CGNS SIDS-to-HDF File Mapping Manual - General CGNS File Mapping Concepts </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Gudie</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="index.html"><span class=nav><b>HDF5&nbsp;Implementation</b></span></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="summary.html"><b>Implementation&nbsp;Summary</b></a>)
+(<span class=nav><b>General&nbsp;HDF5&nbsp;Mapping&nbsp;Concepts</b></span>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>General HDF5 Mapping Concepts</h2>
+
+<ul>
+<li> <a href="#hdfelements">Use of HDF5 Elements in CGNS</a>
+<li> <a href="#cgns_databases">CGNS Databases</a>
+<li> <a href="#internal">Internal Organization of a CGNS Database</a>
+</ul>
+
+<p>
+This section describes the general philosophy underlying the use of
+the HDF5 tree structure by CGNS.
+The section <a href="../filemap/nodes.html">Detailed CGNS Node Descriptions</a>
+describes the exact conventions for each type of data.
+
+<p>
+We first describe the <a href="#hdfelements">roles of the various HDF5
+elements</a> (i.e. <em>groups</em> or <em>attributes</em>) as they are
+specifically applied within CGNS, followed by a description of
+<a href="#internal">the overall layout</a> of the tree structure itself.
+
+<a name="hdfelements"></a>
+<h3>Use of HDF5 Elements in CGNS</h3>
+
+<p>
+We previously described the
+<a href="summary.html#dedicated">general role of each of the HDF5
+elements</a> without reference to CFD.
+Here we note any additional information regarding their use within CGNS.
+
+<p>
+We first describe attributes recognized by both HDF5 and CGNS.
+We then describe certain elements which are derived from context,
+i.e., which the node possesses by virtue of its location within a CGNS
+database.
+These notions, namely, <a href="#cardinality">Cardinality</a>,
+<a href="#parameters">Parameters</a>, and
+<a href="#functions">Functions</a>, are unique to CGNS.
+
+<a name="nodeid"></a>
+<h4>The Node ID</h4>
+
+<p>
+The Node ID is completely controlled by HDF5, and thus its role is
+exactly the same for CGNS as it is for HDF5. CGNS software accesses the
+Node ID only through calls to HDF5. HDF5 itself guarantees that Node IDs
+are unique and constant within any HDF5 file (or collection of files)
+while the file(s) are open.
+
+<a name="nodename"></a>
+<h4>The Node Name</h4>
+
+<p>
+In CGNS, the Name may be left to the choice of the user, or it may be
+specified by the <a href="../sids/index.html">SIDS</a>.
+At the levels of the tree nearest the root,
+the (end-)user is free to set the Name to distinguish among like
+objects in the case at hand. For example, in a multizone problem, nodes
+associated with different zones might be named "<tt>UnderLeftWing</tt>"
+or "<tt>AboveForwardFuselage</tt>". At this level, it is generally
+not possible to identify a collection of names which are likely to
+recur. This means that the naming of high level objects does not
+require standardization, and the SIDS are silent regarding the naming
+convention.
+
+<p>
+Because every HDF5 node must be given a name when it is opened, default
+names, based on the node Label, are provided by convention.
+The <a href="../midlevel/index.html">CGNS Midlevel Library</a> will
+record the default names if none is provided by the user.
+The precise formula is given in the Label section below.
+
+<p>
+At levels of the tree farther from the root, the SIDS often specify
+the name. There is, for example, a commonly encountered collection of
+flow variables whose general meaning is widely understood. In this
+case, standardizing the name conveys precise information. Thus the SIDS
+specify, for instance, that a node containing static internal energy
+per unit mass should have the Name "<tt>EnergyInternal</tt>".
+Adherence to these <a href="../sids/dataname.html">naming
+conventions</a> guarantees uniform meaning of the data from site to site
+and user to user.
+Of course, there may be a desire to store quantities for which no naming
+convention is specified.
+In this case any suitable name can be used, but there is no guarantee of
+proper interpretation by anyone unaware of the choice.
+
+<p>
+By extension, a node name is a series of names separated by a
+<em>slash</em> "<tt>/</tt>" (like the POSIX file system names),
+moreover "<tt>/</tt>" is the root name of the CGNS tree.
+
+<p>
+A CGNS Name can contain any printable ASCII character except the 
+<em>slash</em> "<tt>/</tt>" and the <em>dot</em> "<tt>.</tt>" when
+this <em>dot</em> is the first character of the name.
+
+<h4>The Label</h4>
+
+<p>
+Within CGNS, nearly all labels reflect C-style type definitions
+("typedefs") specified by the SIDS, and end in the characters
+"<tt>_t</tt>". Some "Leaf" nodes (i.e. nodes that have no children)
+do not represent higher level CGNS structures and therefore have labels
+that do not follow the "<tt>_t</tt>" convention. At this writing, all
+such nodes have the type <tt>int[]</tt>, i.e., integer array, a type
+already recognized in C, for which a separate type definition would be
+artificial. Such nodes are generally located by the software through
+their names, which are specified by the SIDS, rather than through their
+labels.
+
+<p>
+The Label generally indicates the role of the data at and below the
+node in the context of CFD. Nodes which are entry points to data for a
+particular zone, for example, have the Label "<tt>Zone_t</tt>".
+
+<p>
+Parent nodes often have a number of children each containing data for
+different instances of the same structure. Multiple children of the same
+parent therefore often have the same Label. It is customary for software
+to conduct searches which depend on the Label, e.g., to determine the
+number of zones in a problem. The software will fail if the conventions
+regarding Labels are not observed.
+
+<p>
+Labels are also used to build default node Names. These are derived from
+the Label by dropping the characters "<tt>_t</tt>" and substituting the
+smallest positive integer resulting in a unique name among children
+of the same parent. For example, the first default Name for a node
+of type <tt>Zone_t</tt> will be "<tt>Zone1</tt>"; the second will be
+"<tt>Zone2</tt>"; and so on.
+
+<h4>The Data Type</h4>
+
+<p>
+Data Types are completely specified by the file mapping. Although HDF5
+provides a number of types, in CGNS the only types used are <tt>MT</tt>
+(No Data), <tt>I4</tt> (Integer), <tt>R4</tt> and <tt>R8</tt> (Real),
+<tt>C1</tt> (Character), and <tt>LK</tt> (Link).
+
+<p>
+The specification of data types within the File Mapping allows for the
+probability that files written under different circumstances may differ
+in precision. The issue is complicated by the ability of HDF5 to sense
+the capabilities of the platform on which it is running and interpret or
+record data accordingly. The general rule is that, although the user of
+HDF5 can specify the precision in which it is desired to read or write
+the data, HDF5 knows both the precision available at the source and the
+precision acceptable to the destination and will mitigate accordingly.
+Thus to specify the precison of real data as <tt>R4</tt>, for example, has
+no meaning unless both <tt>R4</tt> and <tt>R8</tt> are available. Therefore,
+the generic specification "<tt>DataType</tt>" is used to allow for all
+possibilities.
+
+<p>
+For all integer data specified by the SIDS, <tt>I4</tt> provides
+sufficient precision.
+
+<h4>The Number of Dimensions</h4>
+
+<p>
+Whenever data is stored at a node, it is in the form of a single array
+of elements of a single date type. Insofar as possible, the dimension
+specified by CGNS is the natural underlying dimension; for example, a
+rectangular array of pressures is stored with dimension equal to the
+physical dimension of the problem.
+
+<p>
+There are situations in which this representation is not feasible. For
+instance, a list of points which do not form a rectangular array in
+physical space may be compacted into a one-dimensional array in HDF5.
+
+<p>
+Frequently the data is of type <tt>C1</tt> (character data). In some
+cases, the data holds additional information in the form of a name
+specified by the SIDS, and in some cases holds user comment. All such
+data is generally represented as a one-dimensional array (or list) of
+characters.
+
+<h4>The Dimension Values</h4>
+
+<p>
+These are used exactly as specified by HDF5. In the case of rectangular
+arrays of physical data, the dimension values are set to the actual
+sizes in physical space. Note that these sizes often depend on whether
+the values are associated with grid nodes, cell centers or other
+physical locations with respect to the grid. In any event, they refer to
+the amount of data actually stored, not to any larger array from which
+it may have been extracted.
+
+<p>
+In the case of list data, the dimension value is the length of the
+list. Lists of characters may contain termination bytes such as
+"<tt>\n</tt>"; by this means an entire document can be
+stored in the data field.
+
+<h4>The Data</h4>
+
+<p>
+CGNS imposes no conventions on the data itself beyond those specified
+by HDF5. Note that it is a responsibility of the CGNS software to ensure
+that the amount and type of stored data agrees with the specification of
+the data type, number of dimensions, and dimension values.
+
+<a name="childtable"></a>
+<h4>The Child Table</h4>
+
+<p>
+The Child Table is completely controlled by HDF5, and thus its role is
+exactly the same for CGNS as it is for HDF5. CGNS software accesses and
+modifies the child table only through calls to HDF5.
+
+<p>
+In addition to the meaning of attributes of individual HDF5 nodes,
+the File Mapping specifies the relations between nodes in a CGNS
+database. Consequently, the File Mapping determines what kinds of nodes
+will lie in the child table.
+
+<p>
+It is important to reemphasize that HDF5 provides no notion of order
+among children. This means children can be identified only by their
+names, labels and system-provided node IDs. In particular, the order
+of a list of children returned by HDF5 has nothing to do with the order
+in which they were inserted in the file. However, the order returned is
+consistent from call to call provided the file has not been closed and
+the node structure has not been modifed.
+
+<a name="cardinality"></a>
+<h4>Cardinality</h4>
+
+<p>
+The <em>cardinality</em> of a CGNS node is the number of nodes of the same
+label permitted at one point in the tree, i.e., as children of the same
+parent. It consists of both lower and upper limits.
+
+<p>
+Since the notion of a CGNS database allows for work in progress, the
+lower limit is generally zero (although the database may be of little
+use until certain nodes are filled). The upper limit is usually either
+one or many (<i>N</i>).
+
+<a name="parameters"></a>
+<h4>Parameters</h4>
+
+<p>
+CGNS relies on the fact that SLL nodes cannot be found except by
+following the pointers from their parents.  This means that software
+accessing a node has had an opportunity to note all the data above that
+node in the tree. Therefore, nodes do not repeat within themselves
+information which is necessary for their interpretation but which is
+available at a higher level.
+
+<p>
+A datum which is necessary for the proper interpretation of a
+node but which is derived from its ancestors is referred to as a
+<i>structure parameter</i>.
+
+<a name="functions"></a>
+<h4>Functions</h4>
+
+<p>
+Occasionally the proper interpretation of a node depends on
+an implicitly understood <em>function</em> of its structure
+parameters. Usually these relate to the actual amount of data
+stored.
+Several of these functions are defined in the
+<a href="../sids/index.html">SIDS</a> and referenced in this document.
+
+<a name="cgns_databases"></a>
+<h3>CGNS Databases</h3>
+
+<h4>Definition of a CGNS Database</h4>
+
+<p>
+By definition, a CGNS database is created when, within an HDF5 file, a
+node is created which conforms to the <a href="#CGNSBase">specifications
+given below</a> for a node of type
+"<a href="../sids/cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a>".
+This node is conceptually the root of the CGNS database. Because it is
+created and controlled by the user, it cannot be the root of the HDF5
+file.
+Current CGNS conventions require that it be located directly below
+the HDF5 root node.
+
+<p>
+Further, by the mechanism of links, a CGNS database may span multiple
+files. Thus there is no notion of a CGNS <em>file</em>, only of a CGNS
+<em>database</em> implemented within one or more <em>HDF5 files</em>.
+
+<p>
+By virtue of its intended use, a CGNS database is dynamic in
+that its content at any time reflects the current state of a CFD
+problem of interest. For example, after the completion of a grid
+generation procedure, a CGNS file may contain a grid but no boundary
+conditions. Therefore, beyond the occurrence of a <tt>CGNSBase_t</tt>
+node, there is no minimum content required in a CGNS database.
+
+<p>
+Conversely, there is no proscription against the inclusion, anywhere
+within an HDF5 file containing a CGNS database, of nodes of any form
+whatsoever, provided only that their naming and labelling does not mimic
+CGNS conventions. Such "non-CGNS" nodes, and those below them in the HDF5
+tree, are not regarded as part of the CGNS database. CGNS software will
+not detect the existence of non-CGNS nodes.
+
+<p>
+We may therefore take the following as a definition of a CGNS database:
+<blockquote>
+<i>A CGNS database is a subtree of an HDF5 file or files which is rooted
+at a node with label</i> "<tt>CGNSBase_t</tt>" <i>and which conforms to
+the <a href="../sids/index.html">SIDS data model</a> as implemented by
+the <a href="../filemap/index.html">SIDS File Mapping</a>.</i>
+</blockquote>
+
+<h4>Location of CGNS Databases within HDF5 Files</h4>
+
+<p>
+An HDF5 file may contain more than one <tt>CGNSBase_t</tt> node; i.e.,
+there may be more than one CGNS database rooted within the same HDF5
+file.
+CGNS software accepts the <em>name</em> of the desired database as an
+argument, and will locate the correct <tt>CGNSBase_t</tt> node within
+the specified HDF5 file.
+Obviously, each <tt>CGNSBase_t</tt> node in a single HDF5 file must have
+a unique name.
+
+<p>
+A CGNS database may link to CGNS nodes in the same or other HDF5
+files. Thus, for example, a CGNS database may reference the grid from
+another CGNS database without physically copying the the information.
+In this case, the structure of the HDF5 file into which the link is made
+is invisible except below the node to which the link is made.
+
+<h4>File Management</h4>
+
+<p>
+Beyond <i>Open</i> and <i>Close</i> neither HDF5 nor CGNS provides
+any file management facilities. The user is responsible for ensuring
+that:
+
+<ul>
+<li> The HDF5 file containing the root of the required database is
+     available and its permissions are properly set at runtime.
+<li> If links are made to other HDF5 files, including any not under the
+     user's direct control, these are also available at runtime.
+<li> No file is opened for writing by more than one program at a time.
+</ul>
+
+<p>
+It is possible, within CGNS, to protect files from inadvertent writing
+by opening them as "read only".
+
+<a name="internal"></a>
+<h3>Internal Organization of a CGNS Database</h3>
+
+<a name="CGNSBase"></a>
+<h4>The <tt>CGNSBase_t</tt> Node</h4>
+
+<p>
+At the highest level of the tree defining a CGNS database there is
+always a node labeled
+"<a href="../sids/cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a>".
+The name of this node is user defined, and serves essentially as the
+name of the database itself.
+This name is used by the CGNS software to open the database.
+
+<a name="CGNSLibraryVersion"></a>
+<h4>The <tt>CGNSLibraryVersion_t</tt> Node</h4>
+
+<p>
+An HDF5 file may also contain other nodes below the root node beside
+<tt>CGNSBase_t</tt>, but these are <em>not</em> officially part of the
+CGNS database and will not be recognized by most CGNS software.
+One exception to this is a node called <tt>CGNSLibraryVersion_t</tt>,
+which is a child of the HDF5 root node.
+This node stores the version number of the CGNS standard with which the
+file is consistent, and is created automatically when the file is
+created or modified using the <a href="../sids/index.html">CGNS Mid-Level
+Library</a>.
+Officially, the CGNS version number is not a part of the CGNS
+database (because it is not located below <tt>CGNSBase_t</tt>).
+But because the Mid-Level Library software makes use of it, the node is
+included in this document.
+
+<h4>Topological Basis of CGNS Database Organization</h4>
+
+<p>
+Below the root, the organization of a CGNS database reflects the problem
+topology.
+Omitting detail, <a href="../filemap/figures.html#example_hierarchy">the overall
+structure of the HDF5 file</a> is shown in the first of the
+<a href="../filemap/figures.html">CGNS File Mapping Figures</a>.
+Below the HDF5 root node is the <tt>CGNSLibraryVersion_t</tt> node, and
+one or more <tt>CGNSBase_t</tt> nodes.
+Each <tt>CGNSBase_t</tt> node is the root of a CGNS database.
+
+<p>
+At the next level below a <tt>CGNSBase_t</tt> node are general
+specifications which apply to the problem globally, such as reference
+states, units, and so on.
+At this level we also find a collection of nodes labeled
+"<a href="../sids/cgnsbase.html#Zone"><tt>Zone_t</tt></a>".
+The tree below each of these holds all the data local to
+one of the various zones or subdomains which constitute the problem.
+
+<p>
+Beneath each <tt>Zone_t</tt> node there are nodes whose subtrees
+store: the grid (labeled
+<a href="../sids/gridflow.html#GridCoordinates"><tt>GridCoordinates_t</tt></a>);
+flowfields
+(<a href="../sids/gridflow.html#FlowSolution"><tt>FlowSolution_t</tt></a>);
+boundary conditions
+(<a href="../sids/bc.html#ZoneBC"><tt>ZoneBC_t</tt></a>);
+information about the geometrical connection to other zones
+(<a href="../sids/cnct.html#GridConnectivity"><tt>GridConnectivity_t</tt></a>);
+and information defining <a href="../sids/timedep.html">time-dependent
+data</a>.
+Below these there may be additional nodes containing yet more
+geometrically local information. For example, under the <tt>ZoneBC_t</tt>
+node there are nodes defining individual boundary conditions on portions
+of faces of the zone (<a href="../sids/bc.html#BC"><tt>BC_t</tt></a>).
+
+<p>
+Certain types of nodes originally specified at a high level are
+optionally repeated below.
+For example, immediately below a <tt>Zone_t</tt> node we may find
+another <a href="../sids/misc.html#ReferenceState"><tt>ReferenceState_t</tt></a> node.
+The CGNS convention is that such a node overrides (for the associated
+portion of the topology only) any data found at a higher level.
+
+<a name="notcovered"></a>
+<h4>Topics Not Currently Covered</h4>
+
+<p>
+No specification of the kind represented by this file mapping can ever
+be complete. However, it is worth noting that there are certain entities
+common in CFD which are not currently specified by the file mapping.
+
+<p>
+Within nodes of type
+<a href="../sids/gridflow.html#FlowSolution"><tt>FlowSolution_t</tt></a>,
+the current file mapping permits the storage of fields of any number of
+dependent variables.
+In addition to those whose names are specified in the SIDS the user may
+add any desired quantities, naming them appropriately.
+Names that are not currently codified in the SIDS will not be
+common between practitioners without separate communication.
+
+<p>
+Obviously any sort of physical field could be stored in a
+<tt>FlowSolution_t</tt> node. The problem with using CGNS for such
+applications lies in the probable need to specify additional physical
+information.
+Standardizing this information is tantamount to extending the SIDS and
+File Mapping to the disciplines in question.
+
+<p>
+Similarly, if a reacting flow problem requires the specification of rate
+tables or catalytic wall boundary conditions, extensions to the SIDS and
+File mapping will be needed.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 12 July 2005
+
+</body>
+</html>

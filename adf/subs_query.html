@@ -1,0 +1,592 @@
+<!-- ADF User's Guide - ADF Library Of Subroutines -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - ADF Library Of Subroutines </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;Manual</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;Implementation</b></span></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<span class=nav><b>Data&nbsp;Query&nbsp;Routines</b></span>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Data Query Routines</h2>
+
+<ul>
+<li> <tt><a href="#Get_Label">ADF_Get_Label</a></tt> -
+     Get a label
+<li> <tt><a href="#Set_Label">ADF_Set_Label</a></tt> -
+     Set a label
+<li> <tt><a href="#Get_Data_Type">ADF_Get_Data_Type</a></tt> -
+     Get the data type
+<li> <tt><a href="#Get_Number_of_Dimensions">ADF_Get_Number_of_Dimensions</a></tt> -
+     Get the number of dimensions
+<li> <tt><a href="#Get_Dimension_Values">ADF_Get_Dimension_Values</a></tt> -
+     Get the dimension values of a node
+<li> <tt><a href="#Put_Dimension_Information">ADF_Put_Dimension_Information</a></tt> -
+     Set the data type and dimension information
+</ul>
+
+<a name="Get_Label"></a>
+<h3>Get the String in a Node's Label Field</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Get_Label"><br>
+<tt>ADF_Get_Label (ID,label,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Get_Label</tt>
+    <td align=center><tt>ADFGLB</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>char *label</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>character*(*) label</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>label</i></tt><td>
+   <td>The 32-character label of the node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine returns the 32-character string stored in the node's label
+field.
+In C, the label will be null terminated after the last nonblank
+character.
+Therefore, in general, 33 characters should be allocated (32 for the
+label, plus 1 for the null).
+In Fortran, the label is left justified and blank filled to the right.
+The null character is not returned in Fortran, therefore, the variable
+declaration can be for 32 characters (e.g., <tt>CHARACTER*(32)</tt>).
+
+<a name="ex:Get_Label"></a>
+<br><br>
+<u><i>Example</i></u>
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+   C
+         CHARACTER*(MAXCHR) NODNAM,LABL
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,CID
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+         CALL ADFCRE(RID,'NODE 1',CID,IERR)
+         CALL ADFSLB(CID,'THIS IS A NODE LABEL',IERR)
+   C
+         CALL ADFGNAM(CID,NODNAM,IERR)
+         CALL ADFGLB(CID,LABL,IERR)
+   C
+         PRINT *,' NODE NAME = ',NODNAM
+         PRINT *,' LABEL     = ',LABL
+   C
+         STOP
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   NODE NAME = NODE 1
+   LABEL     = THIS IS A NODE LABEL
+</pre>
+
+<a name="Set_Label"></a>
+<h3>Set the String in a Node's Label Field</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Set_Label"><br>
+<tt>ADF_Set_Label (ID,label,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Set_Label</tt>
+    <td align=center><tt>ADFSLB</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt><br>
+                         <tt>const char *label</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt><br>
+                         <tt>character*(*) label</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>label</i></tt><td>
+   <td>The 32-character label for the node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Set_Label</tt>, sets the 32-character string in
+the node's label field.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+See the <a href="#ex:Get_Label">example for <tt>ADF_Get_Label</tt></a>.
+
+<a name="Get_Data_Type"></a>
+<h3>Get the String in a Node's Data-Type Field</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Get_Data_Type"><br>
+<tt>ADF_Get_Data_Type (ID,data_type,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Get_Data_Type</tt>
+    <td align=center><tt>ADFGDT</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>char *data_type</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>character*(*) data_type</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>data_type</i></tt><td>
+   <td>The 32-character data type field stored in the node information
+       header.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Get_Data_Type</tt>, returns the 32-character
+string in the node's data-type field.
+In C, the label will be null terminated after the last nonblank;
+therefore, at least 33 characters (32 for the label, plus 1 for the
+null) should be allocated for the <tt><i>data_type</i></tt> string.
+In Fortran, the null character is not returned; therefore, the
+declaration for the string <tt><i>data_type</i></tt> can be for 32
+characters.
+
+<a name="ex:Get_Data_Type"></a>
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+This example illustrates the process of creating a node, storing data in
+it, querying the node for the information in the header, and reading the
+data back out.
+
+<pre>
+   PROGRAM TEST
+   C
+         PARAMETER (MAXCHR=32)
+         PARAMETER (MAXROW=2)
+         PARAMETER (MAXCOL=10)
+   C
+         CHARACTER*(MAXCHR) NODNAM,LABL
+         CHARACTER*(MAXCHR) DTYPE
+         REAL R4DATI(MAXROW,MAXCOL),R4DATO(MAXROW,MAXCOL)
+         INTEGER IDIMI(2),IDIMO(2)
+   C
+   C *** NODE IDS
+   C
+         REAL*8 RID,CID
+   C
+   C *** OPEN DATABASE
+   C
+         CALL ADFDOPN('db.adf','NEW',' ',RID,IERR)
+   C
+   C *** GENERATE SOME DATA
+   C
+         IDIMI(1) = MAXROW
+         IDIMI(2) = MAXCOL
+         DO 200 ICOL = 1,MAXCOL
+            DO 100 IROW = 1,MAXROW
+               R4DATI(IROW,ICOL) = 2.0*ICOL*IROW
+     100    CONTINUE
+     200 CONTINUE
+   C
+   C *** GENERATE A NODE AND PUT DATA IN IT
+   C
+         CALL ADFCRE(RID,'NODE 1',CID,IERR)
+         CALL ADFSLB(CID,'LABEL FOR NODE 1',IERR)
+         CALL ADFPDIM(CID,'R4',2,IDIMI,IERR)
+         CALL ADFWALL(CID,R4DATI,IERR)
+   C
+   C *** GET INFORMATION FROM NODE
+   C
+         CALL ADFGNAM(CID,NODNAM,IERR)
+         CALL ADFGLB(CID,LABL,IERR)
+         CALL ADFGDT(CID,DTYPE,IERR)
+         CALL ADFGND(CID,NDIM,IERR)
+         CALL ADFGDV(CID,IDIMO,IERR)
+         CALL ADFRALL(CID,R4DATO,IERR)
+   C
+         PRINT *,' NODE NAME            = ',NODNAM
+         PRINT *,' LABEL                = ',LABL
+         PRINT *,' DATA TYPE            = ',DTYPE
+         PRINT *,' NUMBER OF DIMENSIONS = ',NDIM
+         PRINT *,' DIMENSIONS           = ',IDIMO
+         PRINT *,' DATA:'
+         WRITE(*,300)((R4DATO(I,J),I=1,MAXROW),J=1,MAXCOL)
+     300 FORMAT(2(5X,F10.2))
+   C
+         STOP
+         END
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   NODE NAME            = NODE 1
+   LABEL                = LABEL FOR NODE 1
+   DATA TYPE            = R4
+   NUMBER OF DIMENSIONS =            2
+   DIMENSIONS           =            2           10
+   DATA:
+            2.00           4.00
+            4.00           8.00
+            6.00          12.00
+            8.00          16.00
+           10.00          20.00
+           12.00          24.00
+           14.00          28.00
+           16.00          32.00
+           18.00          36.00
+           20.00          40.00
+</pre>
+
+<a name="Get_Number_of_Dimensions"></a>
+<h3>Get the Number of Node Dimensions</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Get_Number_of_Dimensions"><br>
+<tt>ADF_Get_Number_of_Dimensions (ID,num_dims,error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Get_Number_of_Dimensions</tt>
+    <td align=center><tt>ADFGND</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *num_dims</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer num_dims</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>num_dims</i></tt><td>
+   <td>The integer dimension value.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Get_Number_of_Dimensions</tt>, returns the number
+of data dimensions used in the node.
+Values will be returned only for the number of dimensions defined in the
+node.
+If the number of dimensions for the node is zero, an error is returned.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+See the <a href="#ex:Get_Data_Type">example for <tt>ADF_Get_Data_Type</tt></a>.
+
+<a name="Get_Dimension_Values"></a>
+<h3>Get the Values of the Node Dimensions</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Get_Dimension_Values"><br>
+<tt>ADF_Get_Dimension_Values (ID,dim_vals[],error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Get_Dimension_Values</tt>
+    <td align=center><tt>ADFGDV</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *dim_vals[]</tt><br>
+                         <tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer dim_vals()</tt><br>
+                         <tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>dim_vals</i></tt><td>
+   <td>The array (list) of dimension values.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Get_Dimension_Values</tt>, returns the array
+(list) of dimension values for a node.
+Values will be returned only for the number of dimensions defined in the
+node.
+If the number of dimensions for the node is zero, an error is returned.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+See the <a href="#ex:Get_Data_Type">example for <tt>ADF_Get_Data_Type</tt></a>.
+
+<a name="Put_Dimension_Information"></a>
+<h3>Set or Change the Data Type and Dimensions of a Node</h3>
+
+<table align=center width=100% cellspacing=0 cellpadding=5 border
+       bgcolor="#ced9ff">
+<tr><th colspan=3 align=left scope=colgroup abbr="ADF_Put_Dimension_Information"><br>
+<tt>ADF_Put_Dimension_Information (ID,data_type,dims,dim_vals[],error_return)</tt><br><br>
+<tr><th align=right scope=row>Language
+    <th align=center scope=column>C
+    <th align=center scope=column>Fortran
+<tr><th align=right scope=row>Routine Name
+    <td align=center><tt>ADF_Put_Dimension_Information</tt>
+    <td align=center><tt>ADFPDIM</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Input
+    <td width=41% nowrap><tt>const double ID</tt><br>
+                  <tt>const char *data_type</tt><br>
+                  <tt>const int dims</tt><br>
+                  <tt>int dim_vals[]</tt>
+    <td width=41% nowrap><tt>real*8 ID</tt><br>
+                  <tt>character*(*) data_type</tt><br>
+                  <tt>integer dims</tt><br>
+                  <tt>integer dim_vals()</tt>
+<tr><th width=18% align=right valign=baseline scope=row>Output
+    <td width=41% nowrap><tt>int *error_return</tt>
+    <td width=41% nowrap><tt>integer error_return</tt>
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt><i>ID</i></tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The ID of the node to use.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>data_type</i></tt><td>
+   <td>The 32-character data type of the node.
+       The valid user-definable data types are:
+       <br><br>
+       <table cellspacing=0 cellpadding=0 border=0>
+       <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+          <th align=left scope=col><u>Data Type</u></td><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col><u>Notation</u>
+       <tr valign=baseline><td></td>
+          <td>No Data</td><td></td>
+          <td align=center><tt>MT</tt>
+       <tr valign=baseline><td></td>
+          <td>Integer 32</td><td></td>
+          <td align=center><tt>I4</tt>
+       <tr valign=baseline><td></td>
+          <td>Integer 64</td><td></td>
+          <td align=center><tt>I8</tt>
+       <tr valign=baseline><td></td>
+          <td>Unsigned Integer 32</td><td></td>
+          <td align=center><tt>U4</tt>
+       <tr valign=baseline><td></td>
+          <td>Unsigned Integer 64</td><td></td>
+          <td align=center><tt>U8</tt>
+       <tr valign=baseline><td></td>
+          <td>Real 32</td><td></td>
+          <td align=center><tt>R4</tt>
+       <tr valign=baseline><td></td>
+          <td>Real 64</td><td></td>
+          <td align=center><tt>R8</tt>
+       <tr valign=baseline><td></td>
+          <td>Complex 64</td><td></td>
+          <td align=center><tt>X4</tt>
+       <tr valign=baseline><td></td>
+          <td>Complex 128</td><td></td>
+          <td align=center><tt>X8</tt>
+       <tr valign=baseline><td></td>
+          <td>Character (unsigned byte)</td><td></td>
+          <td align=center><tt>C1</tt>
+       <tr valign=baseline><td></td>
+          <td>Byte (unsigned byte)</td><td></td>
+          <td align=center><tt>B1</tt>
+       </table>
+       <br>
+       Compound data types can be defined as a combination of types
+       ("<tt>I4,I4,R8</tt>"), an array ("<tt>I4[25]</tt>"), or a
+       combination of types and arrays ("<tt>I4,C1[20],R8[3]</tt>").
+       They can contain up to 32 characters.
+       This style of data type definition is not very portable across
+       platforms; therefore, it is not recommended.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>dims</i></tt><td>
+   <td>The number of dimensions of this node.
+       <tt><i>dims</i></tt> can be a number from 0 to 12.
+       "0" means no data.
+       The dimension of an array can range from 1 (vector) to 12.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>dim_vals</i></tt><td>
+   <td>The array (list) of dimension values for this node.
+       <tt><i>dim_vals</i></tt> is a vector of integers that define
+       the size of the array in each dimension as defined by
+       <tt><i>dims</i></tt>.
+       If the dims is zero, the <tt><i>dims_vals</i></tt> are not used.
+       The valid range of <tt><i>dim_vals</i></tt> is from 1 to
+       2,147,483,648.
+       The total data size in bytes, calculated by the
+       <tt><i>data_type</i></tt> size times the dimension values, cannot
+       exceed 2,147,483,648 for any one node.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt><i>error_return</i></tt><td>
+   <td><a href="errors.html">Error return code.</a>
+</table>
+
+<p>
+This routine, <tt>ADF_Put_Dimension_Information</tt>, sets or changes
+the data type and dimension information for a node.
+
+<br><br>
+<em>Note:</em>
+When this routine is used to change the data type or number of
+dimensions of an existing node, any data currently associated with the
+node are lost.
+The dimension values can be changed and the data space will be extended
+as needed.
+Be very careful changing the dimension values.
+The layout of the data is assumed to be Fortran-like.
+If the left-most dimension values are changed, the data are not shifted
+around on disk to account for this; only the amount of data is changed.
+Therefore, the indexing into the data will be changed.
+In general, it is safe to change the right-most dimension value.
+For example, if the array of dimension values was (10,11,20,50), then
+changing the 10, 11, or 20 is very risky, whereas changing the 50 should
+be safe.
+
+<br><br>
+<em>Note:</em>
+See the section on <a href="design.html#fortran">Fortran character
+array portability</a>.
+
+<br><br>
+<u><i>Example</i></u>
+
+<p>
+See the <a href="#ex:Get_Data_Type">example for <tt>ADF_Get_Data_Type</tt></a>.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 9 Oct 2002
+
+</body>
+</html>

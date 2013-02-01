@@ -1,0 +1,366 @@
+<!-- HTML input file for "Advances in the CGNS Database Standard for
+     Aerodynamics and CFD" slides -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgns.css" rel="stylesheet" type="text/css">
+<title>Advances in the CGNS Database Standard for Aerodynamics and CFD</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>
+AIAA-2000-0681<br>
+Advances in the CGNS Database Standard for Aerodynamics and CFD<br><br>
+<small>Reno, NV, January 12, 2000</small>
+</h1>
+
+<p>
+Diane M. A. Poirier<br>
+ICEM CFD Engineering, Berkeley, CA
+
+<p>
+Robert H. Bush<br>
+United Technologies Research Center, East Hartford, CT
+
+<p>
+Raymond R. Cosner<br>
+Boeing Phantom Works, St. Louis, MO
+
+<p>
+Christopher L. Rumsey<br>
+NASA Langley Research Center, Hampton, VA
+
+<p>
+Douglas R. McCarthy<br>
+Boeing Commercial Airplane Group, Seattle, WA
+
+<h2>Overview</h2>
+
+<ul>
+<li> Introduction
+     <ul>
+     <li> History
+     <li> CGNS Original Features and Components
+     </ul>
+<li> Advances in the CGNS
+     <ul>
+     <li> Technical Extensions
+          <ul>
+          <li> Unstructured Topology
+          <li> Geometry-to-Mesh Association
+          <li> Grid Motion
+          <li> Iterative and Time-Accurate data
+          </ul>
+     <li> New Organization: The CGNS Steering Committee
+     <li> Migration to an ISO Standard
+     </ul>
+<li> Conclusion
+</ul>
+
+<h2>Introduction: Objective</h2>
+
+<p>
+The CFD General Notation System (CGNS) was conceived to:
+<ul>
+<li> Provide a general, portable and extensible standard for the storage
+     and retrieval of CFD analysis data.
+<li> To offer the opportunity for seamless communication of CFD analysis
+     data between sites, applications and system architectures.
+<li> To eliminate the overhead costs due to file translation, and
+     multiplicity of data sets in various formats.
+</ul>
+
+<h2>Introduction: History of the CGNS Project</h2>
+
+<ul>
+<li> 1994-1995:
+     <ul>
+     <li> Series of meetings between Boeing and NASA addressing means of
+          improving technology transfer from NASA to Industry: The main
+          impediment to technology transfer is the disparity of file
+          formats.
+     </ul>
+<li> 1995-1998:
+     <ul>
+     <li> Development of the CGNS System (SIDS, ADF) at Boeing Seattle,
+          under NASA Contract with participation from:
+          <ul>
+          <li> Boeing Commercial Aircraft Group, Seattle
+          <li> NASA Ames/Langley/Lewis Research Centers
+          <li> Boeing St-Louis (former McDonnell Douglas Corporation)
+          <li> Arnold Engineering Development Center, for the NPARC
+               Alliance
+          <li> Wright-Patterson Air Force Base
+          <li> ICEM CFD Engineering Corporation
+          </ul>
+     </ul>
+<li> 1997-1998:
+     <ul>
+     <li> Development of the CGNS Library.
+     <li> Institution of the CGNS website (http://www.cgns.org) and
+          first official release of the CGNS software and documentation.
+     </ul>
+</ul>
+
+<h2>Introduction: CGNS Elements</h2>
+
+<ul>
+<li> Conceptual entity: Collection of conventions and definitions
+     <ul>
+     <li> Standard Interface Data Structures (SIDS)
+     </ul>
+<li> Database System: Software that performs I/O operations
+     <ul>
+     <li> Advanced Data Format (ADF)
+     </ul>
+<li> Mapping of the SIDS to the ADF Core
+<li> CGNS Application Programming Interface (API)
+</ul>
+
+<center>
+<img src="aiaa00-0681-vg/fig1.png"
+     alt="Chart illustrating data flow between a user application and CGNS software"
+     longdesc="aiaa00-0681-vg/fig1.html">
+</center>
+
+<h2>Introduction: CGNS Main Features</h2>
+
+<ul>
+<li> Hierarchical data structure: quickly traversed and sorted, no need
+     to process irrelevant data
+<li> Complete and explicit problem description
+<li> Standardized naming conventions
+<li> Ability to include unlimited documentation, and application
+     specific data
+<li> Layered so that much of the data structures are optional
+<li> ADF database: universal and self describing
+<li> Based on a single data structure called an ADF node
+<li> The data may encompass several files through the use of links
+<li> Portable ANSI C software, with complete Fortran and C interfaces
+<li> Files stored in compact C binary format
+<li> Complete and architecture independent API
+</ul>
+
+<h2>Introduction: Chart of Original SIDS</h2>
+
+<center>
+<img src="aiaa00-0681-vg/fig2.png"
+     alt="Chart illustrating node structure for the original SIDS specification"
+     longdesc="aiaa00-0681-vg/fig2.html">
+</center>
+
+<h2>Extension: Unstructured Topology</h2>
+
+<ul>
+<li> Unstructured blocks are recorded using the same data structure as
+     structured blocks, <tt>Zone_t</tt>
+<li> Two new children are added to the <tt>Zone_t</tt> data structure:
+     <ul>
+     <li> <tt>ZoneType_t</tt> = <tt>{Structured, Unstructured}</tt>
+     <li> <tt>Elements_t</tt>: Element connectivity, shape, range, ...
+     </ul>
+</ul>
+
+<center>
+<img src="aiaa00-0681-vg/fig3.png"
+     alt="Chart illustrating Zone_t node structure for unstructured grid"
+     longdesc="aiaa00-0681-vg/fig3.html">
+</center>
+
+<h2>Extension: Elements Data Structure</h2>
+
+<p>
+<tt>Element_t</tt> is added under the <tt>Zone_t</tt> data structure to
+record unstructured elements data:
+<ul>
+<li> element based connectivity
+<li> arranged by element type
+<li> use global element numbering
+</ul>
+
+<center>
+<img src="aiaa00-0681-vg/fig4.png"
+     alt="Chart illustrating Elements_t node structure"
+     longdesc="aiaa00-0681-vg/fig4.html">
+</center>
+
+<h2>Extension: Geometry-to-Mesh Association</h2>
+
+<p>
+Necessary for:
+<ul>
+<li> Quick response to design changes
+<li> Mesh adaptation
+<li> Analysis and Display of Results
+</ul>
+
+<p>
+Objectives:
+<ul>
+<li> Compatible to the CGNS System
+<li> Reference data in CAD Files
+<li> Associate CAD Data to Mesh and Boundary Conditions
+</ul>
+
+<p>
+Layer of indirection:
+<ul>
+<li> Rarely a 1-to-1 connection between mesh regions &amp; geometric
+     entities.
+<li> Association independent of changes to mesh &amp; geometry.
+<li> Boundary conditions &amp; material properties can be defined on
+     families.
+</ul>
+
+<center>
+<img src="aiaa00-0681-vg/fig5.png"
+     alt="Chart illustrating geometry-to-mesh association"
+     longdesc="aiaa00-0681-vg/fig5.html">
+</center>
+
+<h2>Extension: Family Data Structure</h2>
+
+<p>
+<tt>Family_t</tt> is added under the <tt>CGNSBase_t</tt> data structure
+to record references to geometry files.
+
+<center>
+<img src="aiaa00-0681-vg/fig6.png"
+     alt="Chart illustrating Family_t node structure"
+     longdesc="aiaa00-0681-vg/fig6.html">
+</center>
+
+<h2>Extension: Grid Motion</h2>
+
+<ul>
+<li> <tt>RigidGridMotion_t</tt>: Records rigid translation and rotation
+     of the mesh
+<li> <tt>ArbitraryGridMotion_t</tt>: Records point-by-point grid motion
+     or deformation
+</ul>
+
+<center>
+<img src="aiaa00-0681-vg/fig7.png"
+     alt="Chart illustrating RigidGridMotion_t and ArbitraryGridMotion_t node structures"
+     longdesc="aiaa00-0681-vg/fig7.html">
+</center>
+
+<h2>Extension: Iterative and Time-Accurate Data</h2>
+
+<p>
+<tt>IterativeOrTemporalData_t</tt> associates with each time step or
+iteration the appropriate data structures for:
+<ul>
+<li> rigid and arbitrary grid motion
+<li> grid coordinates
+<li> flow solutions.
+</ul>
+
+<center>
+<img src="aiaa00-0681-vg/fig8.png"
+     alt="Chart illustrating IterativeOrTemporalData_t node structure"
+     longdesc="aiaa00-0681-vg/fig8.html">
+</center>
+
+<h2>Other Extensions Under Review</h2>
+
+<ul>
+<li> Chemistry
+<li> Multigrid
+<li> Rotating Coordinate Systems
+<li> Periodic Boundary Conditions
+<li> Wall Functions
+<li> 2D Axisymmety
+<li> Cartesian Mesh
+</ul>
+
+<h2>New Organization: The CGNS Steering Committee</h2>
+
+<ul>
+<li> Mission: To ensure the continuation of the CGNS
+<li> Charter: Adopted by the Committee on 21 October 1999
+     <ul>
+     <li> Responsibilities:
+          <ul>
+          <li> Maintain the software, documentation, and CGNS web site
+          <li> Ensure a free distribution of the software and
+               documentation
+          <li> Provide mechanisms for the evolution of the Standard
+          <li> Promote the acceptance of the standard
+          <li> Provide user services
+          </ul>
+     <li> Membership:
+          <ul>
+          <li> Currently limited to 15 organizations
+          </ul>
+     <li> Organization:
+          <ul>
+          <li> Meets at a minimum of once per year
+          <li> Is represented by a Chairperson
+          <li> Governs by consensus
+          <li> Welcomes participation of all parties, members or not
+          </ul>
+     </ul>
+</ul>
+
+<h2>Migration to an ISO Standard</h2>
+
+<ol>
+<li> <u>Preliminary Stage</u> - Planning for possible standardization
+     projects (accomplished 1998-99).
+<li> <u>Proposal Stage</u> - Culminates in approval to start a new AP
+     project (completed November 1999).
+<li> <u>Preparatory Stage</u> - Develop a Working Draft and a New Work
+     Item (planned completion October 2000).
+<li> <u>Committee Stage</u> - Consensus is achieved on a Committee
+     Draft (planned completion ~ April 2001).
+<li> <u>Enquiry Stage</u> - Vote on Draft International Standard.
+<li> <u>National Stage</u> - Vote on Final Draft International Standard
+     (~2002)
+<li> <u>Publication Stage</u> - ISO publishes the International
+     Standard.
+</ol>
+
+<h2>CGNS Continues to Gain Acceptance</h2>
+
+<center>
+Number of Registered Users
+<p>
+<img src="aiaa00-0681-vg/fig9.png"
+     alt="Bar chart showing growth in number uf users "
+     longdesc="aiaa00-0681-vg/fig9.html">
+</center>
+
+<h2>Conclusion</h2>
+
+<ul>
+<li> Technical progress
+     <ul>
+     <li> The CGNS was extended to support unstructured topology and
+          geometry-to-mesh association
+     <li> Grid motion, iterative and time-accurate data have been added
+          to the SIDS, and soon will be added to the API
+     <li> Several other extensions are currently under review
+     </ul>
+<li> Organizational progress
+     <ul>
+     <li> The CGNS Steering Committee governs the CGNS activities and
+          welcomes the participation of all parties
+     </ul>
+<li> Dissemination progress
+     <ul>
+     <li> The CGNS is the object of an ISO standard for aerodynamic data
+     <li> The number of CGNS users is been growing steadily
+     </ul>
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 23 Jan 2008
+
+</body>
+</html>

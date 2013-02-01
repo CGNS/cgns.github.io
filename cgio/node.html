@@ -1,0 +1,258 @@
+<!-- CGIO Manual - Library Of Subroutines -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="cgio.css" rel="stylesheet" type="text/css">
+<title> CGIO User's Guide - Node Management Routines </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="index.html"><span class=nav><b>CGIO&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="library.html"><b>The&nbsp;CGIO&nbsp;Software&nbsp;Library</b></a>)
+(<a href="database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="structure.html"><b>Data&nbsp;Structure&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="links.html"><b>Link&nbsp;Management&nbsp;Routines</b></a>)
+(<span class=nav><b>Node&nbsp;Management&nbsp;Routines</b></span>)
+(<a href="dataio.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages&nbsp;and&nbsp;Routines</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="examples.html"><b>Example&nbsp;Programs</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Node Management Routines</h2>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_get_node_id(<span class=in>int cgio_num</span>, <span class=in>double pid</span>, <span class=in>const char *pathname</span>, <span class=out><i>double *id</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_get_name(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=out><i>char *name</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_set_name(<span class=in>int cgio_num</span>, <span class=in>double pid</span>, <span class=in>double id</span>, <span class=in>const char *name</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_get_label(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=out><i>char *label</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_set_label(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=in>const char *label</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_get_data_type(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=out><i>char *data_type</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_get_dimensions(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=out><i>int *ndims</i></span>, <span class=cgout><i>cgsize_t *dims</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_set_dimensions(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=in>const char *data_type</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>int ndims</span>, <span class=cgin>const cgsize_t *dims</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cgio_get_node_id_f(<span class=in>cgio_num</span>, <span class=in>pid</span>, <span class=in>name</span>, <span class=out><i>id</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_get_name_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=out><i>name</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_set_name_f(<span class=in>cgio_num</span>, <span class=in>pid</span>, <span class=in>id</span>, <span class=in>name</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_get_label_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=out><i>label</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_set_label_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=in>label</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_get_data_type_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=out><i>data_type</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_get_dimensions_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=out><i>ndims</i></span>, <span class=cgout><i>dims</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_set_dimensions_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=in>data_type</span>, <span class=in>ndims</span>, <span class=cgin>dims</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>cgio_num</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Database identifier.
+<tr valign=baseline><td>
+   <td><tt>pid</tt><td>
+   <td>Parent node identifier.
+<tr valign=baseline><td>
+   <td><tt>id</tt><td>
+   <td>Node identifier.
+<tr valign=baseline><td>
+   <td><tt>pathname</tt><td>
+   <td>Absolute or relative path name for a node.
+<tr valign=baseline><td>
+   <td><tt>name</tt><td>
+   <td>Node name (max length 32).
+<tr valign=baseline><td>
+   <td><tt>label</tt><td>
+   <td>Node label (max length 32).
+<tr valign=baseline><td>
+   <td><tt>data_type</tt><td>
+   <td>Type of data contained in the node. One of "MT", "I4", "I8", "U4", "U8",
+       "R4", "C1", or "B1".
+<tr valign=baseline><td>
+   <td><tt>ndims</tt><td>
+   <td>Number of dimensions for the data (max 12).
+<tr valign=baseline><td>
+   <td><tt>dims</tt><td>
+   <td>Data dimension values (<tt>ndims</tt> values).
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<h2>Function Descriptions</h2>
+
+<dl>
+
+<a name="get_node_id"></a>
+<dt><tt>cgio_get_node_id</tt>
+<dd>Gets the node identifier for the node specified by <tt>pathname</tt>
+    in the database given by <tt>cgio_num</tt>. if <tt>pathname</tt> starts
+    with '/', then it is taken as an absolute path and is located based
+    on the root id of the database, otherwise it is taken to be a relative
+    path from the parent node identifed by <tt>pid</tt>. The function returns
+    0 and the node identifier in <tt>id</tt> on success, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="get_name"></a>
+<dt><tt>cgio_get_name</tt>
+<dd>Gets the name of the node identified by <tt>id</tt> in the database given
+    by <tt>cgio_num</tt>. The name is returned in <tt>name</tt>, and has a
+    maximum length of <tt>CGIO_MAX_NAME_LENGTH</tt> (32). In C, <tt>name</tt>
+    should be dimensioned at least 33 to allow for the terminating '0'.
+    The function returns 0 for success, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="set_name"></a>
+<dt><tt>cgio_set_name</tt>
+<dd>Sets (renames) the node identied by <tt>id</tt> in the database given by
+    <tt>cgio_num</tt> to <tt>name</tt>. The parent node identifier is given
+    by <tt>pid</tt>. There must not already exist a child node of <tt>pid</tt>
+    with that name. The function return 0 on success, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="get_label"></a>
+<dt><tt>cgio_get_label</tt>
+<dd>Gets the label of the node identified by <tt>id</tt> in the database given
+    by <tt>cgio_num</tt>. The label is returned in <tt>label</tt>, and has a
+    maximum length of <tt>CGIO_MAX_LABEL_LENGTH</tt> (32). In C, <tt>label</tt>
+    should be dimensioned at least 33 to allow for the terminating '0'.
+    The function returns 0 for success, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="set_label"></a>
+<dt><tt>cgio_set_label</tt>
+<dd>Sets the label of the node identied by <tt>id</tt> in the database given by
+    <tt>cgio_num</tt> to <tt>label</tt>. The function return 0 on success,
+    else an error code.
+
+<dt>&nbsp;<dd>
+<a name="get_data_type"></a>
+<dt><tt>cgio_get_data_type</tt>
+<dd>Gets the data type of the data associated with the node identified by
+    <tt>id</tt> in the database given by <tt>cgio_num</tt>.
+    The data type is returned in <tt>data_type</tt>, and has a
+    maximum length of <tt>CGIO_MAX_DATATYPE_LENGTH</tt> (2).
+    In C, <tt>data_type</tt> should be dimensioned at least 3 to allow for
+    the terminating '0'.
+    The function returns 0 for success, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="get_dimensions"></a>
+<dt><tt>cgio_get_dimensions</tt>
+<dd>Gets the dimensions of the data associated with the node identified by
+    <tt>id</tt> in the database given by <tt>cgio_num</tt>. The number of
+    dimensions is returned in <tt>ndims</tt> and the dimension values
+    in <tt>dims</tt>. Since the maximum number of dimensions is
+    <tt>CGIO_MAX_DIMENSIONS</tt> (12), <tt>dims</tt> should be dimensioned
+    12, unless the actual number of dimensions is already known.
+    The function returns 0 for success, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="set_dimensions"></a>
+<dt><tt>cgio_set_dimensions</tt>
+<dd>Sets the data type and dimensions for data associated with the node
+    identified by <tt>id</tt> in the database given by <tt>cgio_num</tt>.
+    The data type (<tt>data_type</tt>) as one of:
+    <pre>
+    "MT"  An empty node containing no data
+    "I4"  32-bit integer (int or integer*4)
+    "I8"  64-bit integer (cglong_t or integer*8)
+    "U4"  32-bit unsigned integer (unsigned int or integer*4)
+    "U8"  64-bit unsigned integer (cgulong_t or integer*8)
+    "R4"  32-bit real (float or real*4)
+    "R8"  64-bit real (double or real*8)
+    "C1"  character (char or character)
+    "B1"  unsigned bytes (unsigned char or character*1)
+    </pre>
+    The number of dimensions is given by <tt>ndims</tt> (maximum is 12), and
+    the dimension values by <tt>dims</tt>. Note that any existing data for the
+    node will be destroyed. To add the data to the node, use one of the
+    <a href="dataio.html">data writing routines</a>. The function returns 0 for
+    success, else an error code.
+
+</dl>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 07 April 2011
+
+</body>
+</html>

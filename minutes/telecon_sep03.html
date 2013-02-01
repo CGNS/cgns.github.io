@@ -1,0 +1,281 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+18 September 2003<br>
+11:00 AM Eastern Daylight Time<br><br>
+
+<ol>
+<li> The meeting was called to order at 11:05 AM, at the start of the
+     east-coast hurricane Isabel.
+     There were <a href="#attendees">14 attendees</a>, listed below.
+<br><br>
+<li> The minutes of the <a href="telecon_may03.html">29 May 2003
+     telecon meeting</a> were reviewed and approved as posted on the web
+     site.
+<br><br>
+<li> Status of previous action items:<br><br>
+     <ol type="a">
+     <li> HDF-5 implementation (Power):
+          <ul type=disc>
+          <li> AEDC has implemented the ADFH library (HDF5) for
+               CGNS files, and tested it successfully with Wind and
+               ADFViewer.  Seems about 20% slower than ADF for large
+               datasets.  Have not done much investigation into why it
+               is slower.
+          <li> Greg Power asked for advice on licensing/release
+               issues.  For government organizations like AEDC, what
+               are the difficulties, procedures to follow, etc., in
+               re-distributing modified open-source (e.g., GNU licensed)
+               software?  No one had an answer to this.  <u>Power will try
+               to obtain permission to release their work to the CGNS
+               steering committee as soon as possible.</u>
+          <li> Others confirmed that the use of CGNS for large databases
+               can be prohibitively slow.  The problem appears to be
+               related to the number of nodes (quadratic dependence),
+               not so much to the amount of data stored in each node.
+               Reading seems to be faster than writing.  Timing tests
+               seem to indicate the bottleneck is in
+               <a href="../midlevel/open.html"><tt>cg_close</tt></a>.
+               <u>Wedan will look into this high priority issue.</u>
+          <li> Need to establish communication between Power and Poinot
+               on their experience with the HDF5 software, if possible.
+          <li> Still no linking capability.  Is this a fundamental
+               problem with HDF5?  <u>Power will check into this.</u>
+          </ul>
+     <li> Review of 2 proposals
+          for extension
+          (Bush):
+          <ul type=disc>
+          <li> Discussion tabled because Bob had to sign off telecon
+               early.  <u>Action item carries over.</u>
+          </ul>
+     <li> Comments added to website on release policy (Wedan):
+          <ul type=disc>
+          <li> Added to
+               <a href="http://sourceforge.net/projects/cgns/">SourceForge
+               web site</a> <img src="../external.png" alt="external link">,
+               but limited to 256 characters
+          <li> Alonso offered to house CGNS website at Stanford, if
+               needed
+          <li> <u>Wedan will look into adding a "home page" at SourceForge,
+               allowing more content.</u>
+          </ul>
+     <li> <a href="../filemap/nodes.html#CGNSLibraryVersion"><tt>CGNSLibraryVersion</tt></a>
+          now mandatory, documentation in place; no <tt>CGNSVersion</tt>
+          extension is being proposed (Towne):
+          <ul type=disc>
+          <li> Towne confirmed that the documentation has been updated.
+          </ul>
+     <li> Latest 2.2 docs to AIAA for update to
+          <a href="../aiaa.html">Recommended Practice</a> (Towne):
+          <ul type=disc>
+          <li> PDF file, in style used for AIAA Recommended Practice,
+               was sent to AIAA on Sept. 2, but no response from them
+               as yet.
+          </ul>
+     <li> Issue of removed element list and element range (Wedan):
+          <ul type=disc>
+          <li> These are easy to re-implement (and in fact the software
+               changes have already been made and tested in the CVS version).
+          <li> <u>Wedan will write and post an extension proposal, to make
+               it official.</u>
+          </ul>
+     </ol>
+<br>
+<li> Charter issues (Rumsey): <u>Rumsey and Edwards will work together
+     to update the <a href="../charter/index.html">Charter</a>.</u>
+<br><br>
+<li> ISO Status - Chris described the current status, based on info in
+     an email from Ray Cosner.
+     <ol type="a">
+     <li> Still no Boeing funds for this work.  It even seems doubtful
+          that they will be able to restore funding in 2004.
+     <li> ISO has adopted a new rule, requiring the cancellation of any
+          initiatives that have not shown any progress (i.e., passing a
+          gate) in two years.  Under the new rule, all four parts of the
+          CGNS initiative are subject to cancellation on Sep 30, 2003.
+     <li> Ray and Peter Wilson put together and submitted to ISO a draft
+          submittal for Parts 52, 53, and 110 for gate 3.  Hopefully these
+          will be accepted, and keep the effort alive for two more years.
+     <li> They also created a draft of Part 237 for gate 2, although
+          this has some missing pieces.
+     <li> <u>Wedan will be posting the
+          new drafts at the
+          CGNS web site.</u>
+     </ol>
+<br>
+<li> HDF5 status (Poinot): On a note unrelated to HDF5, Chris reported
+     that Marc had been working on a MY-SQL DBS server for CGNS files
+     over the summer.
+<br><br>
+<li> Documentation issues and
+     CGNStalk issues (Towne):
+     <ol type="a">
+     <li> No documentation issues.
+     <li> CGNStalk has received several emails containing viruses within
+          the last few weeks.  Usually, but not always, the attachment
+          containing the virus is removed by mail filters at NASA Glenn
+          before being sent to the list.  So far, this has been more of a
+          nuisance than a severe problem, and no changes have been made to
+          the subscription policy for CGNStalk.
+     </ol>
+<br>
+<li> Software status (Wedan):
+     <ol type="a">
+     <li> Most of the recent work has been on the configuration scripts
+          and the include files, to make the software more portable.  It
+          works for Macintosh, also.
+     <li> A new release has not been made yet.  Users need to do a CVS
+          update to get the latest updated software.
+     </ol>
+<br>
+<li> Discussion on extensions:  
+     <ol type="a">
+     <li> The deadline for commenting on the
+          extension proposals currently posted
+          has passed.  However, we need information/review
+          from Bush on their status before proceeding.
+     <li> Need for decision regarding allowing
+          <a href="../sids/build.html#GridLocation"><tt>GridLocation=FaceCenter</tt></a>
+          for <a href="../sids/cnct.html#GridConnectivity"><tt>GridConnectivity</tt></a>
+          (assign team to create a proposal? user who identified need:
+          Harlan McMorris, CentaurSoft). <u>Rumsey will look into this.</u>
+     <li> Need for allowing
+          <a href="../sids/bc.html#BCDataSet"><tt>BCDataSet</tt></a> under
+          <a href="../sids/misc.html#Family"><tt>Family_t</tt></a>
+          node? (assign team to create a proposal? User who identified
+          need:  Edwin van der Weide, Stanford). <u>Van der Weide
+          will write up a formal proposal, and submit it to Bruce for
+          posting.</u>
+     <li> It was mentioned that it would be nice to allow
+          <a href="../sids/cnct.html#GridConnectivityProperty">Periodic BC
+          property</a> under a
+          <a href="../sids/cnct.html#GridConnectivity1to1"><tt>GridConnectivity1to1</tt></a>
+          node, in addition to under the general
+          <a href="../sids/cnct.html#GridConnectivity"><tt>GridConnectivity</tt></a>
+          node. <u>Van der Weide will write a proposal, and submit to
+          Bruce for posting.</u>
+     </ol>
+<br>
+<li> Other issues - Reno abstract on CGNS was not accepted.  However,
+     Theresa Benyo reported that Poinot will be an invited member
+     of a panel discussion at Reno (Integrated Computational and
+     Visualization Environments, 8am-12noon Wed Jan 7), but there would
+     be no published paper. <u>Poinot (Rumsey, Bush) will also re-submit
+     the abstract to the Portland AIAA meeting.</u>
+<br><br>
+<li> Meeting was adjourned at 12:00 PM.
+<br><br>
+<li> Summary of action items:
+     <ol type="a">
+     <li> Power will try to obtain permission to release their work to
+          the CGNS steering committee as soon as possible.
+     <li> Wedan will look into the high priority issue of why CGNS is so
+          slow for large numbers of nodes.
+     <li> Power will check into whether linking is a fundamental problem
+          for HDF5.
+     <li> Bush to review/report on the 2 pending proposals for
+          extension.
+     <li> Wedan will look into adding a "home page" at SourceForge,
+          allowing more content &amp; description of CVS and release process.
+     <li> Wedan will write and post an extension proposal, regarding
+          issue of removed element list and element range.
+     <li> Rumsey and Edwards will work together to update the Charter.
+     <li> Wedan will post the new ISO drafts at the CGNS web site.
+     <li> Rumsey will look into need for allowing
+          <tt>GridLocation=FaceCenter</tt> for <tt>GridConnectivity</tt>.
+     <li> Van der Weide will write up two formal proposals: one
+          for allowing <tt>BCDataSet</tt> under <tt>Family_t</tt>
+          node, and one for allowing Periodic BC property under a
+          <tt>GridConnectivity1to1</tt> node.  Wedan will post these.
+     <li> Poinot (Rumsey, Bush) will re-submit the abstract for the
+          Portland AIAA meeting.
+     </ol>
+<br>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Juan Alonso<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Stanford
+<tr valign=baseline><td>
+   <td>Theresa Benyo<td>
+   <td>NASA Glenn
+<tr valign=baseline><td>
+   <td>Bob Bush<td>
+   <td>Pratt &amp; Whitney
+<tr valign=baseline><td>
+   <td>Dan Dominik<td>
+   <td>Boeing - Rocketdyne
+<tr valign=baseline><td>
+   <td>David Edwards<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Pankaj Gupta<td>
+   <td>Fluent
+<tr valign=baseline><td>
+   <td>Mori Mani<td>
+   <td>Boeing St. Louis
+<tr valign=baseline><td>
+   <td>Greg Power<td>
+   <td>USAF/AEDC
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Greg Stuckert<td>
+   <td>Fluent
+<tr valign=baseline><td>
+   <td>Charlie Towne<td>
+   <td>NASA Glenn
+<tr valign=baseline><td>
+   <td>Edwin Van der Weide<td>
+   <td>Stanford
+<tr valign=baseline><td>
+   <td>Bruce Wedan<td>
+   <td>ICEM CFD Engineering
+<tr valign=baseline><td>
+   <td>Nick Wyman<td>
+   <td>Pointwise
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 24 Sep 2003
+
+</body>
+</html>

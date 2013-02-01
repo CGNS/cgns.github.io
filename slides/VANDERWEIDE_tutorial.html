@@ -1,0 +1,303 @@
+<!-- HTML input file for slides in "Usage for Unstructured Grids"
+     section of CGNS tutorial -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgns.css" rel="stylesheet" type="text/css">
+<title>CGNS Usage for Unstructured Grids</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>CFD General Notation System (CGNS)<br>
+Usage for Unstructured Grids</h1>
+
+<p>
+Edwin van der Weide<br>
+Stanford University
+
+<h2>Example Unstructured Grid</h2>
+
+<center>
+<img src="VANDERWEIDE_tutorial/fig1.png"
+     alt="Unstructured volume grid around a wing in a half-spherical domain">
+</center>
+
+<p>
+<center>
+<img src="VANDERWEIDE_tutorial/fig2.png"
+     alt="ADFviewer window showing Elements_t nodes for several unstructured element types"
+     longdesc="VANDERWEIDE_tutorial/fig2.html">
+</center>
+
+<h2>Unstructured grid storage</h2>
+
+<ul>
+<li> Several possibilities to store an unstructured grid.
+     <ul>
+     <li> Every element type is stored in a separate Elements_t node.
+          Recommended.
+     <li> One Elements_t node, which stores all elements using the MIXED
+          Element type.
+     <li> Store all elements as arbitrary polygons, NGON_n Element type.
+     <li> Arbitrary combinations of the possibilities above.
+     <li> Pros
+          <ul>
+          <li> Flexibility.
+          </ul>
+     <li> Cons
+          <ul>
+          <li> Reading becomes complicated.
+          </ul>
+     </ul>
+</ul>
+
+<h2>Connectivities (linear elements)</h2>
+
+<center>
+<img src="VANDERWEIDE_tutorial/fig3.png"
+     alt="Figure illustrating various unstructured element types"
+     longdesc="VANDERWEIDE_tutorial/fig3.html">
+</center>
+
+<p>
+See http://www.grc.nasa.gov/WWW/cgns/sids/conv.html#unstructgrid
+for all supported elements.
+
+<h2>Info in the zone</h2>
+
+<ul>
+<li> # elements = # elements of highest dimension.
+     <ul>
+     <li> E.g. for a 3D problem the number elements of the surface grid
+          should NOT be stored in the zone.
+     </ul>
+</ul>
+
+<center>
+<img src="VANDERWEIDE_tutorial/fig4.png"
+     alt="ADFviewer window showing Zone_t node data"
+     longdesc="VANDERWEIDE_tutorial/fig4.html">
+</center>
+
+<h2>Single Zone vs. Multiple Zones</h2>
+
+<ul>
+<li> Multiple zones can be used when there is relative motion,
+     non-matching grids
+<li> Multiple zones can also be used to store a domain decomposition
+     <ul>
+     <li> Drawback: not very flexible
+     <li> Better: use the partial read/write functions
+     </ul>
+</ul>
+
+<h2>Example - CGNS Code (1)</h2>
+
+<pre>
+#include "cgnslib.h"
+
+   /* Open the CGNS for reading and check if the file was found. */
+   
+   if(cg_open(gridFile, MODE_READ, &amp;fileInd) != CG_OK)
+     Terminate("readGridCGNS", cg_get_error());
+   
+   /* Determine the of bases in the grid. This example assumes */
+   /* one base. However it is allowed to have multiple bases. */
+   
+   if(cg_nbases(fileInd, &amp;nBases)!= CG_OK)
+     Terminate("readGridCGNS", cg_get_error());
+   if(nBases != 1)
+     Terminate("readGridCGNS", "This example assumes one base");
+   base = 1;
+   
+   /* Check the cell and physical dimensions of the bases. */
+   /* Both should be 3. */
+   
+   if(cg_base_read(fileInd, base, cgnsName, &amp;cellDim, &amp;physDim) != CG_OK)
+     Terminate("readGridCGNS", cg_get_error());
+</pre>
+
+<center>
+<img src="VANDERWEIDE_tutorial/fig5.png"
+     alt="ADFviewer window showing CGNSBase_t node data"
+     longdesc="VANDERWEIDE_tutorial/fig5.html">
+</center>
+
+<h2>Example - CGNS Code (2)</h2>
+
+<pre>
+   /* Read the number of zones in the grid. */
+   /* This example assumes one zone. */
+
+   if(cg_nzones(fileInd, base, &amp;nZones) != CG_OK)
+     Terminate("readGridCGNS", cg_get_error());
+   if(nZones != 1)
+     Terminate("readGridCGNS", "This example assumes one zone");
+   zone = 1;
+
+   /* Check the zone type. This should be Unstructured. */
+
+   if(cg_zone_type(fileInd, base, zone, &amp;zoneType) != CG_OK)
+     Terminate("readGridCGNS", cg_get_error());
+   if(zoneType != Unstructured)
+     Terminate("readGridCGNS", "Unstructured zone expected");
+
+   /* Determine the number of vertices and volume elements in this */
+   /* zone (and thus in the grid, because one zone is assumed). */
+
+   if(cg_zone_read(fileInd, base, zone, zoneName, sizes) != CG_OK)
+     Terminate("readGridCGNS", cg_get_error());
+   nVertices    = sizes[0];
+   nVolElements = sizes[1];
+</pre>
+
+<center>
+<img src="VANDERWEIDE_tutorial/fig6.png"
+     alt="ADFviewer window showing ZoneType_t node"
+     longdesc="VANDERWEIDE_tutorial/fig6.html">
+</center>
+
+<h2>Example - CGNS Code (3)</h2>
+
+<pre>
+   /* Determine the number and names of the coordinates. */
+
+   if(cg_ncoords(fileInd, base, zone, &amp;nCoords) != CG_OK)
+     Terminate("readGridCGNS", cg_get_error());
+
+   if(cg_coord_info(fileInd, base, zone, 1, &amp;dataType, name) != CG_OK)
+     Terminate("readCGNS", cg_get_error());
+
+   /* Read the x-coordinates. The y and z-coordinates can be read */
+   /* similarly. Just replace CoordinateX by CoordinateY and */
+   /* CoordinateZ respectively. This assumes Cartesian coordinates */
+   /* in double precision. Note that CGNS starts the numbering at */
+   /* 1 even if C is used. */
+
+   one = 1;
+   if(cg_coord_read(fileInd, base, zone, "CoordinateX", realDouble, &amp;one,
+                    &amp;nVertices, coorX) != CG_OK)
+     Terminate("readGridCGNS", cg_get_error());
+
+   /* Determine the number of sections for this zone. Note that */
+   /* surface elements can be stored in a volume zone, but they */
+   /* are NOT taken into account in the number obtained from */
+   /* cg_zone_read. */
+
+   if(cg_nsections(fileInd, base, zone, &amp;nSections) != CG_OK)
+     Terminate("readGridCGNS", cg_get_error());
+</pre>
+
+<center>
+<img src="VANDERWEIDE_tutorial/fig7.png"
+     alt="ADFviewer window showing x coordinates below GridCoordinates_t node "
+     longdesc="VANDERWEIDE_tutorial/fig7.html">
+</center>
+
+<h2>Example - CGNS Code (4)</h2>
+
+<pre>
+   /* Loop over the number of sections and read the element */
+   /* connectivities. As CGNS starts the numbering at 1 the */
+   /* for-loop starts at 1 as well. */
+
+   for(sec=1; sec<=nSections; sec++)
+   {
+     /* Determine the element type and set the pointer for the */
+     /* connectivity accordingly. */
+
+     if(cg_section_read(fileInd, base, zone, sec, secName, &amp;type,
+                        &amp;eBeg, &amp;eEnd, &amp;nBdry, &amp;parentFlag) != CG_OK)
+       Terminate("readGridCGNS", cg_get_error());
+   
+     switch (type)
+     {
+       case TETRA_4:
+         conn = connTetra; break;
+       case PYRA_5:
+         conn = connPyra; break;
+       case PENTA_6:
+         conn = connPrisms; break;
+       case HEXA_8:
+         conn = connHexa; break;
+       case TRI_3:
+         conn = connTri; break;
+       case QUAD_4:
+         conn = connQuad; break;
+       default:
+         Terminate("readGridCGNS", "Unsupported element encountered.");
+         break;
+     }
+   
+     /* Read the connectivity. Again, the node numbering of the */
+     /* connectivities start at 1. If internally a starting index */
+     /* of 0 is used (typical for C-codes) 1 must be substracted */
+     /* from the connectivities read. */
+   
+     if(cg_elements_read(fileInd, base, zone, sec, conn, NULL) != CG_OK)
+       Terminate("readGridCGNS", cg_get_error());
+  }
+</pre>
+
+<center>
+<img src="VANDERWEIDE_tutorial/fig8.png"
+     alt="ADFviewer window showing element connectivity data below Elements_t node"
+     longdesc="VANDERWEIDE_tutorial/fig8.html">
+</center>
+
+<h2>Example - CGNS Code (5)</h2>
+
+<pre>
+   /* Determine the number of boundary conditions for this zone. */
+
+   if(cg_nbocos(fileInd, base, zone, &amp;nBocos) != CG_OK)
+     Terminate("readGridCGNS", cg_get_error());
+
+   /* Loop over the number of boundary conditions. */
+
+   for(boco=1; boco<=nBocos; boco++)
+   {
+     /* Read the info for this boundary condition. */
+
+     if(cg_boco_info(fileInd, base, zone, boco, bocoName, &amp;bocoType, &amp;ptsetType,
+                     &amp;nBCElem, &amp;normalIndex, &amp;normListFlag, &amp;normDataType,
+                     &amp;nDataSet) != CG_OK)
+       Terminate("readGridCGNS", cg_get_error());
+
+     /* Read the element ID's. */
+
+     if(cg_boco_read(fileInd, base, zone, boco, BCElemRead, NULL) != CG_OK)
+       Terminate("readGridCGNS", cg_get_error());
+
+     /* And much more to make it fit into the */
+     /* internal data structures. */
+   }
+</pre>
+
+<center>
+<img src="VANDERWEIDE_tutorial/fig9.png"
+     alt="ADFviewer window showing element list below BC_t node"
+     longdesc="VANDERWEIDE_tutorial/fig9.html">
+</center>
+
+<h2>Conclusions</h2>
+
+<ul>
+<li> CGNS can store a wide variety of unstructured mesh types.
+<li> Midlevel API offers many functions to read/write CGNS files, see
+     http://www.grc.nasa.gov/WWW/cgns/midlevel/index.html
+<li> Simple example to read a grid has been given.
+<li> In a real code more API-functions will be used for checking the
+     available data, etc.
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 20 Dec 2007
+
+</body>
+</html>

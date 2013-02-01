@@ -1,0 +1,289 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+20 November 2003<br>
+11:00 AM Eastern Time<br><br>
+
+<ol>
+<li> The meeting was called to order at 11:05 AM.
+     There were <a href="#attendees">17 attendees</a>, listed below.
+<br><br>
+<li> The minutes of the <a href="telecon_sep03.html">28 September 2003
+     telecon meeting</a> were reviewed and approved as posted on the web
+     site.
+<br><br>
+<li> Status of previous action items:<br><br>
+     <ol type="a">
+     <li> Progress on release of ONERA/AEDC's HDF-5 implementation (Power):
+          <ul type=disc>
+          <li> Updated implementation released by AEDC, but not
+               available on web yet.
+          <li> Replaces ADF; still need CGNS mid-level library.
+          <li> Still has some known problems: problem closing when
+               multiple opens; cannot do linking.
+          <li> Poinot has tested it, and had some problems related to
+               ADF children IDs, possibly related to change between V2.2
+               and V2.3?  <u>Poinot will investigate further.</u>
+          <li> Power, Poinot, and Wedan will attempt to coordinate their
+               work on HDF-5, to avoid duplication of effort.
+          <li> <u>Wedan will add HDF-5 implementation package to
+               SourceForge for all to access.</u>
+          </ul>
+     <li> Summary/status of Wedan's fix to speed up CGNS (Wedan):
+          <ul type=disc>
+          <li> Installed in beta software (V2.3), and results in as much
+               as factor of 10 speed-up. Several groups reported that it
+               is working great!
+          <li> Additional change (user-specified record length) may give
+               additional speed-up, but existing record length believed
+               to be "optimal" in some sense.  If change record length,
+               lose backward-compatability, but this point becomes moot
+               if and when we switch over to HDF-5.
+          <li> <u>Alonso and Van derWeide will experiment with various
+               record lengths to see what types of speed-up can be
+               achieved.</u>
+          </ul>
+     <li> Are links a fundamental problem for HDF-5? (Power, Poinot):
+          <ul type=disc>
+          <li> No fundamental problem; it should be workable.
+          <li> Alonso identified a big slow-down when accessing a file
+               with links, but this was with V2.2.  <u>Alonso will test
+               this with V2.3 and report back.</u>
+          </ul>
+     <li> Status of pending proposals for extension (Bush):
+          <ul type=disc>
+          <li> Bush didn't see any particular problems, but some
+               proposals may need increased definition.
+          <li> <u>Bush and Rumsey will re-examine them, for discussion at
+               Steering Committee meeting in Reno.</u>
+          </ul>
+     <li> Can a "home page" be added at SourceForge? (Wedan):
+          <ul type=disc>
+          <li> Yes, but hasn't yet been done yet.  <u>Action item carries.</u>
+          </ul>
+     <li> Proposal for reinstating removed element list and range (Wedan):
+          <ul type=disc>
+          <li> Not done yet. <u>Action item carries.</u>
+          </ul>
+     <li> Update charter (Rumsey, Edwards):
+          <ul type=disc>
+          <li> Charter has been updated. <u>Rumsey will send to Steering
+               Committee members and to Towne for posting on web site,
+               for review.</u>  Committee will vote on it at Reno meeting.
+          </ul>
+     <li> New ISO drafts posted on CGNS webpage (Wedan):
+          <ul type=disc>
+          <li> Done.
+          </ul>
+     <li> Need for allowing <tt>GridLocation</tt>=<tt>FaceCenter</tt>
+          for <tt>GridConnectivity</tt> (Rumsey):
+          <ul type=disc>
+          <li> Rumsey has been in contact with the proposer (Harlan
+               McMorris).  An official proposal for extension may be
+               forthcoming from him.
+          </ul>
+     <li> Addition of two van der Weide proposals to website (Wedan):
+          <ul type=disc>
+          <li> Done.
+          </ul>
+     <li> Abstract submission (Poinot, Rumsey, Bush):
+          <ul type=disc>
+          <li> Submitted for 2004 AIAA Fluid Dynamics Conference in
+               Portland ("Impact of CGNS on CFD Workflow")
+          <li> Also noted that Poinot and Legensky will participate
+               in panel discussion on "Integrated Computational and
+               Visualization Environments" at AIAA meeting in Reno
+               (Wed AM, January 7).
+          </ul>
+     </ol>
+<br>
+<li> ISO status/discussion (Cosner):<br><br>
+     <ol type="a">
+     <li> All four parts have passed their next gate, so we're OK for
+          two more years.
+     <li> Parts 52, 53, and 110 are now under formal configuration
+          control. Part 237 is one gate behind, and thus not yet under
+          formal configuration control.
+     <li> Four months allowed for people to comment, none received yet.
+          The time expires sometime near mid-January.
+     <li> Boeing FY 2004 funding for this is still undecided. 
+     </ol>
+<br>
+<li> Documentation issues and CGNStalk issues (Towne):<br><br>
+     <ol type="a">
+     <li> Craig Day at AIAA will send ballot to CGNS Steering Committee
+          members, for approval of current SIDS document as updated
+          Recommended Practice, this month or next.
+     </ol>
+<br>
+<li> Software status/discussion (Wedan):<br><br>
+     <ol type="a">
+     <li> Discussion to take place at Steering Committee Meeting in Reno
+          about releasing CGNS V2.3 (removing from beta status)
+     <li> No documentation changes needed for V2.3.
+     </ol>
+<br>
+<li> HDF-5 status/discussion (Poinot, Power):<br><br>
+     <ol type="a">
+     <li> Question about whether or not PHDF-5 (Parallel) will
+          automatically work if HDF-5 works?  The answer is no;
+          different calls will have to be added in the Mid-Level
+          Library. Boeing St. Louis has done similar work, and Bush
+          thinks they can release it, but it uses ADF, not HDF-5.
+     </ol>
+<br>
+<li> Extensions status/discussion:<br><br>
+     <ol type="a">
+     <li> Reading/writing partial connectivity info (van der Weide): For
+          unstructured grids, we cannot now read/write partial
+          connectivity info.  This capability is needed for parallel IO,
+          where you don't want to read connectivity info for entire grid
+          on each processor. <u>Van der Weide will write proposal.</u>
+     </ol>
+<br>
+<li> Other issues:<br><br>
+     <ol type="a">
+     <li> Intelligent Light work/update (Edwards):
+          <ul type=disc>
+          <li> Intelligent Light has finished Phase 1 NASA SBIR for
+               improved data management for CFD, using CGNS.  Phase 2
+               has been awarded, for two years, to start in January.
+          <li> Will be addressing use of HDF-5, including parallel
+               capability.
+          <li> Will also add up to five proposed extensions (or two
+               man-months work).  Extensions to be chosen by Steering
+               Committee, and work to be completed within first eight
+               months.  Committee to begin selection process at Reno
+               meeting.
+          <li> All CGNS software enhancements will be given to CGNS
+               Committee for public release.
+          <li> Alonso and Van der Weide at Stanford volunteered to work
+               with Edwards to help set up benchmarks.
+          </ul>
+     <li> Reno meeting in January (Rumsey):
+          <ul type=disc>
+          <li> Steering Committee Meeting tentatively scheduled to be
+               held Wed, Jan 7, at 7:00 PM.
+          </ul>
+     </ol>
+<br>
+<li> Meeting was adjourned at 12:00 PM.<br><br>
+<li> Summary of action items:<br><br>
+     <ol type="a">
+     <li> Poinot will further investigate possible problem between V2.2
+          and V2.3 related to ADF children IDs when using HDF-5 package.
+     <li> Wedan will add Poinot and Power's HDF-5 implemetation package
+          to SourceForge.
+     <li> Alonso and Van derWeide will experiment with various record
+          lengths to see what types of speed-up can be achieved.
+     <li> Alonso and Van der Weide will test to see if there is a big
+          slowdown with V2.3 when a link is present.
+     <li> Bush and Rumsey will re-examine and prepare plan for
+          discussing and down-selecting proposals for extension, for
+          discussion at Steering Committee meeting in Reno.
+     <li> (carried) Wedan will look into adding a "home page" at
+          SourceForge, allowing more content &amp; description of CVS and
+          release process.
+     <li> (carried) Wedan will write and post an extension proposal,
+          regarding issue of removed element list and element range.
+     <li> Rumsey will send updated draft Charter to Steering Committee
+          members and to Towne for posting on web site, for review.
+     <li> Van der Weide will write proposal for partial read/writes of
+          connectivity info.
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Juan Alonso<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Stanford
+<tr valign=baseline><td>
+   <td>Bob Bush<td>
+   <td>Pratt &amp; Whitney
+<tr valign=baseline><td>
+   <td>Ray Cosner<td>
+   <td>Boeing - Integrated Defense
+<tr valign=baseline><td>
+   <td>Armen Darian<td>
+   <td>Boeing - Rocketdyne
+<tr valign=baseline><td>
+   <td>Dan Dominik<td>
+   <td>Boeing - Rocketdyne
+<tr valign=baseline><td>
+   <td>David Edwards<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Pankaj Gupta<td>
+   <td>Fluent
+<tr valign=baseline><td>
+   <td>Richard Hann<td>
+   <td>Ansys/CFX
+<tr valign=baseline><td>
+   <td>Steve Karman<td>
+   <td>UT Chattanooga
+<tr valign=baseline><td>
+   <td>Kevin Mack<td>
+   <td>ADAPCO
+<tr valign=baseline><td>
+   <td>Marc Poinot<td>
+   <td>ONERA
+<tr valign=baseline><td>
+   <td>Greg Power<td>
+   <td>USAF/AEDC
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Greg Stuckert<td>
+   <td>Fluent
+<tr valign=baseline><td>
+   <td>Charlie Towne<td>
+   <td>NASA Glenn
+<tr valign=baseline><td>
+   <td>Edwin Van der Weide<td>
+   <td>Stanford
+<tr valign=baseline><td>
+   <td>Bruce Wedan<td>
+   <td>ICEM CFD
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 25 Nov 2003
+
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!-- HTML input file for slides in "Parallel I/O for the CGNS system"
+     section of CGNS tutorial -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgns.css" rel="stylesheet" type="text/css">
+<title>Parallel I/O for the CGNS system</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>CFD General Notation System (CGNS)<br>
+Parallel I/O for the CGNS system</h1>
+
+<p>
+Thomas Hauser<br>
+thomas.hauser@usu.edu<br>
+Center for High Performance Computing<br>
+Utah State University<br>
+
+<h2>Outline</h2>
+
+<ul>
+<li> Motivation
+<li> Background of parallel I/O
+<li> Overview of CGNS
+     <ul>
+     <li> Data formats
+     <li> Parallel I/O strategies
+     </ul>
+<li> Parallel CGNS implementation
+<li> Usage examples
+     <ul>
+     <li> Read
+     <li> Writing 
+     </ul>
+</ul>
+
+<h2>Why parallel I/O</h2>
+
+<ul>
+<li> Supercomputer
+     <ul>
+     <li> A computer which turns a CPU-bound problem into an I/O-bound
+          problem.
+     </ul>
+<li> As computers become faster and more parallel, the (often
+     serialized) I/O bus can often become the bottleneck for large
+     computations
+     <ul>
+     <li> Checkpoint/restart files
+     <li> Plot files
+     <li> Scratch files for out-of-core computation
+     </ul>
+</ul>
+
+<h2>I/O Needs on Parallel Computers</h2>
+
+<ul>
+<li> High Performance
+     <ul>
+     <li> Take advantage of parallel I/O paths (when available)
+     <li> Support for application-level tuning parameters
+     </ul>
+<li> Data Integrity
+     <ul>
+     <li> Deal with hardware and power failures sanely
+     </ul>
+<li> Single System Image
+     <ul>
+     <li> All nodes "see" the same file systems
+     <li> Equal access from anywhere on the machine
+     </ul>
+<li> Ease of Use
+     <ul>
+     <li> Accessible in exactly the same ways as a traditional
+          UNIX-style file system
+     </ul>
+</ul>
+
+<h2>Distributed File Systems</h2>
+
+<ul>
+<li> Distributed file system (DFS)
+     <ul>
+     <li> File system stored locally on one system (the server)
+     <li> Accessible by processes on many systems (clients).
+     </ul>
+<li> Some examples of a DFS
+     <ul>
+     <li> NFS (Sun)
+     <li> AFS (CMU)
+     </ul>
+<li> Parallel access
+     <ul>
+     <li> Possible
+     <li> Limited by network
+     <li> Locking problem
+     </ul>
+</ul>
+
+<p>
+<center>
+<img src="HAUSER_tutorial/fig1.png"
+     alt="Diagram of a distributed file system"
+     longdesc="HAUSER_tutorial/fig1.html">
+</center>
+
+<h2>Parallel File Systems</h2>
+
+<ul>
+<li> A parallel file system
+     <ul>
+     <li> multiple servers
+     <li> multiple clients
+     </ul>
+<li> Optimized for high performance
+     <ul>
+     <li> Very large block sizes (=>64kB)
+     <li> Slow metadata operations
+     <li> Special APIs for direct access
+     </ul>
+<li> Examples of parallel file systems
+     <ul>
+     <li> GPFS (IBM)
+     <li> PVFS2 (Clemson/ANL)
+     </ul>
+</ul>
+
+<p>
+<center>
+<img src="HAUSER_tutorial/fig2.png"
+     alt="Diagram of a parallel file system"
+     longdesc="HAUSER_tutorial/fig2.html">
+</center>
+
+<h2>PVFS2 - Parallel Virtual File System</h2>
+
+<ul>
+<li> Three-piece architecture
+     <ul>
+     <li> Single metadata server
+     <li> Multiple data servers
+     <li> Multiple clients
+     </ul>
+<li> Multiple APIs
+     <ul>
+     <li> PVFS library interface
+     <li> UNIX file semantics using Linux kernel driver
+     </ul>
+</ul>
+
+<p>
+<center>
+<img src="HAUSER_tutorial/fig3.png"
+     alt="Diagram of a parallel virtual file system"
+     longdesc="HAUSER_tutorial/fig3.html">
+</center>
+
+<h2>Simplistic parallel I/O</h2>
+
+<p>
+I/O in parallel programs without using a parallel I/O interface
+
+<ul>
+<li> Single I/O Process
+<li> Post-Mortem Reassembly
+</ul>
+
+<p>
+Not scalable for large applications
+
+<h2>Single Process I/O</h2>
+
+<ul>
+<li> Single process I/O.
+     <ul>
+     <li> Global data broadcasted
+     <li> Local data distributed by message passing
+     </ul>
+<li> Scalability problems
+     <ul>
+     <li> I/O bandwidth = single process bandwidth
+     <li> No parallelism in I/O
+     <li> Consumes memory and bandwidth resources
+     </ul>
+</ul>
+
+<p>
+<center>
+<img src="HAUSER_tutorial/fig4.png"
+     alt="Diagram illustrating single process I/O"
+     longdesc="HAUSER_tutorial/fig4.html">
+</center>
+
+<h2>Post-Mortem Reassembly</h2>
+
+<ul>
+<li> Each process does I/O into local files
+<li> Reassembly necessary
+<li> I/O scales
+<li> Reassembly and splitting tool
+     <ul>
+     <li> Does not scale
+     </ul>
+</ul>
+
+<p>
+<center>
+<img src="HAUSER_tutorial/fig5.png"
+     alt="Diagram illustrating need for reassembly"
+     longdesc="HAUSER_tutorial/fig5.html">
+</center>
+
+<h2>Parallel CGNS I/O</h2>
+
+<ul>
+<li> New parallel interface
+<li> Perform I/O cooperatively or collectively
+<li> Potential I/O optimizations for better performance
+<li> CGNS integration
+</ul>
+
+<p>
+<center>
+<img src="HAUSER_tutorial/fig6.png"
+     alt="Diagram illustrating parallel I/O with CGNS"
+     longdesc="HAUSER_tutorial/fig6.html">
+</center>
+
+<h2>Parallel CGNS I/O API</h2>
+
+<ul>
+<li> The same CGNS file format
+     <ul>
+     <li> Using the HDF5 implementation
+     </ul>
+<li> Maintains the look and feel of the serial midlevel API
+     <ul>
+     <li> Same syntax and semantics
+          <ul>
+          <li> Except: open and create
+          </ul>
+     <li> Distinguished by cgp_ prefix
+     </ul>
+<li> Parallel access through the parallel HDF5 interface
+     <ul>
+     <li> Benefits from MPI-I/O
+     <li> MPI communicator added in open argument list
+     <li> MPI info used for parallel I/O management and further
+          optimization
+     </ul>
+</ul>
+
+<h2>MPI-IO File System Hints</h2>
+
+<ul>
+<li> File system hints
+     <ul>
+     <li> Describe access pattern and preferences in MPI-2 to the
+          underlying file system through
+     <li> (keyword,value) pairs stored in an MPI_Info object.
+     </ul>
+<li> File system hints can include the following
+     <ul>
+     <li> File stripe size
+     <li> Number of I/O nodes used
+     <li> Planned access patterns
+     <li> File system specific hints
+     </ul>
+<li> Hints not supported by the MPI implementation or the file system
+     are ignored.
+<li> Null info object (MPI_INFO_NULL) as default
+</ul>
+
+<h2>Parallel I/O implementation</h2>
+
+<ul>
+<li> Reading: no modification, except opening file
+<li> Writing: Split into 2 phases
+<li> Phase 1
+     <ul>
+     <li> Creation of a data set, e.g. coordinates, solution data
+     <li> Collective operation
+     </ul>
+<li> Phase 2
+     <ul>
+     <li> Writing of data into previously created data set
+     <li> Independent operation
+     </ul>
+</ul>
+
+<h2>Examples</h2>
+
+<ul>
+<li> Reading
+     <ul>
+     <li> Each process reads it's own zone
+     </ul>
+<li> Writing
+     <ul>
+     <li> Each process writes it's own zone
+     <li> One zone is written by 4 processors
+          <ul>
+          <li> Creation of zone
+          <li> Writing of subset into the zone
+          </ul>
+     </ul>
+</ul>
+
+<h2>Example Reading</h2>
+
+<pre>
+   if (cgp_open(comm, info, fname, MODE_READ, &amp;cgfile)) cg_error_exit();
+   if (cg_nbases(cgfile, &amp;nbases)) cg_error_exit();
+   cgbase = 1;
+   if (cg_base_read(cgfile, cgbase, basename, &amp;cdim, &amp;pdim)) cg_error_exit();
+   if (cg_goto(cgfile, cgbase, "end")) cg_error_exit();
+   if (cg_units_read(&amp;mu, &amp;lu, &amp;tu, &amp;tempu, &amp;au)) cg_error_exit();
+   if (cg_simulation_type_read(cgfile, cgbase, &amp;simType)) cg_error_exit();
+
+   if (cg_nzones(cgfile, cgbase, &amp;nzones)) cg_error_exit();
+   nstart[0] = 1; nstart[1] = 1; nstart[2] = 1;
+   nend[0] = SIDES; nend[1] = SIDES; nend[2] = SIDES;
+   for(nz=1; nz <= nzones; nz++) {
+     if (cg_zone_read(cgfile, cgbase, nz, zname, zsize)) cg_error_exit
+     if (mpi_rank == nz-1) {
+       if (cg_ncoords(cgfile, cgbase, nz, &amp;ngrids)) cg_error_exit();
+       if (cg_coord_read(cgfile, cgbase, nz, "CoordinateX", RealDouble,
+                         nstart, nend, coord)) cg_error_exit();
+     }
+   }
+</pre>
+
+<h2>Each Process writes one Zone - 1</h2>
+
+<pre>
+   if (cgp_open(comm, info, fname, MODE_WRITE, &amp;cgfile) ||
+       cg_base_write(cgfile, "Base", 3, 3, &amp;cgbase) ||
+       cg_goto(cgfile, cgbase, "end") ||
+       cg_simulation_type_write(cgfile, cgbase, NonTimeAccurate)) cg_error_exit();
+   for(nz=0; nz < nzones; nz++) {
+     if (cg_zone_write(cgfile, cgbase, name, size, Structured, &amp;cgzone[nz][0]))
+        cg_error_exit();
+     if (cgp_coord_create(cgfile, cgbase, cgzone[nz][0], RealDouble, "CoordinateX",
+                          &amp;cgzone[nz][1])) cg_error_exit();
+   }
+</pre>
+
+<h2>Each Process writes one Zone - 2</h2>
+
+<pre>
+   for(nz=0; nz < nzones; nz++) {
+     if (mpi_rank == nz) {
+       if (cgp_coord_write(cgfile, cgbase, cgzone[mpi_rank][0], cgzone[mpi_rank][1],
+                           coord) ||
+           cgp_coord_write(cgfile, cgbase, cgzone[mpi_rank][0], cgzone[mpi_rank][2],
+                           coord) ||
+           cgp_coord_write(cgfile, cgbase, cgzone[mpi_rank][0], cgzone[mpi_rank][3],
+                           coord)) cg_error_exit();
+     }
+   }
+</pre>
+
+<h2>Writing One Zone</h2>
+
+<pre>
+   /* size is the total size of the zone */
+   if (cg_zone_write(cgfile, cgbase, name, size, Structured, &amp;cgzone[nz][0])) cg_error_exit();
+   if (cgp_coord_create(cgfile, cgbase, cgzone[nz][0], RealDouble, "CoordinateX",
+                        &amp;cgzone[nz][1]) ||
+       cgp_coord_create(cgfile, cgbase, cgzone[nz][0], RealDouble, "CoordinateY",
+                        &amp;cgzone[nz][2]) ||
+       cgp_coord_create(cgfile, cgbase, cgzone[nz][0], RealDouble, "CoordinateZ",
+                        &amp;cgzone[nz][3])) cg_error_exit();
+
+   if (cgp_coord_partial_write(cgfile, cgbase, cgzone, cgcoord, rmin, rmax, coord))
+      cg_error_exit;
+</pre>
+
+<h2>Write Performance</h2>
+
+<ul>
+<li> 3 Cases
+     <ul>
+     <li> 50&times;50&times;50 points &times; number of processors
+          <ul>
+          <li> 23.0MB
+          </ul>
+     <li> 150&times;150&times;150 points &times; number of processors
+          <ul>
+          <li> 618 MB
+          </ul>
+     <li> 250&times;250&times;250 points &times; number of processors
+          <ul>
+          <li> 2.8GB
+          </ul>
+     </ul>
+<li> Increasing the problem size with the number of processors
+</ul>
+
+<h2>Total write time - NFS</h2>
+
+<center>
+<img src="HAUSER_tutorial/fig7.png"
+     alt="Graph showing total write time with NFS vs number of processors"
+     longdesc="HAUSER_tutorial/fig7.html">
+</center>
+
+<h2>Total write time - PVFS2</h2>
+
+<center>
+<img src="HAUSER_tutorial/fig8.png"
+     alt="Graph showing total write time with PVFS2 vs number of processors"
+     longdesc="HAUSER_tutorial/fig8.html">
+</center>
+
+<h2>Creation time - PVFS2</h2>
+
+<center>
+<img src="HAUSER_tutorial/fig9.png"
+     alt="Graph showing creation time with PVFS vs number of processors"
+     longdesc="HAUSER_tutorial/fig9.html">
+</center>
+
+<h2>Write time - PVFS2</h2>
+
+<center>
+<img src="HAUSER_tutorial/fig10.png"
+     alt="Graph showing write time with PVFS vs number of processors"
+     longdesc="HAUSER_tutorial/fig10.html">
+</center>
+
+<h2>Conclusion</h2>
+
+<ul>
+<li> Implemented a prototype of parallel I/O within the framework of CGNS
+     <ul>
+     <li> Built on top of existing HDF5 interface
+     <li> Small addition to the midlevel library cgp_* functions
+     </ul>
+<li> High-performance I/O possible with few changes
+<li> Splitting the I/O into two phases
+     <ul>
+     <li> Creation of data sets
+     <li> Writing of data independently into the previously created
+          data set
+     </ul>
+<li> Testing on more platforms
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 20 Dec 2007
+
+</body>
+</html>

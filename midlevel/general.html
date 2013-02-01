@@ -1,0 +1,606 @@
+<!-- CGNS Mid-Level Library - General Remarks -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="midlevel.css" rel="stylesheet" type="text/css">
+<title> CGNS Mid-Level Library - General Remarks </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="index.html"><span class=nav><b>Mid-Level&nbsp;Library</b></span></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<span class=nav><b>General&nbsp;Remarks</b></span>)
+(<a href="fileops.html"><b>File&nbsp;Operations</b></a>)
+(<a href="navigating.html"><b>Navigating&nbsp;a&nbsp;CGNS&nbsp;File</b></a>)
+(<a href="error.html"><b>Error&nbsp;Handling</b></a>)
+(<a href="structural.html"><b>Structural&nbsp;Nodes</b></a>)
+(<a href="descriptor.html"><b>Descriptors</b></a>)
+(<a href="physical.html"><b>Physical&nbsp;Data</b></a>)
+(<a href="location.html"><b>Location&nbsp;and&nbsp;Position</b></a>)
+(<a href="auxiliary.html"><b>Auxiliary&nbsp;Data</b></a>)
+(<a href="grid.html"><b>Grid&nbsp;Specification</b></a>)
+(<a href="solution.html"><b>Solution&nbsp;Data</b></a>)
+(<a href="connectivity.html"><b>Grid&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="equation.html"><b>Equation&nbsp;Specification</b></a>)
+(<a href="families.html"><b>Families</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Data</b></a>)
+(<a href="links.html"><b>Links</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>General Remarks</h2>
+
+<ul>
+<li> <a href="#acquiring">Acquiring the Software and Documentation</a>
+<li> <a href="#organization">Organization of This Manual</a>
+<li> <a href="#language">Language</a>
+<li> <a href="#character">Character Strings</a>
+<li> <a href="#error">Error Status</a>
+<li> <a href="#typedefs">Typedefs</a>
+<li> <a href="#typedefs_char">Character Names for Typedefs</a>
+<li> <a href="#c-port">64-bit C Portability and Issues</a>
+<li> <a href="#f-port">64-bit Fortran Portability and Issues</a>
+</ul>
+
+<a name="acquiring"></a>
+<h3>Acquiring the Software and Documentation</h3>
+
+<p>
+The CGNS Mid-Level Library may be downloaded from
+<a href="http://sourceforge.net/projects/cgns">SourceForge</a>
+<img src="../external.png" alt="external link">.
+This manual, as well as the other CGNS documentation, is available in
+both HTML and PDF format from the <a href="../index.html">CGNS
+documentation web site</a>.
+
+<a name="organization"></a>
+<h3>Organization of This Manual</h3>
+
+<p>
+The sections that follow describe the Mid-Level Library functions
+in detail.
+The first three sections cover <a href="fileops.html">some basic
+file operations</a> (i.e., opening and closing a CGNS file, and
+some configuration options), <a href="navigating.html">accessing a
+specific node in a CGNS database</a>, and <a href="error.html">error
+handling</a>.
+The remaining sections describe the functions used to read, write, and
+modify nodes and data in a CGNS database.
+These sections basically follow the organization used in the "Detailed
+CGNS Node Descriptions" section of the
+<a href="../filemap/index.html"><i>SIDS File Mapping manual</i></a>.
+
+<p>
+At the start of each sub-section is a <i>Node</i> line, listing the
+the applicable CGNS node label, with links to that node's description
+in the <a href="../sids/index.html">SIDS</a> and
+<a href="../filemap/index.html">SIDS File Mapping</a> manuals.
+
+<p>
+Next is a table illustrating the syntax for the Mid-Level Library
+functions.
+The C functions are shown in the top half of the table, followed by the
+corresponding Fortran routines in the bottom half of the table.
+Input variables are shown in an
+<span class=in><b><tt>upright blue</tt></b></span> font, and
+output variables are shown in a
+<span class=out><b><tt><i>slanted red</i></tt></b></span> font.
+As of Version 3.1, some of the arguments to the Mid-Level Library
+have changed from <b><tt>int</tt></b> to <b><tt>cgsize_t</tt></b>
+in order to support 64-bit data. These changes are shown in an
+<span class=cgin><b><tt>upright green</tt></b></span> font for input
+variables, and a
+<span class=cgout><b><tt><i>slanted bright red</i></tt></b></span>
+font for output variables.
+For each function, the right-hand column lists the modes (read, write,
+and/or modify) applicable to that function.
+
+<p>
+The input and output variables are then listed and defined.
+
+<a name="language"></a>
+<h3>Language</h3>
+
+<p>
+The CGNS Mid-Level Library is written in C, but each function has a
+Fortran counterpart.
+All function names start with "<tt>cg_</tt>".
+The Fortran functions have the same name as their C counterpart with the
+addition of the suffix "<tt>_f</tt>".
+
+<a name="character"></a>
+<h3>Character Strings</h3>
+
+<p>
+All data structure names and labels in CGNS are limited to 32
+characters.
+When reading a file, it is advised to pre-allocate the
+character string variables to 32 characters in Fortran, and 33
+in C (to include the string terminator).
+Other character strings, such as the CGNS file name or
+descriptor text, are unlimited in length.
+The space for unlimited length character strings will be
+created by the Mid-Level Library; it is then the responsibility
+of the application to release this space by a call to
+<a href="auxiliary.html#free"><tt>cg_free</tt></a>.
+
+<a name="error"></a>
+<h3>Error Status</h3>
+
+<p>
+All C functions return an integer value representing the error
+status.
+All Fortran functions have an additional parameter, <tt>ier</tt>,
+which contains the value of the error status.
+An error status different from zero implies that an error occured.
+The error message can be printed using the <a href="error.html">error
+handling functions</a> of the CGNS library.
+The error codes are coded in the C and Fortran include files
+<i>cgnslib.h</i> and <i>cgnslib_f.h</i>.
+
+<a name="typedefs"></a>
+<h3>Typedefs</h3>
+
+<p>
+Beginning with version 3.1, two new typedef variables have been
+introduced to support 64-bit mode. The <tt>cglong_t</tt> typedef
+is always a 64-bit integer, and <tt>cgsize_t</tt> will be either
+a 32-bit or 64-bit integer depending on how the library was built.
+Many of the C functions in the MLL have been changed
+to to use <tt>cgsize_t</tt> instead of <tt>int</tt> in the arguments.
+These functions include any that may exceed the <tt>2Gb</tt> limit
+of an <tt>int</tt>, e.g. zone dimensions, element data, boundary
+conditions, and connectivity. In Fortran, all integer data is taken
+to be <tt>integer*4</tt> for 32-bit and <tt>integer*8</tt> for 64-bit
+builds.
+
+<p>
+Several types of variables are defined using typedefs in the
+<i>cgnslib.h</i> file.
+These are intended to facilitate the implementation of
+CGNS in C.
+These variable types are defined as an enumeration of key
+words admissible for any variable of these types.
+The file <i>cgnslib.h</i> must be included in any C application
+programs which use these data types.
+
+<p>
+In Fortran, the same key words are defined as integer parameters in the
+include file <i>cgnslib_f.h</i>.
+Such variables should be declared as <tt>integer</tt> in Fortran
+applications.
+The file <i>cgnslib_f.h</i> must be included in any
+Fortran application using these key words.
+
+<p>
+<b>
+Note that the first two enumerated values in these lists,
+<i>xxxNull</i> and <i>xxxUserDefined</i>, are only available
+in the C interface, and are provided in the advent that your
+C compiler does strict type checking. In Fortran, these values
+are replaced by the numerically equivalent <tt>CG_Null</tt>
+and <tt>CG_UserDefined</tt>. These values are also defined in the
+C interface, thus either form may be used. The function prototypes
+for the MLL use <tt>CG_Null</tt> and <tt>CG_UserDefined</tt>,
+rather than the more specific values.
+</b>
+
+<p>
+The list of enumerated values (key words) for each of these variable
+types (typedefs) are:
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>ZoneType_t</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td><tt><span class=null>ZoneTypeNull, ZoneTypeUserDefined,</span>
+           Structured, Unstructured</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>ElementType_t</tt><td>
+   <td><tt><span class=null>ElementTypeNull, ElementTypeUserDefined,</span>
+           NODE, BAR_2, BAR_3, TRI_3, TRI_6, QUAD_4,
+           QUAD_8, QUAD_9, TETRA_4, TETRA_10, PYRA_5,
+           PYRA_14, PENTA_6, PENTA_15, PENTA_18, HEXA_8,
+           HEXA_20, HEXA_27, MIXED, PYRA_13, NGON_n, NFACE_n</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>DataType_t</tt><td>
+   <td><tt><span class=null>DataTypeNull, DataTypeUserDefined,</span>
+           Integer, RealSingle, RealDouble, Character, LongInteger
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>DataClass_t</tt><td>
+   <td><tt><span class=null>DataClassNull, DataClassUserDefined,</span>
+           Dimensional, NormalizedByDimensional,
+           NormalizedByUnknownDimensional, NondimensionalParameter,
+           DimensionlessConstant</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>MassUnits_t</tt><td>
+   <td><tt><span class=null>MassUnitsNull, MassUnitsNullUserDefined,</span>
+           Kilogram, Gram, Slug, PoundMass</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>LengthUnits_t</tt><td>
+   <td><tt><span class=null>LengthUnitsNull, LengthUnitsUserDefined,</span>
+           Meter, Centimeter, Millimeter, Foot, Inch</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>TimeUnits_t</tt><td>
+   <td><tt><span class=null>TimeUnitsNull, TimeUnitsUserDefined,</span>
+           Second</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>TemperatureUnits_t</tt><td>
+   <td><tt><span class=null>TemperatureUnitsNull, TemperatureUnitsUserDefined,</span>
+           Kelvin, Celsius, Rankine, Fahrenheit</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>AngleUnits_t</tt><td>
+   <td><tt><span class=null>AngleUnitsNull, AngleUnitsUserDefined,</span>
+           Degree, Radian</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>ElectricCurrentUnits_t</tt><td>
+   <td><tt><span class=null>ElectricCurrentUnitsNull, ElectricCurrentUnitsUserDefined,</span>
+           Ampere, Abampere, Statampere, Edison, auCurrent</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>SubstanceAmountUnits_t</tt><td>
+   <td><tt><span class=null>SubstanceAmountUnitsNull, SubstanceAmountUnitsUserDefined,</span>
+           Mole, Entities, StandardCubicFoot, StandardCubicMeter</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>LuminousIntensityUnits_t</tt><td>
+   <td><tt><span class=null>LuminousIntensityUnitsNull, LuminousIntensityUnitsUserDefined,</span>
+           Candela, Candle, Carcel, Hefner, Violle</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>GoverningEquationsType_t</tt><td>
+   <td><tt><span class=null>GoverningEquationsTypeNull, GoverningEquationsTypeUserDefined,</span>
+           FullPotential, Euler, NSLaminar,
+           NSTurbulent, NSLaminarIncompressible,
+           NSTurbulentIncompressible</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>ModelType_t</tt><td>
+   <td><tt><span class=null>ModelTypeNull, ModelTypeUserDefined,</span>
+           Ideal, VanderWaals, Constant,
+           PowerLaw, SutherlandLaw, ConstantPrandtl, EddyViscosity,
+           ReynoldsStress, ReynoldsStressAlgebraic,
+           Algebraic_BaldwinLomax, Algebraic_CebeciSmith,
+           HalfEquation_JohnsonKing, OneEquation_BaldwinBarth,
+           OneEquation_SpalartAllmaras, TwoEquation_JonesLaunder,
+           TwoEquation_MenterSST, TwoEquation_Wilcox,
+	   CaloricallyPerfect, ThermallyPerfect,
+	   ConstantDensity, RedlichKwong,
+	   Frozen, ThermalEquilib, ThermalNonequilib,
+           ChemicalEquilibCurveFit, ChemicalEquilibMinimization,
+           ChemicalNonequilib, EMElectricField, EMMagneticField,
+           EMConductivity, Voltage, Interpolated,
+           Equilibrium_LinRessler, Chemistry_LinRessler</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>GridLocation_t</tt><td>
+   <td><tt><span class=null>GridLocationNull, GridLocationUserDefined,</span>
+           Vertex, CellCenter, FaceCenter, IFaceCenter, JFaceCenter,
+           KFaceCenter, EdgeCenter</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>GridConnectivityType_t</tt><td>
+   <td><tt><span class=null>GridConnectivityTypeNull, GridConnectivityTypeUserDefined,</span>
+           Overset, Abutting, Abutting1to1</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>PointSetType_t</tt><td>
+   <td><tt><span class=null>PointSetTypeNull, PointSetTypeUserDefined,</span>
+           PointList, PointRange, PointListDonor, PointRangeDonor,
+           ElementList, ElementRange, CellListDonor</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>BCType_t</tt><td>
+   <td><tt><span class=null>BCTypeNull, BCTypeUserDefined,</span>
+           BCAxisymmetricWedge,
+           BCDegenerateLine, BCExtrapolate,
+           BCDegeneratePoint, BCDirichlet, BCFarfield, BCNeumann,
+           BCGeneral, BCInflow, BCOutflow, BCInflowSubsonic,
+           BCOutflowSubsonic, BCInflowSupersonic,
+           BCOutflowSupersonic, BCSymmetryPlane, BCTunnelInflow,
+           BCSymmetryPolar, BCTunnelOutflow, BCWallViscous,
+           BCWall, BCWallViscousHeatFlux, BCWallInviscid,
+           BCWallViscousIsothermal, FamilySpecified</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>BCDataType_t</tt><td>
+   <td><tt><span class=null>BCDataTypeNull, BCDataTypeUserDefined,</span>
+           Dirichlet, Neumann</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>RigidGridMotionType_t</tt><td>
+   <td><tt><span class=null>RigidGridMotionTypeNull, RigidGridMotionTypeUserDefined,</span>
+           ConstantRate, VariableRate</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>ArbitraryGridMotionType_t</tt><td>
+   <td><tt><span class=null>ArbitraryGridMotionTypeNull, ArbitraryGridMotionTypeUserDefined,</span>
+           NonDeformingGrid, DeformingGrid</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>SimulationType_t</tt><td>
+   <td><tt><span class=null>SimulationTypeNull, SimulationTypeUserDefined,</span>
+           TimeAccurate, NonTimeAccurate</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>WallFunctionType_t</tt><td>
+   <td><tt><span class=null>WallFunctionTypeNull, WallFunctionTypeUserDefined,</span>
+           Generic</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>AreaType_t</tt><td>
+   <td><tt><span class=null>AreaTypeNull, AreaTypeUserDefined,</span>
+           BleedArea, CaptureArea</tt>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>AverageInterfaceType_t</tt><td>
+   <td><tt><span class=null>AverageInterfaceTypeNull, AverageInterfaceTypeUserDefined,</span>
+           AverageAll, AverageCircumferential, AverageRadial, AverageI,
+	   AverageJ, AverageK</tt>
+</table>
+
+<a name="typedefs_char"></a>
+<h3>Character Names For Typedefs</h3>
+
+<p>
+The CGNS library defines character arrays which map the typedefs above
+to character strings.
+These are global arrays dimensioned to the size of each list of
+typedefs.
+To retrieve a character string representation of a typedef, use the
+typedef value as an index to the appropiate character array.
+For example, to retrieve the string "<tt>Meter</tt>"
+for the <tt>LengthUnits_t Meter</tt> typedef, use
+<tt>LengthUnitsName[Meter]</tt>.
+Functions are available to retrieve these names without the need for
+direct global data access.
+These functions also do bounds checking on the input, and if out of
+range, will return the string "<tt>&lt;invalid&gt;</tt>".
+An additional benefit is that these will work from within a Windows DLL,
+and are thus the recommended access technique.
+The routines have the same name as the global data arrays, but with a
+"<tt>cg_</tt>" prepended.
+For the example above, use "<tt>cg_LengthUnitsName(Meter)</tt>".
+
+<p>
+<table bgcolor="#ced9ff" border="1" cellpadding="5" cellspacing="0" rules="groups" width="100%">
+<colgroup width="90%">
+</colgroup><colgroup>
+</colgroup><thead>
+<tr><th scope="col" align="left" width="90%">Typedef Name Access Functions
+</th></tr></thead><tbody>
+<tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_MassUnitsName(<span class="in">MassUnits_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_LengthUnitsName(<span class="in">LengthUnits_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_TimeUnitsName(<span class="in">TimeUnits_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_TemperatureUnitsName(<span class="in">TemperatureUnits_t
+type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_ElectricCurrentUnitsName(<span class="in">ElectricCurrentUnits_t
+type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_SubstanceAmountUnitsName(<span class="in">SubstanceAmountUnits_t
+type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_LuminousIntensityUnitsName(<span class="in">LuminousIntensityUnits_t
+type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_DataClassName(<span class="in">DataClass_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_GridLocationName(<span class="in">GridLocation_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_BCDataTypeName(<span class="in">BCDataType_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_GridConnectivityTypeName(<span class="in">GridConnectivityType_t
+type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_PointSetTypeName(<span class="in">PointSetType_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_GoverningEquationsTypeName(<span class="in">GoverningEquationsType_t
+type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_ModelTypeName(<span class="in">ModelType_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_BCTypeName(<span class="in">BCType_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_DataTypeName(<span class="in">DataType_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_ElementTypeName(<span class="in">ElementType_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_ZoneTypeName(<span class="in">ZoneType_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_RigidGridMotionTypeName(<span class="in">RigidGridMotionType_t
+type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_ArbitraryGridMotionTypeName(<span class="in">ArbitraryGridMotionType_t
+type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_SimulationTypeName(<span class="in">SimulationType_t
+type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_WallFunctionTypeName(<span class="in">WallFunctionType_t
+type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_AreaTypeName(<span class="in">AreaType_t type</span>);</b></tt>
+</td></tr><tr><td nowrap="nowrap">
+        <tt><b><span class="out"><i>const char *name</i></span> =
+cg_AverageInterfaceTypeName(<span class="in">AverageInterfaceType_t
+type</span>);</b></tt>
+</td></tr></tbody></table>
+
+<a name="c-port"></a>
+<h3>64-bit C Portability and Issues</h3>
+
+<p>
+If you use the <tt>cgsize_t</tt> data type in new code,
+it will work in both 32 and 64-bit compilation modes.
+In order to support CGNS versions prior to 3.1, you may also
+want to add something like this to your code:
+<pre>
+#if CGNS_VERSION < 3100
+#define cgsize_t int
+#endif
+</pre>
+Existing code that uses <tt>int</tt> will not work with a
+CGNS 3.1 library compiled in 64-bit mode. You may want
+to add something like this to your code:
+<pre>
+#if CGNS_VERSION >= 3100 && CG_BUILD_64BIT
+#error does not work in 64 bit mode
+#endif
+</pre>
+or modify your code to use <tt>cgsize_t</tt>.
+
+<a name="f-port"></a>
+<h3>64-bit Fortran Portability and Issues</h3>
+
+<p>
+All integer arguments in the Fortran interface - including
+<a href="general.html#typedefs">enumerated values (enums)</a> - are taken to be
+<tt>integer*4</tt> in 32-bit mode and <tt>integer*8</tt>
+in 64-bit mode. If you have used default or implicit integers in
+your Fortran code, it should port to 64-bit mode in most cases by
+simply turning on your compiler option that promotes implicit
+integers to <tt>integer*8</tt>. If you have explicitly defined your
+integers as <tt>integer*4</tt>, your code will not work in 64-bit mode.
+In that case, you will either need to change them to <tt>integer</tt>
+(recommended for portability) or <tt>integer*8</tt>.
+
+<p>
+A new integer parameter has been added to the <i>cgnslib_f.h</i>
+header, <tt>CG_BUILD_64BIT</tt>, which will be set
+to 1 in 64-bit mode and 0 otherwise. You may use this parameter
+to check at run time if the CGNS library has been compiled in 64-bit
+mode or not, as in:
+<pre>
+if (CG_BUILD_64BIT .ne. 0) then
+    print *,'will not work in 64-bit mode'
+    stop
+endif
+</pre>
+If you are using a CGNS library prior to version 3.1, this parameter will
+not be defined and you will need to rely on your compiler initializing all
+undefined values to 0 (not always the case) for this test to work.
+
+<p>
+If your compiler supports automatic promotion of integers, and you use
+implicit integers, your code should port to 64-bit with the following
+exception.
+
+<p>
+If you use an <tt>Integer</tt> data type in any routine that takes
+a data type specification, and an implicit integer for the data, the code
+will fail when compiled in 64-bit mode with automatic integer promotion.
+An example of this would be:
+<pre>
+integer dim
+integer data(dim)
+call cg_array_write_f('array',Integer,1,dim,data)
+</pre>
+This is because the MLL interprets the <tt>Integer</tt> data type
+as <tt>integer*4</tt> regardless of the compilation mode. The compiler,
+however, has automatically promoted <i>data</i> to be
+<tt>integer*8</tt>. What you will need to do to prevent this problem,
+is to either explicitly define <i>data</i> as in:
+<pre>
+integer dim
+integer*4 data(dim)
+call cg_array_write_f('array',Integer,1,dim,data)
+</pre>
+or
+<pre>
+integer dim
+integer*8 data(dim)
+call cg_array_write_f('array',LongInteger,1,dim,data)
+</pre>
+or test on <tt>CG_BUILD_64BIT</tt> as in:
+<pre>
+integer dim
+integer data(dim)
+if (CG_BUILD_64BIT .eq. 0) then
+  call cg_array_write_f('array',Integer,1,dim,data)
+else
+  call cg_array_write_f('array',LongInteger,1,dim,data)
+endif
+</pre>
+The last 2 options will only work with CGNS Version 3.1, since
+<tt>LongInteger</tt> and <tt>CG_BUILD_64BIT</tt> are
+not defined in previous versions.
+
+<p>
+You may also need to be careful when using integer constants as arguments
+in 64-bit mode. If your compiler automatically promotes integer constants
+to <tt>integer*8</tt>, then there is no problem. This is probably
+the case if your compiler supports implicit integer promotion. If not,
+then the constants will be <tt>integer*4</tt>, and your code
+will not work in 64-bit mode. In that case you will need to do something
+like:
+<pre>
+integer*8 one,dim
+integer*4 data(dim)
+one = 1
+call cg_array_write_f('array',Integer,one,dim,data)
+</pre>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 09 Dec 2011
+
+</body>
+</html>

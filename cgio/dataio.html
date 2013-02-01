@@ -1,0 +1,264 @@
+<!-- CGIO Manual - Library Of Subroutines -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="cgio.css" rel="stylesheet" type="text/css">
+<title> CGIO User's Guide - Data I/O Routines </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="index.html"><span class=nav><b>CGIO&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="library.html"><b>The&nbsp;CGIO&nbsp;Software&nbsp;Library</b></a>)
+(<a href="database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="structure.html"><b>Data&nbsp;Structure&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="links.html"><b>Link&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="node.html"><b>Node&nbsp;Management&nbsp;Routines</b></a>)
+(<span class=nav><b>Data&nbsp;I/O&nbsp;Routines</b></span>)
+(<a href="errors.html"><b>Error&nbsp;Messages&nbsp;and&nbsp;Routines</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="examples.html"><b>Example&nbsp;Programs</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Data I/O Routines</h2>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_read_data(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=cgin>const cgsize_t *s_start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>const cgsize_t *s_end</span>, <span class=cgin>const cgsize_t *s_stride</span>, <span class=in>int m_num_dims</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>const cgsize_t *m_dims</span>, <span class=cgin>const cgsize_t *m_start</span>, <span class=cgin>const cgsize_t *m_end</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>const cgsize_t *m_stride</span>, <span class=out><i>void *data</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_read_all_data(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=out><i>void *data</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_read_block_data(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=cgin>cgsize_t b_start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t b_end</span>, <span class=out><i>void *data</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_write_data(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=cgin>const cgsize_t *s_start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>const cgsize_t *s_end</span>, <span class=cgin>const cgsize_t *s_stride</span>, <span class=in>int m_num_dims</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>const cgsize_t *m_dims</span>, <span class=cgin>const cgsize_t *m_start</span>, <span class=cgin>const cgsize_t *m_end</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>const cgsize_t *m_stride</span>, <span class=in>void *data</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_write_all_data(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=in>void *data</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_write_block_data(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=cgin>cgsize_t b_start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t b_end</span>, <span class=in>void *data</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cgio_read_data_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=cgin>s_start</span>, <span class=cgin>s_end</span>, <span class=cgin>s_stride</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>m_num_dims</span>, <span class=cgin>m_dims</span>, <span class=cgin>m_start</span>, <span class=cgin>m_end</span>, <span class=cgin>m_stride</span>, <span class=out><i>data</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_read_all_data_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=out><i>data</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_read_block_data_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=cgin>b_start</span>, <span class=cgin>b_end</span>, <span class=out><i>data</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_write_data_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=cgin>s_start</span>, <span class=cgin>s_end</span>, <span class=cgin>s_stride</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>m_num_dims</span>, <span class=cgin>m_dims</span>, <span class=cgin>m_start</span>, <span class=cgin>m_end</span>, <span class=cgin>m_stride</span>, <span class=in>data</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_write_all_data_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=in>data</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_write_block_data_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=cgin>b_start</span>, <span class=cgin>b_end</span>, <span class=in>data</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>cgio_num</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Database identifier.
+<tr valign=baseline><td>
+   <td><tt>id</tt><td>
+   <td>Node identifier.
+<tr valign=baseline><td>
+   <td><tt>s_start</tt><td>
+   <td>Starting indices for data in the database.
+       Fortran indexing is used (starting at 1).
+<tr valign=baseline><td>
+   <td><tt>s_end</tt><td>
+   <td>Ending indices for data in the database.
+       Fortran indexing is used (starting at 1).
+<tr valign=baseline><td>
+   <td><tt>s_stride</tt><td>
+   <td>Step increment for data in the database.
+<tr valign=baseline><td>
+   <td><tt>m_num_dims</tt><td>
+   <td>Number of dimensions for data in memory.
+<tr valign=baseline><td>
+   <td><tt>m_dims</tt><td>
+   <td>Dimension values for data in memory.
+<tr valign=baseline><td>
+   <td><tt>m_start</tt><td>
+   <td>Starting indices for data in memory.
+       Fortran indexing is used (starting at 1).
+<tr valign=baseline><td>
+   <td><tt>m_end</tt><td>
+   <td>Ending indices for data in memory.
+       Fortran indexing is used (starting at 1).
+<tr valign=baseline><td>
+   <td><tt>m_stride</tt><td>
+   <td>Step increment for data in memory.
+<tr valign=baseline><td>
+   <td><tt>data</tt><td>
+   <td>Array of data to be read or written.
+<tr valign=baseline><td>
+   <td><tt>b_start</tt><td>
+   <td>Starting offset (index) for the data in the database.
+       Fortran indexing is used (starting at 1).
+<tr valign=baseline><td>
+   <td><tt>b_end</tt><td>
+   <td>Ending offset (index) for the data in the database.
+       Fortran indexing is used (starting at 1).
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<h2>Function Descriptions</h2>
+
+<dl>
+
+<a name="read_data"></a>
+<dt><tt>cgio_read_data</tt>
+<dd>This routine provides general purpose read capabilities from the
+    node identified by <tt>id</tt> in the database given by <tt>cgio_num</tt>.
+    It allows for a general specification of the starting location within
+    the data as well as fixed step lengths (strides) through the data from
+    the initial position.
+    This capability works for both the data on disk and the data being
+    stored in memory. One set of vectors (<tt>s_start</tt>,
+    <tt>s_end</tt> and <tt>s_stride</tt>) are used to describe the mapping
+    of the data within the node, and a second set of vectors
+    (<tt>m_start</tt>, <tt>m_end</tt> and <tt>m_stride</tt>) are used to
+    describe the mapping of the desired data within memory.
+    <br><br>
+    The memory dimensions are given by <tt>m_num_dims</tt> and <tt>m_dims</tt>.
+    There is no requirement that the node dimensions and memory dimensions
+    match, only that the total number of values to be read are the same
+    for the node and memory specifications.
+    <br><br>
+    The data are stored in both memory and on disk in "Fortran ordering."
+    That is, the first index varies the fastest, and indexing starts at 1.
+    Negative indexing is not allowed.
+    <br><br>
+    Be careful when writing data using
+    <a href="#write_all_data"><tt>cgio_write_all_data</tt></a> and then using
+    <tt>cgio_read_data</tt> to randomly access the data.
+    <tt>cgio_write_all_data</tt> takes a starting address in memory and
+    writes <i>N</i> words to disk, making no assumption as to the order of
+    the data.
+    <tt>cgio_read_data</tt> assumes that the data have Fortran-like
+    ordering to navigate through the data in memory and on disk.
+    It assumes that the first dimension varies the fastest.
+    It would be easy for a C program to use the default array ordering
+    (last dimension varying fastest) and write the data out using
+    <tt>cgio_write_all_data</tt>. Then another program might use
+    <tt>cgio_read_data</tt> to access a subsection of the data, and the
+    routine would not return what was expected.
+    <br><br>
+    There can be a significant performance penalty for using
+    <tt>cgio_read_data</tt> when compared with
+    <a href="#read_all_data"><tt>cgio_read_all_data</tt></a>.
+    If performance is a major consideration, it is best to organize
+    data to take advantage of the speed of <tt>cgio_read_all_data</tt>.
+    <br><br>
+    The function returns 0 on success, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="read_all_data"></a>
+<dt><tt>cgio_read_all_data</tt>
+<dd>Reads all the data from the node identified by <tt>id</tt> in the
+    database given by <tt>cgio_num</tt>. On success, the function
+    returns 0 and the data in <tt>data</tt>, else an error code is returned.
+    <i>Note</i>: Data is returned in Fortran indexing order.
+
+<dt>&nbsp;<dd>
+<a name="read_block_data"></a>
+<dt><tt>cgio_read_block_data</tt>
+<dd>Reads a contiguous block of data from the node identified by <tt>id</tt>
+    in the database given by <tt>cgio_num</tt>. On success, the function
+    returns 0 and the data in <tt>data</tt>, else an error code is returned.
+    The starting index is given by <tt>b_start</tt> and the end by
+    <tt>b_end</tt>.
+    <i>Note</i>: Fortran indexing order for multi-dimensional data is used
+    when computing the starting and ending locations.
+
+<dt>&nbsp;<dd>
+<a name="write_data"></a>
+<dt><tt>cgio_write_data</tt>
+<dd>This function is similar to <a href="#read_data">cgio_read_data</a>,
+    but writes the data from memory to the node.
+
+<dt>&nbsp;<dd>
+<a name="write_all_data"></a>
+<dt><tt>cgio_write_all_data</tt>
+<dd>This function is similar to <a href="#read_all_data">cgio_read_all_data</a>,
+    but writes the data from memory to the node.
+
+<dt>&nbsp;<dd>
+<a name="write_block_data"></a>
+<dt><tt>cgio_write_block_data</tt>
+<dd>This function is similar to <a href="#read_block_data">cgio_read_block_data</a>,
+    but writes the data from memory to the node.
+
+</dl>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 08 April 2011
+
+</body>
+</html>

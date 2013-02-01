@@ -1,0 +1,63 @@
+<!-- CGNS Steering Committee, attachment to meeting/telecon minutes
+     14 Jan 2002
+     "CGNS Extensions"
+     longdesc file for figure -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../../../cgns.css" rel="stylesheet" type="text/css">
+<title> Example of creating a link </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<p>
+This chart illustrates the file structure for two CGNS files, one (File
+1) containing a flow solution and the other (File 2) containing a grid,
+with a link between them.
+
+<p>
+On the left is File 1, and on the right is File 2.
+For both files, below the root node is the CGNSBase_t node, named
+FlowSolutionBase in File 1 and GridBase in File 2.
+In both files the CGNSBase_t node has the following data:
+<pre>
+   CellDimension = 3
+   PhysicalDimension = 3
+</pre>
+
+<p>
+Below the CGNSBase_t node in both files is a Zone_t node, named Zone 1,
+containing the following data:
+<pre>
+   VertexSize = (21,17,9)
+   CellSize = (20,16,8)
+   VertexSizeBoundary = (0,0,0)
+</pre>
+
+<p>
+In File 2, below the Zone_t node are two nodes - a ZoneType_t node
+named ZoneType, with Data = Structured, and a GridCoordinates_t
+node named GridCoordinates, with Data = MT.
+Below GridCoordinates_t are child nodes containing the actual grid
+coordinates.
+
+<p>
+In File 1, below the Zone_t node are two nodes - the same ZoneType_t
+node as in File 2, and a FlowSolution_t
+node named FlowSolution, with Data = MT.
+Below FlowSolution_t are child nodes containing the actual flow
+solution.
+Also below the Zone_t node in File 1 is a link node, represented
+by a line labeled "link" drawn from the Zone_t in File 1 to the
+GridCoordinates_t node in File 2.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../../../include/footer_small.html" -->
+Last updated 7 Feb 2008
+
+</body>
+</html>

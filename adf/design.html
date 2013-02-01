@@ -1,0 +1,311 @@
+<!-- ADF User's Guide - ADF Design Considerations -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - ADF Design Considerations </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;Manual</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;Implementation</b></span></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<span class=nav><b>Design&nbsp;Considerations</b></span>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>ADF Design Considerations</h2>
+
+<ul>
+<li> <a href="#fileheader">ADF File Header Information</a>
+<li> <a href="#optimizations">ADF File Optimizations</a>
+<li> <a href="#portability">ADF File Portability</a>
+<li> <a href="#errors">ADF File Error Checking</a>
+<li> <a href="#source">ADF Source Code Considerations</a>
+<li> <a href="#nodeheader">ADF Node Header Information</a>
+<li> <a href="#fortran">Fortran Character Array Portability Concerns</a>
+<li> <a href="#integer64">Integer 64 Data Type Portability Concerns</a>
+<li> <a href="#compound">Compound Data Types Portability Concerns</a>
+</ul>
+
+<p>
+This section provides a summary of the design considerations that were
+used in the construction of the ADF software library.
+
+<a name="fileheader"></a>
+<h3>ADF File Header Information</h3>
+
+<p>
+Every ADF file has a header section that contains information about the
+file itself.
+The following information from this header is available to the user:
+
+<ul>
+<li> ADF version number of the library that created the database.
+<li> File creation date and time.
+<li> File modification date and time.
+<li> Data format used in database (IEEE big endian, IEEE little endian,
+     etc.)
+</ul>
+
+[Under data format, "endian" refers to the ordering of bytes in a
+multi-byte number.
+Big endian is a computer architecture in which, within a given
+multi-byte numeric representation, the most significant byte has the
+lowest address (the word is stored "big-end-first").
+Little endian is a computer architecture in which, within a given 16- or
+32-bit word, bytes at lower addresses have lower significance (the word
+is stored "little-end-first").]
+
+<a name="optimizations"></a>
+<h3>ADF File Optimizations</h3>
+
+<p>
+To optimize the performance of ADF, the following techniques have been
+incorporated into the ADF software to enhance performance of the file:
+
+<ul>
+<li> Use block-based, unbuffered (raw mode) I/O where available, with
+     block sizes of 4096 bytes.
+<li> Align medium to large data chunks on block boundaries.
+<li> If the data size is equal to or greater than 2048, then
+     <ul>
+     <li> align data to the next block and
+     <li> add extra to free (garbage) lists
+     </ul>
+<li> Avoid, where possible, small- to medium-sized chunks of data that
+     span block boundaries.
+<li> Align, where possible, to the next block and add extra to free
+     (garbage) lists.
+</ul>
+
+<p>
+Allow data space to grow by linking data chunks.
+It is possible to increase the last dimension; doing so will extend the
+data.
+However, internal dimensional changes will corrupt the existing data.
+
+<p>
+The pointer table for child nodes will also contain the child node names.
+
+<a name="portability"></a>
+<h3>ADF File Portability</h3>
+
+<p>
+To address code portability and future needs, the following design decisions were made:
+
+<ul>
+<li> Use larger than 32-bit file pointers to allow for files larger than
+     4 Gigabytes.
+     (C routine <tt>lseek</tt> may not handle this, but ADF files should
+     allow it.)<br><br>
+<li> Use 48-bit pointers within a block of data.
+     32-bit pointers to 4096-byte blocks and a 16-bit pointer to a
+     position within the block.
+     This allows for files with 4 gigabyte blocks, in other words
+     2<sup>32</sup> &times; 4096 = 17.5922 + 12 bytes or 17.59 Tera bytes.<br><br>
+<li> The ID pointers will be 64-bit coded IDs.
+     Users may use double data type (<tt>real*8</tt>).
+     This is parceled as follows: 32 bits for block number, 12 bits for
+     block offset, and 20 bits for file identifier.<br><br>
+<li> Encode the integer information, other than data, in ASCII,
+     Hex-based notation.
+</ul>
+
+<a name="errors"></a>
+<h3>ADF File Error Checking</h3>
+
+<p>
+Error checking has been implemented for the ADF file and is summarized
+here.
+Each item in the ADF file will have item-specific boundary tags
+surrounding it to provide file-based corruption checking.
+For variable-sized items, the associated boundary tags will include
+file-based size information.
+Information will be written to the disk in a sequence that will not
+allow corrupt files.
+For example, when adding a new child node, the complete child
+information will be written before the parent's child-table is updated.
+An ADF-core subroutine for downloading data to disk will be provided.
+
+<a name="source"></a>
+<h3>ADF Source Code Considerations</h3>
+
+<p>
+The ADF library of source code will incorporate the use of UNIX "what"
+strings for the ADF version number and also RCS versioning information
+in the source code and in the object code.
+The source code is written in portable ANSI C, using POSIX-defined system
+calls.
+
+<a name="nodeheader"></a>
+<h3>ADF Node Header Information</h3>
+
+<p>
+The following information is contained in an ADF node header:
+
+<ul>
+<li> node boundary tag<br><br>
+<li> name (32 characters)<br><br>
+<li> label (32 characters)<br><br>
+     <ul>
+     <li> number of subnodes (<tt>num_sub_nodes</tt>) is an integer
+          (ASCII, Hex encoded in file).
+     <li> address pointer of the subnodes indicated by the variable.
+     </ul><br>
+<li> <tt>sub_nodes</tt>, which are pointers (ASCII, Hex encoded in file)
+     to a table (the "child table") of file pointers and names for each
+     of the node's children.
+     Note that the child name information is redundant and included for
+     performance.<br><br>
+<li> data type is specified in <tt>data_type</tt> (32 characters allowed).<br><br>
+<li> dimensionality of the data, called <tt>num_dimensions</tt>.
+     It is ASCII, Hex encoded in the file.<br><br>
+<li> dimension values are listed in the integer array of 12,
+     <tt>dimension_values</tt>.
+     The dimension values are Hex encoded.<br><br>
+<li> integer value for the number of data chunks is found in
+     <tt>num_data_chunks</tt> (ASCII, Hex encoded).<br><br>
+<li> data address, which is as follows:<br><br>
+     <table cellspacing=0 cellpadding=0 border=0>
+     <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+        <td>if&nbsp;<tt>num_data_chunks</tt>
+        <td>=&nbsp;1,
+        <td>then a file pointer to data
+     <tr valign=baseline><td>
+        <td>
+        <td>&gt;&nbsp;1,
+        <td>then a file pointer to a table of <tt>num_data_chunks</tt>
+            file pointers and associated data sizes.
+     </table><br>
+<li> ending node boundary tag.
+</ul>
+
+<a name="fortran"></a>
+<h3>Fortran Character Array Portability Concerns</h3>
+
+<p>
+Fortran character arrays are different from any other array type because
+they inherently include declared length information.
+Abstractly, they are a compound type: an array and an integer.
+The ANSI standards do not specify the implementation mechanism for
+handling this data type and so it is left to the vendor.
+As one might expect, vendors have devised different policies.
+This is particularly evident in how argument lists are created and used.
+The matter is further complicated when writing functions in other
+languages that are to be called from Fortran.
+
+<p>
+To keep the interfaces simple and to keep the Fortran and C data I/O
+calls similar (as opposed to having separate data I/O functions for
+character data), ADF suggests abiding by the following rules (these are
+required for Cray T90-mode users):
+
+<ul>
+<li> Do not pass character arrays as the actual data arguments to any
+     ADF read or write function unless that node has been defined with a
+     data type of <tt>C1</tt>.<br><br>
+<li> If a node has been defined as data type <tt>C1</tt>, then pass
+     character arrays only as the actual data arguments to all ADF read
+     and write function.
+</ul>
+
+<p>
+<em>Note to Cray T90-mode users:</em> The above rules must be followed.
+In addition, the given node must be available and have its data type
+correctly defined.
+Error handling is not possible otherwise, and ADF will abort or fail
+regardless of how the error state flag is set.
+
+<a name="integer64"></a>
+<h3>Integer 64 Data Type Portability Concerns</h3>
+
+<p>
+For portability reasons, it is suggested that the use of the <tt>I8</tt>
+data type be restricted to a 64-bit environment.
+
+<a name="compound"></a>
+<h3>Compound Data Types Portability Concerns</h3>
+
+<p>
+For the transportability reasons discussed below, use of compound data
+types is not recommended.
+
+<p>
+When using compound data types (e.g., with structures in C), it is
+important to be aware of data alignment issues.
+If one is not careful, the actual size of the structure in memory may be
+larger than the sum of the individual members.
+The total size depends on the order and word boundary alignment
+requirements of the specific data types.
+This is platform and compiler dependent and not handled by ADF.
+In order to provide the greatest portability (at least up to 64-bit
+environments), it is recommended that
+
+<ul>
+<li> 8-byte data types (<tt>I8</tt>, <tt>R8</tt>) be aligned on 8 byte
+     boundaries, and
+<li> data types smaller than the word size be padded to a size equal to
+     the word size.
+</ul>
+
+<p>
+So a 4-byte data type (e.g., <tt>I4[1]</tt>) needs "padding" (e.g.,
+<tt>I4[2]</tt>) if it is to be followed by an 8-byte data type.
+And assuming a word size of 4 bytes, all <tt>C1</tt>-data-type elements
+need dimension values of multiples of 4 bytes (e.g., <tt>C1[4]</tt>,
+<tt>C1[8]</tt>, etc.).
+To be even more careful, size everything in multiples of 8 bytes,
+for example, "<tt>C1[8]</tt>, <tt>I4[2]</tt>, <tt>C1[16]</tt>,
+<tt>R4[6]</tt>, <tt>R8[5]</tt>, <tt>I8[1]</tt>".
+
+<p>
+For a given architecture and compiler, and taking into consideration the
+restrictions given above, compound data types should work.
+It is more portable and highly recommended that users write out the
+individual components of a structure into separate nodes.
+It would probably be best to copy the individual components of a list of
+structures into an appropriate array type and write the temporary array
+out using the write-all or write-strided routines.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 25 Oct 2001
+
+</body>
+</html>

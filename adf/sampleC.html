@@ -1,0 +1,339 @@
+<!-- ADF User's Guide - Sample C Program -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - Sample C Program </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;Manual</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;Implementation</b></span></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<a href="glossary.html"><b>Glossary&nbsp;of&nbsp;Terms</b></a>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<span class=nav><b>Sample&nbsp;C&nbsp;Program</b></span>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Sample C Program</h2>
+
+<p>
+The following C program builds the ADF file shown in the
+<a href="library.html#f:example">example database figure</a>.
+
+<pre>
+   /*
+      Sample ADF test program to build adf files illustrated
+      in example database figure.
+   */
+
+   #include &lt;stdio.h&gt;
+   #include &lt;ctype.h&gt;
+   #include &lt;string.h&gt;
+
+   #include "../include/ADF.h"
+
+   void print_child_list(double node_id);
+
+   main ()
+   {
+     /* --- Node header character strings */
+      char label[ ADF_LABEL_LENGTH+1];
+      char data_type[ADF_DATA_TYPE_LENGTH+1];
+      char file_name[ADF_FILENAME_LENGTH+1];
+      char path[ADF_MAX_LINK_DATA_SIZE+1];
+
+     /* --- Node id variables */
+      double root_id,parent_id,child_id,tmp_id,root_id_file2;
+
+     /* --- Data to be stored in database */
+      float a[3][4] = {
+                       1.1,2.1,3.1,4.1,
+                       1.2,2.2,3.2,4.2,
+                       1.3,2.3,3.3,4.3
+                      };
+      int a_dimensions[2] = {4,3};
+
+      int c[6] = {1,2,3,4,5,6};
+      int c_dimension = 6;
+
+     /* --- miscellaneous variables */
+      int error_flag, i, j;
+      int error_state = 1;
+      int num_dims, dim_d, d[6], dims_b[2];
+      float b[3][4];
+
+   /* ------ begin source code ----- */
+
+     /* --- set database error flag to abort on error */
+      ADF_Set_Error_State(error_state,&error_flag);
+
+     /* -------- build file: adf_file_two.adf ---------- */
+     /* --- 1.) open database
+            2.) create three nodes at first level
+            3.) put label on node f3
+            4.) put some data in node f3
+            5.) create two nodes below f3
+            6.) close database */
+
+      ADF_Database_Open("adf_file_two.adf","new"," ",&root_id,&error_flag);
+      root_id_file2 = root_id;
+      ADF_Create(root_id,"f1",&tmp_id,&error_flag);
+      ADF_Create(root_id,"f2",&tmp_id,&error_flag);
+      ADF_Create(root_id,"f3",&parent_id,&error_flag);
+      ADF_Set_Label(parent_id,"label on node f3",&error_flag);
+
+      ADF_Put_Dimension_Information(parent_id,"R4",2,a_dimensions,&error_flag);
+      ADF_Write_All_Data(parent_id,(char *)(a),&error_flag);
+
+      ADF_Create(parent_id,"f4",&child_id,&error_flag);
+      ADF_Create(parent_id,"f5",&child_id,&error_flag);
+      ADF_Database_Close(root_id,&error_flag);
+
+     /* -------- build file: adf_file_one.adf ---------- */
+     /* open database and create three nodes at first level */
+      ADF_Database_Open("adf_file_one.adf","new"," ",&root_id,&error_flag);
+      ADF_Create(root_id,"n1",&tmp_id,&error_flag);
+      ADF_Create(root_id,"n2",&tmp_id,&error_flag);
+      ADF_Create(root_id,"n3",&tmp_id,&error_flag);
+
+     /* put three nodes under n1 (two regular and one link) */
+      ADF_Get_Node_ID(root_id,"n1",&parent_id,&error_flag);
+      ADF_Create(parent_id,"n4",&tmp_id,&error_flag);
+      ADF_Link(parent_id,"l3","adf_file_two.adf","/f3",&tmp_id,&error_flag);
+      ADF_Create(parent_id,"n5",&tmp_id,&error_flag);
+
+     /* put two nodes under n4 */
+      ADF_Get_Node_ID(parent_id,"n4",&child_id,&error_flag);
+      ADF_Create(child_id,"n6",&tmp_id,&error_flag);
+      ADF_Create(child_id,"n7",&tmp_id,&error_flag);
+
+     /* put one nodes under n6 */
+      ADF_Get_Node_ID(root_id,"/n1/n4/n6",&parent_id,&error_flag);
+      ADF_Create(parent_id,"n8",&tmp_id,&error_flag);
+
+     /* put three nodes under n3 */
+      ADF_Get_Node_ID(root_id,"n3",&parent_id,&error_flag);
+      ADF_Create(parent_id,"n9",&tmp_id,&error_flag);
+      ADF_Create(parent_id,"n10",&tmp_id,&error_flag);
+      ADF_Create(parent_id,"n11",&tmp_id,&error_flag);
+
+     /* put two nodes under n9 */
+      ADF_Get_Node_ID(parent_id,"n9",&child_id,&error_flag);
+      ADF_Create(child_id,"n12",&tmp_id,&error_flag);
+      ADF_Create(child_id,"n13",&tmp_id,&error_flag);
+
+     /* put label and data in n13 */
+      ADF_Set_Label(tmp_id,"Label on Node n13",&error_flag);
+      ADF_Put_Dimension_Information(tmp_id,"i4",1,&c_dimension,&error_flag);
+      ADF_Write_All_Data(tmp_id,(char *)(c),&error_flag);
+
+     /* put two nodes under n10 (one normal, one link) */
+      ADF_Get_Node_ID(root_id,"/n3/n10",&parent_id,&error_flag);
+      ADF_Link(parent_id,"l1"," ","/n3/n9/n13",&tmp_id,&error_flag);
+      ADF_Create(parent_id,"n14",&tmp_id,&error_flag);
+
+     /* put two nodes under n11 (one normal, one link) */
+      ADF_Get_Node_ID(root_id,"/n3/n11",&parent_id,&error_flag);
+      ADF_Link(parent_id,"l2"," ","/n3/n9/n13",&tmp_id,&error_flag);
+      ADF_Create(parent_id,"n15",&tmp_id,&error_flag);
+
+     /* ----------------- finished building adf_file_one.adf ------------- */
+
+     /* ------------- access and print data --------------- */
+
+     /* access data in node f3 (adf_file_two.adf) through link l3 */
+      ADF_Get_Node_ID(root_id,"/n1/l3",&tmp_id,&error_flag);
+      ADF_Get_Label(tmp_id,label,&error_flag);
+      ADF_Get_Data_Type(tmp_id,data_type,&error_flag);
+      ADF_Get_Number_of_Dimensions(tmp_id,&num_dims,&error_flag);
+      ADF_Get_Dimension_Values(tmp_id,dims_b,&error_flag);
+      ADF_Read_All_Data(tmp_id,(char *)(b),&error_flag);
+      printf (" node f3 through link l3:\n");
+      printf ("   label       = %s\n",label);
+      printf ("   data_type   = %s\n",data_type);
+      printf ("   num of dims = %5d\n",num_dims);
+      printf ("   dim vals    = %5d %5d\n",dims_b[0],dims_b[1]);
+      printf ("   data:\n");
+      for (i=0; i&lt;=3; i++)
+        {
+          for (j=0; j&lt;=2; j++)
+            {
+              printf("     %10.2f",b[j][i]);
+            };
+          printf("\n");
+        };
+
+     /* access data in node n13 */
+      ADF_Get_Node_ID(root_id,"/n3/n9/n13",&tmp_id,&error_flag);
+      ADF_Get_Label(tmp_id,label,&error_flag);
+      ADF_Get_Data_Type(tmp_id,data_type,&error_flag);
+      ADF_Get_Number_of_Dimensions(tmp_id,&num_dims,&error_flag);
+      ADF_Get_Dimension_Values(tmp_id,&dim_d,&error_flag);
+      ADF_Read_All_Data(tmp_id,(char *)(d),&error_flag);
+      printf (" node n13:\n");
+      printf ("   label       = %s\n",label);
+      printf ("   data_type   = %s\n",data_type);
+      printf ("   num of dims = %5d\n",num_dims);
+      printf ("   dim val     = %5d\n",dim_d);
+      printf ("   data:\n");
+      for (i=0; i&lt;=5; i++)
+        {
+          printf("     %-4d",d[i]);
+        };
+      printf("\n\n");
+
+     /* access data in node n13 through l1 */
+      ADF_Get_Node_ID(root_id,"/n3/n10/l1",&tmp_id,&error_flag);
+      ADF_Get_Label(tmp_id,label,&error_flag);
+      ADF_Read_All_Data(tmp_id,(char *)(d),&error_flag);
+      printf (" node n13 through l1:\n");
+      printf ("   label       = %s\n",label);
+      printf ("   data:\n");
+      for (i=0; i&lt;=5; i++)
+        {
+          printf("     %-4d",d[i]);
+        };
+      printf("\n\n");
+
+     /* access data in node n13 through l2 */
+      ADF_Get_Node_ID(root_id,"/n3/n11/l2",&tmp_id,&error_flag);
+      ADF_Get_Label(tmp_id,label,&error_flag);
+      ADF_Read_All_Data(tmp_id,(char *)(d),&error_flag);
+      printf (" node n13 through l2:\n");
+      printf ("   label       = %s\n",label);
+      printf ("   data:\n");
+      for (i=0; i&lt;=5; i++)
+        {
+          printf("     %-4d",d[i]);
+        };
+      printf("\n\n");
+
+     /* print list of children under root node */
+      print_child_list(root_id);
+
+     /* print list of children under n3 */
+      ADF_Get_Node_ID(root_id,"/n3",&tmp_id,&error_flag);
+      print_child_list(tmp_id);
+
+     /* re-open adf_file_two and get new root id */
+      ADF_Database_Open("adf_file_two.adf","old"," ",&root_id,&error_flag);
+      printf (" Comparison of root id:\n");
+      printf ("   adf_file_two.adf original root id = %x\n",root_id_file2);
+      printf ("   adf_file_two.adf new      root id = %x\n",root_id);
+   }
+
+   void print_child_list(double node_id)
+   {
+
+   /*
+      print table of children given a parent node-id
+   */
+      char node_name[ADF_NAME_LENGTH+1];
+      int i, num_children, num_ret, error_return;
+
+      ADF_Get_Name(node_id,node_name,&error_return);
+      ADF_Number_of_Children(node_id,&num_children,&error_return);
+      printf ("Parent Node Name = %s\n",node_name);
+      printf ("  Number of Children = %2d\n",num_children);
+      printf ("  Children Names:\n");
+      for (i=1; i&lt;=num_children; i++)
+        {
+          ADF_Children_Names(node_id,i,1,ADF_NAME_LENGTH+1,
+              &num_ret,node_name,&error_return);
+          printf ("     %s\n",node_name);                                };
+       printf ("\n");
+   }
+</pre>
+
+<p>
+The resulting output is:
+
+<pre>
+   node f3 through link l3:
+     label       = label on node f3
+     data_type   = R4
+     num of dims =     2
+     dim vals    =     4     3
+     data:
+             1.10           1.20           1.30
+             2.10           2.20           2.30
+             3.10           3.20           3.30
+             4.10           4.20           4.30
+   node n13:
+     label       = Label on Node n13
+     data_type   = i4
+     num of dims = 1
+     dim val     = 6
+     data:
+       1        2        3        4        5        6
+
+   node n13 through l1:
+     label       = Label on Node n13
+     data:
+       1        2        3        4        5        6
+
+   node n13 through l2:
+     label       = Label on Node n13
+     data:
+       1        2        3        4        5        6
+
+   Parent Node Name = ADF MotherNode
+     Number of Children =  3
+     Children Names:
+        n1
+        n2
+        n3
+
+   Parent Node Name = n3
+     Number of Children =  3
+     Children Names:
+        n9
+        n10
+        n11
+
+   Comparison of root id:
+     adf_file_two.adf original root id = 18
+     adf_file_two.adf new      root id = 2a
+</pre>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 25 Oct 2001
+
+</body>
+</html>

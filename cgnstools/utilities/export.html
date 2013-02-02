@@ -28,6 +28,7 @@ content="text/html; charset=iso-8859-1">
 (<a href="../../python/index.html"><b>Python&nbsp;Implementation</b></a>)
 (<a href="../../cgnstools/index.html"><span class=nav><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></span></a>)
 <br><br>
+(<a href="../tools.html"><b>Tools</b></a>)
 (<a href="../cgnsview/index.html"><b>CGNSview</b></a>)
 (<a href="../cgnsplot/index.html"><b>CGNSplot</b></a>)
 (<a href="../utilities/index.html"><span class=nav><b>Utilities</b></span></a>)
@@ -56,6 +57,11 @@ currently available.</p>
         <td><a href="#Tecplot">Tecplot</a></td>
         <td>cgns_to_tecplot</td>
         <td>Converts a CGNS file to a Tecplot file</td>
+    </tr>
+    <tr>
+        <td><a href="#VTK">VTK</a></td>
+        <td>cgns_to_vtk</td>
+        <td>Converts a CGNS file to VTK files</td>
     </tr>
 </table>
 
@@ -206,6 +212,68 @@ CGNSview GUI:</p>
 <p>This allows interactive selection of the input and output
 files and options. The <em>Accept</em> button will then construct
 the command line and run <strong>cgns_to_tecplot</strong>.</p>
+
+<hr>
+
+<h2><a name="VTK"></a>VTK</h2>
+
+<p>Converts a CGNS file to VTK files. </p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>cgns_to_vtk</b> <i>options</i> <b>CGNSfile</b> <i>VTKdir</i></p>
+
+<p>The input CGNS file, <i>CGNSfile</i>, is required. If the VTK output
+directory, <em>VTKdir</em>, is given, the VTK files are written to that
+directory, otherwise the current directory is used.
+The command line aptions are:&nbsp;
+</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</td>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</td>
+    </tr>
+    <tr>
+        <td nowrap>-a</td>
+        <td>write ASCII files (default is binary)</td>
+    </tr>
+    <tr>
+        <td nowrap>-b<i> base</i></td>
+        <td>use CGNS base index <i>base</i>, (default is 1)</td>
+    </tr>
+    <tr>
+        <td nowrap>-z<i> zone</i></td>
+        <td>use CGNS zone index <i>zone</i>. (default is 0 for all)</td>
+    </tr>
+    <tr>
+        <td nowrap>-s<i> sol</i></td>
+        <td>use CGNS solution index <i>sol</i>. (default is 1)</td>
+    </tr>
+    <tr>
+        <td nowrap>-e</td>
+        <td>write element sets (unstructured zone).</td>
+    </tr>
+    <tr>
+        <td nowrap>-v</td>
+        <td>verbose printing</td>
+    </tr>
+</table>
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/export_vtk.gif" width="351" height="311"
+        alt="CGNSview Tecplot export window"
+        longdesc="images/export_tecplot.html"></p>
+
+<p>This allows interactive selection of the input file and output
+directory and options. The <em>Accept</em> button will then construct
+the command line and run <strong>cgns_to_vtk</strong>.</p>
 
 <p>
 <hr size=4 width=75%>

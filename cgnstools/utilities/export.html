@@ -59,6 +59,16 @@ currently available.</p>
         <td>Converts a CGNS file to a Tecplot file</td>
     </tr>
     <tr>
+        <td><a href="#AFLR3">AFLR3</a></td>
+        <td>cgns_to_aflr3</td>
+        <td>Converts a CGNS file to an AFLR3 file</td>
+    </tr>
+    <tr>
+        <td><a href="#FAST">FAST</a></td>
+        <td>cgns_to_fast</td>
+        <td>Converts a CGNS file to a FAST file</td>
+    </tr>
+    <tr>
         <td><a href="#VTK">VTK</a></td>
         <td>cgns_to_vtk</td>
         <td>Converts a CGNS file to VTK files</td>
@@ -92,8 +102,8 @@ written to <em>Qfile</em>. The command line aptions are:&nbsp; </p>
 
 <table border="1" cellpadding="5">
     <tr>
-        <th bgcolor="#C0C0C0" align=left scope=col>option</td>
-        <th bgcolor="#C0C0C0" align=left scope=col>description</td>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
     </tr>
     <tr>
         <td nowrap>-s</td>
@@ -175,8 +185,8 @@ the command line and run <strong>cgns_to_plot3d</strong>.</p>
 
 <table border="1" cellpadding="5">
     <tr>
-        <th bgcolor="#C0C0C0" align=left scope=col>option</td>
-        <th bgcolor="#C0C0C0" align=left scope=col>description</td>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
     </tr>
     <tr>
         <td nowrap>-a</td>
@@ -215,6 +225,148 @@ the command line and run <strong>cgns_to_tecplot</strong>.</p>
 
 <hr>
 
+<h2><a name="AFLR3"></a>AFLR3</h2>
+
+<p>Converts a CGNS file to an AFLR3 file. </p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>cgns_to_aflr3</b> <i>options</i> <b>CGNSfile AFLR3file</b> <i>MAPBCfile</i></p>
+
+<p>The input CGNS file, <i>CGNSfile</i>, and AFLR3 output file,
+<em>AFLR3file</em>, are required. If <em>MAPBCfile</em> is given, then
+boundary conditions will be written to it, else the BC file is constucted
+from the base name of the AFLR3 file with the extension .mapbc.</p>
+
+<p>The command line aptions are:</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-4</td>
+        <td>write coordinates as real*4</td>
+    </tr>
+    <tr>
+        <td nowrap>-8</td>
+        <td>write coordinates as real*8 (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-f</td>
+        <td>write formatted ASCII file</td>
+    </tr>
+    <tr>
+        <td nowrap>-s</td>
+        <td>write Fortran stream (binary) file (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-l</td>
+        <td>write little-endian format</td>
+    </tr>
+    <tr>
+        <td nowrap>-b</td>
+        <td>write big-endian format (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-B <i>base</i></td>
+        <td>set CGNS base index to <i>base</i> (default is 1)</td>
+    </tr>
+    <tr>
+        <td nowrap>-Z <i>zone</i></td>
+        <td>set CGNS zone index to <i>zone</i> (default is 1)</td>
+    </tr>
+</table>
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/export_aflr3.gif" width="336" height="317"
+        alt="CGNSview AFLR3 export window"
+        longdesc="images/export_aflr3.html"></p>
+
+<p>This allows interactive selection of the input and output
+files and options. The <em>Accept</em> button will then construct
+the command line and run <strong>cgns_to_aflr3</strong>.</p>
+
+<hr>
+
+<h2><a name="FAST"></a>FAST</h2>
+
+<p>Converts a CGNS file to a FAST file. </p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>cgns_to_fast</b> <i>options</i> <b>CGNSfile FASTfile</b> <i>MAPBCfile</i></p>
+
+<p>The input CGNS file, <i>CGNSfile</i>, and FAST output file,
+<em>FASTfile</em>, are required. If <em>MAPBCfile</em> is given, then
+boundary conditions will be written to it, else the BC file is constucted
+from the base name of the FAST file with the extension .mapbc.
+
+<p>The command line aptions are:</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-4</td>
+        <td>write coordinates as real*4</td>
+    </tr>
+    <tr>
+        <td nowrap>-8</td>
+        <td>write coordinates as real*8 (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-f</td>
+        <td>write formatted ASCII file</td>
+    </tr>
+    <tr>
+        <td nowrap>-s</td>
+        <td>write Fortran stream (binary) file (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-l</td>
+        <td>write little-endian format</td>
+    </tr>
+    <tr>
+        <td nowrap>-b</td>
+        <td>write big-endian format (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-B <i>base</i></td>
+        <td>set CGNS base index to <i>base</i> (default is 1)</td>
+    </tr>
+    <tr>
+        <td nowrap>-Z <i>zone</i></td>
+        <td>set CGNS zone index to <i>zone</i> (default is 1)</td>
+    </tr>
+</table>
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/export_fast.gif" width="335" height="317"
+        alt="CGNSview FAST export window"
+        longdesc="images/export_fast.html"></p>
+
+<p>This allows interactive selection of the input and output
+files and options. The <em>Accept</em> button will then construct
+the command line and run <strong>cgns_to_fast</strong>.</p>
+
+<hr>
+
 <h2><a name="VTK"></a>VTK</h2>
 
 <p>Converts a CGNS file to VTK files. </p>
@@ -235,8 +387,8 @@ The command line aptions are:&nbsp;
 
 <table border="1" cellpadding="5">
     <tr>
-        <th bgcolor="#C0C0C0" align=left scope=col>option</td>
-        <th bgcolor="#C0C0C0" align=left scope=col>description</td>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
     </tr>
     <tr>
         <td nowrap>-a</td>

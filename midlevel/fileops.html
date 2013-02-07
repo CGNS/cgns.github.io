@@ -369,13 +369,15 @@ The currently supported options and expected values are:
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_COMPRESS</tt><td>
-   <td>When a CGNS file is closed after being opened in modify mode, the
-       normal operation of the CGNS library is to rewrite the file if
-       there is unused space.
-       This happens when nodes have been rewritten or deleted.
-       Setting <tt>value</tt> to 0 will prevent the library from
-       rewriting the file, and setting it to 1 will force the rewrite.
-       The default value is &minus;1.
+   <td><b>Note:</b> Prior versions of the libary would automatically rewrite
+       the CGNS file when it was closed after being opened in modify mode
+       if there was unused space. This is no longer done by default.
+       The previous behavior may be
+       recovered by setting <tt>value</tt> to a positive integer. In this
+       case the file will be rewritten if the number of node deletions or
+       modifications are equal to or exceed this number. Setting
+       <tt>value</tt> to a negative number will force the rewrite
+       when the file is closed. The default value is 0 (no rewrite).
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_SET_PATH</tt><td>

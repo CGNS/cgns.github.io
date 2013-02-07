@@ -211,7 +211,6 @@
        of points or elements using <tt>PointRange</tt>, or using a
        discrete list of all points or elements at which the boundary
        condition is applied using <tt>PointList</tt>.
-       <br><br>
        When the boundary condition is to be applied anywhere other than points,
        then <tt>GridLocation_t</tt> under the <tt>BC_t</tt> node must
        be used to indicate this.
@@ -270,8 +269,14 @@
    <td><tt>location</tt><td>
    <td>Grid location used in the definition of the point set.
        The currently admissible locations are <tt>Vertex</tt> (the default
-       if not given). For 2-D grids, <tt>EdgeCenter</tt> is also allowed,
-       and for 3-D grids, the additional values of <tt>FaceCenter</tt>,
+       if not given), and <tt>CellCenter</tt>. Interpretation of
+       <tt>CellCenter</tt>, and additional allowable values of grid location
+       depends on the base cell dimension. For <tt>CellDim</tt>=1,
+       <tt>CellCenter</tt> refers to line elements. For <tt>CellDim</tt>=2,
+       <tt>CellCenter</tt> refers to area elements, and the additional
+       value <tt>EdgeCenter</tt> is allowed. For <tt>CellDim</tt>=3,
+       <tt>CellCenter</tt> refers to volume elements, and in addition to
+       <tt>EdgeCenter</tt>, the values of <tt>FaceCenter</tt>,
        <tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, and <tt>KFaceCenter</tt>
        may be used.
 <tr valign=baseline><td>
@@ -284,12 +289,13 @@
 <ul>
 <li> The use of <tt>ElementList</tt> and <tt>ElementRange</tt> for
      <tt>ptset_type</tt> is deprecated and should not be used
-     in new code. These are still currently accepted, but will be internally
-     replaced with the appropriate values of <tt>PointList/PointRange</tt>
-     and <tt>GridLocation_t</tt>.
-<li> <tt>CellCenter</tt> for <tt>GridLocation_t</tt> is also deprecated. If used,
-     the value will be replaced by <tt>EdgeCenter</tt> for 2-D grids or
-     <tt>FaceCenter</tt> for 3-D grids.
+     in new code fo writing boundary conditions. These are still currently
+     accepted, but will be internally replaced with the appropriate values
+     of <tt>PointList/PointRange</tt> and <tt>GridLocation_t</tt>,
+     based on the base cell dimension.
+<li> Code which reads older CGNS files, should handle <tt>ElementList</tt>
+     and <tt>ElementRange</tt>, however, since many older files contain
+     these specifications for <tt>ptset_type</tt>.
 </ul>
 
 <a name="bcdataset"></a>

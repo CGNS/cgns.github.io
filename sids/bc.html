@@ -423,14 +423,10 @@ the BC surface patch.
      <tt>InwardNormalList</tt>, <tt>Ordinal</tt>, <tt>PointList</tt>,
      <tt>PointRange</tt>, or <tt>ReferenceState</tt>.
 <li> <a href="build.html#GridLocation"><tt>GridLocation</tt></a> is optional;
-     if absent its default value is <tt>Vertex</tt>.
-     For 2-D grids (<tt>CellDimension = 2</tt>), <tt>GridLocation</tt> may take
-     the additional value of <tt>EdgeCenter</tt>.
-     For 3-D grids (<tt>CellDimension = 3</tt>), <tt>GridLocation</tt> may take
-     the additional values of <tt>EdgeCenter</tt>, <tt>FaceCenter</tt>,
-     <tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, or <tt>KFaceCenter</tt>.
+     if absent its default value is <tt>Vertex</tt>. For other allowble
+     values, see the table below.
 <li> One of <tt>PointRange</tt> or <tt>PointList</tt> must be specified but not
-     both. They must define a face subrange of the zone.
+     both. They must define a subrange of the zone.
 <li> <tt>InwardNormalIndex</tt> is only an option for structured grids.
      For unstructured grid boundaries, it should not be used.
      <tt>InwardNormalIndex</tt> may have only one nonzero element, whose
@@ -473,26 +469,30 @@ then <tt>PointRange/List</tt> refer to face elements. The interpretation of
 <table cellspacing=0 cellpadding=3 border>
 <tr align=center>
   <th rowspan=2>CellDimension</th>
-  <th colspan=3>GridLocation</th>
+  <th colspan=4>GridLocation</th>
 </tr><tr align=center>
   <th>Vertex</th>
   <th>EdgeCenter</th>
   <th>*FaceCenter</th>
+  <th>CellCenter</th>
 </tr><tr align=center>
   <td>1</td>
   <td>vertices</td>
   <td>-</td>
   <td>-</td>
+  <td>cells (line elements)</td>
 </tr><tr align=center>
   <td>2</td>
   <td>vertices</td>
   <td>edges</td>
   <td>-</td>
+  <td>cells (area elements)</td>
 </tr><tr align=center>
   <td>3</td>
   <td>vertices</td>
   <td>edges</td>
   <td>faces</td>
+  <td>cells (volume elements)</td>
 </tr>
 </table>
 </center>

@@ -53,6 +53,7 @@
      <ul>
      <li> <tt><b>cg_open</b></tt> - Open a CGNS file
      </li><li> <tt><b>cg_version</b></tt> - Get CGNS file version
+     </li><li> <tt><b>cg_precision</b></tt> - Get CGNS file precision
      </li><li> <tt><b>cg_close</b></tt> - Close a CGNS file
      </li><li> <tt><b>cg_is_cgns</b></tt> - Check for a valid CGNS file
      </li><li> <tt><b>cg_save_as</b></tt> - Save the open CGNS file
@@ -95,6 +96,10 @@
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_precision(<span class=in>int fn</span>, <span class=out><i>int *precision</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_close(<span class=in>int fn</span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
@@ -121,6 +126,10 @@
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_version_f(<span class=in>fn</span>, <span class=out><i>version</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_precision_f(<span class=in>fn</span>, <span class=out><i>precision</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -167,6 +176,10 @@
 <tr valign=baseline><td>
    <td><tt>version</tt><td>
    <td>CGNS version number.
+<tr valign=baseline><td>
+   <td><tt>precision</tt><td>
+   <td>Precision used to write the CGNS file. The return value will be
+       one of 32 (32-bit), 64 (64-bit), or 0 if not known.
 <tr valign=baseline><td>
    <td><tt>file_type</tt><td>
    <td>Type of CGNS file. This will typically be either <tt>CG_FILE_ADF</tt>
@@ -487,7 +500,7 @@ is returned by <tt>cg_root_id</tt>.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 02 Feb 2012
+Last updated 08 Feb 2013
 
 </body>
 </html>

@@ -48,6 +48,7 @@
 
 <ul>
 <li> <a href="#CGNSLibraryVersion">CGNS Version</a>
+<li> <a href="#CGNSLibraryPrecision">CGNS Precision</a>
 <li> <a href="#CGNSBase">CGNS Entry Level Structure Definition: <tt>CGNSBase_t</tt></a>
 <li> <a href="#Zone">Zone Structure Definition: <tt>Zone_t</tt></a>
 <li> <a href="#precedence">Precedence Rules and Scope Within the Hierarchy</a>
@@ -97,6 +98,22 @@ With the advent of new libraries that can read and write CGNS databases,
 the node is now defined as the version of the CGNS standard.
 The Mid-Level Library modifies its interpretation of node data according
 to the CGNS version number, and other libraries should also.
+
+<a name="CGNSLibraryPrecision"></a>
+<h3>CGNS Precision</h3>
+
+<p>
+With the advent of support of both 32 and 64-bit integer data,
+a new node named <tt>CGNSLibraryPrecision_t</tt> has been added at the
+top level of the hierarchy. This node provides the value of 32 for 32-bit
+precision or 64 for 64-bit precision, to denote the precision used
+to write or modify the CGNS file.
+
+<p>
+As with the <tt>CGNSLibraryVersion_t</tt> node, this node is located
+directly under the root node of the file.
+The <a href="../filemap/nodes.html#CGNSLibraryPrecision">SIDS File Mapping
+Manual</a> defines this location more precisely.
 
 <a name="CGNSBase"></a>
 <h3>CGNS Entry Level Structure Definition: <tt>CGNSBase_t</tt></h3>
@@ -769,7 +786,7 @@ level and thereafter omitted when outputting data.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 24 Mar 2012
+Last updated 08 Feb 2013
 
 </body>
 </html>

@@ -34,12 +34,40 @@
 <a name="endnav"></a>
 
 <h2>General Remarks</h2>
-
+<p>
+The Parallel CGNS library, or PCGNS, is built on top of the collective
+I/O support in HDF5 using MPI-IO. PCGNS provides specialized routines
+to open and close a file for parallel I/O and read and write grid
+coordinates, element data, solution data, and general arrays in a
+collective fashion. The data may be queued, and then later flushed
+to optimize these operations for maximum bandwidth. The PCGNS functions
+are prefixed with <em>cgp_</em>, and documented in
+<a href="library.html">The PCGNS Software Library</a>.
+<p>
+All additional accesses to the data use the standard Mid-Level Library (MLL)
+functions. A typical use of the PCGNS routines in a parallel I/O program
+would be:
+<pre>
+cgp_open              --- open file for parallel I/O
+cg_base_write         --- create base and zone using MLL
+cg_zone_write
+cgp_coord_write       --- create coordinate dataset for parallel I/O
+cgp_coord_write_data  --- write the coordinates collectively
+cgp_close             --- close the file
+</pre>
+<p>
+An example Fortran and C program are given in
+<a href="examples.html">Example Programs</a>.
+<p>
+A detailed discussion on the implementation may be found in the PDF paper
+<a href="../papers/AnEfficientAndFlexibleIParallelIOImplementationForTheCFDGeneralNotationSystem.pdf">
+"An Efficient and Flexible Parallel I/O implementation for the CFD General
+Notation System"</a> by Horne, Bensen, and Hauser.
 <p>
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 15 Feb 2013
+Last updated 19 Feb 2013
 
 </body>
 </html>

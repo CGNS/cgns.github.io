@@ -233,12 +233,13 @@ the command line and run <strong>cgns_to_tecplot</strong>.</p>
 
 <p>The program is executed from the command line as:</p>
 
-<p><b>cgns_to_aflr3</b> <i>options</i> <b>CGNSfile AFLR3file</b> <i>MAPBCfile</i></p>
+<p><b>cgns_to_aflr3</b> <i>options</i> <b>CGNSfile</b> <i>AFLR3file MAPBCfile</i></p>
 
-<p>The input CGNS file, <i>CGNSfile</i>, and AFLR3 output file,
-<em>AFLR3file</em>, are required. If <em>MAPBCfile</em> is given, then
-boundary conditions will be written to it, else the BC file is constucted
-from the base name of the AFLR3 file with the extension .mapbc.</p>
+<p>The input CGNS file, <i>CGNSfile</i> is required. If the AFLR3 output file,
+<em>AFLR3file</em>, is not given, the output file name will be constructed
+from the base name of the CGNS file with the extension .ugrid. The same is
+done for the BC file, but the extension .mapbc is used. If <em>MAPBCfile</em>
+is given, then <em>AFLR3file</em> must also be given.</p>
 
 <p>The command line aptions are:</p>
 
@@ -272,6 +273,21 @@ from the base name of the AFLR3 file with the extension .mapbc.</p>
         <td>write big-endian format (default)</td>
     </tr>
     <tr>
+        <td nowrap>-x</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as X-symmetry (6661 in mapbc)</td>
+    </tr>
+    <tr>
+        <td nowrap>-y</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as Y-symmetry (6662 in mapbc)</td>
+    </tr>
+    <tr>
+        <td nowrap>-z</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as Z-symmetry (6663 in mapbc)</td>
+    </tr>
+    <tr>
         <td nowrap>-B <i>base</i></td>
         <td>set CGNS base index to <i>base</i> (default is 1)</td>
     </tr>
@@ -286,7 +302,7 @@ from the base name of the AFLR3 file with the extension .mapbc.</p>
 <p>The following panel is created when launched from the
 CGNSview GUI:</p>
 
-<p><img src="images/export_aflr3.gif" width="336" height="317"
+<p><img src="images/export_aflr3.gif" width="337" height="375"
         alt="CGNSview AFLR3 export window"
         longdesc="images/export_aflr3.html"></p>
 
@@ -304,12 +320,13 @@ the command line and run <strong>cgns_to_aflr3</strong>.</p>
 
 <p>The program is executed from the command line as:</p>
 
-<p><b>cgns_to_fast</b> <i>options</i> <b>CGNSfile FASTfile</b> <i>MAPBCfile</i></p>
+<p><b>cgns_to_fast</b> <i>options</i> <b>CGNSfile</b> <i>FASTfile MAPBCfile</i></p>
 
-<p>The input CGNS file, <i>CGNSfile</i>, and FAST output file,
-<em>FASTfile</em>, are required. If <em>MAPBCfile</em> is given, then
-boundary conditions will be written to it, else the BC file is constucted
-from the base name of the FAST file with the extension .mapbc.
+<p>The input CGNS file, <i>CGNSfile</i> is required. If the FAST output file,
+<em>FASTfile</em>, is not given, the output file name will be constructed
+from the base name of the CGNS file with the extension .fgrid. The same is
+done for the BC file, but the extension .mapbc is used. If <em>MAPBCfile</em>
+is given, then <em>FASTfile</em> must also be given.</p>
 
 <p>The command line aptions are:</p>
 
@@ -343,6 +360,21 @@ from the base name of the FAST file with the extension .mapbc.
         <td>write big-endian format (default)</td>
     </tr>
     <tr>
+        <td nowrap>-x</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as X-symmetry (6661 in mapbc)</td>
+    </tr>
+    <tr>
+        <td nowrap>-y</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as Y-symmetry (6662 in mapbc)</td>
+    </tr>
+    <tr>
+        <td nowrap>-z</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as Z-symmetry (6663 in mapbc)</td>
+    </tr>
+    <tr>
         <td nowrap>-B <i>base</i></td>
         <td>set CGNS base index to <i>base</i> (default is 1)</td>
     </tr>
@@ -357,7 +389,7 @@ from the base name of the FAST file with the extension .mapbc.
 <p>The following panel is created when launched from the
 CGNSview GUI:</p>
 
-<p><img src="images/export_fast.gif" width="335" height="317"
+<p><img src="images/export_fast.gif" width="336" height="371"
         alt="CGNSview FAST export window"
         longdesc="images/export_fast.html"></p>
 
@@ -433,7 +465,7 @@ the command line and run <strong>cgns_to_vtk</strong>.</p>
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../../include/footer_small.html" -->
-Last updated 02 Feb 2013
+Last updated 22 Feb 2013
 
 </body>
 </html>

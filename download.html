@@ -51,13 +51,14 @@ Download</font></h1>
 <br><a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/user/index.html">User's Guide</a>
 <br><a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/overview/index.html">Overview</a>
 <br><a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/sids/index.html">SIDS</a>
-<br><a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/filemap/index.html">SIDS-to-ADF</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/filemap/index.html">SIDS File Mapping</a>
 <br><a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/index.html">Mid-Level Library</a>
-<br><a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/adf/index.html">ADF Guide</a>
+<br><a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/cgio/index.html">CGIO User's Guide</a>
 <p><b>SourceForge pages</b>
-<br><a href="http://sourceforge.net/projects/cgns/">SourceForge CGNS Page</a>
-<br><a href="http://sourceforge.net/cvs/?group_id=74444">CVS Information</a>
-<br><a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=74444&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo" /></a>
+<br><a href="http://sourceforge.net/projects/cgns/">CGNS Page</a>
+<br><a href="http://sourceforge.net/projects/cgns/files/">Distributed Files</a>
+<br><a href="http://sourceforge.net/apps/trac/sourceforge/wiki/Subversion%20client%20instructions">SVN Information</a>
+<br><a href="http://sourceforge.net"><img src="sflogo.php.png" width="125" height="37" border="0" alt="SourceForge.net Logo" /></a>
 </td>
 </tr>
 </table>
@@ -96,15 +97,15 @@ The source code may
 downloaded (from SourceForge) as a gzipped, tar file:  <br>
 <ul>
 <li>
+<b>Current Stable Release:</b>
 <a href="http://sourceforge.net/projects/cgns/files/cgnslib_3.1/cgnslib_3.1.4.tar.gz/download">
-<b>CGNS Version 3.1.4</b></a> (cgnslib_3.1.4.tar.gz) -
+CGNS Version 3.1.4</a> (cgnslib_3.1.4.tar.gz)<br>
 First release of Version 3.1.4 software. Includes 64-bit integer capability
 and updated Tools for viewing and editing CGNS files.
 <a href="http://www.hdfgroup.org/HDF5/">HDF5</a> is now the default file type,
 when CGNS is built with HDF5 version 1.8 or later.
 (CGNS can always read or write both HDF5 and ADF
 file types.)
-<p>
 Version 3.1.4 fixes some issues with goto for FamilyBCDataset for
 UserData, .etc; fixes cmake and configure scripts to allow MPI with
 HDF5 and some bugs in those scripts; updates CGNSplot to handle all element
@@ -112,72 +113,70 @@ types and 1-d and 2-d cases; updates to cgnscheck; adds cgnsBuild.defs
 Makefile include to installation; allows CellCenter for BCs; and
 adds cg_precision and cg_precision_f functions to get integer
 size used to create the file (32 or 64).
-<br>
+<p>
 <b>Note:</b> CGNStools no longer built automatically, you need to set
 the configure flag, <em>--enable-cgnstools</em> if using configure.
-<p>
-Version 3.1.3 implements the bug fixes by Xiangmin Jiao (Jim),
-and adds two new functions to more easily read and write GridLocation data
-for boundary conditions,
-<tt>cg_boco_gridlocation_read</tt> and <tt>cg_boco_gridlocation_write</tt>.
-It also includes the implementation of CPEX 0027 (Time-dependent Connectivities),
-CPEX 0030 (Zone Sub-Regions) and CPEX 0031 (General SIDS Improvements), along
-with the alpha release of Parallel CGNS.
-These are described in the online documentation.
-<p>
-Release 2 fixes the Fortran element name ordering bug.
-<p>
-Release 3 adds the HDF5 CRT_ORDER fix and corrects the directory search
-order for linked files.
-<p>
-Release 4 fixes an issue with descriptors under FamilyBCDataSet_t nodes;
-changes MormalIndexFlag to NormalIndexSize for cg_boco_info;
-and adds a new Fortran routine cg_exit_on_error_f.
 </li>
-</ul>
 
-<p>Also available from the <a href="http://sourceforge.net/projects/cgns/">SourceForge CGNS
-summary page</a>:
-<ul>
 <li>
-<a href="http://prdownloads.sourceforge.net/cgns/cgnslib_2.5-5.tar.gz?download"><b>CGNS Version 2.5-5</b></a> (cgnslib_2.5-5.tar.gz) -
+<b>Current Beta Release:</b>
+<a href="http://sourceforge.net/projects/cgns/files/cgnslib_3.2/cgnslib_3.2.tar.gz/download">
+CGNS Version 3.2 beta</a> (cgnslib_3.2.tar.gz)<br>
+Beta release of Version 3.2 software. This release provides full
+integration of parallel I/O using HDF5 with MPI. It also implements
+the Hierarchy of families (CPEX 0033),
+Multiple families (CPEX 0034), and Cubic elements (CPEX 0036).
+Compression (rewriting) of modified CGNS files is no longer
+automatically done, since this may interfere with parallel I/O. This
+may be reenabled within an application with the <em>cg_set_compress</em>
+function, or done later through the CGNSview GUI or with the
+<em>cgnscompress</em> program in the <em>tools</em> subdirectory.
+Conversion programs to and from AFLR3, FAST, and TetGen have also
+been added to CGNStools.
+</li>
+<br>
+<li>
+<b>Previous Stable Release:</b>
+<a href="http://sourceforge.net/projects/cgns/files/cgnslib_2.5/Release%205/cgnslib_2.5-5.tar.gz/download">CGNS Version 2.5-5</a> (cgnslib_2.5-5.tar.gz)<br>
 Prior stable-release version. (This release fixes a long standing issue of memory leakage in the CGNS library
 when closing a file or deleting a node. It also removes the internal storage
 of element data when reading and writing, and uses the user supplied buffer
 instead. In the case of partial reads and writes however, the element data is
-currently reloaded into memory to do the operations.)<br>
+currently reloaded into memory to do the operations.)
+</li>
+</ul>
+
+<p>Also available from the <a href="http://sourceforge.net/projects/cgns/files/">
+SourceForge CGNS Files Download page</a>:
+
+<ul>
+<li>
+<b>
+<a href="http://sourceforge.net/projects/cgns/files/F77_examples/Release%203/F77_examples-3.tar.gz/download">
+F77_examples</a></b> - Fortran CGNS examples.
 </li>
 
 <li>
 <b>
-<a href="http://prdownloads.sourceforge.net/cgns/cgnstools-2-5-4.tar.gz?download">
-cgnstools</a></b> - older (Version 2.5) tools for viewing/editing ADF file (Tcl/Tk based)... note that newer tools are included
-in the latest Version 3 cgnslib distribution.</li>
-
-<li>
-<b>
-<a href="http://prdownloads.sourceforge.net/cgns/F77_examples-3.tar.gz?download">
-F77_examples</a></b> - Fortran CGNS examples.</li>
-
-<li>
-<b>
-<a href="http://prdownloads.sourceforge.net/cgns/UserGuideCodeV3.1.2.tar.gz?download">
+<a href="http://sourceforge.net/projects/cgns/files/UserGuideCode/Release%203.1.2/UserGuideCodeV3.1.2.tar.gz/download">
 UserGuideCode 3.1.2</a></b> - examples from the <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/user/index.html">CGNS
-User Guide</a>.</li>
+User Guide</a>.
+</li>
+
+<li>
+<b>Windows compiled html file (chm)</b> documentation is available for
+<a href="http://sourceforge.net/projects/cgns/files/WindowsCHM/cgns2.5.chm/download">Version 2.5</a>,
+<a href="http://sourceforge.net/projects/cgns/files/WindowsCHM/cgns3.1.chm/download">Version 3.1</a> and
+<a href="http://sourceforge.net/projects/cgns/files/WindowsCHM/cgns3.2.chm/download">Version 3.2</a>
+of the CGNS library.
+</li>
 
 <li>
 <b>
-Working SVN directory of files</b> from the
-<a href="http://sourceforge.net/projects/cgns/">SourceForge CGNS summary page</a>
-under the "Code" tab.  (Note: older CVS repository is no longer being used.)</li>
-
-<br>
-<li>
-Complete documentation in the form of a Windows compiled html file (chm)
-is available for
-<a href="http://prdownloads.sourceforge.net/cgns/cgns2.5.chm?download">Version 2.5</a> and
-<a href="http://prdownloads.sourceforge.net/cgns/cgns3.1.chm?download">Version 3.1</a>
-of the CGNS library.
+<a href="http://sourceforge.net/p/cgns/code/520/tree/">Working SVN directories</a></b>
+of development files, included source and documentation.
+(<b>Note</b>: older CVS repository is no longer being used.)
+</li>
 </ul>
 
 <p>

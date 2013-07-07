@@ -358,7 +358,8 @@ when calling <tt>cgp_open</tt>.
    <td>The option to configure, currently one of
        <tt>CG_CONFIG_ERROR</tt>, <tt>CG_CONFIG_COMPRESS</tt>,
        <tt>CG_CONFIG_SET_PATH</tt>, <tt>CG_CONFIG_ADD_PATH</tt>,
-       <tt>CG_CONFIG_FILE_TYPE</tt>, or <tt>CG_CONFIG_HDF5_COMPRESS</tt> as
+       <tt>CG_CONFIG_FILE_TYPE</tt>, <tt>CG_CONFIG_HDF5_COMPRESS</tt>,
+       or <tt>CG_CONFIG_HDF5_MPI_COMM</tt> as
        defined in <i>cgnslib.h</i>.
 <tr valign=baseline><td>
    <td><tt>value</tt><td>
@@ -444,6 +445,14 @@ The currently supported options and expected values are:
        no compression. Setting <tt>value</tt> to -1, will use the default
        compression level of 6. The acceptable values are 0 to 9, corresponding
        to gzip compression levels.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_HDF5_MPI_COMM</tt><td>
+   <td>Sets the MPI communicator for parallel I/O. The default is
+       <tt>MPI_COMM_WORLD</tt>. The new communicator is given by
+       typecasting it to a <tt>void *</tt>. This is generally used
+       internally - see <a href="../pcgns/library.html#misc">cgp_mpi_comm</a>
+       instead.
 </table>
 
 <p>
@@ -529,7 +538,7 @@ is returned by <tt>cg_root_id</tt>.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 15 Mar 2013
+Last updated 07 July 2013
 
 </body>
 </html>

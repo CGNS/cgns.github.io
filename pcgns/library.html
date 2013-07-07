@@ -38,6 +38,7 @@
 <ul>
 <li> <a href="#misc">Miscellaneous Routines</a>
      <ul>
+     <li> <tt><b>cgp_mpi_comm</b></tt> - Set the MPI communicator
      <li> <tt><b>cgp_pio_mode</b></tt> - Set the parallel IO mode
      <li> <tt><b>cgp_queue_set</b></tt> - Enable/Disable queued output
      <li> <tt><b>cgp_queue_flush</b></tt> - Flush the output queue
@@ -86,6 +87,10 @@
     <th scope=col>Modes
 <tbody>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgp_mpi_comm(<span class=in>int mpicomm</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cgp_pio_mode(<span class=in>PIOmode_t mode</span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
@@ -102,6 +107,10 @@
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tbody>
+<tr><td nowrap>
+        <tt><b>call cgp_mpi_comm_f(<span class=in>mpicomm</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cgp_pio_mode_f(<span class=in>mode</span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
@@ -128,6 +137,9 @@
 <br><br>
 <table cellspacing=0 cellpadding=0 noborder>
 <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>mpicomm</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The MPI communicator to be used by the CGNS library.
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
    <td><tt>mode</tt><td><tt>&nbsp;&nbsp;</tt>
    <td>Parallel input/ouput mode.
 <tr valign=baseline><td>
@@ -137,6 +149,10 @@
    <td><tt>ier</tt><td>
    <td>Error status.
 </table>
+
+<p>
+The routine <tt>cgp_mpi_comm</tt> sets the MPI communicator for parallel
+operations by the CGNS library. The default value is <tt>MPI_COMM_WORLD</tt>.
 
 <p>
 The routine <tt>cgp_pio_mode</tt> sets the mode for parallel
@@ -652,7 +668,7 @@ defined in the file; no conversions are done.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 15 Feb 2013
+Last updated 06 July 2013
 
 </body>
 </html>

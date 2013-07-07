@@ -81,6 +81,10 @@ c---- open file and create base and zone
       sizes(2) = totelems
       sizes(3) = 0
 
+c---- default is MPI_COMM_WORLD, but can set another
+c     communicator with this
+c     call cgp_mpi_comm_f(MPI_COMM_WORLD,ierr)
+
       call cgp_open_f('fexample.cgns', CG_MODE_WRITE, F, ierr)
       if (ierr .ne. CG_OK) call cgp_error_exit_f
       call cg_base_write_f(F, 'Base', 3, 3, B, ierr)
@@ -258,6 +262,11 @@ int main(int argc, char *argv[])
     sizes[0] = tot_nnodes;
     sizes[1] = tot_nelems;
     sizes[2] = 0;
+
+    /* the default here is to use MPI_COMM_WORLD,
+       but this allows assigning of another communicator
+    cgp_mpi_comm(MPI_COMM_WORLD); */
+
     if (cgp_open(outfile, CG_MODE_WRITE, &F) ||
         cg_base_write(F, "Base", 3, 3, &B) ||
         cg_zone_write(F, B, "Zone", sizes, Unstructured, &Z))
@@ -388,7 +397,7 @@ int main(int argc, char *argv[])
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 15 Feb 2013
+Last updated 06 July 2013
 
 </body>
 </html>

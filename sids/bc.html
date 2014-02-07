@@ -20,6 +20,7 @@
 (<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
 (<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
 (<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
 (<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
 (<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
 (<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
@@ -325,7 +326,7 @@ zone.
 If the boundary conditions contain dimensional data,
 <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
 may be used to describe the system of dimensional units employed.
-If present, these three entities take precedence of all corresponding
+If present, these three entities take precedence over all corresponding
 entities at higher levels of the hierarchy, following the standard
 <a href="cgnsbase.html#precedence">precedence rules</a>.
 
@@ -392,6 +393,8 @@ the BC surface patch.
     BCProperty_t BCProperty ;                                          (o)
 
     FamilyName_t FamilyName ;                                          (o)
+
+    List( AdditionalFamilyName_t AddFamilyName1 ... AddFamilyNameN ) ; (o)
 
     ReferenceState_t ReferenceState ;                                  (o)
 
@@ -615,8 +618,8 @@ In this case, the <a href="#BCType"><tt>BCType</tt></a> must be
 If, under a <tt>BC_t</tt> structure, both <tt>FamilyName_t</tt></a> and
 <a href="#BCType"><tt>BCType_t</tt></a> are present, and the
 <tt>BCType</tt> is <em>not</em> <tt>FamilySpecified</tt>,
-then the <tt>BCType</tt> which <em>is</em> specified takes
-precedence over any <tt>BCType</tt> which might be stored in a
+then the <tt>BCType</tt> that <em>is</em> specified takes
+precedence over any <tt>BCType</tt> that might be stored in a
 <a href="misc.html#FamilyBC"><tt>FamilyBC_t</tt></a> structure under the
 specified <a href="misc.html#Family"><tt>Family_t</tt></a>.
 
@@ -629,7 +632,7 @@ for the class of data contained in the boundary conditions.
 If the boundary conditions contain dimensional data,
 <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
 may be used to describe the system of dimensional units employed.
-If present, these three entities take precedence of all corresponding
+If present, these three entities take precedence over all corresponding
 entities at higher levels of the hierarchy, following the standard
 <a href="cgnsbase.html#precedence">precedence rules</a>.
 
@@ -774,7 +777,7 @@ Condition Specification Data</a>.
 <p>
 The substructures <a href="#BCData"><tt>DirichletData</tt></a> and
 <a href="#BCData"><tt>NeumannData</tt></a> contain boundary-condition data
-which may be constant over the BC patch, or defined locally at each vertex or
+that may be constant over the BC patch, or defined locally at each vertex or
 edge/face of the patch. Locally defined data may be specified in one of two ways.
 If <tt>GridLocation</tt>, <tt>PointRange</tt> and <tt>PointList</tt> are
 all absent, then the data is defined consistent with the BC patch specification
@@ -794,7 +797,7 @@ for the class of data contained in the boundary-condition data.
 If the boundary conditions contain dimensional data,
 <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
 may be used to describe the system of dimensional units employed.
-If present, these three entities take precedence of all corresponding
+If present, these three entities take precedence over all corresponding
 entities at higher levels of the hierarchy, following the standard
 <a href="cgnsbase.html#precedence">precedence rules</a>.
 
@@ -815,7 +818,7 @@ dependencies: <tt>PointRange</tt>, <tt>PointList</tt>
 <p>
 <tt>BCDataSet_t</tt> requires the structure function <tt>ListLength</tt>, which
 is used to specify the length of locally defined <tt>Dirichlet</tt> and
-<tt>Neumann</tt> data arrays when the grid location of these quatities differs
+<tt>Neumann</tt> data arrays when the grid location of these quantities differs
 from that of the BC patch definition. If <tt>PointRange</tt> is specified,
 then <tt>ListLength</tt> is obtained from the number of points (inclusive)
 between the beginning and ending indices of <tt>PointRange</tt>.
@@ -930,7 +933,7 @@ for the class of data contained in the boundary-condition data.
 If the boundary-condition data is dimensional,
 <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> may be
 used to describe the system of dimensional units employed.
-If present, these two entities take precedence of all corresponding
+If present, these two entities take precedence over all corresponding
 entities at higher levels of the hierarchy, following the standard
 <a href="cgnsbase.html#precedence">precedence rules</a>.
 
@@ -1098,7 +1101,7 @@ mass flow = <i>MFR &rho;</i><sub>&infin;</sub><i>U</i><sub>&infin;</sub><i>A<sub
 where <i>MFR</i> is the desired mass flow ratio and
 <i>A<sub>cap</sub></i> is the capture area.
 Another interpretation is the far-upstream cross-sectional area of the
-stream tube which feeds the inlet.
+stream tube that feeds the inlet.
 Note that the capture area is usually defined with an outflow boundary
 condition, which is commonly used at an engine face.
 
@@ -1393,7 +1396,7 @@ For simple boundary conditions, a single data set must be chosen from a
 list that may contain more than one element.
 Likewise, for a compound boundary condition, a limited number of data
 sets must be chosen and applied appropriately.
-The mechanism for proper choice of data sets is controlled by
+The mechanism for the proper choice of data sets is controlled by
 the <a href="#BCType"><tt>BCType</tt></a> field of the <tt>BC_t</tt>
 structure, the <tt>BCTypeSimple</tt> field of the <tt>BCDataSet_t</tt>
 structure, and the <a href="#t:BCType_assoc">boundary-condition type
@@ -1703,7 +1706,7 @@ identifier.
 The various levels of BC implementation allowed are shown in the
 following figure, from the lowest level in which the application codes
 interpret the <a href="#BCType"><tt>BCType</tt></a>, to the fully
-SIDS-compliant BC implementation which completely defines the BC within
+SIDS-compliant BC implementation that completely defines the BC within
 the CGNS file.
 
 <a name="f:BCimplementations"></a>
@@ -1848,7 +1851,7 @@ The data contained in <tt>Temperature</tt> is a floating-point scalar
 with a value of 273.
 The qualifiers <a href="build.html#DataClass"><tt>DataClass</tt></a>
 and <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
-specifies that the temperature is dimensional with units of <tt>Kelvin</tt>.
+specify that the temperature is dimensional with units of <tt>Kelvin</tt>.
 
 <p>
 Since <tt>BCWallViscousIsothermal</tt> is a simple boundary-condition
@@ -2229,7 +2232,7 @@ global data, so the value of <tt>ListLength</tt> is unused.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 15 Feb 2013
+Last updated 07 Feb 2014
 
 </body>
 </html>

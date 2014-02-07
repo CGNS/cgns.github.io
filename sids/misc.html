@@ -20,6 +20,7 @@
 (<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
 (<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
 (<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
 (<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
 (<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
 (<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
@@ -116,7 +117,7 @@ the table below.
 <center>
 <table cellspacing=0 cellpadding=0 border=0>
 <caption>
-Data-name Identifiers for Reference State
+Data-Name Identifiers for Reference State
 <br><br>
 </caption>
 <tr align=left><td colspan=5><hr width=100% noshade>
@@ -197,7 +198,7 @@ default for the class of data contained in the reference state.
 If any reference state quantities are dimensional,
 <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
 may be used to describe the system of dimensional units employed.
-If present, these two entities take precedence of all corresponding
+If present, these two entities take precedence over all corresponding
 entities at higher levels of the hierarchy, following the standard
 <a href="cgnsbase.html#precedence">precedence rules</a>.
 
@@ -338,7 +339,7 @@ default for the class of data contained in the convergence history.
 If any convergence-history data is dimensional,
 <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
 may be used to describe the system of dimensional units employed.
-If present, these two entities take precedence of all corresponding
+If present, these two entities take precedence over all corresponding
 entities at higher levels of the hierarchy, following the standard
 <a href="cgnsbase.html#precedence">precedence rules</a>.
 
@@ -546,7 +547,7 @@ default for the class of data contained in the
 For dimensional data,
 <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
 may be used to describe the system of dimensional units employed.
-If present, these two entities take precedence of all corresponding
+If present, these two entities take precedence over all corresponding
 entities at higher levels of the hierarchy, following the standard
 <a href="cgnsbase.html#precedence">precedence rules</a>.
 
@@ -636,7 +637,7 @@ default class for data contained in the
 For dimensional data,
 <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
 may be used to describe the system of units employed.
-If present, these two entities take precedence of all corresponding
+If present, these two entities take precedence over all corresponding
 entities at higher levels of the hierarchy, following the standard
 <a href="cgnsbase.html#precedence">precedence rules</a>.
 
@@ -691,6 +692,8 @@ to the CAD databases.
 
     RotatingCoordinates_t RotatingCoordinates ;                        (o)
 
+    List( FamilyName_t FamilyName1 ... FamilyNameN ) ;                 (o)
+
     List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
 
     int Ordinal ;                                                      (o)
@@ -728,6 +731,10 @@ to the CAD databases.
      BC patch or a zone in the data structure
      <a href="bc.html#BC"><tt>BC_t</tt></a> or
      <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a>, respectively.
+<li> A hierarchy of families is possible through the list of <tt>FamilyName_t</tt>
+     nodes. These nodes contain both a user defined node name and a
+     family name. The node name <tt>FamilyParent</tt> may be used to specify
+     the family name for the parent of the current <tt>Family_t</tt> node.
 <li> <tt>Ordinal</tt> is defined in the SIDS as a user-defined integer with no
      restrictions on the values that it can contain.
      It may be used here to attribute a number to the family.
@@ -952,7 +959,7 @@ Reference quantities applicable to the set of boundary-condition data are contai
 data contained in the boundary condition data. If the boundary conditions contain dimensional data,
 <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> may be
 used to describe the system of dimensional units employed. If present, these three entities take
-precedence of all corresponding entities at higher levels of the hierarchy,
+precedence over all corresponding entities at higher levels of the hierarchy,
 following the standard <a href="cgnsbase.html#precedence">precedence rules</a>.
 
 <p>
@@ -995,6 +1002,8 @@ node types at other node locations.
     DimensionalUnits_t DimensionalUnits ;                              (o)
 
     FamilyName_t FamilyName ;                                          (o)
+
+    List( AdditionalFamilyName_t AddFamilyName1 ... AddFamilyNameN ) ; (o)
 
     List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
 
@@ -1095,7 +1104,7 @@ node locations.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 05 April 2011
+Last updated 07 Feb 2014
 
 </body>
 </html>

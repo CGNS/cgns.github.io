@@ -20,6 +20,7 @@
 (<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
 (<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
 (<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
 (<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
 (<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
 (<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
@@ -66,7 +67,7 @@ The intellectual content of the CGNS database is defined in terms of C-like
 notation including typedefs and structures.  The database is made up of
 entities, and each entity has a type associated with it.  Entities include such
 things as the dimensionality of the grid, an array of grid coordinates, or a
-zone which contains all the data associated with a given region.
+zone that contains all the data associated with a given region.
 Entities are defined in terms of types, where a type can be an
 integer or a collection of elements (a structure) or a hierarchy of
 structures or other similar constructs.
@@ -546,7 +547,7 @@ The complete element definition may include more than just the cells.
 
 <p>
 Each element shape may have a different number of nodes, depending on
-whether linear or quadratic interpolation is used.
+whether linear, quadratic, or cubic interpolation is used.
 Therefore the name of each type of element is composed of two parts;
 the first part identifies the element shape, and the second part the
 number of nodes.
@@ -560,58 +561,67 @@ The following table summarizes the element types supported in CGNS.
 Element Types in CGNS
 <br><br>
 </caption>
-<tr align=left><td colspan=7><hr width=100% noshade>
+<tr align=left><td colspan=9><hr width=100% noshade>
 <tr valign=baseline>
    <th scope=col>Dimensionality<td><tt>&nbsp;&nbsp;</tt>
    <th align=left scope=col>Shape<td><tt>&nbsp;&nbsp;</tt>
    <th align=left scope=col>Linear Interpolation<td><tt>&nbsp;&nbsp;</tt>
-   <th align=left scope=col>Quadratic Interpolation
-<tr align=left><td colspan=7><hr width=100% noshade>
+   <th align=left scope=col>Quadratic Interpolation<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Cubic Interpolation
+<tr align=left><td colspan=9><hr width=100% noshade>
 <tr valign=baseline>
    <td align=center id=0d>0-D<td>
    <td headers=0d>Point<td>
+   <td headers=0d><tt>NODE</tt><td>
    <td headers=0d><tt>NODE</tt><td>
    <td headers=0d><tt>NODE</tt>
 <tr valign=baseline>
    <td align=center id=1d>1-D<td>
    <td headers=1d><a href="#unst_line">Line</a><td>
    <td headers=1d><tt>BAR_2</tt><td>
-   <td headers=1d><tt>BAR_3</tt>
+   <td headers=1d><tt>BAR_3</tt><td>
+   <td headers=1d><tt>BAR_4</tt>
 <tr valign=baseline>
    <td align=center id=2d>2-D<td>
    <td headers=2d><a href="#unst_tri">Triangle</a><td>
    <td headers=2d><tt>TRI_3</tt><td>
-   <td headers=2d><tt>TRI_6</tt>
+   <td headers=2d><tt>TRI_6</tt><td>
+   <td headers=2d><tt>TRI_9,&nbsp;TRI_10</tt>
 <tr valign=baseline>
    <td><td>
    <td headers=2d><a href="#unst_quad">Quadrangle</a><td>
    <td headers=2d><tt>QUAD_4</tt><td>
-   <td headers=2d><tt>QUAD_8,&nbsp;QUAD_9</tt>
+   <td headers=2d><tt>QUAD_8,&nbsp;QUAD_9</tt><td>
+   <td headers=2d><tt>QUAD_12,&nbsp;QUAD_16</tt>
 <tr valign=baseline>
    <td align=center id=3d>3-D<td>
    <td headers=3d><a href="#unst_tetra">Tetrahedron</a><td>
    <td headers=3d><tt>TETRA_4</tt><td>
-   <td headers=3d><tt>TETRA_10</tt>
+   <td headers=3d><tt>TETRA_10</tt><td>
+   <td headers=3d><tt>TETRA_16,&nbsp;TETRA_20</tt>
 <tr valign=baseline>
    <td><td>
    <td headers=3d><a href="#unst_pyramid">Pyramid</a><td>
    <td headers=3d><tt>PYRA_5</tt><td>
-   <td headers=3d><tt>PYRA_13,&nbsp;PYRA_14</tt>
+   <td headers=3d><tt>PYRA_13,&nbsp;PYRA_14</tt><td>
+   <td headers=3d><tt>PYRA_21,&nbsp;PYRA_29,&nbsp;PYRA_30</tt>
 <tr valign=baseline>
    <td><td>
    <td headers=3d><a href="#unst_penta">Pentahedron</a><td>
    <td headers=3d><tt>PENTA_6</tt><td>
-   <td headers=3d><tt>PENTA_15,&nbsp;PENTA_18</tt>
+   <td headers=3d><tt>PENTA_15,&nbsp;PENTA_18</tt><td>
+   <td headers=3d><tt>PENTA_24,&nbsp;PENTA_38,&nbsp;PENTA_40</tt>
 <tr valign=baseline>
    <td><td>
    <td headers=3d><a href="#unst_hexa">Hexahedron</a><td>
    <td headers=3d><tt>HEXA_8</tt><td>
-   <td headers=3d><tt>HEXA_20,&nbsp;HEXA_27</tt>
-<tr align=left><td colspan=7><hr width=100% noshade>
+   <td headers=3d><tt>HEXA_20,&nbsp;HEXA_27</tt><td>
+   <td headers=3d><tt>HEXA_32,&nbsp;HEXA_56,&nbsp;HEXA_64</tt>
+<tr align=left><td colspan=9><hr width=100% noshade>
 </table>
 </center>
 <br>
-Any element type not supported by CGNS can be recorded using the CGNS
+General polyhedral elements can be recorded using the CGNS
 generic element types <tt>NGON_n</tt> and <tt>NFACE_n</tt>.
 See the <a href="gridflow.html#Elements"><tt>Elements_t</tt> structure
 definition</a> for more detail.
@@ -635,7 +645,7 @@ points and their element connectivity information should always be
 given.
 
 <a name="unst_line"></a>
-<h4>1-D (Line) Elements</h4>
+<h3>1-D (Line) Elements</h3>
 
 <p>
 1-D elements represent geometrically a line (or bar).
@@ -643,8 +653,11 @@ The linear form, <tt>BAR_2</tt>, is composed of two nodes at each extremity
 of the line.
 The quadratic form, <tt>BAR_3</tt>, has an additional node located at
 the middle of the line.
+The cubic form of the line, <tt>BAR_4</tt>, contains two nodes
+interior to the endpoints.
 
-<br><br>
+<h5>Linear and Quadratic Elements</h5>
+
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
    <td><tt>BAR_2</tt><br><br>
@@ -656,7 +669,7 @@ the middle of the line.
 
 <br>
 <table cellspacing=0 cellpadding=0 border=0>
-<caption class=edge>Face Definition
+<caption class=edge>Edge Definition
 <br><br>
 </caption>
 <tr valign=baseline>
@@ -669,8 +682,31 @@ the middle of the line.
    <td align=center class=midnode><tt>N3</tt></td>
 </table>
 
+<h5>Cubic Elements</h5>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>BAR_4</tt><br>
+       <img src="conv.figs/bar4.gif" alt="BAR_4 element">
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=edge>Edge Definition
+<br><br>
+</caption>
+<tr valign=baseline>
+   <th scope=col>Oriented edge</th><td><tt>&nbsp;&nbsp;</tt></td>
+   <th scope=col>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+   <th scope=col class=midnode>Mid nodes</th>
+<tr valign=baseline>
+   <td align=center><tt>E1</tt></td><td></td>
+   <td align=center><tt>N1,N2</tt></td><td></td>
+   <td align=center class=midnode><tt>N3,N4</tt></td>
+</table>
+
 <a name="unst_2d"></a>
-<h4>2-D (Surface) Elements</h4>
+<h3>2-D (Surface) Elements</h3>
 
 <p>
 2-D elements represent a surface in either 2-D or 3-D space.
@@ -699,17 +735,21 @@ In a 2-D mesh, all elements must be oriented the same way; i.e., all
 normals must point toward the same side of the mesh.
 
 <a name="unst_tri"></a>
-<h5>Triangular Elements</h5>
+<h4>Triangular Elements</h4>
 
 <p>
-Two types of triangular elements are supported in CGNS, <tt>TRI_3</tt>
-and <tt>TRI_6</tt>.
+Four types of triangular elements are supported in CGNS, <tt>TRI_3</tt>,
+<tt>TRI_6</tt>, <tt>TRI_9</tt>, and <tt>TRI_10</tt>.
 <tt>TRI_3</tt> elements are composed of three nodes located at the
 three geometric corners of the triangle.
 <tt>TRI_6</tt> elements have three additional nodes located at the
 middles of the three edges.
+The cubic forms of triangular elements, <tt>TRI_9</tt> and <tt>TRI_10</tt>
+contain two interior nodes along each edge, and an interior face node
+in the case of <tt>TRI_10</tt>.
 
-<br><br>
+<h5>Linear and Quadratic Elements</h5>
+
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=top><td><tt>&nbsp;&nbsp;&nbsp;</tt>
    <td><tt>TRI_3</tt><br>
@@ -761,13 +801,68 @@ middles of the three edges.
        </table>
 </table>
 
+<h5>Cubic Elements</h5>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=top><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>TRI_9</tt><br>
+       <img src="conv.figs/tri9.gif" alt="TRI_9 element">
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>TRI_10</tt><br>
+       <img src="conv.figs/tri10.gif" alt="TRI_10 element">
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=top>
+   <td><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Edge Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+          <th scope=col align=left>Oriented edges</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left class=midnode>Mid nodes</th>
+       <tr valign=baseline>
+          <td><tt>E1</tt></td><td></td>
+          <td><tt>N1,N2</tt></td><td></td>
+          <td class=midnode><tt>N4,N5</tt></td>
+       <tr valign=baseline>
+          <td><tt>E2</tt></td><td></td>
+          <td><tt>N2,N3</tt></td><td></td>
+          <td class=midnode><tt>N6,N7</tt></td>
+       <tr valign=baseline>
+          <td><tt>E3</tt></td><td></td>
+          <td><tt>N3,N1</tt></td><td></td>
+          <td class=midnode><tt>N8,N9</tt></td>
+       </table>
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+   <td><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Face Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+          <th scope=col align=left>Face</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left class=midnode>Mid-edge nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col class=midface>Mid-face node</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Oriented edges</th>
+       <tr valign=baseline>
+          <td><tt>F1</tt></td><td></td>
+          <td><tt>N1,N2,N3</tt></td><td></td>
+          <td class=midnode><tt>N4,N5,N6,N7,N8,N9</tt></td><td></td>
+          <td align=center class=midface><tt>N10</tt></td><td></td>
+          <td><tt>E1,E2,E3</tt></td>
+       </table>
+</table>
+
 <br>
 <u><i>Notes</i></u>
 
 <br><br>
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
-   <td><tt>N1,...,N6</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>N1,...,N10</tt><td><tt>&nbsp;&nbsp;</tt>
    <td>Grid point identification number.
        Integer &ge; 0 or blank, and no two values may be the same.
        Grid points <tt>N1</tt>, <tt>N2</tt>, and <tt>N3</tt> are in
@@ -783,17 +878,21 @@ middles of the three edges.
 </table>
 
 <a name="unst_quad"></a>
-<h5>Quadrilateral Elements</h5>
+<h4>Quadrilateral Elements</h4>
 
 <p>
-CGNS supports three types of quadrilateral elements, <tt>QUAD_4</tt>,
-<tt>QUAD_8</tt>, and <tt>QUAD_9</tt>.
+CGNS supports five types of quadrilateral elements, <tt>QUAD_4</tt>,
+<tt>QUAD_8</tt>, <tt>QUAD_9</tt>, <tt>QUAD_12</tt>, and <tt>QUAD_16</tt>.
 <tt>QUAD_4</tt> elements are composed of four nodes located at the
 four geometric corners of the quadrangle.
 In addition, <tt>QUAD_8</tt> and <tt>QUAD_9</tt> elements have four
 mid-edge nodes, and <tt>QUAD_9</tt> adds a mid-face node.
+The cubic forms of quadrilateral elements, <tt>QUAD_12</tt> and <tt>QUAD_16</tt>
+contain two interior nodes along each edge, and four interior face nodes
+in the case of <tt>QUAD_16</tt>.
 
-<br><br>
+<h5>Linear and Quadratic Elements</h5>
+
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=top><td><tt>&nbsp;&nbsp;&nbsp;</tt>
    <td><tt>QUAD_4</tt><br>
@@ -852,13 +951,73 @@ mid-edge nodes, and <tt>QUAD_9</tt> adds a mid-face node.
    <td><tt>E1,E2,E3,E4</tt></td>
 </table>
 
+<h5>Cubic Elements</h5>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=top><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>QUAD_12</tt><br><br>
+       <img src="conv.figs/quad12.gif" alt="QUAD_12 element">
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>QUAD_16</tt><br><br>
+       <img src="conv.figs/quad16.gif" alt="QUAD_16 element">
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<td>
+   <tr><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Edge Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+          <th scope=col align=left>Oriented edges</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left class=midnode>Mid nodes</th>
+       <tr valign=baseline>
+          <td><tt>E1</tt></td><td></td>
+          <td><tt>N1,N2</tt></td><td></td>
+          <td class=midnode><tt>N5,N6</tt></td>
+       <tr valign=baseline>
+          <td><tt>E2</tt></td><td></td>
+          <td><tt>N2,N3</tt></td><td></td>
+          <td class=midnode><tt>N7,N8</tt></td>
+       <tr valign=baseline>
+          <td><tt>E3</tt></td><td></td>
+          <td><tt>N3,N4</tt></td><td></td>
+          <td class=midnode><tt>N9,N10</tt></td>
+       <tr valign=baseline>
+          <td><tt>E4</tt></td><td></td>
+          <td><tt>N4,N1</tt></td><td></td>
+          <td class=midnode><tt>N11,N12</tt></td>
+       </table>
+   <tr><br>
+   <tr><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Face Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+          <th scope=col align=left>Face</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left class=midnode>Mid-edge nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col class=midface>Mid-face nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Oriented edges</th>
+       <tr valign=baseline>
+          <td><tt>F1</tt></td><td></td>
+          <td><tt>N1,N2,N3,N4</tt></td><td></td>
+          <td class=midnode><tt>N5,N6,N7,N8,N9,N10,N11,N12</tt></td><td></td>
+          <td align=center class=midface><tt>N13,N14,N15,N16</tt></td><td></td>
+          <td><tt>E1,E2,E3,E4</tt></td>
+       </table>
+</td>
+</table>
+
 <br>
 <u><i>Notes</i></u>
 
 <br><br>
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
-   <td><tt>N1,...,N9</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>N1,...,N16</tt><td><tt>&nbsp;&nbsp;</tt>
    <td>Grid point identification number.
        Integer &ge; 0 or blank, and no two values may be the same.
        Grid points <tt>N1, ..., N4</tt> are in
@@ -874,7 +1033,7 @@ mid-edge nodes, and <tt>QUAD_9</tt> adds a mid-face node.
 </table>
 
 <a name="unst_3d"></a>
-<h4>3-D (Volume) Elements</h4>
+<h3>3-D (Volume) Elements</h3>
 
 <p>
 3-D elements represent a volume in 3-D space, and constitute the cells
@@ -884,17 +1043,21 @@ CGNS supports four different shapes of 3-D elements -
 <a href="#unst_penta">pentahedra</a>, and <a href="#unst_hexa">hexahedra</a>.
 
 <a name="unst_tetra"></a>
-<h5>Tetrahedral Elements</h5>
+<h4>Tetrahedral Elements</h4>
 
 <p>
-CGNS supports two types of tetrahedral elements, <tt>TETRA_4</tt>
-and <tt>TETRA_10</tt>.
+CGNS supports four types of tetrahedral elements, <tt>TETRA_4</tt>,
+<tt>TETRA_10</tt>, <tt>TETRA_16</tt>, and <tt>TETRA_20</tt>.
 <tt>TETRA_4</tt> elements are composed of four nodes located at the
 four geometric corners of the tetrahedron.
 <tt>TETRA_10</tt> elements have six additional nodes, at the middle
 of each of the six edges.
+The cubic forms of tetrahedral elements, <tt>TETRA_16</tt> and <tt>TETRA_20</tt>
+contain two interior nodes along each edge, and four interior face nodes
+in the case of <tt>TETRA_20</tt>.
 
-<br><br>
+<h5>Linear and Quadratic Elements</h5>
+
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=top><td><tt>&nbsp;&nbsp;&nbsp;</tt>
    <td><tt>TETRA_4</tt><br><br>
@@ -973,13 +1136,100 @@ of each of the six edges.
        </table>
 </table>
 
+<h5>Cubic Elements</h5>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=top><td>
+   <td><tt>TETRA_16</tt><br>
+       <img src="conv.figs/tetra16.gif" alt="TETRA_16 element">
+<tr valign=top><td><br>
+<tr valign=top><td>
+   <td><tt>TETRA_20</tt><br>
+       <img src="conv.figs/tetra20.gif" alt="TETRA_20 element">
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<td>
+   <tr><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Edge Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+          <th scope=col align=left>Oriented edges</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left class=midnode>Mid nodes</th>
+       <tr valign=baseline>
+          <td><tt>E1</tt></td><td></td>
+          <td><tt>N1,N2</tt></td><td></td>
+          <td class=midnode><tt>N5,N6</tt></td>
+       <tr valign=baseline>
+          <td><tt>E2</tt></td><td></td>
+          <td><tt>N2,N3</tt></td><td></td>
+          <td class=midnode><tt>N7,N8</tt></td>
+       <tr valign=baseline>
+          <td><tt>E3</tt></td><td></td>
+          <td><tt>N3,N1</tt></td><td></td>
+          <td class=midnode><tt>N9,N10</tt></td>
+       <tr valign=baseline>
+          <td><tt>E4</tt></td><td></td>
+          <td><tt>N1,N4</tt></td><td></td>
+          <td class=midnode><tt>N11,N12</tt></td>
+       <tr valign=baseline>
+          <td><tt>E5</tt></td><td></td>
+          <td><tt>N2,N4</tt></td><td></td>
+          <td class=midnode><tt>N13,N14</tt></td>
+       <tr valign=baseline>
+          <td><tt>E6</tt></td><td></td>
+          <td><tt>N3,N4</tt></td><td></td>
+          <td class=midnode><tt>N15,N16</tt></td>
+       </table>
+   <tr><br>
+   <tr><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Face Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+          <th scope=col align=left>Face</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left class=midnode>Mid-edge nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col class=midface>Mid-face node</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Oriented edges</th>
+       <tr valign=baseline>
+          <td><tt>F1</tt></td><td></td>
+          <td><tt>N1,N3,N2</tt></td><td></td>
+          <td class=midnode><tt>N10,N9,N8,N7,N6,N5</tt></td><td></td>
+          <td align=center class=midface><tt>N17</tt></td><td></td>
+          <td><tt>-E3,-E2,-E1</tt></td>
+       <tr valign=baseline>
+          <td><tt>F2</tt></td><td></td>
+          <td><tt>N1,N2,N4</tt></td><td></td>
+          <td class=midnode><tt>N5,N6,N13,N14,N12,N11</tt></td><td></td>
+          <td align=center class=midface><tt>N18</tt></td><td></td>
+          <td><tt>&nbsp;E1,E5,-E4</tt></td>
+       <tr valign=baseline>
+          <td><tt>F3</tt></td><td></td>
+          <td><tt>N2,N3,N4</tt></td><td></td>
+          <td class=midnode><tt>N7,N8,N15,N16,N14,N13</tt></td><td></td>
+          <td align=center class=midface><tt>N19</tt></td><td></td>
+          <td><tt>&nbsp;E2,E6,-E5</tt></td>
+       <tr valign=baseline>
+          <td><tt>F4</tt></td><td></td>
+          <td><tt>N3,N1,N4</tt></td><td></td>
+          <td class=midnode><tt>N9,N10,N11,N12,N16,N15</tt></td><td></td>
+          <td align=center class=midface><tt>N20</tt></td><td></td>
+          <td><tt>&nbsp;E3,E4,-E6</tt></td>
+       </table>
+</td>
+</table>
+
 <br>
 <u><i>Notes</i></u>
 
 <br><br>
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
-   <td><tt>N1,...,N10</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>N1,...,N20</tt><td><tt>&nbsp;&nbsp;</tt>
    <td>Grid point identification number.
        Integer &ge; 0 or blank, and no two values may be the same.
        Grid points <tt>N1 ... N3</tt> are in consecutive order about
@@ -1004,18 +1254,25 @@ of each of the six edges.
 </table>
 
 <a name="unst_pyramid"></a>
-<h5>Pyramid Elements</h5>
+<h4>Pyramid Elements</h4>
 
 <p>
-CGNS supports three types of pyramid elements, <tt>PYRA_5</tt>,
-<tt>PYRA_13</tt>, and <tt>PYRA_14</tt>.
+CGNS supports six types of pyramid elements, <tt>PYRA_5</tt>,
+<tt>PYRA_13</tt>, <tt>PYRA_14</tt>, <tt>PYRA_21</tt>, <tt>PYRA_29</tt>,
+and <tt>PYRA_30</tt>.
 <tt>PYRA_5</tt> elements are composed of five nodes located at the
 five geometric corners of the pyramid.
 In addition, <tt>PYRA_13</tt> and <tt>PYRA_14</tt> elements have a node
 at the middle of each of the eight edges; <tt>PYRA_14</tt> adds a node
 at the middle of the quadrilateral face.
+The cubic forms of pyramid elements, <tt>PYRA_21</tt>,
+<tt>PYRA_29</tt>, and <tt>PYRA_30</tt>
+contain two interior nodes along each edge, eight interior face nodes
+in the case of <tt>PYRA_29</tt> and <tt>PYRA_30</tt>, and an additonal
+interior volume node for <tt>PYRA_30</tt>.
 
-<br><br>
+<h5>Linear and Quadratic Elements</h5>
+
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=top><td><tt>&nbsp;&nbsp;&nbsp;</tt>
    <td><tt>PYRA_5</tt><br><br>
@@ -1114,13 +1371,118 @@ at the middle of the quadrilateral face.
    <td><tt>&nbsp;E4,&nbsp;E5,-E8</tt></td>
 </table>
 
+<h5>Cubic Elements</h5>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=top><td>
+   <td><tt>PYRA_21</tt><br>
+       <img src="conv.figs/pyra21.gif" alt="PYRA_21 element">
+<tr valign=top><td><br>
+<tr valign=top><td>
+   <td><tt>PYRA_29</tt><br>
+       <img src="conv.figs/pyra29.gif" alt="PYRA_29 element">
+<tr valign=top><td><br>
+<tr valign=top><td>
+   <td><tt>PYRA_30</tt><br>
+       <img src="conv.figs/pyra30.gif" alt="PYRA_30 element">
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<td>
+   <tr><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Edge Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+          <th scope=col align=left>Oriented edges</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left class=midnode>Mid nodes</th>
+       <tr valign=baseline>
+          <td><tt>E1</tt></td><td></td>
+          <td><tt>N1,N2</tt></td><td></td>
+          <td class=midnode><tt>N6,N7</tt></td>
+       <tr valign=baseline>
+          <td><tt>E2</tt></td><td></td>
+          <td><tt>N2,N3</tt></td><td></td>
+          <td class=midnode><tt>N8,N9</tt></td>
+       <tr valign=baseline>
+          <td><tt>E3</tt></td><td></td>
+          <td><tt>N3,N4</tt></td><td></td>
+          <td class=midnode><tt>N10,N11</tt></td>
+       <tr valign=baseline>
+          <td><tt>E4</tt></td><td></td>
+          <td><tt>N4,N1</tt></td><td></td>
+          <td class=midnode><tt>N12,N13</tt></td>
+       <tr valign=baseline>
+          <td><tt>E5</tt></td><td></td>
+          <td><tt>N1,N5</tt></td><td></td>
+          <td class=midnode><tt>N14,N15</tt></td>
+       <tr valign=baseline>
+          <td><tt>E6</tt></td><td></td>
+          <td><tt>N2,N5</tt></td><td></td>
+          <td class=midnode><tt>N16,N17</tt></td>
+       <tr valign=baseline>
+          <td><tt>E7</tt></td><td></td>
+          <td><tt>N3,N5</tt></td><td></td>
+          <td class=midnode><tt>N18,N19</tt></td>
+       <tr valign=baseline>
+          <td><tt>E8</tt></td><td></td>
+          <td><tt>N4,N5</tt></td><td></td>
+          <td class=midnode><tt>N20,N21</tt></td>
+       </table>
+   <tr><br>
+   <tr><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Face Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+          <th scope=col align=left>Face</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left class=midnode>Mid-edge nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col class=midface>Mid-face nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Oriented edges</th>
+       <tr valign=baseline>
+          <td><tt>F1</tt></td><td></td>
+          <td><tt>N1,N4,N3,N2</tt></td><td></td>
+          <td class=midnode><tt>N13,N12,N11,N10,N9,N8,N7,N6</tt></td><td></td>
+          <td align=center class=midface><tt>N22,N25,N24,N23</tt></td><td></td>
+          <td><tt>-E4,-E3,-E2,-E1</tt></td>
+       <tr valign=baseline>
+          <td><tt>F2</tt></td><td></td>
+          <td><tt>N1,N2,N5</tt></td><td></td>
+          <td class=midnode><tt>N6,N7,N16,N17,N15,N14</tt></td><td></td>
+          <td align=center class=midface><tt>N26</tt></td><td></td>
+          <td><tt>&nbsp;E1,E6,-E5</tt></td>
+       <tr valign=baseline>
+          <td><tt>F3</tt></td><td></td>
+          <td><tt>N2,N3,N5</tt></td><td></td>
+          <td class=midnode><tt>N8,N9,N18,N19,N17,N16</tt></td><td></td>
+          <td align=center class=midface><tt>N27</tt></td><td></td>
+          <td><tt>&nbsp;E2,E7,-E6</tt></td>
+       <tr valign=baseline>
+          <td><tt>F4</tt></td><td></td>
+          <td><tt>N3,N4,N5</tt></td><td></td>
+          <td class=midnode><tt>N10,N11,N20,N21,N19,N18</tt></td><td></td>
+          <td align=center class=midface><tt>N28</tt></td><td></td>
+          <td><tt>&nbsp;E3,E8,-E7</tt></td>
+       <tr valign=baseline>
+          <td><tt>F5</tt></td><td></td>
+          <td><tt>N4,N1,N5</tt></td><td></td>
+          <td class=midnode><tt>N12,N13,N14,N15,N21,N20</tt></td><td></td>
+          <td align=center class=midface><tt>N29</tt></td><td></td>
+          <td><tt>&nbsp;E4,E5,-E8</tt></td>
+       </table>
+</td>
+</table>
+
 <br>
 <u><i>Notes</i></u>
 
 <br><br>
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
-   <td><tt>N1,...,N14</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>N1,...,N30</tt><td><tt>&nbsp;&nbsp;</tt>
    <td>Grid point identification number.
        Integer &ge; 0 or blank, and no two values may be the same.
        Grid points <tt>N1 ... N4</tt> are in consecutive order about
@@ -1128,7 +1490,6 @@ at the middle of the quadrilateral face.
        The cross product of a vector going from <tt>N1</tt> to <tt>N2</tt>,
        with a vector going from <tt>N1</tt> to <tt>N3</tt>, must result in a
        vector oriented from face <tt>F1</tt> toward <tt>N5</tt>.
-       <tt>N14</tt> is located at the center of the quadrilateral face.
 <br><br>
 <tr valign=baseline><td>
    <td><tt>E1,...,E8</tt><td>
@@ -1146,18 +1507,25 @@ at the middle of the quadrilateral face.
 </table>
 
 <a name="unst_penta"></a>
-<h5>Pentahedral Elements</h5>
+<h4>Pentahedral Elements</h4>
 
 <p>
-CGNS supports three types of pentahedral elements, <tt>PENTA_6</tt>,
-<tt>PENTA_15</tt>, and <tt>PENTA_18</tt>.
+CGNS supports six types of pentahedral elements, <tt>PENTA_6</tt>,
+<tt>PENTA_15</tt>, <tt>PENTA_18</tt>, <tt>PENTA_24</tt>,
+<tt>PENTA_38</tt>, and <tt>PENTA_40</tt>.
 <tt>PENTA_6</tt> elements are composed of six nodes located at the
 six geometric corners of the pentahedron.
 In addition, <tt>PENTA_15</tt> and <tt>PENTA_18</tt> elements have a node
 at the middle of each of the nine edges; <tt>PENTA_18</tt> adds a
 node at the middle of each of the three quadrilateral faces.
+The cubic forms of the pentahedral elements, <tt>PENTA_24</tt>,
+<tt>PENTA_38</tt>, and <tt>PENTA_40</tt>
+contain two interior nodes along each edge, fourteen interior face nodes
+in the case of <tt>PENTA_38</tt> and <tt>PENTA_40</tt>, and an additonal
+two interior volume nodes for <tt>PENTA_40</tt>.
 
-<br><br>
+<h5>Linear and Quadratic Elements</h5>
+
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=top><td><tt>&nbsp;&nbsp;&nbsp;</tt>
    <td><tt>PENTA_6</tt><br><br>
@@ -1260,13 +1628,122 @@ node at the middle of each of the three quadrilateral faces.
    <td><tt>&nbsp;E7,&nbsp;E8,&nbsp;E9</tt></td>
 </table>
 
+<h5>Cubic Elements</h5>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=top><td>
+   <td><tt>PENTA_24</tt><br>
+       <img src="conv.figs/penta24.gif" alt="PENTA_24 element">
+<tr valign=top><td><br>
+<tr valign=top><td>
+   <td><tt>PENTA_38</tt><br>
+       <img src="conv.figs/penta38.gif" alt="PENTA_38 element">
+<tr valign=top><td><br>
+<tr valign=top><td>
+   <td><tt>PENTA_40</tt><br>
+       <img src="conv.figs/penta40.gif" alt="PENTA_40 element">
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<td>
+   <tr><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Edge Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+          <th scope=col align=left>Oriented edges</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left class=midnode>Mid nodes</th>
+       <tr valign=baseline>
+          <td><tt>E1</tt></td><td></td>
+          <td><tt>N1,N2</tt></td><td></td>
+          <td class=midnode><tt>N7,N8</tt></td>
+       <tr valign=baseline>
+          <td><tt>E2</tt></td><td></td>
+          <td><tt>N2,N3</tt></td><td></td>
+          <td class=midnode><tt>N9,N10</tt></td>
+       <tr valign=baseline>
+          <td><tt>E3</tt></td><td></td>
+          <td><tt>N3,N1</tt></td><td></td>
+          <td class=midnode><tt>N11,N12</tt></td>
+       <tr valign=baseline>
+          <td><tt>E4</tt></td><td></td>
+          <td><tt>N1,N4</tt></td><td></td>
+          <td class=midnode><tt>N13,N14</tt></td>
+       <tr valign=baseline>
+          <td><tt>E5</tt></td><td></td>
+          <td><tt>N2,N5</tt></td><td></td>
+          <td class=midnode><tt>N15,N16</tt></td>
+       <tr valign=baseline>
+          <td><tt>E6</tt></td><td></td>
+          <td><tt>N3,N6</tt></td><td></td>
+          <td class=midnode><tt>N17,N18</tt></td>
+       <tr valign=baseline>
+          <td><tt>E7</tt></td><td></td>
+          <td><tt>N4,N5</tt></td><td></td>
+          <td class=midnode><tt>N19,N20</tt></td>
+       <tr valign=baseline>
+          <td><tt>E8</tt></td><td></td>
+          <td><tt>N5,N6</tt></td><td></td>
+          <td class=midnode><tt>N21,N22</tt></td>
+       <tr valign=baseline>
+          <td><tt>E9</tt></td><td></td>
+          <td><tt>N6,N4</tt></td><td></td>
+          <td class=midnode><tt>N23,N24</tt></td>
+       </table>
+   <tr><br>
+   <tr><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Face Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+         <th scope=col align=left>Face</th><td><tt>&nbsp;&nbsp;</tt></td>
+         <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+         <th scope=col align=left>Mid-edge nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+         <th scope=col class=midface>Mid-face nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+         <th scope=col align=left>Oriented edges</th>
+       <tr valign=baseline>
+         <td><tt>F1</tt></td><td></td>
+         <td><tt>N1,N2,N5,N4</tt></td><td></td>
+         <td class=midnode><tt>N7,N8,N15,N16,N20,N19,N14,N13</tt></td><td></td>
+         <td align=center class=midface><tt>N26,N27,N28,N29</tt></td><td></td>
+         <td><tt>&nbsp;E1,E5,-E7,-E4</tt></td>
+       <tr valign=baseline>
+         <td><tt>F2</tt></td><td></td>
+         <td><tt>N2,N3,N6,N5</tt></td><td></td>
+         <td class=midnode><tt>N9,N10,N17,N18,N22,N21,N16,N15</tt></td><td></td>
+         <td align=center class=midface><tt>N30,N31,N32,N33</tt></td><td></td>
+         <td><tt>&nbsp;E2,E6,-E8,-E5</tt></td>
+       <tr valign=baseline>
+         <td><tt>F3</tt></td><td></td>
+         <td><tt>N3,N1,N4,N6</tt></td><td></td>
+         <td class=midnode><tt>N11,N12,N13,N14,N24,N23,N18,N17</tt></td><td></td>
+         <td align=center class=midface><tt>N34,N35,N36,N37</tt></td><td></td>
+         <td><tt>&nbsp;E3,E4,-E9,-E6</tt></td>
+       <tr valign=baseline>
+         <td><tt>F4</tt></td><td></td>
+         <td><tt>N1,N3,N2</tt></td><td></td>
+         <td class=midnode><tt>N12,N11,N10,N9,N8,N7</tt></td><td></td>
+         <td align=center class=midface><tt>N25</tt></td><td></td>
+         <td><tt>-E3,-E2,-E1</tt></td>
+       <tr valign=baseline>
+         <td><tt>F5</tt></td><td></td>
+         <td><tt>N4,N5,N6</tt></td><td></td>
+         <td class=midnode><tt>N19,N20,N21,N22,N23,N24</tt></td><td></td>
+         <td align=center class=midface><tt>N38</tt></td><td></td>
+         <td><tt>&nbsp;E7,E8,E9</tt></td>
+       </table>
+</td>
+</table>
+
 <br>
 <u><i>Notes</i></u>
 
 <br><br>
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
-   <td><tt>N1,...,N18</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>N1,...,N40</tt><td><tt>&nbsp;&nbsp;</tt>
    <td>Grid point identification number.
        Integer &ge; 0 or blank, and no two values may be the same.
        Grid points <tt>N1 ... N3</tt> are in consecutive order about
@@ -1290,18 +1767,25 @@ node at the middle of each of the three quadrilateral faces.
 </table>
 
 <a name="unst_hexa"></a>
-<h5>Hexahedral Elements</h5>
+<h4>Hexahedral Elements</h4>
 
 <p>
-CGNS supports three types of hexahedral elements, <tt>HEXA_8</tt>,
-<tt>HEXA_20</tt>, and <tt>HEXA_27</tt>.
+CGNS supports six types of hexahedral elements, <tt>HEXA_8</tt>,
+<tt>HEXA_20</tt>, <tt>HEXA_27</tt>, <tt>HEXA_32</tt>,
+<tt>HEXA_56</tt>, and <tt>HEXA_64</tt>.
 <tt>HEXA_8</tt> elements are composed of eight nodes located at the
 eight geometric corners of the hexahedron.
 In addition, <tt>HEXA_20</tt> and <tt>HEXA_27</tt> elements have a node
 at the middle of each of the twelve edges; <tt>HEXA_27</tt> adds a
 node at the middle of each of the six faces, and one at the cell center.
+The cubic forms of the hexahedral elements, <tt>HEXA_32</tt>,
+<tt>HEXA_56</tt>, and <tt>HEXA_64</tt>
+contain two interior nodes along each edge, 24 interior face nodes
+in the case of <tt>HEXA_56</tt> and <tt>HEXA_64</tt>, and an additonal
+eight interior volume nodes for <tt>HEXA_64</tt>.
 
-<br><br>
+<h5>Linear and Quadratic Elements</h5>
+
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=top><td><tt>&nbsp;&nbsp;&nbsp;</tt>
    <td><tt>HEXA_8</tt><br><br>
@@ -1422,13 +1906,140 @@ node at the middle of each of the six faces, and one at the cell center.
    <td><tt>&nbsp;E9,&nbsp;E10,&nbsp;E11,&nbsp;E12</tt></td>
 </table>
 
+<h5>Cubic Elements</h5>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=top><td>
+   <td><tt>HEXA_32</tt><br>
+       <img src="conv.figs/hexa32.gif" alt="HEXA_32 element">
+<tr valign=top><td><br>
+<tr valign=top><td>
+   <td><tt>HEXA_56</tt><br>
+       <img src="conv.figs/hexa56.gif" alt="HEXA_56 element">
+<tr valign=top><td><br>
+<tr valign=top><td>
+   <td><tt>HEXA_64</tt><br>
+       <img src="conv.figs/hexa64.gif" alt="HEXA_64 element">
+</table>
+
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+<td>
+   <tr><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Edge Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+          <th scope=col align=left>Oriented edges</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+          <th scope=col align=left class=midnode>Mid nodes</th>
+       <tr valign=baseline>
+          <td><tt>E1</tt></td><td></td>
+          <td><tt>N1,N2</tt></td><td></td>
+          <td class=midnode><tt>N9,N10</tt></td>
+       <tr valign=baseline>
+          <td><tt>E2</tt></td><td></td>
+          <td><tt>N2,N3</tt></td><td></td>
+          <td class=midnode><tt>N11,N12</tt></td>
+       <tr valign=baseline>
+          <td><tt>E3</tt></td><td></td>
+          <td><tt>N3,N4</tt></td><td></td>
+          <td class=midnode><tt>N13,N14</tt></td>
+       <tr valign=baseline>
+          <td><tt>E4</tt></td><td></td>
+          <td><tt>N4,N1</tt></td><td></td>
+          <td class=midnode><tt>N15,N16</tt></td>
+       <tr valign=baseline>
+          <td><tt>E5</tt></td><td></td>
+          <td><tt>N1,N5</tt></td><td></td>
+          <td class=midnode><tt>N17,N18</tt></td>
+       <tr valign=baseline>
+          <td><tt>E6</tt></td><td></td>
+          <td><tt>N2,N6</tt></td><td></td>
+          <td class=midnode><tt>N19,N20</tt></td>
+       <tr valign=baseline>
+          <td><tt>E7</tt></td><td></td>
+          <td><tt>N3,N7</tt></td><td></td>
+          <td class=midnode><tt>N21,N22</tt></td>
+       <tr valign=baseline>
+          <td><tt>E8</tt></td><td></td>
+          <td><tt>N4,N8</tt></td><td></td>
+          <td class=midnode><tt>N23,N24</tt></td>
+       <tr valign=baseline>
+          <td><tt>E9</tt></td><td></td>
+          <td><tt>N5,N6</tt></td><td></td>
+          <td class=midnode><tt>N25,N26</tt></td>
+       <tr valign=baseline>
+          <td><tt>E10</tt></td><td></td>
+          <td><tt>N6,N7</tt></td><td></td>
+          <td class=midnode><tt>N27,N28</tt></td>
+       <tr valign=baseline>
+          <td><tt>E11</tt></td><td></td>
+          <td><tt>N7,N8</tt></td><td></td>
+          <td class=midnode><tt>N29,N30</tt></td>
+       <tr valign=baseline>
+          <td><tt>E12</tt></td><td></td>
+          <td><tt>N8,N5</tt></td><td></td>
+          <td class=midnode><tt>N31,N32</tt></td>
+       </table>
+   <tr><br>
+   <tr><table cellspacing=0 cellpadding=0 border=0>
+       <caption class=edge>Face Definition
+       <br><br>
+       </caption>
+       <tr valign=baseline>
+         <th scope=col align=left>Face</th><td><tt>&nbsp;&nbsp;</tt></td>
+         <th scope=col align=left>Corner nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+         <th scope=col align=left class=midnode>Mid-edge nodes</th><td><tt>&nbsp;&nbsp;</tt></td>
+         <th scope=col class=midface>Mid-face nodes</th></td><td><tt>&nbsp;&nbsp;</tt></td>
+         <th scope=col align=left>Oriented edges</th>
+       <tr valign=baseline>
+         <td><tt>F1</tt></td><td></td>
+         <td><tt>N1,N4,N3,N2</tt></td><td></td>
+         <td class=midnode><tt>N16,N15,N14,N13,N12,N11,N10,N9</tt></td><td></td>
+         <td align=center class=midface><tt>N33,N36,N35,N34</tt></td><td></td>
+         <td><tt>-E4,-E3,-E2,-E1</tt></td>
+       <tr valign=baseline>
+         <td><tt>F2</tt></td><td></td>
+         <td><tt>N1,N2,N6,N5</tt></td><td></td>
+         <td class=midnode><tt>N9,N10,N19,N20,N26,N25,N18,N17</tt></td><td></td>
+         <td align=center class=midface><tt>N37,N38,N39,N40</tt></td><td></td>
+         <td><tt>&nbsp;E1,E6,-E9,-E5</tt></td>
+       <tr valign=baseline>
+         <td><tt>F3</tt></td><td></td>
+         <td><tt>N2,N3,N7,N6</tt></td><td></td>
+         <td class=midnode><tt>N11,N12,N21,N22,N28,N27,N20,N19</tt></td><td></td>
+         <td align=center class=midface><tt>N41,N42,N43,N44</tt></td><td></td>
+         <td><tt>&nbsp;E2,E7,-E10,-E6</tt></td>
+       <tr valign=baseline>
+         <td><tt>F4</tt></td><td></td>
+         <td><tt>N3,N4,N8,N7</tt></td><td></td>
+         <td class=midnode><tt>N13,N14,N23,N24,N30,N29,N22,N21</tt></td><td></td>
+         <td align=center class=midface><tt>N45,N46,N47,N48</tt></td><td></td>
+         <td><tt>&nbsp;E3,E8,-E11,-E7</tt></td>
+       <tr valign=baseline>
+         <td><tt>F5</tt></td><td></td>
+         <td><tt>N1,N5,N8,N4</tt></td><td></td>
+         <td class=midnode><tt>N17,N18,N32,N31,N24,N23,N15,N16</tt></td><td></td>
+         <td align=center class=midface><tt>N49,N50,N51,N52</tt></td><td></td>
+         <td><tt>&nbsp;E5,-E12,-E8,E4</tt></td>
+       <tr valign=baseline>
+         <td><tt>F6</tt></td><td></td>
+         <td><tt>N5,N6,N7,N8</tt></td><td></td>
+         <td class=midnode><tt>N25,N26,N27,N28,N29,N30,N31,N32</tt></td><td></td>
+         <td align=center class=midface><tt>N53,N54,N55,N56</tt></td><td></td>
+         <td><tt>&nbsp;E9,E10,E11,E12</tt></td>
+       </table>
+</td>
+</table>
+
 <br>
 <u><i>Notes</i></u>
 
 <br><br>
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
-   <td><tt>N1,...,N27</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>N1,...,N64</tt><td><tt>&nbsp;&nbsp;</tt>
    <td>Grid point identification number.
        Integer &ge; 0 or blank, and no two values may be the same.
        Grid points <tt>N1 ... N4</tt> are in consecutive order about
@@ -1752,7 +2363,7 @@ role of donor zone.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 17 June 2008
+Last updated 07 Feb 2014
 
 </body>
 </html>

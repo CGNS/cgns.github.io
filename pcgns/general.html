@@ -1,0 +1,73 @@
+<!-- PCGNS Manual - General Remarks -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="pcgns.css" rel="stylesheet" type="text/css">
+<title> Parallel CGNS User's Guide - General Remarks </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="index.html"><span class=nav><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<span class=nav><b>General Remarks</b></span>)
+(<a href="library.html"><b>The&nbsp;PCGNS&nbsp;Software&nbsp;Library</b></a>)
+(<a href="examples.html"><b>Example&nbsp;Programs</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>General Remarks</h2>
+<p>
+The Parallel CGNS library, or PCGNS, is built on top of the collective
+I/O support in HDF5 using MPI-IO. PCGNS provides specialized routines
+to open and close a file for parallel I/O and read and write grid
+coordinates, element data, solution data, and general arrays in a
+collective fashion. The data may be queued, and then later flushed
+to optimize these operations for maximum bandwidth. The PCGNS functions
+are prefixed with <em>cgp_</em>, and documented in
+<a href="library.html">The PCGNS Software Library</a>.
+<p>
+All additional accesses to the data use the standard Mid-Level Library (MLL)
+functions. A typical use of the PCGNS routines in a parallel I/O program
+would be:
+<pre>
+cgp_open              --- open file for parallel I/O
+cg_base_write         --- create base and zone using MLL
+cg_zone_write
+cgp_coord_write       --- create coordinate dataset for parallel I/O
+cgp_coord_write_data  --- write the coordinates collectively
+cgp_close             --- close the file
+</pre>
+<p>
+An example Fortran and C program are given in
+<a href="examples.html">Example Programs</a>.
+<p>
+A detailed discussion on the implementation may be found in the PDF paper
+<a href="../papers/AnEfficientAndFlexibleIParallelIOImplementationForTheCFDGeneralNotationSystem.pdf">
+"An Efficient and Flexible Parallel I/O implementation for the CFD General
+Notation System"</a> by Horne, Bensen, and Hauser.
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 19 Feb 2013
+
+</body>
+</html>

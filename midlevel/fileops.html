@@ -20,6 +20,7 @@
 (<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
 (<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
 (<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
 (<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
 (<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
 (<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
@@ -249,11 +250,24 @@ application's memory. An attempt is also made to do the same with
 unstructured mesh element data.
 
 <p>
-The function <tt>cg_is_cgns</tt> may be used to determine if a file is
-a CGNS file or not, and the type of file (<tt>CG_FILE_ADF</tt> or
-<tt>CG_FILE_HDF5</tt>). If the file is a CGNS file, <tt>cg_is_cgns</tt>
-returns <tt>CG_OK</tt>, otherwise <tt>CG_ERROR</tt> is returned and
-<tt>file_type</tt> is set to <tt>CG_FILE_NONE</tt>.
+When a CGNS file is newly created using <tt>CG_MODE_WRITE</tt>, the default
+type of database manager used is determined at compile time. If the CGNS
+library was built with HDF5 version 1.8 or later support, the file type
+will be <tt>CG_FILE_HDF5</tt>, otherwise <tt>CG_FILE_ADF</tt> is used.
+This may be changed either by setting an environment variable,
+<tt>CGNS_FILETYPE</tt>, to one of <tt>adf</tt>, <tt>hdf5</tt>, or
+<tt>adf2</tt>, or by calling the routine <tt>cg_set_file_type</tt>
+prior to the <tt>cg_open</tt> call. Calling <tt>cg_set_file_type</tt>
+with the argument <tt>CG_FILE_NONE</tt> will reset the library to
+use the default file type. <b>Note:</b> If the environment variable
+<tt>CGNS_FILETYPE</tt> is set, it takes precedence.
+
+<p>
+For existing files, the function <tt>cg_is_cgns</tt> may be used to
+determine if a file is a CGNS file or not, and the type of file
+(<tt>CG_FILE_ADF</tt> or <tt>CG_FILE_HDF5</tt>). If the file is a CGNS file,
+<tt>cg_is_cgns</tt> returns <tt>CG_OK</tt>, otherwise <tt>CG_ERROR</tt>
+is returned and <tt>file_type</tt> is set to <tt>CG_FILE_NONE</tt>.
 
 <p>
 The CGNS file identified by <tt>fn</tt> may be saved to a different filename
@@ -266,6 +280,13 @@ newly created CGNS files. The function
 identified by <tt>fn</tt>. If the CGNS library is built as 32-bit,
 the additional file type, <tt>CG_FILE_ADF2</tt>, is available.
 This allows creation of a 2.5 compatible CGNS file.
+
+<p>
+Although the file type <tt>CG_FILE_PHDF5</tt> is defined
+in the <tt>cgnslib.h</tt> header file, this should not be used directly
+in user code. This value is used internally by the CGNS library to indicate
+parallel I/O using HDF5, and the file type is set to this value
+when calling <tt>cgp_open</tt>.
 
 <a name="configure"></a>
 <h3>Configuring CGNS Internals</h3>
@@ -308,19 +329,19 @@ This allows creation of a 2.5 compatible CGNS file.
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_set_compress_f(<span class=in>compress</span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_set_compress_f(<span class=in>compress</span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_get_compress_f(<span class=out><i>compress</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_get_compress_f(<span class=out><i>compress</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_set_path_f(<span class=in>path</span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_set_path_f(<span class=in>path</span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_add_path_f(<span class=in>path</span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_add_path_f(<span class=in>path</span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 </table>
@@ -337,7 +358,8 @@ This allows creation of a 2.5 compatible CGNS file.
    <td>The option to configure, currently one of
        <tt>CG_CONFIG_ERROR</tt>, <tt>CG_CONFIG_COMPRESS</tt>,
        <tt>CG_CONFIG_SET_PATH</tt>, <tt>CG_CONFIG_ADD_PATH</tt>,
-       or <tt>CG_CONFIG_HDF5_COMPRESS</tt> as
+       <tt>CG_CONFIG_FILE_TYPE</tt>, <tt>CG_CONFIG_HDF5_COMPRESS</tt>,
+       or <tt>CG_CONFIG_HDF5_MPI_COMM</tt> as
        defined in <i>cgnslib.h</i>.
 <tr valign=baseline><td>
    <td><tt>value</tt><td>
@@ -385,8 +407,8 @@ The currently supported options and expected values are:
    <td>This is the rewrite-upon-close setting.
        <b>Note:</b> Prior versions of the library would automatically rewrite
        the CGNS file when it was closed after being opened in modify mode
-       if there was unused space. This is no longer done by default.
-       The previous behavior may be
+       if there was unused space. This is no longer done, due to possible
+       conflicts when using parallel I/O. The previous behavior may be
        recovered by setting <tt>value</tt> to a positive integer. In this
        case the file will be rewritten if the number of node deletions or
        modifications are equal to or exceed this number. Setting
@@ -410,17 +432,33 @@ The currently supported options and expected values are:
        path instead of replacing it.
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
+   <td><tt>CG_CONFIG_FILE_TYPE</tt><td>
+   <td>Sets the default file type for newly created CGNS files.
+       The argument, <tt>value</tt> should be set to one of
+       <tt>CG_FILE_NONE</tt>, <tt>CG_FILE_ADF</tt>, <tt>CG_FILE_HDF5</tt>,
+       or <tt>CG_FILE_ADF2</tt>. See the discussion above for
+       <tt>cg_set_file_type</tt>.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
    <td><tt>CG_CONFIG_HDF5_COMPRESS</tt><td>
    <td>Sets the compression level for data written from HDF5. The default is
        no compression. Setting <tt>value</tt> to -1, will use the default
        compression level of 6. The acceptable values are 0 to 9, corresponding
        to gzip compression levels.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_HDF5_MPI_COMM</tt><td>
+   <td>Sets the MPI communicator for parallel I/O. The default is
+       <tt>MPI_COMM_WORLD</tt>. The new communicator is given by
+       typecasting it to a <tt>void *</tt>. This is generally used
+       internally - see <a href="../pcgns/library.html#misc">cgp_mpi_comm</a>
+       instead.
 </table>
 
 <p>
 The routines <tt>cg_error_handler</tt>, <tt>cg_set_compress</tt>,
-<tt>cg_set_path</tt>, and <tt>cg_add_path</tt> are convenience
-functions built on top of <tt>cg_configure</tt>.
+<tt>cg_set_path</tt>, <tt>cg_add_path</tt>, and <tt>cg_set_file_type</tt>
+are convenience functions built on top of <tt>cg_configure</tt>.
 
 <p>
 There is no Fortran counterpart to function <tt>cg_configure</tt> or
@@ -500,7 +538,7 @@ is returned by <tt>cg_root_id</tt>.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 15 Feb 2013
+Last updated 07 July 2013
 
 </body>
 </html>

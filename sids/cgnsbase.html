@@ -20,6 +20,7 @@
 (<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
 (<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
 (<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
 (<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
 (<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
 (<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
@@ -73,9 +74,9 @@ with a discussion of <a href="#precedence">globally applicable data</a>.
 CGNS is an evolving standard.
 Although great care is taken to make CGNS databases backward-compatible
 with previous versions whenever possible, new nodes and new features are
-still being added which make them non-forward-compatible.
+still being added that make them non-forward-compatible.
 To address this issue, each new version of the standard is labeled with
-a version number which should be written in the file.
+a version number that should be written in the file.
 This version number corresponds to the version of the SIDS and is an
 essential part of the file containing the CGNS database.
 The file can not be interpreted properly without knowledge of this
@@ -232,7 +233,7 @@ zones in order to use original data structures such as
 <tt>ZoneConnectivity</tt> with an unstructured zone (mismatch or overset
 connectivity).
 When the cells are bidimensional, two interpolants per node are
-required, while when the cells are tridimensional, three interpolants
+required, whereas when the cells are tridimensional, three interpolants
 per node must be provided.
 <tt>PhysicalDimension</tt> becomes useful when expressing quantities
 such as the <tt>InwardNormalList</tt> in the
@@ -390,6 +391,8 @@ For unstructured zones, the element connectivity may also be recorded.
 
     FamilyName_t FamilyName ;                                          (o)
 
+    List( AdditionalFamilyName_t AddFamilyName1 ... AddFamilyNameN ) ; (o)
+
     List( FlowSolution_t&lt;CellDimension, IndexDimension, VertexSize, CellSize&gt;
           FlowSolution1 ... FlowSolutionN ) ;                          (o)
 
@@ -523,7 +526,9 @@ deforming) grid motion.
 <a name="FamilyName"></a>
 <p>
 <tt>FamilyName</tt> identifies to which family a zone belongs.
-Families may be used to define material properties.
+Families may be used to define material properties. Where multiple
+families are desired, <tt>AdditionalFamilyName</tt> nodes may be used
+to specify them.
 
 <p>
 Flow-solution quantities are contained in the list of
@@ -705,7 +710,7 @@ these may also be considered to be global defaults.
 Each of these four entities may also be defined within the
 <a href="#Zone"><tt>Zone_t</tt></a> structure.
 If present in a given instance of <tt>Zone_t</tt>, they supersede the
-global data and establish new defaults which apply only within that
+global data and establish new defaults that apply only within that
 zone.
 
 <p>
@@ -766,7 +771,7 @@ level and thereafter omitted when outputting data.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 28 Apr 2011
+Last updated 07 Feb 2014
 
 </body>
 </html>

@@ -20,6 +20,7 @@
 (<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
 (<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
 (<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
 (<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
 (<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
 (<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
@@ -504,7 +505,7 @@ the type of arbitrary grid motion.
 The <a href="data.html#DataArray"><tt>DataArray_t</tt></a> nodes are used
 to store the components of the grid velocity vector.
 The table below lists the data-name identifiers used to record these
-vectors in cartesian, cylindrical, and spherical coordinate systems.
+vectors in Cartesian, cylindrical, and spherical coordinate systems.
 
 <br><br>
 <a name="t:id_gridvel"></a>
@@ -597,7 +598,7 @@ default for the class of data contained in the
 For dimensional grid velocities,
 <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
 may be used to describe the system of dimensional units employed.
-If present, these two entities take precedence of all corresponding
+If present, these two entities take precedence over all corresponding
 entities at higher levels of the hierarchy, following the standard
 <a href="cgnsbase.html#precedence">precedence rules</a>.
 
@@ -660,7 +661,7 @@ associated with the zone. The time variation is the recorded in the
 
 <p>
 In this example, the whole mesh moves rigidly, so the only
-time-dependant data are the grid coordinates and flow solutions.
+time-dependent data are the grid coordinates and flow solutions.
 However, since the mesh moves rigidly, the grid coordinates need not be
 recorded at each time step.
 Instead, a <a href="#RigidGridMotion"><tt>RigidGridMotion_t</tt></a>
@@ -695,7 +696,7 @@ correspond to each time step.
     ZoneBC_t ZoneBC
     ZoneGridConnectivity_t ZoneGridConnectivity
 
-    <i>--- Time dependant data</i>
+    <i>--- Time dependent data</i>
     RigidGridMotion_t RigidGridMotion#1
     RigidGridMotion_t RigidGridMotion#2
     ...
@@ -723,7 +724,7 @@ In this example, <tt>Solution#0</tt> could correspond to a restart solution.
 <h4>Example - Deforming Grid Motion</h4>
 
 <p>
-In this example, velocity vectors are node dependant allowing for mesh
+In this example, velocity vectors are node dependent allowing for mesh
 deformation.
 In such a case, it is difficult or even impossible to recompute the mesh
 at each time step.
@@ -974,7 +975,7 @@ Each indentation represents a level down (a child) from the parent node.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 06 Jun 2011
+Last updated 07 Feb 2014
 
 </body>
 </html>

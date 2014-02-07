@@ -22,6 +22,7 @@ content="text/html; charset=iso-8859-1">
 (<a href="../../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
 (<a href="../../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
 (<a href="../../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
 (<a href="../../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
 (<a href="../../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
 (<a href="../../python/index.html"><b>Python&nbsp;Implementation</b></a>)
@@ -62,6 +63,26 @@ currently available.</p>
         <td>patran_to_cgns</td>
         <td>Converts a Patran Neutral file to unstructured CGNS</td>
     </tr>
+    <tr>
+        <td><a href="#VGRID">VGRID</a></td>
+        <td>vgrid_to_cgns</td>
+        <td>Converts a VGRID file to unstructured CGNS</td>
+    </tr>
+    <tr>
+        <td><a href="#AFLR3">AFLR3</a></td>
+        <td>aflr3_to_cgns</td>
+        <td>Converts an AFLR3 file to unstructured CGNS</td>
+    </tr>
+    <tr>
+        <td><a href="#FAST">FAST</a></td>
+        <td>fast_to_cgns</td>
+        <td>Converts a FAST file to unstructured CGNS</td>
+    </tr>
+    <tr>
+        <td><a href="#TetGen">TetGen</a></td>
+        <td>tetgen_to_cgns</td>
+        <td>Converts a TetGen file to unstructured CGNS</td>
+    </tr>
 </table>
 
 <p><br>
@@ -86,13 +107,13 @@ file with no iblank array, written as whole format.</p>
 
 <p>where <em>XYZfile</em> and <em>CGNSfile</em> are required. If <em>Qfile</em>
 is given, then the solution will be output to the CGNS file,
-otherwise just the grid will be written. The command line options
-are:</p>
+otherwise just the grid will be written.</p>
+<p>The command line options are:</p>
 
 <table border="1" cellpadding="5" cellspacing="0">
     <tr>
-        <th bgcolor="#C0C0C0" align=left scope=col>option</td>
-        <th bgcolor="#C0C0C0" align=left scope=col>description</td>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
     </tr>
     <tr>
         <td nowrap>-s</td>
@@ -178,13 +199,13 @@ ASCII and binary files are supported.</p>
 
 <p><b>tecplot_to_cgns</b> <i>options</i> <b>Tecplotfile</b> <b>CGNSfile</b></p>
 
-<p>where <em>Tecplotfile</em> and <em>CGNSfile</em> are required.
-The command line options are:</p>
+<p>where <em>Tecplotfile</em> and <em>CGNSfile</em> are required.</p>
+<p>The command line options are:</p>
 
 <table border="1" cellpadding="5" cellspacing="0">
     <tr>
-        <th bgcolor="#C0C0C0" align=left scope=col>option</td>
-        <th bgcolor="#C0C0C0" align=left scope=col>description</td>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
     </tr>
     <tr>
         <td nowrap>-f</td>
@@ -247,13 +268,13 @@ element sets. A command line option is available to read packet
 
 <p><b>patran_to_cgns</b> <i>options</i> <b>Patranfile</b> <b>CGNSfile</b></p>
 
-<p>where <em>Patranfile</em> and <em>CGNSfile</em> are required.
-The command line options are:</p>
+<p>where <em>Patranfile</em> and <em>CGNSfile</em> are required.</p>
+<p>The command line options are:</p>
 
 <table border="1" cellpadding="5" cellspacing="0">
     <tr>
-        <th bgcolor="#C0C0C0" align=left scope=col>option</td>
-        <th bgcolor="#C0C0C0" align=left scope=col>description</td>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
     </tr>
     <tr>
         <td nowrap>-l</td>
@@ -300,11 +321,246 @@ the command line and run <strong>patran_to_cgns</strong>. If the
 import is successfull, CGNSview will read and display the CGNS
 file.</p>
 
+<hr>
+
+<h2><a name="VGRID"></a>VGRID</h2>
+
+<p>Converts VGRID .cogsg, .mapbc, and .bc files to an unstructured CGNS file.
+An option, <i>-c</i>, is provided to combine patchs with the same name
+and boundary condition.
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>vgrid_to_cgns</b> <i>options</i> <b>VGRIDfile</b> <i>CGNSfile</i></p>
+
+<p>where <em>VGRIDfile</em> may be any of the VGRID input files
+(.cogsg, .mapbc, or .bc).
+The base file name is constructed from <em>VGRIDfile</em> and used to
+load the additional files. If <em>CGNSfile</em> is given, then the
+output will be written to that file, otherwise the CGNS file name
+is constructed from the VGRID file name by replacing the file extension
+with .cgns.</p>
+<p>The command line options are:</p>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-c</td>
+        <td>Combine patchs where possible</td>
+    </tr>
+</table>
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/import_vgrid.gif" width="335" height="238"
+        alt="CGNSview VGRID import window"
+        longdesc="images/import_vgrid.html"></p>
+
+<p>This allows interactive selection of the input and output
+files and options. The <em>Accept</em> button will then construct
+the command line and run <strong>vgrid_to_cgns</strong>. If the
+import is successfull, CGNSview will read and display the CGNS
+file.</p>
+
+<hr>
+
+<h2><a name="AFLR3"></a>AFLR3</h2>
+
+<p>Converts a AFLR3 file to an unstructured CGNS file.
+Will read a corresponding .mapbc file (if available)
+to define the boundary conditions.
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>aflr3_to_cgns</b> <i>options</i> <b>AFLR3file</b> <i>CGNSfile</i></p>
+
+The name of the AFLR3 file is given by <em>AFLR3file</em>.
+If <em>CGNSfile</em> is given, then the
+output will be written to that file, otherwise the CGNS file name
+is constructed from the AFLR3 file name by replacing the file extension
+with .cgns. The default file format is assumed to be double-precision,
+big-endian, Fortran stream (binary).</p>
+
+<p>The command line options are:</p>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-4</td>
+        <td>coordinates are real*4</td>
+    </tr>
+    <tr>
+        <td nowrap>-8</td>
+        <td>coordinates are real*8 (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-f</td>
+        <td>Formatted ASCII file</td>
+    </tr>
+    <tr>
+        <td nowrap>-u</td>
+        <td>Fortran unformatted file</td>
+    </tr>
+    <tr>
+        <td nowrap>-s</td>
+        <td>Fortran stream (binary) file (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-l</td>
+        <td>little-endian format</td>
+    </tr>
+    <tr>
+        <td nowrap>-b</td>
+        <td>big-endian format (default)</td>
+    </tr>
+</table>
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/import_aflr3.gif" width="324" height="273"
+        alt="CGNSview AFLR3 import window"
+        longdesc="images/import_aflr3.html"></p>
+
+<p>This allows interactive selection of the input and output
+files and options. The <em>Accept</em> button will then construct
+the command line and run <strong>aflr3_to_cgns</strong>. If the
+import is successfull, CGNSview will read and display the CGNS
+file.</p>
+
+<hr>
+
+<h2><a name="FAST"></a>FAST</h2>
+
+<p>Converts a FAST file to an unstructured CGNS file.
+Will read a corresponding .fastbc or .mapbc file (if available)
+to define the boundary conditions. If <em>CGNSfile</em> is given, then the
+output will be written to that file, otherwise the CGNS file name
+is constructed from the FAST file name by replacing the file extension
+with .cgns. The default file format
+is assumed to be double-precision, big-endian, Fortran stream (binary).
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>fast_to_cgns</b> <i>options</i> <b>FASTfile</b> <i>CGNSfile</i></p>
+
+The name of the FAST file is given by <em>FASTfile</em>.
+If <em>CGNSfile</em> is given, then the
+output will be written to that file, otherwise the CGNS file name
+is constructed from the FAST file name by replacing the file extension
+with .cgns. The default file format is assumed to be double-precision,
+big-endian, Fortran stream (binary).</p>
+
+<p>The command line options are:</p>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-4</td>
+        <td>coordinates are real*4</td>
+    </tr>
+    <tr>
+        <td nowrap>-8</td>
+        <td>coordinates are real*8 (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-f</td>
+        <td>Formatted ASCII file</td>
+    </tr>
+    <tr>
+        <td nowrap>-u</td>
+        <td>Fortran unformatted file</td>
+    </tr>
+    <tr>
+        <td nowrap>-s</td>
+        <td>Fortran stream (binary) file (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-l</td>
+        <td>little-endian format</td>
+    </tr>
+    <tr>
+        <td nowrap>-b</td>
+        <td>big-endian format (default)</td>
+    </tr>
+</table>
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/import_fast.gif" width="323" height="267"
+        alt="CGNSview FAST import window"
+        longdesc="images/import_fast.html"></p>
+
+<p>This allows interactive selection of the input and output
+files and options. The <em>Accept</em> button will then construct
+the command line and run <strong>fast_to_cgns</strong>. If the
+import is successfull, CGNSview will read and display the CGNS
+file.</p>
+
+<hr>
+
+<h2><a name="TetGen"></a>TetGen</h2>
+
+<p>Converts TetGen .poly, .smesh, .node, .face or .ele file(s)
+to an unstructured CGNS file.
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>tetgen_to_cgns</b> <b>TetGenfile</b> <i>CGNSfile</i></p>
+
+<p>where <em>TetGenfile</em> is the TetGen file. If the file extension
+is .node, .face, or .ele, the additional files to be read will be
+constructed from the base file name and appropiate extensions.
+If <em>CGNSfile</em> is given, then the
+output will be written to that file, otherwise the CGNS file name
+is constructed from the TetGen file name by replacing the file extension
+with .cgns.
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/import_tetgen.gif" width="335" height="182"
+        alt="CGNSview TetGen import window"
+        longdesc="images/import_tetgen.html"></p>
+
+<p>This allows interactive selection of the input and output
+files. The <em>Accept</em> button will then construct
+the command line and run <strong>tetgen_to_cgns</strong>. If the
+import is successfull, CGNSview will read and display the CGNS
+file.</p>
+
 <p>
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../../include/footer_small.html" -->
-Last updated 16 May 2003
+Last updated 03 Feb 2013
 
 </body>
 </html>

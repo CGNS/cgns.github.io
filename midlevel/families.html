@@ -20,6 +20,7 @@
 (<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
 (<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
 (<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
 (<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
 (<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
 (<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
@@ -54,6 +55,9 @@
      <li> <tt><b>cg_family_write</b></tt> - Create a Family_t node
      <li> <tt><b>cg_nfamilies</b></tt> - Get number of families
      <li> <tt><b>cg_family_read</b></tt> - Read family info
+     <li> <tt><b>cg_family_name_write</b></tt> - Write multiple family names under Family_t
+     <li> <tt><b>cg_nfamily_names</b></tt> - Get number of family names under Family_t
+     <li> <tt><b>cg_family_name_read</b></tt> - Read multiple family names under Family_t
      </ul>
 <li> <a href="#geometry">Geometry Reference</a>
      <ul>
@@ -71,6 +75,9 @@
      <ul>
      <li> <tt><b>cg_famname_write</b></tt> - Write family name
      <li> <tt><b>cg_famname_read</b></tt> - Read family name
+     <li> <tt><b>cg_multifam_write</b></tt> - Write multiple family names
+     <li> <tt><b>cg_nmultifam</b></tt> - Get number of family names
+     <li> <tt><b>cg_multifam_read</b></tt> - Read multiple family names
      </ul>
 </ul>
 
@@ -103,6 +110,20 @@
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *nFamBC</i></span>, <span class=out><i>int *nGeo</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_family_name_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Fam</span>, <span class=in>char *NodeName</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *FamilyName</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_nfamily_names(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Fam</span>, <span class=out><i>int *nNames</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_family_name_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Fam</span>, <span class=in>int N</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>char *NodeName</i></span>, <span class=out><i>char *FamilyName</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
        <tt><b>call cg_family_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>FamilyName</span>, <span class=out><i>Fam</i></span>, <span class=out><i>ier</i></span>)</b></tt>
@@ -114,6 +135,18 @@
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_family_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Fam</span>, <span class=out><i>FamilyName</i></span>, <span class=out><i>nFamBC</i></span>, <span class=out><i>nGeo</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_family_name_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Fam</span>, <span class=in>NodeName</span>, <span class=in>FamilyName</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_nfamily_names_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Fam</span>, <span class=out><i>nNames</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_family_name_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Fam</span>, <span class=in>N</span>, <span class=out><i>NodeName</i></span>, <span class=out><i>FamilyName</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
@@ -142,12 +175,23 @@
    <td><tt>FamilyName</tt><td>
    <td>Name of the family.
 <tr valign=baseline><td>
+   <td><tt>NodeName</tt><td>
+   <td>Name of the <tt>FamilyName_t</tt> node. <tt>FamilyParent</tt> is used to refer
+       to the parent family of the <tt>Family_t</tt> node.
+<tr valign=baseline><td>
    <td><tt>nFamBC</tt><td>
    <td>Number of boundary conditions for this family.
        This should be either 0 or 1.
 <tr valign=baseline><td>
    <td><tt>nGeo</tt><td>
    <td>Number of geometry references for this family.
+<tr valign=baseline><td>
+   <td><tt>nNames</tt><td>
+   <td>Number of <tt>FamilyName_t</tt> nodes for this family.
+<tr valign=baseline><td>
+   <td><tt>N</tt><td>
+   <td>Family name index number, where
+       1 &le; <tt>N</tt> &le; <tt>nNames</tt>.
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.
@@ -356,6 +400,18 @@ when it is no longer needed by calling
         <tt><b><span class=out><i>ier</i></span> = cg_famname_read(<span class=out><i>char *FamilyName</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_multifam_write(<span class=in>char *NodeName</span>, <span class=in>char *FamilyName</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_nmultifam(<span class=out><i>int *nNames</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_multifam_read(<span class=in>int N</span>, <span class=out><i>char *NodeName</i></span>, <span class=out><i>char *FamilyName</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
         <tt><b>call cg_famname_write_f(<span class=in>FamilyName</span>, <span class=out><i>ier</i></span>)</b></tt>
@@ -364,6 +420,18 @@ when it is no longer needed by calling
 <tr><td nowrap>
         <tt><b>call cg_famname_read_f(<span class=out><i>FamilyName</i></span>, <span class=out><i>ier</i></span>)</b></tt>
      <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_multifam_write_f(<span class=in>NodeName</span>, <span class=in>FamilyName</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_nmultifam_f(<span class=out><i>nNames</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_multifam_read_f(<span class=in>N</span>, <span class=out><i>NodeName</i></span>, <span class=out><i>FamilyName</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
 
@@ -375,18 +443,34 @@ when it is no longer needed by calling
 <br><br>
 <table cellspacing=0 cellpadding=0 noborder>
 <tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
-   <td><tt>FamilyName</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>NodeName</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Node name.
+<tr valign=baseline><td>
+   <td><tt>FamilyName</tt><td>
    <td>Family name.
+<tr valign=baseline><td>
+   <td><tt>nNames</tt><td>
+   <td>Number of additional family names.
+<tr valign=baseline><td>
+   <td><tt>N</tt><td>
+   <td>Family name index number, where
+       1 &le; <tt>N</tt> &le; <tt>nNames</tt>.
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.
 </table>
 
 <p>
+Note that the family name written <tt>cg_famname_write</tt> is stored in
+a <tt>FamilyName_t</tt> node named <tt>FamilyName</tt> as in previous
+versions. The additional family names written with <tt>cg_multifam_write</tt>
+are stored in <tt>AdditionalFamilyName_t</tt> nodes.
+
+<p>
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 09 Dec 2011
+Last updated 15 Apr 2012
 
 </body>
 </html>

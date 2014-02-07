@@ -20,6 +20,7 @@
 (<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
 (<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
 (<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
 (<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
 (<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
 (<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
@@ -223,7 +224,7 @@ system of units or normalization.
 <h4>Example - Cartesian Coordinates for a 2-D Structured Grid</h4>
 
 <p>
-Cartesian coordinates for a 2-D grid of size 17 &times; 33; the data
+This example uses Cartesian coordinates for a 2-D grid of size 17 &times; 33; the data
 arrays include only core vertices, and the coordinates are in units of
 feet.
 <pre>
@@ -285,7 +286,7 @@ the data; this is reflected in the FORTRAN-like implied do-loops for
 <tt>x(i,j)</tt> and <tt>y(i,j)</tt>.
 
 <p>
-Since the dimensional units for both <i>x</i> and <i>y</i> are the same, an
+Because the dimensional units for both <i>x</i> and <i>y</i> are the same, an
 alternate approach is to set the data class and system of units
 using <a href="build.html#DataClass"><tt>DataClass</tt></a> and
 <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> at the
@@ -329,9 +330,9 @@ level be used to retrieve the information.
 <h4>Example - Cylindrical Coordinates for a 3-D Structured Grid</h4>
 
 <p>
-Cylindrical coordinates for a 3-D grid whose core size is
-17 &times; 33 &times; 9.
-The grid contains a single plane of rind on the minimum and maximum
+This example uses cylindrical coordinates for a 3-D grid whose core size is
+17 &times; 33 &times; 9;
+the grid contains a single plane of rind on the minimum and maximum
 <i>k</i> faces.
 The coordinates are nondimensional.
 <pre>
@@ -381,7 +382,7 @@ are abbreviated.
 <h4>Example - Cartesian Coordinates for a 3-D Unstructured Grid</h4>
 
 <p>
-Cartesian grid coordinates for a 3-D unstructured zone where
+This example uses Cartesian grid coordinates for a 3-D unstructured zone where
 <tt>VertexSize</tt> is 15.
 <pre>
   GridCoordinates_t&lt;1, 15&gt; GridCoordinates =
@@ -524,7 +525,10 @@ Consequently:
      TRI_3, TRI_6, QUAD_4, QUAD_8, QUAD_9,
      TETRA_4, TETRA_10, PYRA_5, PYRA_14,
      PENTA_6, PENTA_15, PENTA_18, HEXA_8, HEXA_20, HEXA_27,
-     MIXED, PYRA_13, NGON_n, NFACE_n );
+     MIXED, PYRA_13, NGON_n, NFACE_n,
+     BAR_4, TRI_9, TRI_10, QUAD_12, QUAD_16,
+     TETRA_16, TETRA_20, PYRA_21, PYRA_29, PYRA_30,
+     PENTA_24, PENTA_38, PENTA_40, HEXA_32, HEXA_56, HEXA_64 );
 </pre>
 The conventions for element numbering for the various supported types
 are described in <a href="conv.html#unstructgrid">Unstructured Grid
@@ -588,7 +592,7 @@ Except for boundary faces, each face of a polyhedral element must be
 shared by another polyhedral element.
 
 <p>
-I.e., for <tt>NGON_n</tt>, the data array <tt>ElementConnectivity</tt>
+For example, for <tt>NGON_n</tt>, the data array <tt>ElementConnectivity</tt>
 contains a list of nodes making up each face in the grid, with the first
 value for each face defining the number of nodes making up that face:
 <pre>
@@ -1437,6 +1441,8 @@ of the entire field.
 
     FamilyName_t FamilyName ;                                                  (o)
 
+    List( AdditionalFamilyName_t AddFamilyName1 ... AddFamilyNameN ) ;         (o)
+
     DataClass_t DataClass ;                                                    (o)
 
     DimensionalUnits_t DimensionalUnits ;                                      (o)
@@ -1786,7 +1792,7 @@ Under Zone_t:
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 06 Jul 2011
+Last updated 07 Feb 2014
 
 </body>
 </html>

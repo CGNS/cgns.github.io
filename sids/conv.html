@@ -561,17 +561,26 @@ The following table summarizes the element types supported in CGNS.
 Element Types in CGNS
 <br><br>
 </caption>
-<tr align=left><td colspan=9><hr width=100% noshade>
+<tr align=left><td colspan=15><hr width=100% noshade>
 <tr valign=baseline>
    <th scope=col>Dimensionality<td><tt>&nbsp;&nbsp;</tt>
    <th align=left scope=col>Shape<td><tt>&nbsp;&nbsp;</tt>
-   <th align=left scope=col>Linear Interpolation<td><tt>&nbsp;&nbsp;</tt>
-   <th align=left scope=col>Quadratic Interpolation<td><tt>&nbsp;&nbsp;</tt>
-   <th align=left scope=col>Cubic Interpolation
-<tr align=left><td colspan=9><hr width=100% noshade>
+   <th align=left scope=col>Linear<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Quadratic<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Cubic<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Quartic
+<tr valign=baseline>
+   <th scope=col><td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col><td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Interpolation<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Interpolation<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Interpolation<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Interpolation
+<tr align=left><td colspan=15><hr width=100% noshade>
 <tr valign=baseline>
    <td align=center id=0d>0-D<td>
    <td headers=0d>Point<td>
+   <td headers=0d><tt>NODE</tt><td>
    <td headers=0d><tt>NODE</tt><td>
    <td headers=0d><tt>NODE</tt><td>
    <td headers=0d><tt>NODE</tt>
@@ -580,44 +589,51 @@ Element Types in CGNS
    <td headers=1d><a href="#unst_line">Line</a><td>
    <td headers=1d><tt>BAR_2</tt><td>
    <td headers=1d><tt>BAR_3</tt><td>
-   <td headers=1d><tt>BAR_4</tt>
+   <td headers=1d><tt>BAR_4</tt><td>
+   <td headers=1d><tt>BAR_5</tt>
 <tr valign=baseline>
    <td align=center id=2d>2-D<td>
    <td headers=2d><a href="#unst_tri">Triangle</a><td>
    <td headers=2d><tt>TRI_3</tt><td>
    <td headers=2d><tt>TRI_6</tt><td>
-   <td headers=2d><tt>TRI_9,&nbsp;TRI_10</tt>
+   <td headers=2d><tt>TRI_9,&nbsp;TRI_10</tt><td>
+   <td headers=2d><tt>TRI_12,&nbsp;TRI_15</tt>
 <tr valign=baseline>
    <td><td>
    <td headers=2d><a href="#unst_quad">Quadrangle</a><td>
    <td headers=2d><tt>QUAD_4</tt><td>
    <td headers=2d><tt>QUAD_8,&nbsp;QUAD_9</tt><td>
-   <td headers=2d><tt>QUAD_12,&nbsp;QUAD_16</tt>
+   <td headers=2d><tt>QUAD_12,&nbsp;QUAD_16</tt><td>
+   <td headers=2d><tt>QUAD_P4_16,&nbsp;QUAD_25</tt>
 <tr valign=baseline>
    <td align=center id=3d>3-D<td>
    <td headers=3d><a href="#unst_tetra">Tetrahedron</a><td>
    <td headers=3d><tt>TETRA_4</tt><td>
    <td headers=3d><tt>TETRA_10</tt><td>
-   <td headers=3d><tt>TETRA_16,&nbsp;TETRA_20</tt>
+   <td headers=3d><tt>TETRA_16,&nbsp;TETRA_20</tt><td>
+   <td headers=3d><tt>TETRA_22,&nbsp;TETRA_34,&nbsp;TETRA_35</tt>
 <tr valign=baseline>
    <td><td>
    <td headers=3d><a href="#unst_pyramid">Pyramid</a><td>
    <td headers=3d><tt>PYRA_5</tt><td>
    <td headers=3d><tt>PYRA_13,&nbsp;PYRA_14</tt><td>
-   <td headers=3d><tt>PYRA_21,&nbsp;PYRA_29,&nbsp;PYRA_30</tt>
+   <td headers=3d><tt>PYRA_21,&nbsp;PYRA_29,&nbsp;PYRA_30</tt><td>
+   <td headers=3d><tt>PYRA_P4_29,&nbsp;PYRA_50,&nbsp;PYRA_55</tt>
 <tr valign=baseline>
    <td><td>
    <td headers=3d><a href="#unst_penta">Pentahedron</a><td>
    <td headers=3d><tt>PENTA_6</tt><td>
    <td headers=3d><tt>PENTA_15,&nbsp;PENTA_18</tt><td>
-   <td headers=3d><tt>PENTA_24,&nbsp;PENTA_38,&nbsp;PENTA_40</tt>
+   <td headers=3d><tt>PENTA_24,&nbsp;PENTA_38,&nbsp;PENTA_40</tt><td>
+   <td headers=3d><tt>PENTA_33,&nbsp;PENTA_66,&nbsp;PENTA_75</tt>
 <tr valign=baseline>
    <td><td>
    <td headers=3d><a href="#unst_hexa">Hexahedron</a><td>
    <td headers=3d><tt>HEXA_8</tt><td>
    <td headers=3d><tt>HEXA_20,&nbsp;HEXA_27</tt><td>
-   <td headers=3d><tt>HEXA_32,&nbsp;HEXA_56,&nbsp;HEXA_64</tt>
-<tr align=left><td colspan=9><hr width=100% noshade>
+   <td headers=3d><tt>HEXA_32,&nbsp;HEXA_56,&nbsp;HEXA_64</tt><td>
+   <td headers=3d><tt>HEXA_44,&nbsp;HEXA_98,&nbsp;HEXA_125</tt>
+<tr align=left><td colspan=15><hr width=100% noshade>
 </table>
 </center>
 <br>
@@ -2285,15 +2301,15 @@ nine interior volume nodes for <tt>PENTA_75</tt>.
 
 <table cellspacing=0 cellpadding=0 border=0>
 <tr valign=top><td>
-   <td><tt>PENTA_24</tt><br>
+   <td><tt>PENTA_33</tt><br>
        <img src="conv.figs/Penta_33.gif" width=75% alt="PENTA_33 element">
 <tr valign=top><td><br>
 <tr valign=top><td>
-   <td><tt>PENTA_38</tt><br>
+   <td><tt>PENTA_66</tt><br>
        <img src="conv.figs/Penta_66.gif" width=75% alt="PENTA_66 element">
 <tr valign=top><td><br>
 <tr valign=top><td>
-   <td><tt>PENTA_40</tt><br>
+   <td><tt>PENTA_75</tt><br>
        <img src="conv.figs/Penta_75.gif" width=75% alt="PENTA_75 element">
 </table>
 
@@ -3188,7 +3204,7 @@ role of donor zone.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 28 Aug 2014
+Last updated 02 Sep 2014
 
 </body>
 </html>

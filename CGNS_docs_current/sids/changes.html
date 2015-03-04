@@ -1,0 +1,344 @@
+<!-- CGNS SIDS document - Major Differences from Previous SIDS Documents -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Major Differences from Previous SIDS Documents </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Major Differences from Previous CGNS Versions</h2>
+
+<ul>
+<li> <a href="#Version32">Version 3.2</a>
+<li> <a href="#Version31">Version 3.1</a>
+<li> <a href="#Version25">Version 2.5</a>
+<li> <a href="#Version24">Version 2.4</a>
+<li> <a href="#Version23">Version 2.3</a>
+<li> <a href="#Version22beta1">Version 2.2, Beta 1</a>
+<li> <a href="#Version21beta1">Version 2.1, Beta 1</a>
+<li> <a href="#Version2beta2">Version 2.0, Beta 2</a>
+<li> <a href="#Version2beta1">Version 2.0, Beta 1</a>
+</ul>
+
+<p>
+The following items represent noteworthy alterations and additions to
+the SIDS <u>in reverse chronological order</u>.  References to CPEX in the following refer to 
+<a href="http://www.cgns.org/Proposals.html">CGNS Proposals for Extension</a>.
+
+<a name="Version32"></a>
+<h3>Version 3.2</h3>
+
+<p>
+The following changes were made for Version 3.2.
+<ul>
+<li> Added AdditionalFamilyName_t under 
+      <a href="bc.html#BC">BC_t</a>, 
+      <a href="cgnsbase.html#Zone">Zone_t</a>, 
+      <a href="gridflow.html#ZoneSubRegion">ZoneSubRegion_t</a>, and
+      <a href="misc.html#UserDefinedData">UserDefinedData_t</a>; and added
+      FamilyName_t under 
+      <a href="misc.html#Family">Family_t</a> 
+      (a hierarchy of families is now possible); according
+      to CPEX 0033 and 0034.
+<li> Added new cubic elements in <a href="conv.html#unstructgrid">Conventions</a>, according to CPEX 0036.
+<li> Added new quartic elements in <a href="conv.html#unstructgrid">Conventions</a>, according to CPEX 0038.
+     <br><br>
+</ul>
+
+<a name="Version31"></a>
+<h3>Version 3.1</h3>
+
+<p>
+The following changes were made for Version 3.1.
+<ul>
+<li> Added a <tt>PYRA_13</tt> element in the description of the
+        unstructured grid element numbering conventions for
+        <a href="conv.html#unst_pyramid">pyramid elements</a>.
+     <br><br>
+<li> Modified the description of the
+        <a href="gridflow.html#Elements"><tt>Elements_t</tt></a>
+        structure to incorporate the new definition of the
+        <tt>NGON_n</tt> element type, and added the <tt>NFACE_n</tt>
+        element type.
+        Also added <a href="gridflow.html#element_example">examples</a>
+        illustrating their use, including for polyhedral elements.
+     <br><br>
+<li> Changed <tt>Null</tt> to <tt>xxxxNull</tt> and <tt>UserDefined</tt> to <tt>xxxxUserDefined</tt>, as appropriate.
+     <br><br>
+<li> Also made sure that the <tt>xxxxNull</tt> is listed first, and the
+     <tt>xxxxUserDefined</tt> is listed second.
+     <br><br>
+<li> Added section <a href="floweqn.html#ModelType">Model Type Structure Definition</a>.
+     <br><br>
+<li> Added <a href="gridflow.html##ZoneSubRegion">ZoneSubRegion_t</a> (CPEX 0030).
+        Made changes associated with CPEX 0031:
+        (1) added CellDimension to several places in <a href="cgnsbase.html#Zone">Zone_t</a>,
+        (2) added new ParentElements and ParentElementsPosition
+        in <a href="gridflow.html#Elements">Elements_t</a>,
+        (3) added CellDimension and revamped usage of PointList and PointRange
+        in <a href="gridflow.html#FlowSolution">FlowSolution_t</a>,
+        (4) added CellDimension to several places in <a href="bc.html#ZoneBC">ZoneBC_t</a>,
+        (5) added CellDimension and revamped usage of PointList and PointRange
+        in <a href="bc.html#BC">BC_t</a>,
+        (6) changes in <a href="bc.html#BCDataSet">BCDataSet_t</a>,
+        (7) added CellDimension and revamped usage of PointList and PointRange
+        in <a href="misc.html#DiscreteData">DiscreteData_t</a>,
+        (8) changes in <a href="misc.html#FamilyBC">FamilyBC_t</a>,
+        (9) creation of new <a href="misc.html#FamilyBCDataSet">FamilyBCDataSet_t</a>,
+        (10) changes in <a href="timedep.html#ZoneGridConnectivity">Zone Grid Connectivities</a>, and
+        (11) addition of ZoneGridConnectivityPointers and ZoneSubRegionPointers
+        in <a href="timedep.html#ZoneIterativeData">ZoneIterativeData_t</a>.
+        A note regarding CPEX 0031:  The use of ElementList and ElementRange has been
+        deprecated in favor of PointList and PointRange, as described in CPEX 0031 and
+        in relevant sections of this document.
+     <br><br>
+<li> Added clarity that if rotating about more than one axis, then it is done
+          in a particular order in
+          <a href="cnct.html#Periodic">Periodic_t</a> and in
+          <a href="timedep.html#t:id_rigidgrid">Data-Name Identifiers for Rigid Grid Motion</a>.
+     <br><br>
+<li> Modified table in
+          <a href="bc.html#BC">BC_t</a> to include CellCenter GridLocation.
+</ul>
+
+<a name="Version25"></a>
+<h3>Version 2.5</h3>
+
+<p>
+No changes were made to the data structures for Version 2.5.
+
+<a name="Version24"></a>
+<h3>Version 2.4</h3>
+
+<p>
+The following changes were made for Version 2.4.
+<ul>
+<li> <a href="build.html#GridLocation"><tt>GridLocation_t</tt></a>,
+     <tt>PointRange</tt>, and <tt>PointList</tt>
+     have been added to the
+     <a href="bc.html#BCDataSet"><tt>BCDataSet_t</tt></a> data structure,
+     allowing boundary conditions to be specified at locations different
+     from those used to defined the BC patch.
+     (E.g., a BC patch may be defined using vertices, with boundary
+     conditions applied at face centers.)<br><br>
+<li> Data structures have been added to
+     <a href="floweqn.html#FlowEquationSet"><tt>FlowEquationSet_t</tt></a>
+     for describing the electric field, magnetic field, and conductivity
+     models used for <a href="floweqn.html#EM">electromagnetic flows</a>.
+     Corresponding recommended <a href="floweqn.html#t:id_EM">data-name
+     identifiers</a> have also been added.<br><br>
+<li> <a href="gridflow.html#RotatingCoordinates"><tt>RotatingCoordinates_t</tt></a>
+     has been added to the <a href="misc.html#Family"><tt>Family_t</tt></a>
+     data structure.<br><br>
+<li> A <a href="bc.html#BCDataSet"><tt>BCDataSet_t</tt></a> list
+     has been added to the <a href="misc.html#FamilyBC"><tt>FamilyBC_t</tt></a>
+     data structure, allowing specification of boundary condition data
+     arrays for CFD families.<br><br>
+<li> <a href="build.html#GridLocation"><tt>GridLocation_t</tt></a>,
+     <tt>PointRange</tt>, <tt>PointList</tt>,
+     <a href="cgnsbase.html#FamilyName"><tt>FamilyName_t</tt></a>,
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>,
+     and <a href="cgnsbase.html#Ordinal"><tt>Ordinal</tt></a> have been
+     added to the
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     data structure.<br><br>
+<li> The <a href="build.html#DimensionalUnits"><tt>DimensionalUnits_t</tt></a>
+     and <a href="build.html#DimensionalExponents"><tt>DimensionalExponents_t</tt></a>
+     structures have been expanded to include units for electric
+     current, substance amount, and luminous intensity.<br><br>
+<li> The capability to include <a href="conv.html#rind_unstruct">rind
+     data with unstructured grids</a> has been added, and
+     <a href="build.html#Rind"><tt>Rind_t</tt></a> has been added to the
+     <a href="gridflow.html#Elements"><tt>Elements_t</tt></a> structure,
+     allowing specification of connectivity information for rind
+     elements.
+</ul>
+
+<a name="Version23"></a>
+<h3>Version 2.3</h3>
+
+<p>
+The following changes were made for Version 2.3.
+<ul>
+<li> <tt>ElementRange</tt> and <tt>ElementList</tt> have been added to the
+     <a href="bc.html#BC"><tt>BC_t</tt></a> data structure.
+     <tt>ElementRange</tt> or <tt>ElementList</tt> may now be used
+     to define a boundary condition patch by specifying face indices,
+     instead of using <tt>PointRange</tt> or <tt>PointList</tt> with
+     <tt>GridLocation</tt> set to <tt>FaceCenter</tt>.
+     The use of <tt>PointRange</tt> or <tt>PointList</tt> to define a
+     boundary condition patch hasn't changed.
+     They may be used to define a boundary condition patch by specifying
+     either vertex or face indices.
+
+     <p>
+     When <tt>PointRange</tt> or <tt>PointList</tt> is used, the choice
+     between vertex or face indices is determined by the value of
+     <a href="build.html#GridLocation"><tt>GridLocation_t</tt></a>.
+     When <tt>ElementRange</tt> or <tt>ElementList</tt> is used,
+     <tt>GridLocation_t</tt> is ignored.
+</ul>
+
+<a name="Version22beta1"></a>
+<h3>Version 2.2, Beta 1</h3>
+
+<p>
+The following changes were made for Version 2.2, Beta 1.
+<ul>
+<li> <a href="gridflow.html#Axisymmetry"><tt>Axisymmetry_t</tt></a> and
+     <a href="gridflow.html#RotatingCoordinates"><tt>RotatingCoordinates_t</tt></a>
+     nodes have been added, allowing the recording of data relevant to
+     axisymmetric flows and rotating coordinates.<br><br>
+<li> A <a href="misc.html#Gravity"><tt>Gravity_t</tt></a> node has
+     been added for storage of the gravitational vector.<br><br>
+<li> A <a href="cnct.html#GridConnectivityProperty"><tt>GridConnectivityProperty_t</tt></a>
+     node has been added, allowing the recording of special properties
+     associated with particular connectivity patches, such as periodic
+     interfaces, or interfaces where the data is to be averaged in some
+     way prior to passing it to a neighboring interface.<br><br>
+<li> A <a href="bc.html#BCProperty"><tt>BCProperty_t</tt></a>
+     node has been added, allowing the recording of special properties
+     associated with particular boundary condition patches, such as wall
+     function or bleed regions.<br><br>
+<li> Additional <a href="dataname.html#dataname_flow">flow solution
+     data-name identifiers</a> are included for variables in rotating
+     coordinate systems.
+</ul>
+
+<a name="Version21beta1"></a>
+<h3>Version 2.1, Beta 1</h3>
+
+<p>
+The following changes were made for Version 2.1, Beta 1.
+<ul>
+<li> A node type
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     is added for the storage of arbitrary user defined data in
+     <tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+     restrictions or implicit meanings imposed on these node types at
+     other node locations.<br><br>
+<li> Support for multi-species flows and chemistry has been added.
+     New gas models have been added to the
+     <a href="floweqn.html#GasModel"><tt>GasModelType_t</tt></a>
+     enumeration, and
+     <a href="floweqn.html#ThermalRelaxationModel"><tt>ThermalRelaxationModel_t</tt></a>
+     and <a href="floweqn.html#ChemicalKineticsModel"><tt>ChemicalKineticsModel_t</tt></a>
+     data structures have been added for describing the thermal
+     relaxation and chemical kinetics models.
+     Additional <a href="dataname.html#dataname_flow">flow solution
+     data-name identifiers</a> are included.
+</ul>
+
+<a name="Version2beta2"></a>
+<h3>Version 2.0, Beta 2</h3>
+
+<p>
+The following changes were made for Version 2.0, Beta 2.
+<ul>
+<li> The following data structures related to time-dependent flow
+     have been added:
+     <a href="timedep.html#BaseIterativeData"><tt>BaseIterativeData_t</tt></a>,
+     <a href="timedep.html#ZoneIterativeData"><tt>ZoneIterativeData_t</tt></a>,
+     <a href="timedep.html#RigidGridMotion"><tt>RigidGridMotion_t</tt></a>,
+     <a href="timedep.html#ArbitraryGridMotion"><tt>ArbitraryGridMotion_t</tt></a>.
+</ul>
+
+<a name="Version2beta1"></a>
+<h3>Version 2.0, Beta 1</h3>
+
+<p>
+The following changes were made for Version 2.0, Beta 1.
+
+<ul>
+<li> The capability for recording unstructured zones has been
+     added to the SIDS.
+     (These changes occur throughout the document, although some
+     specific items are listed below.)<br><br>
+<li> The values <tt>UserDefined</tt> and <tt>Null</tt> are now allowed
+     for all enumeration types (throughout document).<br><br>
+<li> The following nodes are now defined (some of these also
+     include additional new children sub-nodes):
+     <a href="misc.html#Family"><tt>Family_t</tt></a>,
+     <a href="gridflow.html#Elements"><tt>Elements_t</tt></a>,
+     <a href="cgnsbase.html#Zone"><tt>ZoneType_t</tt></a>,
+     <a href="cgnsbase.html#Zone"><tt>FamilyName_t</tt></a>,
+     <a href="misc.html#GeometryReference"><tt>GeometryReference_t</tt></a>,
+     <a href="misc.html#FamilyBC"><tt>FamilyBC_t</tt></a>.<br><br>
+<li> Under <a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a>, the
+     <tt>IndexDimension</tt> is no longer recorded; it has been replaced
+     by <tt>CellDimension</tt> and <tt>PhysicalDimension</tt>.<br><br>
+<li> Under <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a>, the
+     optional parameter <tt>VertexSizeBoundary</tt> has been added for
+     unstructured zones.<br><br>
+<li> The method for general connectivity
+     (<a href="cnct.html#GridConnectivity"><tt>GridConnectivity_t</tt></a>)
+     has been altered.
+     It now requires the use of either (a) <tt>PointListDonor</tt> (an
+     integer, for <tt>Abutting1to1</tt> only) or (b) <tt>CellListDonor</tt>
+     (an integer) plus <tt>InterpolantsDonor</tt> (a real).<br><br>
+<li> The <a href="build.html#GridLocation"><tt>GridLocation_t</tt></a>
+     structure has been moved up one level
+     (from <a href="bc.html#BCDataSet"><tt>BCDataSet_t</tt></a> to
+     <a href="bc.html#BC"><tt>BC_t</tt></a>).
+     Thus, for example, if the boundary conditions are defined at
+     vertices (the default), then any associated dataset information
+     must also be specified at vertices.<br><br>
+<li> The data-name identifier
+     <a href="misc.html#ReferenceState"><tt>LengthReference</tt></a>
+     has been added (see also the
+     <a href="dataname.html#dataname_flow">data-name identifier
+     conventions for the flowfield solution</a>).<br><br>
+<li> The <i>&nu;<sub>t</sub></i> parameter has
+     been renamed <tt>ViscosityEddyKinematic</tt>, and a new parameter
+     <tt>ViscosityEddy</tt>, representing
+     <i>&mu;<sub>t</sub></i>, has been defined
+     (see the <a href="dataname.html#dataname_flow">data-name identifier
+     conventions for the flowfield solution</a>).
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 28 Aug 2014
+
+</body>
+</html>

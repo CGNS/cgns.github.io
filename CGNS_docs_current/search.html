@@ -1,0 +1,153 @@
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="cgns.css" rel="stylesheet" type="text/css">
+<title> Searching the CGNS documentation </title>
+<script language="JavaScript">
+<!-- Begin
+   // Add url to search string to filter results to requested document
+   function URLFilter (form) {
+      setCookie("cgns_query", form.qt.value);
+      var doc_index = form.doc.selectedIndex;
+      form.qt.value += "|url:www.grc.nasa.gov/WWW/cgns/CGNS_docs_current" +
+                       form.doc.options[doc_index].value
+   }
+   // Set a cookie
+   function setCookie (name,value,expires) {
+      document.cookie = escape(name) + "=" + escape(value) + "; path=/" +
+         ((expires == null) ? "" : "; expires=" + expires.toGMTString());
+   }
+   // Retrieve a cookie
+   function getCookie (name) {
+      var cookiename = name + "=";
+      var dc = document.cookie;
+      var begin, end;
+      if (dc.length > 0) {
+         begin = dc.indexOf(cookiename);
+         if (begin != -1) {
+            begin += cookiename.length;
+            end = dc.indexOf(";", begin);
+            if (end == -1) {
+               end = dc.length;
+            }
+            return unescape(dc.substring(begin, end));
+         }
+      }
+      return null;
+   }
+   // Delete a cookie
+   function deleteCookie (name) {
+      document.cookie = name + "=; expires=Thu, 01-Jan-70 00:00:01 GMT" + 
+        "; path=/";
+   }
+   // Retrieve original search query
+   function getQuery () {
+      var SearchForm = document.forms["SearchForm"];
+      var qtvalue = getCookie("cgns_query");
+      if (qtvalue != null) {
+         SearchForm.qt.value = qtvalue
+      }
+   }
+// End -->
+</script>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000"
+      onLoad="getQuery();
+              document.SearchForm.qt.focus();">
+
+<a href="#endnav"><img src="blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Search CGNS Documentation</h2>
+
+<noscript>
+<i>JavaScript has apparently been disabled in your browser.
+Restricting search results to the CGNS documentation requires the use
+of JavaScript.
+Your search will still work, but results will be reported for the entire
+www.grc.nasa.gov domain, and not restricted to the CGNS documentation.</i>
+</noscript>
+
+<form method=POST name=SearchForm
+      action="http://search.grc.nasa.gov/query.html"
+      onSubmit="return URLFilter(this)">
+<input type=hidden name=col value="library">
+<input type=hidden name=col value="xreflib">
+
+<table cellpadding=0 cellspacing=10 border=0>
+<tr valign=baseline>
+    <td align=right><b><label for=search_string>Search for</label>:</b>
+    <td><input type=text name=qt id=search_string size=50 value="">
+<tr valign=baseline>
+    <td align=right><b><label for=document>Search in</label>:</b>
+    <td><select name=doc id=document>
+        <option selected value="">All documents
+        <option value="/charter">Steering Committee Charter
+        <option value="/overview">Overview and Entry-Level Document
+        <option value="/user">A User's Guide to CGNS
+        <option value="/midlevel">Mid-Level Library
+        <option value="/sids">Standard Interface Data Structures (SIDS)
+        <option value="/filemap">SIDS File Mapping Manual
+        <option value="/cgio">CGIO User's Guide
+        <option value="/adf">ADF Implementation
+        <option value="/hdf5">HDF5 Implementation
+        <option value="/minutes">Minutes
+        <option value="/papers">Conference Papers
+        <option value="/slides">Slides
+        </select><tt>&nbsp;</tt>
+        <input type=submit value="Search"><tt>&nbsp;</tt>
+        <input type=button value="Reset"
+               onClick="document.SearchForm.qt.focus();
+                        document.SearchForm.qt.value='';
+                        deleteCookie('cgns_query');"><tt>&nbsp;</tt>
+        <a href="http://search.grc.nasa.gov/help/">Help</a>
+        <img src="external.png" alt="external link">
+</table>
+</form>
+
+<u><i>Notes</i></u>
+<ul>
+<li> Queries in lower case letters will match any case; otherwise, the
+     search is case sensitive.
+     I.e., "elements" will match elements and Elements, while "Elements"
+     will only match Elements.<br><br>
+<li> Use quotation marks to search for phrases (e.g., "boundary
+     conditions").<br><br>
+<li> See the <a href="http://search.grc.nasa.gov/help/">search help
+     pages</a> <img src="external.png" alt="external link">
+     for additional details on the syntax used to search for
+     multi-word phrases, perform special searches, etc.
+     (Note that the "Search" link on those pages will take you to the
+     search page for the entire NASA Glenn web server.
+     Use your browser's "Back" button to return to this page to search
+     just the CGNS documentation.)<br><br>
+<li> Only the documentation for the current CGNS version is searched -
+     not previous versions, and not the beta version.
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="include/footer_big.html" -->
+Last updated 24 Oct 2011
+
+</body>
+</html>

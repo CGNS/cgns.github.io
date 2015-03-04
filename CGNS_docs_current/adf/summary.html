@@ -1,0 +1,321 @@
+<!-- CGNS File Mapping Manual - Summary Description of ADF -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF Implementation - Summary Description of ADF </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;Manual</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;Implementation</b></span></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<span class=nav><b>Summary&nbsp;Description&nbsp;of&nbsp;ADF</b></span>)
+(<a href="guide.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Summary Description of ADF (Advanced Data Format)</h2>
+
+<ul>
+<li> <a href="#general">General Description of ADF</a>
+<li> <a href="#adfnodestructure">The Structure of an ADF Node</a>
+</ul>
+
+<p>
+The purpose of the current document is to describe the way in which
+CFD data is to be stored in an ADF file.  To do this, it is necessary
+to first describe the structure of the ADF file itself in some
+detail. Therefore, a conceptual summary of ADF is given here in order
+to make the current document relatively independent, and to allow
+the reader to focus on those aspects of ADF which are essential to
+understanding the file mapping.
+The <a href="../adf/index.html">ADF User's Guide</a> should be used as
+the authoritative reference to resolve any issues not covered by this
+summary.
+
+<a name="general"></a>
+<h3>General Description of ADF</h3>
+
+<p>
+The ADF, or Advanced Data Format, together with its access software
+known as the ADF Core, constitutes a general database manager
+particularly suited to the storage of numerical data. Its use is not
+restricted to data connected with CFD, and ADF contains no built-in
+references to concepts from CFD.
+
+<h4>ADF Files and the ADF Core</h4>
+
+<p>
+Files created by the ADF Core are referred to as ADF files. These
+are binary files whose precise physical form on the external storage
+medium is completely controlled by the Core routines. ADF files are not
+intelligible or accessible except through the ADF Core routines, and
+their physical form is of interest only to ADF Core programmers.
+
+<p>
+The ADF Core routines perform typical operations on ADF files: open,
+close, create, delete, read, write, and so on. They are written in ANSI
+C and are thus themselves portable to any platform supporting an ANSI
+C compiler. Because the Core completely determines the physical form
+of the ADF files, the files themselves can be read on those platforms
+as well.
+[There are necessarily some issues relating to the
+retention of precision on platforms of varying word length.]
+In addition to portability, this arrangement provides integrity of data
+across both space and time. In particular, it is never necessary to know
+more about an ADF file (other than that it is one) in order to open it
+and find out what it contains.
+
+<p>
+The ADF Core implements the minimal set of procedures required to fully
+manipulate the database. The Core itself is written in C, but each Core
+call is also provided in Fortran. This enables the user to access ADF
+data from either of these languages.
+
+<h4>The Conceptual Structure of ADF Files</h4>
+
+<p>
+Although the physical structure of an ADF file in storage is (or should
+be) of little concern to users of ADF, an understanding of its logical
+or conceptual structure is essential. This structure determines its
+suitability for the type of data at hand and is reflected in all of the
+ADF Core calling sequences.
+
+<p>
+An ADF file consists entirely of a collection of elements called
+nodes. These nodes are arranged in a tree structure which is logically
+similar to a UNIX file system. The nodes are said to be connected in a
+"child-parent" relationship according to the following simple rules:
+
+<ol>
+<li> Each node may have any number of child nodes.
+<li> Except for one node, called the root, each node is the child of
+     exactly one other node, called its parent.
+<li> The root node has no parent.
+</ol>
+
+<p>
+Every node in an ADF file has exactly the same internal structure. Each
+node contains identifying information, pointers to any children, and,
+optionally, data.
+
+<p>
+When an ADF file is opened (by the appropriate Core routine),
+information is returned to the calling program which is sufficient to
+access the root node. It is then the responsibility of the program to
+search the tree for whatever information is required, or to add to the
+tree any information it wishes to store.
+
+<p>
+There is a special kind of node called a link, which serves as a pointer
+to a node in another ADF file, or in another part of the same ADF
+file. The tree structure at and below the node to which the link points
+is available as if that node were present instead of the link. This
+allows an ADF file to span multiple physical files, and also allows a
+portion of one ADF file to be referenced by several other ADF files.
+
+<h4>The ADF Mid-Level Library (projected)</h4>
+
+<p>
+The ADF Core routines access the data at a very fundamental level. Since
+by definition the Core implements a minimum number of basic functions,
+it necessarily deals with the data at a very fundamental level. While
+skilled programmers may find this acceptable, most programs define
+higher level routines which coalesce oft-repeated sequences of Core
+calls. We envision that these routines will eventually be gathered into
+an ADF "Mid-Level" Library.
+
+<p>
+At this time, there are approximately four such routines. However, there
+has been no coordinated effort to gather, organize, or distribute such a
+Library.
+
+<p>
+(These remarks apply only to routines designed to access general ADF
+data. There does exist a set of higher level routines used to access CFD
+related data, namely, the <a href="../midlevel/index.html">CGNS Mid-Level
+Library</a>.)
+
+<a name="adfnodestructure"></a>
+<h3>The Structure of an ADF Node</h3>
+
+<p>
+The File Mapping specifies not only the location of the node at which
+a particular kind of data is to be stored, but also how the internal
+structure of the node is to be used. Each node contains a number of
+fields into which data may be entered directly via ADF Core calls. They
+are:
+
+<ul>
+<li> The <a href="#nodename">Node Name</a>
+<li> The <a href="#label">Label</a>
+<li> The <a href="#datatype">Data Type</a>
+<li> The <a href="#dimensions">Number of Dimensions</a>
+<li> The <a href="#dimvalues">Dimension Values</a>
+<li> The <a href="#data">Data</a>
+</ul>
+In addition, two other entities associated with the nodes are managed by
+ADF itself. These are:
+<ul>
+<li> The <a href="#nodeid">Node ID</a>
+<li> The <a href="#childtable">Child Table</a>
+</ul>
+
+<a name="nodeid"></a>
+<h4>The Node ID</h4>
+
+<p>
+The node ID is a unique identifier assigned to each existing node by
+ADF when the file containing it is opened, and to new nodes as they are
+created. ADF Core inquiries generally return node IDs as a result and
+accept node IDs as input. By building a table of IDs, calling software
+can subsequently access specific nodes without further search. The Node
+ID is real and is not under user control.
+
+<a name="nodename"></a>
+<h4>The Node Name</h4>
+
+<p>
+The node Name is a 32-byte character field which is user
+controllable. Its general use is to distinguish among the children of a
+given node; consequently, no two children of the same parent may have
+the same Name.
+
+<a name="label"></a>
+<h4>The Label</h4>
+
+<p>
+The Label is a 32-byte character field which is user controllable. ADF
+assigns no formal role to the Label, but the intent was to identify
+the structure of the included data. It is common for the various
+children of a single parent to store different instances of the same
+structure. Therefore, there is no prohibition against more than one
+child of the same parent having the same Label.
+
+<a name="datatype"></a>
+<h4>The Data Type</h4>
+
+<p>
+The Data Type is a 32-byte character field which specifies the type and
+precision of any data which is stored in the data field. Types provided
+by ADF are:
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left scope=col><u>Data Type</u><th><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col><u>Notation</u>
+<tr valign=baseline><td>
+   <td>No Data<td>
+   <td><tt>MT</tt>
+<tr valign=baseline><td>
+   <td>Integer 32<td>
+   <td><tt>I4</tt>
+<tr valign=baseline><td>
+   <td>Integer 64<td>
+   <td><tt>I8</tt>
+<tr valign=baseline><td>
+   <td>Unsigned Integer 32<td>
+   <td><tt>U4</tt>
+<tr valign=baseline><td>
+   <td>Unsigned Integer 64<td>
+   <td><tt>U8</tt>
+<tr valign=baseline><td>
+   <td>Real 32<td>
+   <td><tt>R4</tt>
+<tr valign=baseline><td>
+   <td>Real 64<td>
+   <td><tt>R8</tt>
+<tr valign=baseline><td>
+   <td>Complex 64<td>
+   <td><tt>X4</tt>
+<tr valign=baseline><td>
+   <td>Complex 128<td>
+   <td><tt>X8</tt>
+<tr valign=baseline><td>
+   <td>Character<td>
+   <td><tt>C1</tt>
+<tr valign=baseline><td>
+   <td>Byte<td>
+   <td><tt>B1</tt>
+<tr valign=baseline><td>
+   <td>Link<td>
+   <td><tt>LK</tt>
+</table>
+<br>
+If the data type is <tt>MT</tt> or <tt>LK</tt>, the node attributes which
+described the data may be left undefined.
+
+<a name="dimensions"></a>
+<h4>The Number of Dimensions</h4>
+
+<p>
+The Data portion of a node is designed to store multi-dimensional arrays
+of data, each element of which is presumed to be of the Data Type
+specified. The Number of Dimensions specifies the number of integers
+required to reference a single datum within the array.
+
+<a name="dimvalues"></a>
+<h4>The Dimension Values</h4>
+
+<p>
+The Dimension Values are a list of integers expressing the actual sizes
+of the stored array in each of the dimensions specified.
+
+<a name="data"></a>
+<h4>The Data</h4>
+
+<p>
+The portion of the node holding the actual stored data array.
+
+<a name="childtable"></a>
+<h4>The Child Table</h4>
+
+<p>
+ADF maintains a table recording the number of, and pointers to, the
+children of each node. The table is adjusted when children are added or
+deleted by ADF Core calls.
+
+<p>
+Children may be identified by their names and labels, and, thence,
+by their node IDs once these have been determined. ADF provides no
+notion of order among children. In particular, the order of a list of
+children returned by ADF has nothing to do with the order in which they
+were inserted in the file. However, the order returned is consistent
+from call to call provided the file has not been closed and the node
+structure has not been modifed.
+
+<p>
+Note that there is no <em>parent</em> table; that is, a node has no direct
+knowledge of its parent. Since calling software must open the file
+from the root, it presumably cannot access a child without having
+first accessed the parent.  It is the responsibility of the calling
+software to record the node ID of the parent if this information will be
+required.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 05 April 2011
+
+</body>
+</html>

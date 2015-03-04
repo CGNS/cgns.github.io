@@ -1,0 +1,458 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+22 March 2006<br>
+11:00 AM Eastern Time
+
+<p>
+<ol>
+<li> The meeting was called to order at 11:05 AM.  There were
+     <a href="#attendees">13 attendees</a>, listed below.
+<p>
+<li> The minutes of the <a href="meeting_jan06.html">11 January 2006
+     meeting</a> were approved as posted on the web site.
+<p>
+<li> Steering Committee Membership
+     <p>
+     <ol type="a">
+     <li> Daniel Einstein (Pacific Northwest National Laboratory)
+          introduced himself
+          <ul type=disc>
+          <li> he is interested in joining the steering committee
+          <li> works in area of computational physiology
+          <li> committee voted to add Pacific NW National Lab to
+               steering committee: <u>Towne will add Pacific Northwest
+               National Laboratory to
+               <a href="../charter/index.html">Steering Committee
+               Charter</a>.</u>
+          </ul>
+     </ol>
+<p>
+<li> Status of previous action items:
+     <p>
+     <ol type="a">
+     <li> Rumsey and Towne to update
+          <a href="../charter/index.html">Charter</a> with changes to
+          committee membership.
+          <ul type=disc>
+          <li> done
+          </ul>
+     <li> Rumsey will contact Aftosmis about possible participation on
+          committee.
+          <ul type=disc>
+          <li> done - no response
+          </ul>
+     <li> Allmaras will write explicit documentation, for addition to
+          SIDS, describing face-based storage and providing explicit
+          examples for using the method, and will send to Rumsey and
+          Michal for review.
+          <ul type=disc>
+          <li> done
+          <li> we need other committee members to look at it and give
+               comments
+          <li> it currently works with existing MLL (it is merely a
+               documentation change), but do we need to worry about
+               mixing cell-based with face-based in the same file or
+               zone? do we need some sort of descriptor node so another
+               user can easily identify what method is being used?
+          <li> Fisher, Poinot, Hann, Weber, Allmaras, Rumsey will be
+               on team to evaluate this proposal and decide what to
+               do.  <u>Rumsey will forward Allmaras's documentation on
+               face-based storage method to Fisher, Poinot, Hann, Weber.</u>
+          </ul>
+     <li> Wedan will write documentation for SIDS and MLL as appropriate
+          on Rind-for-unstructured and send to Rumsey, Norris, and Towne.
+          <ul type=disc>
+          <li> Not done yet.  <u>Action item carries.</u>
+          </ul>
+     <li> Wedan to look into issue of memory allocation for
+          <a href="../midlevel/descriptor.html#descriptor"><tt>cg_descriptor_read</tt></a>
+          (related to use of <i>malloc</i>).
+          <ul type=disc>
+          <li> done
+          <li> this involves C-usage of
+               <a href="../midlevel/links.html"><tt>link_read</tt></a>,
+               <a href="../midlevel/families.html#geometry"><tt>geo_read</tt></a>,
+               <a href="../midlevel/descriptor.html#descriptor"><tt>descriptor_read</tt></a>,
+               and <a href="../midlevel/auxiliary.html#convergence"><tt>convergence_read</tt></a>
+          <li> other MLL routines require user to <i>malloc</i> memory,
+               and free up space
+          <li> but these 4 routines are different in that they
+               <i>malloc</i> the character strings for you
+          <li> Wedan added new <tt>cg_free</tt> MLL routine (currently
+               in CVS) so user can free up space "<i>malloc</i>"ed by
+               these 4 routines
+          <li> Documentation for this call still needed.  <u>Wedan to write
+               up documentation on <tt>cg_free</tt>.</u>
+          </ul>
+     <li> Wedan to post HDF-5
+          policy statement
+          on website, and include link to
+          <a href="http://hdf.ncsa.uiuc.edu/HDF5/">HDF-5 site</a>
+          <img src="../external.png" alt="external link">.  Also
+          Wedan will try to give Rumsey access to the CGNS website.
+          <ul type=disc>
+          <li> first part done
+          <li> Rumsey now helps Wedan make changes to the site, but sole
+               control still resides at ANSYS/ICEM
+          </ul>
+     <li> Rumsey will summarize Poinot's handling of source terms for
+          internal BCs, and pass on to others through CGNSTalk.
+          <ul type=disc>
+          <li> done
+          </ul>
+     <li> Rumsey to send Stuckert and Bush a copy of invitation letter
+          to panelists for reference.
+          <ul type=disc>
+          <li> done
+          </ul>
+     <a name="item4i"></a>
+     <li> Rumsey to look into advertising the tutorial session to be
+          held in San Francisco.
+          <ul type=disc>
+          <li> done
+          <li> AIAA did not want to advertise in the conference
+               bulletin, because of possible conflicts with AIAA courses
+               that attendees are paying for
+          <li> AIAA recommended that we make one or more posters, and
+               also 1-page flyers. <u>Poinot and Rumsey will work on
+               making a poster and flyer, and will forward to steering
+               committee prior to printing.</u>
+          <li> Hann recommended looking into advertising at
+               <a href="http://www.cfd-online.com/">CFD-Online</a>
+               <img src="../external.png" alt="external link">.
+               <u>Rumsey will look into advertising the SF tutorial session
+               at CFD-Online.</u>
+          </ul>
+     <li> Wedan will investigate <tt>InwardNormalList</tt> problem (lines
+          1877-1878 in <i>cgns_internal.c</i>).
+          <ul type=disc>
+          <li> done (bug fixed)
+          </ul>
+     <li> Wedan will look into MLL changes associated with making
+          <tt>CellList+InterpolantsDonor</tt> (under
+          <a href="../sids/cnct.html#GridConnectivity"><tt>GridConnectivity</tt></a>)
+          optional rather than required.
+          <ul type=disc>
+          <li> done - new MLL routine <tt>cg_conn_write_short</tt>
+               written (in CVS)
+          </ul>
+     <li> Rumsey will make SIDS doc changes associated with making
+          <tt>CellList+InterpolantsDonor</tt> (under
+          <a href="../sids/cnct.html#GridConnectivity"><tt>GridConnectivity</tt></a>)
+          optional rather than required.
+          <ul type=disc>
+          <li> done - currently posted in Beta documentation
+          <li> Discussion held about version numbering and documentation
+               (summary in <a href="#item8">section 8</a> below)
+          </ul>
+     <li> Rumsey and Bush will look at need for multiple
+          <a href="../sids/cnct.html#ZoneGridConnectivity"><tt>ZoneGridConnectivities</tt></a>
+          for <a href="../sids/timedep.html">time-dependent data</a> and
+          will put together a preliminary proposal.
+          <ul type=disc>
+          <li> done - new proposal submitted
+          </ul>
+     <li> Alonso will forward to Rumsey some preliminary ideas on levels
+          of compliance for vendors, related to problems he has
+          encountered.
+          <ul type=disc>
+          <li> Not done yet.  <u>Action item carries.</u>
+          </ul>
+     </ol>
+<p>
+<li> Planning for San Francisco AIAA meeting
+     <p>
+     <ol type="a">
+     <li> Two major CGNS events planned: Panel discussion and evening
+          tutorial session
+     <li> Panel discussion will be "CGNS Practical Applications in
+          CFD", under auspices of Fluid Dynamics TC, Monday June 5,
+          1PM.  We currently have 5 panel members: Cayre (SNECMA), Sudre
+          (Eurocopter), Poinot (ONERA), Hann (Ansys-CFX), Fisher (or
+          Mani or Allmaras) (Boeing). But Cayre and Sudre are not sure
+          about being able to attend.  <u>Rumsey will send Fisher more
+          information about SF Panel discussion.</u>
+     <li> Discussion held about evening tutorial. 
+          <ul type=disc>
+          <li> we already discussed advertising (see
+               <a href="#item4i">4i</a>)
+          <li> 5 tutors are Rumsey, Wedan, van der Weide, Hauser, Poinot
+          <li> Rumsey has requested a room sized for 50 people
+          <li> Question came up whether it's a good idea to divide
+               tutorial into into "Basic" and "Advanced" sections.
+               Perhaps better to just show topics and proceed naturally
+               from basic to advanced?  Or change "advanced" to
+               "in-depth"?  No decision made.  Poinot and Rumsey will
+               work on the advertising poster and see how it comes out -
+               and decide what to call things at that point.
+          </ul>
+     </ol>
+<p>
+<li> Open items (see <a href="#item15">number 15 below</a>):
+     <p>
+     <ol type="a">
+     <li> No discussion
+     </ol>
+<p>
+<li> ISO/STEP
+     <p>
+     <ol type="a">
+     <li> Hunten reported that of four new STEP Integrated Resource
+          (IR) documents developed during CGNS STEP integration, 2
+          are done (Parts 107 and 53) and 2 are in process (Parts
+          52 and 110). They are combining the original AP 209 with
+          an integrated engineering analysis framework and CGNS to
+          create a second version of AP209 (AP209E2).  Expect ISO
+          committee draft for ballot around September 2006.  They
+          hope to eventually develop an API standard based upon the
+          currently-being-developed STEP Binary standard based upon
+          HDF-5 to be associated with the AP 209E2. The latest revision
+          of the AP 209 planning model is attached
+          (<a href="attachments/AP209E2_Planning_Model.1.3.html">HTML</a>,
+          <a href="attachments/AP209E2_Planning_Model.1.3.pdf">PDF</a>).
+     </ol>
+<p>
+<a name="item8"></a>
+<li> Documentation
+     <p>
+     <ol type="a">
+     <li> <u>Towne will check with AIAA on the status of the latest
+          Recommended Practice document.</u>
+     <li> Version numbering discussion
+          <ul type=disc>
+          <li> generally, we consider e.g. 2.0 &rarr; 3.0 a major new
+               release, with possible loss of some compatability - it is
+               formally announced
+          <li> 2.3 &rarr; 2.4 a fairly significant new release, with
+               compatability maintained - it is also formally announced
+          <li> when there are fairly minor changes, like bug fixes or
+               small enhancements that do not affect most users, they
+               sometimes come out unannounced (e.g., 2.4.2 &rarr; 2.4.3)
+          <li> the question is how to handle minor changes when the
+               small changes involve a need for documentation change or
+               addition
+          <li> Towne indicated that the decision of determining the
+               version number can be made independent of consideration
+               of the documentation.  In other words, if the new
+               documentation goes with 2.4.4, then this version number
+               is posted at the top of the SIDS document.  The most
+               important thing is good communication between Wedan and
+               Towne, so each is fully aware of what the other is doing.
+          </ul>
+     </ol>
+<p>
+<li> Software
+     <p>
+     <ol type="a">
+     <li> No discussion
+     </ol>
+<p>
+<li> HDF-5
+     <p>
+     <ol type="a">
+     <li> Koziol at NCSA is working on revisions to group format in
+          HDF-5, and plans to wrap up sometime this spring for release
+          1.8.0.
+     <li> Hauser's student is almost ready with a beta release for
+          parallel HDF-5
+          <ul type=disc>
+          <li> <u>Hauser will send to Alonso and van der Weide to try out</u>
+          <li> After this, it will be made available on SourceForge
+          </ul>
+     </ol>
+<p>
+<li> Extensions
+     <p>
+     <ol type="a">
+     <li> There are several new proposals for extension (the first 3 are
+          already posted), but technical problems on the website make it
+          impossible to access them yet.
+          <ul type=disc>
+          <li> Averaging Interfaces - (Magnan)
+          <li> Face Center Connectivity - (deVito)
+          <li> Multiple zone connectivities for time-dependent - (Rumsey)
+          <li> Fluid-structure interaction with deformable boundaries -
+               (Einstein) 
+          </ul>
+     <li> <u>Rumsey will forward all new proposals to Steering Committee
+          for comments.</u> Deadline for response will be in a few months.
+     <li> <u>Rumsey will have Einstein's FSI proposal posted to the
+          website.</u>
+     <li> There is also still a need for handling source terms without
+          having to specify them over the entire field, but rather
+          only over a small "region" or "regions".  One possibility is
+          to springboard off of Sayre's
+          existing
+          proposal on "Element Regions", which applies
+          only to unstructured grids.  We need an interested person
+          willing to extend this and/or create a new source term
+          ("region") proposal for extension!
+     </ol>
+<p>
+<li> Other issues:
+     <p>
+     <ol type="a">
+     <li> Next telecon will be tentatively held on Wed, May 10 at 11 AM
+          eastern.
+     <li> We will also try to hold a special telecon just for the
+          participants/leaders/panelists at the San Francisco meeting,
+          probably earlier in May, to coordinate in preparation for the
+          event.
+     </ol>
+<p>
+<li> Meeting was adjourned at 12:15 PM.
+<p>
+<li> Summary of <b><u>action items</u></b>:
+     <p>
+     <ol type="a">
+     <li> Towne will add Pacific Northwest National Laboratory to
+          <a href="../charter/index.html">Steering Committee Charter</a>.
+     <li> Rumsey will forward Allmaras's documentation on face-based
+          storage method to Fisher, Poinot, Hann, Weber.
+     <li> Wedan will write documentation for SIDS and MLL as appropriate
+          on Rind-for-unstructured and send to Rumsey, Norris, and
+          Towne.
+     <li> Wedan to write up documentation on <tt>cg_free</tt>.
+     <li> Poinot and Rumsey will work on making a poster and flyer
+          for the SF tutorial session, and will forward to steering
+          committee prior to printing.
+     <li> Rumsey will look into advertising the SF tutorial session at
+          <a href="http://www.cfd-online.com/">CFD-Online</a>
+          <img src="../external.png" alt="external link">.
+     <li> Alonso will forward to Rumsey some preliminary ideas on
+          levels of compliance for vendors, related to problems he has
+          encountered.
+     <li> Rumsey will send Fisher more information about SF Panel
+          discussion.
+     <li> Towne will check with AIAA on the status of the latest
+          Recommended Practice document.
+     <li> Hauser will send parallel version of CGNS with HDF-5 to Alonso
+          and van der Weide to try out.
+     <li> Rumsey will forward all new proposals for extension to
+          Steering Committee for comments.
+     <li> Rumsey will have Einstein's FSI proposal posted to the
+          website.
+     </ol>
+<p>
+<a name="item15"></a>
+<li> Summary of <b><u>open items</u></b> from prior meetings (these are
+     different from action items, in that they are open or unresolved
+     issues that we want to keep track of, but there are no specific
+     actions required of anyone at this point in time):
+     <p>
+     <ol type="a">
+     <li> Keep track of/resolve <a href="#HDF5_todo">HDF-5 "to-do" list</a>.
+     <li> Keep track of progress with ISO/STEP.
+     <li> Need for official certification process (test for compliance)
+     <li> Need to add Karman's additional <tt>PYRA</tt> element type to
+          allowed list (in software and in SIDS)
+     <li> Need to upgrade/update <a href="../user/index.html">User's
+          Guide</a> as appropriate (such as additional specific examples)
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Steven Allmaras<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Boeing Commercial
+<tr valign=baseline><td>
+   <td>Armen Darian<td>
+   <td>Pratt &amp; Whitney - Rocketdyne
+<tr valign=baseline><td>
+   <td>Daniel Einstein<td>
+   <td>Pacific NW National Laboratory
+<tr valign=baseline><td>
+   <td>Mark Fisher<td>
+   <td>Boeing - IDS/St. Louis 
+<tr valign=baseline><td>
+   <td>Richard Hann<td>
+   <td>ANSYS/CFX 
+<tr valign=baseline><td>
+   <td>Thomas Hauser<td>
+   <td>Utah State
+<tr valign=baseline><td>
+   <td>Keith Hunten<td>
+   <td>Lockheed Martin
+<tr valign=baseline><td>
+   <td>Robert Magnan<td>
+   <td>Hydro Quebec
+<tr valign=baseline><td>
+   <td>Marc Poinot<td>
+   <td>ONERA
+<tr valign=baseline><td>
+   <td>Greg Power<td>
+   <td>USAF/AEDC
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Charlie Towne<td>
+   <td>NASA Glenn
+<tr valign=baseline><td>
+   <td>Kurt Weber<td>
+   <td>Rolls Royce/Allison</table>
+
+<a name="HDF5_todo"></a>
+<h2>Tentative to-do list in association with HDF-5 switchover</h2>
+
+<ul>
+<li> Complete and test parallel implementation
+<li> Complete and test API capability to automatically detect and switch
+     between ADF and HDF-5 (transparent to user?)
+<li> Assess/minimize impact on software vendors using CGNS
+<li> Make changes recommended by HDF-5 to improve usability with HDF-5
+     (e.g., character strings as opposed to character arrays)
+<li> Assess compression capability of HDF-5
+<li> CGNS configure scripts will need to be modified to check for
+     availability of appropriate HDF-5 libraries.
+<li> Possibly add flag-based options when opening CGNS files.  For
+     example: "follow links" vs. "don't follow links"; "use ADF" vs. "use
+     HDF-5"; "translate file automatically" vs. "leave the file as-is";
+     "compress" vs. "don't compress".
+<li> Look into eliminating need for ID's from MLL
+<li> Resolve "link-of-links" problem: will require HDF-5 fix by NCSA
+     (beta implementation of "external links" is in the works -
+     likely complete in early 2006?)
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 24 Mar 2006
+
+</body>
+</html>

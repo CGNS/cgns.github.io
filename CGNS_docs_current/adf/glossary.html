@@ -1,0 +1,169 @@
+<!-- ADF User's Guide - ADF Glossary of Terms -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="adf.css" rel="stylesheet" type="text/css">
+<title> ADF User's Guide - ADF Glossary of Terms </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;Manual</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="index.html"><span class=nav><b>ADF&nbsp;Implementation</b></span></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="library.html"><b>The&nbsp;ADF&nbsp;Software&nbsp;Library</b></a>)
+(<span class=nav><b>Glossary&nbsp;of&nbsp;Terms</b></span>)
+(<a href="history.html"><b>History&nbsp;of&nbsp;ADF&nbsp;Version&nbsp;Releases</b></a>)
+(<a href="arch.html"><b>File&nbsp;System&nbsp;Architectures</b></a>)
+(<a href="versions.html"><b>File&nbsp;Version&nbsp;Control&nbsp;Numbering</b></a>)
+(<a href="design.html"><b>Design&nbsp;Considerations</b></a>)
+(<a href="conventions.html"><b>Conventions&nbsp;and&nbsp;Implementations</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages</b></a>)
+(<a href="defaults.html"><b>Default&nbsp;Values&nbsp;and&nbsp;Limits</b></a>)
+(<a href="subs_database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="subs_structure.html"><b>Data&nbsp;Structure&nbsp;and&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="subs_query.html"><b>Data&nbsp;Query&nbsp;Routines</b></a>)
+(<a href="subs_io.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="subs_misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="sampleFortran.html"><b>Sample&nbsp;Fortran&nbsp;Program</b></a>)
+(<a href="sampleC.html"><b>Sample&nbsp;C&nbsp;Program</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>ADF Glossary of Terms</h2>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>ADF<td><tt>&nbsp;&nbsp;</tt>
+   <td>The initialism (acronym) for Advanced Data Format.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Child<td>
+   <td>One of the subnodes of a Parent.
+       A child node does not have knowledge of its parent node.
+       The user must keep track of this relationship.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Database<td>
+   <td>A hierarchy of ADF nodes.
+       By use of links, it may physically span multiple files.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>File<td>
+   <td>An ADF file, which a single root node and its underlying structure.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>ID<td>
+   <td>A unique identifier to access a given node within a file.
+       This 8-byte field contains sufficient information for ADF to
+       locate the node within a file.
+       For any given node, the ID is generated only after the file it
+       resides in has been opened by a program and the user requests
+       information about the node.
+       The ID is valid only within the program that opened the file and
+       while that file is open.
+       If the file is closed and reopened, the ID for any given node
+       will be different.
+       Within different programs, the node-ID for the same node will be
+       different.
+       The ID is never actually written into a file.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Link-Node<a name="link"></a><td>
+   <td>A special type of node.
+       Links are created using the
+       <a href="subs_structure.html#Link"><tt>ADF_Link</tt></a> subroutine.
+       The data type of this node is <tt>LK</tt>, and its data is a
+       one-dimensional array containing the name of the file (if other
+       than the current file) containing the node to be linked and the
+       full path name in that file from the root node to the desired
+       node.
+       <br><br>
+       Links provide a mechanism for referring to a node that physically
+       resides in a different part of the hierarchy.
+       The node pointed to by a link may or may not reside in the same
+       file as the link itself.
+       A link within ADF is very similar to a "soft" link in the
+       UNIX operating system in that it does not guarantee that the
+       referenced node exists.
+       ADF will "resolve" the link only when information is requested
+       about the node.
+       If the ID of a link-node is used in an ADF call, the effect of
+       the call is the same as if the ID of the linked-to node was used.
+       Note that a link node does not have children itself.
+       In the <a href="library.html#f:example">example database</a>
+       figure, the children seen for <tt>L3</tt> are <tt>F4</tt> and
+       <tt>F5</tt>.
+       If a child is "added" to <tt>L3</tt>, then in reality, the child
+       is added to <tt>F3</tt>.
+       There are specialized subroutines provided to create link nodes
+       and extract the link details.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Node<td>
+   <td>The single component used to construct an ADF database.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Node&nbsp;name<td>
+   <td>A node has a 32-character name.
+       Every child node directly under a given parent must have a unique
+       name.
+       Legal characteristics in a name are <tt>A-Z</tt>, <tt>a-z</tt>,
+       <tt>0-9</tt>, and special characters (ASCII values from 32 to
+       126, omitting the forward slash "<tt>/</tt>", ASCII number 47).
+       Names will be blank filled to 32 bytes; they are case sensitive.
+       Leading blanks are discarded and trailing blanks are ignored,
+       whereas internal blanks are significant.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Parent<td>
+   <td>A node that has subnodes directly associated with it.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td>Pathname<td>
+   <td>Within a database, nodes can be referenced using the name of a node
+       along with its parent ID, or by using a "pathname" whose syntax is
+       roughly the same as a path name in the UNIX environment.
+       A pathname that begins with a leading slash "<tt>/</tt>" is
+       assumed to begin at the root node of the file.
+       If no leading slash is given, the name is assumed to begin at the
+       node specified by the parent ID.
+       Although there is a 32-character limitation on the node Name,
+       there is no restriction on the length of the pathname.
+       For example, equivalent ways to refer to node <tt>N8</tt> in the
+       hierarchy in the <a href="library.html#f:example">example
+       database</a> figure are:
+       <ul>
+       <li> Node-ID for <tt>N6</tt> and name = "<tt>N8</tt>"
+       <li> Node-ID for <tt>N4</tt> and name = "<tt>N6/N8</tt>"
+       <li> Node-ID for <tt>N1</tt> and name = "<tt>N4/N6/N8</tt>"
+       <li> Node-ID for the <tt>Root_Node</tt> and name =
+            "<tt>/N1/N4/N6/N8</tt>"
+       </ul>
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 25 Oct 2001
+
+</body>
+</html>

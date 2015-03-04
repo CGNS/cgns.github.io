@@ -1,0 +1,544 @@
+<!-- CGNS Mid-Level Library - Opening and Closing a CGNS File -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="midlevel.css" rel="stylesheet" type="text/css">
+<title> CGNS Mid-Level Library - Opening and Closing a CGNS File </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="index.html"><span class=nav><b>Mid-Level&nbsp;Library</b></span></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="general.html"><b>General&nbsp;Remarks</b></a>)
+(<span class=nav><b>File&nbsp;Operations</b></span>)
+(<a href="navigating.html"><b>Navigating&nbsp;a&nbsp;CGNS&nbsp;File</b></a>)
+(<a href="error.html"><b>Error&nbsp;Handling</b></a>)
+(<a href="structural.html"><b>Structural&nbsp;Nodes</b></a>)
+(<a href="descriptor.html"><b>Descriptors</b></a>)
+(<a href="physical.html"><b>Physical&nbsp;Data</b></a>)
+(<a href="location.html"><b>Location&nbsp;and&nbsp;Position</b></a>)
+(<a href="auxiliary.html"><b>Auxiliary&nbsp;Data</b></a>)
+(<a href="grid.html"><b>Grid&nbsp;Specification</b></a>)
+(<a href="solution.html"><b>Solution&nbsp;Data</b></a>)
+(<a href="connectivity.html"><b>Grid&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="equation.html"><b>Equation&nbsp;Specification</b></a>)
+(<a href="families.html"><b>Families</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Data</b></a>)
+(<a href="links.html"><b>Links</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>File Operations</h2>
+
+<ul>
+<li> <a href="#openclose">Opening and Closing a CGNS File</a>
+     <ul>
+     <li> <tt><b>cg_open</b></tt> - Open a CGNS file
+     </li><li> <tt><b>cg_version</b></tt> - Get CGNS file version
+     </li><li> <tt><b>cg_precision</b></tt> - Get CGNS file precision
+     </li><li> <tt><b>cg_close</b></tt> - Close a CGNS file
+     </li><li> <tt><b>cg_is_cgns</b></tt> - Check for a valid CGNS file
+     </li><li> <tt><b>cg_save_as</b></tt> - Save the open CGNS file
+     </li><li> <tt><b>cg_set_file_type</b></tt> - Set default file type
+     </li><li> <tt><b>cg_get_file_type</b></tt> - Get file type for open CGNS file
+     </li></ul>
+</li><li> <a href="#configure">Configuring CGNS Internals</a>
+     <ul>
+     <li> <tt><b>cg_configure</b></tt> - Configure CGNS internals
+     <li> <tt><b>cg_error_handler</b></tt> - Set CGNS error handler
+     <li> <tt><b>cg_set_compress</b></tt> - Set CGNS compression mode
+     <li> <tt><b>cg_get_compress</b></tt> - Get CGNS compression mode
+     <li> <tt><b>cg_set_path</b></tt> - Set the CGNS link search path
+     <li> <tt><b>cg_add_path</b></tt> - Add to the CGNS link search path
+     </li></ul>
+</li><li> <a href="#cgiointer">Interfacing with CGIO</a>
+     <ul>
+     <li> <tt><b>cg_get_cgio</b></tt> - get the CGIO index number
+     <li> <tt><b>cg_root_id</b></tt> - get the root node ID
+     </li></ul>
+</li></ul>
+
+<a name="openclose"></a>
+<h3>Opening and Closing a CGNS File</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_open(<span class=in>char *filename</span>, <span class=in>int mode</span>, <span class=out><i>int *fn</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_version(<span class=in>int fn</span>, <span class=out><i>float *version</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_precision(<span class=in>int fn</span>, <span class=out><i>int *precision</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_close(<span class=in>int fn</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_is_cgns(<span class=in>const char *filename</span>, <span class=out><i>int *file_type</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_save_as(<span class=in>int fn</span>, <span class=in>const char *filename</span>, <span class=in>int file_type</span>, <span class=in>int follow_links</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_set_file_type(<span class=in>int file_type</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_get_file_type(<span class=in>int fn</span>, <span class=out><i>int *file_type</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_open_f(<span class=in>filename</span>, <span class=in>mode</span>, <span class=out><i>fn</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_version_f(<span class=in>fn</span>, <span class=out><i>version</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_precision_f(<span class=in>fn</span>, <span class=out><i>precision</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_close_f(<span class=in>fn</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_is_cgns_f(<span class=in>filename</span>, <span class=out><i>file_type</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_save_as_f(<span class=in>fn</span>, <span class=in>filename</span>, <span class=in>file_type</span>, <span class=in>follow_links</span>, <span class=out><i>ier</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_set_file_type_f(<span class=in>file_type</span>, <span class=out><i>ier</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_get_file_type_f(<span class=in>fn</span>, <span class=out><i>file_type</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>filename</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Name of the CGNS file, including path name if necessary.
+       There is no limit on the length of this character variable.
+<tr valign=baseline><td>
+   <td><tt>mode</tt><td>
+   <td>Mode used for opening the file.
+       The modes currently supported are <tt>CG_MODE_READ</tt>,
+       <tt>CG_MODE_WRITE</tt>, and <tt>CG_MODE_MODIFY</tt>.
+<tr valign=baseline><td>
+   <td><tt>fn</tt><td>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><tt>version</tt><td>
+   <td>CGNS version number.
+<tr valign=baseline><td>
+   <td><tt>precision</tt><td>
+   <td>Precision used to write the CGNS file. The return value will be
+       one of 32 (32-bit), 64 (64-bit), or 0 if not known.
+<tr valign=baseline><td>
+   <td><tt>file_type</tt><td>
+   <td>Type of CGNS file. This will typically be either <tt>CG_FILE_ADF</tt>
+       or <tt>CG_FILE_HDF5</tt> depending on the underlying file format.
+       However, note that when built in 32-bit, there is also an option
+       to create a Version 2.5 CGNS file by setting the file type to 
+       <tt>CG_FILE_ADF2</tt>.
+<tr valign=baseline><td>
+   <td><tt>follow_links</tt><td>
+   <td>This flag determines whether links are left intact when saving
+       a CGNS file. If non-zero, then the links will be removed and the
+       data associated with the linked files copied to the new file.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+The function <tt>cg_open</tt> must always be the first one called.
+It opens a CGNS file for reading and/or writing and returns an index
+number <tt>fn</tt>.
+The index number serves to identify the CGNS file in subsequent
+function calls.
+Several CGNS files can be opened simultaneously.
+The current limit on the number of files opened at once depends on the
+platform.
+On an SGI workstation, this limit is set at 100 (parameter
+<tt>FOPEN_MAX</tt> in <i>stdio.h</i>).
+
+<p>
+The file can be opened in one of the following modes:
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>CG_MODE_READ</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Read only mode.
+<tr valign=baseline><td>
+   <td><tt>CG_MODE_WRITE</tt><td>
+   <td>Write only mode.
+<tr valign=baseline><td>
+   <td><tt>CG_MODE_MODIFY</tt><td>
+   <td>Reading and/or writing is allowed.
+</table>
+
+<p>
+When the file is opened, if no <tt>CGNSLibraryVersion_t</tt> node is
+found, a default value of 1.05 is assumed for the CGNS version number.
+Note that this corresponds to an old version of the CGNS standard, that
+doesn't include many data structures supported by the current standard.
+
+<p>
+The function <tt>cg_close</tt> must always be the last one called.
+It closes the CGNS file designated by the index number <tt>fn</tt> and frees
+the memory where the CGNS data was kept.
+When a file is opened for writing, <tt>cg_close</tt> writes all the CGNS
+data in memory onto disk prior to closing the file.
+Consequently, if is omitted, the CGNS file is not written properly.
+
+<p>
+In order to reduce memory usage and improve execution speed,
+large arrays such as grid coordinates or flow solutions are not actually
+stored in memory.
+Instead, only basic information about the node is kept,
+while reads and writes of the data is directly to and from the
+application's memory. An attempt is also made to do the same with
+unstructured mesh element data.
+
+<p>
+When a CGNS file is newly created using <tt>CG_MODE_WRITE</tt>, the default
+type of database manager used is determined at compile time. If the CGNS
+library was built with HDF5 version 1.8 or later support, the file type
+will be <tt>CG_FILE_HDF5</tt>, otherwise <tt>CG_FILE_ADF</tt> is used.
+This may be changed either by setting an environment variable,
+<tt>CGNS_FILETYPE</tt>, to one of <tt>adf</tt>, <tt>hdf5</tt>, or
+<tt>adf2</tt>, or by calling the routine <tt>cg_set_file_type</tt>
+prior to the <tt>cg_open</tt> call. Calling <tt>cg_set_file_type</tt>
+with the argument <tt>CG_FILE_NONE</tt> will reset the library to
+use the default file type. <b>Note:</b> If the environment variable
+<tt>CGNS_FILETYPE</tt> is set, it takes precedence.
+
+<p>
+For existing files, the function <tt>cg_is_cgns</tt> may be used to
+determine if a file is a CGNS file or not, and the type of file
+(<tt>CG_FILE_ADF</tt> or <tt>CG_FILE_HDF5</tt>). If the file is a CGNS file,
+<tt>cg_is_cgns</tt> returns <tt>CG_OK</tt>, otherwise <tt>CG_ERROR</tt>
+is returned and <tt>file_type</tt> is set to <tt>CG_FILE_NONE</tt>.
+
+<p>
+The CGNS file identified by <tt>fn</tt> may be saved to a different filename
+and type using <tt>cg_save_as</tt>. In order to save as an HDF5 file,
+the library must have been built with HDF5 support. ADF support is always
+built. The
+function <tt>cg_set_file_type</tt> sets the default file type for
+newly created CGNS files. The function
+<tt>cg_get_file_type</tt> returns the file type for the CGNS file
+identified by <tt>fn</tt>. If the CGNS library is built as 32-bit,
+the additional file type, <tt>CG_FILE_ADF2</tt>, is available.
+This allows creation of a 2.5 compatible CGNS file.
+
+<p>
+Although the file type <tt>CG_FILE_PHDF5</tt> is defined
+in the <tt>cgnslib.h</tt> header file, this should not be used directly
+in user code. This value is used internally by the CGNS library to indicate
+parallel I/O using HDF5, and the file type is set to this value
+when calling <tt>cgp_open</tt>.
+
+<a name="configure"></a>
+<h3>Configuring CGNS Internals</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_configure(<span class=in>int option</span>, <span class=in>void *value</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_error_handler(<span class=in>void (*)(int, char *)</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_set_compress(<span class=in>int compress</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_get_compress(<span class=out><i>int *compress</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_set_path(<span class=in>const char *path</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_add_path(<span class=in>const char *path</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_exit_on_errors_f(<span class=in>flag</span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_set_compress_f(<span class=in>compress</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_get_compress_f(<span class=out><i>compress</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_set_path_f(<span class=in>path</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_add_path_f(<span class=in>path</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>option</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The option to configure, currently one of
+       <tt>CG_CONFIG_ERROR</tt>, <tt>CG_CONFIG_COMPRESS</tt>,
+       <tt>CG_CONFIG_SET_PATH</tt>, <tt>CG_CONFIG_ADD_PATH</tt>,
+       <tt>CG_CONFIG_FILE_TYPE</tt>, <tt>CG_CONFIG_HDF5_COMPRESS</tt>,
+       or <tt>CG_CONFIG_HDF5_MPI_COMM</tt> as
+       defined in <i>cgnslib.h</i>.
+<tr valign=baseline><td>
+   <td><tt>value</tt><td>
+   <td>The value to set, type cast as <tt>void *</tt>.
+<tr valign=baseline><td>
+   <td><tt>compress</tt><td>
+   <td>CGNS compress (rewrite) setting.
+<tr valign=baseline><td>
+   <td><tt>path</tt><td>
+   <td>Pathname to search for linked to files when opening a
+       file with external links.
+<tr valign=baseline><td>
+   <td><tt>flag</tt><td>
+   <td>Fortran flag to set automatic exit in the case of error.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+The function <tt>cg_configure</tt> allows certain CGNS library internal
+options to be configured.
+The currently supported options and expected values are:
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>CG_CONFIG_ERROR</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>This allows an error call-back function to be defined by the
+       user.
+       The value should be a pointer to a function to receive the error.
+       The function is defined as <tt>void err_callback(int is_error,
+       char *errmsg)</tt>, and will be called for errors and warnings.
+       The first argument, <tt>is_error</tt>, will be 0 for warning
+       messages, 1 for error messages, and &minus;1 if the program is
+       going to terminate (i.e., a call to <tt>cg_error_exit()</tt>).
+       The second argument is the error or warning message.
+       If this is defined, warning and error messages will go to the
+       function, rather than the terminal.
+       A <tt>value</tt> of <tt>NULL</tt> will remove the call-back
+       function.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_COMPRESS</tt><td>
+   <td>This is the rewrite-upon-close setting.
+       <b>Note:</b> Prior versions of the library would automatically rewrite
+       the CGNS file when it was closed after being opened in modify mode
+       if there was unused space. This is no longer done, due to possible
+       conflicts when using parallel I/O. The previous behavior may be
+       recovered by setting <tt>value</tt> to a positive integer. In this
+       case the file will be rewritten if the number of node deletions or
+       modifications are equal to or exceed this number. Setting
+       <tt>value</tt> to a negative number will force the rewrite
+       when the file is closed. The default value is 0 (no rewrite).
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_SET_PATH</tt><td>
+   <td>Sets the search path for locating linked-to files.
+       The argument <tt>value</tt> should be a character string
+       containing one or more directories, formatted the same as for the
+       <tt>PATH</tt> environment variable.
+       This will replace any current settings.
+       Setting <tt>value</tt> to <tt>NULL</tt> will remove all paths.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_ADD_PATH</tt><td>
+   <td>Adds a directory, or list of directories, to the linked-to file
+       search path.
+       This is the same as <tt>CG_CONFIG_SET_PATH</tt>, but adds to the
+       path instead of replacing it.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_FILE_TYPE</tt><td>
+   <td>Sets the default file type for newly created CGNS files.
+       The argument, <tt>value</tt> should be set to one of
+       <tt>CG_FILE_NONE</tt>, <tt>CG_FILE_ADF</tt>, <tt>CG_FILE_HDF5</tt>,
+       or <tt>CG_FILE_ADF2</tt>. See the discussion above for
+       <tt>cg_set_file_type</tt>.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_HDF5_COMPRESS</tt><td>
+   <td>Sets the compression level for data written from HDF5. The default is
+       no compression. Setting <tt>value</tt> to -1, will use the default
+       compression level of 6. The acceptable values are 0 to 9, corresponding
+       to gzip compression levels.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_HDF5_MPI_COMM</tt><td>
+   <td>Sets the MPI communicator for parallel I/O. The default is
+       <tt>MPI_COMM_WORLD</tt>. The new communicator is given by
+       typecasting it to a <tt>void *</tt>. This is generally used
+       internally - see <a href="../pcgns/library.html#misc">cgp_mpi_comm</a>
+       instead.
+</table>
+
+<p>
+The routines <tt>cg_error_handler</tt>, <tt>cg_set_compress</tt>,
+<tt>cg_set_path</tt>, <tt>cg_add_path</tt>, and <tt>cg_set_file_type</tt>
+are convenience functions built on top of <tt>cg_configure</tt>.
+
+<p>
+There is no Fortran counterpart to function <tt>cg_configure</tt> or
+<tt>cg_error_handler</tt>. The Fortran function <tt>cg_exit_on_error_f</tt>
+routine be be used in place of <tt>cg_error_handler</tt>. If <tt>flag</tt>
+is non-zero, then when an error is encountered, the library will print
+the error message and exit with an code of 1. Setting <tt>flag</tt> to
+zero (the default) prevents this and the error is returned to the user
+code.
+
+<p>
+<i>Note:</i> The HDF5 implementation does not support search paths
+for linked files. The links need to be either absolute or relative
+pathnames. As a result, it is recommended that the search path
+options not be used as they may be removed in future versions.
+
+<a name="cgiointer"></a>
+<h3>Interfacing with CGIO</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_get_cgio(<span class=in>int fn</span>, <span class=out><i>int *cgio_num</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_root_id(<span class=in>int fn</span>, <span class=out><i>double *rootid</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_get_cgio_f(<span class=in>fn</span>, <span class=out><i>cgio_num</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_root_id_f(<span class=in>fn</span>, <span class=out><i>rootid</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>fn</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><tt>cgio_num</tt><td>
+   <td>CGIO indentifier for the CGNS file.
+<tr valign=baseline><td>
+   <td><tt>rootid</tt><td>
+   <td>Root node identifier for the CGNS file.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+These allow for the use of the <a href="../cgio/index.html">low-level
+CGIO functions</a> in conjunction with the Mid Level Library.
+The function <tt>cg_get_cgio</tt> returns the CGIO database identifier
+for the specified CGNS file, which is used in the CGIO routines.
+The root node identifier for the CGNS file
+is returned by <tt>cg_root_id</tt>.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 07 July 2013
+
+</body>
+</html>

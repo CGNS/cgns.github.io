@@ -1,0 +1,206 @@
+<!-- CGIO Manual - Library Of Subroutines -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="cgio.css" rel="stylesheet" type="text/css">
+<title> CGIO User's Guide - Database-Level Routines </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="index.html"><span class=nav><b>CGIO&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="library.html"><b>The&nbsp;CGIO&nbsp;Software&nbsp;Library</b></a>)
+(<span class=nav><b>Database-Level&nbsp;Routines</b></span>)
+(<a href="structure.html"><b>Data&nbsp;Structure&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="links.html"><b>Link&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="node.html"><b>Node&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="dataio.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages&nbsp;and&nbsp;Routines</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="examples.html"><b>Example&nbsp;Programs</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Database-Level Routines</h2>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_is_supported(<span class=in>int file_type</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;-&nbsp;-</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_check_file(<span class=in>const char *filename</span>, <span class=out><i>int *file_type</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;-&nbsp;-</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_open_file(<span class=in>const char *filename</span>, <span class=in>int file_mode</span>, <span class=in>int file_type</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *cgio_num</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_close_file(<span class=in>int cgio_num</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_get_file_type(<span class=in>int cgio_num</span>, <span class=out><i>int *file_type</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_get_root_id(<span class=in>int cgio_num</span>, <span class=out><i>double *rootid</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cgio_is_supported_f(<span class=in>file_type</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;-&nbsp;-</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_check_file_f(<span class=in>filename</span>, <span class=out><i>file_type</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;-&nbsp;-</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_open_file_f(<span class=in>filename</span>, <span class=in>file_mode</span>, <span class=in>file_type</span>, <span class=out><i>cgio_num</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_close_file_f(<span class=in>cgio_num</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_get_file_type_f(<span class=in>cgio_num</span>, <span class=out><i>file_type</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_get_root_id_f(<span class=in>cgio_num</span>, <span class=out><i>rootid</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>file_type</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Type of database file. acceptable values are <tt>CGIO_FILE_NONE</tt>,
+       <tt>CGIO_FILE_ADF</tt>, <tt>CGIO_FILE_HDF5</tt> and.<tt>CGIO_FILE_ADF2</tt>.
+<tr valign=baseline><td>
+   <td><tt>filename</tt><td>
+   <td>Name of the database file, including path name if necessary.
+       There is no limit on the length of this character variable.
+<tr valign=baseline><td>
+   <td><tt>file_mode</tt><td>
+   <td>Mode used for opening the file. The supported modes are.
+       <tt>CGIO_MODE_READ</tt>, <tt>CGIO_MODE_WRITE</tt>, and
+       <tt>CGIO_MODE_MODIFY</tt>.
+<tr valign=baseline><td>
+   <td><tt>cgio_num</tt><td>
+   <td>Indentifier for the open database file.
+<tr valign=baseline><td>
+   <td><tt>rootid</tt><td>
+   <td>Node identifier for the root node of the database.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<h2>Function Descriptions</h2>
+
+<dl>
+
+<a name="is_supported"></a>
+<dt><tt>cgio_is_supported</tt>
+<dd>Determines if the database type given by <tt>file_type</tt> is supported
+    by the library. Retuns 0 if supported, else <tt>CGIO_ERR_FILE_TYPE</tt>
+    if not. <tt>CGIO_FILE_ADF</tt> is always supported;
+    <tt>CGIO_FILE_HDF5</tt> is supported if the library was built with HDF5;
+    and <tt>CGIO_FILE_ADF2</tt> is supported when built in 32-bit mode.
+
+<dt>&nbsp;<dd>
+<a name="check_file"></a>
+<dt><tt>cgio_check_file</tt>
+<dd>Checks the file <tt>filename</tt> to determine if it is a valid database.
+    If so, returns 0 and the type of database in <tt>file_type</tt>,
+    otherwise returns an error code and <tt>file_type</tt> will be set
+    to <tt>CGIO_FILE_NONE</tt>.
+
+<dt>&nbsp;<dd>
+<a name="open_file"></a>
+<dt><tt>cgio_open_file</tt>
+<dd>Opens a database file of the specified type and mode. If successfull,
+    returns 0, and the database identifier in <tt>cgio_num</tt>, otherwise
+    returns an error code. The database identifier is used to access the
+    database in subsequent function calls.
+    <br><br>
+    The mode in which the database is opened is given by <tt>file_mode</tt>,
+    which may take the value <tt>CGIO_MODE_READ</tt>, <tt>CGIO_MODE_WRITE</tt>,
+    or <tt>CGIO_MODE_MODIFY</tt>. New databases should be opened with
+    <tt>CGIO_MODE_WRITE</tt>, while existing databases are opened with either
+    <tt>CGIO_MODE_READ</tt> (for read-only access) or
+    <tt>CGIO_MODE_MODIFY</tt> (for read/write access).
+    <br><br>
+    A specific database type may be specified by <tt>file_type</tt>, which may
+    be one of <tt>CGIO_FILE_NONE</tt>, <tt>CGIO_FILE_ADF</tt>,
+    <tt>CGIO_FILE_HDF5</tt>, or <tt>CGIO_FILE_ADF2</tt>. When opening a database
+    in write mode, <tt>CGIO_FILE_NONE</tt> indicates that the default database
+    type should be used, otherwise the specified database type will be opened.
+    When opening in read or modify mode, <tt>CGIO_FILE_NONE</tt> indicates that
+    any database type is acceptable, otherwise if the database type does
+    not match that given by <tt>file_type</tt> an error will be retuned.
+
+<dt>&nbsp;<dd>
+<a name="close_file"></a>
+<dt><tt>cgio_close_file</tt>
+<dd>Closes the database given by <tt>cgio_num</tt>. Returns 0 for success,
+    else an error code.
+
+<dt>&nbsp;<dd>
+<a name="get_file_type"></a>
+<dt><tt>cgio_get_file_type</tt>
+<dd>Gets the type of the database given by <tt>cgio_num</tt>.
+    Returns 0 and the type in <tt>file_type</tt> if successfull,
+    else an error code.
+
+<dt>&nbsp;<dd>
+<a name="get_root_id"></a>
+<dt><tt>cgio_get_root_id</tt>
+<dd>Gets the unique node identifier for the root node in the database given
+    by <tt>cgio_num</tt>. Returns 0 and the identifier in <tt>rootid</tt>
+    if successfull, else an error code.
+
+</dl>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 06 April 2011
+
+</body>
+</html>

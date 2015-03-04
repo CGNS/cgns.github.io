@@ -1,0 +1,147 @@
+<!-- CGIO Manual - Library Of Subroutines -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="cgio.css" rel="stylesheet" type="text/css">
+<title> CGIO User's Guide - Miscellaneous Routines </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="index.html"><span class=nav><b>CGIO&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="library.html"><b>The&nbsp;CGIO&nbsp;Software&nbsp;Library</b></a>)
+(<a href="database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="structure.html"><b>Data&nbsp;Structure&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="links.html"><b>Link&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="node.html"><b>Node&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="dataio.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages&nbsp;and&nbsp;Routines</b></a>)
+(<span class=nav><b>Miscellaneous&nbsp;Routines</b></span>)
+(<a href="examples.html"><b>Example&nbsp;Programs</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Miscellaneous Routines</h2>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_flush_to_disk(<span class=in>int cgio_num</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_library_version(<span class=in>int cgio_num</span>, <span class=out><i>char *version</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_file_version(<span class=in>int cgio_num</span>, <span class=out><i>char *file_version</i></span>, <span class=out><i>char *creation_date</i></span>,<br>
+               &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span class=out><i>char *modified_date</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cgio_flush_to_disk_f(<span class=in>cgio_num</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_library_version_f(<span class=in>cgio_num</span>, <span class=out><i>version</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_file_version_f(<span class=in>cgio_num</span>, <span class=out><i>file_version</i></span>, <span class=out><i>creation_date</i></span>,<br>
+               &nbsp&nbsp&nbsp&nbsp&nbsp<span class=out><i>modified_date</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>cgio_num</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Database identifier.
+<tr valign=baseline><td>
+   <td><tt>version</tt><td>
+   <td>32-byte character string containing the database library version.
+<tr valign=baseline><td>
+   <td><tt>file_version</tt><td>
+   <td>32-byte character string containing the database file version.
+<tr valign=baseline><td>
+   <td><tt>creation_date</tt><td>
+   <td>32-byte character string containing the database file creation date.
+<tr valign=baseline><td>
+   <td><tt>modified_date</tt><td>
+   <td>32-byte character string containing the last modification date for the database file.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<h2>Function Descriptions</h2>
+
+<dl>
+
+<a name="flush_to_disk"></a>
+<dt><tt>cgio_flush_to_disk</tt>
+<dd>Forces any buffered data in the database manager to be written
+    to disk. Returns 0 if successfull, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="library_version"></a>
+<dt><tt>cgio_library_version</tt>
+<dd>Gets the current library version for the database given by <tt>cgio_num</tt>.
+    The version is returned in <tt>version</tt> which is of maximum length
+    <tt>CGIO_MAX_VERSION_LENGTH</tt> (32). In C, <tt>version</tt> should
+    be dimensioned at least 33 in the calling routine to allow for the
+    terminating '0'.
+    The function returns 0 if successfull, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="file_version"></a>
+<dt><tt>cgio_file_version</tt>
+<dd>Gets the version, creation and last modified dates, for the database
+    file given by <tt>cgio_num</tt>. The version is returned in
+    <tt>file_version</tt>, which is of maximum length
+    <tt>CGIO_MAX_VERSION_LENGTH</tt> (32). The creation date is returned in
+    <tt>creation_date</tt>, and the last modified date in <tt>modified_date</tt>,
+    which are of maximum length <tt>CGIO_MAX_DATE_LENGTH</tt> (32).
+    In C, these should be dimensioned at least 33 in the calling routine
+    to allow for the terminating '0'.
+    The function returns 0 if successfull, else an error code.
+
+</dl>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 07 April 2011
+
+</body>
+</html>

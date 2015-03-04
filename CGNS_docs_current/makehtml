@@ -1,0 +1,85 @@
+#! /bin/sh
+#
+# makehtml - create compressed tar file containing HTML documentation
+#            for a specified document
+#
+# Author: Charlie Towne (towne@lerc.nasa.gov)
+
+#set -vx
+
+version='1.0, 8 June 2001'
+
+usage='USAGE: makehtml dirlist'
+
+# get the directories to process
+
+dirs=""
+while [ $# -gt 0 ]; do
+  [ -d $1 ] && dirs="$dirs $1"
+  shift
+done
+
+if [ -z "$dirs" ]; then
+   echo 'Error: No directories specified' >& 2
+   echo $usage >& 2
+   exit 1
+fi
+
+# process the directories
+
+for d in $dirs ; do
+
+# Set directory name
+  directory=$d
+
+# Create the tar file
+# explicitly name the files so don't get .svn
+  case $d in
+    adf)          tar cvf adf.tar \
+                      adf/adf.css adf/*.html adf/*.gif adf/*.png;;
+    cgio)         tar cvf cgio.tar \
+                     cgio/cgio.css cgio/*.html cgio/*.gif cgio/*.png;;
+    cgnstools)    tar cvf cgnstools.tar \
+                      cgnstools/cgnstools.css cgnstools/*.html cgnstools/*.png \
+                      cgnstools/cgnsplot/*.html cgnstools/cgnsplot/*.png \
+                      cgnstools/cgnsplot/images/*.html cgnstools/cgnsplot/images/*.gif \
+                      cgnstools/cgnsview/*.html cgnstools/cgnsview/images/*.gif \
+                      cgnstools/utilities/*.html cgnstools/utilities/*.png \
+                      cgnstools/utilities/images/*.html cgnstools/utilities/images/*.gif;;
+    charter)      tar cvf charter.tar \
+                      charter/charter.css charter/*.html charter/*.png;;
+    filemap)      tar cvf filemap.tar \
+                      filemap/filemap.css filemap/*.html filemap/*.png \
+                      filemap/figures/*.html filemap/figures/*.gif;;
+    hdf5)         tar cvf hdf5.tar \
+                      hdf5/hdf5.css hdf5/*.html hdf5/*.png;;
+    logo)         tar cvf logo.tar \
+                      logo/cgns*;;
+    midlevel)     tar cvf midlevel.tar \
+                      midlevel/midlevel.css midlevel/*.html midlevel/*.png;;
+    overview)     tar cvf overview.tar \
+                      overview/overview.css overview/*.html overview/*.png;;
+    sids)         tar cvf sids.tar \
+                      sids/sids.css sids/*.html sids/*.png \
+                      sids/*.eqs/*.html sids/*.eqs/*.gif \
+                      sids/*.figs/*.html sids/*.figs/*.gif sids/aiaa/*.pdf;;
+    user)         tar cvf user.tar \
+                      user/user.css user/*.html user/*.png \
+                      user/figures/*.html user/figures/*.gif;;
+    sitemaps)     tar cvf sitemaps.tar \
+                      sitemaps/*.html;;
+    pcgns)        tar cvf pcgns.tar \
+                      pcgns/pcgns.css pcgns/*.html;;
+    *)            directory=""
+                  echo "skipping directory $d" ;;
+  esac
+
+  if [ -n "$directory" ]; then
+# Compress it, show the sizes, and move it into the directory
+    gzip $directory.tar
+    gzip -l $directory.tar.gz
+    mv $directory.tar.gz $directory
+    echo "$directory.tar.gz - done"
+  fi
+
+done

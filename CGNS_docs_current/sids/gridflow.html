@@ -1,0 +1,1798 @@
+<!-- CGNS SIDS document - Grid Coordinates, Elements, and Flow Solutions -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Grid Coordinates, Elements, and Flow Solutions </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<span class=nav><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></span>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Grid Coordinates, Elements, and Flow Solutions</h2>
+
+<ul>
+<li> <a href="#GridCoordinates">Grid Coordinates Structure Definition: <tt>GridCoordinates_t</tt></a>
+<li> <a href="#grid_example">Grid Coordinates Examples</a>
+<li> <a href="#Elements">Elements Structure Definition: <tt>Elements_t</tt></a>
+<li> <a href="#element_example">Elements Examples</a>
+<li> <a href="#Axisymmetry">Axisymmetry Structure Definition: <tt>Axisymmetry_t</tt></a>
+<li> <a href="#RotatingCoordinates">Rotating Coordinates Structure Definition: <tt>RotatingCoordinates_t</tt></a>
+<li> <a href="#FlowSolution">Flow Solution Structure Definition: <tt>FlowSolution_t</tt></a>
+<li> <a href="#flow_example">Flow Solution Example</a>
+<li> <a href="#ZoneSubRegion">Zone Subregion Structure Definition: <tt>ZoneSubRegion_t</tt></a>
+<li> <a href="#subreg_example">Zone Subregion Examples</a>
+</ul>
+
+<p>
+This section defines structure types for describing the grid
+coordinates, element data, and flow solution data pertaining to a zone.
+Entities of each of the structure types defined in this section are
+contained in the <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a> structure.
+
+<a name="GridCoordinates"></a>
+<h3>Grid Coordinates Structure Definition: <tt>GridCoordinates_t</tt></h3>
+
+<p>
+The physical coordinates of the grid vertices are described by the 
+<tt>GridCoordinates_t</tt> structure.
+This structure contains a list for the data arrays of the individual
+components of the position vector.
+It also provides a mechanism for identifying rind-point data included
+within the position-vector arrays.
+<pre>
+  GridCoordinates_t&lt; int IndexDimension, int VertexSize[IndexDimension] &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+ 
+    Rind_t&lt;IndexDimension&gt; Rind ;                                      (o/d)
+
+    List( DataArray_t&lt;DataType, IndexDimension, DataSize[]&gt; 
+          DataArray1 ... DataArrayN ) ;                                (o)
+
+    DataClass_t DataClass ;                                            (o)
+    
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are
+     as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>GridCoordinates_t</tt> and shall not include the names
+     <tt>DataClass</tt>, <tt>DimensionalUnits</tt>, or <tt>Rind</tt>.
+<li> There are no required fields for <tt>GridCoordinates_t</tt>.
+     <a href="build.html#Rind"><tt>Rind</tt></a> has a default if absent;
+     the default is equivalent to having a <tt>Rind</tt> structure
+     whose <tt>RindPlanes</tt> array contains all zeros.
+<li> The structure parameter <tt>DataType</tt> must be consistent
+     with the data stored in the
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a> substructures.
+</ol>
+
+<p>
+<tt>GridCoordinates_t</tt> requires two structure parameters:
+<tt>IndexDimension</tt> identifies the dimensionality of the grid-size
+arrays, and <tt>VertexSize</tt> is the number of vertices in each index
+direction excluding rind points.
+For unstructured zones, <tt>IndexDimension</tt> is always 1 and
+<tt>VertexSize</tt> is the total number of vertices, excluding rind
+points.
+
+<p>
+The grid-coordinates data is stored in the list of
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+entities; each <tt>DataArray_t</tt> structure entity may contain
+a single component of the position vector (e.g., three separate
+<tt>DataArray_t</tt> entities are used for <i>x</i>, <i>y</i>, and
+<i>z</i>).
+
+<p>
+Standardized data-name identifiers for the grid coordinates are
+described in <a href="dataname.html#dataname_grid">Conventions for
+Data-Name Identifiers</a>.
+
+<p>
+<a href="build.html#Rind"><tt>Rind</tt></a> is an optional field that
+indicates the number of rind planes (for structured grids) or rind
+points (for unstructured grids) included in the grid-coordinates data.
+If <tt>Rind</tt> is absent, then the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> structure
+entities contain only "core" vertices of a zone; core refers to all
+interior and bounding vertices of a zone - <tt>VertexSize</tt> is the
+number of core vertices.
+Core vertices in a zone are assumed to begin at <tt>[1,1,1]</tt> (for
+a structured zone in 3-D) and end at <tt>VertexSize</tt>.
+If <tt>Rind</tt> is present, it will provide information on the number
+of "rind" points in addition to the core points that are contained in
+the <tt>DataArray_t</tt> structures.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default class for data contained in the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+For dimensional grid coordinates,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of units employed.
+If present, these two entities take precedence over the corresponding
+entities at higher levels of the CGNS hierarchy, following the
+standard <a href="cgnsbase.html#precedence">precedence rules</a>.
+An example that uses these grid-coordinate defaults is shown under
+<a href="#grid_example">Grid Coordinates Examples</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="DataSize_grid"></a>
+<h4>FUNCTION <tt>DataSize[]</tt>:</h4>
+
+return value: one-dimensional <tt>int</tt> array of length <tt>IndexDimension</tt>
+<br>
+dependencies: <tt>IndexDimension</tt>, <tt>VertexSize[]</tt>, <tt>Rind</tt>
+
+<p>
+<tt>GridCoordinates_t</tt> requires a single structure function, named
+<tt>DataSize</tt>, to identify the array sizes of the grid-coordinates
+data.
+A function is required for the following reasons:
+
+<ul>
+<li> the entire grid, including both core and rind points, is stored
+     in the <a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities;
+<li> the <tt>DataArray_t</tt> structure is simple in that it doesn't
+     know anything about core versus rind data; it just knows that
+     it contains data of some given size;
+<li> to make all the <tt>DataArray_t</tt> entities syntactically
+     consistent in their size (i.e., by syntax entities containing
+     <i>x</i>, <i>y</i> and <i>z</i> must have the same dimensionality
+     and dimension sizes), the size of the array is passed onto the
+     <tt>DataArray_t</tt> structure as a parameter.
+</ul>
+
+<pre>
+  if (Rind is absent) then
+    {
+    DataSize[] = VertexSize[] ;
+    }
+  else if (Rind is present) then
+    { 
+    DataSize[] = VertexSize[] + [a + b,...] ;
+    }
+</pre>
+where <tt>RindPlanes = [a,b,...]</tt> (see the
+<a href="build.html#Rind"><tt>Rind_t</tt></a> structure for the     
+definition of <tt>RindPlanes</tt>).
+
+<a name="grid_example"></a>
+<h3>Grid Coordinates Examples</h3>
+
+<p>
+This section contains examples of grid coordinates.
+These examples show the storage of the grid-coordinate data arrays, as
+well as different mechanisms for describing the class of data and the
+system of units or normalization.
+
+<a name="ex:grid1"></a>
+<h4>Example - Cartesian Coordinates for a 2-D Structured Grid</h4>
+
+<p>
+This example uses Cartesian coordinates for a 2-D grid of size 17 &times; 33; the data
+arrays include only core vertices, and the coordinates are in units of
+feet.
+<pre>
+  !  IndexDimension = 2
+  !  VertexSize = [17,33]
+  GridCoordinates_t&lt;2, [17,33]&gt; GridCoordinates =
+    {{
+    DataArray_t&lt;real, 2, [17,33]&gt; CoordinateX =
+      {{
+      Data(real, 2, [17,33]) = ((x(i,j), i=1,17), j=1,33) ;
+
+      DataClass_t DataClass = Dimensional ;
+      
+      DimensionalUnits_t DimensionalUnits = 
+        {{ 
+        MassUnits        = MassUnitsNull ;
+        LengthUnits      = Foot ;
+        TimeUnits        = TimeUnitsNull ;
+        TemperatureUnits = TemperatureUnitsNull ;
+        AngleUnits       = AngleUnitsNull ;
+        }} ;
+      }} ;
+
+    DataArray_t&lt;real, 2, [17,33]&gt; CoordinateY =
+      {{
+      Data(real, 2, [17,33]) = ((y(i,j), i=1,17), j=1,33) ;
+
+      DataClass_t DataClass = Dimensional ;
+      
+      DimensionalUnits_t DimensionalUnits = 
+        {{ 
+        MassUnits        = MassUnitsNull ;
+        LengthUnits      = Foot ;
+        TimeUnits        = TimeUnitsNull ;
+        TemperatureUnits = TemperatureUnitsNull ;
+        AngleUnits       = AngleUnitsNull ;
+        }} ;
+      }} ;
+    }} ;
+</pre>
+From the <a href="dataname.html">Conventions for Data-Name Identifiers</a>,
+the identifiers
+for <i>x</i> and <i>y</i> are <tt>CoordinateX</tt> and <tt>CoordinateY</tt>,
+respectively, and both have a data type of <tt>real</tt>.
+The value of <a href="build.html#DataClass"><tt>DataClass</tt></a>
+in <tt>CoordinateX</tt> and <tt>CoordinateY</tt> indicate the data is
+dimensional, and
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+specifies the appropriate units are feet.
+The <a href="build.html#DimensionalExponents"><tt>DimensionalExponents</tt></a>
+entity is absent from both <tt>CoordinateX</tt> and <tt>CoordinateY</tt>;
+the information that <i>x</i> and <i>y</i> are lengths can be inferred
+from the <a href="dataname.html#dataname_grid">data-name identifier
+conventions for coordinate systems</a>.
+
+<p>
+Note that FORTRAN multidimensional array indexing is used to store
+the data; this is reflected in the FORTRAN-like implied do-loops for
+<tt>x(i,j)</tt> and <tt>y(i,j)</tt>.
+
+<p>
+Because the dimensional units for both <i>x</i> and <i>y</i> are the same, an
+alternate approach is to set the data class and system of units
+using <a href="build.html#DataClass"><tt>DataClass</tt></a> and
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> at the
+<a href="#GridCoordinates"><tt>GridCoordinates_t</tt></a> level, and
+eliminate this information from each instance of
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a>.
+<pre>
+  GridCoordinates_t&lt;2, [17,33]&gt; GridCoordinates =
+    {{
+    DataClass_t DataClass = Dimensional ;
+    
+    DimensionalUnits_t DimensionalUnits = 
+      {{ 
+      MassUnits        = MassUnitsNull ;
+      LengthUnits      = Foot ;
+      TimeUnits        = TimeUnitsNull ;
+      TemperatureUnits = TemperatureUnitsNull ;
+      AngleUnits       = AngleUnitsNull ;
+      }} ;
+
+    DataArray_t&lt;real, 2, [17,33]&gt; CoordinateX =
+      {{
+      Data(real, 2, [17,33]) = ((x(i,j), i=1,17), j=1,33) ;
+      }} ;
+
+    DataArray_t&lt;real, 2, [17,33]&gt; CoordinateY =
+      {{
+      Data(real, 2, [17,33]) = ((y(i,j), i=1,17), j=1,33) ;
+      }} ;
+    }} ;
+</pre>
+Since the <a href="build.html#DataClass"><tt>DataClass</tt></a> and
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+entities are not present in <tt>CoordinateX</tt> and <tt>CoordinateY</tt>,
+the established <a href="data.html#dim">rules for dimensional data</a>
+dictate that <tt>DataClass</tt> and <tt>DimensionalUnits</tt> specified
+at the <a href="#GridCoordinates"><tt>GridCoordinates_t</tt></a>
+level be used to retrieve the information.
+
+<a name="ex:grid2"></a>
+<h4>Example - Cylindrical Coordinates for a 3-D Structured Grid</h4>
+
+<p>
+This example uses cylindrical coordinates for a 3-D grid whose core size is
+17 &times; 33 &times; 9;
+the grid contains a single plane of rind on the minimum and maximum
+<i>k</i> faces.
+The coordinates are nondimensional.
+<pre>
+  !  IndexDimension = 3
+  !  VertexSize = [17,33,9]
+  GridCoordinates_t&lt;3, [17,33,9]&gt; GridCoordinates =
+    {{
+    Rind_t&lt;3&gt; Rind =
+      {{
+      int[6] RindPlanes = [0,0,0,0,1,1] ;
+      }} ;
+
+    ! DataType = real
+    ! IndexDimension = 3
+    ! DataSize = VertexSize + [0,0,2] = [17,33,11]
+    DataArray_t&lt;real, 3, [17,33,11]&gt; CoordinateRadius =
+      {{
+      Data(real, 3, [17,33,11]) = (((r(i,j,k), i=1,17), j=1,33), k=0,10) ;
+
+      DataClass_t DataClass = NormalizedByUnknownDimensional ;
+      }} ;
+
+    DataArray_t&lt;real, 3, [17,33,11]&gt; CoordinateZ     = {{ }} ;
+    DataArray_t&lt;real, 3, [17,33,11]&gt; CoordinateTheta = {{ }} ;
+    }} ;
+</pre>
+The value of <tt>RindPlanes</tt> specifies two rind planes on the
+minimum and maximum <i>k</i> faces.
+These rind planes are reflected in the structure function
+<a href="#DataSize_grid"><tt>DataSize</tt></a> which is equal to the number
+of core vertices plus two in the <i>k</i> dimension.
+The value of <tt>DataSize</tt> is passed to the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+The value of <a href="build.html#DataClass"><tt>DataClass</tt></a>
+indicates the data is nondimensional.
+Note that if <tt>DataClass</tt> is set as
+<tt>NormalizedByUnknownDimensional</tt> at a higher level
+(<a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> or
+<a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a>), then it is not
+needed here.
+
+<p>
+Note that the entities <tt>CoordinateZ</tt> and <tt>CoordinateTheta</tt>
+are abbreviated.
+
+<a name="ex:grid3"></a>
+<h4>Example - Cartesian Coordinates for a 3-D Unstructured Grid</h4>
+
+<p>
+This example uses Cartesian grid coordinates for a 3-D unstructured zone where
+<tt>VertexSize</tt> is 15.
+<pre>
+  GridCoordinates_t&lt;1, 15&gt; GridCoordinates =
+    {{
+
+    ! DataType = real
+    ! IndexDimension = 1
+    ! DataSize = VertexSize = 15
+    DataArray_t&lt;real, 1, 15&gt; CoordinateX =
+      {{
+      Data(real, 1, 15) = (x(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; CoordinateY =
+      {{
+      Data(real, 1, 15) = (y(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; CoordinateZ =
+      {{
+      Data(real, 1, 15) = (z(i), i=1,15) ;
+      }} ;
+    }} ;
+</pre>
+
+<a name="Elements"></a>
+<h3>Elements Structure Definition: <tt>Elements_t</tt></h3>
+
+<p>
+The <tt>Elements_t</tt> data structure is required for unstructured
+zones, and contains the element connectivity data, the element type,
+the element range, the parent elements data, and the number of boundary
+elements.
+
+<pre>
+  Elements_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+ 
+    Rind_t&lt;IndexDimension&gt; Rind ;                                      (o/d)
+
+    IndexRange_t ElementRange ;                                        (r)
+
+    int ElementSizeBoundary ;                                          (o/d)
+
+    ElementType_t ElementType ;                                        (r)
+
+    DataArray_t&lt;int, 1, ElementDataSize&gt; ElementConnectivity ;         (r)
+
+    DataArray_t&lt;int, 2, [ElementSize, 2]&gt; ParentElements;              (o)
+    DataArray_t&lt;int, 2, [ElementSize, 2]&gt; ParentElementsPosition;      (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are
+     as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>Elements_t</tt> and shall not include the names
+     <tt>ElementConnectivity</tt>, <tt>ElementRange</tt>,
+     <tt>ParentElements</tt>, <tt>ParentElementsPosition</tt>, or <tt>Rind</tt>.
+<li> <a href="build.html#IndexRange"><tt>IndexRange_t</tt></a>,
+     <a href="#ElementType"><tt>ElementType_t</tt></a>, and
+     <a href="#ElementConnectivity"><tt>ElementConnectivity</tt></a>
+     are the required fields within the <tt>Elements_t</tt> structure.
+     <a href="build.html#Rind"><tt>Rind</tt></a> has a default if absent;
+     the default is equivalent to having a <tt>Rind</tt> structure
+     whose <tt>RindPlanes</tt> array contains all zeros.
+</ol>
+
+<p>
+<a href="build.html#Rind"><tt>Rind</tt></a> is an optional field that
+indicates the number of rind elements included in the elements data.
+If <tt>Rind</tt> is absent, then the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> structure
+entities contain only core elements of a zone.
+If <tt>Rind</tt> is present, it will provide information on the number
+of rind elements, in addition to the core elements, that are contained
+in the <tt>DataArray_t</tt> structures.
+
+<p>
+Note that the usage of rind data with respect to the size of the
+<tt>DataArray_t</tt> structures is different under <tt>Elements_t</tt>
+than elsewhere.
+For example, when rind coordinate data is stored under
+<a href="#GridCoordinates"><tt>GridCoordinates_t</tt></a>, the parameter
+<tt>VertexSize</tt> accounts for the core data only.
+The size of the <tt>DataArray_t</tt> structures containing the grid
+coordinates is determined by the <tt>DataSize</tt> function, which adds
+the number of rind planes or points to <tt>VertexSize</tt>.
+But for the element connectivity, the size of the <tt>DataArray_t</tt>
+structures containing the connectivity data is just
+<tt>ElementDataSize</tt>, which depends on <tt>ElementSize</tt>, and
+includes both the core and rind elements.
+
+<p>
+<tt>ElementRange</tt> contains the index of the first and last elements
+defined in <a href="#ElementConnectivity"><tt>ElementConnectivity</tt></a>.
+The elements are indexed with a global numbering system, starting at 1,
+for all element sections under a given
+<a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a> data structure.
+The global numbering insures that each element, whether it's a cell,
+a face, or an edge, is uniquely identified by its number.
+They are also listed as a continuous list of element numbers within any
+single element section.
+Therefore the number of elements in a section is:
+<pre>
+  ElementSize = ElementRange.end - ElementRange.start + 1
+</pre>
+
+<p>
+The element indices are used for the boundary condition and zone
+connectivity definition.
+
+<p>
+<tt>ElementSizeBoundary</tt> indicates if the elements are sorted, and how
+many boundary elements are recorded.
+By default, <tt>ElementSizeBoundary</tt> is set to zero, indicating that
+the elements are not sorted.
+If the elements are sorted, <tt>ElementSizeBoundary</tt> is set to the
+number of elements at the boundary.
+Consequently:
+<pre>
+  ElementSizeInterior = ElementSize - ElementSizeBoundary
+</pre>
+
+<a name="ElementType"></a>
+<p>
+<tt>ElementType_t</tt> is an enumeration of the supported element types:
+<pre>
+  ElementType_t := Enumeration(
+     ElementTypeNull, ElementTypeUserDefined, NODE, BAR_2, BAR_3,
+     TRI_3, TRI_6, QUAD_4, QUAD_8, QUAD_9,
+     TETRA_4, TETRA_10, PYRA_5, PYRA_14,
+     PENTA_6, PENTA_15, PENTA_18, HEXA_8, HEXA_20, HEXA_27,
+     MIXED, PYRA_13, NGON_n, NFACE_n,
+     BAR_4, TRI_9, TRI_10, QUAD_12, QUAD_16,
+     TETRA_16, TETRA_20, PYRA_21, PYRA_29, PYRA_30,
+     PENTA_24, PENTA_38, PENTA_40, HEXA_32, HEXA_56, HEXA_64 );
+</pre>
+The conventions for element numbering for the various supported types
+are described in <a href="conv.html#unstructgrid">Unstructured Grid
+Element Numbering Conventions</a>.
+
+<a name="ElementConnectivity"></a>
+<p>
+For all element types except <tt>MIXED</tt>, <tt>NGON_n</tt>, and
+<tt>NFACE_n</tt>, <tt>ElementConnectivity</tt> contains the list of
+nodes for each element.
+If the elements are sorted, then it must first list the connectivity of
+the boundary elements, then that of the interior elements.
+<pre>
+  ElementConnectivity = Node1<sub>1</sub>, Node2<sub>1</sub>, ... NodeN<sub>1</sub>,
+                        Node1<sub>2</sub>, Node2<sub>2</sub>, ... NodeN<sub>2</sub>,
+                        ...
+                        Node1<sub>M</sub>, Node2<sub>M</sub>, ... NodeN<sub>M</sub>
+</pre>
+where <tt>M</tt> is the total number of elements (i.e.,
+<tt>ElementSize</tt>), and <tt>N</tt> is the number of nodes per element.
+
+<p>
+<tt>ElementDataSize</tt> indicates the total size (number of integers)
+of the array <tt>ElementConnectivity</tt>.
+For all element types except <tt>MIXED</tt>, <tt>NGON_n</tt>, and
+<tt>NFACE_n</tt>, <tt>ElementDataSize</tt> is given by:
+<pre>
+  ElementDataSize = ElementSize * NPE[ElementType]
+</pre>
+where <tt>NPE[ElementType]</tt> is a function returning the number of
+nodes for the given <tt>ElementType</tt>.
+For example, <tt>NPE[HEXA_8]=8</tt>.
+
+<p>
+When the section <tt>ElementType</tt> is <tt>MIXED</tt>, the data array
+<tt>ElementConnectivity</tt> contains one extra integer per element, to
+hold each individual element type:
+<pre>
+  ElementConnectivity = Etype<sub>1</sub>, Node1<sub>1</sub>, Node2<sub>1</sub>, ... NodeN<sub>1</sub>,
+                        Etype<sub>2</sub>, Node1<sub>2</sub>, Node2<sub>2</sub>, ... NodeN<sub>2</sub>,
+                        ...
+                        Etype<sub>M</sub>, Node1<sub>M</sub>, Node2<sub>M</sub>, ... NodeN<sub>M</sub>
+</pre>
+where again <tt>M</tt> is the total number of elements, and
+<tt>N</tt><sub><i>i</i></sub> is the number of nodes in element <i>i</i>.
+In the case of <tt>MIXED</tt> element section, <tt>ElementDataSize</tt> is
+given by:
+<pre>
+<tt>&nbsp;&nbsp;ElementDataSize</tt> = &sum;(<tt>NPE[ElementType</tt><sub><i>n</i></sub><tt>] + 1</tt>)
+</pre>
+where the summation is over <i>n</i>, and <i>n</i> represents a specific
+element type.
+
+<p>
+Arbitrary polyhedral elements may be defined using the <tt>NGON_n</tt>
+and <tt>NFACE_n</tt> element types.
+The <tt>NGON_n</tt> element type is used to specify all the faces in the
+grid, and the <tt>NFACE_n</tt> element type is then used to define the
+polyhedral elements as a collection of these faces.
+Except for boundary faces, each face of a polyhedral element must be
+shared by another polyhedral element.
+
+<p>
+For example, for <tt>NGON_n</tt>, the data array <tt>ElementConnectivity</tt>
+contains a list of nodes making up each face in the grid, with the first
+value for each face defining the number of nodes making up that face:
+<pre>
+  ElementConnectivity = Nnodes<sub>1</sub>, Node1<sub>1</sub>, Node2<sub>1</sub>, ... NodeN<sub>1</sub>,
+                        Nnodes<sub>2</sub>, Node1<sub>2</sub>, Node2<sub>2</sub>, ... NodeN<sub>2</sub>,
+                        ...
+                        Nnodes<sub>M</sub>, Node1<sub>M</sub>, Node2<sub>M</sub>, ... NodeN<sub>M</sub>
+</pre>
+where here <tt>M</tt> is the total number of faces, and
+<tt>N</tt><sub><i>i</i></sub> is the number of nodes in face <i>i</i>.
+The <tt>ElementDataSize</tt> is the total number of nodes defining all
+the faces, plus one value per face specifying the number of nodes making
+up that face.
+
+<p>
+Then for <tt>NFACE_n</tt>, <tt>ElementConnectivity</tt> contains the
+list of face elements making up each polyhedral element, with the first
+value for each element defining the number of faces making up that
+element.
+<pre>
+  ElementConnectivity = Nfaces<sub>1</sub>, Face1<sub>1</sub>, Face2<sub>1</sub>, ... FaceN<sub>1</sub>,
+                        Nfaces<sub>2</sub>, Face1<sub>2</sub>, Face2<sub>2</sub>, ... FaceN<sub>2</sub>,
+                        ...
+                        Nfaces<sub>M</sub>, Face1<sub>M</sub>, Face2<sub>M</sub>, ... FaceN<sub>M</sub>
+</pre>
+where now <tt>M</tt> is the total number of polyhedral elements, and
+<tt>N</tt><sub><i>i</i></sub> is the number of faces in element <i>i</i>.
+The sign of the face number determines its orientation (i.e., the
+direction of the face normal, constructed as defined by the
+<a href="conv.html#unst_2d">convention for 2-D elements</a>).
+If the face number is positive, the face normal is directed outward; if
+it's negative, the face normal is directed inward.
+The <tt>ElementDataSize</tt> is the sum of the number of faces defining
+each polyhedral element, plus one value per polyhedral element
+specifying the number of faces making up that element.
+
+<p>
+For face elements in 3-D, or bar element in 2-D, additonal data may be provided
+for each element in <tt>ParentElements</tt> and <tt>ParentElementsPosition</tt>.
+The element numbers of the two adjacent cells for each face are given in
+<tt>ParentElements</tt>. The corresponding canonical positions of the face in the
+two parent cells is given in <tt>ParentElementsPosition</tt>; these canonical
+face positions are defined in the section
+<a href="conv.html#unstructgrid">Unstructured Grid Element Numbering Conventions</a>.
+For faces on the boundary of the domain, the second parent is set to zero.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="element_example"></a>
+<h3>Elements Examples</h3>
+
+<p>
+This section contains four examples of elements definition in CGNS.
+The first example is for a simple three-element tetrahedral grid, using
+the <tt>TETRA_4</tt> element type.
+The second example is for the same grid as the first example, but the
+elements are treated as general polyhedra to illustrate the use of the
+<tt>NGON_n</tt> and <tt>NFACE_n</tt> element types.
+The third and fourth examples are for an unstructured zone with
+15 tetrahedral and 10 hexahedral elements, with the third example
+defining the elements in separate sections for the <tt>TETRA_4</tt> and
+<tt>HEXA_8</tt> element types, and the fourth example combining them
+using the <tt>MIXED</tt> element type.
+
+<a name="ex:elements1"></a>
+<h4>Example - <tt>TETRA_4</tt> Element Types</h4>
+
+This example uses the simple three-element tetrahedral grid shown below.
+<a name="f:ex_tetra"></a>
+<br><br>
+<center>
+<img src="gridflow.figs/ex_tetra.gif"
+     alt="Unstructured grid consisting of three tetrahedra"
+     longdesc="gridflow.figs/ex_tetra.html">
+<br><br>
+Example Tetrahedral Grid
+</center>
+
+<p>
+The element type is <tt>TETRA_4</tt>, and the connectivity is defined
+in <tt>ElementConnectivity</tt> by specifying the four nodes comprising
+each element, with the order consistent with the
+<a href="conv.html#unst_tetra">numbering conventions for tetrahedral
+elements</a>.
+The data in <tt>ElementConnectivity</tt> is grouped by element; note
+that the parentheses are added here for presentation purposes only.
+<pre>
+  Zone_t UnstructuredZone =
+    {{
+    Elements_t TetraElements =
+      {{
+      IndexRange_t ElementRange = [1,3] ;
+
+      ElementType_t ElementType = TETRA_4 ;
+
+      DataArray_t&lt;int, 1, NPE[TETRA_4] &times; 3&gt; ElementConnectivity =
+        {{
+        Data(int, 1, NPE[TETRA_4] &times; 3) =
+          (1, 2, 3, 4), (2, 5, 3, 6), (2, 6, 3, 4) ;
+        }} ;
+      }} ;
+    }} ;
+</pre>
+
+<a name="ex:elements2"></a>
+<h4>Example - <tt>NGON_n</tt> and <tt>NFACE_n</tt> Element Types</h4>
+
+<p>
+This example uses the same grid as in the previous example, but
+treats the elements as general polyhedra to illustrate the use of the
+<tt>NGON_n</tt> and <tt>NFACE_n</tt> element types.
+The grid consists of three volume elements, each made up of four face
+elements, with each face defined by three nodes.
+
+<p>
+For each face, the nodes comprising that face are listed in
+<tt>ElementConnectivity</tt> for the <tt>NGON_n</tt> element type.
+The <tt>ElementRange</tt> is <tt>[1,10]</tt>, corresponding to the 10
+total faces in the grid.
+The <tt>ElementDataSize</tt> is 40, corresponding to the total of 30
+nodes defining the 10 faces, plus one value per face specifying the
+number of nodes making up that face.
+
+<p>
+The faces making up the three volume elements are then listed in
+<tt>ElementConnectivity</tt> for the <tt>NFACE_n</tt> element type.
+The <tt>ElementRange</tt> is <tt>[11,13]</tt>, corresponding to the three
+volume elements.
+The <tt>ElementDataSize</tt> is 15, corresponding to three volume
+elements with four faces per element, plus one value per volume element
+specifying the number of faces making up that element.
+Note that the face numbers for faces 3 and 8 are negative in the
+definition of volume element 3, since their normals point inward for
+that element.
+Again, the parentheses in <tt>ElementConnectivity</tt> are for
+presentation purposes only.
+<pre>
+  Zone_t UnstructuredZone =
+    {{
+    Elements_t NgonElements =
+      {{
+      IndexRange_t ElementRange = [1,10] ;
+
+      ElementType_t ElementType = NGON_n ;
+
+      DataArray_t&lt;int, 1, 40&gt; ElementConnectivity =
+        {{
+        Data(int, 1, 40) =
+          (3, 1, 3, 2), (3, 1, 2, 4), (3, 2, 3, 4), (3, 3, 1, 4),
+          (3, 2, 3, 5), (3, 2, 5, 6), (3, 5, 3, 6), (3, 3, 2, 6),
+          (3, 2, 6, 4), (3, 6, 3, 4) ;
+        }} ;
+      }} ;
+    Elements_t NfaceElements =
+      {{
+      IndexRange_t ElementRange = [11,13] ;
+
+      ElementType_t ElementType = NFACE_n ;
+
+      DataArray_t&lt;int, 1, 15&gt; ElementConnectivity =
+        {{
+        Data(int, 1, 15) =
+          (4,  1,  2,  3,  4),
+          (4,  5,  6,  7,  8),
+          (4, -8,  9, 10, -3) ;
+        }} ;
+      }} ;
+    }} ;
+</pre>
+
+<a name="ex:elements3"></a>
+<h4>Example - Separate Element Types</h4>
+
+<p>
+In this example, elements are defined for an unstructured zone with 15
+tetrahedral and 10 hexahedral elements.
+The elements are written in two separate sections, one for the
+tetrahedral elements and one for the hexahedral elements.
+<pre>
+  Zone_t UnstructuredZone =
+    {{
+    Elements_t TetraElements =
+      {{
+      IndexRange_t ElementRange = [1,15] ;
+
+      int ElementSizeBoundary = 10 ;
+
+      ElementType_t ElementType = TETRA_4 ;
+
+      DataArray_t&lt;int, 1, NPE[TETRA_4] &times; 15&gt; ElementConnectivity =
+        {{
+        Data(int, 1, NPE[TETRA_4] &times; 15) = (node(i,j), i=1,NPE[TETRA_4], j=1,15) ;
+        }} ;
+      }} ;
+    Elements_t HexaElements =
+      {{
+      IndexRange_t ElementRange = [16,25] ;
+
+      int ElementSizeBoundary = 0 ;
+
+      ElementType_t ElementType = HEXA_8 ;
+
+      DataArray_t&lt;int, 1, NPE[HEXA_8] &times; 10&gt; ElementConnectivity =
+        {{
+        Data(int, 1, NPE[HEXA_8] &times; 10) = (node(i,j), i=1,NPE[HEXA_8], j=1,10) ;
+        }} ;
+      }} ;
+    }} ;
+</pre>
+
+<a name="ex:elements4"></a>
+<h4>Example - <tt>MIXED</tt> Element Type</h4>
+
+<p>
+In this example, the same unstructured zone described in the previous
+example is written in a single element section of type <tt>MIXED</tt>
+(i.e., an unstructured grid composed of mixed elements).
+<pre>
+  Zone_t UnstructuredZone =
+    {{
+    Elements_t MixedElementsSection =
+      {{
+      IndexRange_t ElementRange = [1,25] ;
+
+      ElementType_t ElementType = MIXED ;
+
+      DataArray_t&lt;int, 1, ElementDataSize&gt; ElementConnectivity =
+        {{
+        Data(int, 1, ElementDataSize) = (etype(j),(node(i,j),
+             i=1,NPE[etype(j)]), j=1,25) ;
+        }} ;
+      }} ;
+    }} ;
+</pre>
+
+<a name="Axisymmetry"></a>
+<h3>Axisymmetry Structure Definition: <tt>Axisymmetry_t</tt></h3>
+
+<p>
+The <tt>Axisymmetry_t</tt> data structure allows recording the axis of
+rotation and the angle of rotation around this axis for a two-dimensional
+dataset that represents an axisymmetric database.
+
+<pre>
+  Axisymmetry_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    DataArray_t&lt;real,1,2&gt; AxisymmetryReferencePoint ;                  (r)
+    DataArray_t&lt;real,1,2&gt; AxisymmetryAxisVector ;                      (r)
+    DataArray_t&lt;real,1,1&gt; AxisymmetryAngle ;                           (o)
+    DataArray_t&lt;char,2,[32,2]&gt; CoordinateNames ;                       (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>Axisymmetry_t</tt> and shall not include the names
+     <tt>AxisymmetryAngle</tt>, <tt>AxisymmetryAxisVector</tt>,
+     <tt>AxisymmetryReferencePoint</tt>, <tt>CoordinateNames</tt>,
+     <tt>DataClass</tt>, or <tt>DimensionalUnits</tt>.
+<li> <tt>AxisymmetryReferencePoint</tt> and <tt>AxisymmetryAxisVector</tt>
+     are the required fields within the <tt>Axisymmetry_t</tt> structure.
+</ol>
+
+<p>
+<tt>AxisymmetryReferencePoint</tt> specifies the origin used for
+defining the axis of rotation.
+
+<p>
+<tt>AxisymmetryAxisVector</tt> contains the direction cosines of the
+axis of rotation, through the <tt>AxisymmetryReferencePoint</tt>.
+For example, for a 2-D dataset defined in the (<i>x,y</i>) plane,
+if <tt>AxisymmetryReferencePoint</tt> contains (0,0) and
+<tt>AxisymmetryAxisVector</tt> contains (1,0), the <i>x</i>-axis is the
+axis of rotation.
+
+<p>
+<tt>AxisymmetryAngle</tt> allows specification of the circumferential
+extent about the axis of rotation.
+If this angle is undefined, it is assumed to be 360&deg;.
+
+<p>
+<tt>CoordinateNames</tt> may be used to specify the first and second
+coordinates used in the definition of <tt>AxisymmetryReferencePoint</tt>
+and <tt>AxisymmetryAxisVector</tt>.
+If not found, it is assumed that the first coordinate is
+<tt>CoordinateX</tt> and the second is <tt>CoordinateY</tt>.
+The coordinates given under <tt>CoordinateNames</tt>, or implied by
+using the default, must correspond to those found under
+<a href="#GridCoordinates"><tt>GridCoordinates_t</tt></a>.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the default
+class for numerical data contained in the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+For dimensional data,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> may be
+used to describe the system of units employed.
+If present, these two entities take precedence over the corresponding
+entities at higher levels of the CGNS hierarchy, following the
+standard <a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="RotatingCoordinates"></a>
+<h3>Rotating Coordinates Structure Definition: <tt>RotatingCoordinates_t</tt></h3>
+
+<p>
+The <tt>RotatingCoordinates_t</tt> data structure is used to record
+the rotation center and rotation rate vector of a rotating coordinate
+system.
+
+<pre>
+  RotatingCoordinates_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    DataArray_t&lt;real,1,PhysicalDimension&gt; RotationCenter ;             (r)
+    DataArray_t&lt;real,1,PhysicalDimension&gt; RotationRateVector ;         (r)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>RotatingCoordinates_t</tt> and shall not include
+     the names <tt>DataClass</tt>, <tt>DimensionalUnits</tt>,
+     <tt>RotationCenter</tt>, or <tt>RotationRateVector</tt>.
+<li> <tt>RotationCenter</tt> and <tt>RotationRateVector</tt> are
+     the required fields within the <tt>RotatingCoordinates_t</tt>
+     structure.
+</ol>
+
+<p>
+<tt>RotationCenter</tt> specifies the coordinates of the center of
+rotation, and <tt>RotationRateVector</tt> specifies the components of
+the angular velocity of the grid about the center of rotation.
+Together, they define the angular velocity vector.
+The direction of the angular velocity vector specifies the axis of
+rotation, and its magnitude specifies the rate of rotation.
+
+<p>
+For example, for the common situation of rotation about the <i>x</i>-axis,
+<tt>RotationCenter</tt> would be specified as any point on the <i>x</i>-axis,
+like (0,0,0).
+<tt>RotationRateVector</tt> would then be specified as (<i>&omega;</i>,0,0),
+where <i>&omega;</i> is the rotation rate.
+Using the right-hand rule, <i>&omega;</i> would be positive for clockwise
+rotation (looking in the +<i>x</i> direction), and negative for
+counter-clockwise rotation.
+
+<p>
+Note that for a rotating coordinate system, the axis of rotation is
+defined in the inertial frame of reference, while the grid coordinates
+stored using the <a href="#GridCoordinates"><tt>GridCoordinates_t</tt></a>
+data structure are relative to the rotating frame of reference.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the default
+class for data contained in the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+For dimensional data,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> may be
+used to describe the system of units employed.
+If present, these two entities take precedence over the corresponding
+entities at higher levels of the CGNS hierarchy, following the
+standard <a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+If rotating coordinates are used, it is useful to store variables
+relative to the rotating frame.
+Standardized data-name identifiers should be used for these
+variables, as defined for flow-solution quantities in the section
+<a href="dataname.html">Conventions for Data-Name Identifiers</a>.
+
+<a name="FlowSolution"></a>
+<h3>Flow Solution Structure Definition: <tt>FlowSolution_t</tt></h3>
+
+<p>
+The flow solution within a given zone is described by the
+<tt>FlowSolution_t</tt> structure.
+This structure contains a list for the data arrays of the individual
+flow-solution variables, as well as identifying the grid location of the
+solution.
+It also provides a mechanism for identifying rind-point data included
+within the data arrays.
+
+<pre>
+  FlowSolution_t&lt; int CellDimension, int IndexDimension,
+                  int VertexSize[IndexDimension],
+                  int CellSize[IndexDimension] &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    GridLocation_t GridLocation ;                                      (o/d)
+
+    Rind_t&lt;IndexDimension&gt; Rind ;                                      (o/d)
+
+    IndexRange&lt;IndexDimension&gt; PointRange ;                            (o)
+    IndexArray&lt;IndexDimension, ListLength[], int&gt; PointList ;          (o)
+
+    List( DataArray_t&lt;DataType, IndexDimension, DataSize[]&gt; 
+          DataArray1 ... DataArrayN ) ;                                (o)
+
+    DataClass_t DataClass ;                                            (o)
+    
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>FlowSolution_t</tt> and shall not include the
+     names <tt>DataClass</tt>, <tt>DimensionalUnits</tt>,
+     <tt>GridLocation</tt>, <tt>PointList</tt>, <tt>PointRange</tt>,
+     or <tt>Rind</tt>.
+<li> There are no required fields for <tt>FlowSolution_t</tt>.
+     <a href="build.html#GridLocation"><tt>GridLocation</tt></a> has a
+     default of <tt>Vertex</tt> if absent.
+     <a href="build.html#Rind"><tt>Rind</tt></a> also has a default if
+     absent; the default is equivalent to having an instance of
+     <tt>Rind</tt> whose <tt>RindPlanes</tt> array contains all zeros.
+<li> Both of the fields <tt>PointList</tt> and <tt>PointRange</tt> are
+     optional. Only one of these two fields may be specified.
+<li> The structure parameter <tt>DataType</tt> must be consistent with
+     the data stored in the
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+     structure entities; <tt>DataType</tt> is
+     <tt>real</tt> for all flow-solution identifiers defined in
+     the section <a href="dataname.html">Conventions for Data-Name
+     Identifiers</a>.
+<li> For unstructured zones
+     <a href="build.html#GridLocation"><tt>GridLocation</tt></a>
+     options are limited to <tt>Vertex</tt> or <tt>CellCenter</tt>,
+     unless one of <tt>PointList</tt> or <tt>PointRange</tt> is present.
+<li> Indexing of data within the
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a> structure
+     must ne consistent with the associated numbering of vertices or elements.
+</ol>
+
+<p>
+<tt>FlowSolution_t</tt> requires four structure parameters; <tt>CellDimension</tt>
+identifies the dimensionality of cells or elements,
+<tt>IndexDimension</tt> identifies the dimensionality of the grid-size
+arrays, and <tt>VertexSize</tt> and <tt>CellSize</tt> are the number of
+core vertices and cells, respectively, in each index direction.
+For unstructured zones, <tt>IndexDimension</tt> is always 1.
+
+<p>
+The flow solution data is stored in the list of
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities; each
+<tt>DataArray_t</tt> structure entity may contain a single component of
+the solution vector.
+Standardized data-name identifiers for the flow-solution quantities are
+described in the section <a href="dataname.html">Conventions for Data-Name
+Identifiers</a>.
+The field <a href="build.html#GridLocation"><tt>GridLocation</tt></a>
+specifies the location of the solution data with respect to the grid;
+if absent, the data is assumed to coincide with grid vertices (i.e.,
+<tt>GridLocation = Vertex</tt>).
+All data within a given instance of <tt>FlowSolution_t</tt> must reside
+at the same grid location.
+
+<p>
+For structured grids, the value of <tt>GridLocation</tt> alone specifies the
+location and indexing of the flow solution data. Vertices are explicity indexed.
+Cell centers and face centers are indexed using the minimum of the connecting
+vertex indices, as described in the section
+<a href="conv.html#structgrid">Structured Grid Notation and Indexing Conventions</a>.
+
+<p>
+For unstructured grids, the value of <tt>GridLocation</tt> alone specifies
+location and indexing of flow solution data only for vertex and cell-centered data.
+The reason for this is that element-based grid connectivity provided in the
+<a href="#Elements"><tt>Elements_t</tt></a> data structures explicitly indexes only
+vertices and cells. For data stored at alternate grid locations (e.g., edges),
+additional connectivity information is needed. This is provided by the optional
+fields <tt>PointRange</tt> and <tt>PointList</tt>; these refer to vertices,
+edges, faces or cell centers, depending on the values of <tt>CellDimension</tt>
+and <tt>GridLocation</tt>. The following table shows these relations.
+
+<center>
+<table cellspacing=0 cellpadding=3 border>
+<tr align=center>
+  <th rowspan=2>CellDimension</th>
+  <th colspan=4>GridLocation</th>
+</tr><tr align=center>
+  <th>Vertex</th>
+  <th>EdgeCenter</th>
+  <th>*FaceCenter</th>
+  <th>CellCenter</th>
+</tr><tr align=center>
+  <td>1</td>
+  <td>vertices</td>
+  <td>-</td>
+  <td>-</td>
+  <td>cells (line elements)</td>
+</tr><tr align=center>
+  <td>2</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>-</td>
+  <td>cells (area elements)</td>
+</tr><tr align=center>
+  <td>3</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>faces</td>
+  <td>cells (volume elements)</td>
+</tr>
+</table>
+</center>
+
+<p>
+<i>Note</i>: In the table, *FaceCenter stands for the possible types:
+<tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, <tt>KFaceCenter</tt>,
+or <tt>FaceCenter</tt>.
+
+<p>
+Although intended for edge or face-based solution data for unstructured grids,
+the fields <tt>PointRange/List</tt> may also be used to (redundantly) index vertex
+and cell-centered data. In all cases, indexing of flow solution data corresponds
+to the element numbering as defined in the <a href="#Elements"><tt>Elements_t</tt></a>
+data structures.
+
+<p>
+<a href="build.html#Rind"><tt>Rind</tt></a> is an optional field
+that indicates the number of rind planes (for
+structured grids) or rind points or elements (for unstructured grids)
+included in the data.
+Its purpose and function are identical to those described for the
+<a href="#GridCoordinates"><tt>GridCoordinates_t</tt></a> structure.
+Note, however, that the <tt>Rind</tt> in this structure is independent
+of the <tt>Rind</tt> contained in <tt>GridCoordinates_t</tt>.
+They are not required to contain the same number of rind planes or
+elements.
+Also, the location of any flow-solution rind points is assumed to be
+consistent with the location of the core flow solution points (e.g.,
+if <tt>GridLocation = CellCenter</tt>,
+rind points are assumed to be located at fictitious cell centers).
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the default
+class for data contained in the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+For dimensional flow solution data,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> may be
+used to describe the system of units employed.
+If present, these two entities take precedence over the corresponding
+entities at higher levels of the CGNS hierarchy, following the
+standard <a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="ListLength_flow"></a>
+<h4>FUNCTION <tt>Listlength[]</tt>:</h4>
+
+return value: <tt>int</tt>
+<br>
+dependencies: <tt>PointRange</tt>, <tt>PointList</tt>
+
+<p>
+<tt>FlowSolution_t</tt> requires the structure function <tt>ListLength</tt>,
+which is used to specify the number of entities (e.g. vertices) corresponding
+to a given <tt>PointRange</tt> or <tt>PointList</tt>. If <tt>PointRange</tt> is
+specified, then <tt>ListLength</tt> is obtained from the number of points
+(inclusive) between the beginning and ending indices of <tt>PointRange</tt>.
+If <tt>PointList</tt> is specified, then <tt>ListLength</tt> is the number of
+indices in the list of points. In this situation, <tt>ListLength</tt> becomes
+a user input along with the indices of the list <tt>PointList</tt>. By <i>user</i>
+we mean the application code that is generating the CGNS database.
+
+<a name="DataSize_flow"></a>
+<h4>FUNCTION <tt>DataSize[]</tt>:</h4>
+
+return value: one-dimensional <tt>int</tt> array of length <tt>IndexDimension</tt>
+<br>
+dependencies: <tt>IndexDimension</tt>, <tt>VertexSize[]</tt>, <tt>CellSize[]</tt>, <tt>GridLocation</tt>,
+<tt>Rind</tt>, <tt>ListLength[]</tt>
+
+<p>
+The function <tt>DataSize[]</tt> is the size of flow solution data arrays.
+If <a href="build.html#Rind"><tt>Rind</tt></a> is absent then
+<tt>DataSize</tt> represents only the core points; it will be
+the same as <tt>VertexSize</tt> or <tt>CellSize</tt> depending on
+<a href="build.html#GridLocation"><tt>GridLocation</tt></a>.  The
+definition of the function <tt>DataSize[]</tt> is as follows:
+
+<pre>
+  if (PointRange/PointList is present) then
+    {
+    DataSize[] = ListLength[] ;
+    }
+  else if (Rind is absent) then
+    {
+    if (GridLocation = Vertex) or (GridLocation is absent)
+      {
+      DataSize[] = VertexSize[] ;
+      }
+    else if (GridLocation = CellCenter) then
+      {
+      DataSize[] = CellSize[] ;
+      }
+    }
+  else if (Rind is present) then
+    {
+    if (GridLocation = Vertex) or (GridLocation is absent) then
+      {
+      DataSize[] = VertexSize[] + [a + b,...] ;
+      }
+    else if (GridLocation = CellCenter)
+      {
+      DataSize[] = CellSize[] + [a + b,...] ;
+      }
+    }
+</pre>
+where <tt>RindPlanes = [a,b,...]</tt> (see the
+<a href="build.html#Rind"><tt>Rind_t</tt></a> structure for the
+definition of <tt>RindPlanes</tt>).
+
+<a name="flow_example"></a>
+<h3>Flow Solution Example</h3>
+
+<p>
+This section contains an example of the flow solution entity, including
+the designation of grid location and rind planes and data-normalization
+mechanisms.
+
+<a name="ex:flow"></a>
+<h4>Example - Flow Solution</h4>
+
+<p>
+Conservation-equation variables (<i>&rho;</i>, <i>&rho;u</i>, <i>&rho;v</i>, 
+and <i>&rho;e</i><sub>0</sub>)
+for a 2-D grid of size 11 &times; 5.
+The flowfield is cell-centered with two planes of rind data.
+The density, momentum and stagnation energy
+(<i>&rho;e</i><sub>0</sub>)
+data is nondimensionalized with respect to a freestream reference state
+whose quantities are dimensional.
+The freestream density and pressure are used for normalization; these
+values are 1.226 kg/m<sup>3</sup> and
+1.0132&times;10<sup>5</sup> N/m<sup>2</sup> (standard atmosphere conditions).
+The data-name identifier conventions for the conservation-equation
+variables are <tt>Density</tt>, <tt>MomentumX</tt>, <tt>MomentumY</tt>
+and <tt>EnergyStagnationDensity</tt>.
+<pre>
+  !  CellDimension = 2
+  !  IndexDimension = 2
+  !  VertexSize = [11,5]
+  !  CellSize = [10,4]
+  FlowSolution_t&lt;2, [11,5], [10,4]&gt; FlowExample =
+    {{
+    GridLocation_t GridLocation = CellCenter ;
+
+    Rind_t&lt;2&gt; Rind =
+      {{
+      int[4] RindPlanes = [2,2,2,2] ;
+      }} ;
+
+    DataClass_t DataClass = NormalizedByDimensional ;
+    
+    DimensionalUnits_t DimensionalUnits = 
+      {{ 
+      MassUnits        = Kilogram ;
+      LengthUnits      = Meter ;
+      TimeUnits        = Second ;
+      TemperatureUnits = TemperatureUnitsNull ;
+      AngleUnits       = AngleUnitsNull ;
+      }} ;
+
+    !  DataType = real
+    !  Dimension = 2
+    !  DataSize = CellSize + [4,4] = [14,8]
+    DataArray_t&lt;real, 2, [14,8]&gt; Density =
+      {{
+      Data(real, 2, [14,8]) = ((rho(i,j), i=-1,12), j=-1,6) ;
+
+      DataConversion_t DataConversion =
+        {{
+        ConversionScale  = 1.226 ;
+        ConversionOffset = 0 ;
+        }} ;
+
+      DimensionalExponents_t DimensionalExponents =
+        {{
+        MassExponent        = +1 ;
+        LengthExponent      = -3 ;
+        TimeExponent        =  0 ;
+        TemperatureExponent =  0 ;
+        AngleExponent       =  0 ;
+        }} ;
+      }} ;
+
+    DataArray_t&lt;real, 2, [14,8]&gt; MomentumX =
+      {{
+      Data(real, 2, [14,8]) = ((rho_u(i,j), i=-1,12), j=-1,6) ;
+
+      DataConversion_t DataConversion =
+        {{
+        ConversionScale  = 352.446 ;
+        ConversionOffset = 0 ;
+        }} ;
+      }} ;
+
+    DataArray_t&lt;real, 2, [14,8]&gt; MomentumY =
+      {{
+      Data(real, 2, [14,8]) = ((rho_v(i,j), i=-1,12), j=-1,6) ;
+
+      DataConversion_t DataConversion =
+        {{
+        ConversionScale  = 352.446 ;
+        ConversionOffset = 0 ;
+        }} ;
+      }} ;
+
+    DataArray_t&lt;real, 2, [14,8]&gt; EnergyStagnationDensity =
+      {{
+      Data(real, 2, [14,8]) = ((rho_e0(i,j), i=-1,12), j=-1,6) ;
+
+      DataConversion_t DataConversion =
+        {{
+        ConversionScale  = 1.0132e+05 ;
+        ConversionOffset = 0 ;
+        }} ;
+      }} ;
+    }} ;
+</pre>
+The value of <a href="build.html#GridLocation"><tt>GridLocation</tt></a>
+indicates the data is at cell centers, and the value of
+<a href="build.html#Rind"><tt>RindPlanes</tt></a> specifies two rind
+planes on each face of the zone.
+The resulting value of the structure function
+<a href="#DataSize_flow"><tt>DataSize</tt></a> is the number of cells
+plus four in each coordinate direction; this value is passed to each of
+the <a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+
+<p>
+Since the data are all nondimensional and normalized by dimensional
+reference quantities, this information is stated in
+<a href="build.html#DataClass"><tt>DataClass</tt></a> and
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+at the <a href="#FlowSolution"><tt>FlowSolution_t</tt></a> level
+rather than attaching the appropriate <tt>DataClass</tt> and
+<tt>DimensionalUnits</tt> to each
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entity.
+It could possibly be at even higher levels in the heirarchy.
+The contents of <a href="data.html#DataConversion"><tt>DataConversion</tt></a>
+are in each case the denominator of the normalization; this is
+<i>&rho;</i><sub>&infin;</sub>
+for density,
+(<i>p</i><sub>&infin;</sub> <i>&rho;</i><sub>&infin;</sub>)<sup>1/2</sup>
+for momentum, and
+<i>p</i><sub>&infin;</sub>
+for stagnation energy.
+The dimensional exponents are specified for density.
+For all the other data, the dimensional exponents are to be inferred
+from the data-name identifiers.
+
+<p>
+Note that no information is provided to identify the actual reference
+state or indicate that it is freestream.
+This information is not needed for data manipulations involving
+renormalization or changing the units of the converted raw data.
+
+<a name="ZoneSubRegion"></a>
+<h3>Zone Subregion Structure Definition: <tt>ZoneSubRegion_t</tt></h3>
+
+The <tt>ZoneSubRegion_t</tt> node allows for the ability to give flowfield or
+other information over a subset of the entire zone in a CGNS file.
+This subset may be over a portion of a boundary, or it may be over a portion
+of the entire field.
+
+<pre>
+  ZoneSubRegion_t&lt; int IndexDimension, int CellDimension &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                         (o)
+
+    int RegionCellDimension ;                                                  (o/d)
+
+    GridLocation_t GridLocation ;                                              (o/d)
+
+    IndexRange_t&lt;IndexDimension&gt; PointRange ;                                  (r:o:o:o)
+    IndexArray_t&lt;IndexDimension, ListLength, int&gt; PointList ;                  (o:r:o:o)
+    Descriptor_t BCRegionName ;                                                (o:o:r:o)
+    Descriptor_t GridConnectivityRegionName ;                                  (o:o:o:r)
+
+    Rind_t&lt;IndexDimension&gt; Rind;                                               (o/d)
+
+    List( DataArray_t&lt;DataType, 1, ListLength[]&gt; DataArray1 ... DataArrayN ) ; (o)
+
+    FamilyName_t FamilyName ;                                                  (o)
+
+    List( AdditionalFamilyName_t AddFamilyName1 ... AddFamilyNameN ) ;         (o)
+
+    DataClass_t DataClass ;                                                    (o)
+
+    DimensionalUnits_t DimensionalUnits ;                                      (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;          (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>ZoneSubRegion_t</tt> and shall not include the names
+     <tt>RegionCellDimension</tt>, <tt>Rind</tt>, <tt>PointRange</tt>,
+     <tt>PointList</tt>, <tt>BCRegionName</tt>, <tt>GridConnectivityRegionName</tt>,
+     <tt>FamilyName</tt>, <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>RegionCellDimension</tt> must be equal to or less than the
+     cell dimension for the zone. If absent, then its default value is
+     <tt>CellDimension</tt>.
+<li> <tt>GridLocation</tt> has a default value of <tt>Vertex</tt> if absent.
+     Permissible values of <tt>GridLocation</tt> are determined by
+     <tt>RegionCellDimension</tt> (see below). All data within a given
+     instance of <tt>ZoneSubRegion_t</tt> must reside at the same grid location.
+<li> The extent of the region and distribution of its data is specified by one of
+     <tt>PointRange</tt>, <tt>PointList</tt>, <tt>BCRegionName</tt>, or
+     <tt>GridConnectivityRegionName</tt>. One and only one of these must be specified.
+</ol>
+
+<p>
+The extent of the subregion and the distribution of data within that subregion
+is determined by <tt>RegionCellDimension</tt>, <tt>GridLocation</tt>, and one of
+<tt>PointRange/List</tt>, <tt>BCRegionName</tt>, or <tt>GridConnectivityRegionName</tt>.
+For a 3-D subregion (<tt>RegionCellDimension</tt> = 3), data can be located
+at vertices, edges, face centers or cell centers.
+For a 2-D subregion (<tt>RegionCellDimension</tt> = 2),
+data can be located at vertices, edges or cell centers (i.e. area elements).
+It is anticipated that one of the widest uses for <tt>ZoneSubRegion_t</tt>
+will be to store specific boundary-only information. For example, in a 3-D simulation,
+one may wish to store additional data on surfaces. In this case, the
+<tt>RegionCellDimension</tt> would be set to 2.
+
+<p>
+<tt>PointRange/List</tt> refer to vertices, edges, faces or cell centers,
+depending on the values of <tt>RegionCellDimension</tt> and <tt>GridLocation</tt>.
+Note that it is both the dimensionality of the zone (<tt>CellDimension</tt>)
+as well as the dimensionality of the subregion (<tt>RegionCellDimension</tt>),
+that determines the types of elements
+permissible in <tt>PointRange/List</tt>. The following table shows these relations.
+
+<center>
+<table cellspacing=0 cellpadding=3 border>
+<tr align=center>
+  <th rowspan=2>CellDimension</th>
+  <th rowspan=2>RegionCellDimension</th>
+  <th colspan=4>GridLocation</th>
+</tr><tr align=center>
+  <th>Vertex</th>
+  <th>EdgeCenter</th>
+  <th>*FaceCenter</th>
+  <th>CellCenter</th>
+</tr><tr align=center>
+  <td>1</td>
+  <td>1</td>
+  <td>vertices</td>
+  <td>-</td>
+  <td>-</td>
+  <td>cells (line elements)</td>
+</tr><tr align=center>
+  <td>2</td>
+  <td>1</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>-</td>
+  <td>-</td>
+</tr><tr align=center>
+  <td>2</td>
+  <td>2</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>-</td>
+  <td>cells (area elements)</td>
+</tr><tr align=center>
+  <td>3</td>
+  <td>1</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>-</td>
+  <td>-</td>
+</tr><tr align=center>
+  <td>3</td>
+  <td>2</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>faces</td>
+  <td>-</td>
+</tr><tr align=center>
+  <td>3</td>
+  <td>3</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>faces</td>
+  <td>cells (volume elements)</td>
+</tr>
+</table>
+</center>
+
+<p>
+<i>Note</i>: In the table, *FaceCenter stands for the possible types:
+<tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, <tt>KFaceCenter</tt>,
+or <tt>FaceCenter</tt>.
+
+<p>
+For both structured and unstructured grids, <tt>GridLocation</tt> = <tt>Vertex</tt>
+means that <tt>PointRange/List</tt> refers to vertex indices. For structured grids,
+edges, faces and cell centers are indexed using the minimum of the
+connecting vertex indices, as described in the section
+<a href="conv.html#structgrid">Structured Grid Notation and Indexing Conventions</a>.
+For unstructured grids, edges, faces and
+cell centers are indexed using their element numbering, as defined in
+the <a href="#Elements"><tt>Elements_t</tt></a> data structures.
+
+<p>
+If the vertices or elements of the subregion are continuously numbered,
+then <tt>PointRange</tt> may be used. Otherwise, <tt>PointList</tt>
+should be used to list the vertices/elements. Alternatively, if
+the data locations and range of the subregion coincide with an existing
+BC region or zone-to-zone GridConnectivity region, then <tt>BCRegionName</tt>
+or <tt>GridConnectivityRegionName</tt> may be used.
+<tt>BCRegionName</tt> is a string giving the name of an existing
+<a href="bc.html#BC"><tt>BC_t</tt></a> node of the current zone.
+<tt>GridConnectivityRegionName</tt> is a string giving the name of an existing
+<a href="cnct.html#GridConnectivity1to1"><tt>GridConnectivity1to1_t</tt></a>
+or <a href="cnct.html#GridConnectivity"><tt>GridConnectivity_t</tt></a>
+node of the current zone.
+The name referred to should be unambiguous.
+
+<p>
+Consistent with <a href="#FlowSolution"><tt>FlowSolution_t</tt></a>,
+the subregion’s solution data is stored in the list of
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities;
+each <tt>DataArray_t</tt> structure entity contains a single quantity.
+Standardized data-name identifiers for solution quantities are described
+in the section <a href="dataname.html">Conventions for Data-Name Identifiers</a>.
+As noted above, all solution data
+within a given subregion must reside at the same grid location.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the default class
+for data contained in the <tt>DataArray_t</tt> entities. For dimensional
+flow solution data, <a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of units employed. If present, these two entities
+take precedence over the corresponding entities at higher levels of the
+CGNS hierarchy, following the standard <a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+<tt>ZoneSubRegion_t</tt> requires the structure function
+<a href="bc.html#ListLength"><tt>ListLength[]</tt></a>,
+which is used to specify the number
+of data points (e.g. vertices, cell centers, face centers, edge centers)
+corresponding to the given <tt>PointRange/List</tt>.
+If <tt>PointRange</tt> is specified, then <tt>ListLength</tt> is obtained
+from the number of points (inclusive) between the beginning and ending indices
+of <tt>PointRange</tt>. If <tt>PointList</tt> is specified,
+then <tt>ListLength</tt> is the number of indices in the list of points.
+In this situation, <tt>ListLength</tt> becomes a user input along with the
+indices of the list <tt>PointList</tt>. By <i>user</i> we mean the application
+code that is generating the CGNS database.
+
+<p>
+<a href="build.html#Rind"><tt>Rind</tt></a> is an optional field that indicates the
+number of rind planes (for structured grids) or rind points (for unstructured grids).
+If <tt>Rind</tt> is absent, then the <tt>DataArray_t</tt> structure entities contain
+only core data of length <tt>ListLength</tt>, as defined for this region.
+If <tt>Rind</tt> is present, it will provide information on the number of
+rind elements, in addition to the <tt>ListLength</tt>, that are contained
+in the <tt>DataArray_t</tt> structures. The bottom line is that <tt>Rind</tt>
+simply adds a specified number to <tt>ListLength</tt>,
+as used by the <tt>DataArray_t</tt> structures.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a> data structure
+allows arbitrary user-defined data to be stored.
+
+<p>
+There may be multiple instances of <tt>ZoneSubRegion_t</tt> in a given zone.
+These may simply be multiple regions defined for a single solution,
+or they may be associated with different times / different solutions in a
+time-dependent simulation (in which case
+<a href="timedep.html#ZoneIterativeData">ZoneIterativeData</a> should be
+used to associate them).
+
+
+<a name="subreg_example"></a>
+<h3>Zone Subregion Examples</h3>
+
+<p>
+This section contains four examples of Zone Subregions, including
+the use of <tt>PointList</tt>, <tt>PointRange</tt> and <tt>BCRegionName</tt>.
+
+<h4>Example - Volume Subregion for a Structured Grid</h4>
+
+For this example, it is assumed that a 1-zone 3-D structured grid exists
+of size (197×97×33). Inside of this zone, the user wishes to output a
+special subset region of interior data (say, temperature and kinematic viscosity)
+at the specific cell-center locations i = 121-149, j = 17-45, k = 21-23.
+Even though this same data may possibly exist under <tt>FlowSolution_t</tt>
+(which holds the flowfield data for the entire zone), this particular location
+may represent a special region of interest where the user wants to focus attention
+or output different types of flowfield variables or user-defined data.
+Note that for structured grids, the location list always references grid nodes;
+in this case with <tt>GridLocation</tt> = <tt>Cellcenter</tt> the cell centers
+are indexed by the minimum i, j, and k indices of the connecting vertices.
+
+<pre>
+Under Zone_t:
+
+  ZoneSubRegion_t&lt;3,3&gt; Region1 =
+    {{
+    GridLocation_t GridLocation = CellCenter ;
+    int RegionCellDimension = 3;
+    IndexRange_t&lt;3&gt; PointRange =
+      {{
+      int[3] Begin = [121,17,21];
+      int[3] End = [149,45,21];
+      }};
+
+    ! ListLength = (149-121+1)*(45-17+1)*(23-21+1) = 29*29*3 = 2523
+    DataArray_t&lt;real,1,2523&gt; Temperature =
+      {{
+      Data(real,1,2523) = temperature at the cell centers specified
+      }} ;
+    DataArray_t&lt;real,1,2523&gt; ViscosityKinematic =
+      {{
+      Data(real,1,2523) = kinematic viscosity at the cell centers specified
+      }} ;
+    }} ; ! end Region1
+</pre>
+
+<h4>Example - Volume Subregion for an Unstructured Grid</h4>
+
+This example is like the previous one, except it is for an unstructured zone.
+Inside of this zone, the user wishes to output a special subset region of
+data (say, temperature and kinematic viscosity) at a specific list of 2523
+element cell-center locations, located somewhere within the (larger) field
+of elements. Recall that when <tt>GridLocation</tt> is anything other than
+<tt>Vertex</tt> in conjunction with unstructured grids, then the location list
+represents element numbers and not grid node numbers.
+
+<pre>
+Under Zone_t:
+
+  ZoneSubRegion_t&lt;1,3&gt; Region1 =
+    {{
+    GridLocation_t GridLocation = CellCenter ;
+    int RegionCellDimension = 3;
+    IndexArray_t&lt;1,2523,int&gt; PointList =
+      {{
+      int[1] ElementList = list of 3-D element numbers where region data given
+      }} ;
+
+    ! ListLength = length of the element list = 2523
+    DataArray_t&lt;real,1,2523&gt; Temperature =
+      {{
+      Data(real,1,2523) = temperature at the element cell centers specified
+      }} ;
+    DataArray_t&lt;real,1,2523&gt; ViscosityKinematic =
+      {{
+      Data(real,1,2523) = kinematic viscosity at the element cell centers specified
+      }} ;
+    }} ; ! end Region1
+</pre>
+
+<h4>Example - Surface Subregion for an Unstructured Grid</h4>
+
+In this example, boundary data is output on a 2-D surface subregion of a 3-D problem.
+Because this is data on a topologically 2-D boundary (in a 3-D simulation),
+<tt>RegionCellDimension</tt> is set to 2. <tt>GridLocation</tt> is specified as
+<tt>FaceCenter</tt>. Recall that when <tt>GridLocation</tt> is anything other than
+<tt>Vertex</tt> in conjunction with unstructured grids, then the location list
+represents element numbers and not grid node numbers. Thus, the <tt>PointList/Range</tt>
+indicates particular surface elements (or boundary elements) that need to have been
+defined in the file under their own <tt>Elements_t</tt> node(s),
+separate from the 3-D volume elements that make up the grid.
+In this case, we assume that the surface element numbers at which we are outputting
+data are 5568 through 5592 inclusive. Because the numbers occur in sequential order,
+we can make use of <tt>PointRange</tt>.
+
+<pre>
+Under Zone_t:
+
+  ZoneSubRegion_t&lt;1,3&gt; Region1 =
+    {{
+    GridLocation_t GridLocation = FaceCenter ;
+    int RegionCellDimension = 2;
+    IndexArray_t&lt;1,25,int&gt; PointRange =
+      {{
+      int[1] Begin = [5568];
+      int[1] End = [5592];
+      }} ;
+
+    ! ListLength = length of the element list = 25
+    DataArray_t&lt;real,1,25&gt; Temperature =
+      {{
+      Data(real,1,25) = temperature at the specific face element locations specified
+      }} ;
+    DataArray_t&lt;real,1,25&gt; ViscosityKinematic =
+      {{
+      Data(real,1,25) = kinematic viscosity at the specific face element locations specified
+      }} ;
+    }} ; ! end Region1
+</pre>
+
+<h4>Example - Surface Subregion Utilizing BC Information</h4>
+
+In this example, boundary data is output at the same locations where the BCs
+are specified in a particular <tt>BC_t</tt> node (in this case the ListLength is 25).
+Note that because this is data on a topologically 2-D boundary (in a 3-D simulation),
+<tt>RegionCellDimension</tt> is set to 2. <tt>GridLocation</tt> is not specified,
+because it is inherited from the <tt>BC_t</tt> node along with the <tt>ListLength</tt>.
+
+<pre>
+Under Zone_t:
+
+  ZoneSubRegion_t&lt;1,3&gt; Region1 =
+    {{
+    int RegionCellDimension = 2;
+    Descriptor_t BCRegionName = "name of a ZoneBC/BC_t node" ;
+
+    ! ListLength = length of the point/element list from BC_t = 25
+    DataArray_t&lt;real,1,25&gt; Temperature =
+      {{
+      Data(real,1,25) = temperature at the specific BC locations specified
+      }} ;
+    DataArray_t&lt;real,1,25&gt; ViscosityKinematic =
+      {{
+      Data(real,1,25) = kinematic viscosity at the specific BC locations specified
+      }} ;
+    }} ; ! end Region1
+</pre>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 28 Aug 2014
+
+</body>
+</html>

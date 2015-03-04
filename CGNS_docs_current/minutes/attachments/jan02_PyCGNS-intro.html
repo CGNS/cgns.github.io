@@ -1,0 +1,248 @@
+<!-- HTML input file for "CGNS and elsA" (attachment to
+minutes of Jan 2002 Steering Committee Meeting) -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../../cgns.css" rel="stylesheet" type="text/css">
+<title>CGNS and elsA</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>
+CGNS and elsA
+</h1>
+
+<p>
+Poinot Marc<br>
+DSNA/ELSA<br>
+poinot@onera.fr<br>
+http://elsa.onera.fr
+
+<h2>Motivations</h2>
+
+<ul>
+<li> CFD standard for data representation is required
+     <ul>
+     <li> We want to use a common data representation for interoperability
+     <li> We want to ensure our data a long life format
+     </ul>
+<li> ONERA is a CFD expert
+     <ul>
+     <li> We are one of the aerospace main actors
+     <li> We want to participate to a standard
+          <ul>
+          <li> Add our expertise
+          <li> Be aware of what's going on
+          </ul>
+     </ul>
+<li> Some customers are asking for CGNS
+     <ul>
+     <li> Common data representation at specification level
+     <li> Interoperability for application framework
+     </ul>
+</ul>
+
+<h2>CGNS related developments</h2>
+
+<ul>
+<li> elsA
+     <ul>
+     <li> Main I/O data representation
+          <ul>
+          <li> In-memory tree
+               <ul>
+               <li> Interoperability / Multi-processing
+               </ul>
+          </ul>
+          <ul>
+          <li> Disk tree
+               <ul>
+               <li> Validation resources
+               </ul>
+          </ul>
+     </ul>
+<li> pyCGNS
+     <li> A Python binding to CGNS
+     <li> Gluing language for application framework
+          <ul>
+          <li> e.g. translators to CGNS trees
+               <ul>
+               <li> From/To Tecplot and Aerospace actors data format
+               </ul>
+          </ul>
+     <li> Open source
+          <ul>
+          <li> http://elsa.onera.fr/CGNS/releases
+          </ul>
+     </ul>
+</ul>
+
+<h2>An ISO Data Representation</h2>
+
+<p>
+<center>
+<img src="jan02_PyCGNS-intro/fig1.png"
+     alt="Chart showing CGNS within ISO data structure"
+     longdesc="jan02_PyCGNS-intro/fig1.html">
+</center>
+
+<h2>Application side features/ concerns</h2>
+
+<ul>
+<li> Top level side
+     <ul>
+     <li> Share application data
+          <ul>
+          <li> Semantics
+          <li> Common names/structure
+          </ul>
+     <li> Self-described tree structure
+     <li> ISO process
+     </ul>
+<li> Lower level side
+     <ul>
+     <li> Share physical data
+     <li> Actual interoperability between applications
+     <li> CAUTION: NO STANDARDIZATION PROCESS
+     </ul>
+<li> Missing Features
+     <ul>
+     <li> Protocol
+          <ul>
+          <li> No data lifecycle
+          <li> No data ownership
+          </ul>
+     <li> Specific data / extensions
+          <ul>
+          <li> Guidelines for proprietary sub-tree
+          </ul>
+     <li> Parallel
+          <ul>
+          <li> Application side: uses in-memory representation?
+          </ul>
+     <li> Share / Transactionnal / Query
+          <ul>
+          <li> DBMS uses blobs at application level?
+          </ul>
+     <li> Other
+          <ul>
+          <li> Force an XML mapping
+          </ul>
+     </ul>
+</ul>
+
+<h2>Architecture</h2>
+
+<p>
+<center>
+<img src="jan02_PyCGNS-intro/fig2.png"
+     alt="Chart showing elsA and other applications interfacing a tree on disk"
+     longdesc="jan02_PyCGNS-intro/fig2.html">
+</center>
+<br><br>
+<p>
+<center>
+<img src="jan02_PyCGNS-intro/fig3.png"
+     alt="Chart showing elsA and other applications interfacing a tree on disk, and a tree in memory"
+     longdesc="jan02_PyCGNS-intro/fig3.html">
+</center>
+
+<h2>pyCGNS Status</h2>
+
+<ul>
+<li> v0.3
+     <ul>
+     <li> Binding
+          <ul>
+          <li> Full ADF wrapper
+          <li> 60% MLL wrapper
+          <li> 10% OOL layer
+          </ul>
+     <li> Python + Numerical Python
+          <ul>
+          <li> Standard package
+          <li> Documentation + test suite
+          </ul>
+     <li> Tools
+          <ul>
+          <li> SIFT - SIDS instance description check
+          <li> ParseTree - Tree dump/display as XML tree
+          <li> StampNode - Add sub-nodes with specific stamps (date,
+               ownership ...)
+          </ul>
+     <li> http://elsa.onera.fr/CGNS/releases
+     </ul>
+<li> v0.4 (1Q2002)
+     <ul>
+     <li> In-memory representation
+          <ul>
+          <li> Python/C/C++/Fortran in-memory tree sharing	
+          </ul>
+     <li> Tools
+          <ul>
+          <li> SIFT - Generate data tree from SIDS instance description
+          </ul>
+     </ul>
+<li> v1.0 (3Q2002)
+     <ul>
+     <li> Binding
+          <ul>
+          <li> Full MLL wrapper
+          <li> Full OOL layer
+          </ul>
+     <li> Documentation
+          <ul>
+          <li> Features 100% documented + tutorial
+          <li> Design partly documented
+          </ul>
+     <li> Test suite
+          <ul>
+          <li> Complete test suite for OOL/MLL/ADFF
+          </ul>
+     </ul>
+</ul>
+
+<h2>Code example - pyCGNS</h2>
+
+<pre>
+#!/usr/bin/env python
+# CFD General Notation System - CGNS lib wrapper
+# ONERA/DSNA/ELSA - poinot@onera.fr
+# User's Guide to CGNS - C.L.Rumsey et al. examples translation
+#
+from CGNS      import midlevel
+from CGNS.wrap import *
+from Numeric   import *
+#
+# open CGNS file for read-only
+file=pyCGNS('grid.cgns',midlevel.MODE_READ)
+index_base=1
+index_zone=1
+index_flow=1
+isize=file.zoneread(index_base,index_zone)[3]
+irmin=[1,1,1]
+irmax=[isize[0],isize[1],isize[2]]
+(loc,name)=file.solinfo(index_base,index_zone,index_flow)
+if (loc != midlevel.Vertex):
+  print "Error, GridLocation must be Vertex! Currently:",
+  print midlevel.GridLocation[loc]
+# read flow solution
+r=file.fieldread(index_base,index_zone,index_flow,'Density',midlevel.RealSingle,irmin,irmax)
+p=file.fieldread(index_base,index_zone,index_flow,'Pressure',midlevel.RealSingle,irmin,irmax)
+# close CGNS file
+del file
+print "Successfully read flow solution from file 'grid.cgns'"
+print "For example, r,p(21,17,9)=",r[20,16,8],p[20,16,8]
+print "Program successful... ending now"
+</pre>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../../include/footer_small.html" -->
+Last updated 4 Feb 2008
+
+</body>
+</html>

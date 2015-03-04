@@ -1,0 +1,415 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Meeting Minutes</h2>
+
+7 January 2009<br>
+7:00 PM Eastern Time<br>
+AIAA Aerospace Sciences Meeting, Orlando, FL
+
+<p>
+<ol>
+<li> The face-to-face meeting was called to order at 7:05 PM eastern
+     time, in Orlando FL at the AIAA ASM Conference.  There were
+     <a href="#attendees">8 attendees</a>, listed below (including 3
+     telephone call-ins).
+<p>
+<li> The minutes of the <a href="telecon_nov08.html">5 November 2008
+     meeting</a> were approved as posted on the web site.
+<p>
+<li> Status of previous action items
+     <p>
+     <ol type="a">
+     <li> Hauser and Poinot will work together to resolve the issue of
+          the HDF-5 indexing problem, both to make sure the fix in V3
+          works for Poinot and to check consistency of files generated
+          without MLL.
+          <ol type=i>
+          <li> Poinot considered adding a new flag to file, to indicate
+               what the ordering inside the file is, but others at
+               the meeting felt that this gives too many options and
+               complicates the reading.  The problem is that a bug
+               was discovered in the software last year, so Poinot's
+               group has many CGNS HDF-5 files with the incorrect index
+               ordering (written before the bug was fixed). General
+               consensus at the meeting was to enforce C-ordering in
+               HDF-5 files. I.e., corrupted files will need to be fixed
+               via some external utility; there should be no additional
+               flag or node added in the file.
+          </ol>
+     <li> Wedan to incorporate compression capability into Version 3 MLL.
+          <ol type=i>
+          <li> Hauser believes this was done (in CVS version), but it
+               needs testing. <u>Hauser to test Version 3 compression
+               capability prior to release.</u>
+          </ol>
+     <li> Hauser and Wedan to improve documentation and build
+          instructions for V3.0, remove instructions regarding XML
+          output from configure script, make HDF-5 part of V3.0's tar
+          file distribution, and generally upgrade the build capability
+          prior to release of V3.0. Tentative plans to release V3.0 in
+          January 2009.
+          <ol type=i>
+          <li> Significant progress made on this front by Hauser and
+               his student. They plan to use cmake (similar to autoconf
+               &amp; automake) - there were no objections to this from
+               the other attendees.  They also added a patch to fix
+               HDF-5 for large number of zones (it used to be slower
+               than ADF, but now is typically a little bit faster).
+               They are essentially on schedule for a release of V3.0
+               within the next month. <u>Hauser &amp; Wedan to complete
+               and release V3.0.</u>
+          </ol>
+     <li> Rumsey to move Allmaras' proposal to "Awaiting implementation"
+          column.
+          <ol type=i>
+          <li> Done.
+          </ol>
+     <li> <u>Poinot to work with Power and others to bring Rigid Motion
+          Improvement proposal to completion, including specific
+          examples.</u>
+          <ol type=i>
+          <li> Not done yet.  Examples still needed. Power wants to be
+               sure standard does not have too many options; i.e., make
+               it as simple as possible.
+          </ol>
+     <li> Rumsey to compile list of potential programmers who might help
+          to implement some of the outstanding proposals.
+          <ol type=i>
+          <li> Attempted. The only positive response came from
+               Poinot. The 3 outstanding accepted proposals for
+               extension are still awaiting MLL implementation, so this
+               issue of developer support for the MLL still remains one
+               of the CGNS Team's biggest bottlenecks.
+          </ol>
+     <li> <u>Hauser will add HDF-5 parallel code to SourceForge and will
+          let users know when it is available.</u>
+          <ol type=i>
+          <li> Not done yet.
+          </ol>
+     <li> Paul, Bussoletti, and Allmaras to continue to look into finding
+          manpower development (particularly for MLL implementation)
+          resources at Boeing.
+          <ol type=i>
+          <li> Still no progress on this front.  Does not appear likely,
+               so action item deleted.
+          </ol>
+     <li> <u>Hauser to contact members of the HPC Consortium to explore
+          possibility of CGNS contributing to their effort.</u>
+          <ol type=i>
+          <li> Not done yet.
+          </ol>
+     <li> <u>Duque and Hauser to continue to develop proposal for
+          handling sprays of unconnected points.</u>
+          <ol type=i>
+          <li> Not done yet.
+          </ol>
+     <li> Hauser to send information on interface "fix" to improve
+          performance of HDF-5 when there are many zones to Wedan,
+          Poinot, and anyone else interested.
+          <ol type=i>
+          <li> Done, see item c above.
+          </ol>
+     <li> <u>Wedan to investigate issue of MLL deleting the entire node
+          even though its new dimensions are the same.</u>
+          <ol type=i>
+          <li> Not done yet.
+          </ol>
+     <li> <u>Hauser will take control of cgns.org domain name and will
+          consider possibility of moving website to Utah State site.</u>
+          <ol type=i>
+          <li> Not done yet.  There is some urgency on this now because
+               the domain no longer works, but Hauser has been unable to
+               get an invoice from ANSYS for the transfer. Periera and
+               Rumsey will try to help follow up on this with Dave Davis
+               at ANSYS
+          </ol>
+     <li> <u>Wedan to look into issue brought up by Miller (10/19/07) to
+          write info one element at a time to save memory.</u>
+          <ol type=i>
+          <li> Not done yet.
+          </ol>
+     <li> <u>Wedan to implement patch sent to him by Bussoletti to fix
+          excessive memory usage by MLL.</u>
+          <ol type=i>
+          <li> Not done yet.
+          </ol>
+     </ol>
+<p>
+<li> Committee membership
+     <p>
+     <ol type="a">
+     <li> At his request, Dan Einstein (Pacific Northwest Labs) asked
+          to be replaced on the committee by Xiangmin (Jim) Jiao (Stony
+          Brook University). Jim has created a Matlab/Octave interface
+          for CGNS, which will soon be available for download.  He is
+          interested to become an active contributor and push for CGNS's
+          usage for Octave and MATLAB users and also for multiphysics
+          codes. The committee approved the change in membership from
+          Pacific Northwest Labs to Stony Brook University.
+     <li> Hauser mentioned that Alonso (Stanford) may be interested
+          in re-establishing a seat on the committee. <u>Hauser will
+          contact Alonso to see if he is interested in rejoining the
+          CGNS steering committee.</u>
+     </ol>
+<p>
+<li> Open items (purpose of these is to not lose track of long-term
+     issues that come up)
+     <p>
+     <ol type="a">
+     <li> Keep track of/resolve <a href="#HDF5_todo">HDF-5 "to-do" list</a>
+          <ol type=i>
+          <li> Many of these items are now completed for V3.0.
+          </ol>
+     <li> Keep track of progress with ISO/STEP.
+          <ol type=i>
+          <li> <u>Rumsey will ping Hunten to find out the current status
+               of the ISO/STEP effort.</u>
+               [This was done shortly after the meeting. Hunten
+               responded immediately via email,
+               (<a href="#Hunten_email">see below</a>), and included an
+               updated version of an overview document of AP209E2
+               (<a href="attachments/AP209Edition2OverviewRev1.2.html">HTML</a>,
+               <a href="attachments/AP209Edition2OverviewRev1.2.pdf">PDF</a>).]
+          </ol>
+     <li> Need for official certification process (test for compliance).
+          <ol type=i>
+          <li> There was some discussion on this. <u>Power will provide
+               some high-level routines for reading/writing CGNS that
+               may be useful, for inclusion on the website.</u>
+          </ol>
+     <li> Develop method to write info one element at a time to save
+          memory via something like <tt>cg_section_partialwrite</tt>
+          (Miller 10/19/07 CGNSTalk)
+          <ol type=i>
+          <li> No progress.
+          </ol>
+     <li> Address issue of possible need for "long" instead of "int" to
+          avoid signed 2 Gig limit (Miller 10/19/07 CGNSTalk).
+     <li> Problem with 64-bit <tt>cg_goto_f</tt> (Gibeling 08/29/08
+          CGNSTalk)
+          <ol type=i>
+          <li> <u>Hauser will investigate both the "long" vs
+               "int" issue as well as the problem with the 64-bit
+               <tt>cg_goto_f</tt>, and report back.</u>
+          </ol>
+     </ol>
+<p>
+<li> There was also some discussion regarding decision by Drag
+     Prediction Workshop (DPW) committee to move toward CGNS as the
+     official format for their grids, particularly as part of their
+     mesh quality evaluation.  There may be opportunities for CGNS
+     discussions/talks at the AIAA San Antonio meeting in June or at
+     next January's ASM in Orlando, as part of DPW meetings and/or as
+     part of a workshop effort by Jack Benek. Hauser and Rumsey also
+     mentioned that the CGNS tutorial session has a green light for the
+     EUCASS meeting in France in July 2009.  Currently it is not known
+     whether it will be a half-day or full-day event. <u>Rumsey will
+     notify people via CGNSTalk about the upcoming CGNS activities at
+     the EUCASS meeting in France.</u>
+<p>
+<li> Meeting was adjourned at 8:15 PM Eastern. Next Telecon date is TBD.
+<p>
+<li> Summary of <b><u>action items</u></b>:
+     <p>
+     <ol type="a">
+     <li> Hauser to test Version 3 compression capability prior to
+          release.
+     <li> Hauser &amp; Wedan to complete and release V3.0.
+     <li> Poinot to work with Power and others to bring Rigid Motion
+          Improvement proposal to completion, including specific
+          examples.
+     <li> Hauser will add HDF-5 parallel code to SourceForge and will
+          let users know when it is available.
+     <li> Hauser to contact members of the HPC Consortium to explore
+          possibility of CGNS contributing to their effort.
+     <li> Duque and Hauser to continue to develop proposal for handling
+          sprays of unconnected points.
+     <li> Wedan to investigate issue of MLL deleting the entire node
+          even though its new dimensions are the same.
+     <li> Hauser will take control of cgns.org domain name and will
+          consider possibility of moving website to Utah State site.
+     <li> Wedan to look into issue brought up by Miller (10/19/07) to
+          write info one element at a time to save memory.
+     <li> Wedan to implement patch sent to him by Bussoletti to fix
+          excessive memory usage by MLL.
+     <li> Hauser will contact Alonso to see if he is interested in
+          rejoining the CGNS steering committee.
+     <li> Rumsey will ping Hunten to find out the current status of the
+          ISO/STEP effort.
+     <li> Power will provide some high-level routines for
+          reading/writing CGNS that may be useful, for inclusion on the
+          website.
+     <li> Hauser will investigate both the "long" vs "int" issue as well
+          as the problem with the 64-bit <tt>cg_goto_f</tt>, and report
+          back.
+     <li> Rumsey will notify people via CGNSTalk about the upcoming CGNS
+          activities at the EUCASS meeting in France.
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Steve Allmaras<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Boeing Commercial
+<tr valign=baseline><td>
+   <td>Andrew Cary<td>
+   <td>Boeing Integrated Defense Systems
+<tr valign=baseline><td>
+   <td>Thomas Hauser<td>
+   <td>Utah State
+<tr valign=baseline><td>
+   <td>Steve Karman<td>
+   <td>U. Tennessee Chattanooga
+<tr valign=baseline><td>
+   <td>Joe Morrison<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Simon Pereira<td>
+   <td>ANSYS / ICEM CFD
+<tr valign=baseline><td>
+   <td>Greg Power<td>
+   <td>USAF/AEDC
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+</table>
+
+<a name="HDF5_todo"></a>
+<h2>Tentative to-do list in association with HDF-5 switchover</h2>
+
+<ul>
+<li> Complete and test parallel implementation
+     <ul>
+     <li> under development
+     </ul>
+<li> Complete and test API capability to automatically detect and switch
+     between ADF and HDF-5 (transparent to user?)
+     <ul>
+     <li> <u>done in V3.0</u>
+     </ul>
+<li> Assess/minimize impact on software vendors using CGNS
+     <ul>
+     <li> under development (success with automatic detection transparent
+          to user will minimize impact)
+     </ul>
+<li> Make changes recommended by HDF-5 to improve usability with HDF-5
+     (e.g., character strings as opposed to character arrays)
+     <ul>
+     <li> <u>done</u>
+     </ul>
+<li> Assess compression capability of HDF-5
+     <ul>
+     <li> <u>done by Poinot - capability will be added to V3 MLL</u>
+     </ul>
+<li> CGNS configure scripts will need to be modified to check for
+     availability of appropriate HDF-5 libraries.
+     <ul>
+     <li> <u>done in V3.0</u>
+     </ul>
+<li> Possibly add flag-based options when opening CGNS files.  For
+     example: "follow links" vs. "don't follow links"; "use ADF" vs. "use
+     HDF-5"; "translate file automatically" vs. "leave the file as-is";
+     "compress" vs. "don't compress".
+<li> Look into eliminating need for ID's from MLL
+<li> Resolve "link-of-links" problem: will require HDF-5 fix by NCSA
+     under development (1.8.0 beta)
+     <ul>
+     <li> <u>done in V3.0 in combination with HDF-5 V1.8</u>
+     </ul>
+<li> Are any changes needed in SIDS-to-HDF5 document?  Or is it
+     up-to-date?
+<li> Improve build capability of V3.0.
+</ul>
+
+<a name="Hunten_email"></a>
+<h2>Email from Keith Hunten to Chris Rumsey on status of ISO/STEP effort</h2>
+
+<tt>
+<p>
+Chris -
+
+<p>
+Well, for once I have some good, concrete news!  The three standards
+documents that comprise the integration of CGNS with ISO/STEP have just
+been approved for their next level of ballot (a Draft International
+Standard).  These are Part 10303-52 Mesh Based Topology, Part 10303-53
+Numerical Analysis, and Part 10303-110 Mesh-based computational fluid
+dynamics.
+
+<p>
+I apologize for the lateness on these, but since Boeing pulled out their
+resources this has been a spare time effort on many peoples part (many
+thanks to David Leal and Ray Goult in the UK on Parts 52 and 110, and
+Darla Nettles of PDES, Inc on Parts 53 and 209), and a low level of
+effort here at LM Aero and the PDES, Inc consortium.
+
+<p>
+The second edition of AP209 (10303-209E2) is very near completion. It
+has been renamed to "Multidisciplinary analysis and design" to reflect
+the additional scope beyond traditional finite element analysis.  The
+composite material shape and definition modules have been balloted and
+completed with the AP203E2 project (though this does not affect you).
+The modules that reflect the new analysis capabilities in the above
+mentioned documents have been completed and are in their last stages of
+editorial revision.  The overall AP209E2 document is also in that stage.
+With luck we may have it ready to go out for review in a couple of
+months.
+
+<p>
+Once the new AP209E2 document is completed I would like to propose some
+kind of review process with your committee to ensure that we are up to
+date.  There will be an ISO TC184/SC4 meeting in Vancouver May 18-22
+where we could do a formal review and walk-through.
+
+<p>
+I have included an updated version of an overview document of AP209E2
+[<a href="attachments/AP209Edition2OverviewRev1.2.html">HTML</a>,
+<a href="attachments/AP209Edition2OverviewRev1.2.pdf">PDF</a>]
+that may be useful for you and your committee members.
+
+<p>
+Regards,
+
+<p>
+Keith
+</tt>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 9 Jan 2009
+
+</body>
+</html>

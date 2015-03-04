@@ -1,0 +1,443 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+2 August 2005<br>
+11:00 AM Eastern Time
+
+<p>
+<ol>
+<li> The meeting was called to order at 11:05 AM.  There were
+     <a href="#attendees">8 attendees</a>, listed below.
+<p>
+<li> The minutes of the <a href="telecon_may05.html">25 May 2005
+     meeting</a> were approved as posted on the web site.
+<p>
+<li> Status of previous action items:
+     <p>
+     <ol type="a">
+     <li> Towne will incorporate Vice-Chair changes into the charter and
+          post.
+          <ul type=disc>
+          <li> Done.
+          </ul>
+     <li> Rumsey will forward to Hunten the e-mails of the members on
+          the <i>hdf5cgns@ncsa.uiuc.edu</i> mailing list.
+          <ul type=disc>
+          <li> Done.
+          </ul>
+     <li> Hunten will send a copy of his planning documentation to
+          Rumsey, for inclusion as an attachment to these minutes.
+          <ul type=disc>
+          <li> Done.  These are attached to the May 2005 minutes.
+          </ul>
+     <li> Hauser will provide a list of issues that need to be discussed
+          with the NCSA (HDF5) people.
+          <ul type=disc>
+          <li> The only remaining major issues are the two already
+               known: (a) HDF5 has slower I/O for files with many
+               (thousands of) nodes and (b) HDF5 files tend to be
+               significantly larger than ADF files.  No additional
+               issues need to be raised. Action item dropped.
+          </ul>
+     <li> Towne will upgrade Poinot's SIDS-to-HDF5 documentation with
+          2.4 additions and post after V2.4 comes online.
+          <ul type=disc>
+          <li> Not done yet. Document needs to be modified to read V2.4
+               (rather than 3.0), and statement "CGNS versions prior to
+               v3.x used the ADF storage manager" needs to be deleted
+               or modified. Also, SIDS-to-ADF documentation needs
+               to continue to be posted for the foreseeable future.
+               <u>Action item carries.</u>
+          </ul>
+     <li> Wedan will make change in CGNS HDF5 software so viewer can
+          read (see) character strings in the HDF5 files.
+          <ul type=disc>
+          <li> Done, but not tested/available yet.  Action item carries.
+          </ul>
+     <li> Wedan will complete changes for V2.4 and will announce when
+          ready.
+          <ul type=disc>
+          <li> Almost ready. Initial download page still needs to be
+               updated.  <u>Action item carries.</u>
+          </ul>
+     <li> Allmaras will write up an example of how to use existing
+          standard for unstructured face-based connectivity, and send to
+          Rumsey to pass on to the Committee.
+          <ul type=disc>
+          <li> Done.  There was a lot of discussion on this issue,
+               which deals with a method of using face-based data
+               structures with parents defined, for handling polyhedral
+               unstructured cells.  This method is apparently
+               SIDS-compliant, although it was not originally an
+               intended method for general use. The method works, but
+               there is still some missing information that Allmaras
+               currently puts in as <tt>UserDefined</tt> nodes.
+               Continuing to allow this method puts some additional
+               workload on CGNS readers which at this point are probably
+               not looking for it, but on the positive side it does
+               allow users to write polyhedral cells easily without the
+               necessity of adding/coding a new extension.  Allmaras
+               said that it is already easy to determine, by looking at
+               the file, whether the face-based method is being used or
+               not. <u>Allmaras will write explicit documentation, for
+               addition to the SIDS, describing face-based storage and
+               providing explicit examples for using the method, and
+               will send to Rumsey and Michal for review.</u>
+          </ul>
+     <li> Wedan will change the MLL to return element list instead of
+          point list when appropriate.
+          <ul type=disc>
+          <li> This item had to do with eliminating the
+               <tt>Pointlist/Range + CellCenter</tt> possibility -
+               and thus removing the need for GridLocation under
+               <tt>BC_t</tt>. The idea was to have the API automatically
+               make the alteration, transparent to the user.  Wedan was
+               not sure if this specific task had been done yet or not.
+               <u>Action item carries.</u>
+          </ul>
+     <li> Rumsey and Poinot to coordinate some type of "Intro to CGNS"
+          for Reno 2006 or for AIAA's summer 2006 meeting.
+          <ul type=disc>
+          <li> Ongoing. Current plan is to do nothing at Reno, but hold
+               a Panel Discussion (something like "CGNS in Industry")
+               at AIAA's June 2006 meeting in San Francisco. Poinot is
+               arranging for several industry representatives to attend,
+               give brief talks, and answer questions. Apparently there
+               are not many industrial users yet in the U.S. (other than
+               Boeing to some degree)... most activity is occurring in
+               Europe. Michal said that someone at Boeing would probably
+               be willing to serve on the panel.  Rumsey and Poinot
+               also plan to tentatively coordinate an evening tutorial
+               session. <u>Action item carries.</u>
+          </ul>
+     <li> Towne will check to see if old documentation is stored on
+          SourceForge. He will make sure future "old versions" also get
+          put there.
+          <ul type=disc>
+          <li> Done.  The old documentation is there, starting with
+               Version 2.2. <u>As soon as V2.4 comes on line, Towne will
+               bundle up V2.3 documentation for Wedan to post.</u>
+          </ul>
+     <li> Norris will try to work with the (currently commented)
+          Rind-for-unstructured fixes and see if they meet his needs.
+          <ul type=disc>
+          <li> Not done yet. <u>Action item carries.</u> There was
+               some discussion on whether to officially implement
+               this capability now, or to wait (because of loss of
+               forward compatibility).  It was decided to wait, to give
+               Norris a chance to try it and also because there is no
+               documentation on this capability yet. <u>Wedan will write
+               documentation for SIDS on Rind-for-unstructured and send
+               to Rumsey and Norris.</u>
+          </ul>
+     <li> Hann will send his proposed changes for decoupling the MLL
+          from ADF and HDF5 to Poinot, Rumsey, Wedan, and Allmaras, to
+          get their opinion on it.
+          <ul type=disc>
+          <li> Done.  According to our <a href="#HDF_policy">draft
+               policy statement regarding HDF-5</a>, even once we
+               officially announce HDF-5 as the official recommended
+               storage format, we will continue to support ADF
+               capability for the foreseeable future.  Hann's method may
+               be the best way to handle this in the future.  Currently,
+               the user can choose between ADF and HDF-5 at compile
+               time.  There was also some discussion for eventually
+               providing "stubs" so users can avoid HDF-5 entirely if
+               desired, but if HDF-5 is to be our official recommended
+               method, then this probably is not a good idea (the
+               "stubs" could be done for those who ask for it, but not
+               widely advertised and not part of the V3.0 distribution
+               package).
+          </ul>
+     <li> Poinot and Wedan will work to resolve issue of "link of links"
+          problem with our HDF5 implementation.
+          <ul type=disc>
+          <li> Not done. <u>Action item carries.</u>
+          </ul>
+     <a name="item3o"></a>
+     <li> Rumsey will send McMorris & Brouillet e-mails to Michal, and
+          Michal will contact them about need for <tt>GridLocation =
+          FaceCenter</tt> for zone-to-zone connectivity.
+          <ul type=disc>
+          <li> Done, but there does not appear to be enough interest (or
+               time) for anyone to propel this idea forward by writing
+               a proposal for extension and following it through.
+               Therefore, this item will be tabled for now.
+          </ul>
+     </ol>
+<p>
+<li> Open Items (<a href="#item13">number 13 below</a>):
+     <p>
+     <ol type="a">
+     <li> Regarding <a href="#HDF5_todo">HDF-5 "to do" list</a>, it is
+          no longer a necessity that HDF-5 fix "creation tracking", so
+          this item was taken off the list.  Also, the SIDS-to-HDF5
+          documentation is complete, so that item was also removed.
+     <li> Regarding the issue of alphanumeric sorting: HDF-5 does this
+          automatically, so this item becomes a non-issue once HDF-5
+          becomes the recommended official storage mechanism.  It does
+          not appear to be worthwhile to pursue it for ADF nodes outside
+          the Zone nodes (for which it is already done). Item removed
+          from list of Open Items.
+     <li> Regarding CGNS license, the decision was made (via e-mail
+          voting) to switch to the zlib license. Therefore this item
+          removed from Open Item list. <u>Wedan will change the license
+          in the software and on the website to zlib, and will forward
+          appropriate wording to Towne.  Also, Towne will change the
+          license in the documentation
+          (<a href="../charter/index.html">Charter</a> and anywhere else
+          it appears).</u>
+     <li> Regarding <tt>PYRA</tt> element needed, this change definitely
+          needs to wait for Version 3.0, because it changes the enums,
+          and forward compatibility is lost in a major way.
+     </ol>
+<p>
+<li> ISO/STEP
+     <p>
+     <ol type="a">
+     <li> Nothing to report.
+     </ol>
+<p>
+<li> Documentation issues and CGNStalk issues:
+     <p>
+     <ol type="a">
+     <li> There are some known errors in the SIDS that have been
+          corrected in the on-line version, which Towne will want to
+          pass on to AIAA for its next Recommended Practice.
+     <li> Because NASA Glenn is transitioning its e-mail services to an
+          Agency-level service, the CGNStalk address is being changed
+          to: <i>CGNStalk@lists.nasa.gov</i> (effective immediately).
+          The old <i>CGNStalk@grc.nasa.gov</i> will disappear Aug 8. All
+          current subscribers should have already received a Welcome
+          message.  Anyone can post to this address, not just those who
+          are subscribed.  The list archives have been moved to
+          <a href="https://lists.nasa.gov/mailman/private/cgnstalk/"><i>https://lists.nasa.gov/mailman/private/cgnstalk/</i></a>
+          (access is limited to members only).  The CGNStalk info page is
+          <a href="https://lists.nasa.gov/mailman/listinfo/cgnstalk/"><i>https://lists.nasa.gov/mailman/listinfo/cgnstalk/</i></a>.
+          <u>Also, Wedan will update the
+          <i>www.cgns.org</i> webpage
+          describing CGNStalk.</u>
+     </ol>
+<p>
+<li> Software status/discussion:
+     <p>
+     <ol type="a">
+     <li> Possible bugs reported on CGNStalk in <tt>family_write</tt>
+          etc. were already fixed by Wedan.  Same goes for Fortran90
+          bugs found by Hauser in V2.4. The fixes are in the latest
+          version.
+     </ol>
+<p>
+<li> HDF-5 status/discussion:
+     <p>
+     <ol type="a">
+     <li> <a href="#HDF_policy">Draft policy statement regarding
+          HDF-5</a> was discussed.  Earlier e-mail voting by Steering
+          Committee members gave a thumbs-up to it.  Telecon attendees
+          also agreed to it.  This Policy Statement will remain
+          unofficial and will not be widely publicized until we make the
+          official move to Version 3.0.
+     </ol>
+<p>
+<li> Extensions status/discussion:
+     <p>
+     <ol type="a">
+     <li> Tabling of possible extension <tt>GridLocation =
+          FaceCenter</tt> for zone-to-zone connectivity (for use
+          primarily with unstructured grids) was discussed during action
+          items (<a href="#item3o">item 3(o)</a>).
+     </ol>
+<p>
+<li> Other issues:
+     <p>
+     <ol type="a">
+     <li> None.
+     </ol>
+<p>
+<li> Meeting was adjourned at 12:17 PM.
+<p>
+<li> Summary of <b><u>action items</u></b>:
+     <p>
+     <ol type="a">
+     <li> Towne will upgrade Poinot's SIDS-to-HDF5 documentation with
+          2.4 additions and post (along with other 2.4 docs) after V2.4
+          comes online.
+     <li> Wedan will make change in CGNS HDF5 software so viewer can
+          read (see) character strings in the HDF5 files.
+     <li> Wedan will complete changes for V2.4 and will announce when
+          ready.
+     <li> Allmaras will write explicit documentation, for addition to
+          the SIDS, describing face-based storage and providing explicit
+          examples for using the method, and will send to Rumsey and
+          Michal for review.
+     <li> Wedan will change the MLL to return element list instead of
+          point list when appropriate.
+     <li> Rumsey and Poinot to coordinate CGNS Panel Discussion and
+          possible tutorial for AIAA's June 2006 meeting in San
+          Francisco.
+     <li> As soon as V2.4 comes on line, Towne will bundle up V2.3
+          documentation for Wedan to post.
+     <li> Norris will try to work with the (currently commented)
+          Rind-for-unstructured fixes and see if they meet his needs.
+     <li> Wedan will write documentation for SIDS on
+          Rind-for-unstructured and send to Rumsey and Norris.
+     <li> Poinot and Wedan will work to resolve issue of "link of links"
+          problem with our HDF5 implementation.
+     <li> Wedan will change the license in the software and on the
+          website to zlib, and will forward appropriate wording to Towne.
+     <li> Towne will change the license in the documentation
+          (<a href="../charter/index.html">Charter</a> and anywhere else
+          it appears).
+     <li> Wedan will update the
+          <i>www.cgns.org</i> webpage
+          describing CGNStalk.
+     </ol>
+<p>
+<a name="item13"></a>
+<li> Summary of <b><u>open items</u></b> from prior meetings (these are
+     different from action items, in that they are open or unresolved
+     issues that we want to keep track of, but there are no specific
+     actions required of anyone at this point in time):
+     <p>
+     <ol type="a">
+     <li> Resolve <a href="#HDF5_todo">HDF-5 "to-do" list</a>.
+     <li> Eventually resolve any differences between SIDS and ISO/STEP.
+     <li> Need for official certification process (test for compliance)
+     <li> Need to add Karman's additional <tt>PYRA</tt> element type to
+          allowed list (in software and in SIDS)
+     <li> Need to allow Rind for unstructured (in software and in SIDS)
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Steve Allmaras<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Boeing - Seattle
+<tr valign=baseline><td>
+   <td>Bob Bush<td>
+   <td>Pratt &amp; Whitney
+<tr valign=baseline><td>
+   <td>Bob Fiedler<td>
+   <td>U. Illinois
+<tr valign=baseline><td>
+   <td>Thomas Hauser<td>
+   <td>Utah State
+<tr valign=baseline><td>
+   <td>Todd Michal<td>
+   <td>Boeing - St. Louis
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Greg Stuckert<td>
+   <td>Fluent
+<tr valign=baseline><td>
+   <td>Bruce Wedan<td>
+   <td>Ansys / ICEM CFD
+</table>
+
+<a name="HDF5_todo"></a>
+<h2>Tentative to-do list in association with HDF-5 switchover</h2>
+
+<ul>
+<li> Complete and test parallel implementation
+<li> Complete and test API capability to automatically detect and switch
+     between ADF and HDF-5 (transparent to user?)
+<li> Assess/minimize impact on software vendors using CGNS
+<li> Make changes recommended by HDF-5 to improve usability with HDF-5
+     (e.g., character strings as opposed to character arrays)
+<li> HDF-5 must fix "creation tracking"
+<li> Assess compression capability of HDF-5
+<li> CGNS configure scripts will need to be modified to check for
+     availability of appropriate HDF-5 libraries.
+<li> Possibly add flag-based options when opening CGNS files.  For
+     example: "follow links" vs. "don't follow links"; "use ADF" vs. "use
+     HDF-5"; "translate file automatically" vs. "leave the file as-is";
+     "compress" vs. "don't compress".
+<li> Look into eliminating need for ID's from MLL
+</ul>
+
+<a name="HDF_policy"></a>
+<h2>Draft CGNS Policy Statement regarding HDF-5</h2>
+
+<p>
+The CGNS implementation of SIDS, so-called MLL, was originally built
+using a file format called ADF (Advanced Data Format).  This format was
+based on a common file format system previously in use at McDonnell
+Douglas.  The ADF has worked extremely well, requiring little repair,
+upgrade, or maintenance over the last decade.
+
+<p>
+However, ADF does not have parallel or compression capability, and does
+not have the support and tools HDF5 offers.  Also, HDF5, supported by
+the National Center for Supercomputing Applications (NCSA), has rapidly
+grown to become a world-wide format standard for storing scientific
+data.  HDF5 has parallel capability as well as a broader support base
+than ADF.
+
+<p>
+Therefore, the CGNS Steering Committee has made the decision to adopt
+HDF5 as the default (official) data storage mechanism.  We are currently
+in the process of making the switch.  In doing so, however, we have
+learned that there are some issues associated with usage of HDF5: it has
+slower I/O for files with many (thousands of) nodes, and its file sizes
+tend to be significantly larger than ADF files in general.  These issues
+make the switch more complicated, but we have decided to count on NCSA
+to continue to improve HDF5 and hopefully eliminate the problems at some
+point in the future.
+
+<p>
+We have also learned that it is possible to easily support both ADF and
+HDF5 formats simultaneously, giving the user the capability to choose
+between them.
+
+<p>
+Therefore, we have decided to continue forward with the "switch", with
+the following as our goal:
+
+<p>
+The CGNS Steering Committee considers HDF5 to be its official,
+recommended storage format.  However, ADF will continue to be available
+for use, with the CGNS mid-level library capable of (1) using either
+format and (2) translating back and forth between the two.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 10 Aug 2005
+
+</body>
+</html>

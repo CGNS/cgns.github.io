@@ -1,0 +1,353 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Meeting Minutes</h2>
+
+AIAA Meeting, Portland, OR<br>
+30 June 2004, 7:00 PM Pacific Time<br><br>
+
+<ol>
+<li> The meeting was called to order at 7:05 PM.
+     There were <a href="#attendees">7 attendees</a>, listed below.
+<br><br>
+<li> The minutes of the 25 March 2004 telecon meeting were
+     approved as posted on the web site.
+<br><br>
+<li> Status of previous action items:
+     <ol type="a">
+     <li> Wedan will formally archive old versions of software on SourceForge.
+          <ul type=disc>
+          <li> not done yet - <u>action item carries</u>
+          </ul>
+     <li> Towne will take V2.3 documentation out of beta status.
+          <ul type=disc>
+          <li> done - V2.3 is now official documentation
+          </ul>
+     <li> Rumsey will form informal HDF-5 task force to begin looking
+          at timing to switch to HDF-5, and develop list of things that
+          need to be done.
+          <ul type=disc>
+          <li> done - <a href="#HDF5_members">current e-mail list of
+               members</a> is below... anyone else interested in being a
+               member of this list should contact Rumsey
+          </ul>
+     <li> Towne will post Hauser's CGNS paper(s) to website.
+          <ul type=disc>
+          <li> done (Reno paper <a href="../papers/aiaa04-1088.pdf">AIAA
+               2004-1088</a>)
+          </ul>
+     <li> Rumsey will set up & hold meeting for Portland.
+          <ul type=disc>
+          <li> done
+          </ul>
+     <li> Alonso and Hann will send Wedan some of their examples of CGNS
+          files and programs that write/read them, and Wedan will post
+          them.
+          <ul type=disc>
+          <li> not done yet - <u>action item carries</u>
+          </ul>
+     </ol>
+<br>
+<li> Status of open items:
+     <ol type="a">
+     <li> Issue of links causing slowdown (perhaps can modify open call
+          so it does not follow links).
+          <ul type=disc>
+          <li> status unchanged
+          </ul>
+     <li> With next major release, eliminate <tt>PointList/Range</tt>
+          + <tt>CellCenter</tt> possibility (and thus remove the need
+          for <tt>GridLocation</tt> under <tt>BC_t</tt>).  Next major
+          release of API will need to automatically make this alteration
+          (transparent to user). Documentation (SIDS, User's Guide,
+          other?) will need to be changed.
+          <ul type=disc>
+          <li> status unchanged
+          </ul>
+     <li> Need to look into compression capability of HDF-5.
+          <ul type=disc>
+          <li> this item is one of the items in the new list of
+               <a href="#HDF5_todo">Tentative to-do list prior to HDF-5
+               switchover</a>... this list as a whole will from this
+               point be considered an open item.
+          </ul>
+     </ol>
+<br>
+<li> ISO status/discussion (Cosner, in absentia):
+     <ol type="a">
+     <li> Possibility to merge AP 237 (Fluid Dynamics) with AP 209
+          (Finite Element Solid Mechanics).  Next ISO/STEP meeting is in
+          UK in early July 2004, where they may decide this issue.
+     </ol>
+<br>
+<li> Documentation issues and CGNStalk issues (Towne, in absentia):
+     <ol type="a">
+     <li> V2.3 now official documentation.  V2.2 is under "prior
+          version," and V2.1 has been removed.  Currently there is a
+          V2.4beta, which is same as V2.3.  We're not sure yet whether
+          the next release will be V2.4, or V3.0.  It depends on when we
+          make the big switchover to HDF-5 (which will be V3.0).
+     <li> V2.3 will at some point become the updated AIAA Recommended
+          Practice document. Craig Day at AIAA will first put it out for
+          public review and comment. After that, CGNS members will be
+          called on to vote.
+     </ol>
+<br>
+<li> Software status/discussion (Wedan, in absentia):
+     <ol type="a">
+     <li> Nothing new, other than a few small bug fixes and configure
+          script updates.
+     </ol>
+<br>
+<li> HDF-5 status/discussion (Hauser, Poinot): 
+     <ol type="a">
+     <li> Hauser is currently testing prototype parallel implementation
+          - goal is to be ready for his planned Reno 2005 paper.  He
+          noted that it is necessary to create whole tree (or read whole
+          tree) first using master processor, then can write (or read)
+          data in parallel.
+     <li> The question came up: what happens in parallel if want/need
+          to create new node (with time-dependent data, for example)?
+          <u>Hauser believes you would have to close then re-open the
+          file, but he will check into this.</u>
+     <li> It was noted that HDF-5 has its own complete set of tools
+          available.  For example, there is a viewer program (like
+          <a href="../cgnstools/adfviewer/index.html"><i>adfviewer</i></a>).
+     <li> Quincey (NCSA) is currently working creation tracking issue in
+          HDF-5.
+     <li> After we switch over to HDF-5, users will need to download
+          both CGNS software and HDF-5 software separately.  Configure
+          scripts will need to be modified to check for availability of
+          appropriate HDF-5 libraries. This item will be added to the
+          "to do" list.
+     <li> Hauser brought up question whether it wouldn't be better to
+          eliminate ID's altogether in the MLL when we go to HDF-5.
+          Reference by names instead.  This may be a big job, but it may
+          be better for us in the long run.  This item will be added to
+          the "to do" list.
+     <li> Poinot reiterated need for SIDS-to-HDF-5 file mapping
+          document, prior to switch. This item will be added to the "to
+          do" list.
+     <li> The group discussed a possible date to shoot for the
+          switch-over:  Summer 2005 was offered as a possible goal!  Is
+          this feasible?  There is unlikely to be funding available for
+          any part of this effort. <u>This will be discussed further at
+          the next CGNS telecon.</u>
+     </ol>
+<br>
+<li> Extensions status/discussion (Edwards, in absentia):
+     <ol type="a">
+     <li> Intelligent Light (IL) is completing 6 extensions, as part
+          of their SBIR.  They should be completed in July, for beta
+          testing.  They are looking for volunteers to test the new
+          extensions.
+     <li> Issue related to the EM extension (units) was discussed.  8
+          units apparently cover everything. IL will probably implement
+          only new <tt>DimensionalExponents</tt> call for now (with 8
+          units), and <tt>DimensionalUnits</tt> will remain at 5 with
+          the additional 3 being required to be certain units (electric
+          current=Amperes, amnt of substance=moles, and luminous
+          intensity=candelas).  The group felt this was not desirable
+          in the long run, and it should be a high priority item to
+          create new <tt>DimensionalUnits</tt> calls to handle all 8,
+          for consistency, at the very least by the time we switch over
+          to HDF-5. <u>This will be added as an open issue.</u> <u>Also,
+          Rumsey will send an e-mail to CGNSTalk and Tom Shih (CoS) to
+          make everyone aware of this issue.</u>
+     </ol>
+<br>
+<li> Other issues:
+     <ol type="a">
+     <li> Poinot presented a CGNS paper in Portland AIAA meeting:
+          <a href="../papers/aiaa04-2142.pdf">AIAA 2004-2142</a>.
+          <u>Rumsey will send to Towne to post.</u>
+     <li> In a recent AIAA survey, general membership expressed the
+          desire to see a greater promotion of CGNS.  AIAA is asking for
+          ideas on how they can help us with this.  At the Committee on
+          Standards (CoS) meeting, they suggested that we draft a letter
+          that AIAA can send to commercial CFD companies' presidents,
+          discussing AIAA's support of the CGNS standard. The CoS may
+          also write letters to technical contacts as well. <u>Rumsey
+          will work with Tom Shih (chair of CoS) to draft a letter for
+          AIAA.</u>
+     <li> It was decided to wait to hold the next CGNS telecon until
+          September, to avoid conflicts with summer holidays.
+     <li> <u>A new "open item" is to eventually align / resolve
+          differences between SIDS and latest ISO/STEP, as each
+          continues to evolve.</u>
+     <li> Issue was brought up that we may want to add flag-based
+          options when opening CGNS files.  For example: "follow
+          links" vs. "don't follow links"; "use ADF" vs. "use HDF-5";
+          "translate file automatically" vs. "leave the file as-is";
+          "compress" vs. "don't compress". This will be added to "to do"
+          list.
+     <li> Poinot asked the question: currently if you use MLL you are
+          compliant: but if people write their own MLL, how can we
+          insure they are compliant?  Set up "ISO test suite"?
+     <li> The request was made whether we can put all documentation
+          (<i>.tex</i> files?) on SourceForge. <u>Rumsey will check with
+          Towne about this.</u>
+     <li> Question about whether it might be a good idea to have a "CGNS
+          User's Meeting" at the AIAA summer 2005 meeting. <u>This will
+          be discussed further at the next CGNS telecon.</u>
+     </ol>
+<br>
+<li> Meeting was adjourned at 8:20 PM.
+<br><br>
+<li> Summary of <u><b>action items</b></u>:
+     <ol type="a">
+     <li> Wedan will formally archive old versions of software on
+          SourceForge.
+     <li> Alonso and Hann will send Wedan some of their examples of CGNS
+          files and programs that write/read them, and Wedan will post them.
+     <li> Hauser will check into parallel issues regarding
+          time-dependent data.
+     <li> Rumsey to send e-mail to CGNStalk & Shih regarding 8 units
+          issue.
+     <li> Rumsey to send Poinot's AIAA paper to Towne to post.
+     <li> Rumsey to work with Tom Shih of CoS to draft letter from AIAA
+          to software companies urging active support of CGNS.
+     <li> Rumsey to check with Towne regarding posting documentation to
+          SourceForge.
+     <li> Rumsey to discuss (during next telecon) the possibility of
+          holding a CGNS User's meeting in summer 2005, in conjunction with
+          the AIAA meeting.
+     <li> Rumsey to discuss (during next telecon) the possible date of
+          summer 2005 as a goal for switching over to HDF-5.
+     </ol>
+<br>
+<li> Summary of <u><b>open items</b></u> (these are different from
+     action items, in that they are open or unresolved issues that we
+     want to keep track of, but there are no specific actions required
+     of anyone at this point in time):
+     <ol type="a">
+     <li> Issue of links causing slowdown (perhaps can modify open call
+          so it does not follow links).
+     <li> With next major release, eliminate the
+          <tt>Pointlist/Range</tt> + <tt>CellCenter</tt> possibility
+          (and thus remove the need for <tt>GridLocation</tt> under
+          <tt>BC_t</tt>).  Next major release of API will need to
+          automatically make the alteration (transparent to the
+          user). Documentation (SIDS, User's Guide, other?) will need to
+          be changed.
+     <li> Resolve <a href="#HDF5_todo">HDF-5 "to-do" list</a>.
+     <li> Issue of 8 units - need consistency between
+          <tt>DimensionalUnits</tt> and <tt>DimensionalExponents</tt>.
+     <li> Eventually resolve any differences between SIDS and ISO/STEP.
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Dan Dominik<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Boeing - Rocketdyne
+<tr valign=baseline><td>
+   <td>Thomas Hauser<td>
+   <td>Utah State University
+<tr valign=baseline><td>
+   <td>Mori Mani<td>
+   <td>Boeing, St. Louis
+<tr valign=baseline><td>
+   <td>Chris Nelson<td>
+   <td>ITAC
+<tr valign=baseline><td>
+   <td>Marc Poinot<td>
+   <td>ONERA
+<tr valign=baseline><td>
+   <td>Chris Rahaim<td>
+   <td>Rotordynamics Seal Research
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+</table>
+
+<a name="HDF5_members"></a>
+<h2>List of people on HDF-5 task force</h2>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Robert Bush
+<tr valign=baseline><td>
+   <td>David Edwards
+<tr valign=baseline><td>
+   <td>Mark Fisher
+<tr valign=baseline><td>
+   <td>Richard Hann
+<tr valign=baseline><td>
+   <td>Thomas Hauser
+<tr valign=baseline><td>
+   <td>Quincey Koziol
+<tr valign=baseline><td>
+   <td>Marc Poinot
+<tr valign=baseline><td>
+   <td>Greg Power
+<tr valign=baseline><td>
+   <td>Chris Rumsey
+<tr valign=baseline><td>
+   <td>Ken Wall
+<tr valign=baseline><td>
+   <td>Edwin van der Weide
+<tr valign=baseline><td>
+   <td>Bruce Wedan
+</table>
+
+<a name="HDF5_todo"></a>
+<h2>Tentative to-do list prior to HDF-5 switchover</h2>
+
+<ul>
+<li> Complete and test parallel implementation
+<li> Complete and test API capability to automatically detect and switch
+     between ADF and HDF-5 (transparent to user?)
+<li> Assess/minimize impact on software vendors using CGNS
+<li> Make changes recommended by HDF-5 to improve usability with HDF-5
+     (e.g., character strings as opposed to character arrays)
+<li> HDF-5 must fix "creation tracking"
+<li> Assess compression capability of HDF-5
+<li> Create SIDS-to-HDF-5 documentation (Poinot?)
+<li> CGNS configure scripts will need to be modified to check for
+     availability of appropriate HDF-5 libraries.
+<li> Possibly add flag-based options when opening CGNS files.  For
+     example: "follow links" vs. "don't follow links"; "use ADF" vs. "use
+     HDF-5"; "translate file automatically" vs. "leave the file as-is";
+     "compress" vs. "don't compress".
+<li> Look into eliminating need for ID's from MLL
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 7 July 2004
+
+</body>
+</html>

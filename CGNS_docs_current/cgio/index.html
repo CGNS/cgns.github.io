@@ -1,0 +1,177 @@
+<!-- Home Page for CGIO Manual -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="cgio.css" rel="stylesheet" type="text/css">
+<title> CGIO User's Guide </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<span class=nav><b>CGIO&nbsp;User's&nbsp;Guide</b></span>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="library.html"><b>The&nbsp;CGIO&nbsp;Software&nbsp;Library</b></a>)
+(<a href="database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<a href="structure.html"><b>Data&nbsp;Structure&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="links.html"><b>Link&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="node.html"><b>Node&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="dataio.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages&nbsp;and&nbsp;Routines</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="examples.html"><b>Example&nbsp;Programs</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<br><br>
+<table>
+<tr>
+   <td><img src="../logo/cgns_color.gif" width=150 alt="CGNS logo">
+   <td><tt>&nbsp;&nbsp;</tt>
+   <td><h1>CFD&nbsp;General&nbsp;Notation&nbsp;System<br>
+       CGIO&nbsp;User's&nbsp;Guide</h1>
+</table>
+<h1><small><small>Document Version 3.2.1<br>
+CGNS Version 3.2.1</small></small></h1>
+
+<p>
+The CGIO interface provides low-level access to the database manager which
+underlies CGNS. The original database manager for CGNS was
+<a href="../adf/index.html">ADF</a> (Advanced Data Format), and as such
+much of the CGIO interface routines are patterned after this. Starting
+with CGNS library version 2.xx, a new database manager
+<a href="../hdf5/index.html">HDF5</a> (Hierarchical Data Format) was
+introduced. At that time only one of these database managers could be used
+at a time, and this was selected at build time.
+
+<p>
+In CGNS library version 3.xx, the CGIO interface was developed to support
+both database managers simultaneously, and in a fashion transparent to
+the application code. This is now the preferred way to access the database
+manager.
+
+<p>
+This document defines the general structure of a database file, but not
+the specific implementation details. See the
+<a href="../adf/index.html">ADF</a> and
+<a href="../hdf5/index.html">HDF5</a> Implementations for the details.
+The CGIO core routines used to store and retrieve data from the
+database manager are also described.
+
+<p>
+<ul>
+<li> <a href="library.html">The CGIO Software Library</a>
+     <ul>
+     <li> <a href="library.html#node">Node - The Building Block</a>
+     <li> <a href="library.html#attributes">Node Attributes</a>
+     <li> <a href="library.html#glossary">Glossary of Terms</a>
+     <li> <a href="library.html#conventions">Conventions and Implementations</a>
+     <li> <a href="library.html#defaults">Limits and Sizes</a>
+     </ul>
+<li> <a href="database.html">Database-Level Routines</a>
+     <ul>
+     <li> <tt>cgio_is_supported</tt> - Check for supported database type
+     <li> <tt>cgio_check_file</tt> - Check for valid database
+     <li> <tt>cgio_open_file</tt> - Open a database
+     <li> <tt>cgio_close_file</tt> - Close a database
+     <li> <tt>cgio_get_file_type</tt> - Get the type of the database
+     <li> <tt>cgio_get_root_id</tt> - Get the root ID of the database
+     </ul>
+<li> <a href="structure.html">Data Structure Management Routines</a>
+     <ul>
+     <li> <tt>cgio_create_node</tt> - Create an empty node
+     <li> <tt>cgio_new_node</tt> - Create a node with data
+     <li> <tt>cgio_delete_node</tt> - Delete a node
+     <li> <tt>cgio_move_node</tt> - Move a node to new location
+     <li> <tt>cgio_number_children</tt> - Get the number of children of a node
+     <li> <tt>cgio_children_names</tt> - Get the child names of a node
+     <li> <tt>cgio_children_ids</tt> - Get a unique identifiers for children of a node
+     </ul>
+<li> <a href="links.html">Link Management Routines</a>
+     <ul>
+     <li> <tt>cgio_is_link</tt> - Test if a node is a link
+     <li> <tt>cgio_link_size</tt> - Get link path size
+     <li> <tt>cgio_create_link</tt> - Create a link
+     <li> <tt>cgio_get_link</tt> - Get the path information from a link
+     </ul>
+<li> <a href="node.html">Node Management Routines</a>
+     <ul>
+     <li> <tt>cgio_get_node_id</tt> - Get a unique identifier for a node
+     <li> <tt>cgio_get_name</tt> - Get the name of a node
+     <li> <tt>cgio_set_name</tt> - Set (change) the name of a node
+     <li> <tt>cgio_get_label</tt> - Get the label of a node
+     <li> <tt>cgio_set_label</tt> - Set (change) the label of a node
+     <li> <tt>cgio_get_data_type</tt> - Get the data type for a node
+     <li> <tt>cgio_get_dimensions</tt> - Get the number of dimensions
+     <li> <tt>cgio_set_dimensions</tt> - Set the data type and dimension information
+     </ul>
+<li> <a href="dataio.html">Data I/O Routines</a>
+     <ul>
+     <li> <tt>cgio_read_data</tt> - Read the data from a node (with partial capabilities)
+     <li> <tt>cgio_read_all_data</tt> - Read all the data into a contiguous memory space
+     <li> <tt>cgio_read_block_data</tt> - Read a contiguous block of data from a node
+     <li> <tt>cgio_write_data</tt> - Write the data to a node (with partial capabilities)
+     <li> <tt>cgio_write_all_data</tt> - Write all the data from a contiguous memory space
+     <li> <tt>cgio_write_block_data</tt> - Write a contiguous block of data to a node
+     </ul>
+<li> <a href="errors.html">Error Handling and Messages</a>
+     <ul>
+     <li> <tt>cgio_error_message</tt> - Get the error message for the last error
+     <li> <tt>cgio_error_code</tt> - Get last error code and database type
+     <li> <tt>cgio_error_exit</tt> - Print error message and abort
+     <li> <tt>cgio_error_abort</tt> - Set/unset abort on error option
+     <li> <a href="errors.html#messages">Error messages</a>
+     </ul>
+<li> <a href="misc.html">Miscellaneous Routines</a>
+     <ul>
+     <li> <tt>cgio_flush_to_disk</tt> - Force a write to disk
+     <li> <tt>cgio_library_version</tt> - Get the database library version
+     <li> <tt>cgio_file_version</tt> - Get the database file version and dates
+     </ul>
+<li> <a href="examples.html">Example Programs</a>
+     <ul>
+     <li> <a href="examples.html#Fortran">Fortran Example</a>
+     <li> <a href="examples.html#C">C Example</a>
+     </ul>
+</ul>
+
+<p>
+The complete <a href="cgio.tar.gz">CGIO Manual in HTML form</a>
+is also available for installation on a local system.
+This is a gzip'ed tar file (32K, 143K gunzip'ed), and may be downloaded
+by clicking on the link while holding down the shift key, assuming your
+browser supports this capability.
+A dialogue box will appear for you to specify the directory and file name.
+To unpack the contents, do
+<pre>
+   gunzip -c cgio.tar.gz | tar xvf -
+</pre>
+The files will be extracted and stored in the directory <i>cgio</i>.
+Point your browser to the local file <i>cgio/index.html</i> to
+display the <i>CGIO Manual</i> home page.
+Note also that some links, to other manuals, etc., may not work.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_big.html" -->
+Last updated 07 Feb 2014
+
+</body>
+</html>

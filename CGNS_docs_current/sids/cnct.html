@@ -1,0 +1,1358 @@
+<!-- CGNS SIDS document - Multizone Interface Connectivity -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Multizone Interface Connectivity </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<span class=nav><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></span>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Multizone Interface Connectivity</h2>
+
+<ul>
+<li> <a href="#ZoneGridConnectivity">Zonal Connectivity Structure Definition: <tt>ZoneGridConnectivity_t</tt></a>
+<li> <a href="#GridConnectivity1to1">1-to-1 Interface Connectivity Structure Definition: <tt>GridConnectivity1to1_t</tt></a>
+<li> <a href="#cnct_1to1_example">1-to-1 Interface Connectivity Examples</a>
+<li> <a href="#GridConnectivity">General Interface Connectivity Structure Definition: <tt>GridConnectivity_t</tt></a>
+<li> <a href="#cnct_gen_example">General Interface Connectivity Examples</a>
+<li> <a href="#GridConnectivityProperty">Grid Connectivity Property Structure Definition: <tt>GridConnectivityProperty_t</tt></a>
+     <ul>
+     <li> <a href="#Periodic">Periodic Interface Structure Definition: <tt>Periodic_t</tt></a>
+     <li> <a href="#AverageInterface">Average Interface Structure Definition: <tt>AverageInterface_t</tt></a>
+     </ul>
+<li> <a href="#OversetHoles">Overset Grid Holes Structure Definition: <tt>OversetHoles_t</tt></a>
+</ul>
+
+<p>
+This section defines structures for describing multizone interface
+connectivity for <a href="conv.html#interfaces">1-to-1 abutting,
+mismatched abutting, and overset type interfaces</a>.
+All interface connectivity information pertaining to a given zone is
+grouped together in a
+<a href="#ZoneGridConnectivity"><tt>ZoneGridConnectivity_t</tt></a>
+structure entity; this in turn is contained in a <a
+href="cgnsbase.html#Zone">zone structure entity</a>.
+
+<p>
+Before presentation of the structure definitions, a few design features
+require comment.
+All indices used to describe interfaces are the dimensionality
+(<tt>IndexDimension</tt>) of the grid, even when they are used to
+describe lower-dimensional zonal boundaries for abutting interfaces.
+The alternative for structured zones that was not chosen is to use
+lower-dimensional indices for lower-dimensional interfaces (e.g., for a
+3-D grid, use two-dimensional indices for describing grid planes that
+are interfaces).
+Both alternatives offer trade-offs.
+The lower-dimensional indices require cyclic notation conventions and
+additional identification of face location; whereas, full-dimensional
+indices result in one redundant index component when describing points
+along a grid plane.
+We decided that full-dimensional indices would be more usable and less
+error prone in actual implementation.
+
+<p>
+A major consequence of this decision is that connectivity information
+for describing mismatched abutting interfaces and overset interfaces
+can be merged into a single structure,
+<a href="#GridConnectivity"><tt>GridConnectivity_t</tt></a>.
+In fact, this single structure type can be used to describe all zonal
+interfaces.
+
+<p>
+A second design choice was to duplicate all 1-to-1 abutting interface
+information within the CGNS database.
+It is possible to describe a given 1-to-1 interface with a single set of
+connectivity data.
+In contrast, mismatched and overset interfaces require different
+connectivity information when the roles of receiver and donor zones are
+interchanged.
+Therefore, a given mismatched or overset interface requires two sets of
+connectivity data within the database.
+The decision to force two sets of connectivity data (one contained
+in each of the <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a> entities
+for the two adjacent zones)for each 1-to-1 interface makes the
+connectivity structures for all interface types look and function
+similarly.
+It also fits better with the zone-by-zone hierarchy chosen for the CGNS
+database.  The minor penalty in data duplication was deemed worth the
+advantages gained.
+
+<p>
+Note that it is a CGNS design intent that a given zone boundary segment
+or location should at most be defined (or covered) by either a boundary
+condition or a multizone interface connectivity, but not by both.
+
+<a name="ZoneGridConnectivity"></a>
+<h3>Zonal Connectivity Structure Definition: <tt>ZoneGridConnectivity_t</tt></h3> 
+
+<p>
+All multizone interface grid connectivity information pertaining to
+a given zone is contained in the <tt>ZoneGridConnectivity_t</tt>
+structure.
+This includes abutting interfaces (1-to-1 and general mismatched),
+overset-grid interfaces, and overset-grid holes.
+
+<pre>
+  ZoneGridConnectivity_t&lt; int IndexDimension, int CellDimension &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    List( GridConnectivity1to1_t&lt;IndexDimension&gt;
+          GridConnectivity1to11 ... GridConnectivity1to1N ) ;          (o)
+
+    List( GridConnectivity_t&lt;IndexDimension, CellDimension&gt;
+          GridConnectivity1 ... GridConnectivityN ) ;                  (o)
+
+    List( OversetHoles_t&lt;IndexDimension&gt; 
+          OversetHoles1 ... OversetHolesN ) ;                          (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="#GridConnectivity1to1"><tt>GridConnectivity1to1_t</tt></a>,
+     <a href="#GridConnectivity"><tt>GridConnectivity_t</tt></a>,
+     <a href="#OversetHoles"><tt>OversetHoles_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>ZoneGridConnectivity_t</tt>.
+<li> All lists within the <tt>ZoneGridConnectivity_t</tt> structure may
+     be empty.
+</ol>
+
+<p>
+<tt>ZoneGridConnectivity_t</tt> requires two structure parameters,
+<tt>IndexDimension</tt>, which is passed onto all connectivity
+substructures, and <tt>CellDimension</tt>, which is passed to
+<a href="#GridConnectivity"><tt>GridConnectivity_t</tt></a> only.
+
+<p>
+Connectivity information for 1-to-1 or matched multizone interfaces is
+contained in the
+<a href="#GridConnectivity1to1"><tt>GridConnectivity1to1_t</tt></a> structure.
+Abutting and overset connectivity is contained in the
+<a href="#GridConnectivity"><tt>GridConnectivity_t</tt></a> structure,
+and overset-grid holes are identified in the
+<a href="#OversetHoles"><tt>OversetHoles_t</tt></a> structure.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="GridConnectivity1to1"></a>
+<h3>1-to-1 Interface Connectivity Structure Definition: <tt>GridConnectivity1to1_t</tt></h3>
+
+<p>
+<tt>GridConnectivity1to1_t</tt> only applies to structured zones
+interfacing with structured donors and whose interface is a logically
+rectangular region.
+It contains connectivity information for a multizone interface patch
+that is abutting with 1-to-1 matching between adjacent zone indices
+(also referred to as C0 connectivity).
+An interface patch is the subrange of the face of a zone that touches
+one and only one other zone.
+This structure identifies the subrange of indices for the two adjacent
+zones that make up the interface and gives an index transformation from
+one zone to the other.
+It also identifies the name of the adjacent zone.
+
+<p>
+All the interface patches for a given zone are contained in the
+<a href="#ZoneGridConnectivity"><tt>ZoneGridConnectivity_t</tt></a>
+entity for that zone.
+If a face of a zone touches several other zones (say <i>N</i>), then
+<i>N</i> different instances of the <tt>GridConnectivity1to1_t</tt>
+structure must be included in the zone to describe each separate
+interface patch.
+This convention requires that a single interface patch be described
+twice in the database - once for each adjacent zone.
+
+<pre>
+  GridConnectivity1to1_t&lt; int IndexDimension &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    int[IndexDimension] Transform ;                                    (o/d)
+
+    IndexRange_t&lt;IndexDimension&gt; PointRange ;                          (r)
+    IndexRange_t&lt;IndexDimension&gt; PointRangeDonor ;                     (r)
+
+    Identifier(Zone_t) ZoneDonorName ;                                 (r)
+
+    GridConnectivityProperty_t GridConnectivityProperty ;              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+
+    int Ordinal ;                                                      (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>GridConnectivity1to1_t</tt> and shall not include the
+     names <tt>GridConnectivityProperty</tt>, <tt>PointRange</tt>,
+     <tt>PointRangeDonor</tt>, <tt>Transform</tt>, or <tt>Ordinal</tt>.
+<li> If <tt>Transform</tt> is absent, then its default value is
+     <tt>[</tt>+1,+2,+3<tt>]</tt>.
+<li> <tt>ZoneDonorName</tt> must be equated to a zone identifier
+     within the current CGNS database (i.e., it must be equal to one
+     of the <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a> identifiers
+     contained in the current
+     <a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> entity).
+<li> Beginning indices of <tt>PointRange</tt> and
+     <tt>PointRangeDonor</tt> must coincide (i.e., must be the same
+     physical point); ending indices of <tt>PointRange</tt> and
+     <tt>PointRangeDonor</tt> must also coincide.
+<li> Elements of <tt>Transform</tt> must be signed integers in the range
+     <tt>-IndexDimension</tt>, ..., <tt>+IndexDimension</tt>;
+     element magnitudes may not be repeated.
+     In 3-D allowed elements are 0, &plusmn;1, &plusmn;2, &plusmn;3.
+</ol>
+
+<p>
+<tt>PointRange</tt> contains the subrange of indices that makes up the
+interface patch in the current zone (i.e., that
+<a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a> entity
+that contains the given instance of <tt>GridConnectivity1to1_t</tt>).
+<tt>PointRangeDonor</tt> contains the interface patch subrange
+of indices for the adjacent zone (whose identifier is given by
+<tt>ZoneDonorName</tt>).
+By convention the indices contained in <tt>PointRange</tt> and
+<tt>PointRangeDonor</tt> refer to vertices.
+
+<a name="Transform"></a>
+<p>
+<tt>Transform</tt> contains a short-hand notation for the transformation
+matrix describing the relation between indices of the two adjacent
+zones.
+The transformation matrix itself has rank <tt>IndexDimension</tt> and
+contains elements +1, &minus;1 and 0; it is orthonormal and its inverse
+is its transpose.
+The transformation matrix (<tt>T</tt>) works as follows:  If
+<tt>Index1</tt> and <tt>Index2</tt> are the indices of a given point
+on the interface, where <tt>Index1</tt> is in the current zone and
+<tt>Index2</tt> is in the adjacent zone, then their relationship is,
+<pre>
+        Index2 = T.(Index1 - Begin1) + Begin2 
+
+        Index1 = Transpose[T].(Index2 - Begin2) + Begin1 
+</pre>
+where the "<tt>.</tt>" notation indicates matrix-vector multiply.
+<tt>Begin1</tt> and <tt>End1</tt> are the subrange indices contained
+in <tt>PointRange</tt>, and <tt>Begin2</tt> and <tt>End2</tt> are the
+subrange indices contained in <tt>PointRangeDonor</tt>.
+
+<p>
+The short-hand notation used in <tt>Transform</tt> is as follows: Each
+element shows the image in the adjacent zone's face of a positive index
+increment in the current zone's face.
+The first element is the image of a positive increment in <i>i</i>; the
+second element is the image of an increment in <i>j</i>; and the third
+(in 3-D) is the image of an increment in <i>k</i> on the current zone's
+face.
+For 3-D, the transformation matrix <tt>T</tt> is constructed from
+<tt>Transform =
+[</tt>&plusmn;<i>a</i>, &plusmn;<i>b</i>, &plusmn;<i>c</i><tt>]</tt>
+as follows:
+<br><br>
+<center>
+<img src="cnct.eqs/T.gif"
+     alt="Transformation matrix for general Transform"
+     longdesc="cnct.eqs/T.html">
+</center>
+<br>
+where
+sgn(<i>x</i>) &equiv; +1 if <i>x</i> &ge; 0, and &minus;1 if <i>x</i> &lt; 0, and
+del(<i>x&minus;y</i>) &equiv; +1 if |<i>x</i>| = |<i>y</i>|, and 0 otherwise.
+
+<p>
+For example, <tt>Transform = [</tt>&minus;2, +3, +1<tt>]</tt> gives the
+transformation matrix,
+<br><br>
+<center>
+<img src="cnct.eqs/Texample.gif"
+     alt="Transformation matrix for Transform = [-2, +3, +1]"
+     longdesc="cnct.eqs/Texample.html">
+</center>
+
+<p>
+For establishing relationships between adjacent and current zone indices
+lying on the interface itself, one of the elements of <tt>Transform</tt>
+is superfluous since one component of both interface indices remains
+constant.
+It is therefore acceptable to set that element of <tt>Transform</tt> to
+zero.
+
+<p>
+If the transformation matrix is used for continuation of computational
+coordinates into the adjacent zone (e.g., to find the location of a rind
+point in the adjacent zone), then all elements of <tt>Transform</tt> are
+needed.
+If the above mentioned superfluous element is set to zero, it can be
+easily regenerated from <tt>PointRange</tt> and <tt>PointRangeDonor</tt>
+and the grid sizes of the two zones.
+This is done by determining the faces represented by <tt>PointRange</tt>
+and <tt>PointRangeDonor</tt> (i.e., <i>i</i>-min, <i>i</i>-max,
+<i>j</i>-min, etc.).
+If one is a minimum face and the other a maximum face, then the sign of
+the missing element in <tt>Transform</tt> is "+", and the value of the
+missing element in the transformation matrix (<tt>T</tt>) is +1.
+If the faces are both minimums or are both maximums, the sign is "&minus;".
+Next, the position and magnitude of the element in <tt>Transform</tt>,
+and hence the row and column in the transformation matrix, is given by
+the combinations of <i>i</i>, <i>j</i> and <i>k</i> faces for the two.
+For example, if <tt>PointRange</tt> represents a <i>j</i>-min
+or <i>j</i>-max face and <tt>PointRangeDonor</tt> represents an
+<i>i</i>-min or <i>i</i>-max face, then the missing element's position
+in <tt>Transform</tt> is 2 and its magnitude is 1 (i.e., <tt>Transform =
+[</tt>*, &plusmn;1, *<tt>]</tt>).
+
+<p>
+Note also that the transform matrix and the two index pairs overspecify
+the interface patch.
+For example, <tt>End2</tt> can be obtained from <tt>Transform</tt>,
+<tt>Begin1</tt>, <tt>End1</tt> and <tt>Begin2</tt>.
+
+<p>
+A <a href="#GridConnectivityProperty"><tt>GridConnectivityProperty_t</tt></a>
+data structure may be used to record special properties associated with
+particular connectivity patches, such as a periodic interface, or an
+interface where data is to be averaged in some way.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+<tt>Ordinal</tt> is user-defined and has no restrictions on the values
+that it can contain.
+It is included for backward compatibility to assist implementation of
+the CGNS system into applications whose I/O depends heavily on the
+numbering of zone interfaces.
+Since there are no restrictions on the values contained in
+<tt>Ordinal</tt> (or that <tt>Ordinal</tt> is even provided), there is
+no guarantee that the interfaces in an existing CGNS database will have
+sequential values from 1 to <i>N</i> without holes or repetitions.
+Use of <tt>Ordinal</tt> is discouraged and is on a user-beware basis.
+
+<a name="cnct_1to1_example"></a>
+<h3>1-to-1 Interface Connectivity Examples</h3>
+
+<p>
+This section contains two examples of structure entities for describing
+the connectivity for structured-zone 1-to-1 abutting multizone
+interfaces.
+The <a href="twozone.html">Structured Two-Zone Flat Plate Example</a>
+contains additional examples of 1-to-1 interfaces.
+
+<a name="ex:1to1a"></a>
+<h4>Example - 1-to-1 Abutting of Complete Faces</h4>
+
+<p>
+Two zones have the same orientation; zone 1 is 9 &times; 17 &times; 11 and
+zone 2 is 9 &times; 17 &times; 21.
+The <i>k</i>-max face of zone 1 abuts the <i>k</i>-min face of zone 2.
+Contained in the structure entities of zone 1 is the following interface
+structure:
+<pre>
+  GridConnectivity1to1_t&lt;3&gt; Zone1/ZoneGridConnectivity/KMax =
+    {{
+    int[3] Transform = [1,2,3] ;
+    IndexRange_t&lt;3&gt; PointRange =
+      {{
+      int[3] Begin = [1,1,11] ;
+      int[3] End   = [9,17,11] ;
+      }} ;
+    IndexRange_t&lt;3&gt; PointRangeDonor =
+      {{
+      int[3] Begin = [1,1,1] ; 
+      int[3] End   = [9,17,1] ;
+      }} ;
+    Identifier(Zone_t) ZoneDonorName = Zone2 ;
+    }} ;
+</pre>
+Contained in the structure entities of zone 2 is the following:
+<pre>
+  GridConnectivity1to1_t&lt;3&gt; Zone2/ZoneGridConnectivity/KMin =
+    {{
+    int[3] Transform = [1,2,3] ;
+    IndexRange_t&lt;3&gt; PointRange =
+      {{
+      int[3] Begin = [1,1,1] ; 
+      int[3] End   = [9,17,1] ;
+      }} ;
+    IndexRange_t&lt;3&gt; PointRangeDonor =
+      {{
+      int[3] Begin = [1,1,11] ;
+      int[3] End   = [9,17,11] ;
+      }} ;
+    Identifier(Zone_t) ZoneDonorName = Zone1 ;
+    }} ;
+</pre>
+
+This example assumes zones 1 and 2 have the identifiers <tt>Zone1</tt>
+and <tt>Zone2</tt>, respectively.
+
+<a name="ex:1to1b"></a>
+<h4>Example - 1-to-1 Abutting, Complete Face to a Subset of a Face</h4>
+
+<a name="f:cnct_1to1"></a>
+<br><br>
+<center>
+<img src="cnct.figs/cnct_1to1.gif"
+     alt="Two abutting zones, with 1-to-1 abutting of a complete face to a subset of a face"
+     longdesc="cnct.figs/cnct_1to1.html">
+<br><br>
+Example Interface for 1-to-1 Connectivity
+</center>
+
+<p>
+The above figure shows a more complex 1-to-1 abutting interface, where
+the entire <i>j</i>-max face of zone 2 coincides with a subset of the
+<i>i</i>-max face of zone 1.
+This situation would result in the following connectivity structures:
+<pre>
+  GridConnectivity1to1_t&lt;3&gt; Zone1/ZoneGridConnectivity/IMax =
+    {{
+    int[3] Transform = [-2,-1,-3] ;
+    IndexRange_t&lt;3&gt; PointRange =
+      {{
+      int[3] Begin = [17,3,1] ;
+      int[3] End   = [17,9,5] ;
+      }} ;
+    IndexRange_t&lt;3&gt; PointRangeDonor =
+      {{
+      int[3] Begin = [7,9,5] ; 
+      int[3] End   = [1,9,1] ;
+      }} ;
+    Identifier(Zone_t) ZoneDonorName = Zone2 ;
+    }} ;
+</pre>
+
+<pre>
+  GridConnectivity1to1_t&lt;3&gt; Zone2/ZoneGridConnectivity/JMax =
+    {{
+    int[3] Transform = [-2,-1,-3] ;
+    IndexRange_t&lt;3&gt; PointRange =
+      {{
+      int[3] Begin = [1,9,1] ;
+      int[3] End   = [7,9,5] ;
+      }} ;
+    IndexRange_t&lt;3&gt; PointRangeDonor =
+      {{
+      int[3] Begin = [17,9,5] ; 
+      int[3] End   = [17,3,1] ;
+      }} ;
+    Identifier(Zone_t) ZoneDonorName = Zone1 ;
+    }} ;
+</pre>
+
+<p>
+This example also assumes zones 1 and 2 have the identifiers
+<tt>Zone1</tt> and <tt>Zone2</tt>, respectively.
+Note that the index transformation matrix for both this and the previous
+examples is symmetric; hence, the value of <tt>Transform</tt> is
+identical for both members of the interface pair.
+In general this will not always be the case.
+
+<a name="GridConnectivity"></a>
+<h3>General Interface Connectivity Structure Definition: <tt>GridConnectivity_t</tt></h3>
+
+<p>
+<tt>GridConnectivity_t</tt> contains connectivity information for
+generalized multizone interfaces, and may be used for any mix of
+structured and unstructured zones.
+Its purpose is to describe mismatched-abutting and overset interfaces,
+but can also be used for 1-to-1 abutting interfaces.
+
+<p>
+For abutting interfaces that are not 1-to-1, also referred to as patched
+or mismatched, an interface patch is the subrange of the face of a zone
+that touches one and only one other zone.
+This structure identifies the subrange of indices (or array of indices)
+that make up the interface and gives their image in the adjacent (donor)
+zone.
+It also identifies the name of the adjacent zone.
+If a given face of a zone touches several (say <i>N</i>) adjacent zones,
+then <i>N</i> different instances of <tt>GridConnectivity_t</tt> are
+needed to describe all the interfaces.
+For a single abutting interface, two instances of
+<tt>GridConnectivity_t</tt> are needed in the database - one for each
+adjacent zone.
+
+<p>
+For overset interfaces, this structure identifies the fringe points of a
+given zone that lie in one and only one other zone.
+If the fringe points of a zone lie in several (say <i>N</i>) overlapping
+zones, then <i>N</i> different instances of <tt>GridConnectivity_t</tt>
+are needed to describe the overlaps.
+It is possible with overset grids that a single fringe point may
+actually lie in several overlapping zones (though in typical usage,
+linkage to only one of the overlapping zones is kept).
+There is no restriction against a given fringe point being contained
+within multiple instances of <tt>GridConnectivity_t</tt>; therefore,
+this structure allows the description of a single fringe point lying in
+several overlapping zones.
+
+<pre>
+  GridConnectivityType_t := Enumeration(
+    GridConnectivityTypeNull,
+    GridConnectivityTypeUserDefined,
+    Overset,
+    Abutting,
+    Abutting1to1 ) ;
+
+  GridConnectivity_t&lt; int IndexDimension, int CellDimension &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    GridConnectivityType_t GridConnectivityType ;                      (o/d)
+
+    GridLocation_t GridLocation ;                                      (o/d)
+
+    IndexRange_t&lt;IndexDimension&gt; PointRange ;                          (o:r)
+    IndexArray_t&lt;IndexDimension, PointListSize, int&gt;  PointList ;      (r:o)
+    IndexArray_t&lt;IndexDimension, PointListSize, int&gt;  PointListDonor ; (o)
+    IndexArray_t&lt;IndexDimension, PointListSize, int&gt;  CellListDonor ;  (o)
+
+    Identifier(Zone_t) ZoneDonorName ;                                 (r)
+
+    DataArray_t &lt;real, 2, [CellDimension, PointListSize]&gt;
+       InterpolantsDonor                                               (o)
+
+    GridConnectivityProperty_t GridConnectivityProperty ;              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+
+    int Ordinal ;                                                      (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>GridConnectivity_t</tt> and shall not include the names
+     <tt>CellListDonor</tt>, <tt>GridConnectivityProperty</tt>,
+     <tt>GridConnectivityType</tt>, <tt>GridLocation</tt>,
+     <tt>InterpolantsDonor</tt>, <tt>Ordinal</tt>, <tt>PointList</tt>,
+     <tt>PointListDonor</tt>, or <tt>PointRange</tt>.
+<li> <tt>ZoneDonorName</tt> must be equated to a zone identifier
+     within the current CGNS database (i.e., it must be equal to one
+     of the <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a> identifiers
+     contained in the current
+     <a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> entity).
+<li> If <tt>GridConnectivityType</tt> is absent, then its default value
+     is <tt>Overset</tt>.
+<li> For <tt>Abutting</tt> or <tt>Abutting1to1</tt> interfaces,
+     <a href="build.html#GridLocation"><tt>GridLocation</tt></a> can be
+     either <tt>Vertex</tt> or <tt>FaceCenter</tt>.
+     When <tt>GridLocation</tt> is set to <tt>Vertex</tt>, then
+     <tt>PointList</tt> or <tt>PointRange</tt> refer to node indices,
+     for both structured and unstructured grids.
+     When <tt>GridLocation</tt> is set to <tt>FaceCenter</tt>, then
+     <tt>PointList</tt> or <tt>PointRange</tt> refer to face elements.
+     Face elements are indexed using different methods depending if the
+     zone is structured or unstructured.
+     For a structured zone, face elements are indexed using the minimum
+     of the connecting vertex indices, as described in the section
+     <a href="conv.html#structgrid">Structured Grid Notation and
+     Indexing Conventions</a>.
+     For an unstructured zone, face elements are indexed using their
+     element numbering, as defined in the
+     <a href="gridflow.html#Elements"><tt>Elements_t</tt></a> data
+     structures.
+     For <tt>Overset</tt> interfaces, <tt>GridLocation</tt> can be
+     either <tt>Vertex</tt> or <tt>CellCenter</tt>, allowing the
+     description of the overlap region in the receiver zone to be
+     consistent with the grid location used for storing the flow
+     solution.
+     If <tt>GridLocation</tt> is absent, then its default value is
+     <tt>Vertex</tt>.
+<li> One of <tt>PointRange</tt> and <tt>PointList</tt> must be specified,
+     but not both.
+<li> If <tt>PointRange</tt> is specified, then an index ordering
+     convention is needed to map receiver-zone grid points to donor-zone
+     grid points.
+     FORTRAN multidimensional array ordering is used.
+<li> If <tt>GridConnectivityType</tt> is <tt>Abutting1to1</tt> or
+     <tt>Abutting</tt>, then <tt>PointRange</tt> or <tt>PointList</tt>
+     must define points associated with a face subrange (if
+     the zone is structured, all points must be in a single
+     computational grid plane); the donor-zone grid locations defined
+     by <tt>PointListDonor</tt> or <tt>CellListDonor</tt> must also be
+     associated with a face subrange.
+<li> If donor information is given, either <tt>PointListDonor</tt>
+     alone, or <tt>CellListDonor</tt> with or without
+     <tt>InterpolantsDonor</tt>, must be used.
+     The use of <tt>PointListDonor</tt> is restricted to
+     <tt>Abutting1to1</tt>, whereas <tt>CellListDonor</tt> can be used
+     for any interface type.
+<li> Thus, for a <tt>GridConnectivityType</tt> that is not
+     <tt>Abutting1to1</tt>, there are three allowable levels of
+     description concerning the connectivity information: (a) full,
+     giving <tt>ZoneDonorName</tt> with <tt>CellListDonor</tt>
+     plus <tt>InterpolantsDonor</tt>; (b) partial, giving
+     <tt>ZoneDonorName</tt> with <tt>CellListDonor</tt> but
+     no <tt>InterpolantsDonor</tt>; or (c) minimal, giving
+     <tt>ZoneDonorName</tt> only.
+</ol>
+
+<p>
+The type of multizone interface connectivity may be
+<a href="conv.html#interfaces"><tt>Overset</tt>, <tt>Abutting</tt>, or
+<tt>Abutting1to1</tt></a>.
+<tt>Overset</tt> refers to zones that overlap; for a 3-D configuration
+the overlap is a 3-D region.
+<tt>Abutting</tt> refers to zones that abut or touch, but do not overlap
+(other than the vertices and faces that make up the interface).
+<tt>Abutting1to1</tt> is a special case of abutting interfaces where
+grid lines are continuous across the interface and all vertices on the
+interface are shared by the two adjacent zones.
+
+<p>
+The interface grid points within the receiver zone may be specified by
+<tt>PointRange</tt> if they constitute a logically rectangular region
+(e.g., an abutting interface where an entire face of the receiver zone
+abuts with a part of a face of the donor zone).
+In all other cases, <tt>PointList</tt> should be used to list the
+receiver-zone grid points making up the interface.
+For a structured-to-structured interface, all indices in
+<tt>PointRange</tt> or <tt>PointList</tt> should have one index element
+in common (see note 7).
+
+<p>
+<a href="build.html#GridLocation"><tt>GridLocation</tt></a> identifies
+the location of indices within the receiver zone described by
+<tt>PointRange</tt> or <tt>PointList</tt>.
+It also identifies the location of indices defined by
+<tt>PointListDonor</tt> in the donor zone.
+<tt>GridLocation</tt> does <em>not</em> apply to <tt>CellListDonor</tt>
+or <tt>InterpolantsDonor</tt>.
+The <tt>CellListDonor</tt> is always an index or indices that define a
+particular cell or element, while the <tt>InterpolantsDonor</tt> defines
+an interpolation value relative to the cell/element <em>vertices</em>.
+In other words, when using <tt>InterpolantsDonor</tt>, the interpolants
+are always given with respect to the vertices of the donor zone.
+<tt>InterpolantsDonor</tt> is currently only defined for structured
+grids and certain basic unstructured grid element types.
+
+<p>
+For structured grids, the interpolant value is given along each index
+direction, depending on the location within the cell.
+For example, if the point is located within the cell at a position 75%
+in the <i>i</i>-direction, 41% in the <i>j</i>-direction, and 20% in the
+<i>k</i>-direction, then <tt>InterpolantsDonor</tt> values (<i>r</i>,
+<i>s</i>, <i>t</i>) would be (0.75, 0.41, 0.20).
+
+<p>
+The interpolation function is a linear combination of the <i>x</i>,
+<i>y</i>, and <i>z</i> values at the surrounding nodes:
+<br><br>
+<center>
+<img src="cnct.eqs/d.gif"
+     alt="d = sum from i=1 to N of W sub i dot d sub i">
+</center>
+<br>
+where <i>d</i> is the <i>x</i>, <i>y</i>, or <i>z</i> value at an
+interior point in the cell, <i>d<sub>i</sub></i> is the <i>x</i>,
+<i>y</i>, or <i>z</i> value at node <i>i</i>, and <i>W<sub>i</sub></i> is
+a weight at node <i>i</i>.
+The weights are functions of the parametric variables <i>r</i>,
+<i>s</i>, and <i>t</i> (corresponding with the <i>i</i>, <i>j</i>, and
+<i>k</i> directions, respectively), which vary from 0 to 1, inclusively.
+For structured grids in 3-D, <i>N</i> = 8.
+Note that for skewed, non-parallel grids, it is not always easy to
+determine the interpolants geometrically, and it may be necessary to
+solve an inverse problem using the interpolation function.
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=top><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><img src="cnct.figs/cnct_struct.gif" alt="Structured grid cell"
+            longdesc="cnct.figs/cnct_struct.html">
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>W</i><sub><i>i</i>,<i>j</i>,<i>k</i></sub> =
+          (1 &minus; <i>r</i>)(1 &minus; <i>s</i>)(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub><i>i</i>+1,<i>j</i>,<i>k</i></sub> =
+          <i>r</i>(1 &minus; <i>s</i>)(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub><i>i</i>,<i>j</i>+1,<i>k</i></sub> =
+          (1 &minus; <i>r</i>)<i>s</i>(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub><i>i</i>,<i>j</i>,<i>k</i>+1</sub> =
+          (1 &minus; <i>r</i>)(1 &minus; <i>s</i>)<i>t</i><br>
+       <i>W</i><sub><i>i</i>+1,<i>j</i>+1,<i>k</i></sub> =
+          <i>r</i><i>s</i>(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub><i>i</i>+1,<i>j</i>,<i>k</i>+1</sub> =
+          <i>r</i>(1 &minus; <i>s</i>)<i>t</i><br>
+       <i>W</i><sub><i>i</i>,<i>j</i>+1,<i>k</i>+1</sub> =
+          (1 &minus; <i>r</i>)<i>s</i><i>t</i><br>
+       <i>W</i><sub><i>i</i>+1,<i>j</i>+1,<i>k</i>+1</sub> =
+          <i>r</i><i>s</i><i>t</i>
+</table>
+
+<p>
+For unstructured grids, <tt>InterpolantsDonor</tt> is defined only for
+the basic linear element types:
+<a href="conv.html#unst_line"><tt>BAR_2</tt></a>,
+<a href="conv.html#unst_tri"><tt>TRI_3</tt></a>,
+<a href="conv.html#unst_quad"><tt>QUAD_4</tt></a>,
+<a href="conv.html#unst_tetra"><tt>TETRA_4</tt></a>,
+<a href="conv.html#unst_pyramid"><tt>PYRA_5</tt></a>,
+<a href="conv.html#unst_penta"><tt>PENTA_6</tt></a>,
+and <a href="conv.html#unst_hexa"><tt>HEXA_8</tt></a>.
+The directionality for the <i>r</i>, <i>s</i>, and <i>t</i> interpolants
+for the basic element types is defined as follows.
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>BAR_2</tt>
+<tr><td>&nbsp;
+<tr valign=top><td>
+   <td><img src="cnct.figs/cnct_unst_bar2.gif" alt="Unstructured grid line element"
+            longdesc="cnct.figs/cnct_unst_bar2.html">
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>W</i><sub>1</sub> = 1 &minus; <i>r</i><br>
+       <i>W</i><sub>2</sub> = <i>r</i>
+</table>
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>TRI_3</tt>
+<tr><td>&nbsp;
+<tr valign=top><td>
+   <td><img src="cnct.figs/cnct_unst_tri3.gif" alt="Unstructured grid triangular element"
+            longdesc="cnct.figs/cnct_unst_tri3.html">
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>W</i><sub>1</sub> = 1 &minus; <i>r</i> &minus; <i>s</i><br>
+       <i>W</i><sub>2</sub> = <i>r</i><br>
+       <i>W</i><sub>3</sub> = <i>s</i>
+</table>
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>QUAD_4</tt>
+<tr><td>&nbsp;
+<tr valign=top><td>
+   <td><img src="cnct.figs/cnct_unst_quad4.gif" alt="Unstructured grid quadrilateral element"
+            longdesc="cnct.figs/cnct_unst_quad4.html">
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>W</i><sub>1</sub> = (1 &minus; <i>r</i>)(1 &minus; <i>s</i>)<br>
+       <i>W</i><sub>2</sub> = <i>r</i>(1 &minus; <i>s</i>)<br>
+       <i>W</i><sub>3</sub> = <i>rs</i><br>
+       <i>W</i><sub>4</sub> = (1 &minus; <i>r</i>)<i>s</i>
+</table>
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>TETRA_4</tt>
+<tr><td>&nbsp;
+<tr valign=top><td>
+   <td><img src="cnct.figs/cnct_unst_tetra4.gif" alt="Unstructured grid tetrahedral element"
+            longdesc="cnct.figs/cnct_unst_tetra4.html">
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>W</i><sub>1</sub> = 1 &minus; <i>r</i> &minus; <i>s</i> &minus; <i>t</i><br>
+       <i>W</i><sub>2</sub> = <i>r</i><br>
+       <i>W</i><sub>3</sub> = <i>s</i><br>
+       <i>W</i><sub>4</sub> = <i>t</i>
+</table>
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>PYRA_5</tt>
+<tr><td>&nbsp;
+<tr valign=top><td>
+   <td><img src="cnct.figs/cnct_unst_pyra5.gif" alt="Unstructured grid pyramid element"
+            longdesc="cnct.figs/cnct_unst_pyra5.html">
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>W</i><sub>1</sub> = (1 &minus; <i>r</i>)(1 &minus; <i>s</i>)(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub>2</sub> = <i>r</i>(1 &minus; <i>s</i>)(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub>3</sub> = <i>rs</i>(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub>4</sub> = (1 &minus; <i>r</i>)<i>s</i>(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub>5</sub> = <i>t</i>
+</table>
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>PENTA_6</tt>
+<tr><td>&nbsp;
+<tr valign=top><td>
+   <td><img src="cnct.figs/cnct_unst_penta6.gif" alt="Unstructured grid pentahedral element"
+            longdesc="cnct.figs/cnct_unst_penta6.html">
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>W</i><sub>1</sub> = (1 &minus; <i>r</i> &minus; <i>s</i>)(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub>2</sub> = <i>r</i>(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub>3</sub> = <i>s</i>(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub>4</sub> = (1 &minus; <i>r</i> &minus; <i>s</i>)<i>t</i><br>
+       <i>W</i><sub>5</sub> = <i>rt</i><br>
+       <i>W</i><sub>6</sub> = <i>st</i>
+</table>
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>HEXA_8</tt>
+<tr><td>&nbsp;
+<tr valign=top><td>
+   <td><img src="cnct.figs/cnct_unst_hexa8.gif" alt="Unstructured grid hexahedral element"
+            longdesc="cnct.figs/cnct_unst_hexa8.html">
+   <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>W</i><sub>1</sub> = (1 &minus; <i>r</i>)(1 &minus; <i>s</i>)(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub>2</sub> = <i>r</i>(1 &minus; <i>s</i>)(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub>3</sub> = <i>rs</i>(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub>4</sub> = (1 &minus; <i>r</i>)<i>s</i>(1 &minus; <i>t</i>)<br>
+       <i>W</i><sub>5</sub> = (1 &minus; <i>r</i>)(1 &minus; <i>s</i>)<i>t</i><br>
+       <i>W</i><sub>6</sub> = <i>r(1 &minus; <i>s</i>)t</i><br>
+       <i>W</i><sub>7</sub> = <i>rst</i><br>
+       <i>W</i><sub>8</sub> = <i>(1 &minus; <i>r</i>)st</i>
+</table>
+
+<p>
+<tt>PointListDonor</tt> may only be used when the interface is
+<tt>Abutting1to1</tt>.
+It contains the images of all the receiver-zone interface points in the
+donor zone.
+If the zone is structured, all indices in <tt>PointListDonor</tt> should
+have one index element in common.
+
+<p>
+For mismatched or overset interfaces, the zone connectivity
+donor information, when given, is defined using either
+the <tt>CellListDonor</tt> alone, or the combination of
+<tt>CellListDonor</tt> and <tt>InterpolantsDonor</tt>.
+<tt>CellListDonor</tt> contains the list of donor cells or elements in
+which each node of the receiver zone can be located.
+<tt>InterpolantsDonor</tt> contains the interpolation factors to locate
+the receiver nodes in the donor cells.
+<tt>InterpolantsDonor</tt> may be thought of as bi- or tri-linear
+interpolants (depending on <tt>CellDimension</tt>) in the cell of the
+donor zone.
+
+<p>
+A <a href="#GridConnectivityProperty"><tt>GridConnectivityProperty_t</tt></a>
+data structure may be used to record special properties associated with
+particular connectivity patches, such as a periodic interface, or an
+interface where data is to be averaged in some way.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+<tt>Ordinal</tt> is user-defined and has no restrictions on the values
+that it can contain.
+It is included for backward compatibility to assist implementation of
+the CGNS system into applications whose I/O depends heavily on the
+numbering of zone interfaces.
+Since there are no restrictions on the values contained in
+<tt>Ordinal</tt> (or that <tt>Ordinal</tt> is even provided), there is
+no guarantee that the interfaces for a given zone in an existing CGNS
+database will have sequential values from 1 to <i>N</i> without holes or
+repetitions.
+Use of <tt>Ordinal</tt> is discouraged and is on a user-beware basis.
+
+<a name="PointListSize_abut"></a>
+<h4>FUNCTION <tt>PointListSize</tt>:</h4>
+
+return value: <tt>int</tt>
+<br>
+dependencies: <tt>PointRange</tt>, <tt>PointList</tt>
+
+<p>
+<tt>PointListDonor</tt>, <tt>CellListDonor</tt>, and
+<tt>InterpolantsDonor</tt> require the function <tt>PointListSize</tt>,
+to identify the length of the array.
+If <tt>PointRange</tt> is specified by <tt>GridConnectivity_t</tt>,
+then <tt>PointListSize</tt> is obtained from the number of grid
+points (inclusive) between the beginning and ending indices of
+<tt>PointRange</tt>.
+If <tt>PointList</tt> is specified by <tt>GridConnectivity_t</tt>,
+then <tt>PointListSize</tt> is actually a user input during creation of
+the database; it is the length of the array <tt>PointList</tt> whose
+elements are also user inputs (by "user" we mean the application code
+that is generating the CGNS database).
+
+<p>
+By definition, the <tt>PointList</tt> and <tt>PointListDonor</tt> arrays
+have the same size, and this size should be stored along with the arrays
+in their respective <a href="build.html#IndexArray"><tt>IndexArray_t</tt></a>
+structures.
+<tt>PointListSize</tt> was chosen to be a structure function, rather
+than a separate element of <tt>GridConnectivity_t</tt> for the following
+reasons: first, it is redundant if <tt>PointRange</tt> is specified;
+and second, it leads to redundant storage if <tt>PointList</tt> is
+specified, since the value of <tt>PointListSize</tt> is also stored
+within the <tt>PointList</tt> structure.
+
+<p>
+This situation has somewhat of a precedent within the SIDS definitions.
+The structure <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>
+contains a string of unspecified length.
+Yet in actual implementation, the (string) length is a function of the
+descriptor string itself and should be stored along with the string.
+
+<a name="cnct_gen_example"></a>
+<h3>General Interface Connectivity Examples</h3>
+
+<a name="ex:struct_abut"></a>
+<h4>Example - Structured Abutting Zones</h4>
+
+<p>
+Say that you have a three-dimensional structured grid.
+Assume that at the interface between two zones you have the following
+situation.
+<br><br>
+<center>
+<img src="cnct.figs/cnct_example1.gif"
+     alt="Cell faces at interface between two structured zones"
+     longdesc="cnct.eqs/cnct_example1.html">
+<br><br>
+Example Interface for Generalized Connectivity, Structured Grids
+</center>
+
+<p>
+In this particular example, the patching occurs on a "plane".
+In other words, the two cells in 3-D have faces that abut in a 2-D
+sense.
+It is these faces that we are picturing here.
+The solid quadrilateral is the donor cell face, and the dashed
+quadrilateral is the position of the receiving cell face relative to the
+donor cell.
+Note that since this is a 2-D-type of abutting case, one of the indices
+(in this case <i>i</i> = 20, which represents <tt>imax</tt>) of the
+donor cell is constant.
+For this example, the point R of the receiver cell is located within the
+donor cell pictured, and we wish to give the <tt>CellListDonor</tt> and
+<tt>InterpolantsDonor</tt> for it.
+
+<p>
+Because this is a structured grid, the <tt>CellListDonor</tt> in this
+case is given by
+<pre>
+   CellListDonor = (19, 10, 2)
+</pre>
+
+<p>
+Here, we are using the <a href="conv.html#structgrid">Structured Grid
+Notation and Indexing Conventions</a> that say cell centers, face
+centers, and edge centers are indexed by the minimum <i>i</i>, <i>j</i>,
+and <i>k</i> indices of the connecting vertices.
+
+<p>
+The <tt>InterpolantsDonor</tt> defines an interpolation value relative
+to the cell/element vertices.
+In this case, say that the point R is located 0.75 along the
+<i>j</i>-index direction and 0.45 along the <i>k</i>-index direction.
+(It also lies on the <i>i</i> = 20, or <tt>imax</tt> face.)
+Thus, in this example:
+<pre>
+   InterpolantsDonor = (1.0, 0.75, 0.45) 
+</pre>
+Note that if the donor zone was instead located on an <i>i</i> = 1
+(<tt>imin</tt> face), then the <tt>CellListDonor</tt> would be (1, 10, 2)
+and the <tt>InterpolantsDonor</tt> would be (0.0, 0.75, 0.45).
+
+<a name="ex:unstruct_abut1"></a>
+<h4>Example - Unstructured Abutting Zones, <tt>HEXA_8</tt> Donor Cell</h4>
+
+<p>
+As a second example, assume that you have the same setup as before, but
+now with a three-dimensional unstructured grid.
+In this case, we no longer have a 3-D array of indices defining
+coordinate directions.
+Instead, we simply have a 1-D list of indices as well as a list of
+volume (and possibly face) elements composed of those indices.
+In this example we again are assuming the two zones abut in a 2-D sense.
+We now have the choice of describing the donor in terms of its volume
+element or its boundary (face) element, if available.
+Here in this example, we use the volume element.
+<br><br>
+<center>
+<img src="cnct.figs/cnct_example2.gif"
+     alt="Cell faces at interface between two unstructured zones"
+     longdesc="cnct.eqs/cnct_example2.html">
+<br><br>
+Example Interface for Generalized Connectivity, Unstructured Grids with
+<tt>HEXA_8</tt> Donor Cell
+</center>
+
+<p>
+The <tt>HEXA_8</tt> volume element has been appropriately numbered,
+using the <a href="conv.html#unstructgrid">Unstructured Grid Element
+Numbering Conventions</a>.
+In this example, it is the 1-2-3-4 face of the volumetric element that
+is abutting with the other zone (but it could be any of its six faces)
+
+<p>
+The <tt>CellListDonor</tt> in this case is simply given by
+<pre>
+   CellListDonor = (238)
+</pre>
+Using the convention established above for <tt>HEXA_8</tt> elements, the
+<tt>InterpolantsDonor</tt> would be
+<pre>
+   InterpolantsDonor = (0.75, 0.55, 0.0)
+</pre>
+
+<a name="ex:unstruct_abut2"></a>
+<h4>Example - Unstructured Abutting Zones, <tt>TRI_3</tt> Donor Cell</h4>
+
+<p>
+As a third example, assume that you have two zones in a
+three-dimensional unstructured grid with triangles and quadrilaterals at
+its boundaries.
+Here the current zone (made up of quadrilateral faces) is abutting the
+donor zone (made up of triangular faces) in a 2-D sense.
+We again have the choice of describing the donor in terms of its volume
+element or its boundary (face) element.
+Here in this example, we use the face element.
+<br><br>
+<center>
+<img src="cnct.figs/cnct_example3.gif"
+     alt="Cell faces at interface between two unstructured zones"
+     longdesc="cnct.eqs/cnct_example3.html">
+<br><br>
+Example Interface for Generalized Connectivity, Unstructured Grids with
+<tt>TRI_3</tt> Donor Cell
+</center>
+
+<p>
+The <tt>CellListDonor</tt> in this case is simply given by
+<pre>
+   CellListDonor = (1893)
+</pre>
+Using the convention established above for <tt>TRI_3</tt> elements, the
+<tt>InterpolantsDonor</tt> would be:
+<pre>
+   InterpolantsDonor = (0.34, 0.61)
+</pre>
+In this case the third dimension of the <tt>InterpolantsDonor</tt>
+(although present) is not used, because by default the interpolation is
+only two-dimensional in the 2-D plane of the donor face.
+
+<a name="GridConnectivityProperty"></a>
+<h3>Grid Connectivity Property Structure Definition: <tt>GridConnectivityProperty_t</tt></h3>
+
+<p>
+<tt>GridConnectivityProperty_t</tt> allows the recording of special
+properties associated with particular connectivity patches.
+At the current time, only two properties (<tt>Periodic_t</tt> and
+<tt>AverageInterface_t</tt>) are included, but extensions involving
+other properties may be implemented as additional nodes under
+<tt>GridConnectivityProperty_t</tt> in the future.
+
+<pre>
+  GridConnectivityProperty_t :=
+    {
+    List( Descriptor_t  Descriptor1 ... DescriptorN ) ;                (o)
+
+    Periodic_t Periodic ;                                              (o)
+                
+    AverageInterface_t AverageInterface ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>GridConnectivityProperty_t</tt> and shall not include the names
+     <tt>Periodic</tt> or <tt>AverageInterface</tt>.
+</ol>
+
+<p>
+The <tt>Periodic_t</tt> and <tt>AverageInterface_t</tt> data structures
+may be used to record properties associated with periodic interfaces, or
+interfaces where data is to be averaged in some way, respectively.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="Periodic"></a>
+<h4>Periodic Interface Structure Definition: <tt>Periodic_t</tt></h4>
+
+<p>
+The <tt>Periodic_t</tt> data structure allows data associated with
+a periodic interface to be recorded.
+
+<pre>
+  Periodic_t :=
+    {
+    List( Descriptor_t  Descriptor1 ... DescriptorN ) ;                (o)
+
+    DataArray_t&lt;real, 1, PhysicalDimension&gt; RotationCenter ;           (r)
+    DataArray_t&lt;real, 1, PhysicalDimension&gt; RotationAngle ;            (r)
+    DataArray_t&lt;real, 1, PhysicalDimension&gt; Translation ;              (r)
+
+    DataClass_t DataClass ;                                            (o)
+                                
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>Periodic_t</tt> and shall not include the
+     names <tt>DataClass</tt>, <tt>DimensionalUnits</tt>,
+     <tt>RotationAngle</tt>, <tt>RotationCenter</tt>, or
+     <tt>Translation</tt>.
+</ol>
+
+<p>
+<tt>RotationCenter</tt> is the origin for defining the rotation angle
+between the periodic interfaces.
+<tt>RotationAngle</tt> defines the angle from the current interface to
+the connecting interface.
+If rotating about more than one axis, the rotation is performed first 
+about the x-axis, then the y-axis, then the z-axis.
+<tt>Translation</tt> defines the translation from the current interface
+to the connecting interface.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the default
+for the class of data contained in the <tt>DataArray_t</tt> structures.
+If the data is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> may be
+used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="AverageInterface"></a>
+<h4>Average Interface Structure Definition: <tt>AverageInterface_t</tt></h4>
+
+<p>
+The <tt>AverageInterface_t</tt> data structure is used when data at the
+current connectivity interface is to be averaged in some way prior to
+passing it to a neighboring interface.
+
+<pre>
+  AverageInterface_t :=
+    {
+    List( Descriptor_t  Descriptor1 ... DescriptorN ) ;                (o)
+
+    AverageInterfaceType_t AverageInterfaceType                        (r)
+                                
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>AverageInterface_t</tt> and shall not include the
+     name <tt>AverageInterfaceType</tt>.
+</ol>
+
+<p>
+<tt>AverageInterfaceType_t</tt> is a required enumeration data structure
+that is used to define the type of averaging to be done.
+
+<pre>
+  AverageInterfaceType_t := Enumeration(
+    AverageInterfaceTypeNull,
+    AverageInterfaceTypeUserDefined,
+    AverageAll,
+    AverageCircumferential,
+    AverageRadial,
+    AverageI,
+    AverageJ,
+    AverageK ) ;
+</pre>
+
+<p>
+<tt>AverageAll</tt> means that the data from the entire current patch is
+averaged, whereas each of the other choices indicates averaging of the
+data on the current interface in the indicated direction.
+Note that <tt>AverageI</tt>, <tt>AverageJ</tt>, and <tt>AverageK</tt>
+apply only to structured grids.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="OversetHoles"></a>
+<h3>Overset Grid Holes Structure Definition: <tt>OversetHoles_t</tt></h3>
+
+<p>
+Grid connectivity for overset grids must also include "holes" within
+zones, where any solution states are ignored or "turned off", because
+they are solved for in some other overlapping zone.
+The structure <tt>OversetHoles_t</tt> specifies those points within
+a given zone that make up a hole (or holes), and applies to both
+structured and unstructured zones.
+Grid points specified in this structure are equivalent to those with
+IBLANK=0 in the PLOT3D format.
+
+<pre>
+  OversetHoles_t&lt; int IndexDimension &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    GridLocation_t GridLocation ;                                      (o/d)
+
+    List( IndexRange_t&lt;IndexDimension&gt; 
+      PointRange, PointRange2 ... PointRangeN ) ;                      (o:r)
+
+    IndexArray_t&lt;IndexDimension, PointListSize, int&gt; PointList ;       (r:o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="build.html#IndexRange"><tt>IndexRange_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>OversetHoles_t</tt> and shall not include the names
+     <tt>GridLocation</tt> or <tt>PointList</tt>.
+<li> If <a href="build.html#GridLocation"><tt>GridLocation</tt></a> is
+     absent, then its default value is <tt>Vertex</tt>.
+<li> One of <tt>PointRange</tt> and <tt>PointList</tt> must be
+     specified, but not both.
+</ol>
+
+<p>
+The location of grid indices specified in <tt>PointList</tt> and the
+<tt>PointRange</tt> list is given by
+<a href="build.html#GridLocation"><tt>GridLocation</tt></a>.
+
+<p>
+The grid points making up a hole within a zone may be specified by
+<tt>PointRange</tt> if they constitute a logically rectangular region.
+If the hole points constitute a (small) set of possibly overlapping
+logically rectangular regions, then they may be specified by the list
+<tt>PointRange</tt>, <tt>PointRange2</tt>, etc.
+The more general alternate is to use <tt>PointList</tt> to list all grid
+points making up the hole(s) within a zone.
+Note that using multiple <tt>PointRange</tt> specifications may result
+in a given hole being specified more than once.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="PointListSize_over"></a>
+<h4>FUNCTION <tt>PointListSize</tt>:</h4>
+
+return value: <tt>int</tt>
+<br>
+dependencies: <tt>PointList</tt>
+
+<p>
+<tt>OversetHoles_t</tt> requires one structure function,
+<tt>PointListSize</tt>, to identify the length of the <tt>PointList</tt>
+array.
+<tt>PointListSize</tt> is a user input.
+(See the discussion on function
+<a href="#PointListSize_abut"><tt>PointListSize</tt></a>.)
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 07 Feb 2014
+
+</body>
+</html>

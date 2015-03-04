@@ -1,0 +1,780 @@
+<!-- HTML input file for "CFD General Notation System" slides -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgns.css" rel="stylesheet" type="text/css">
+<title>CGNS Summary</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>CFD General Notation System</h1>
+
+<p>
+http://www.cgns.org
+
+<p>
+Bruce Wedan<br>
+ANSYS/ICEM CFD
+
+<h2>Presentation Overview</h2>
+
+<ul>
+<li> What is CGNS ?
+<li> History of CGNS
+<li> CGNS Steering Committee
+<li> ISO-STEP Standard
+<li> HDF5 Interface
+<li> User Base
+<li> CGNS Main Features
+<li> Current Release (Version 2.3)
+<li> Extensions (Version 2.4 beta)
+<li> CGNS Tools
+<li> Detailed Node Descriptions
+<li> Example
+<li> Conclusions
+</ul>
+
+<h2>What is CGNS?</h2>
+<ul>
+<li> CFD General Notation System
+     <ul>
+     <li> Principal target is the data normally associated with compressible
+          viscous flow (i.e. Navier-Stokes)
+     <li> Applicable to computational field physics in general with
+          augmentation of the data definitions and storage conventions
+     </ul>
+<li> Objectives
+     <ul>
+     <li> Provide a general, portable and extensible standard for the storing
+          and retrieval of CFD analysis data
+     <li> Offer seamless communication of CFD analysis data between
+          sites, applications and system architectures
+     <li> Eliminate the overhead costs due to file translation and
+          multiplicity of data sets in various formats
+     <li> Provide free, open software - GNU Lesser General Public License
+     </ul>
+<li> Advanced Data Format (ADF)
+     <ul>
+     <li> Software that performs the I/O operations
+     <li> Directed graph based on a single data structure (the ADF node)
+     <li> Defines how data is organized in the storage media.
+     </ul>
+<li> Standard Interface Data Structures (SIDS)
+     <ul>
+     <li> Collection of conventions and definitions that defines the
+          intellectual content of CFD-related data.
+     <li> Independent of the physical file format
+     </ul>
+<li> SIDS to ADF Mapping
+     <ul>
+     <li> Defines how the SIDS is represented in ADF
+     </ul>
+<li> CGNS MidLevel Library (MLL)
+     <ul>
+     <li> High level Application Programming Interface (API) which
+          conforms closely to the SIDS
+     <li> Built on top of ADF and does not perform any direct I/O operation
+     </ul>
+</ul>
+
+<h2>History of CGNS</h2>
+
+<ul>
+<li> 1994-1995:
+     <ul>
+     <li> Series of meetings between Boeing and NASA addressing means
+          of improving technology transfer from NASA to Industry: The
+          main impediment to technology transfer is the disparity of file
+          formats.
+     </ul>
+<li> 1995-1998:
+     <ul>
+     <li> Development of the CGNS System (SIDS, ADF) at Boeing
+          Seattle, under NASA Contract with participation from:
+          <ul>
+          <li> Boeing Commercial Aircraft Group, Seattle
+          <li> NASA Ames/Langley/Lewis Research Centers
+          <li> Boeing St-Louis (former McDonnell Douglas Corporation)
+          <li> Arnold Engineering Development Center, for the NPARC Alliance
+          <li> Wright-Patterson Air Force Base
+          <li> ICEM CFD Engineering Corporation
+          </ul>
+     </ul>
+<li> 1997-1998:
+     <ul>
+     <li> Development of the CGNS Midlevel Library.
+     <li> Institution of the CGNS website (http://www.cgns.org)
+     <li> first release of the CGNS software and documentation.
+     </ul>
+<li> 1999-2001:
+     <ul>
+     <li> CGNS Steering Committee created as a subcommittee of the
+          AIAA CFD Committee on Standards
+     <li> Version 2.0 of CGNS library released
+          <ul>
+          <li> Added moving grids and time-dependent data
+          </ul>
+     <li> ISO-STEP standardization process undertaken by Boeing
+     <li> CGNStalk mailing list created at NASA Glenn
+     </ul>
+<li> 2002:
+     <ul>
+     <li> CGNS becomes a AIAA Recommended Practice
+     <li> Version 2.1 of CGNS library released
+          <li> Added support for user-defined arrays, chemistry and links
+     </ul>
+<li> 2003:
+     <ul>
+     <li> Source code moved under CVS at SourceForge
+          (http://sourceforge.net/projects/cgns/)
+     <li> Version 2.2 of CGNS library released
+          <ul>
+          <li> Added axisymmetry, rotating coordinates, connectivity and
+               boundary condition properties
+          </ul>
+     </ul>
+<li> 2004:
+     <ul>
+     <li> HDF5 interface to CGNS released
+     <li> Version 2.3 (current stable version) released
+          <ul>
+          <li> I/O times speed up by an order of magnitude
+          </ul>
+     </ul>
+</ul>
+
+<h2>CGNS Steering Committee</h2>
+
+<ul>
+<li> Public forum made up of international representatives
+     from government, industry and academia
+<li> Responsibilities
+     <ul>
+     <li> Maintain the software, documentation and CGNS web site
+     <li> Ensure a free distribution of the software and documentation
+     <li> Promote the acceptance of the CGNS standard
+     </ul>
+<li> Organization
+     <ul>
+     <li> Meets at a minimum of once a year
+     <li> Represented by an elected ChairPerson
+          <ul>
+          <li> currently Chris Rumsey of NASA Langley
+          </ul>
+     <li> Governs by consensus
+     <li> Welcomes participation of all parties, members or not
+     </ul>
+<li> Membership - 20 organizations
+     <ul>
+     <li> NASA Ames
+     <li> NASA Langley
+     <li> NASA Glenn
+     <li> Boeing Commercial
+     <li> Boeing - Rocketdyne
+     <li> Boeing Integrated Defense Systems
+     <li> Pratt &amp; Whitney
+     <li> ICEM CFD Engineering
+     <li> Fluent, Inc.
+     <li> Rolls-Royce Allison
+     <li> US Air Force / AEDC
+     <li> CD ADAPCO
+     <li> Intelligent Light
+     <li> Pointwise
+     <li> Aerospatiale Matra Airbus
+     <li> NUMECA
+     <li> ONERA
+     <li> Stanford University
+     <li> Utah State University
+     <li> ANSYS CFX
+     </ul>
+</ul>
+
+<h2>ISO-STEP Standard</h2>
+
+<ul>
+<li> AP 237 - Fluid Dynamics
+     <ul>
+     <li> Top-level standard which defines the data types and structures
+          used throughout the field of fluid dynamics
+     <li> Need to extend ISO-STEP for binary data (currently ASCII only)
+     </ul>
+<li> Part 110 - Computational Fluid Dynamics
+     <ul>
+     <li> Defines the data types and structures unique to CFD
+     </ul>
+<li> Part 52 - Mesh-based Topology
+     <ul>
+     <li> Defines structured and unstructured grids including topology and
+          element connectivity
+     </ul>
+<li> Part 53 - Numerical Analysis
+     <ul>
+     <li> Defines links to product data management structures and
+          configuration control for numerical analysis
+     </ul>
+<li> Approval process
+     <ul>
+     <li> A proposal must past 6 stages or "gates" to become a standard.
+     <li> Passage through each "gate" requires a specified number of
+          votes from the 17 P-Member countries. There are CGNS users in
+          each of these countries.
+     <li> Proposals are cancelled after 2 years if progress is not shown
+     <li> AP 237 is at "gate" 3 (Committee Draft)
+     <li> Parts 110, 52, and 53 are at "gate" 4 (Draft International Std)
+     </ul>
+<li> Current status
+     <ul>
+     <li> Standardization effort is stalled due to lack of funds.
+     <li> ISO-STEP has decided to merge AP 237 with AP 209 (finite
+          element analysis) because there is a high degree of common
+          content. Effort is being lead by Keith Hunten of Lockheed
+          Martin
+     </ul>
+</ul>
+
+<h2>HDF5 Interface</h2>
+
+<ul>
+<li> Implementation
+     <ul>
+     <li> Fully implemented at the ADF level - no change to MLL
+     </ul>
+<li> Advantages
+     <ul>
+     <li> Used in many applications
+     <li> Parallel I/O using MPI
+     <li> Faster access through linked files
+     </ul>
+<li> Disadvantages
+     <ul>
+     <li> File sizes are 2 to 3 times larger
+     <li> I/O times are generally 2 to 3 times slower, but may be up to a
+          order of magnitude for a large number of nodes
+     </ul>
+<li> Current Status
+     <ul>
+     <li> HDF5 Task Force set up to further evaluate implementation
+     <li> Added as option to CGNS with conversion routines 
+     </ul>
+</ul>
+
+
+<h2>User Base</h2>
+
+<ul>
+<li> Registered Users
+     <ul>
+     <li> 591 users from more than 25 countries
+     </ul>
+<li> CGNStalk (as of May 2003)
+     <ul>
+     <li> 153 participants from 20 different countries and at least 63
+          different organizations
+     </ul>
+<li> SourceForge (last 2 years)
+     <ul>
+     <li> Average of 20 page views and 7.5 downloads per day
+     </ul>
+<li> Known implementations
+     <ul>
+     <li> 13 commercial, 9 government, 5 industry, 3 academia
+     </ul>
+</ul>
+
+<h2>CGNS Main Features</h2>
+
+<ul>
+<li> Hierarchical data structure: quickly traversed and sorted, no need to
+     process irrelevant data
+<li> Complete and explicit problem description
+<li> Standardized naming conventions
+<li> Unlimited internal documentation, and application specific data
+<li> Layered so that much of the data structures are optional
+<li> ADF database: universal and self describing
+<li> Based on a single data structure called an ADF node
+<li> The data may encompass several files through the use of links
+<li> Portable ANSI C software, with complete Fortran and C interfaces
+<li> Files stored in compact C binary format
+<li> Complete and architecture independent API
+</ul>
+
+<h2>Current Release (Version 2.3)</h2>
+
+<ul>
+<li> Grid coordinates and elements
+     <ul>
+     <li> 1D, 2D and 3D support (physical and cell dimensions)
+     <li> Any number of structured and/or unstructured zones
+     <li> Cartesian, cylindrical and spherical coordinates systems
+     <li> Linear and higher-order elements (22 predefined element types)
+     <li> 2D axisymmetry
+     </ul>
+<li> Grid connectivities
+     <ul>
+     <li> 1-to-1 abutting, mismatched abutting, and overset (chimera)
+     <li> Connectivity properties (average and periodic interfaces)
+     </ul>
+<li> Boundary conditions
+     <ul>
+     <li> Simple or complex boundary conditions with predefined
+          identifiers
+     <li> Any number of Dirichlet or Neumann conditions may be specified
+          globally or locally on a boundary condition patch
+     <li> Boundary patch normals, area and wall function properties
+     </ul>
+<li> Governing flow equations
+     <ul>
+     <li> General class of flow equations
+     <li> Gas, viscosity, thermal conductivity, thermal relaxation,
+          chemistry, turbulence, and turbulence closure models
+     </ul>
+<li> Solutions
+     <ul>
+     <li> Vertex, cell, face or edge centered with rind (ghost points/cells)
+     <li> Any number of solution variables
+     <li> Predefined identifiers for solution variables
+     <li> Generic discrete data (not typically part of the solution)
+     </ul>
+<li> Time-dependent flows
+     <ul>
+     <li> Time-accurate or non-time-accurate
+     <li> Rotating, rigid motion or arbitrary motion grids
+     <li> Storage of base and/or zone iterative data
+     </ul>
+<li> Physical data
+     <ul>
+     <li> Data class: dimensional, normalized, or nondimensional
+     <li> Data conversion factors
+     <li> Dimensional units: mass, length, time, temperature and angle
+     <li> Dimensional exponents: powers of base units
+     </ul>
+<li> Auxiliary data
+     <ul>
+     <li> Global and/or local convergence history
+     <li> Reference state variables
+     <li> Gravity and global integral data
+     <li> Arbitrary user-defined data
+     <li> Textual data for documentation and annotations
+     </ul>
+<li> Families
+     <ul>
+     <li> Provides a level of indirection to allow mesh to geometry
+          associations
+     <li> Boundary conditions may be applied on families
+     <li> Links mesh surfaces to one or more CAD entities
+     </ul>
+</ul>
+
+<h2>Extensions (Version 2.4 beta)</h2>
+
+<ul>
+<li> Units
+     <ul>
+     <li> Electric current, amount of a substance, and luminous intensity
+          added to the base units
+     </ul>
+<li> Electromagnetics
+     <ul>
+     <li> Electric field, magnetic field and electrical conductivity models
+          added to the governing flow equations
+     <li> Voltage, electric and magnetic field strengths, current density,
+          electrical conductivity, Lorenz force and Joule heating added to
+          list of solution identifiers
+     </ul>
+<li> Families
+     <ul>
+     <li> Rotating coordinates and complex boundary conditions added to
+          the family specification
+     </ul>
+<li> Boundary conditions
+     <ul>
+     <li> Allow for specification of boundary condition data at a location
+          different than that of the patch specification
+     </ul>
+<li> User-defined data
+     <ul>
+     <li> Allows recursive user-defined data
+     <li> Family names and point set specification added
+     </ul>
+<li> 1-to-1 connectivities
+     <ul>
+     <li> Periodic and average interface properties added
+     </ul>
+<li> Partial read and write
+     <ul>
+     <li> Partial read and write for grid coordinates, elements and solution
+          variable added
+     </ul>
+</ul>
+
+<h2>CGNS Tools</h2>
+
+<ul>
+<li> ADFviewer
+     <p>
+     <img src="nasa-ames/fig1.png"
+          alt="ADFviewer window"
+          longdesc="nasa-ames/fig1.html">
+     <ul>
+     <li> Views and/or edits ADF/CGNS files.
+     <li> May create, delete or modify nodes
+     <li> Nodes are displayed in a Windows-like collapsible tree
+     <li> Additional utilities may be accessed from the menus
+     <li> Configurable menus
+     <li> Written in Tcl/Tk
+     </ul>
+<br>
+<li> CGNSplot
+     <p>
+     <img src="nasa-ames/fig2.png"
+          alt="CGNSplot window"
+          longdesc="nasa-ames/fig2.html">
+     <ul>
+     <li> Viewer for CGNS files
+     <li> Displays zones, element sets, connectivities, and boundary
+          conditions
+     <li> Written in Tcl/Tk with OpenGL
+     <li> Runs standalone, or may be called from ADFviewer
+     </ul>
+<br>
+<li> File conversion
+     <ul>
+     <li> Convert Patran, PLOT3D and Tecplot files to CGNS
+     <li> Convert CGNS files to PLOT3D and Tecplot
+     </ul>
+<li> CGNS file manipulation
+     <ul>
+     <li> Data conversion utilities for modifying the solution location
+          (vertex or cell-center), solution variables (primitive or
+          conservative), and data class (dimensional or normalized)
+     <li> Subset extraction and interpolation
+     </ul>
+<li> CGNS bindings
+     <ul>
+     <li> Tcl/Tk interface to ADF and MLL
+     <li> PyCGNS: Python interface to ADF and MLL
+     <li> ADFM: in memory representation of ADF trees
+     <li> CGNS++: C++ interface to ADF and MLL
+
+     </ul>
+<li> Other utilities
+     <ul>
+     <li> <i>CGNScheck</i>: checks CGNS files for valid data and
+          conformance to the SIDS
+     <li> <i>ADFlist</i>: lists ADF/CGNS file tree structure and node data
+     <li> <i>ADF_Edit</i>: command-line based interactive browser/editor
+          for ADF/CGNS files
+     <li> <i>CGNS_readhist</i>: reads a CGNS file and writes convergence
+          history to a formatted file.
+     <li> <i>FTU (File Transfer Utility)</i>: converts to and from
+          PLOT3D, and has a textbased menu allowing the manipulation of
+          a CGNS base
+     <li> <i>CGNS Viewer</i>: ADF/CGNS file editor/viewer with a GUI using
+          the GTK+ library
+     </ul>
+</ul>
+
+<h2>ADF Core</h2>
+
+<center>
+<img src="nasa-ames/fig3.png"
+     alt="ADF file nodes with links"
+     longdesc="nasa-ames/fig3.html">
+</center>
+
+<h2>ADF Node Content</h2>
+
+<ul>
+<li> ID: A unique identifier to access a node within a file.
+<li> Name: A character field used to name the node. It must be unique for
+     a given parent.
+<li> Label: A character field used to described the type of information
+     contained in the node.
+<li> Data type: A character field specifying the type of data (e.g. real,
+     complex) associated with the node.
+<li> Number of dimensions: The dimensionality of the data.
+<li> Dimensions: An integer vector containing the number of elements
+     within each dimension.
+<li> Data: The data associated with the node.
+<li> Number of subnodes: The number of children directly attached to a
+     node.
+<li> Name of subnodes: The list of children names.
+</ul>
+
+<h2>Top Level Structure</h2>
+
+<center>
+<img src="nasa-ames/fig4.png"
+     alt="Top level nodes in CGNS file"
+     longdesc="nasa-ames/fig4.html">
+</center>
+
+<h2>DataArray_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig5.png"
+     alt="DataArray_t node structure"
+     longdesc="nasa-ames/fig5.html">
+</center>
+
+<h2>Family_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig6.png"
+     alt="Family_t node structure"
+     longdesc="nasa-ames/fig6.html">
+</center>
+
+<h2>FlowEquationSet_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig7.png"
+     alt="FlowEquationSet_t node structure"
+     longdesc="nasa-ames/fig7.html">
+</center>
+
+<h2>ReferenceState_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig8.png"
+     alt="ReferenceState_t node structure"
+     longdesc="nasa-ames/fig8.html">
+</center>
+
+<h2>UserDefinedData_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig9.png"
+     alt="UserDefinedData_t node structure"
+     longdesc="nasa-ames/fig9.html">
+</center>
+
+<h2>Zone_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig10.png"
+     alt="Zone_t node structure"
+     longdesc="nasa-ames/fig10.html">
+</center>
+
+<h2>Elements_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig11.png"
+     alt="Elements_t node structure"
+     longdesc="nasa-ames/fig11.html">
+</center>
+
+<h2>FlowSolution_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig12.png"
+     alt="FlowSolution_t node structure"
+     longdesc="nasa-ames/fig12.html">
+</center>
+
+<h2>GridCoordinates_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig13.png"
+     alt="GridCoordinates_t node structure"
+     longdesc="nasa-ames/fig13.html">
+</center>
+
+<h2>ZoneBC_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig14.png"
+     alt="ZoneBC_t node structure"
+     longdesc="nasa-ames/fig14.html">
+</center>
+
+<h2>BCDataSet_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig15.png"
+     alt="BCDataSet_t node structure"
+     longdesc="nasa-ames/fig15.html">
+</center>
+
+<h2>ZoneGridConnectivity_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig16.png"
+     alt="ZoneGridConnectivity_t node structure"
+     longdesc="nasa-ames/fig16.html">
+</center>
+
+<h2>GridConnectivity_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig17.png"
+     alt="GridConnectivity_t node structure"
+     longdesc="nasa-ames/fig17.html">
+</center>
+
+<h2>GridConnectivity1to1_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig18.png"
+     alt="GridConnectivity1to1_t node structure"
+     longdesc="nasa-ames/fig18.html">
+</center>
+
+<h2>OversetHoles_t Node</h2>
+
+<center>
+<img src="nasa-ames/fig19.png"
+     alt="OversetHoles_t node structure"
+     longdesc="nasa-ames/fig19.html">
+</center>
+
+<h2>Example</h2>
+
+<ul>
+<li> Structured cylinder attached to unstructured cube
+</ul>
+
+<center>
+<img src="nasa-ames/fig20.png"
+     alt="Figure showing a structured cylindrical grid attached to an unstructured cubical grid">
+</center>
+
+<h2>Example - Code</h2>
+
+<pre>
+   unlink("example.cgns");
+   cg_open("example.cgns", MODE_WRITE, &cgfile);
+   cg_base_write(cgfile, "Mismatched", CellDim, PhyDim, &cgbase);
+   cg_goto(cgfile, cgbase, "end");
+   cg_descriptor_write("Descriptor", "Mismatched Grid");
+   cg_dataclass_write(Dimensional);
+   cg_units_write(Kilogram, Meter, Second, Kelvin, Radian);
+   /*----- zone 1 is unstructured cube -----*/
+   cg_zone_write(cgfile, cgbase, "UnstructuredZone", size, Unstructured, &cgzone);
+   /* write coordinates */
+   cg_coord_write(cgfile, cgbase, cgzone, RealSingle, "CoordinateX", xcoord, &cgcoord);
+   cg_coord_write(cgfile, cgbase, cgzone, RealSingle, "CoordinateY", ycoord, &cgcoord);
+   cg_coord_write(cgfile, cgbase, cgzone, RealSingle, "CoordinateZ", zcoord, &cgcoord);
+   /* write elements and faces */
+   cg_section_write(cgfile, cgbase, cgzone, "Elements", HEXA_8, 1, num_element, 0,
+      elements, &cgsect);
+   cg_section_write(cgfile, cgbase, cgzone, "Faces", QUAD_4, num_element+1,
+      num_element+num_face, 0, faces, &cgsect);
+   cg_parent_data_write(cgfile, cgbase, cgzone, cgsect, parent);
+   /* write inflow and wall BCs */
+   cg_boco_write(cgfile, cgbase, cgzone, "Inlet", BCInflow, ElementRange, 2, range, &cgbc);
+   cg_boco_write(cgfile, cgbase, cgzone, "Walls", BCWall, PointList, n, pts, &cgbc);
+   /*----- zone 2 is structured cylinder -----*/
+   cg_zone_write(cgfile, cgbase, "StructuredZone", size, Structured, &cgzone);
+   /* write coordinates */
+   cg_coord_write(cgfile, cgbase, cgzone, RealSingle, "CoordinateR", xcoord, &cgcoord);
+   cg_coord_write(cgfile, cgbase, cgzone, RealSingle, "CoordinateTheta", ycoord, &cgcoord);
+   cg_coord_write(cgfile, cgbase, cgzone, RealSingle, "CoordinateZ", zcoord, &cgcoord);
+   /* write outlet and wall BCs */
+   cg_boco_write(cgfile, cgbase, cgzone, "Outlet", BCOutflow, PointRange, 2, range, &cgbc);
+   cg_boco_write(cgfile, cgbase, cgzone, "Walls", BCWall, PointList, n/3, pts, &cgbc);
+   /* periodic 1to1 connectivity */
+   cg_1to1_write(cgfile, cgbase, 2, "Periodic", "StructuredZone", range, d_range, transform,
+      &cgconn);
+   /*----- zone 1 > zone 2 connectivity -----*/
+   cg_conn_write(cgfile, cgbase, 1, "Unstructured > Structured", Vertex, Abutting,
+      PointRange, 2, pts, "StructuredZone", Structured, CellListDonor, Integer, n/3, d_pts,
+      &cgconn);
+   cg_goto(cgfile, cgbase, "Zone_t", 1, "ZoneGridConnectivity_t", 1, "GridConnectivity_t",
+      cgconn, "end");
+   cg_array_write("InterpolantsDonor", RealSingle, 2, dims, interp);
+   /*----- zone 2 > zone 1 connectivity similar -----*/
+   /* close file */
+   cg_close(cgfile);
+</pre>
+
+<h2>Example - Node Tree</h2>
+
+<pre>
+ADF MotherNode
+  +-CGNSLibraryVersion
+  +-Mismatched
+    +-Descriptor
+    +-DataClass
+    +-DimensionalUnits
+    +-UnstructuredZone
+    | +-ZoneType
+    | +-GridCoordinates
+    | | +-CoordinateX
+    | | +-CoordinateY
+    | | +-CoordinateZ
+    | +-Elements
+    | | +-ElementRange
+    | | +-ElementConnectivity
+    | +-Faces
+    | | +-ElementRange
+    | | +-ElementConnectivity
+    | | +-ParentData
+    | +-ZoneBC
+    | | +-Inlet
+    | | | +-ElementRange
+    | | +-Walls
+    | |   +-PointList
+    | +-ZoneGridConnectivity
+    |   +-Unstructured -> Structured
+    |     +-GridConnectivityType
+    |     +-PointRange
+    |     +-CellListDonor
+    |     +-InterpolantsDonor
+    +-StructuredZone
+      +-ZoneType
+      +-GridCoordinates
+      | +-CoordinateR
+      | +-CoordinateTheta
+      | +-CoordinateZ
+      +-ZoneGridConnectivity
+      | +-Periodic
+      | | +-Transform
+      | | +-PointRange
+      | | +-PointRangeDonor
+      | +-Structured -> Unstructured
+      |   +-GridConnectivityType
+      |   +-PointList
+      |   +-CellListDonor
+      |   +-InterpolantsDonor
+      +-ZoneBC
+        +-Outlet
+        | +-PointRange
+        +-Walls
+          +-PointList
+</pre>
+
+<h2>Conclusions</h2>
+
+<ul>
+<li> Why should I use CGNS?
+     <ul>
+     <li> CGNS is a well-established, stable format with worldwide
+          acceptance, use and support
+     <li> Provides seamless communication of data between applications,
+          sites, and system architectures
+     <li> Supported by most commercial visualization and CFD vendors
+     <li> Extensible and flexible - easily adapted to other fields of
+          computational physics through specification in the SIDS
+     <li> Backwards compatible with previous versions - forwards
+          compatible within the major release number
+     <li> Allows new software development to focus on functionality and
+          reliability rather than data I/O, storage and compatibility
+     </ul>
+<li> Want more information?
+     <ul>
+     <li> http://www.cgns.org
+     </ul>
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 19 Dec 2007
+
+</body>
+</html>

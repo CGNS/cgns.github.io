@@ -1,0 +1,471 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgnstools.css" rel="stylesheet" type="text/css">
+<title>Supplied CGNS Tools</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><span class=nav><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></span></a>)
+<br><br>
+(<span class=nav><b>Tools</b></span>)
+(<a href="cgnsview/index.html"><b>CGNSview</b></a>)
+(<a href="cgnsplot/index.html"><b>CGNSplot</b></a>)
+(<a href="utilities/index.html"><b>Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>Supplied CGNS Tools</h1>
+
+<p>A number of useful CGNS tools are available in the </i>tools</i>
+subdirectory of the CGNS library distribution, are are documented here.
+</p>
+
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr>
+        <td><a href="#cgnscheck"><i>cgnscheck</i></a></td>
+        <td>a CGNS file validator</td>
+    </tr>
+    <tr>
+        <td><a href="#cgnscompress"><i>cgnscompress</i></a></td>
+        <td>compress (remove extra space) from a CGNS file</td>
+    </tr>
+    <tr>
+        <td><a href="#cgnsdiff"><i>cgnsdiff</i></a></td>
+        <td>compare 2 CGNS files</td>
+    </tr>
+    <tr>
+        <td><a href="#cgnslist"><i>cgnslist</i></a></td>
+        <td>list the contents of a CGNS file</td>
+    </tr>
+    <tr>
+        <td><a href="#cgnsnames"><i>cgnsnames</i></a></td>
+        <td>display all the standard data-name identifiers</td>
+    </tr>
+    <tr>
+        <td><a href="#cgnsupdate"><i>cgnsupdate</i></a></td>
+        <td>script to update a CGNS file to the current version</td>
+    </tr>
+    <tr>
+        <td><a href="#cgnsconvert"><i>cgnsconvert</i></a></td>
+        <td>convert a CGNS file to/from ADF/HDF5 format</td>
+    </tr>
+    <tr>
+        <td><a href="#cgnsconvert"><i>adf2hdf</i></a></td>
+        <td>script to convert a CGNS file from ADF to HDF5</td>
+    </tr>
+    <tr>
+        <td><a href="#cgnsconvert"><i>hdf2adf</i></a></td>
+        <td>script to convert a CGNS file from HDF5 to ADF</td>
+    </tr>
+</table>
+<br>
+
+<hr>
+
+<h2><a name="cgnscheck"></a>cgnscheck</h2>
+
+<p>
+Checks a CGNS file for validity and if it conforms to the CGNS standard.
+</p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p>
+<b>cgnscheck</b> <i>options</i> <b>CGNSfile</b> <i>newCGNSfile</i>
+</p>
+
+<p>The command line options are:</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-v</td>
+        <td>verbose output. Print node information</td>
+    </tr>
+    <tr>
+        <td nowrap>-V</td>
+        <td>more verbose. Also print out descriptors</td>
+    </tr>
+    <tr>
+        <td nowrap>-w<i> level</i></td>
+        <td>Level for warning messages, from 0 (no messages) to
+            3 (for all messages). default is 3</td>
+    </tr>
+    <tr>
+        <td nowrap>-e</td>
+        <td>don't print out error messages (done by default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-u</td>
+        <td>update CGNS version and check file</td>
+    </tr>
+    <tr>
+        <td nowrap>-U</td>
+        <td>update CGNS version only</td>
+    </tr>
+</table>
+
+<p>The input CGNS file, <i>CGNSfile</i> is required. If option <i>-u</i>
+or <i>-U</i> is given, then the file will be updated to the current
+CGNS version and rewritten. If the output CGNS file, <em>newCGNSfile</em>,
+is specified the modified CGNS data file will be written to it,
+otherwise <em>CGNSfile</em> will be modified.
+</p>
+
+<hr>
+
+<h2><a name="cgnscompress"></a>cgnscompress</h2>
+
+<p>
+Rewrites a CGNS file to remove any unused space. This may happen when a
+file is opened in modify mode and nodes deleted or rewritten. In previous
+versions of the library, the entire file was automatically rewritten
+in this case, thus unused space did not occur. In the current version
+this is no longer done since problems may occur when doing paralllel I/O.
+</p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p>
+<b>cgnscompress</b> <b>CGNSfile</b> <i>newCGNSfile</i>
+</p>
+
+<p>The input CGNS file, <i>CGNSfile</i> is the file to be compressed.
+If an output CGNS file, <em>newCGNSfile</em>,
+is specified the compressed file will be written to it,
+otherwise <em>CGNSfile</em> will be compressed.
+</p>
+
+<hr>
+
+<h2><a name="cgnsdiff"></a>cgnsdiff</h2>
+
+<p>
+Compares 2 CGNS files and lists the differences.
+</p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p>
+<b>cgnsdiff</b> <i>options</i> <b>CGNSfile1</b> <i>dataset1</i> <b>CGNSfile2</b> <i>dataset2</i>
+</p>
+
+<p>The command line options are:</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-c</td>
+        <td>compare node names as case insensitive</td>
+    </tr>
+    <tr>
+        <td nowrap>-i</td>
+        <td>ignore white space in node names wihile comparing</td>
+    </tr>
+    <tr>
+        <td nowrap>-q</td>
+        <td>quiet mode. print only if the files differ</td>
+    </tr>
+    <tr>
+        <td nowrap>-f</td>
+        <td>follow links while comparing</td>
+    </tr>
+    <tr>
+        <td nowrap>-r</td>
+        <td>compare child nodes also. This is only used when <i>dataset1</i>
+            is specified. Normally, only the specified node is compared</td>
+    </tr>
+    <tr>
+        <td nowrap>-d</td>
+        <td>compare the data for a node also. Normally, only the node headers
+            are compared (i.e. label, data type and dimensions.</td>
+    </tr>
+    <tr>
+        <td nowrap>-t<i> tolerance</i></td>
+        <td>Tolerance for comparing floating point data when <i>-d</i>
+            is used. The default is 0</td>
+    </tr>
+</table>
+
+<p>The CGNS files to be compared are given by <i>CGNSfile1</i> and
+<i>CGNSfile1</i>. The files will be compared by matching node (dataset)
+names. If <i>dataset1</i> is specified, then only that node (and it's
+children if option <i>-r</i> is given) will be compared. Two different
+named nodes may be compared be specifying <i>dataset2</i>, in which
+case <i>dataset1</i> in file <i>CGNSfile1</i> will be compared with
+<i>dataset2</i> in file <i>CGNSfile2</i>. The actual data contained in
+the nodes is not compared by default, rather just the header information.
+The <i>-d</i> option will case the node data to be compared also if the
+headers match. When comparing floating point data, the tolerance given
+by option <i>-t</i> will be used.
+</p>
+
+<p>On output:</p>
+
+<table border="0" cellpadding="5">
+    <tr>
+        <td nowrap>&lt; <i>dataset1</i></td>
+        <td>indicates node is only in <i>CGNSfile1</i></td>
+    </tr>
+    <tr>
+        <td nowrap>&gt; <i>dataset2</i></td>
+        <td>indicates node is only in <i>CGNSfile2</i></td>
+    </tr>
+    <tr>
+        <td nowrap><i>dataset1</i>&lt;&gt;<i>dataset2</i> - <i>what</i></td>
+        <td>indicates that the nodes differ and <i>what</i> indicates the
+            difference</td>
+    </tr>
+</table>
+<p></p>
+
+<hr>
+
+<h2><a name="cgnslist"></a>cgnslist</h2>
+
+<p>
+Lists th contents of a CGNS file in a tree structure.
+</p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>cgnslist</b> <i>options</i> <b>CGNSfile</b>
+</p>
+
+<p>The command line options are:</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-b</td>
+        <td>brief output. File summary only</td>
+    </tr>
+    <tr>
+        <td nowrap>-i<i> indent</i></td>
+        <td>amount to indent when printing tree. (default is 2)</td>
+    </tr>
+    <tr>
+        <td nowrap>-f</td>
+        <td>follow links</td>
+    </tr>
+    <tr>
+        <td nowrap>-l</td>
+        <td>print the node label</td>
+    </tr>
+    <tr>
+        <td nowrap>-t</td>
+        <td>print the node data type</td>
+    </tr>
+    <tr>
+        <td nowrap>-d</td>
+        <td>print the node dimensions</td>
+    </tr>
+    <tr>
+        <td nowrap>-s</td>
+        <td>print the node size in bytes</td>
+    </tr>
+    <tr>
+        <td nowrap>-a</td>
+        <td>print all the above. implies <i>-ltds</i></td>
+    </tr>
+</table>
+
+<p>The input CGNS file, <i>CGNSfile</i> is required. The file contents
+will be listed (node names) in a tree structure, where children nodes
+are indented 2 from their parent nodes. The information printed for
+a node, and the indent amount, may be set with the command line options.
+The option <i>-b</i> will print only a file summary, rather than the
+entire tree.
+</p>
+
+<hr>
+
+<h2><a name="cgnsnames"></a>cgnsnames</h2>
+
+<p>
+Prints the list on the standardized CGNS data-name identifiers along
+with their dimensional units (if any).
+</p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p>
+<b>cgnsnames</b>
+</p>
+
+<p>and writes the output to the console.</p>
+
+<hr>
+
+<h2><a name="cgnsupdate"></a>cgnsupdate</h2>
+
+<p>
+This is a script that calls <a href="#cgnscheck"><i>cgnscheck</i></a>
+with the <i>-U</i> option to update a file to the current CGNS version.
+</p>
+
+<h3>Command Line</h3>
+
+<p>The script is executed from the command line as:</p>
+
+<p>
+<b>cgnsupdate</b> <b>CGNSfile</b> <i>newCGNSfile</i>
+</p>
+
+<p>The input CGNS file, <i>CGNSfile</i> is the file to be converted.
+If an output CGNS file, <em>newCGNSfile</em>,
+is specified the modified CGNS data file will be written to it,
+otherwise <em>CGNSfile</em> will be modified.
+</p>
+
+<hr>
+
+<h2><a name="cgnsconvert"></a>cgnsconvert</h2>
+
+<p>
+Converts a CGNS file to or from ADF or HDF5 format.
+</p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>cgnsconvert</b> <i>options</i> <b>CGNSfile</b> <i>newCGNSfile</i>
+</p>
+<p>The command line options are:</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-a</td>
+        <td>write ADF file</td>
+    </tr>
+    <tr>
+        <td nowrap>-h
+        <td>write HDF5 format</td>
+    </tr>
+    <tr>
+        <td nowrap>-f</td>
+        <td>force output if input format is the same as the output format</td>
+    </tr>
+    <tr>
+        <td nowrap>-l</td>
+        <td>expand links in output file</td>
+    </tr>
+</table>
+
+<p>The input CGNS file, <i>CGNSfile</i> is the file to be converted.
+If an output CGNS file, <em>newCGNSfile</em>,
+is specified the converted CGNS file will be written to it,
+otherwise <em>CGNSfile</em> will be converted.
+The output format is given by the command line options <i>-a</i> to
+write an ADF file, or <i>-h</i> to write an HDF5 file. If neither
+option is given, then the output format is assumed to be the opposite
+of the input format. If the input and output formats are the same,
+nothing is done, unless the <i>-f</i> option is given to force the
+writing. The <i>-l</i> option will remove the links and create the
+corresponding data within the output file.
+</p>
+
+<hr>
+
+<h2><a name="adf2hdf"></a>adf2hdf</h2>
+
+<p>
+Script to convert an ADF CGNS file to HDF5 format. Calls
+<a href="#cgnsconvert"><i>cgnsconvert</i></a> with the <i>-h</i> option.
+</p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>adf2hdf</b> <i>-links</i> <b>CGNSfile</b> <i>newCGNSfile</i>
+</p>
+
+<p>The only command line option is <i>-links</i> which causes
+any linked data to be included in the output file.
+The input CGNS file, <i>CGNSfile</i> is the file to be converted.
+If an output CGNS file, <em>newCGNSfile</em>,
+is specified the converted CGNS file will be written to it,
+otherwise <em>CGNSfile</em> will be converted. If the input format
+is already in HDF5 format, nothing is done.
+</p>
+
+<hr>
+
+<h2><a name="hdf2adf"></a>hdf2adf</h2>
+
+<p>
+Script to convert a HDF5 CGNS file to ADF format. Calls
+<a href="#cgnsconvert"><i>cgnsconvert</i></a> with the <i>-a</i> option.
+</p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>hdf2adf</b> <i>-links</i> <b>CGNSfile</b> <i>newCGNSfile</i>
+</p>
+
+<p>The only command line option is <i>-links</i> which causes
+any linked data to be included in the output file.
+The input CGNS file, <i>CGNSfile</i> is the file to be converted.
+If an output CGNS file, <em>newCGNSfile</em>,
+is specified the converted CGNS file will be written to it,
+otherwise <em>CGNSfile</em> will be converted. If the input format
+is already in ADF format, nothing is done.
+</p>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../../include/footer_small.html" -->
+Last updated 15 Feb 2013
+
+</body>
+</html>

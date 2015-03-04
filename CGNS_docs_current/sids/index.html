@@ -1,0 +1,158 @@
+<!-- Home Page for CGNS SIDS document -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<br><br>
+<table>
+<tr>
+   <td><img src="../logo/cgns_color.gif" width=150 alt="CGNS logo">
+   <td><tt>&nbsp;&nbsp;</tt>
+   <td><h1>CFD&nbsp;General&nbsp;Notation&nbsp;System<br>
+       Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</h1>
+</table>
+<h1><small><small>Document Version 3.2.5<br>
+CGNS Version 3.2.2, Alpha<br>
+<!--Draft AIAA Recommended Practice R-101A-200X-->
+</small></small></h1>
+
+<p>Note the CGNS Version designation here is "3.2.2, Alpha" because quartic elements
+definitions have been added to
+        <a href="sids/conv.html#unst_line">Line Elements</a>,
+        <a href="sids/conv.html#unst_2d">Surface Elements</a>, and
+        <a href="sids/conv.html#unst_3d">Volume Elements</a> in the SIDS,
+but this capability has not been implemented in the CGNS software yet.
+I.e., the official version of CGNS software is still 3.2.1, and it does not include
+quartic element capability.  When quartic element capability is added, 
+the software version will be upgraded to 3.2.2.
+
+<p>
+This document contains the Standard Interface Data Structures (SIDS)
+definitions for the <a href="http://cgns.sourceforge.net/">CFD General
+Notation System (CGNS) project</a>
+<img src="../external.png" alt="external link">; this project was
+originally a NASA-funded contract under the AST program, but control
+has now been completely transferred to a public forum known as the CGNS
+Steering Committee.
+
+<p>
+The purpose of this document is to scope the information that should be
+communicated between various CFD application codes; the target is 3-D
+multizone, compressible Navier-Stokes analysis.
+Attention in this document is not focused on I/O routines or formats
+but on the precise description of data that should be present in the I/O
+of a CFD code or in a CFD database.
+
+<p>
+This document therefore contains a precise definition of information
+pertinent to a CGNS database.
+Specifically, the following information is addressed:
+<ul>
+<li> <a href="gridflow.html">grid coordinates and elements</a>
+<li> <a href="gridflow.html#FlowSolution">flow solution data</a>,
+     including <a href="data.html#nondimparam">nondimensional parameters</a>
+<li> <a href="cnct.html">multizone interface connectivity</a>,
+     including abutting and overset
+<li> <a href="bc.html">boundary conditions</a>
+<li> <a href="floweqn.html">flow equation descriptions</a>
+<li> <a href="timedep.html">time-dependent flow</a>
+<li> <a href="misc.html#ReferenceState">reference states</a>
+<li> <a href="build.html#DimensionalUnits">dimensional units</a> and
+     <a href="data.html#DataConversion">nondimensionalization
+     information</a> associated with data
+<li> <a href="misc.html#ConvergenceHistory">convergence history</a>
+<li> <a href="misc.html#Family">association to geometry definition</a>
+<li> <a href="design.html#topology">topologically based hierarchical structures</a>
+</ul>
+This information is encoded into C-like data structures.
+
+<p>
+This SIDS document is consistent with CGNS Version 3.2.
+A <a href="changes.html">list of major changes</a> for earlier versions
+is available.
+
+<p>
+<ul>
+<li> <a href="intro.html">Introduction</a>
+<li> <a href="design.html">Design Philosophy of Standard Interface Data Structures</a>
+<li> <a href="conv.html">Conventions</a>
+<li> <a href="build.html">Building-Block Structure Definitions</a>
+<li> <a href="data.html">Data-Array Structure Definitions</a>
+<li> <a href="cgnsbase.html">Hierarchical Structures (<tt>CGNSBase_t</tt> and <tt>Zone_t</tt>)</a>
+<li> <a href="gridflow.html">Grid Coordinates, Elements, and Flow Solution</a>
+<li> <a href="cnct.html">Multizone Interface Connectivity</a>
+<li> <a href="bc.html">Boundary Conditions</a>
+<li> <a href="floweqn.html">Governing Flow Equations</a>
+<li> <a href="timedep.html">Time-Dependent Flow</a>
+<li> <a href="misc.html">Miscellaneous Data Structures</a>
+<li> <a href="dataname.html">Conventions for Data-Name Identifiers</a>
+<li> <a href="twozone.html">Structured Two-Zone Flat Plate Example</a>
+</ul>
+
+<p>
+The complete <a href="sids.tar.gz">CGNS Standard Interface Data
+Structures in HTML form</a> is also available for installation on a
+local system.
+This is a gzip'ed tar file (224K, 861K gunzip'ed), and may be downloaded
+by clicking on the link while holding down the shift key, assuming your
+browser supports this capability.
+A dialogue box will appear for you to specify the directory and file name.
+To unpack the contents, do
+<pre>
+   gunzip -c sids.tar.gz | tar xvf -
+</pre>
+The files will be extracted and stored in the directory <i>sids</i>.
+Point your browser to the local file <i>sids/index.html</i> to
+display the <i>CGNS Standard Interface Data Structures</i> home page.
+Note also that some links, to other manuals, etc., may not work.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<p>
+<!--#include virtual="../include/footer_big.html" -->
+Last updated 28 Aug 2014
+
+</body>
+</html>

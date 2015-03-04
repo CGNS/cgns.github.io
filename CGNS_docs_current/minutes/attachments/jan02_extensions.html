@@ -1,0 +1,128 @@
+<!-- HTML input file for "CGNS Extensions" (attachment to
+minutes of Jan 2002 Steering Committee Meeting) -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../../cgns.css" rel="stylesheet" type="text/css">
+<title>CGNS Extensions</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>
+CGNS Extensions
+</h1>
+
+<p>
+Reno, 2002
+
+<h2>Introduction</h2>
+
+<ul>
+<li> New extensions:
+     <ul>
+     <li> Links
+     <li> User Defined data
+     <li> Chemistry &amp; species
+     </ul>
+<li> Implemented by Intelligent Light (under contract with NASA Langley)
+</ul>
+
+<h2>Links</h2>
+
+<ul>
+<li> Capability has always been there, but only possible to create them
+     with ADF calls
+<li> New API routines have been written:
+     <ul>
+     <li> cg_link_write (nodename, filename, name_in_file)
+     <li> cg_link_read (filename, link_path)
+     <li> cg_is_link (path_length) 
+     </ul>
+</ul>
+
+<h2>Example of creating a link</h2>
+
+<p>
+<center>
+<img src="jan02_extensions/fig1.png"
+     alt="Chart illustrating two CGNS files with a link between them"
+     longdesc="jan02_extensions/fig1.html">
+</center>
+
+<p>
+While you are in file 1:
+<pre>
+   filename='file 2'
+   name_in_file='GridBase/Zone 1/GridCoordinates'
+   call cg_goto_f(index,ibase,ier,'Zone_t',1,'end')
+   call cg_link_write_f('GridCoordinates',filename,name_in_file,ier)
+</pre>
+
+<h2>User-defined data</h2>
+
+<ul>
+<li> Currently difficult to add arbitrary data (not covered by SIDS) to
+     CGNS file when using API
+<li> Needed, e.g., to hold required code-specific information that is
+     not intended to be used by others
+<li> Identified by the tag: UserDefinedData_t
+<li> Is supported under most existing nodes
+<li> Arbitrary dimensions and dimension values are supported
+<li> Arbitrary number of UserDefinedData_t nodes allowed under each node
+<li> Arbitrary number of DataArrays allowed under each UserDefinedData_t
+     node
+<li> New API routines have been written:
+     <ul>
+     <li> cg_user_data_write (user_data_name, index)
+     <li> cg_user_data_read (index, user_data_name)
+     <li> cg_nuser_data (nuserdata)
+     </ul>
+</ul>
+
+<h2>Example of writing user-defined data</h2>
+
+<pre>
+   real*8 data1(3)
+   real*4 data2(3,3)
+   call cg_goto_f(index,ibase,ier,...,'end')
+   call cg_user_data_write_f('Extra',index,ier)
+   call cg_goto_f(index,ibase,ier,...,'UserDefinedData_t',index,'end')
+   call cg_array_write_f('MyData1',RealDouble,1,3,data1,ier)
+   indx(1)=3
+   indx(2)=3
+   call cg_array_write_f('MyData2',RealSingle,2,indx,data2,ier)
+</pre>
+
+<h2>Chemistry &amp; species</h2>
+
+<ul>
+<li> Still in process, but nearing completion
+<li> Summary of changes:
+     <ul>
+     <li> Under FlowSolution, define new field quantity data-name
+          identifiers (e.g.: MassFractionH2O)
+     <li> Under FlowEquationSet, modify GasModel to allow several
+          additional types (e.g., CaloricallyPerfect, RedlichKwong)
+     <li> Under FlowEquationSet, allow new node ThermalRelaxationModel_t
+          (e.g., type = Frozen, ThermalEquilib)
+     <li> Under FlowEquationSet, allow new node ChemicalKineticsModel_t:
+          <ul>
+          <li> e.g., type = Frozen, ChemicalEquilibCurveFit
+          <li> define several data-name identifiers for DataArray_t
+               nodes (e.g., MolecularWeightH2O)
+          </ul>
+     </ul>
+<li> If needed, other FlowEquationSet information to be stored in
+     Descriptor nodes
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../../include/footer_small.html" -->
+Last updated 7 Feb 2008
+
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!-- CGIO Manual - Library Of Subroutines -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="cgio.css" rel="stylesheet" type="text/css">
+<title> CGIO User's Guide - Data Structure Management Routines </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="index.html"><span class=nav><b>CGIO&nbsp;User's&nbsp;Guide</b></span></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="library.html"><b>The&nbsp;CGIO&nbsp;Software&nbsp;Library</b></a>)
+(<a href="database.html"><b>Database-Level&nbsp;Routines</b></a>)
+(<span class=nav><b>Data&nbsp;Structure&nbsp;Management&nbsp;Routines</b></span>)
+(<a href="links.html"><b>Link&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="node.html"><b>Node&nbsp;Management&nbsp;Routines</b></a>)
+(<a href="dataio.html"><b>Data&nbsp;I/O&nbsp;Routines</b></a>)
+(<a href="errors.html"><b>Error&nbsp;Messages&nbsp;and&nbsp;Routines</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Routines</b></a>)
+(<a href="examples.html"><b>Example&nbsp;Programs</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Data Structure Management Routines</h2>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_create_node(<span class=in>int cgio_num</span>, <span class=in>double pid</span>, <span class=in>const char *name</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>double *id</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_new_node(<span class=in>int cgio_num</span>, <span class=in>double pid</span>, <span class=in>const char *name</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>const char *label</span>, <span class=in>const char *data_type</span>, <span class=in>int ndims</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>const cgsize_t *dims</span>, <span class=in>const void *data</span>, <span class=out><i>double *id</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_delete_node(<span class=in>int cgio_num</span>, <span class=in>double pid</span>, <span class=in>double id</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_move_node(<span class=in>int cgio_num</span>, <span class=in>double pid</span>, <span class=in>double id</span>, <span class=in>double new_pid</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_number_children(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=out><i>int *num_child</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_children_names(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=in>int start</span>, <span class=in>int max_ret</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>int name_len</span>, <span class=out><i>int *num_ret</i></span>, <span class=out><i>char *child_names</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgio_children_ids(<span class=in>int cgio_num</span>, <span class=in>double id</span>, <span class=in>int start</span>, <span class=in>int max_ret</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *num_ret</i></span>, <span class=out><i>char *child_ids</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cgio_create_node_f(<span class=in>cgio_num</span>, <span class=in>pid</span>, <span class=in>name</span>, <span class=out><i>id</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_new_node_f(<span class=in>cgio_num</span>, <span class=in>pid</span>, <span class=in>name</span>, <span class=in>label</span>, <span class=in>data_type</span>, <span class=in>ndims</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>dims</span>, <span class=in>data</span>, <span class=out><i>id</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_delete_node_f(<span class=in>cgio_num</span>, <span class=in>pid</span>, <span class=in>id</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_move_node_f(<span class=in>cgio_num</span>, <span class=in>pid</span>, <span class=in>id</span>, <span class=in>new_pid</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_number_children_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=out><i>num_child</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_children_names_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=in>start</span>, <span class=in>max_ret</span>, <span class=in>name_len</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>num_ret</i></span>, <span class=out><i>child_names</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgio_children_ids_f(<span class=in>cgio_num</span>, <span class=in>id</span>, <span class=in>start</span>, <span class=in>max_ret</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>num_ret</i></span>, <span class=out><i>child_ids</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>cgio_num</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Database identifier.
+<tr valign=baseline><td>
+   <td><tt>pid</tt><td>
+   <td>Parent node identifier.
+<tr valign=baseline><td>
+   <td><tt>id</tt><td>
+   <td>Node identifier.
+<tr valign=baseline><td>
+   <td><tt>name</tt><td>
+   <td>Node name (max length 32).
+<tr valign=baseline><td>
+   <td><tt>label</tt><td>
+   <td>Node label (max length 32).
+<tr valign=baseline><td>
+   <td><tt>data_type</tt><td>
+   <td>Type of data contained in the node. One of "MT", "I4", "I8", "U4", "U8",
+       "R4", "C1", or "B1".
+<tr valign=baseline><td>
+   <td><tt>ndims</tt><td>
+   <td>Number of dimensions for the data (max 12).
+<tr valign=baseline><td>
+   <td><tt>dims</tt><td>
+   <td>Data dimension values (<tt>ndims</tt> values).
+<tr valign=baseline><td>
+   <td><tt>data</tt><td>
+   <td>Data array to be stored with the node.
+<tr valign=baseline><td>
+   <td><tt>new_pid</tt><td>
+   <td>New parent node identifier under which the node is to be moved.
+<tr valign=baseline><td>
+   <td><tt>num_child</tt><td>
+   <td>Number of children of the specified node.
+<tr valign=baseline><td>
+   <td><tt>start</tt><td>
+   <td>Starting index for returned child names or ids
+       (1 &lt;= <tt>start</tt> &lt;= <tt>num_child</tt>).
+<tr valign=baseline><td>
+   <td><tt>max_ret</tt><td>
+   <td>Maximum child names or ids to be returned
+       (1 &lt;= <tt>max_ret</tt> &lt;= <tt>num_child-start+1</tt>).
+<tr valign=baseline><td>
+   <td><tt>name_len</tt><td>
+   <td>Length reserved for each returned child name.
+<tr valign=baseline><td>
+   <td><tt>num_ret</tt><td>
+   <td>Number of returned values of child names or identifiers.
+<tr valign=baseline><td>
+   <td><tt>child_names</tt><td>
+   <td>Child node names (<tt>num_ret</tt> values). This array should
+       be dimensioned at least (<tt>name_len * max_ret</tt>).
+<tr valign=baseline><td>
+   <td><tt>child_ids</tt><td>
+   <td>Child node identifiers (<tt>num_ret</tt> values). This array
+       should be dimensioned at least (<tt>max_ret</tt>).
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<h2>Function Descriptions</h2>
+
+<dl>
+
+<a name="create_node"></a>
+<dt><tt>cgio_create_node</tt>
+<dd>Creates a new empty node in the database given by <tt>cgio_num</tt>
+    as a child of the node identified by <tt>pid</tt>. The name of the new
+    node is given by <tt>name</tt>, and must not already exist as a child
+    of the parent node. The node will contain no label, dimensions,
+    or data. Use the <a href="node.html">Node Management Routines</a> to
+    change the properties of the node, and the
+    <a href="dataio.html">Data I/O Routines</a> to add data. Returns 0 and the
+    identifier of the new node in <tt>id</tt> on success, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="new_node"></a>
+<dt><tt>cgio_new_node</tt>
+<dd>Creates a new node in the database given by <tt>cgio_num</tt>
+    as a child of the node identified by <tt>pid</tt>. The name of the new
+    node is given by <tt>name</tt>, and must not already exist as a child
+    of the parent node. The node label is given by <tt>label</tt>,
+    the type of data by <tt>data_type</tt>, the dimensions of the data by
+    <tt>ndims</tt> and <tt>dims</tt>, and the data to write to the node
+    by <tt>data</tt>. This is equivalent to calling the routines:
+    <pre>
+    <a href="#create_node">cgio_create_node</a>
+    <a href="node.html#set_label">cgio_set_label</a>
+    <a href="node.html#set_dimensions">cgio_set_dimensions</a>
+    <a href="dataio.html#write_all_data">cgio_write_all_data</a>
+    </pre>
+    Returns 0 and the identifier of the new node in <tt>id</tt> on success,
+    else an error code.
+
+<dt>&nbsp;<dd>
+<a name="delete_node"></a>
+<dt><tt>cgio_delete_node</tt>
+<dd>Deletes the node identified by <tt>id</tt> below the parent node identified
+    by <tt>pid</tt> in the database given by <tt>cgio_num</tt>. All children
+    of the deleted node will also be deleted unless a link is encountered.
+    The link node will be deleted but nothing below it.
+    Returns 0 on success, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="move_node"></a>
+<dt><tt>cgio_move_node</tt>
+<dd>Moves the node indentified by <tt>id</tt> below the parent node identified
+    by <tt>pid</tt> to below the new parent node identified by <tt>new_pid</tt>
+    in the database given by <tt>cgio_num</tt>. A node by the same name as
+    that that for <tt>id</tt> must not already exist under <tt>new_pid</tt>.
+    A node may only be moved if it and the parent nodes all reside in the
+    sane physical database. Returns 0 on success, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="number_children"></a>
+<dt><tt>cgio_number_children</tt>
+<dd>Gets the number of children of the node identified by <tt>id</tt> in the
+    database given by <tt>cgio_num</tt>, Returns 0 and the number of children
+    in <tt>num_child</tt> on success, else an error code.
+
+<dt>&nbsp;<dd>
+<a name="children_names"></a>
+<dt><tt>cgio_children_names</tt>
+<dd>Gets the names of the children of the node identified by <tt>id</tt> in
+    the database given by <tt>cgio_num</tt>. The starting index for the
+    array of names is given by <tt>start</tt>, and the maximum number of
+    names to return by <tt>max_ret</tt>. Both <tt>start</tt> and <tt>max_ret</tt>
+    should be between 1 and <tt>num_child</tt>, inclusively. The size reserved
+    for each name in <tt>child_names</tt> is given by <tt>name_len</tt>.
+    The array <tt>child_names</tt> should be dimensioned at least
+    (<tt>name_len * max_ret</tt>). Since node names are limited to a length
+    of <tt>CGIO_MAX_NAME_LENGHT</tt> (32), <tt>name_len</tt> should be at
+    least 32 to ensure the returned names are mot truncated. In C, an
+    additional byte should be added to <tt>name_len</tt> allow for the
+    terminating '0' for each name. If successfull, the function returns 0;
+    the actual number of returned names is given by <tt>num_ret</tt>,
+    and the array of names in <tt>child_names</tt>. In C, the names are
+    '0'-terminated within each name field. In Fortran, any unused space
+    is padded with blanks (space character).
+
+<dt>&nbsp;<dd>
+<a name="children_ids"></a>
+<dt><tt>cgio_children_ids</tt>
+<dd>Gets the node identifiers of the children of the node identified by
+    <tt>id</tt> in the database given by <tt>cgio_num</tt>.
+    The starting index for the array of ids is given by <tt>start</tt>,
+    and the maximum ids to return by <tt>max_ret</tt>. Both <tt>start</tt>
+    and <tt>max_ret</tt> should be between 1 and <tt>num_child</tt>, inclusively.
+    The array <tt>child_ids</tt> should be dimensioned at least
+    (<tt>max_ret</tt>). If successfull, the function returns 0; the
+    actual number of returned ids is given by <tt>num_ret</tt>, and the
+    array of identifiers in <tt>child_ids</tt>.
+
+</dl>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 09 April 2011
+
+</body>
+</html>

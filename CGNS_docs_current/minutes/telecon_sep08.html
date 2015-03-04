@@ -1,0 +1,445 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+10 September 2008
+
+<p>
+<ol>
+<li> The meeting was called to order at 11:00 AM eastern time. There were
+     <a href="#attendees">9 attendees</a>, listed below.
+<p>
+<li> The minutes of the <a href="telecon_jul08.html">2 July 2008
+     meeting</a> were approved as posted on the web site.
+<p>
+<li> Discussion of HDF-5 array ordering
+     <p>
+     <ol type="a">
+     <li> Summary of problem:  HDF-5 uses C-index ordering for its
+          arrays, but CGNS uses Fortran indexing.  So if anyone (in
+          Version 2.5 or earlier) wrote an HDF-5 file with CGNS, it
+          would have its indexing incorrect.  This did not hurt if
+          one only used CGNS API to read/write the file (i.e. it was
+          internally consistent), but it would be incorrect if one tried
+          to use other software to read the HDF-5 CGNS file.  Also,
+          partial read/writes in the CGNS software did not work.
+     <li> Wedan fixed this for Version 3.  He added new "HDF5 Version"
+          node.  If detected, then the software knows the indexing
+          is already correct.  If not detected, then the software
+          automatically corrects the faulty indexing.
+     <li> <u>Poinot to try Version 3 fix for HDF-5 indexing problem, and
+          make sure it works for his applications.</u>
+     <li> There was also discussion about whether to put the fix in
+          Version 2.x.  If we do, we lose forward compatability (if
+          try to open new file with older software, it will fail).
+          Consensus: to NOT put fix in Version 2.x.  This means that
+          Version 2.x and earlier will have this known problem: HDF-5
+          indexing is backward.  We should recommend that only V3 and
+          above be used in conjunction with HDF-5.
+     <li> <u>Rumsey to add disclaimer about HDF-5 incorrect index ordering
+          in Version 2.x to website.</u>
+     <li> <u>Towne to add disclaimer about HDF-5 incorrect index ordering
+          in Version 2.x in MLL documentation.</u>
+     </ol>
+<p>
+<li> Other discussion related to HDF-5
+     <p>
+     <ol type="a">
+     <li> Poinot tested HDF-5 1st level compression.  Works well, but
+          very slow.  Easy to put in MLL - only 5-10 lines of code.
+          Uses "chunk" storage.  Chunk feature has a "magic" value that
+          sets size of the chunk.
+     <li> We need to decide how to put compression in at the API level.
+     <li> Consensus was that <tt>cg_configure</tt> would be an
+          appropriate place to bring this capability in.  Can make it
+          so it only compresses when greater than a certain number of
+          bytes.
+     <li> <u>Poinot to send Wedan his coding and other information related
+          to HDF-5 compression.</u>
+     <li> <u>Wedan to incorporate compression capability into Version 3
+          MLL.</u>
+     <li> Hauser asked if there are any changes needed in SIDS-to-HDF5
+          document?
+          <ol type=i>
+          <li> Added this to "to-do" list for HDF-5 switchover
+               (attachment 2)
+          </ol>
+     </ol>
+<p>
+<li> Status of previous action items
+     <p>
+     <ol type="a">
+     <li> Wedan and Hauser to look into improving documentation and
+          build instructions for V3.0.
+          <ol type=i>
+          <li> Not done yet - <u>action carries.</u>
+          </ol>
+     <li> Rumsey to e-mail committee to remind them to comment on new
+          extensions.
+          <ol type=i>
+          <li> Done: mail sent to all CGNSTalk, but no responses
+               received.  <u>Rumsey to email committee and ask for vote on
+               two existing proposals and collect responses.</u>
+          </ol>
+     <li> Hauser to remove instructions regarding XML output from
+          configure script in V3.0.
+          <ol type=i>
+          <li> Not done yet - <u>action carries.</u>
+          </ol>
+     <li> Hauser to make HDF-5 part of V3.0's tar file distribution, and
+          set up makefile appropriately.
+          <ol type=i>
+          <li> Not done yet - <u>action carries.</u>
+          </ol>
+     <li> Hauser to contact vendors regarding testing V3.0 prior to
+          release if possible and report back to committee.
+          <ol type=i>
+          <li> Almost ready for V3 release. Action deleted.
+          </ol>
+     <li> Hauser will add HDF-5 parallel code to SourceForge and will
+          let users know when it is available.
+          <ol type=i>
+          <li> Tabled until after Version 3 release - <u>action carries.</u>
+          </ol>
+     <li> Rumsey to email Towne and Wedan about the issue of node
+          ordering for <tt>NGON_n</tt>.
+          <ol type=i>
+          <li> Done.  There was a lot of discussion on the outcome of
+               this.
+          <li> One issue: if one uses <tt>NGON + NFACE</tt> to describe
+               arbitrary polyhedra, you need additional "winding"
+               information. As pointed out in email by Feldman, this
+               can be done by making <tt>NFACE</tt> + or &minus; (+ indicates
+               pointing outward from the cell matching the <tt>NGON</tt>
+               right hand rule definition, and &minus; pointing inward).  You
+               also need to prohibit faces that are not attached to a
+               volume element - other than at boundaries.
+          <li> Second issue: the draft documentation currently
+               allows TWO methods: <tt>NGON + NFACE</tt>, and also
+               <tt>NGON</tt> + parent data.  Having two methods is
+               confusing, and can put too big a burden on external
+               software readers.  Allmaras pointed out that his original
+               proposal a long time ago involved use of parent data, but
+               the group had decided to go with <tt>NGON + NFACE</tt>
+               because it was already coded and it did not involve
+               additional descriptive nodes.  In today's discussion,
+               consensus was to only document the <tt>NGON + NFACE</tt>
+               method (including <tt>NFACE</tt> + or &minus; for winding
+               information).
+          <li> <u>Towne to modify <tt>NGON+NFACE</tt> documentation for
+               V3 to include Feldman's suggestions, and to remove
+               <tt>NGON</tt> + parent data as an option.</u>
+          </ol>
+     <li> Paul, Bussoletti, and Allmaras to continue to look into
+          finding manpower development (particularly for MLL
+          implementation) resources at Boeing.
+          <ol type=i>
+          <li> Ongoing. Seeds have been planted.  <u>Action carries.</u>
+          </ol>
+     <li> Duque and Hauser to continue to develop proposal for handling
+          sprays of unconnected points.
+          <ol type=i>
+          <li> Not done yet - <u>action carries.</u>
+          </ol>
+     <li> Rumsey to look at posting a specific checklist on the website
+          on what to put in a proposal for extension.
+          <ol type=i>
+          <li> Done.
+          </ol>
+     <li> Duque and Hauser to continue to pursue NSF funding and look
+          into idea of a fundraising collaborative.
+          <ol type=i>
+          <li> Not done yet - <u>action carries.</u>
+          </ol>
+     <li> Rumsey will contact EUCASS 2009 conference organizers about
+          possibility of having CGNS sessions and/or tutorial.
+          <ol type=i>
+          <li> Done.  They are interested.  Conference is in June 2009
+               in Versailles, France. They are looking into providing
+               a room for CGNS's use for 1-2 days.  We can perhaps
+               hold a tutorial session and a series of talks or panel
+               discussions, much like we did in San Francisco in
+               2006. Poinot has become our new point-of-contact for
+               this.
+          <li> <u>Poinot to forward a draft proposal on CGNS activities for
+               EUCASS to Hauser &amp; Rumsey that will eventually go to the
+               EUCASS organizers.</u>
+          </ol>
+     <li> Hauser and Rumsey to consider writing abstract on CGNS
+          progress for AIAA summer 2009 conference.
+          <ol type=i>
+          <li> This conference would conflict with EUCASS, so action
+               cancelled.
+          </ol>
+     <li> Hauser to merge Poinot's changes related to HDF-5 linking into
+          V3.0.
+          <ol type=i>
+          <li> Done.  Currently in CVS.
+          </ol>
+     <li> Hauser to look into methods on SourceForge for getting Poinot
+          developer access: switch from CVS to SVN? or use SSL?
+          <ol type=i>
+          <li> Done.  Poinot now has check-out access.  Cannot currently
+               check-in because of ONERA's firewall.
+          </ol>
+     <li> Hauser to speak to Koziol at HDF-5 Group about issues related
+          to developers and funding.
+          <ol type=i>
+          <li> Done.  HDF-5 has become some sort of non-profit.  They
+               have about 20 employees, and have long-term support.
+               They are willing to help us look into taking the same
+               route, and they are also willing to collaborate.
+          <li> Wedan mentioned the "donate" button on SourceForge, if we
+               have a place to put the money.
+          <li> Rumsey asked about accounting and tax-filing issues (and
+               who would do it) if we tried to go the non-profit route.
+          <li> <u>Hauser to attend an upcoming HDF-5 meeting in Colorado,
+               and find out more about what it means to become a
+               non-profit like HDF-5 and how it would affect things.</u>
+          </ol>
+     <li> Wedan to investigate issue of MLL deleting the entire node
+          even though its new dimensions are the same.
+          <ol type=i>
+          <li> Not done yet.  May be good idea for certain nodes.
+               <u>Action carries.</u>
+          </ol>
+     <li> Hauser will take control of <i>cgns.org</i> domain name and
+          will consider possibility of moving website to Utah State site.
+          <ol type=i>
+          <li> Not done yet - <u>action carries.</u>
+          </ol>
+     <li> Hauser to contact Hunten about ISO/STEP and ask the best way
+          for us to comment.
+          <ol type=i>
+          <li> Not done yet - <u>action carries.</u>
+          </ol>
+     </ol>
+<p>
+<li> CGNSTalk issues
+     <p>
+     <ol type="a">
+     <li> <u>Wedan to look into issue brought up by Miller (10/19/07) to
+          write info one element at a time to save memory.</u>  (This issue
+          is also on list of open items)
+     <li> Miller: address issue of possible need for "long" instead of
+          "int" to avoid signed 2 Gig limit (This issue is also on list
+          of open items)
+          <ol type=i>
+          <li> no change of status
+          </ol>
+     <li> Shenoy: error in CGNSTools file (08/28/08)
+          <ol type=i>
+          <li> Already fixed in CVS version.
+          </ol>
+     <li> Gibeling: Problem with 64-bit cg_goto_f (08/29/08)
+          <ol type=i>
+          <li> this issue added to list of open items
+          </ol>
+     <li> Ahlman: question on status of parallel implementation (09/03/08)
+          <ol type=i>
+          <li> Hauser will respond to Ahlman CGNSTalk question about
+               status of parallel implementation.
+          </ol>
+     <li> Bussoletti: excessive memory usage by MLL (09/04/08)
+          <ol type=i>
+          <li> <u>Bussoletti to send patch fixing excessive memory usage by
+               MLL to Wedan, and Wedan to implement.</u>
+          </ol>
+     </ol>
+<p>
+<li> Open items (purpose of these is to not lose track of long-term
+     issues that come up)
+     <p>
+     <ol type="a">
+     <li> Keep track of/resolve <a href="#HDF5_todo">HDF-5 "to-do" list</a>
+          <ol type=i>
+          <li> Many of these items are now completed for V3.0.
+          </ol>
+     <li> Keep track of progress with ISO/STEP.
+     <li> Need for official certification process (test for compliance).
+     <li> Develop method to write info one element at a time to save
+          memory via something like <tt>cg_section_partialwrite</tt>
+          (Miller 10/19/07 CGNSTalk)
+     <li> Address issue of possible need for "long" instead of "int" to
+          avoid signed 2 Gig limit (Miller 10/19/07 CGNSTalk).
+     <li> Problem with 64-bit <tt>cg_goto_f</tt> (Gibeling 08/29/08
+          CGNSTalk)
+     </ol>
+<p>
+<li> Hauser plans to have face-to-face meeting at the AIAA meeting in
+     Orlando in January 2009.  Tentatively set for Wednesday evening
+     of the conference.  Rumsey to email Hauser information on how to
+     reserve a room for AIAA conference.
+<p>
+<li> Meeting was adjourned at 1:00 PM Eastern. Next Telecon is
+     tentatively set for November 5, 2008.
+<p>
+<li> Summary of <b><u>action items</u></b>:
+     <p>
+     <ol type="a">
+     <li> Poinot to try Version 3 fix for HDF-5 indexing problem, and
+          make sure it works for his applications.
+     <li> Rumsey to add disclaimer about HDF-5 incorrect index ordering
+          in Version 2.x to website.
+     <li> Towne to add disclaimer about HDF-5 incorrect index ordering
+          in Version 2.x in MLL documentation.
+     <li> Poinot to send Wedan his coding and other information related
+          to HDF-5 compression.
+     <li> Wedan to incorporate compression capability into Version 3
+          MLL.
+     <li> Wedan and Hauser to look into improving documentation and
+          build instructions for V3.0.
+     <li> Rumsey to email committee and ask for vote on two existing
+          proposals and collect responses.
+     <li> Hauser to remove instructions regarding XML output from
+          configure script in V3.0.
+     <li> Hauser to make HDF-5 part of V3.0's tar file distribution, and
+          set up makefile appropriately.
+     <li> Hauser will add HDF-5 parallel code to SourceForge and will
+          let users know when it is available.
+     <li> Towne to modify <tt>NGON+NFACE</tt> documentation for V3 to
+          include Feldman's suggestions, and to remove <tt>NGON</tt> +
+          parent data as an option.
+     <li> Paul, Bussoletti, and Allmaras to continue to look into
+          finding manpower development (particularly for MLL
+          implementation) resources at Boeing.
+     <li> Duque and Hauser to continue to develop proposal for handling
+          sprays of unconnected points.
+     <li> Duque and Hauser to continue to pursue NSF funding and look
+          into idea of a fundraising collaborative.
+     <li> Poinot to forward a draft proposal on CGNS activities for
+          EUCASS to Hauser &amp; Rumsey that will eventually go to the
+          EUCASS organizers.
+     <li> Hauser to attend an upcoming HDF-5 meeting in Colorado, and
+          find out more about what it means to become a non-profit like
+          HDF-5 and how it would affect things.
+     <li> Wedan to investigate issue of MLL deleting the entire node
+          even though its new dimensions are the same.
+     <li> Hauser will take control of <i>cgns.org</i> domain name and
+          will consider possibility of moving website to Utah State site.
+     <li> Hauser to contact Hunten about ISO/STEP and ask the best way
+          for us to comment.
+     <li> Wedan to look into issue brought up by Miller (10/19/07) to
+          write info one element at a time to save memory.
+     <li> Wedan to implement patch sent to him by Bussoletti to fix
+          excessive memory usage by MLL.
+     <li> Rumsey to email Hauser information on how to reserve a room
+          for AIAA conference.
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Steve Allmaras<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Boeing Commercial
+<tr valign=baseline><td>
+   <td>John Bussoletti<td>
+   <td>Pointwise
+<tr valign=baseline><td>
+   <td>Richard Hann<td>
+   <td>ANSYS / CFX
+<tr valign=baseline><td>
+   <td>Thomas Hauser<td>
+   <td>Utah State
+<tr valign=baseline><td>
+   <td>Kevin Mack<td>
+   <td>CD-ADAPCO
+<tr valign=baseline><td>
+   <td>Marc Poinot<td>
+   <td>Onera
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Charlie Towne<td>
+   <td>NASA Glenn
+<tr valign=baseline><td>
+   <td>Bruce Wedan<td>
+   <td>unaffiliated
+</table>
+
+<a name="HDF5_todo"></a>
+<h2>Tentative to-do list in association with HDF-5 switchover</h2>
+
+<ul>
+<li> Complete and test parallel implementation
+     <ul>
+     <li> under development
+     </ul>
+<li> Complete and test API capability to automatically detect and switch
+     between ADF and HDF-5 (transparent to user?)
+     <ul>
+     <li> <u>done in V3.0</u>
+     </ul>
+<li> Assess/minimize impact on software vendors using CGNS
+     <ul>
+     <li> under development (success with automatic detection transparent
+          to user will minimize impact)
+     </ul>
+<li> Make changes recommended by HDF-5 to improve usability with HDF-5
+     (e.g., character strings as opposed to character arrays)
+     <ul>
+     <li> <u>done</u>
+     </ul>
+<li> Assess compression capability of HDF-5
+     <ul>
+     <li> <u>done by Poinot - capability will be added to V3 MLL</u>
+     </ul>
+<li> CGNS configure scripts will need to be modified to check for
+     availability of appropriate HDF-5 libraries.
+     <ul>
+     <li> <u>done in V3.0</u>
+     </ul>
+<li> Possibly add flag-based options when opening CGNS files.  For
+     example: "follow links" vs. "don't follow links"; "use ADF" vs. "use
+     HDF-5"; "translate file automatically" vs. "leave the file as-is";
+     "compress" vs. "don't compress".
+<li> Look into eliminating need for ID's from MLL
+<li> Resolve "link-of-links" problem: will require HDF-5 fix by NCSA
+     under development (1.8.0 beta)
+     <ul>
+     <li> <u>done in V3.0 in combination with HDF-5 V1.8</u>
+     </ul>
+<li> Are any changes needed in SIDS-to-HDF5 document?  Or is it
+     up-to-date?
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 23 Sep 2008
+
+</body>
+</html>

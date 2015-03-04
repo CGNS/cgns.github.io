@@ -1,0 +1,1786 @@
+<!-- CGNS SIDS document - Governing Flow Equations -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Governing Flow Equations </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<span class=nav><b>Governing&nbsp;Flow&nbsp;Equations</b></span>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Governing Flow Equations</h2>
+
+<ul>
+<li> <a href="#FlowEquationSet">Flow Equation Set Structure Definition: <tt>FlowEquationSet_t</tt></a>
+<li> <a href="#GoverningEquations">Governing Equations Structure Definition: <tt>GoverningEquations_t</tt></a>
+<li> <a href="#ModelType">Model Type Structure Definition: <tt>ModelType_t</tt></a>
+<li> <a href="#GasModel">Thermodynamic Gas Model Structure Definition: <tt>GasModel_t</tt></a>
+<li> <a href="#ViscosityModel">Molecular Viscosity Model Structure Definition: <tt>ViscosityModel_t</tt></a>
+<li> <a href="#ThermalConductivityModel">Thermal Conductivity Model Structure Definition: <tt>ThermalConductivityModel_t</tt></a>
+<li> <a href="#Turbulence">Turbulence Structure Definitions</a>
+<li> <a href="#ThermalRelaxationModel">Thermal Relaxation Model Structure Definition: <tt>ThermalRelaxationModel_t</tt></a>
+<li> <a href="#ChemicalKineticsModel">Chemical Kinetics Model Structure Definition: <tt>ChemicalKineticsModel_t</tt></a>
+<li> <a href="#EM">Electromagnetics Structure Definitions</a>
+<li> <a href="#flowexample">Flow Equation Examples</a>
+</ul>
+
+<p>
+This section provides structure type definitions for describing the
+governing flow-equation set associated with the database.
+The description includes the general class of governing equations, the
+turbulent closure equations, the gas and chemistry models, the
+viscosity and thermal-conductivity models, and the electromagnetics
+models.
+Included with each equation description are associated constants.
+The structure definitions attempt to balance the opposing requirements
+for future growth and extensibility with initial ease of implementation.
+Included in the final section are examples of flow-equation sets.
+
+<p>
+The intended use of these structures initially is primarily for archival
+purposes and to provide additional documentation of the flow solution.
+If successful in this role, it is foreseeable that these flow-equation
+structures may eventually be also used as inputs for grid generators,
+flow solvers, and post-processors.
+
+<a name="FlowEquationSet"></a>
+<h3>Flow Equation Set Structure Definition: <tt>FlowEquationSet_t</tt></h3>
+
+<p>
+<tt>FlowEquationSet_t</tt> is a general description of the governing
+flow equations.
+It includes the dimensionality of the governing equations, and the
+collection of specific equation-set descriptions covered in subsequent
+sections.
+It can be a child node of either
+<a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> or
+<a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a> (or both).
+<pre>
+  FlowEquationSet_t&lt; int CellDimension &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    int EquationDimension ;                                            (o)
+
+    GoverningEquations_t&lt;CellDimension&gt; GoverningEquations ;           (o)
+
+    GasModel_t GasModel ;                                              (o)
+
+    ViscosityModel_t ViscosityModel ;                                  (o)
+
+    ThermalConductivityModel_t ThermalConductivityModel ;              (o)
+
+    TurbulenceClosure_t TurbulenceClosure ;                            (o)
+
+    TurbulenceModel_t&lt;CellDimension&gt; TurbulenceModel ;                 (o)
+
+    ThermalRelaxationModel_t ThermalRelaxationModel ;                  (o)
+
+    ChemicalKineticsModel_t ChemicalKineticsModel ;                    (o)
+
+    EMElectricFieldModel_t EMElectricFieldModel ;                      (o)
+
+    EMMagneticFieldModel_t EMMagneticFieldModel ;                      (o)
+
+    EMConductivityModel_t EMConductivityModel ;                        (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>FlowEquationSet_t</tt> and shall not include the names
+     <tt>EMConductivityModel</tt>, <tt>EMElectricFieldModel</tt>,
+     <tt>EMMagneticFieldModel</tt>, <tt>EquationDimension</tt>,
+     <tt>GoverningEquations</tt>, <tt>GasModel</tt>,
+     <tt>ViscosityModel</tt>, <tt>ThermalConductivityModel</tt>,
+     <tt>TurbulenceClosure</tt>, <tt>TurbulenceModel</tt>,
+     <tt>ThermalRelaxationModel</tt>, <tt>ChemicalKineticsModel</tt>,
+     <tt>DataClass</tt>, or <tt>DimensionalUnits</tt>.
+<li> There are no required elements for <tt>FlowEquationSet_t</tt>.
+</ol>
+
+<p>
+<tt>FlowEquationSet_t</tt> requires a single structure parameter,
+<tt>CellDimension</tt>, to identify the dimensionality of index arrays
+for structured grids.
+This parameter is passed onto several substructures.
+
+<p>
+<tt>EquationDimension</tt> is the dimensionality of the governing
+equations; it is the number of spatial variables describing the flow.
+<a href="#GoverningEquations"><tt>GoverningEquations</tt></a> describes
+the general class of flow equations.
+<a href="#GasModel"><tt>GasModel</tt></a> describes the equation of state,
+and <a href="#ViscosityModel"><tt>ViscosityModel</tt></a> and
+<a href="#ThermalConductivityModel"><tt>ThermalConductivityModel</tt></a>
+describe the auxiliary relations for molecular viscosity and the thermal
+conductivity coefficient.
+<a href="#TurbulenceClosure"><tt>TurbulenceClosure</tt></a> and
+<a href="#TurbulenceModel"><tt>TurbulenceModel</tt></a> describe the
+turbulent closure for the Reynolds-averaged Navier-Stokes equations.
+<a href="#ThermalRelaxationModel"><tt>ThermalRelaxationModel</tt></a> and
+<a href="#ChemicalKineticsModel"><tt>ChemicalKineticsModel</tt></a>
+describe the equations used to model thermal relaxation and chemical
+kinetics.
+<tt>EMElectricFieldModel</tt>, <tt>EMMagneticFieldModel</tt>, and
+<tt>EMConductivityModel</tt> describe the equations used to model
+electromagnetics.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the flow-equation set.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="GoverningEquations"></a>
+<h3>Governing Equations Structure Definition: <tt>GoverningEquations_t</tt></h3>
+
+<p>
+<tt>GoverningEquations_t</tt> describes the class of governing flow
+equations associated with the solution.
+<pre>
+  GoverningEquationsType_t := Enumeration(
+    GoverningEquationsTypeNull,
+    GoverningEquationsTypeUserDefined,
+    FullPotential,
+    Euler,
+    NSLaminar,
+    NSTurbulent,
+    NSLaminarIncompressible,
+    NSTurbulentIncompressible ) ;
+
+  GoverningEquations_t&lt; int CellDimension &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    GoverningEquationsType_t GoverningEquationsType ;                  (r)
+
+    int[CellDimension*(CellDimension + 1)/2] DiffusionModel ;          (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>GoverningEquations_t</tt> and shall not include the name
+     <tt>DiffusionModel</tt>.
+<li> <tt>GoverningEquationsType</tt> is the only required element.
+<li> The length of the <a href="#DiffusionModel"><tt>DiffusionModel</tt></a>
+     array is as follows: in 1-D it is <tt>int[1]</tt>; in 2-D it is
+     <tt>int[3]</tt>; and in 3-D it is <tt>int[6]</tt>.
+     For unstructured zones, <tt>DiffusionModel</tt> is not supported,
+     and should not be used.
+</ol>
+
+<p>
+<tt>GoverningEquations_t</tt> requires a single structure parameter,
+<tt>CellDimension</tt>.
+It is used to define the length of the array <tt>DiffusionModel</tt>.
+
+<p>
+<a name="DiffusionModel"></a>
+<tt>DiffusionModel</tt> describes the viscous diffusion terms modeled
+in the flow equations, and is applicable only to the Navier-Stokes
+equations with structured grids.
+Typically, thin-layer approximations include only the diffusion terms in
+one or two computational-coordinate directions.
+<tt>DiffusionModel</tt> encodes the coordinate directions that include
+second-derivative and cross-derivative diffusion terms.
+The first <tt>CellDimension</tt> elements are second-derivative terms
+and the remainder elements are cross-derivative terms.
+Allowed values for individual elements in the array
+<tt>DiffusionModel</tt> are 0 and 1; a value of 1 indicates the
+diffusion term is modeled, and 0 indicates that they are not modeled.
+In 3-D, the encoding of <tt>DiffusionModel</tt> is as follows:
+
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr align=left><td colspan=3><hr width=100% noshade>
+<tr valign=baseline>
+   <th scope=col>Element<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col abbr="Terms">Modeled Terms
+<tr align=left><td colspan=3><hr width=100% noshade>
+<tr valign=baseline>
+   <td align=center><i>n</i> = 1<td>
+   <td>Diffusion terms in <i>i</i>
+       (&part;<sup>2</sup>/&part;<i>&xi;</i><sup>2</sup>)
+<tr valign=baseline>
+   <td align=center><i>n</i> = 2<td>
+   <td>Diffusion terms in <i>j</i>
+       (&part;<sup>2</sup>/&part;<i>&eta;</i><sup>2</sup>)
+<tr valign=baseline>
+   <td align=center><i>n</i> = 3<td>
+   <td>Diffusion terms in <i>k</i>
+       (&part;<sup>2</sup>/&part;<i>&zeta;</i><sup>2</sup>)
+<tr valign=baseline>
+   <td align=center><i>n</i> = 4<td>
+   <td>Cross-diffusion terms in <i>i</i>-<i>j</i>
+       (&part;<sup>2</sup>/&part;<i>&xi;</i> &part;<i>&eta;</i> and
+        &part;<sup>2</sup>/&part;<i>&eta;</i> &part;<i>&xi;</i>)
+<tr valign=baseline>
+   <td align=center><i>n</i> = 5<td>
+   <td>Cross-diffusion terms in <i>j</i>-<i>k</i>
+       (&part;<sup>2</sup>/&part;<i>&eta;</i> &part;<i>&zeta;</i> and
+        &part;<sup>2</sup>/&part;<i>&zeta;</i> &part;<i>&eta;</i>)
+<tr valign=baseline>
+   <td align=center><i>n</i> = 6<td>
+   <td>Cross-diffusion terms in <i>k</i>-<i>i</i>
+       (&part;<sup>2</sup>/&part;<i>&zeta;</i> &part;<i>&xi;</i> and
+        &part;<sup>2</sup>/&part;<i>&xi;</i> &part;<i>&zeta;</i>)
+<tr align=left><td colspan=3><hr width=100% noshade>
+</table>
+</center>
+
+<br>
+where derivatives in the <i>i</i>, <i>j</i> and <i>k</i>
+computational-coordinates are <i>&xi;</i>, <i>&eta;</i> and
+<i>&zeta;</i>, respectively.
+The full Navier-Stokes equations in 3-D are indicated by
+<tt>DiffusionModel = [1,1,1,1,1,1]</tt>, and the thin-layer
+equations including only diffusion in the <i>j</i>-direction are
+<tt>[0,1,0,0,0,0]</tt>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="ModelType"></a>
+<h3>Model Type Structure Definition: <tt>ModelType_t</tt></h3>
+
+<p>
+<tt>ModelType_t</tt> is a complete list of all models covered in subsequent
+sections. A specific model will contain a subset of this enumeration.
+<pre>
+  GasModelType_t := Enumeration(
+    ModelTypeNull, ModelTypeUserDefined,
+    Ideal, VanderWaals, Constant, PowerLaw,
+    SutherlandLaw, ConstantPrandtl, EddyViscosity,
+    ReynoldsStress, ReynoldsStressAlgebraic,
+    Algebraic_BaldwinLomax, Algebraic_CebeciSmith,
+    HalfEquation_JohnsonKing, OneEquation_BaldwinBarth,
+    OneEquation_SpalartAllmaras, TwoEquation_JonesLaunder,
+    TwoEquation_MenterSST, TwoEquation_Wilcox,
+    CaloricallyPerfect, ThermallyPerfect, ConstantDensity,
+    RedlichKwong, Frozen, ThermalEquilib, ThermalNonequilib,
+    ChemicalEquilibCurveFit, ChemicalEquilibMinimization,
+    ChemicalNonequilib, EMElectricField, EMMagneticField,
+    EMConductivity, Voltage, Interpolated,
+    Equilibrium_LinRessler, Chemistry_LinRessler ) ;
+</pre>
+
+<a name="GasModel"></a>
+<h3>Thermodynamic Gas Model Structure Definition: <tt>GasModel_t</tt></h3>
+
+<p>
+<tt>GasModel_t</tt> describes the equation of state model used in the
+governing equations to relate pressure, temperature and density.
+The enumerated values for <tt>GasModelType_t</tt> are a subset of the
+<tt>ModelType_t</tt> enumeration.
+<pre>
+  GasModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Ideal,
+    VanderWaals,
+    CaloricallyPerfect,
+    ThermallyPerfect,
+    ConstantDensity,
+    RedlichKwong ) ;
+
+  GasModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    GasModelType_t GasModelType ;                                      (r)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>GasModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>GasModelType</tt> is the only required element.
+<li> The <tt>GasModelType</tt> enumeration name <tt>Ideal</tt> implies
+     a calorically perfect single-component gas, but the more descriptive
+     name <tt>CaloricallyPerfect</tt> is generally preferred.
+</ol>
+
+<p>
+For a perfect gas (<tt>GasModelType = CaloricallyPerfect</tt>), the
+pressure, temperature, and density are related by
+
+<br><br>
+<center>
+<i>p</i> = <i>&rho;RT</i>
+</center>
+<br>
+
+where <i>R</i> is the ideal gas constant.
+Related quantities are the specific heat at constant pressure
+(<i>c<sub>p</sub></i>), specific heat at constant volume
+(<i>c<sub>v</sub></i>) and specific heat ratio <i>&gamma;</i> =
+<i>c<sub>p</sub></i>/<i>c<sub>v</sub></i>).
+The gas constant and specific heats are related by
+<i>R</i> = <i>c<sub>p</sub></i> &minus; <i>c<sub>v</sub></i>.
+Data-name identifiers associated with the perfect gas law are listed below.
+
+<br><br>
+<a name="t:id_perfect"></a>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Perfect Gas
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>IdealGasConstant</tt><td>
+   <td>Ideal gas constant (<i>R</i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/(<b>T</b><sup>2</sup><b>&Theta;</b>)
+<tr valign=baseline>
+   <td><tt>SpecificHeatRatio</tt><td>
+   <td>Ratio of specific heats
+       (<i>&gamma;</i> = <i>c<sub>p</sub></i>/<i>c<sub>v</sub></i>)<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>SpecificHeatVolume</tt><td>
+   <td>Specific heat at constant volume (<i>c<sub>v</sub></i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/(<b>T</b><sup>2</sup><b>&Theta;</b>)
+<tr valign=baseline>
+   <td><tt>SpecificHeatPressure</tt><td>
+   <td>Specific heat at constant pressure (<i>c<sub>p</sub></i>)<td>
+   <td align=center><b>L</b><sup>2</sup>/(<b>T</b><sup>2</sup><b>&Theta;</b>)
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+If it is desired to specify any of these identifiers in a CGNS database,
+they should be defined as
+<a href="data.html#DataArray"><tt>DataArray</tt></a>s under
+<tt>GasModel_t</tt>.
+
+<p>
+The dimensional units are defined as follows: <b>M</b> is mass, <b>L</b>
+is length, <b>T</b> is time and
+<b>&Theta;</b> is temperature.
+These are further described in the section on
+<a href="dataname.html">Conventions for Data-Name Identifiers</a>.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the thermodynamic gas model.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="ViscosityModel"></a>
+<h3>Molecular Viscosity Model Structure Definition: <tt>ViscosityModel_t</tt></h3>
+
+<p>
+<tt>ViscosityModel_t</tt> describes the model for relating molecular
+viscosity (<i>&mu;</i>) to
+temperature.
+The enumerated values for <tt>ViscosityModelType_t</tt> are a subset of the
+<tt>ModelType_t</tt> enumeration.
+<pre>
+  ViscosityModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Constant,
+    PowerLaw,
+    SutherlandLaw ) ;
+
+  ViscosityModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    ViscosityModelType_t ViscosityModelType ;                          (r)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>ViscosityModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>ViscosityModelType</tt> is the only required element.
+</ol>
+
+<p>
+The molecular viscosity models are as follows: <tt>Constant</tt> states
+that molecular viscosity is constant throughout the field and is equal
+to some reference value (<i>&mu;</i> = <i>&mu;</i><sub>ref</sub>);
+<tt>PowerLaw</tt> states that molecular viscosity follows a power-law
+relation,
+<center>
+<i>&mu;</i> = <i>&mu;</i><sub>ref</sub>
+              (<i>T</i>/<i>T</i><sub>ref</sub>)<sup><i>n</i></sup>
+</center>
+<br>
+and <tt>SutherlandLaw</tt> is Sutherland's Law for molecular viscosity,
+<br><br>
+<center>
+<i>&mu;</i> = <i>&mu;</i><sub>ref</sub>
+              (<i>T</i>/<i>T</i><sub>ref</sub>)<sup>3/2</sup>
+              (<i>T</i><sub>ref</sub> + <i>T<sub>s</sub></i>) / 
+              (<i>T</i> + <i>T<sub>s</sub></i>)
+</center>
+<br>
+where <i>T<sub>s</sub></i> is the Sutherland's Law constant, and
+<i>&mu;</i><sub>ref</sub> and
+<i>T</i><sub>ref</sub> are the reference viscosity and temperature,
+respectively.
+For air [White, F. M., <i>Viscous Fluid Flow</i>, McGraw-Hill, 1974,
+p. 28-29], the power-law exponent is <i>n</i> = 0.666, Sutherland's law
+constant (<i>T<sub>s</sub></i>) is 110.6 K, the reference temperature
+(<i>T</i><sub>ref</sub>) is 273.15 K, and the reference viscosity
+(<i>&mu;</i><sub>ref</sub>) is
+1.716 &times; 10<sup>-5</sup> kg/(m-s).
+The data-name identifiers for molecular viscosity models are defined below.
+
+<br><br>
+<a name="t:id_viscosity"></a>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Molecular Viscosity Models
+<br><br>
+</caption>
+<tr align=left><td colspan=7><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col><tt>ViscosityModelType</tt><td><tt>&nbsp;</tt>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=7><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>PowerLaw</tt><td>
+   <td><tt>PowerLawExponent</tt><td>
+   <td>Power-law exponent (<i>n</i>)<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>SutherlandLaw</tt><td>
+   <td><tt>SutherlandLawConstant</tt><td>
+   <td>Sutherland's Law constant (<i>T<sub>s</sub></i>)<td>
+   <td align=center><b>&Theta;</b>
+<tr valign=baseline>
+   <td><i>All</i><td>
+   <td><tt>TemperatureReference</tt><td>
+   <td>Reference temperature (<i>T</i><sub>ref</sub>)<td>
+   <td align=center><b>&Theta;</b>
+<tr valign=baseline>
+   <td><i>All</i><td>
+   <td><tt>ViscosityMolecularReference</tt><td>
+   <td>Reference viscosity (<i>&mu;</i><sub>ref</sub>)<td>
+   <td align=center><b>M</b>/(<b>LT</b>)
+<tr align=left><td colspan=7><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+If it is desired to specify any of these identifiers in a CGNS
+database, they should be defined as
+<a href="data.html#DataArray"><tt>DataArray</tt></a>s under
+<tt>ViscosityModel_t</tt>.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the molecular viscosity model.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="ThermalConductivityModel"></a>
+<h3>Thermal Conductivity Model Structure Definition: <tt>ThermalConductivityModel_t</tt></h3>
+
+<p>
+<tt>ThermalConductivityModel_t</tt> describes the model for relating the
+thermal-conductivity coefficient (<i>k</i>) to temperature.
+The enumerated values for <tt>ThermalConductivityModelType_t</tt> are a subset of the
+<tt>ModelType_t</tt> enumeration.
+<pre>
+  ThermalConductivityModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    ConstantPrandtl,
+    PowerLaw,
+    SutherlandLaw ) ;
+
+  ThermalConductivityModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    ThermalConductivityModelType_t ThermalConductivityModelType ;      (r)
+    
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+                
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>ThermalConductivityModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>ThermalConductivityModelType</tt> is the only required element.
+</ol>
+
+<p>
+The thermal-conductivity models parallel the molecular viscosity models.
+<tt>ConstantPrandtl</tt> states that the Prandtl number
+(<i>Pr</i>&nbsp;=&nbsp;<i>&mu;c<sub>p</sub>/k</i>)
+is constant and equal to some reference value.
+<tt>PowerLaw</tt> relates <i>k</i> to temperature via a power-law
+relation,
+<center>
+<i>k</i> = <i>k</i><sub>ref</sub>
+           (<i>T</i>/<i>T</i><sub>ref</sub>)<sup><i>n</i></sup>
+</center>
+<br>
+and <tt>SutherlandLaw</tt> is Sutherland's Law for molecular viscosity,
+<br><br>
+<center>
+<i>k</i> = <i>k</i><sub>ref</sub>
+           (<i>T</i>/<i>T</i><sub>ref</sub>)<sup>3/2</sup>
+           (<i>T</i><sub>ref</sub> + <i>T<sub>s</sub></i>) / 
+           (<i>T</i> + <i>T<sub>s</sub></i>)
+</center>
+<br>
+where <i>k</i><sub>ref</sub> is the reference thermal conductivity,
+<i>T</i><sub>ref</sub> is the reference temperature, and
+<i>T<sub>s</sub></i> is the Sutherland's law constant.
+For air [White, F. M., <i>Viscous Fluid Flow</i>, McGraw-Hill,
+1974, p. 32-33], the Prandtl number is <i>Pr</i> = 0.72, the
+power-law exponent is <i>n</i> = 0.81, Sutherland's law constant
+(<i>T<sub>s</sub></i>) is 194.4 K, the reference temperature
+(<i>T</i><sub>ref</sub>) is 273.15 K, and the reference thermal
+conductivity (<i>k</i><sub>ref</sub>) is 2.414 &times; 10<sup>-2</sup>
+kg-m/(s<sup>3</sup>-K).
+Data-name identifiers for thermal conductivity models are listed below.
+
+<br><br>
+<a name="t:id_thermal"></a>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Thermal Conductivity Models
+<br><br>
+</caption>
+<tr align=left><td colspan=7><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col><tt>ThermalConduc</tt>-<br>
+       <tt>tivityModelType</tt><td><tt>&nbsp;</tt>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=7><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>ConstantPrandtl</tt><td>
+   <td><tt>Prandtl</tt><td>
+   <td>Prandtl number (<i>Pr</i>)<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>PowerLaw</tt><td>
+   <td><tt>PowerLawExponent</tt><td>
+   <td>Power-law exponent (<i>n</i>)<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>SutherlandLaw</tt><td>
+   <td><tt>SutherlandLawConstant</tt><td>
+   <td>Sutherland's Law constant (<i>T<sub>s</sub></i>)<td>
+   <td align=center><b>&Theta;</b>
+<tr valign=baseline>
+   <td><i>All</i><td>
+   <td><tt>TemperatureReference</tt><td>
+   <td>Reference temperature (<i>T</i><sub>ref</sub>)<td>
+   <td align=center><b>&Theta;</b>
+<tr valign=baseline>
+   <td><i>All</i><td>
+   <td><tt>ThermalConductivityReference</tt><td>
+   <td>Reference thermal conductivity (<i>k</i><sub>ref</sub>)<td>
+   <td align=center><b>ML</b>/(<b>T</b><sup>3</sup>
+       <b>&Theta;</b>)
+<tr align=left><td colspan=7><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+If it is desired to specify any of these identifiers in a CGNS
+database, they should be defined as
+<a href="data.html#DataArray"><tt>DataArray</tt></a>s under
+<tt>ThermalConductivityModel_t</tt>.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the thermal conductivity model.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="Turbulence"></a>
+<h3>Turbulence Structure Definitions</h3>
+
+<p>
+This section presents structure definitions for describing the form of
+closure used in the Reynolds-averaged (or Favre-averaged) Navier-Stokes
+equations for determining the Reynolds stress terms.
+Here "turbulence closure" refers to eddy viscosity or other
+approximations for the Reynolds stress terms, and "turbulence model"
+refers to the actual algebraic or turbulence-transport equation models
+used.
+To an extent these are independent choices (e.g., using either an eddy
+viscosity closure or an algebraic Reynolds-stress closure with a
+two-equation model).
+
+<a name="TurbulenceClosure"></a>
+<h4>Turbulence Closure Structure Definition: <tt>TurbulenceClosure_t</tt></h4>
+
+<p>
+<tt>TurbulenceClosure_t</tt> describes the turbulence closure for the
+Reynolds stress terms of the Navier-Stokes equations.
+The enumerated values for <tt>TurbulenceClosureType_t</tt> are a subset of the
+<tt>ModelType_t</tt> enumeration.
+
+<pre>
+  TurbulenceClosureType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    EddyViscosity,
+    ReynoldsStress,                     
+    ReynoldsStressAlgebraic ) ;
+
+  TurbulenceClosure_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    TurbulenceClosureType_t TurbulenceClosureType ;                    (r)
+    
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+                
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>TurbulenceClosure_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>TurbulenceClosureType</tt> is the only required element.
+</ol>
+
+<p>
+The different types of turbulent closure are as follows:
+<tt>EddyViscosity</tt> is the Boussinesq eddy-viscosity closure, where
+the Reynolds stresses are approximated as the product of an eddy
+viscosity (<i>&nu;<sub>t</sub></i>)
+and the mean strain tensor.
+Using indicial notation, the relation is,
+<center>
+&minus;(<i>u</i>&prime;<sub><i>i</i></sub><i>u</i>&prime;<sub><i>j</i></sub>)<sub>ave</sub> = 
+   <i>&nu;<sub>t</sub></i>
+      ( &part;<i>u<sub>i</sub></i> / &part;<i>x<sub>j</sub></i> +
+        &part;<i>u<sub>j</sub></i> / &part;<i>x<sub>i</sub></i> )
+</center>
+<br>
+
+where &minus;(<i>u</i>&prime;<sub><i>i</i></sub><i>u</i>&prime;<sub><i>j</i></sub>)<sub>ave</sub>
+are
+the Reynolds stresses; the notation is further discussed under
+<a href="dataname.html#dataname_flow">Flowfield Solution</a> in the
+section on <a href="dataname.html">Conventions for Data-Name Identifiers</a>.
+<tt>ReynoldsStress</tt> is no approximation of the Reynolds stresses.
+<tt>ReynoldsStressAlgebraic</tt> is an algebraic approximation for the
+Reynolds stresses based on some intermediate transport quantities.
+
+<p>
+Associated with the turbulent closure is a list of constants, where each
+constant is described by a separate
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entity.
+Constants associated with the eddy-viscosity closure are listed below.
+
+<br><br>
+<a name="t:id_closure"></a>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Turbulence Closure
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>PrandtlTurbulent</tt><td>
+   <td>Turbulent Prandtl number
+       (<i>&rho; &nu;<sub>t</sub> c<sub>p</sub></i> / <i>k<sub>t</sub></i>)<td>
+   <td align=center>-
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+If it is desired to specify any of these identifiers in a CGNS
+database, they should be defined as
+<a href="data.html#DataArray"><tt>DataArray</tt></a>s under
+<tt>TurbulenceClosure_t</tt>.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the turbulence closure.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="TurbulenceModel"></a>
+<h4>Turbulence Model Structure Definition: <tt>TurbulenceModel_t</tt></h4>
+
+<p>
+<tt>TurbulenceModel_t</tt> describes the equation set used to model the
+turbulence quantities.
+The enumerated values for <tt>TurbulenceModelType_t</tt> are a subset of the
+<tt>ModelType_t</tt> enumeration.
+<pre>
+  TurbulenceModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Algebraic_BaldwinLomax,
+    Algebraic_CebeciSmith,
+    HalfEquation_JohnsonKing,
+    OneEquation_BaldwinBarth,
+    OneEquation_SpalartAllmaras,
+    TwoEquation_JonesLaunder,
+    TwoEquation_MenterSST,
+    TwoEquation_Wilcox ) ;
+
+  TurbulenceModel_t&lt; int CellDimension &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    TurbulenceModelType_t TurbulenceModelType ;                        (r)
+    
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    int[CellDimension*(CellDimension + 1)/2] DiffusionModel ;          (o)
+
+    DataClass_t DataClass ;                                            (o)
+                
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>, 
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>TurbulenceModel_t</tt> and shall not include the
+     names <tt>DiffusionModel</tt>, <tt>DataClass</tt>, or
+     <tt>DimensionalUnits</tt>.
+<li> <tt>TurbulenceModelType</tt> is the only required element.
+<li> The length of the <a href="#DiffusionModel"><tt>DiffusionModel</tt></a>
+     array is as follows: in 1-D it is <tt>int[1]</tt>; in 2-D it is
+     <tt>int[3]</tt>; and in 3-D it is <tt>int[6]</tt>.
+     For unstructured zones, <tt>DiffusionModel</tt> is not supported,
+     and should not be used.
+</ol>
+
+<p>
+<tt>TurbulenceModel_t</tt> requires a single structure parameter,
+<tt>CellDimension</tt>.
+It is used to define the length of the array
+<tt>DiffusionModel</tt>.
+<a href="#DiffusionModel"><tt>DiffusionModel</tt></a> describes the
+viscous diffusion terms included in the turbulent transport model
+equations.
+
+<p>
+The <tt>TurbulenceModelType</tt> names currently listed correspond to
+the following particular references.
+
+<p>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>Algebraic_BaldwinLomax</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Baldwin, B. S., and Lomax, H. (1978) "Thin Layer Approximations
+       and Algebraic Model for Separated Turbulent Flows," AIAA Paper
+       78-257.
+<br><br>
+<tr valign=baseline><td>
+   <td><tt>Algebraic_CebeciSmith</tt><td>
+   <td>Cebeci, T., and Smith, A. M. O. (1974) <i>Analysis of
+       Turbulent Boundary Layers</i>, Academic Press, New York.
+<br><br>
+<tr valign=baseline><td>
+   <td><tt>HalfEquation_JohnsonKing</tt><td>
+   <td>Johnson, D., and King, L. (1985) "A Mathematically Simple
+       Turbulence Closure Model for Attached and Separated Turbulent
+       Boundary Layers," AIAA Journal, Vol. 23, No. 11, pp. 1684-1692.
+<br><br>
+<tr valign=baseline><td>
+   <td><tt>OneEquation_BaldwinBarth</tt><td>
+   <td>Baldwin, B., and Barth, T. (1990) "A One-Equation Turbulent
+       Transport Model for High Reynolds Number Wall-Bounded Flows," NASA
+       TM-102847.
+<br><br>
+<tr valign=baseline><td>
+   <td><tt>OneEquation_SpalartAllmaras</tt><td>
+   <td>Spalart, P. R., and Allmaras, S. R. (1994) "A One-Equation
+       Turbulence Model for Aerodynamic Flows," La Recherche
+       Aerospatiale, Vol. 1, pp. 5-21.
+<br><br>
+<tr valign=baseline><td>
+   <td><tt>TwoEquation_JonesLaunder</tt><td>
+   <td>Jones, W., and Launder, B. (1972) "The Prediction of
+       Laminarization with a Two-Equation Model of Turbulence,"
+       International Journal of Heat and Mass Transfer, Vol. 15,
+       pp. 301-314.
+<br><br>
+<tr valign=baseline><td>
+   <td><tt>TwoEquation_MenterSST</tt><td>
+   <td>Menter, F. R. (1994) "Two-Equation Eddy-Viscosity Turbulence
+       Models for Engineering Application," AIAA Journal, Vol. 32,
+       No. 8, pp. 1598-1605.
+<br><br>
+<tr valign=baseline><td>
+   <td><tt>TwoEquation_Wilcox</tt><td>
+   <td>Wilcox, D. C. (1994) <i>Turbulence Modeling for CFD</i>, First
+       Edition, DCW Industries, La Canada, California.
+</table>
+
+<p>
+There is no formal mechanism for accounting for subsequent changes to
+these models.
+(For example, Wilcox later published 1998 and 2006 versions of his
+<i>k</i>-<i>&omega;</i> model).
+If it is a mere change to constant(s), then this could be described by
+retaining the same <tt>TurbulenceModelType</tt> name and listing each
+constant using a separate
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entry.
+If the change is more involved, then it is recommended to employ
+<tt>TurbulenceModelType = UserDefined</tt> with a child
+<a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> node giving
+details about it.
+
+<p>
+Associated with each choice of turbulence model may be a list
+of constants, where each constant is described by a separate
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entity.
+If used, the Data-Name Identifier of each constant should
+include the turbulence model name, as well as the constant
+name (e.g., <tt>TurbulentSACb1</tt>, <tt>TurbulentSSTCmu</tt>,
+<tt>TurbulentKESigmak</tt>, etc.).
+However, no attempt is made here to formalize the names for all possible
+turbulence models.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the turbulence model equation set.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<h4>Example - Spalart-Allmaras Turbulence Model</h4>
+
+<p>
+Description for the eddy-viscosity closure and Spalart-Allmaras
+turbulence model, including associated constants.
+<pre>
+  TurbulenceClosure_t TurbulenceClosure =
+    {{
+    TurbulenceClosureType_t TurbulenceClosureType = EddyViscosity ;
+
+    DataArray_t&lt;real, 1, 1&gt; PrandtlTurbulent = {{ 0.90 }} ;
+    }} ;
+
+  TurbulenceModel_t TurbulenceModel = 
+    {{
+    TurbulenceModelType_t TurbulenceModelType = OneEquation_SpalartAllmaras ;
+
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSACb1   = {{ 0.1355 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSACb2   = {{ 0.622 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSASigma = {{ 2/3 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSAKappa = {{ 0.41 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSACw1   = {{ 3.2391 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSACw2   = {{ 0.3 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSACw3   = {{ 2 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSACv1   = {{ 7.1 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSACt1   = {{ 1 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSACt2   = {{ 2 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSACt3   = {{ 1.2 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TurbulentSACt4   = {{ 0.5 }} ;
+    }} ;
+</pre>
+Note that each <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+entity is abbreviated.
+
+<a name="ThermalRelaxationModel"></a>
+<h3>Thermal Relaxation Model Structure Definition: <tt>ThermalRelaxationModel_t</tt></h3>
+
+<p>
+<tt>ThermalRelaxationModel_t</tt> describes the equation set used to model
+thermal relaxation quantities.
+The enumerated values for <tt>ThermalRelaxationModelType_t</tt> are a subset of the
+<tt>ModelType_t</tt> enumeration.
+<pre>
+  ThermalRelaxationModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Frozen,
+    ThermalEquilib,
+    ThermalNonequilib ) ;
+
+  ThermalRelaxationModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    ThermalRelaxationModelType_t ThermalRelaxationModelType ;          (r)
+    
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+                
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>ThermalRelaxationModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>ThermalRelaxationModelType</tt> is the only required element.
+</ol>
+
+<p>
+<tt>ThermalRelaxationModelType_t</tt> is an enumeration type describing
+the type of thermal relaxation model.
+
+<p>
+<a href="build.html#DataClass"><tt>DataArray_t</tt></a> data structures
+may be used to store data associated with the thermal relaxation model.
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data being used.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+Additional information, if needed, may be stored using
+<a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> data
+structures.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="ChemicalKineticsModel"></a>
+<h3>Chemical Kinetics Model Structure Definition: <tt>ChemicalKineticsModel_t</tt></h3>
+
+<p>
+<tt>ChemicalKineticsModel_t</tt> describes the equation set used to model
+chemical kinetics quantities.
+The enumerated values for <tt>ChemicalKineticsModelType_t</tt> are a subset of the
+<tt>ModelType_t</tt> enumeration.
+<pre>
+  ChemicalKineticsModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Frozen,
+    ChemicalEquilibCurveFit,
+    ChemicalEquilibMinimization,
+    ChemicalNonequilib ) ;
+
+  ChemicalKineticsModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    ChemicalKineticsModelType_t ChemicalKineticsModelType ;            (r)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>ChemicalKineticsModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>ChemicalKineticsModelType</tt> is the only required element.
+</ol>
+
+<p>
+<tt>ChemicalKineticsModelType_t</tt> is an enumeration type describing
+the type of chemical kinetics model.
+
+<p>
+<a href="build.html#DataClass"><tt>DataArray_t</tt></a> data structures
+may be used to store data associated with the chemical kinetics model.
+Recommended data-name identifiers are listed in the following table.
+
+<br><br>
+<a name="t:id_chemicalkinetics"></a>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Chemical Kinetics Models
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>MolecularWeight<i>Symbol</i></tt><td>
+   <td>Molecular weight for species <i>Symbol</i><td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>HeatOfFormation<i>Symbol</i></tt><td>
+   <td>Heat of formation per unit mass for species <i>Symbol</i><td>
+   <td align=center><b>L</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>FuelAirRatio</tt><td>
+   <td>Fuel/air mass ratio<td>
+   <td align=center>-
+<tr valign=baseline>
+   <td><tt>ReferenceTemperatureHOF</tt><td>
+   <td>Reference temperature for the heat of formation<td>
+   <td align=center><b>&Theta;</b>
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+The dimensional units are defined as follows: <b>L</b> is length,
+<b>T</b> is time and <b>&Theta;</b> is
+temperature.
+These are further described in the section on
+<a href="dataname.html">Conventions for Data-Name Identifiers</a>.
+
+<p>
+The variable string <i>Symbol</i> in the above data-name identifiers
+represents the chemical symbol for the desired species.
+For example, <tt>H</tt> represents hydrogen atoms, <tt>O</tt> represents
+oxygen atoms, <tt>H2</tt> represents hydrogen molecules, <tt>H2O</tt>
+represents water molecules, and <tt>C3H5O3(NO2)3</tt> represents
+nitroglycerin molecules.
+Any symbols from the periodic table of the elements can be used.
+For charged molecules or particles, the word "<tt>plus</tt>" or
+"<tt>minus</tt>" should be spelled out in lower case.
+For example, a CNO+ molecule should be denoted as <tt>CNOplus</tt>.
+
+<p>
+Other commonly used mixtures that are usually not referred to by their
+chemical symbols, are defined in the following table.
+Individual users may define new names, but these may not be recognized
+by other CGNS applications.
+For consistency, additional names should be proposed as SIDS extensions.
+
+<br><br>
+<a name="t:id_chemicalkineticssymbols"></a>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Defined Names (Symbols) for Commonly Used Mixtures
+<br><br>
+</caption>
+<tr align=left><td colspan=3><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>Symbol<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Mixture
+<tr align=left><td colspan=3><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>Air</tt><td>
+   <td>Generic air model
+<tr valign=baseline>
+   <td><tt>eminus</tt><td>
+   <td>Electrons
+<tr valign=baseline>
+   <td><tt>Fuel</tt><td>
+   <td>Generic fuel model
+<tr valign=baseline>
+   <td><tt>FuelAir</tt><td>
+   <td>Generic fuel/air mixture
+<tr valign=baseline>
+   <td><tt>JP5</tt><td>
+   <td>JP5 jet fuel
+<tr valign=baseline>
+   <td><tt>JP7</tt><td>
+   <td>JP7 jet fuel
+<tr valign=baseline>
+   <td><tt>JP10</tt><td>
+   <td>JP10 jet fuel
+<tr valign=baseline>
+   <td><tt>Product</tt><td>
+   <td>Generic fuel/air product of combustion
+<tr valign=baseline>
+   <td><tt>RP1</tt><td>
+   <td>RP1 rocket fuel
+<tr align=left><td colspan=3><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data being used.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+Additional information, if needed, may be stored using
+<a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> data
+structures.
+For example, if CHEMKIN is used, it is recommended that a
+<tt>Descriptor_t</tt> data structure be used to indicate this.
+Reaction equations could also be specified using <tt>Descriptor_t</tt>
+data structures.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="EM"></a>
+<h3>Electromagnetics Structure Definitions</h3>
+
+<p>
+This section presents structure definitions for describing the electric
+field, magnetic field, and conductivity models used for electromagnetic
+flows.
+
+<a name="EMElectricFieldModel"></a>
+<h4>Electromagnetics Electric Field Model Structure Definition: <tt>EMElectricFieldModel_t</tt></h4>
+
+<p>
+<tt>EMElectricFieldModel_t</tt> describes the electric field model used
+for electromagnetic flows.
+The enumerated values for <tt>EMElectricFieldModelType_t</tt> are a subset of the
+<tt>ModelType_t</tt> enumeration.
+<pre>
+  EMElectricFieldModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Constant,
+    Frozen,
+    Interpolated,
+    Voltage ) ;
+
+  EMElectricFieldModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    EMElectricFieldModelType_t EMElectricFieldModelType ;              (r)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>EMElectricFieldModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>EMElectricFieldModelType</tt> is the only required element.
+</ol>
+
+<p>
+<tt>EMElectricFieldModelType_t</tt> is an enumeration type describing
+the type of electric field model.
+
+<p>
+<a href="build.html#DataClass"><tt>DataArray_t</tt></a> data structures
+may be used to store data associated with the electric field model.
+Recommended data-name identifiers are listed in the section describing
+the <a href="#EMConductivityModel">electromagnetics conductivity model</a>.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the electric field model.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="EMMagneticFieldModel"></a>
+<h4>Electromagnetics Magnetic Field Model Structure Definition: <tt>EMMagneticFieldModel_t</tt></h4>
+
+<p>
+<tt>EMMagneticFieldModel_t</tt> describes the magnetic field model used
+for electromagnetic flows.
+The enumerated values for <tt>EMMagneticFieldModelType_t</tt> are a subset of the
+<tt>ModelType_t</tt> enumeration.
+<pre>
+  EMMagneticFieldModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Constant,
+    Frozen,
+    Interpolated ) ;
+
+  EMMagneticFieldModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    EMMagneticFieldModelType_t EMMagneticFieldModelType ;              (r)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>EMMagneticFieldModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>EMMagneticFieldModelType</tt> is the only required element.
+</ol>
+
+<p>
+<tt>EMMagneticFieldModelType_t</tt> is an enumeration type describing
+the type of magnetic field model.
+
+<p>
+<a href="build.html#DataClass"><tt>DataArray_t</tt></a> data structures
+may be used to store data associated with the magnetic field model.
+Recommended data-name identifiers are listed in the section describing
+the <a href="#EMConductivityModel">electromagnetics conductivity model</a>.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the magnetic field model.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="EMConductivityModel"></a>
+<h4>Electromagnetics Conductivity Model Structure Definition: <tt>EMConductivityModel_t</tt></h4>
+
+<p>
+<tt>EMConductivityModel_t</tt> describes the conductivity model used
+for electromagnetic flows.
+The enumerated values for <tt>EMConductivityModelType_t</tt> are a subset of the
+<tt>ModelType_t</tt> enumeration.
+<pre>
+  EMConductivityModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Constant,
+    Frozen,
+    Equilibrium_LinRessler,
+    Chemistry_LinRessler ) ;
+
+  EMConductivityModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    EMConductivityModelType_t EMConductivityModelType ;                (r)
+    
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+                
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>EMConductivityModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>EMConductivityModelType</tt> is the only required element.
+</ol>
+
+<p>
+<tt>EMConductivityModelType_t</tt> is an enumeration type describing
+the type of conductivity model.
+
+<p>
+<a href="build.html#DataClass"><tt>DataArray_t</tt></a> data structures
+may be used to store data associated with the conductivity model.
+Recommended data-name identifiers for all three electromagnetics models
+are listed in the following table.
+
+<br><br>
+<a name="t:id_EM"></a>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Electromagnetics Models
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>Voltage</tt><td>
+   <td>Voltage<td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>TI</b>
+<tr valign=baseline>
+   <td><tt>ElectricFieldX</tt><td>
+   <td><i>x</i>-component of electric field vector<td>
+   <td align=center><b>ML</b>/<b>TI</b>
+<tr valign=baseline>
+   <td><tt>ElectricFieldY</tt><td>
+   <td><i>y</i>-component of electric field vector<td>
+   <td align=center><b>ML</b>/<b>TI</b>
+<tr valign=baseline>
+   <td><tt>ElectricFieldZ</tt><td>
+   <td><i>z</i>-component of electric field vector<td>
+   <td align=center><b>ML</b>/<b>TI</b>
+<tr valign=baseline>
+   <td><tt>MagneticFieldX</tt><td>
+   <td><i>x</i>-component of magnetic field vector<td>
+   <td align=center><b>I</b>/<b>L</b>
+<tr valign=baseline>
+   <td><tt>MagneticFieldY</tt><td>
+   <td><i>y</i>-component of magnetic field vector<td>
+   <td align=center><b>I</b>/<b>L</b>
+<tr valign=baseline>
+   <td><tt>MagneticFieldZ</tt><td>
+   <td><i>z</i>-component of magnetic field vector<td>
+   <td align=center><b>I</b>/<b>L</b>
+<tr valign=baseline>
+   <td><tt>CurrentDensityX</tt><td>
+   <td><i>x</i>-component of current density vector<td>
+   <td align=center><b>I</b>/<b>L</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>CurrentDensityY</tt><td>
+   <td><i>y</i>-component of current density vector<td>
+   <td align=center><b>I</b>/<b>L</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>CurrentDensityZ</tt><td>
+   <td><i>z</i>-component of current density vector<td>
+   <td align=center><b>I</b>/<b>L</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>ElectricConductivity</tt><td>
+   <td>Electrical conductivity<td>
+   <td align=center><b>ML</b>/<b>T</b><sup>3</sup><b>I</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>LorentzForceX</tt><td>
+   <td><i>x</i>-component of Lorentz force vector<td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>LorentzForceY</tt><td>
+   <td><i>y</i>-component of Lorentz force vector<td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>LorentzForceZ</tt><td>
+   <td><i>z</i>-component of Lorentz force vector<td>
+   <td align=center><b>ML</b>/<b>T</b><sup>2</sup>
+<tr valign=baseline>
+   <td><tt>JouleHeating</tt><td>
+   <td>Joule heating<td>
+   <td align=center><b>ML</b><sup>2</sup>/<b>T</b><sup>2</sup>
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+The dimensional units are defined as follows: <b>M</b> is mass,
+<b>L</b> is length, <b>T</b> is time, and <b>I</b> is electric current.
+These are further described in the section on
+<a href="dataname.html">Conventions for Data-Name Identifiers</a>.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the conductivity model.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="flowexample"></a>
+<h3>Flow Equation Examples</h3>
+
+<p>
+This section presents two examples of flow-equation sets.
+The first is an inviscid case and the second is a turbulent case with a
+one-equation turbulence model.
+
+<a name="ex:eqn_Euler"></a>
+<h4>Example - 3-D Compressible Euler</h4>
+
+<p>
+3-D compressible Euler with a perfect gas assumption for a monatomic
+gas:
+<pre>
+  FlowEquationSet_t&lt;3&gt; EulerEquations = 
+    {{
+    int EquationDimension = 3 ;
+    
+    GoverningEquations_t&lt;3&gt; GoverningEquations =
+      {{
+      GoverningEquationsType_t GoverningEquationsType = Euler ;
+      }} ;
+      
+    GasModel_t GasModel =
+      {{
+      GasModelType_t GasModelType = CaloricallyPerfect ;
+      
+      DataArray_t&lt;real, 1, 1&gt; SpecificHeatRatio =
+        {{
+        Data(real, 1, 1) = 1.667 ;
+
+        DataClass_t DataClass = NondimensionalParameter ;
+        }} ;
+      }} ;
+    }} ;
+</pre>
+
+<a name="ex:eqneqn_NS_Euler"></a>
+<h4>Example - 3-D Compressible Navier-Stokes</h4>
+
+<p>
+3-D compressible Navier-Stokes for a structured grid, with the S-A
+turbulence model, a perfect gas assumption, Sutherland's law for the
+molecular viscosity, a constant Prandtl-number assumption, and inclusion
+of the full Navier-Stokes diffusion terms; all models assume air:
+<pre>
+  FlowEquationSet_t&lt;3&gt; NSEquations = 
+    {{
+    int EquationDimension = 3 ;
+    
+    GoverningEquations_t&lt;3&gt; GoverningEquations =
+      {{
+      GoverningEquationsType_t GoverningEquationsType = NSTurbulent ;
+      
+      int[6] DiffusionModel = [1,1,1,1,1,1] ;
+      }} ;
+      
+    GasModel_t GasModel =
+      {{
+      GasModelType_t GasModelType = CaloricallyPerfect ;
+      
+      DataArray_t&lt;real, 1, 1&gt; SpecificHeatRatio = {{ 1.4 }} ;
+      }} ;
+
+    ViscosityModel_t ViscosityModel =
+      {{
+      ViscosityModelType_t ViscosityModelType = SutherlandLaw ;
+      
+      DataArray_t&lt;real, 1, 1&gt; SutherlandLawConstant = 
+        {{ 
+        Data(real, 1, 1) = 110.6 }} ;
+      
+        DataClass_t DataClass = Dimensional ;
+        DimensionalUnits_t DimensionalUnits = {{ TemperatureUnits = Kelvin }} ;
+        }} ;
+      }} ;
+
+    ThermalConductivityModel_t ThermalConductivityModel =
+      {{
+      ThermalConductivityModelType_t ThermalConductivityModelType =
+         ConstantPrandtl ;
+      
+      DataArray_t&lt;real, 1, 1&gt; Prandtl = {{ 0.72 }} ;
+      }} ;
+
+    TurbulenceClosure_t&lt;3&gt; TurbulenceClosure =
+      {{
+      TurbulenceClosureType_t TurbulenceClosureType = EddyViscosity ;
+      
+      DataArray_t&lt;real, 1, 1&gt; PrandtlTurbulent = {{ 0.90 }} ;
+      }} ;
+      
+    TurbulenceModel_t&lt;3&gt; TurbulenceModel =
+      {{
+      TurbulenceModelType_t TurbulenceModelType = OneEquation_SpalartAllmaras ;
+      
+      int[6] DiffusionModel = [1,1,1,1,1,1] ;
+      }} ;      
+    }} ;
+</pre>
+Note that all <a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities are abbreviated except
+<tt>SutherlandLawConstant</tt>.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 28 Aug 2014
+
+</body>
+</html>

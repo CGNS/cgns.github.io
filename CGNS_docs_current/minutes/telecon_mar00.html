@@ -1,0 +1,328 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+16 March 2000<br>
+2:00pm Eastern Time
+
+<p>
+The meeting was called to order at 2:00 Eastern time.
+There were 18 attendees, <a href="#attendees">listed below</a>.
+
+<p>
+Bob Bush reviewed the minutes from the January meeting, noting that
+they have been posted on the web. Having no comments, the minutes were
+approved as posted. Bob also noted that following the January meeting, a
+presentation was made to the AIAA CFD Committee on Standards proposing
+to affiliate with that organization. The proposal was accepted, and we
+are now a sub-committee of this organization.
+
+<ul>
+<li> A round-table discussion of the current implementation and usage
+     status of CGNS in various organizations was held to familiarize the
+     Committee with current activities.  The high points are summarized
+     here.
+     <br><br>
+     <ul>
+     <li> Intelligent Light - Dave Edwards - IL is planning to release
+          a CGNS reader for their primary product in the July time
+          frame. During this effort, they will assess performance
+          and identify areas for improvement. One area is likely to
+          be incorporation of their 'Data Guide' technology to speed
+          access to large data sets.  During the installation process
+          they also anticipate needing additional utilities. They hope
+          to provide these utilities to the CGNS community. This led
+          to some discussion of how to provide and support additional
+          utilities. This will need to be explored further. Steve
+          Legensky also offered to help with a web list of CGNS
+          contacts. See the <a href="#intelligentlight">viewgraph
+          presented by Dave Edwards</a>.
+     <br><br>
+     <li> ADAPCO - Scott Ochs - ADAPCO is in the process of
+          transitioning to CGNS, and can currently read and write
+          grids and solutions (structured and unstructured). Their
+          next step is to utilize the mixed element capability, and
+          store time accurate data.  The capability is already in beta
+          release, with a more complete release planned in a couple of
+          months. They expressed an interest in obtaining 'sample' codes
+          to help in the transition. This led to a discussion of the
+          possibility of creating a place on the web where sample code
+          can be posted. Scott (and Steve Feldman) also raised a problem
+          they were having with the <tt>cg_goto</tt> function on IBM
+          systems. Others on the line who had used IBM systems have not
+          experienced similar problems. They will continue to try and
+          identify the problem.
+     <br><br>
+     <li> AMTEC - Diane Poirier noted that Tecplot now has a CGNS
+          reader. Release date is unknown.
+     <br><br>
+     <li> Fluent - Barb Hutchings - Barb noted that Fluent has
+          downloaded the documentation, and assigned a programmer to
+          begin implementation. They anticipate a release of the ability
+          to read and write information in V5.5, which should occur in
+          the third quarter of 2000.
+     <br><br>
+     <li> NUMECA - Michel Delanaye - NUMECA is adopting CGNS for all
+          their products.  They currently have a full implementation
+          in their grid generator, with the exception of the boundary
+          condition information. The structured code also uses it for
+          the solution (but again not coupling information yet. They
+          would like to include unsteady data as soon as the capability
+          is available. They would also like the ability to store
+          planes of solution data (they were referred to the Boeing
+          discussion to come). They anticipate a March release to their
+          user base. NUMECA has also been active convincing various
+          consortia to adopt CGNS as the data exchange standard. New
+          capabilities required include new element types (e.g.
+          hanging nodes) and potentially octree information. For
+          <a href="#numeca">more details</a>, see below.
+     <br><br>
+     <li> Lockheed - Steve Karman - Also mentioned the need for hanging
+          node information.
+     <br><br>
+     <li> Boeing - Todd Michal - Boeing has a structured grid
+          implementation of CGNS in a pre-release version of Wind. They
+          anticipate including unstructured grid capability, utilities
+          and post processing capability this year, and a release to
+          NPARC user community next year. Boeing is also bringing in
+          Overflow and CFL3D versions, which utilize CGNS. They have
+          made a proposal for storing boundary planes, which will be
+          distributed for discussion as an extension proposal.
+     <br><br>
+     <li> RocketDyne - Armen Darian - RocketDyne has converted a
+          rotating machinery post-processor to use CGNS.
+     <br><br>
+     <li> Vircinity - Andreas Wierse - We introduced Andreas Wierse
+          who gave an overview of Vircinity, a visualization and
+          post-processing capability with emphasis on virtual
+          reality. They are looking at CGNS, and should decide on a
+          development plan soon, and assign a CGNS contact point. They
+          also have contacts with the EU and will bring CGNS to their
+          attention.
+     </ul>
+<br>
+<li> <b>Extension Status (Diane Poirier)</b>
+     <br><br>
+     <ul>
+     <li> The unstructured grid element ordering extension has
+          been implemented and is on the web. Documentation is
+          underway. ADAPCO is utilizing already.
+     <br><br>
+     <li> The moving grid proposal is finished and ready for
+          implementation.
+     <br><br>
+     <li> The chemistry proposal is still stalled. Suggested to finalize
+          as is, and extend in the future if a more comprehensive
+          standard is required.
+     <br><br>
+     <li> Diane also brought up the need for a documentation focal
+          point. Anyone interested please contact Diane or Bob Bush.
+     <br><br>
+     <li> Steve Legensky offered to take on some of the testing on
+          multiple platforms to relieve Diane of this aspect of the
+          development.
+     </ul>
+<br>
+<li> <b>June Meeting</b> - There was a brief discussion of the June
+     meeting, and it was decided to coordinate with the AIAA CFD CoS
+     with the CGNS team meeting first, and reporting out at the CoS
+     meeting. (Subsequent contact with Ray Cosner has identified
+     that our meeting night will be Tuesday, with the CoS meeting on
+     Wednesday night. Please plan accordingly!)
+</ul>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Bob Bush<td><tt>&nbsp;&nbsp;</tt>
+   <td>UTRC
+<tr valign=baseline><td>
+   <td>Stuart Ochs<td>
+   <td>ADAPCO
+<tr valign=baseline><td>
+   <td>Steve Feldman<td>
+   <td>ADAPCO
+<tr valign=baseline><td>
+   <td>Dan Dominik<td>
+   <td>Boeing Rocketdyne
+<tr valign=baseline><td>
+   <td>Armen Darian<td>
+   <td>Boeing Rocketdyne
+<tr valign=baseline><td>
+   <td>Barb Hutching<td>
+   <td>Fluent Inc.
+<tr valign=baseline><td>
+   <td>Michel Delanaye<td>
+   <td>NUMECA
+<tr valign=baseline><td>
+   <td>Bill Thompson<td>
+   <td>?
+<tr valign=baseline><td>
+   <td>David Kenwright<td>
+   <td>NASA Ames
+<tr valign=baseline><td>
+   <td>Steve Karman<td>
+   <td>Lockeed
+<tr valign=baseline><td>
+   <td>David Edwards<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Steve Legensky<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Mark Fisher<td>
+   <td>Boeing St-Louis
+<tr valign=baseline><td>
+   <td>Ray Cosner<td>
+   <td>Boeing St-Louis
+<tr valign=baseline><td>
+   <td>Todd Michael<td>
+   <td>Boeing St-Louis
+<tr valign=baseline><td>
+   <td>Mori Mani<td>
+   <td>Boeing St-Louis
+<tr valign=baseline><td>
+   <td>Andreas Wierse<td>
+   <td>Vircinity
+<tr valign=baseline><td>
+   <td>Diane Poirier<td>
+   <td>ICEM CFD Engineering
+</table>
+
+<a name="intelligentlight"></a>
+<h2>Intelligent Light's CGNS Effort</h2>
+
+<ul>
+<li> Develop CGNS reader for Fieldview (Version 7, Sept 2000)
+     <br><br>
+     <ul>
+     <li> Testing with CGNS files generated from various solvers
+          <br><br>
+          <ul>
+          <li> Creation of matrix of CGNS data sets generated from from
+               various CFD solvers and grid generation tools
+          </ul>
+     <br>
+     <li> Assessment of performance
+     <br><br>
+     <li> Identification of areas of improvement
+          <br><br>
+          <ul>
+          <li> Integration with Fieldview Data Guide
+          </ul>
+     </ul> 
+<br>
+<li> Develop Deskdrawer CGNS Utilities
+     <br><br>
+     <ul>
+     <li> Utility for output of header information (tell user what's
+          in the file)
+     <br><br>
+     <li> Utility to determine if CGNS file can be used for
+          pre-processing, solver or post-processing
+     <br><br>
+     <li> Utility to convert CGNS to Fieldview Unstructured File Format
+     <br><br>
+     <li> Others (TBD)
+     </ul>
+</ul>
+
+<a name="numeca"></a>
+<h2>Report from NUMECA</h2>
+
+<tt>
+Subject: NUMECA input
+<br><br><br>
+Bob,
+
+<p>
+I thought you would be interested to get something written about what
+I said during the last teleconference. So, NUMECA is adopting the CGNS
+format as the only data transfer system between its different products,
+IGG (multi-block structured grid generation), Euranus (multi-block
+structured flow solver), CFView (postprocessing, visualization).
+
+<p>
+So far, the grid coordinates are written in the data base, the topology
+is still stored in our own format, but we are progressively changing
+to CGNS for the complete set of information, connectivity, boundary
+conditions, etc. This should be completed fairly soon.  The flow solver
+outputs solutions in the CGNS database, and the database can be read by
+CFView. For unsteady computations, solutions at different time steps are
+stored for the moment in a different file. The CGNS will be part of the
+next release of these products, i.e. end of March.
+
+<p>
+We have proposed the use of CGNS in two European research projects. The
+CGNS format has been adopted in the first one, HPNURSA, to study
+unsteady flows in turbomachinery. Partners in this project are TaskFlow,
+SIMULOG which is writing a CGNS reader for Ensight, SEP, HYRDO-Vevay,
+EPFL and Ecole Centrale de Lyon. In the second one, ESTEDI, we proposed
+to test the CGNS format as a possible way to store data in a very large
+data base which is intended for data posttreatment (data mining) for
+large scientific computations (Climate modeling, Cosmology, Satellite
+tracking, LES, etc).
+
+<p>
+I mentioned some problems regarding speed. Further investigation on
+our side has highlighted some bad usage which has been corrected
+since. I also mentioned our wish to be able to store quantities on
+block boundaries. The Boeing proposal will most propably meet our
+expectations. The last comment was about the ability to store our
+hierarchal hexahedral unstructured grids. On this matter, I am going to
+investigate different possibilities and probably contact Diane with some
+propositions.
+
+<p>
+Hope this will help,
+
+<br><br>
+-Michel
+<br><br>
+Dr. Michel Delanaye<br>
+NUMECA International<br>
+Av. Franklin Roosevelt 5<br>
+B-1050 Brussels<br>
+Tel: +32 2 647.83.11 (main) ext 824<br>
++32 2 642.28.24 (voice mail)<br>
+Fax: +32 2 647.93.98
+</tt>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 5 Feb 2002
+
+</body>
+</html>

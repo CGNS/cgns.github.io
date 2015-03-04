@@ -1,0 +1,927 @@
+<!-- CGNS SIDS document - Data-Array Structure Definitions -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Data-Array Structure Definitions </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<span class=nav><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></span>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Data-Array Structure Definitions</h2>
+
+<ul>
+<li> <a href="#DataArray">Definition: <tt>DataArray_t</tt></a>
+     <ul>
+     <li> <a href="#DataConversion">Definition: <tt>DataConversion_t</tt></a>
+     </ul>
+<li> <a href="#manip">Data Manipulation</a>
+     <ul>
+     <li> <a href="#dim">Dimensional Data</a>
+     <li> <a href="#normbydim">Nondimensional Data Normalized by Dimensional Quantities</a>
+     <li> <a href="#normbyunkdim">Nondimensional Data Normalized by Unknown Dimensional Quantities</a>
+     <li> <a href="#nondimparam">Nondimensional Parameters</a>
+     <li> <a href="#dimensionless">Dimensionless Constants</a>
+     </ul>
+<li> <a href="#example">Data-Array Examples</a>
+</ul>
+
+<p>
+This section defines the structure type <tt>DataArray_t</tt> for
+describing data arrays.
+This general-purpose structure is used to declare data arrays and
+scalars throughout the CGNS hierarchy.
+It is used to describe grid coordinates, flow-solution data, governing
+flow parameters, boundary-condition data, and other information.
+For most of these different types of CFD data, we have also established
+a <a href="dataname.html">list of standardized identifiers</a> for
+entities of type <tt>DataArray_t</tt>.
+For example, <tt>Density</tt> is used for data arrays containing static
+density.
+
+<p>
+We address five classes of data with the <tt>DataArray_t</tt> structure
+type:
+<ol>
+<li> dimensional data (e.g., velocity in units of m/s);
+<li> nondimensional data normalized by dimensional reference quantities;
+<li> nondimensional data with associated nondimensional reference quantities;
+<li> nondimensional parameters (e.g., Reynolds number, pressure coefficient);
+<li> pure constants (e.g., <i>&pi;</i>, <i>e</i>).
+</ol>
+The first two of these classes often occur within the same test case,
+where each piece of data is either dimensional itself or normalized by a
+dimensional quantity.
+The third data class is typical of a completely nondimensional test
+case, where all field data and reference quantities are nondimensional.
+The fourth class, nondimensional parameters, are universal in CFD,
+although not always consistently defined.
+The individual components of nondimensional parameters may be data from
+any of the first three classes.
+
+<p>
+Each of the five classes of data requires different information to
+describe dimensional units or normalization associated with the data.
+These requirements are reflected in the structure definition for
+<tt>DataArray_t</tt>.
+
+<p>
+The remainder of this section is as follows: The structure type
+<tt>DataArray_t</tt> is first defined.
+Then the <a href="#manip">class identification and data
+manipulation</a> is discussed for each of the five data classes.
+Finally, <a href="#example">examples of <tt>DataArray_t</tt>
+entities</a> are presented.
+
+<a name="DataArray"></a>
+<h3>Definition: <tt>DataArray_t</tt></h3>
+
+<p>
+<tt>DataArray_t</tt> describes a multi-dimensional data array of given
+type, dimensionality and size in each dimension.
+The data may be dimensional, nondimensional or pure constants.
+Qualifiers are provided to describe dimensional units or normalization
+information associated with the data.
+<pre>
+  DataArray_t&lt; DataType, int Dimension, int[Dimension] DimensionValues &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    Data( DataType, Dimension, DimensionValues ) ;                     (r)
+
+    DataClass_t DataClass ;                                            (o)
+    
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    DimensionalExponents_t DimensionalExponents ;                      (o)
+    
+    DataConversion_t DataConversion ;                                  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> list are
+     as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>DataArray_t</tt> and shall not include the
+     names <tt>DataClass</tt>, <tt>DimensionalUnits</tt>,
+     <tt>DimensionalExponents</tt>, or <tt>DataConversion</tt>.
+<li> <tt>Data()</tt> is the only required field for <tt>DataArray_t</tt>.
+</ol>
+
+<p>
+<tt>DataArray_t</tt> requires three structure parameters:
+<tt>Dimension</tt> is the dimensionality of the data array;
+<tt>DimensionValues</tt> is an array of length <tt>Dimension</tt>
+that contains the size of the data arrays in each dimension; and
+<tt>DataType</tt> is the data type of the data stored.
+<tt>DataType</tt> will usually be <tt>real</tt>, but other data types
+are permissible.
+
+<p>
+The optional entities <tt>DataClass</tt>, <tt>DimensionalUnits</tt>,
+<tt>DimensionalExponents</tt> and
+<a href="#DataConversion"><tt>DataConversion</tt></a> provide information
+on dimensional units and normalization associated with the data.
+The function of these qualifiers is provided in the
+<a href="#manip">next section</a>.
+
+<p>
+This structure type is formulated to describe an array of scalars.
+Therefore, for vector quantities (e.g., the position vector or the
+velocity vector), separate structure entities are required for each
+component of the vector.
+For example, the Cartesian coordinates of a 3-D grid are described by
+three separate <tt>DataArray_t</tt> entities: one for <i>x</i>, one
+for <i>y</i> and one for <i>z</i> (see the example for
+<a href="gridflow.html#ex:grid1">Cartesian Coordinates for a 2-D
+Structured Grid</a>).
+
+<a name="DataConversion"></a>
+<h4>Definition: <tt>DataConversion_t</tt></h4>
+
+<p>
+<tt>DataConversion_t</tt> contains conversion factors for recovering raw
+dimensional data from given nondimensional data.
+These conversion factors are typically associated with nondimensional
+data that is normalized by dimensional reference quantities.
+<pre>
+  DataConversion_t :=
+    {
+    real ConversionScale ;                                             (r)
+    
+    real ConversionOffset ;                                            (r)
+    } ;
+</pre>
+
+<p>
+Given a nondimensional piece of data, <tt>Data(nondimensional)</tt>, the
+conversion to "raw" dimensional form is:
+<pre>
+  Data(raw) = Data(nondimensional)*ConversionScale + ConversionOffset
+</pre>
+These conversion factors are further described in the section
+<a href="#normbydim">Nondimensional Data Normalized by Dimensional
+Quantities</a>.
+
+<a name="manip"></a>
+<h3>Data Manipulation</h3>
+
+<p>
+The optional entities of <a href="#DataArray"><tt>DataArray_t</tt></a>
+provide information for manipulating the data, including changing units
+or normalization.
+This section describes the rules under which these optional entities
+operate and the specific manipulations that can be performed on the
+data.
+
+<p>
+Within a given instance of <tt>DataArray_t</tt>, the class of data
+and all information required for manipulations may be completely
+and precisely specified by the entities <tt>DataClass</tt>,
+<tt>DimensionalUnits</tt>, <tt>DimensionalExponents</tt> and
+<tt>DataConversion</tt>.
+<tt>DataClass</tt> identifies the class of data and governs the
+manipulations that can be performed.
+Each of the five data classes is treated separately in the subsequent
+sections.
+
+<p>
+The entities <tt>DataClass</tt> and <tt>DimensionalUnits</tt> serve
+special functions in the CGNS hierarchy.
+If <tt>DataClass</tt> is absent from a given instance of
+<tt>DataArray_t</tt>, then its value is determined from "global" data.
+This global data may be set at any level of the CGNS hierarchy with the
+data set at the lowest level taking precedence.
+<tt>DimensionalUnits</tt> may be similarly set by global data.
+The rules for determining the appropriate set of global data to apply is
+further detailed in the section
+<a href="cgnsbase.html#precedence">Precedence Rules and Scope
+Within the Hierarchy</a>.
+
+<p>
+This alternate functionality provides a measure of economy in describing
+dimensional units or normalization within the hierarchy.
+Examples that make use of global data are available for both
+<a href="gridflow.html#grid_example">grid coordinates</a> and
+<a href="gridflow.html#flow_example">flow solutions</a>.
+A complete <a href="twozone.html">two-zone example case</a> also depicts
+this alternate functionality.
+
+<a name="dim"></a>
+<h4>Dimensional Data</h4>
+
+<p>
+If <tt>DataClass = Dimensional</tt>, the data is dimensional.
+The optional qualifiers <tt>DimensionalUnits</tt> and
+<tt>DimensionalExponents</tt> describe dimensional units associated with
+the data.
+These qualifiers are provided to specify the system of dimensional units
+and the dimensional exponents, respectively.
+For example, if the data is the <i>x</i>-component of velocity,
+then <tt>DimensionalUnits</tt> will state that the pertinent
+dimensional units are, say, <tt>Meter</tt> and <tt>Second</tt>;
+<tt>DimensionalExponents</tt> will specify that the pertinent dimensional
+exponents are <tt>LengthExponent = 1</tt> and <tt>TimeExponent = -1</tt>.
+Combining the information gives the units m/s.
+<a href="#example">Examples showing the use of these two qualifiers</a>
+are provided.
+
+<p>
+If <tt>DimensionalUnits</tt> is absent, then the appropriate set of
+dimensional units is obtained from "global" data.
+The rules for determining this appropriate set of global dimensional
+units are presented in the section 
+<a href="cgnsbase.html#precedence">Precedence Rules and Scope
+Within the Hierarchy</a>.
+
+<p>
+If <tt>DimensionalExponents</tt> is absent, then the appropriate
+dimensional exponents can be determined by convention if the specific
+instance of <tt>DataArray_t</tt> corresponds to one of the
+<a href="dataname.html">standardized data-name identifiers</a>.
+Otherwise, the exponents are unspecified.
+We strongly recommend inclusion of the <tt>DimensionalExponents</tt>
+qualifier whenever the data is dimensional and the instance of
+<tt>DataArray_t</tt> is not among the list of standardized identifiers.
+
+<a name="normbydim"></a>
+<h4>Nondimensional Data Normalized by Dimensional Quantities</h4>
+
+<p>
+If <tt>DataClass = NormalizedByDimensional</tt>, the data is
+nondimensional and is normalized by dimensional reference quantities.
+All optional entities in <a href="#DataArray"><tt>DataArray_t</tt></a>
+are used.
+<a href="#DataConversion"><tt>DataConversion</tt></a> contains factors
+to convert the nondimensional data to "raw" dimensional data; these
+factors are <tt>ConversionScale</tt> and <tt>ConversionOffset</tt>.
+The conversion process is as follows:
+<pre>
+  Data(raw) = Data(nondimensional)*ConversionScale + ConversionOffset
+</pre>
+where <tt>Data(nondimensional)</tt> is the original nondimensional data,
+and <tt>Data(raw)</tt> is the converted raw data.
+This converted raw data is dimensional, and the optional qualifiers
+<tt>DimensionalUnits</tt> and <tt>DimensionalExponents</tt> describe the
+appropriate dimensional units and exponents.
+Note that <tt>DimensionalUnits</tt> and <tt>DimensionalExponents</tt>
+also describe the units for <tt>ConversionScale</tt> and
+<tt>ConversionOffset</tt>.
+
+<p>
+If <tt>DataConversion</tt> is absent, the equivalent defaults are
+<tt>ConversionScale = 1</tt> and <tt>ConversionOffset = 0</tt>.
+If either <tt>DimensionalUnits</tt> or <tt>DimensionalExponents</tt> is
+absent, follow the rules described in the <a href="#dim">previous section</a>.
+
+<p>
+Note that functionally there is little difference between these
+first two data classes (<tt>DataClass = <a href="#dim">Dimensional</a></tt>
+and <tt>NormalizedByDimensional</tt>}.
+In the first case the data is dimensional, and in the second, the
+converted raw data is dimensional.
+Also, the equivalent defaults for <tt>DataConversion</tt> produce
+no changes in the data; hence, it is almost the same as stating the
+original data is dimensional.
+
+<a name="normbyunkdim"></a>
+<h4>Nondimensional Data Normalized by Unknown Dimensional Quantities</h4>
+
+<p>
+If <tt>DataClass = NormalizedByUnknownDimensional</tt>, the data is
+nondimensional and is normalized by some unspecified dimensional
+quantities.
+This type of data is typical of a completely nondimensional test case,
+where all field data and all reference quantities are nondimensional.
+
+<p>
+Only the <tt>DimensionalExponents</tt> qualifier is used in this case,
+although it is expected that this qualifier will be seldom utilized in
+practice.
+For entities of <tt>DataArray_t</tt> that are not among the list of
+standardized data-name identifiers, the qualifier could provide useful
+information by defining the exponents of the dimensional form of the
+nondimensional data.
+
+<p>
+Rather than providing qualifiers to describe the normalization
+of the data, we instead dictate that all data of type
+<tt>NormalizedByUnknownDimensional</tt> in a given database be
+nondimensionalized consistently.
+This is done by picking one set of mass, length, time and temperature
+scales and normalizing all appropriate data by these scales.
+We describe this process in detail in the following.
+A complete <a href="twozone.html">two-zone example case</a> is also
+available that uses a completely nondimensional database with consistent
+normalization used throughout.
+
+<p>
+The practice of nondimensionalization within flow solvers and other
+application codes is quite popular.
+The problem with this practice is that to manipulate the data
+from a given code, one must often know the particulars of the
+nondimensionalization used.
+This largely results from what we call inconsistent normalization - more
+than the minimum required scales are used to normalize data within the
+code.
+For example, in the OVERFLOW flow solver, the following
+nondimensionalization is used:
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline align=center>
+   <td><i>x</i>&prime; = <i>x</i> / <i>L</i><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>u</i>&prime; = <i>u</i> / <i>c</i><sub>&infin;</sub><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>&rho;</i>&prime; = <i>&rho;</i> / <i>&rho;</i><sub>&infin;</sub>
+<tr valign=baseline align=center>
+   <td><i>y</i>&prime; = <i>y</i> / <i>L</i><td>
+   <td><i>v</i>&prime; = <i>v</i> / <i>c</i><sub>&infin;</sub><td>
+   <td><i>p</i>&prime; = <i>p</i> / (<i>&rho;</i><sub>&infin;</sub><i>c</i><sub>&infin;</sub><sup>2</sup>)
+<tr valign=baseline align=center>
+   <td><i>z</i>&prime; = <i>z</i> / <i>L</i><td>
+   <td><i>w</i>&prime; = <i>w</i> / <i>c</i><sub>&infin;</sub><td>
+   <td><i>&mu;</i>&prime; = <i>&mu;</i> / <i>&mu;</i><sub>&infin;</sub>
+</table>
+</center>
+<br>
+where (<i>x</i>,<i>y</i>,<i>z</i>) are the Cartesian coordinates,
+(<i>u</i>,<i>v</i>,<i>w</i>) are the Cartesian components of velocity,
+<i>&rho;</i> is static
+density, <i>p</i> is static pressure, <i>c</i> is the static speed of
+sound, and <i>&mu;</i> is the
+molecular viscosity.
+In this example, primed quantities are nondimensional
+and all others are dimensional.
+Four dimensional scales are used for normalization: <i>L</i> (a unit
+length),
+<i>&rho;</i><sub>&infin;</sub>,
+<i>v</i><sub>&infin;</sub> and
+<i>&mu;</i><sub>&infin;</sub>.
+However, only three fundamental dimensional units are represented: mass,
+length and time.
+The extra normalizing scale leads to inconsistent normalization.
+The primary consequence of this is additional nondimensional parameters,
+such as Reynolds number, appearing in the nondimensionalized governing
+equations where none are found in the original dimensional equations.
+Many definitions, including skin friction coefficient, also have extra
+terms appearing in the nondimensionalized form.
+This adds unnecessary complication to any data or equation manipulation
+associated with the flow solver.
+
+<p>
+Consistent normalization avoids many of these problems.
+Here the number of scales used for normalization is the same as the
+number of fundamental dimensional units represented by the data.
+Using consistent normalization, the resulting nondimensionalized form
+of equations and definitions is identical to their original dimensional
+formulations.
+One piece of evidence to support this assertion is that it is not
+possible to form any nondimensional parameters from the set of
+dimensional scales used for normalization.
+
+<p>
+An important fallout of consistent normalization is that the actual
+scales used for normalization become immaterial for all data
+manipulation processes.
+To illustrate this consider the following nondimensionalization
+procedure: let <i>M</i> (mass), <i>L</i> (length) and <i>T</i> (time) be
+arbitrary dimensional scales by which all data is normalized (neglect
+temperature data for the present).
+The nondimensional data follows:
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline align=center>
+   <td><i>x</i>&prime; = <i>x</i> / <i>L</i><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>u</i>&prime; = <i>u</i> / (<i>L</i>/<i>T</i>)<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>&rho;</i>&prime; = <i>&rho;</i> / (<i>M</i>/<i>L</i><sup>3</sup>)
+<tr valign=baseline align=center>
+   <td><i>y</i>&prime; = <i>y</i> / <i>L</i><td>
+   <td><i>v</i>&prime; = <i>v</i> / (<i>L</i>/<i>T</i>)<td>
+   <td><i>p</i>&prime; = <i>p</i> / (<i>M</i>/(<i>LT</i><sup>2</sup>))
+<tr valign=baseline align=center>
+   <td><i>z</i>&prime; = <i>z</i> / <i>L</i><td>
+   <td><i>w</i>&prime; = <i>w</i> / (<i>L</i>/<i>T</i>)<td>
+   <td><i>&mu;</i>&prime; = <i>&mu;</i> / (<i>M</i>/(<i>LT</i>))
+</table>
+</center>
+<br>
+where primed quantities are nondimensional and all others are
+dimensional.
+
+<p>
+Consider an existing database where all field data and all reference
+data is nondimensional and normalized as shown.
+Assume the database has a single reference state given by,
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline align=center>
+   <td><i>x</i>&prime;<sub>ref</sub> = <i>x</i><sub>ref</sub> / <i>L</i><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>u</i>&prime;<sub>ref</sub> = <i>u</i><sub>ref</sub> / (<i>L</i>/<i>T</i>)<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>&rho;</i>&prime;<sub>ref</sub> = <i>&rho;</i><sub>ref</sub> / (<i>M</i>/<i>L</i><sup>3</sup>)
+<tr valign=baseline align=center>
+   <td><i>y</i>&prime;<sub>ref</sub> = <i>y</i><sub>ref</sub> / <i>L</i><td>
+   <td><i>v</i>&prime;<sub>ref</sub> = <i>v</i><sub>ref</sub> / (<i>L</i>/<i>T</i>)<td>
+   <td><i>p</i>&prime;<sub>ref</sub> = <i>p</i><sub>ref</sub> / (<i>M</i>/(<i>LT</i><sup>2</sup>))
+<tr valign=baseline align=center>
+   <td><i>z</i>&prime;<sub>ref</sub> = <i>z</i><sub>ref</sub> / <i>L</i><td>
+   <td><i>w</i>&prime;<sub>ref</sub> = <i>w</i><sub>ref</sub> / (<i>L</i>/<i>T</i>)<td>
+   <td><i>&mu;</i>&prime;<sub>ref</sub> = <i>&mu;</i><sub>ref</sub> / (<i>M</i>/(<i>LT</i>))
+</table>
+</center>
+
+<p>
+If a user wanted to change the nondimensionalization of grid-point
+pressures, the procedure is straightforward.
+Let the desired new normalization be given by
+<i>p</i>&Prime;<sub><i>ijk</i></sub> = <i>p<sub>ijk</sub></i> / (<i>&rho;</i><sub>ref</sub><i>c</i><sub>ref</sub><sup>2</sup>),
+where all terms on the right-hand-side are <em>dimensional</em>, and as
+such they are unknown to the database user.
+However, the desired manipulation is possible using only nondimensional
+data provided in the database,
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline>
+   <td><i>p</i>&Prime;<sub><i>ijk</i></sub><td>&nbsp;
+   <td>&equiv; <i>p<sub>ijk</sub></i> / 
+               (<i>&rho;</i><sub>ref</sub><i>c</i><sub>ref</sub><sup>2</sup>)
+<tr valign=baseline>
+   <td><td>
+   <td>= [<i>p<sub>ijk</sub></i> / (<i>M</i>/(<i>LT</i><sup>2</sup>)]
+         [(<i>M</i>/<i>L</i><sup>3</sup>) / <i>&rho;</i><sub>ref</sub>]
+         [(<i>L</i>/<i>T</i>) / <i>c</i><sub>ref</sub>]<sup>2</sup>
+<tr valign=baseline>
+   <td><td>
+   <td>= <i>p</i>&prime;<sub><i>ijk</i></sub> / 
+         (<i>&rho;</i>&prime;<sub>ref</sub>(<i>c</i>&prime;<sub>ref</sub>)<sup>2</sup>)
+</table>
+</center>
+
+<p>
+Thus, the desired renormalization is possible using the database's
+nondimensional data as if it were actually dimensional.
+There is, in fact, a high degree of equivalence between dimensional data
+and consistently normalized nondimensional data.
+The procedure shown in this example should extend to any desired
+renormalization, provided the needed
+<a href="misc.html#ReferenceState">reference-state quantities</a> are
+included in the database.
+
+<p>
+This example points out two stipulations that we now dictate for data in
+the class <tt>NormalizedByUnknownDimensional</tt>,
+<ol type="a">
+<li> All nondimensional data within a given database that has 
+     <tt>DataClass = NormalizedByUnknownDimensional</tt>
+     shall be consistently normalized.
+<li> Any nondimensional <a href="misc.html#ReferenceState">reference
+     state</a> appearing in a database should be sufficiently populated
+     with reference quantities to allow for renormalization procedures.
+</ol>
+The second of these stipulations is somewhat ambiguous, but good
+practice would suggest that a flow solver, for example, should output
+to the database enough static and/or stagnation reference quantities to
+sufficiently define the state.
+
+<p>
+A <a href="twozone.html">two-zone example case</a> is available that
+shows an example of a well-populated reference state.
+
+<p>
+With these two stipulations, we contend the following:
+<ul>
+<li> The dimensional scales used to nondimensionalize all data are
+     immaterial, and there is no need to identify these quantities in a
+     CGNS database.
+<li> The dimensional scales need not be reference-state quantities
+     provided in the database.
+     For example, a given database could contain freestream reference
+     state conditions, but all the data is normalized by sonic
+     conditions (which are not provided in the database).
+<li> All renormalization procedures can be carried out treating the data
+     as if it were dimensional with a consistent set of units.
+<li> Any application code that internally uses consistent normalization
+     can use the data provided in a CGNS database without modification
+     or transformation to the code's internal normalization.
+</ul>
+
+<p>
+Before ending this section, we note that the OVERFLOW flow solver
+mentioned above (or any other application code that internally uses
+inconsistent normalization) could easily read and write data to a
+nondimensional CGNS database that conforms to the above stipulations.
+On output, the code could renormalize data so it is consistently
+normalized.
+Probably, the easiest method would be to remove the molecular viscosity
+scale (<i>&mu;</i><sub>&infin;</sub>),
+and only use <i>L</i>,
+<i>&rho;</i><sub>&infin;</sub> and
+<i>c</i><sub>&infin;</sub>
+for all normalizations (recall these are dimensional scales).
+The only change from the above example would be the
+nondimensionalization of viscosity, which would become
+<i>&mu;</i>&Prime; = <i>&mu;</i> / (<i>&rho;</i><sub>&infin;</sub><i>c</i><sub>&infin;</sub><i>L</i>).
+The code could then output all field data as,
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline align=center>
+   <td><i>x</i>&prime;<sub><i>ijk</i></sub> = <i>x<sub>ijk</sub></i> / <i>L</i><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>u</i>&prime;<sub><i>ijk</i></sub> = <i>u<sub>ijk</sub></i> / <i>c</i><sub>&infin;</sub><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>&rho;</i>&prime;<sub><i>ijk</i></sub> = <i>&rho;<sub>ijk</sub></i> / <i>&rho;</i><sub>&infin;</sub>
+<tr valign=baseline align=center>
+   <td><i>y</i>&prime;<sub><i>ijk</i></sub> = <i>y<sub>ijk</sub></i> / <i>L</i><td>
+   <td><i>v</i>&prime;<sub><i>ijk</i></sub> = <i>v<sub>ijk</sub></i> / <i>c</i><sub>&infin;</sub><td>
+   <td><i>p</i>&prime;<sub><i>ijk</i></sub> = <i>p<sub>ijk</sub></i> / (<i>&rho;</i><sub>&infin;</sub><i>c</i><sub>&infin;</sub><sup>2</sup>)
+<tr valign=baseline align=center>
+   <td><i>z</i>&prime;<sub><i>ijk</i></sub> = <i>z<sub>ijk</sub></i> / <i>L</i><td>
+   <td><i>w</i>&prime;<sub><i>ijk</i></sub> = <i>w<sub>ijk</sub></i> / <i>c</i><sub>&infin;</sub><td>
+   <td><i>&mu;</i>&Prime;<sub><i>ijk</i></sub> = <i>&mu;<sub>ijk</sub></i> / (<i>&rho;</i><sub>&infin;</sub><i>c</i><sub>&infin;</sub><i>L</i>)
+</table>
+</center>
+<br>
+and output the freestream reference quantities,
+<br><br>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline align=center>
+   <td><i>u</i>&prime;<sub>&infin;</sub> = <i>u</i><sub>&infin;</sub> / <i>c</i><sub>&infin;</sub><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>&rho;</i>&prime;<sub>&infin;</sub> = <i>&rho;</i><sub>&infin;</sub> / <i>&rho;</i><sub>&infin;</sub> = 1
+<tr valign=baseline align=center>
+   <td><i>v</i>&prime;<sub>&infin;</sub> = <i>v</i><sub>&infin;</sub> / <i>c</i><sub>&infin;</sub><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>p</i>&prime;<sub>&infin;</sub> = <i>p</i><sub>&infin;</sub> / (<i>&rho;</i><sub>&infin;</sub><i>c</i><sub>&infin;</sub><sup>2</sup>) = 1 / <i>&gamma;</i>
+<tr valign=baseline align=center>
+   <td><i>w</i>&prime;<sub>&infin;</sub> = <i>w</i><sub>&infin;</sub> / <i>c</i><sub>&infin;</sub><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>&mu;</i>&Prime;<sub>&infin;</sub> = <i>&mu;</i><sub>&infin;</sub> / (<i>&rho;</i><sub>&infin;</sub><i>c</i><sub>&infin;</sub><i>L</i>) &sim; <i>O</i> (1/<i>Re</i>)
+<tr valign=baseline align=center>
+   <td><i>c</i>&prime;<sub>&infin;</sub> = <i>c</i><sub>&infin;</sub> / <i>c</i><sub>&infin;</sub> = 1<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>L</i>&prime; = <i>L</i> / <i>L</i> = 1
+</table>
+</center>
+<br>
+where <i>&gamma;</i> is the specific heat
+ratio (assumes a perfect gas) and <i>Re</i> is the Reynolds number.
+
+<p>
+On input, the flow solver should be able to recover its internal
+normalizations from the data in a nondimensional CGNS database by
+treating the data as if it were dimensional.
+
+<a name="nondimparam"></a>
+<h4>Nondimensional Parameters</h4>
+
+<p>
+If <tt>DataClass = NondimensionalParameter</tt>, the data is a
+nondimensional parameter (or array of nondimensional parameters).
+Examples include Mach number, Reynolds number and pressure coefficient.
+These parameters are prevalent in CFD, although their definitions tend
+to vary between different application codes.
+A list of <a href="dataname.html#dataname_nondim">standardized data-name
+identifiers for nondimensional parameters</a> is provided.
+
+<p>
+We distinguish nondimensional parameters from other data classes by the
+fact that they are <em>always</em> dimensionless.
+In a completely nondimensional database, they are distinct in that their
+normalization is not necessarily consistent with other data.
+
+<p>
+Typically, the <tt>DimensionalUnits</tt>, <tt>DimensionalExponents</tt>
+and <tt>DataConversion</tt> qualifiers are not used for nondimensional
+parameters; although, there are a few situations where they may be used
+(these are discussed below).
+Rather than rely on optional qualifiers to describe the normalization,
+we establish the convention that <em>any nondimensional parameters
+should be accompanied by their defining scales</em>; this is further
+discussed in the section on
+<a href="dataname.html#dataname_nondim">standardized data-name
+identifiers for nondimensional parameters</a>.
+An example is Reynolds number defined as
+<i>Re</i> = <i>VL<sub>R</sub></i> / <i>&nu;</i>,
+where <i>V</i>, <i>L<sub>R</sub></i> and <i>&nu;</i>
+are velocity, length, and viscosity scales, respectively.
+Note that these defining scales may be dimensional or nondimensional
+data.
+We establish the data-name identifiers <tt>Reynolds</tt>,
+<tt>Reynolds_Velocity</tt>, <tt>Reynolds_Length</tt> and
+<tt>Reynolds_ViscosityKinematic</tt> for the Reynolds number and its
+defining scales.
+Anywhere an instance of <tt>DataArray_t</tt> is found with the
+identifier <tt>Reynolds</tt>, there should also be entities for the
+defining scales.
+An <a href="#ex:data5">example of this use for Reynolds number</a> is
+available.
+
+<p>
+In certain situations, it may be more convenient to use the optional
+qualifiers of <a href="#DataArray"><tt>DataArray_t</tt></a> to describe
+the normalization used in nondimensional parameters.
+These situations must satisfy two requirements:  First, the defining
+scales are dimensional; and second, the nondimensional parameter is a
+normalization of a single "raw" data quantity and it is clear what this
+raw data is.
+Examples that satisfy this second constraint are pressure coefficient,
+where the raw data is static pressure, and lift coefficient, where the
+raw data is the lift force.
+Conversely, Reynolds number is a parameter that violates the second
+requirement - there are three pieces of raw data rather than one that
+make up <i>Re</i>.
+For nondimensional parameters that satisfy these two requirements, the
+qualifiers <tt>DimensionalUnits</tt>, <tt>DimensionalExponents</tt> and
+<tt>DataConversion</tt> may be used as in the section
+<a href="#normbydim">Nondimensional Data Normalized by Dimensional
+Quantities</a> to recover the raw dimensional data.
+
+<a name="dimensionless"></a>
+<h4>Dimensionless Constants</h4>
+
+<p>
+If <tt>DataClass = DimensionlessConstant</tt>, the data is a constant
+(or array of constants) with no associated dimensional units.
+The <tt>DimensionalUnits</tt>, <tt>DimensionalExponents</tt> and
+<tt>DataConversion</tt> qualifiers are not used.
+
+<a name="example"></a>
+<h3>Data-Array Examples</h3>
+
+<p>
+This section presents five examples of data-array entities and
+illustrates the use of optional information for describing dimensional
+and nondimensional data.
+
+<a name="ex:data1"></a>
+<h4>Example - One-Dimensional Data Array, Constants</h4>
+
+<p>
+A one-dimensional array of integers; the array is the integers from 1 to
+10.
+The data is pure constants.
+<pre>
+  !  DataType = int
+  !  Dimension = 1
+  !  DimensionValues = 10
+  DataArray_t&lt;int, 1, 10&gt; Data1 =
+    {{
+    Data(int, 1, 10) = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] ;
+    
+    DataClass_t DataClass = DimensionlessConstant ;
+    }} ;
+</pre>
+
+<p>
+The structure parameters for <tt>DataArray_t</tt> state the data is an
+one-dimensional integer array of length ten.
+The value of <tt>DataClass</tt> indicates the data is
+<a href="#dimensionless">unitless constants</a>.
+
+<a name="ex:data2"></a>
+<h4>Example - Two-Dimensional Data Array, Pressures</h4>
+
+<p>
+A two-dimensional array of pressures with size 11 &times; 9 given by the
+array <tt>P(i,j)</tt>.
+The data is dimensional with units of N/m<sup>2</sup> (i.e.,
+kg/(m-s<sup>2</sup>)).
+Note that <tt>Pressure</tt> is the data-name identifier for static
+pressure.
+<pre>
+  !  DataType = real
+  !  Dimension = 2
+  !  DimensionValues = [11,9]
+  DataArray_t&lt;real, 2, [11,9]&gt; Pressure =
+    {{
+    Data(real, 2, [11,9]) = ((P(i,j), i=1,11), j=1,9) ;
+    
+    DataClass_t DataClass = Dimensional ;
+
+    DimensionalUnits_t DimensionalUnits =
+      {{
+      MassUnits        = Kilogram ;
+      LengthUnits      = Meter ;
+      TimeUnits        = Second ;
+      TemperatureUnits = TemperatureUnitsNull ;
+      AngleUnits       = AngleUnitsNull ;
+      }} ;
+	
+    DimensionalExponents_t DimensionalExponents =
+      {{
+      MassExponent        = +1 ;
+      LengthExponent      = -1 ;
+      TimeExponent        = -2 ;
+      TemperatureExponent =  0 ;
+      AngleExponent       =  0 ;
+      }} ;
+    }} ;
+</pre>
+
+<p>
+From the <a href="dataname.html">data-name identifier conventions</a>,
+<tt>Pressure</tt> has a floating-point data type; hence, the appropriate
+structure parameter for <tt>DataArray_t</tt> is <tt>real</tt>.
+
+<p>
+The value of <tt>DataClass</tt> indicates that the data is
+<a href="#dim">dimensional</a>, and both the dimensional units and
+dimensional exponents are provided.
+<tt>DimensionalUnits</tt> specifies that the units are kilograms,
+meters, and seconds, and <tt>DimensionalExponents</tt> specifies the
+appropriate exponents for pressure.
+Combining the information gives pressure as kg/(m-s<sup>2</sup>).
+<tt>DimensionalExponents</tt> could have been defaulted, since the
+dimensional exponents are part of the <a href="dataname.html">standardized
+data-name identifier</a> for <tt>Pressure</tt>.
+
+<p>
+Note that FORTRAN multidimensional array indexing is used to store
+the data; this is reflected in the FORTRAN-like implied do-loops for
+<tt>P(i,j)</tt>.
+
+<a name="ex:data3"></a>
+<h4>Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy</h4>
+
+<p>
+A 3-D array of size 33 &times; 9 &times; 17 containing nondimensional
+static enthalpy.
+The data is normalized by freestream velocity as follows:
+<center>
+<i>h</i>&prime;<sub><i>ijk</i></sub> = <i>h<sub>ijk</sub></i> / <i>q</i><sub>ref</sub><sup>2</sup>
+</center>
+<br>
+where <i>h</i>&prime;<sub><i>ijk</i></sub>
+is nondimensional static enthalpy.
+The freestream velocity is dimensional with a value of 10 m/s.
+<pre>
+  !  DataType = real
+  !  Dimension = 3
+  !  DimensionValues = [33,9,17]
+  DataArray_t&lt;real, 3, [33,9,17]&gt; Enthalpy =
+    {{
+    Data(real, 3, [33,9,17]) = (((H(i,j,k), i=1,33), j=1,9), k=1,17) ;
+    
+    DataClass_t DataClass = NormalizedByDimensional ;
+    
+    DataConversion_t DataConversion =
+      {{
+      real ConversionScale  = 100 ;
+      real ConversionOffset = 0 ;
+      }} ;
+      
+    DimensionalUnits_t DimensionalUnits =
+      {{
+      MassUnits        = MassUnitsNull ;
+      LengthUnits      = Meter ;
+      TimeUnits        = Second ;
+      TemperatureUnits = TemperatureUnitsNull ;
+      AngleUnits       = AngleUnitsNull ;
+      }} ;
+	
+    DimensionalExponents_t DimensionalExponents =
+      {{
+      MassExponent        =  0 ;
+      LengthExponent      = +2 ;
+      TimeExponent        = -2 ;
+      TemperatureExponent =  0 ;
+      AngleExponent       =  0 ;
+      }} ;
+    }} ;
+</pre>
+
+<p>
+From the list of <a href="dataname.html">standardized data-name
+identifiers</a>, the identifier for static enthalpy is <tt>Enthalpy</tt>
+and its data type is <tt>real</tt>.
+
+<p>
+The value of <tt>DataClass</tt> indicates that the data is
+<a href="#normbydim">nondimensional and normalized by a dimensional reference
+quantity</a>.
+<tt>DataConversion</tt> provides the conversion factors
+for recovering the raw static enthalpy, which has units of
+m<sup>2</sup>/s<sup>2</sup> as indicated by
+<tt>DimensionalUnits</tt> and <tt>DimensionalExponents</tt>.
+Note that <tt>DimensionalExponents</tt> could have been defaulted using
+the conventions for the data-name identifier <tt>Enthalpy</tt>.
+
+<a name="ex:data4"></a>
+<h4>Example - Three-Dimensional Data Array, Nondimensional Database</h4>
+
+<p>
+The previous example for nondimensional enthalpy is repeated for a
+<a href="#normbyunkdim">completely nondimensional</a> database.
+<pre>
+  !  DataType = real
+  !  Dimension = 3
+  !  DimensionValues = [33,9,17]
+  DataArray_t&lt;real, 3, [33,9,17]&gt; Enthalpy =
+    {{
+    Data(real, 3, [33,9,17]) = (((H(i,j,k), i=1,33), j=1,9), k=1,17) ;
+    
+    DataClass_t DataClass = NormalizedByUnknownDimensional ;
+    }} ;
+</pre>
+The value of <tt>DataClass</tt> indicates the appropriate class.
+
+<a name="ex:data5"></a>
+<h4>Example - Data Arrays for Reynolds Number</h4>
+
+<p>
+Reynolds number of 1.554 &times; 10<sup>6</sup> based on a
+velocity scale of 10 m/s, a length scale of 2.3 m
+and a kinematic viscosity scale of 1.48 &times; 10<sup>&minus;5</sup>
+m<sup>2</sup>/s.
+Assume the database has globally set the dimensional units to kilograms,
+meters, and seconds, and the global default data class to dimensional
+(<tt>DataClass = Dimensional</tt>).
+<pre>
+  !  DataType = real
+  !  Dimension = 1
+  !  DimensionValues = 1
+  DataArray_t&lt;real, 1, 1&gt; Reynolds =
+    {{
+    Data(real, 1, 1) = 1.554e+06 ;
+    
+    DataClass_t DataClass = NondimensionalParameter ;
+    }} ;
+
+  DataArray_t&lt;real, 1, 1&gt; Reynolds_Velocity =
+    {{
+    Data(real, 1, 1) = 10. ;
+    }} ;
+
+  DataArray_t&lt;real, 1, 1&gt; Reynolds_Length =
+    {{
+    Data(real, 1, 1) = 2.3 ;
+    }} ;
+
+  DataArray_t&lt;real, 1, 1&gt; Reynolds_ViscosityKinematic =
+    {{
+    Data(real, 1, 1) = 1.48e-05 ;
+    }} ;
+</pre>
+
+<p>
+<tt>Reynolds</tt> contains the value of the Reynolds number, and
+the value of its <tt>DataClass</tt> qualifier designates it as a
+<a href="#nondimparam">nondimensional parameter</a>.
+By conventions for <a href="dataname.html#dataname_nondim">standardized
+data-name identifiers for nondimensional parameters</a>, the
+defining scales are contained in the associated entities
+<tt>Reynolds_Velocity</tt>, <tt>Reynolds_Length</tt>, and
+<tt>Reynolds_ViscosityKinematic</tt>.
+Since each of these entities contain no qualifiers, global information
+is used to decipher that they are all dimensional with mass, length, and
+time units of kilograms, meters, and seconds.
+The structure parameters for each <tt>DataArray_t</tt> entity state that
+they contain a real scalar.
+
+<p>
+If a user wanted to convey the dimensional units of the defining scales
+using optional qualifiers of <tt>DataArray_t</tt>, then the last
+three entities in this example would have a form similar to that in
+the <a href="#ex:data2">Two-Dimensional Data Array example</a>.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 07 Feb 2014
+
+</body>
+</html>

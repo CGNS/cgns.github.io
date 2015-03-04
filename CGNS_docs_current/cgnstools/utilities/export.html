@@ -1,0 +1,471 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgnstools.css" rel="stylesheet" type="text/css">
+<title>Export Utilities</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../../cgnstools/index.html"><span class=nav><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></span></a>)
+<br><br>
+(<a href="../tools.html"><b>Tools</b></a>)
+(<a href="../cgnsview/index.html"><b>CGNSview</b></a>)
+(<a href="../cgnsplot/index.html"><b>CGNSplot</b></a>)
+(<a href="../utilities/index.html"><span class=nav><b>Utilities</b></span></a>)
+<br><br>
+(<a href="../utilities/import.html"><b>Import&nbsp;Utilities</b></a>)
+(<span class=nav><b>Export&nbsp;Utilities</b></span>)
+(<a href="../utilities/convert.html"><b>Data&nbsp;Conversion&nbsp;Utilities</b></a>)
+(<a href="../utilities/subset.html"><b>Subsets&nbsp;and&nbsp;Interpolation</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>Export Utilities</h1>
+
+<p>This document describes the export routines which convert data
+CGNS to other formats. The following export utilities are
+currently available.</p>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <td><a href="#PLOT3D">PLOT3D</a></td>
+        <td>cgns_to_plot3d</td>
+        <td>Converts a structured CGNS file to PLOT3D file(s)</td>
+    </tr>
+    <tr>
+        <td><a href="#Tecplot">Tecplot</a></td>
+        <td>cgns_to_tecplot</td>
+        <td>Converts a CGNS file to a Tecplot file</td>
+    </tr>
+    <tr>
+        <td><a href="#AFLR3">AFLR3</a></td>
+        <td>cgns_to_aflr3</td>
+        <td>Converts a CGNS file to an AFLR3 file</td>
+    </tr>
+    <tr>
+        <td><a href="#FAST">FAST</a></td>
+        <td>cgns_to_fast</td>
+        <td>Converts a CGNS file to a FAST file</td>
+    </tr>
+    <tr>
+        <td><a href="#VTK">VTK</a></td>
+        <td>cgns_to_vtk</td>
+        <td>Converts a CGNS file to VTK files</td>
+    </tr>
+</table>
+
+<p><br>
+</p>
+
+<hr>
+
+<h2><a name="PLOT3D"></a>PLOT3D</h2>
+
+<p>Converts a CGNS file containing a structured grid to a PLOT3D
+XYZ file and Q file (if a solution is present). </p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>cgns_to_plot3d</b> <i>options</i> <b>CGNSfile XYZfile</b> <i>Qfile</i>
+</p>
+
+<p>The input CGNS file, <i>CGNSfile</i>, and PLOT3D XYZ output
+file, <i>XYZfile</i>, are required. The grid from the CGNS file
+will be written to the PLOT3D XYZ file. Interfaces in the CGNS
+file will be output as an <i>iblank</i> array in the XYZ file
+unless disabled by the <i>-n</i> command line option. If <i>Qfile</i>
+is specified and a solution exists in the CGNS file, it will be
+written to <em>Qfile</em>. The command line aptions are:&nbsp; </p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-s</td>
+        <td>write as single block PLOT3D file</td>
+    </tr>
+    <tr>
+        <td nowrap>-p</td>
+        <td>write planar grid format</td>
+    </tr>
+    <tr>
+        <td nowrap>-n</td>
+        <td>don't write an iblank array. (default is to write one
+        only if interfaces exist)</td>
+    </tr>
+    <tr>
+        <td nowrap>-f</td>
+        <td>write formatted (ASCII) PLOT3D file. (default is
+        binary)</td>
+    </tr>
+    <tr>
+        <td nowrap>-u</td>
+        <td>write Fortran unformatted PLOT3D file. (default is
+        binary)</td>
+    </tr>
+    <tr>
+        <td nowrap>-d</td>
+        <td>use double-precision (64-bit)</td>
+    </tr>
+    <tr>
+        <td nowrap>-b<i> base</i></td>
+        <td>use CGNS base index <i>base</i>.</td>
+    </tr>
+    <tr>
+        <td nowrap>-B <i>name</i></td>
+        <td>set CGNS base name to <i>name</i>.</td>
+    </tr>
+    <tr>
+        <td nowrap>-S <i>sol</i></td>
+        <td>solution to use if multiple (default 1)</td>
+    </tr>
+    <tr>
+        <td nowrap>-w</td>
+        <td>use volume weighting</td>
+    </tr>
+    <tr>
+        <td nowrap>-g <i>gamma</i></td>
+        <td>gamma for data conversions (default is 1.4)</td>
+    </tr>
+</table>
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/export_plot3d.gif" width="374" height="539"
+        alt="CGNSview PLOT3D export window"
+        longdesc="images/export_plot3d.html"></p>
+
+<p>This allows interactive selection of the input and output
+files and options. The <em>Accept</em> button will then construct
+the command line and run <strong>cgns_to_plot3d</strong>.</p>
+
+<hr>
+
+<h2><a name="Tecplot"></a>Tecplot</h2>
+
+<p>Converts a CGNS file to a Tecplot file. </p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>cgns_to_tecplot</b> <i>options</i> <b>CGNSfile Tecplotfile</b></p>
+
+<p>The input CGNS file, <i>CGNSfile</i>, and Tecplot output file,
+<em>Tecplotfile</em>, are required. The command line aptions are:&nbsp;
+</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-a</td>
+        <td>write ASCII Tecplot file (default is binary)</td>
+    </tr>
+    <tr>
+        <td nowrap>-b<i> base</i></td>
+        <td>use CGNS base index <i>base</i>.</td>
+    </tr>
+    <tr>
+        <td nowrap>-B <i>name</i></td>
+        <td>set CGNS base name to <i>name</i>.</td>
+    </tr>
+    <tr>
+        <td nowrap>-S <i>sol</i></td>
+        <td>solution to use if multiple (default 1)</td>
+    </tr>
+    <tr>
+        <td nowrap>-w</td>
+        <td>use volume weighting</td>
+    </tr>
+</table>
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/export_tecplot.gif" width="426" height="382"
+        alt="CGNSview Tecplot export window"
+        longdesc="images/export_tecplot.html"></p>
+
+<p>This allows interactive selection of the input and output
+files and options. The <em>Accept</em> button will then construct
+the command line and run <strong>cgns_to_tecplot</strong>.</p>
+
+<hr>
+
+<h2><a name="AFLR3"></a>AFLR3</h2>
+
+<p>Converts a CGNS file to an AFLR3 file. </p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>cgns_to_aflr3</b> <i>options</i> <b>CGNSfile</b> <i>AFLR3file MAPBCfile</i></p>
+
+<p>The input CGNS file, <i>CGNSfile</i> is required. If the AFLR3 output file,
+<em>AFLR3file</em>, is not given, the output file name will be constructed
+from the base name of the CGNS file with the extension .ugrid. The same is
+done for the BC file, but the extension .mapbc is used. If <em>MAPBCfile</em>
+is given, then <em>AFLR3file</em> must also be given.</p>
+
+<p>The command line aptions are:</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-4</td>
+        <td>write coordinates as real*4</td>
+    </tr>
+    <tr>
+        <td nowrap>-8</td>
+        <td>write coordinates as real*8 (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-f</td>
+        <td>write formatted ASCII file</td>
+    </tr>
+    <tr>
+        <td nowrap>-s</td>
+        <td>write Fortran stream (binary) file (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-l</td>
+        <td>write little-endian format</td>
+    </tr>
+    <tr>
+        <td nowrap>-b</td>
+        <td>write big-endian format (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-x</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as X-symmetry (6661 in mapbc)</td>
+    </tr>
+    <tr>
+        <td nowrap>-y</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as Y-symmetry (6662 in mapbc)</td>
+    </tr>
+    <tr>
+        <td nowrap>-z</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as Z-symmetry (6663 in mapbc)</td>
+    </tr>
+    <tr>
+        <td nowrap>-B <i>base</i></td>
+        <td>set CGNS base index to <i>base</i> (default is 1)</td>
+    </tr>
+    <tr>
+        <td nowrap>-Z <i>zone</i></td>
+        <td>set CGNS zone index to <i>zone</i> (default is 1)</td>
+    </tr>
+</table>
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/export_aflr3.gif" width="337" height="375"
+        alt="CGNSview AFLR3 export window"
+        longdesc="images/export_aflr3.html"></p>
+
+<p>This allows interactive selection of the input and output
+files and options. The <em>Accept</em> button will then construct
+the command line and run <strong>cgns_to_aflr3</strong>.</p>
+
+<hr>
+
+<h2><a name="FAST"></a>FAST</h2>
+
+<p>Converts a CGNS file to a FAST file. </p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>cgns_to_fast</b> <i>options</i> <b>CGNSfile</b> <i>FASTfile MAPBCfile</i></p>
+
+<p>The input CGNS file, <i>CGNSfile</i> is required. If the FAST output file,
+<em>FASTfile</em>, is not given, the output file name will be constructed
+from the base name of the CGNS file with the extension .fgrid. The same is
+done for the BC file, but the extension .mapbc is used. If <em>MAPBCfile</em>
+is given, then <em>FASTfile</em> must also be given.</p>
+
+<p>The command line aptions are:</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-4</td>
+        <td>write coordinates as real*4</td>
+    </tr>
+    <tr>
+        <td nowrap>-8</td>
+        <td>write coordinates as real*8 (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-f</td>
+        <td>write formatted ASCII file</td>
+    </tr>
+    <tr>
+        <td nowrap>-s</td>
+        <td>write Fortran stream (binary) file (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-l</td>
+        <td>write little-endian format</td>
+    </tr>
+    <tr>
+        <td nowrap>-b</td>
+        <td>write big-endian format (default)</td>
+    </tr>
+    <tr>
+        <td nowrap>-x</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as X-symmetry (6661 in mapbc)</td>
+    </tr>
+    <tr>
+        <td nowrap>-y</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as Y-symmetry (6662 in mapbc)</td>
+    </tr>
+    <tr>
+        <td nowrap>-z</td>
+        <td>indicates that a CGNS BCSymmetryPlane boundary condition
+            should be treated as Z-symmetry (6663 in mapbc)</td>
+    </tr>
+    <tr>
+        <td nowrap>-B <i>base</i></td>
+        <td>set CGNS base index to <i>base</i> (default is 1)</td>
+    </tr>
+    <tr>
+        <td nowrap>-Z <i>zone</i></td>
+        <td>set CGNS zone index to <i>zone</i> (default is 1)</td>
+    </tr>
+</table>
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/export_fast.gif" width="336" height="371"
+        alt="CGNSview FAST export window"
+        longdesc="images/export_fast.html"></p>
+
+<p>This allows interactive selection of the input and output
+files and options. The <em>Accept</em> button will then construct
+the command line and run <strong>cgns_to_fast</strong>.</p>
+
+<hr>
+
+<h2><a name="VTK"></a>VTK</h2>
+
+<p>Converts a CGNS file to VTK files. </p>
+
+<h3>Command Line</h3>
+
+<p>The program is executed from the command line as:</p>
+
+<p><b>cgns_to_vtk</b> <i>options</i> <b>CGNSfile</b> <i>VTKdir</i></p>
+
+<p>The input CGNS file, <i>CGNSfile</i>, is required. If the VTK output
+directory, <em>VTKdir</em>, is given, the VTK files are written to that
+directory, otherwise the current directory is used. Each zone,
+and element set (if option <i>-e</i> is selected), whill be written
+to a seperate VTK file in that directory.
+The command line aptions are:&nbsp;
+</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th bgcolor="#C0C0C0" align=left scope=col>option</th>
+        <th bgcolor="#C0C0C0" align=left scope=col>description</th>
+    </tr>
+    <tr>
+        <td nowrap>-a</td>
+        <td>write ASCII files (default is binary)</td>
+    </tr>
+    <tr>
+        <td nowrap>-b<i> base</i></td>
+        <td>use CGNS base index <i>base</i>, (default is 1)</td>
+    </tr>
+    <tr>
+        <td nowrap>-z<i> zone</i></td>
+        <td>use CGNS zone index <i>zone</i>. (default is 0 for all)</td>
+    </tr>
+    <tr>
+        <td nowrap>-s<i> sol</i></td>
+        <td>use CGNS solution index <i>sol</i>. (default is 1)</td>
+    </tr>
+    <tr>
+        <td nowrap>-e</td>
+        <td>write element sets (unstructured zone).</td>
+    </tr>
+    <tr>
+        <td nowrap>-v</td>
+        <td>verbose printing</td>
+    </tr>
+</table>
+
+<h3>CGNSview Interface</h3>
+
+<p>The following panel is created when launched from the
+CGNSview GUI:</p>
+
+<p><img src="images/export_vtk.gif" width="349" height="333"
+        alt="CGNSview VTK export window"
+        longdesc="images/export_vtk.html"></p>
+
+<p>This allows interactive selection of the input file and output
+directory and options. The <em>Accept</em> button will then construct
+the command line and run <strong>cgns_to_vtk</strong>.</p>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../../include/footer_small.html" -->
+Last updated 22 Feb 2013
+
+</body>
+</html>

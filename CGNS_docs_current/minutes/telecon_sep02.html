@@ -1,0 +1,170 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+18 September 2002<br>
+2:00pm Eastern Time<br><br>
+
+Telecon Number: (805) 240-9853, participant code: 557184
+
+<p>
+The meeting was called to order with 10 people in attendance.
+The <a href="#attendees">attendees</a> are listed below.
+
+<p>
+The minutes of the June Meeting in St. Louis were approved as posted on
+the web.
+
+<ul>
+<li> <b>Charter Business</b> - Bob Bush extended an invitation for
+     nominations and volunteers for people to serve as chairman of the
+     Steering Committee beginning next year.
+     The duties include arranging meetings and telecons, setting
+     agendas, serving as a focal point for questions about the
+     standard and organization, coordinating the review, approval and
+     implementation of extensions and generally keeping the lines of
+     communication open.
+     Anyone interested should contact Bob Bush
+     (<a href="mailto:bushrh@pweh.com">bushrh@pweh.com</a>) by the
+     end of September.
+<br><br>
+<li> <b>ISO Status</b> - Ray Cosner indicated that there have been no
+     meetings of the ISO committee since the June meeting.
+     Parts 52 an 53 are complete and ready for release.
+     They are available for review on the
+     CGNS web site.
+     Part 110 has been incorporated into Part 237 and which is still
+     being revised.
+     There is still a plan to have a workshop to review the parts once
+     237 is in draft form, probably towards the end of the year.
+     Ray will try to provide one month notice to the committee of the
+     arrangements.
+<br><br>
+<li> <b>Documentation</b> - Charlie Towne indicated that the Library of
+     Congress number for the AIAA Recommended Practice has arrived and
+     final arrangements are being made to finalize the document.
+     He is now working on revising the beta document to include new
+     extensions currently being implemented.
+<br><br>
+<li> <b>Extensions</b> - Diane Poirier reported on the status of
+     extensions currently being implemented, including Delete Node,
+     Gravity, Axisymmetry, Rotating Coordinates, Periodic Connectivity
+     and Rotor/Stator interactions.
+     These will be released as Version 2.2 as soon as the beta
+     documentation has been updated.
+
+     There was some discussion about forward compatibility.
+     We will allow forward compatibility for point releases, and
+     reserve changes that are not forward compatible for integer level
+     revisions.
+     This should alleviate much of the vendor support issues.
+     The change has been implemented in V2.1 and will be supported in
+     subsequent revisions.
+     We have also made a Rev release of V2.0 in case vendors would like
+     this capability, but do not want to upgrade to V2.1.
+     Charlie Towne asked if we could pass back an error code instead of
+     stopping the read, but this would be difficult to implement.
+     We will continue to study this issue.
+
+     Marc Poinot has indicated that he has a full implementation of the
+     SIDS using HDF5 instead of the ADF core, with the notable exception
+     of support for Links.
+     Revisions to HDF5 should facilitate adding Link capability also.
+     Marc has not had time to do performance comparisons between HDF
+     and ADF implementations, and ONERA is still using ADF for their
+     applications.
+     David Edwards indicated a willingness to do some benchmarking and
+     comparisons.
+     <br><br>
+<li> <b>Related Software Status</b> - Chris Rumsey will review the
+     utilities and documentation provided by Bruce Wedan, and see what
+     we can provide in the way of documentation.
+<br><br>
+<li> <b>Issues</b> - There was some discussion about bug tracking
+     to provide additional user information about the status of the
+     software.
+     There are free software products out there, but there being no
+     known bugs we will wait to implement a bug tracking system.
+
+     John Bussoletti would like to see some re-structuring of the
+     mid-level libraries to better support unstructured grids, new
+     programming capabilities and perhaps isolate ADF from the SIDS and
+     mid level library implementation.
+     He also indicated a desire for the addition of unstructured edge
+     definition to the SIDS.
+     The committee invited him to write extensions for the SIDS, and to
+     recommend changes to the mid level library.
+     A bottom up re-write of the mid level library would be welcomed,
+     but the committee does not currently have the resources to support
+     such an activity.
+
+     Chris Rumsey indicated the continuing need for a diff function to
+     compare binary files.
+     The time stamp difficulty, and the indeterminate node structure
+     were cited as difficulties that would need to be overcome.
+     This also led to a discussion of the need for a SIDS compliance
+     checker, perhaps built into the Utilities.
+</ul>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Bob Bush
+<tr valign=baseline><td>
+   <td>Ray Cosner
+<tr valign=baseline><td>
+   <td>Dan Dominik
+<tr valign=baseline><td>
+   <td>Chris Rumsey
+<tr valign=baseline><td>
+   <td>John Bussoletti
+<tr valign=baseline><td>
+   <td>David Edwards
+<tr valign=baseline><td>
+   <td>Charlie Towne
+<tr valign=baseline><td>
+   <td>Marc Poinot
+<tr valign=baseline><td>
+   <td>Armen Darian
+<tr valign=baseline><td>
+   <td>Diane Poirier
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 23 Sept 2002
+
+</body>
+</html>

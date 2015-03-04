@@ -1,0 +1,455 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+4 October 2006<br>
+11:00 AM Eastern Time
+
+<p>
+<ol>
+<li> The meeting was called to order at 11:05 AM.  There were
+     <a href="#attendees">11 attendees</a>, listed below.
+<p>
+<li> The minutes of the <a href="telecon_aug06.html">2 August 2006
+     meeting</a> were approved as posted on the web site.
+<p>
+<li> Steering Committee Membership changes and updates
+     <p>
+     <ol type="a">
+     <li> Scott Imaly from Tecplot introduced himself, and expressed
+          an interest in joining the Steering Committee.  Tecplot has
+          supported CGNS for quite some time.  The committee approved
+          the Tecplot membership.
+     <li> <u>Towne will update the <a href="../charter/index.html">Steering
+          Committee Charter</a> to add Tecplot, and Rumsey will update
+          the website.</u>
+     <li> Specific member changes: Earl Duque now POC for IL, Ankur
+          Agarwal now POC for Fluent, Edwin van der Weide now POC for
+          Stanford
+     <li> Committee chair position
+          <ol type=i>
+          <li> Rumsey's 2-year term is ending in Jan 2007
+          <li> Thomas Hauser, current vice-chair, would like to extend
+               the term for one more year, and delay being voted into
+               this position until Jan 2008
+          <li> Committee members saw no problem with this; it will be
+               voted on at January Reno meeting
+          </ol>
+     </ol>
+<p>
+<li> Status of previous action items:
+     <p>
+     <ol type="a">
+     <li> Towne will update the <a href="../charter/index.html">Steering
+          Committee Charter</a> to raise the limit of members to 30, and
+          to add Thaerocomp.
+          <ol type=i>
+          <li> Done.
+          </ol>
+     <li> Alonso will forward to Rumsey some preliminary ideas on levels
+          of compliance for vendors, related to problems he has
+          encountered.
+          <ol type=i>
+          <li> Alonso no longer able to participate.  Action item
+               cancelled.
+          </ol>
+     <li> Towne will e-mail AIAA again to check on the status of the
+          Recommended Practice.
+          <ol type=i>
+          <li> Done.  Michele Ringrose said AIAA still needs to take
+               some "process steps" to complete this. <u>Towne will e-mail
+               AIAA the latest version of the SIDS, to insure it is
+               up-to-date.</u>
+          </ol>
+     <li> Hauser will send parallel version of CGNS with HDF-5 to
+          Alonso, van der Weide, Poinot, and Wedan to try out.
+          <ol type=i>
+          <li> Parallel version not quite finished ... still needs to
+               resolve one issue with HDF-5 developers.  <u>Action item
+               carries.</u>
+          </ol>
+     <li> Wedan and Rumsey will initiate a new proposal for extension,
+          perhaps based on Sayre's existing proposal but also including
+          structured grids, to try to deal with the need for writing
+          data to smaller and/or possibly lower-order regions.
+          <ol type=i>
+          <li> Proposal developed and sent to CGNSTalk. It is based
+               on current <a href="../sids/bc.html#BC"><tt>BC_t</tt></a>
+               node structure, which apparently can handle a lot of what
+               users want for functionality when writing "regions",
+               including arbitrary dimensionality. <u>Rumsey will post new
+               proposal for Regions on website and ask for comments.</u>
+          </ol>
+     <li> Wedan will look at Poinot's string definition header file and
+          determine the best course of action.
+          <ol type=i>
+          <li> Not done yet. May add this to distribution, but would not
+               be linked by default.  <u>Wedan will contact Poinot and look
+               into adding string definitions header file as part of the
+               official CGNS distribution.</u>
+          </ol>
+     <li> Wedan will look into the partial write problem (found by
+          Allmaras).
+          <ol type=i>
+          <li> Done.  Problem fixed (see <a href="#software">Software
+               section</a>).
+          </ol>
+     <li> Rumsey and Hauser will follow up with AIAA about the
+          possibility of developing an AIAA short course.
+          <ol type=i>
+          <li> Ball is now in our court.  AIAA wants outline developed
+               for course before they decide how to market it.  Alabi
+               volunteered to help Hauser prepare the outline /
+               course. <u>Rumsey will send Alabi information about what
+               AIAA needs to get the ball rolling on a possible AIAA
+               short course for CGNS. Hauser and Alabi will pursue this
+               effort.</u> Wedan, Rumsey, and Poinot are also interested in
+               possibly helping.
+          </ol>
+     <li> Hann will look at the documentation and recommend changes to
+          make it more explicit on the fact that the number of cells
+          in <tt>Zone_t</tt> should be the number of highest order
+          elements.
+          <ol type=i>
+          <li> Done, doc changes implemented early September.
+          </ol>
+     <li> Wedan will make the fix recommended by Montreuil in cgnstools
+          for IRIX64.
+          <ol type=i>
+          <li> Not done yet.  <u>Action item carries.</u>
+          </ol>
+     <li> Poinot will test the HDF5 external link capability.
+          <ol type=i>
+          <li> In process.  He has built HDF-5 version with links
+               extension, but is not sure how to apply them to his
+               problem yet.  Action item carries.
+          </ol>
+     <li> Allmaras will head up a task force to resolve the issue of the
+          face-based storage method.  Members are: Allmaras, Fisher,
+          Poinot, Hann, Weber, Feldman, Rumsey, Wedan, Imaly).  They
+          will hold a mini-telecon in early-September.
+          <ol type=i>
+          <li> Done. Telecon held (see <a href="#minutes">minutes</a>).
+               <u>Allmaras will send revised proposal to Rumsey for posting
+               on website.</u>
+          </ol>
+     </ol>
+<p>
+<li> Open items (see <a href="#item14">number 14 below</a>):
+     <p>
+     <ol type="a">
+     <li> Brief discussion:
+          <ol type=i>
+          <li> <a href="#HDF5_todo">HDF-5 "to-do" list</a> maybe not a
+               high priority now, because we decided to actively and
+               indefinitely support both ADF and HDF-5 (with HDF-5 the
+               "officially recommended" method).  But it is probably
+               important to continue to keep the items on the list in
+               the back of our minds.
+          <li> ISO/STEP effort is pretty much independent from us now,
+               but we still need to remember to try to keep up with it.
+          <li> Issue of need for certification process often comes up
+               at meetings, so we need to keep this in the back of our
+               minds also.  A checker currently comes bundled in with
+               the tools, and can be used stand-alone or in conjunction
+               with <a href="../cgnstools/adfviewer/index.html">adfviewer</a>.
+          <li> Need to add missing <tt>PYRA</tt> element, but this will
+               lose backward compatibility, so we have to wait until
+               version 3.0 before putting it in. General feeling at this
+               time was that we should hold off on 3.0: perhaps want to
+               first add capability for accessing HDF-5 or ADF at run
+               time rather than at compile time.
+          <li> It would be "nice" at some point to update the
+               <a href="../user/index.html">User's Guide</a>, especially
+               with more unstructured examples.
+          </ol>
+     </ol>
+<p>
+<li> ISO/STEP
+     <p>
+     <ol type="a">
+     <li> Nothing new to report.
+     </ol>
+<p>
+<li> Documentation
+     <p>
+     <ol type="a">
+     <li> Documentation has been updated: 
+          (1) <a href="../charter/organization.html#representation">changes
+          to charter</a> as mentioned above, (2) changes to
+          <a href="../midlevel/structural.html#zone">MLL</a> and
+          <a href="../sids/cgnsbase.html#Zone">SIDS</a> regarding # of
+          cells in <tt>Zone_t</tt> being the number of "highest order"
+          elements, (3) changes to charter to add
+          <a href="../charter/organization.html#representation">steering
+          committee member responsibilities</a>, (4) changes for
+          <a href="../sids/cnct.html#GridConnectivity"><tt>FaceCenter</tt>
+          connectivity</a> (recently-adopted proposal).
+     </ol>
+<p>
+<a name="software"></a>
+<li> Software
+     <p>
+     <ol type="a">
+     <li> Wedan has made many changes, including:  
+          <ol type=i>
+          <li> In particular, he fixed the partial read/write problem.
+               Now in write or modify mode, MLL never deletes the node
+               ... you must specifically delete it, or overwrite the
+               node entirely. As a result of all the fixes, there are
+               some new MLL routines, and some are no longer needed.
+          <li> Also added a capability to search for links
+          <li> Also modified <tt>cg_goto</tt> function to add more
+               capabilities (such as searching by name)
+          </ol>
+     <li> <u>Wedan will cut a new point release (2.5) soon, to include all
+          of the new capabilities.</u>
+     <li> <u>Wedan will write MLL documentation on all the recent changes
+          related to 2.5 and send to Towne for posting.</u> (No changes are
+          required in the SIDS.)
+     </ol>
+<p>
+<li> HDF-5
+     <p>
+     <ol type="a">
+     <li> Nothing new to report.
+     </ol>
+<p>
+<a name="extensions"></a>
+<li> Extensions
+     <p>
+     <ol type="a">
+     <li> As a result of voting as well as discussions during
+          <a href="telecon_aug06.html">2 August 2006 Telecon</a>, four
+          proposals were "processed":
+          <ol type=i>
+          <li> multiple zone connectivities for time dependent accepted,
+               awaiting implementation
+          <li> averaging interfaces &amp; grid connectivity put on hold
+               (conflicts with the way others already handle this -
+               better to do as <tt>UserDefined</tt> for now until
+               agreement can be reached)
+          <li> face center connectivity accepted, implemented (Doc only)
+          <li> FSI with deformable boundaries put on hold (apparently
+               can be handled using current capabilities)
+          </ol>
+     </ol>
+<p>
+<li> Other issues:
+     <p>
+     <ol type="a">
+     <li> Wedan noted that anyone interested in contributing as a
+          developer to CGNS can be given developer access to the
+          <a href="http://sourceforge.net/projects/cgns">SourceForge
+          repository</a> <img src="../external.png" alt="external link">.
+          Please contact Wedan or Rumsey if you are interested!
+     <li> Hauser to attend NOAA oceanographic workshop in Boulder
+          Colorado in mid-October and discuss CGNS.
+     <li> Next Steering Committee telecon will be held either in late
+          November, or else we will wait until we hold the Reno meeting
+          in early January (Wed PM). Decision will be made in early
+          November.
+     </ol>
+<p>
+<li> Meeting was adjourned at 12:05 PM.
+<p>
+<li> Summary of <b><u>action items</u></b>:
+     <p>
+     <ol type="a">
+     <li> Towne will update the Steering Committee Charter to add
+          Tecplot, and Rumsey will update the website.
+     <li> Towne will e-mail AIAA the latest version of the SIDS, to
+          insure it is up-to-date.
+     <li> Hauser will send parallel version of CGNS with HDF-5 to van
+          der Weide, Poinot, and Wedan to try out.
+     <li> Rumsey will post new proposal for Regions on website and ask
+          for comments.
+     <li> Wedan will contact Poinot and look into adding string
+          definitions header file as part of the official CGNS
+          distribution.
+     <li> Rumsey will send Alabi information about what AIAA needs to
+          get the ball rolling on a possible AIAA short course for CGNS.
+     <li> Hauser and Alabi will pursue AIAA short course effort, with
+          possible help from Wedan, Rumsey, and Poinot.
+     <li> Wedan will make the fix recommended by Montreuil in cgnstools
+          for IRIX64.
+     <li> Poinot will test the HDF5 external link capability.
+     <li> Allmaras will send revised proposal to Rumsey for posting on
+          website.
+     <li> Wedan will cut a new point release (2.5) soon, to include all
+          of the new capabilities.
+     <li> Wedan will write MLL documentation on all the recent changes
+          related to 2.5 and send to Towne for posting.
+     </ol>
+<p>
+<a name="item14"></a>
+<li> Summary of <b><u>open items</u></b> from prior meetings (these are
+     different from action items, in that they are open or unresolved
+     issues that we want to keep track of, but there are no specific
+     actions required of anyone at this point in time):
+     <p>
+     <ol type="a">
+     <li> Keep track of/resolve <a href="#HDF5_todo">HDF-5 "to-do" list</a>.
+     <li> Keep track of progress with ISO/STEP.
+     <li> Need for official certification process (test for compliance)
+     <li> Need to add Karman's additional <tt>PYRA</tt> element type to
+          allowed list (in software and in SIDS)
+     <li> Need to upgrade/update <a href="../user/index.html">User's
+          Guide</a> as appropriate (such as additional specific examples)
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+<tr valign=baseline><td>
+   <td>Ken Alabi<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Thaerocomp
+<tr valign=baseline><td>
+   <td>Steven Allmaras<td>
+   <td>Boeing Commercial
+<tr valign=baseline><td>
+   <td>Bob Bush<td>
+   <td>Pratt &amp; Whitney
+<tr valign=baseline><td>
+   <td>Armen Darian<td>
+   <td>Pratt &amp; Whitney
+<tr valign=baseline><td>
+   <td>Dan Einstein<td>
+   <td>Pacific NW National Laboratory
+<tr valign=baseline><td>
+   <td>Scott Imlay<td>
+   <td>Tecplot
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Renaud Sauvage<td>
+   <td>Airbus
+<tr valign=baseline><td>
+   <td>Charlie Towne<td>
+   <td>NASA Glenn
+<tr valign=baseline><td>
+   <td>Bruce Wedan<td>
+   <td>ANSYS/ICEM CFD
+<tr valign=baseline><td>
+   <td>Edwin van der Weide<td>
+   <td>Stanford University
+</table>
+
+<a name="HDF5_todo"></a>
+<h2>Tentative to-do list in association with HDF-5 switchover</h2>
+
+<ul>
+<li> Complete and test parallel implementation
+<li> Complete and test API capability to automatically detect and switch
+     between ADF and HDF-5 (transparent to user?)
+<li> Assess/minimize impact on software vendors using CGNS
+<li> Make changes recommended by HDF-5 to improve usability with HDF-5
+     (e.g., character strings as opposed to character arrays)
+<li> Assess compression capability of HDF-5
+<li> CGNS configure scripts will need to be modified to check for
+     availability of appropriate HDF-5 libraries.
+<li> Possibly add flag-based options when opening CGNS files.  For
+     example: "follow links" vs. "don't follow links"; "use ADF" vs. "use
+     HDF-5"; "translate file automatically" vs. "leave the file as-is";
+     "compress" vs. "don't compress".
+<li> Look into eliminating need for ID's from MLL
+<li> Resolve "link-of-links" problem: will require HDF-5 fix by NCSA
+     (beta implementation of "external links" is in the works -
+     likely complete in early 2006?)
+</ul>
+
+<a name="minutes"></a>
+<h2>Minutes of Mini-telecon concerning Face-based storage proposal</h2>
+
+Wed, Sept 6, 2006<br>
+11AM eastern
+
+<br><br>
+Attendees:<br>
+Allmaras, Feldman, Fisher, Hann, Imlay, Rumsey, Weber, Wedan
+
+<p>
+Discussion centered around whether or not to allow (encourage / make
+official) face-based connectivity method in CGNS files.  (Currently,
+connectivity is officially done via element-based, also known as
+cell-based or volume-based.)  It turns out that the mechanisms for
+allowing face-based are largely already in place. Allmaras presented
+pros and cons for allowing the new approach.
+
+<p>
+The consensus was to allow face-based as an option.  A given zone will
+be allowed to use either element-based OR face-based, but not both. A
+new flag will be defined at the <tt>Zone_t</tt> level to indicate what
+storage method is being used.  If this new flag is not present, then the
+default is element-based.  The data in the <tt>Zone_t</tt> node will
+still contain vertex size and cell size etc, as usual.
+
+<p>
+The current method for lumping the interior and boundary elements
+together will remain (there was some discussion for use of a new
+<tt>BoundaryElements_t</tt> label, but it was felt that there is already
+a lot of investment in the current method, and adding a new label would
+mostly complicate things at this point).
+
+<p>
+There was also a discussion about a possible need to allow
+<tt>FlowSolution</tt>s etc to be stored at face-centers and edges.
+Currently, for unstructured zones, such storage is only allowed at
+<tt>Vertex</tt> or <tt>CellCenter</tt>.  This appears to be do-able, but
+is independent of the face-based connectivity proposal, and therefore
+will be treated as a separate proposal in the future.
+
+<p>
+Thus, for the current proposal, there will be not only some
+documentation changes, but also some (minor) coding changes required to
+implement this proposal, in order to accomodate the new flag.  It was
+also mentioned that one of the CGNS "checkers" may need to be modified,
+because cell size in <tt>Zone_t</tt> will no longer match up with number
+of elements when they are face-based.
+
+<br><br>
+ACTIONS from mini-telecon:<br>
+Allmaras will revise his proposed changes to the SIDS and will send to
+the group.  Rumsey will subsequently post this to the website under
+"Proposals for Extension".
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 11 Oct 2006
+
+</body>
+</html>

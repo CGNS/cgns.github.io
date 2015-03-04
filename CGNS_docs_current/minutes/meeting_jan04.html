@@ -1,0 +1,356 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Meeting Minutes</h2>
+
+7 January 2004<br>
+7:00 PM Pacific Time<br><br>
+
+<ol>
+<li> The meeting was called to order at 7:05 PM.
+     There were <a href="#attendees">17 attendees</a>, listed below.
+<br><br>
+<li> The minutes of the 20 November 2004 telecon meeting were reviewed
+     and approved as posted on the web site.
+<br><br>
+<li> Status of previous action items:
+     <ol type="a">
+     <li> Check in latest HDF-5 software to SourceForge (Wedan):
+          <ul type=disc>
+          <li> A version was posted to SourceForge earlier, but Bruce
+               has since worked on it more. <u>The latest version will
+               be posted to SourceForge (under CVS) soon</u>, after
+               Marc Poinot has had a chance to look at it.  It can do
+               links OK now.  It is basically complete, although Bruce
+               identified a bug in the HDF-5 software, which he reported
+               to them.
+          </ul>
+     <li> Add home page to SourceForge (Wedan):
+          <ul type=disc>
+          <li> Done.
+          </ul>
+     <li> Proposal for reinstating removed element list and range (Wedan):
+          <ul type=disc>
+          <li> Committee decided to reinstate this without formal
+               proposal review, as of official release of Version
+               2.3 (see #7 below). <u>Rumsey to check with Towne to
+               see if SIDS documentation exists for this capability
+               already.</u>
+          </ul>
+     <li> Problem with ADF children's IDs between 2.2 and 2.3 (Poinot, Wedan)
+          <ul type=disc>
+          <li> Resolved.
+          </ul>
+     <li> Experiment with disk block size (Alonso, van der Weide)
+          <ul type=disc>
+          <li> 4096 = standard
+          <li> Biggest speed-up was maybe 25%, usually it was 5-10%
+          <li> Decided to leave as-is; maintains backward compatibility
+          </ul>
+     <li> Do links cause slowdown? (Alonso, van der Weide)
+          <ul type=disc>
+          <li> Yes, when many linked nodes are present
+          <li> Problem is number of zones in link - there are a lot of
+               links to <tt>GridCoordinates</tt> when there are a lot of
+               zones - when you open the file, it goes through all the
+               tree
+          <li> <u>Bruce will look into this issue further (perhaps can
+               modify open call so it does not follow links).</u>
+          </ul>
+     <li> Prepare/prioritize extensions (Bush, Rumsey)
+          <ul type=disc>
+          <li> Done (discussion later)
+          </ul>
+     <li> Post charter for comments (Rumsey, Edwards):
+          <ul type=disc>
+          <li> Done (discussion later)
+          </ul>
+     <li> Proposal for partial read/write posted to website (van der Weide):
+          <ul type=disc>
+          <li> Done.
+          </ul>
+     </ol>
+<br>
+<li> Charter (Rumsey)
+     <ol type="a">
+     <li> Only 2 minor comments were made via e-mail during the last 2
+          months.
+     <li> Vote was taken, charter was accepted.
+     <li> <u>Rumsey will finalize and send to Towne to post.</u>
+     </ol>
+<br>
+<li> ISO status/discussion (Cosner):
+     <ol type="a">
+     <li> Rumsey reported for Cosner: no formal change of status.
+          Boeing funding for 2004 remains unresolved.  With regard
+          to parts 52, 53, and 110, Ray has received several formal
+          comments from several countries, but they are low-level and
+          easily addressed.
+     </ol>
+<br>
+<li> Documentation issues and CGNStalk issues (Towne):
+     <ol type="a">
+     <li> Rumsey reported for Towne: for the updated AIAA recommended
+          practice, AIAA will send a ballot to the CGNS committee
+          sometime soon. <tt>ElementList</tt> and <tt>Range</tt> will
+          need to be added into the SIDS when that functionality is
+          turned back on (see #7 below).  Regarding spam problem on
+          CGNSTalk, it is not bad enough yet to warrant any action.
+     </ol>
+<br>
+<li> Software status/discussion (Wedan):
+     <ol type="a">
+     <li> Discussion took place about releasing CGNS V2.3 (removing from
+          beta status).  This was formally voted on and accepted by the
+          committee.
+     <li> It was also decided to put back in the <tt>ElementList</tt>
+          and <tt>Range</tt> capability, but this will require
+          modification to the SIDS.
+     <li> <u>Bruce will prepare V2.3 for official release - need to
+          coordinate with change to SIDS for <tt>ElementList</tt> and
+          <tt>Range</tt>.</u>
+     <li> <u>Bruce will look into formally archiving all old versions of
+          the software.</u>
+     <li> <u>Bruce will remove the webpage containing binaries - in the
+          future, all software must be obtained through SourceForge.</u>
+     </ol>
+<br>
+<li> HDF-5 status/discussion (Poinot, Wedan, Power): 
+     <ol type="a">
+     <li> Thomas Hauser described his work (Reno AIAA paper 2004-1088)
+          regarding CGNS with HDF-5 for parallel (created new calls in
+          API) - a start, still needs more work.
+     <li> Power, Alonso, agreed to help test new software.
+     <li> Edwards and Hauser will coordinate their efforts in this area.
+     <li> At some point, Bruce will put preliminary version of Hauser's
+          software on SourceForge.
+     <li> Noted that HDF-5 is slower than ADF for small files (&lt;
+          roughly 1 million points).  The file size is also bigger.
+     <li> Committee decided that it is still too early to officially
+          switch over to HDF-5 (from ADF).  We will work toward it.
+          When we go, it will be a "major" release (3.0).
+     <li> There is already a translator ADF -&gt; HDF-5 available.
+          When we go to V3.0, it should probably automatically make
+          the translation for the user (in much the same way that the
+          current software automatically upgrades earlier versions to
+          the latest).
+     </ol>
+<br>
+<li> Extensions status/discussion (Bush, Rumsey)
+     <ol type="a">
+     <li> Extensions were discussed and
+          <a href="#extensions">prioritized</a>, regarding possibility
+          for immediate implementation by Intelligent Light (as part
+          of their SBIR contract). <u>Rumsey to send a summary to
+          Edwards.</u>
+     </ol>
+<br>
+<li> Other issues:
+     <ol type="a">
+     <li> Poinot plans to submit a proposal relating to SIDS changes
+          needed in conjunction with an XML CGNS "compiler" he has been
+          developing.
+     </ol>
+<br>
+<li> Meeting was adjourned at 9:15 PM.
+<br><br>
+<li> Summary of action items:
+     <ol type="a">
+     <li> Wedan to post latest and greatest HDF-5 version (including
+          link capability) to SourceForge.
+     <li> Rumsey to check with Towne to see if documentation still
+          exists for <tt>ElementList</tt> and <tt>Range</tt> (removed
+          prior to V2).
+     <li> Wedan will look into issue of links further (perhaps can
+          modify open call so it does not follow links).
+     <li> Rumsey will finalize updated CGNS Charter and send to Towne to
+          post.
+     <li> Wedan will prepare V2.3 for official release - need to
+          coordinate with change to SIDS for <tt>ElementList</tt> and
+          <tt>Range</tt>.
+     <li> Wedan will look into formally archiving all old versions of
+          the software.
+     <li> Wedan will remove the webpage containing binaries - in the
+          future, all software must be obtained through SourceForge.
+     <li> Rumsey to send a summary of priority list of Proposals for
+          Extension to Edwards.
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Juan Alonzo<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Stanford
+<tr valign=baseline><td>
+   <td>Steve Barson<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Bob Bush<td>
+   <td>Pratt & Whitney
+<tr valign=baseline><td>
+   <td>David Edwards<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Thomas Hauser<td>
+   <td>Utah State University
+<tr valign=baseline><td>
+   <td>Bill Jones<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Todd Michal<td>
+   <td>Boeing
+<tr valign=baseline><td>
+   <td>Chris Nelson<td>
+   <td>ITAC
+<tr valign=baseline><td>
+   <td>Marc Poinot<td>
+   <td>ONERA
+<tr valign=baseline><td>
+   <td>Greg Power<td>
+   <td>USAF/AEDC
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>John Steinbrenner<td>
+   <td>Pointwise
+<tr valign=baseline><td>
+   <td>Greg Stuckert<td>
+   <td>Fluent
+<tr valign=baseline><td>
+   <td>Stephane Viala<td>
+   <td>AIRBUS
+<tr valign=baseline><td>
+   <td>Edwin Van der Weide<td>
+   <td>Stanford
+<tr valign=baseline><td>
+   <td>Bruce Wedan<td>
+   <td>ICEM CFD
+<tr valign=baseline><td>
+   <td>Andreas Wierse<td>
+   <td>VirCinity
+</table>
+
+<a name="extensions"></a>
+<h2>Prioritization of Proposals for Extension</h2>
+
+<table border>
+<tr align=left>
+   <th scope=col>Extension
+   <th scope=col>Recommendation<br>
+                 for near-term<br>
+                 implementation
+   <th scope=col>Changes<br>
+                 needed<br>
+                 to SIDS?
+   <th scope=col>Comments
+<tr valign=baseline>
+   <td>1) Partial read/write
+   <td align=center>H
+   <td align=center>N
+   <td>API only (5 functions) - see
+       <a href="../midlevel/grid.html#gridcoordinates"><tt>cg_coord_read</tt></a>
+<tr valign=baseline>
+   <td>2) Family extensions
+   <td align=center>H
+   <td align=center>Y
+   <td>Simple
+<tr valign=baseline>
+   <td>3) <tt>GridConnectivity</tt>
+   <td align=center>M
+   <td align=center>Y
+   <td>Simple
+<tr valign=baseline>
+   <td>4) <tt>BCDataSet</tt>
+   <td align=center>L
+   <td align=center>Y
+   <td>Implementation similar to #5
+<tr valign=baseline>
+   <td>5) <tt>UserDefined</tt>
+   <td align=center>H+
+   <td align=center>Y
+   <td>Highest priority - need to include <tt>UserDefined</tt> as child,
+       and limit to 10 layers
+<tr valign=baseline>
+   <td>6) New BC types
+   <td align=center>L
+   <td align=center>Y
+   <td>Some already exist - interior BC types should not be BCs
+<tr valign=baseline>
+   <td>7) &amp; 9) Elements/Chemistry
+   <td align=center>L
+   <td align=center>Y
+   <td>Needs more definition - also, make consistent with existing
+       Chemistry - get more buy-in from chemistry community
+<tr valign=baseline>
+   <td>8) Regions
+   <td align=center>L
+   <td align=center>Y
+   <td>Important, but need to add similar capability for Structured also
+       (in consistent fashion)
+<tr valign=baseline>
+   <td>10) Soln specific BCs
+   <td align=center>L
+   <td align=center>Y
+   <td>Transition still needed; need for others may not be justified
+<tr valign=baseline>
+   <td>11) Electromagnetics
+   <td align=center>H
+   <td align=center>Y
+   <td>Simple, already used by Wind code; need to rename "Sigma", change
+       label names
+<tr valign=baseline>
+   <td>12) Multiphase
+   <td align=center>L
+   <td align=center>Y
+   <td>Important, but not ready yet
+<tr valign=baseline>
+   <td>13) Hierarchical
+   <td align=center>L
+   <td align=center>Y
+   <td>Important, but not ready yet
+</table>
+
+<p>
+Note: low (L) priority does not indicate low value of proposal - the
+rating is primarily relating to readiness for immediate implementation,
+as well as need for the capability by the greatest number of users.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 13 Jan 2004
+
+</body>
+</html>

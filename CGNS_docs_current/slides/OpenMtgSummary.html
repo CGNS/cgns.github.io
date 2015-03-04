@@ -1,0 +1,295 @@
+<!-- HTML input file for "CGNS Summary" slides -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../cgns.css" rel="stylesheet" type="text/css">
+<title>CGNS Summary</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<h1>
+CGNS Summary
+</h1>
+
+<p>
+CGNS (CFD General Notation System)<br><br>
+Summary for Open Meeting, May 1999
+
+<p>
+Prepared by: Douglas R. McCarthy<br>
+douglas.r.mccarthy@boeing.com<br>
+May 20, 1999
+
+<h2>CGNS System - General Description</h2>
+
+<ul>
+<li> Standards for CFD data specification, storage and I/O
+<li> Open software implementing the standards
+<li> Developed under AST contract by:
+     <ul>
+     <li> Boeing Seattle
+     <li> Boeing St. Louis
+     <li> ICEM CFD
+     <li> NASA Langley
+     <li> NASA Ames
+     <li> NASA Glenn
+     </ul>
+<li> Participation by:
+     <ul>
+     <li> WPAFB
+     <li> NPARC Alliance
+     </ul>
+</ul>
+
+<h2>CGNS System - Standardized Data and I/O for CFD</h2>
+
+<p>
+Purpose:
+<ul>
+<li> Exchange data easily between groups and sites, and across computing
+     platforms
+<li> Archive data in self-documenting, machine independent form
+<li> Exchange data directly between "applications" codes (i.e., grid
+     generators, flow solvers, post-processors)
+<li> Make applications themselves interchangeable
+<li> Reduce time to incorporate new capabilities
+<li> Allow applications engineers to choose methods based on technical
+     requirements
+<li> Allow developers to focus on added value rather than I/O
+<li> Facilitate the development of infrastructure and general utilities
+     for manipulating CFD data
+</ul>
+
+<p>
+Scope:
+<ul>
+<li> Pointers to CAD Geometry
+<li> Multi-block structured grids (all types)
+<li> Unstructured grids
+<li> Field properties
+<li> Boundary conditions
+<li> Connection information
+<li> Units, non-dimensionalization, turbulence models, equation sets,
+     etc.
+</ul>
+
+<p>
+Implementation:
+<ul>
+<li> Incorporate CGNS I/O into existing or new applications codes
+<li> Codes share information using the file system as a data bus
+<li> Codes are still run under user selection and control
+<li> User responsible for file manipulation and directory maintenance
+<li> No file "locking"
+</ul>
+
+<h2>CGNS Software Relationships</h2>
+
+<center>
+<img src="OpenMtgSummary/fig1.png"
+     alt="Figure illustrating CGNS software relationships"
+     longdesc="OpenMtgSummary/fig1.html">
+</center>
+
+<h2>Two Level System</h2>
+
+<p>
+Independent Data Base Manager, ADF
+<ul>
+<li> Tree, with links
+<li> All nodes in tree are the same:
+     <ul>
+     <li> Labeling information
+     <li> Dimensioning information
+     <li> Data (optional): Integer, Real, Character, etc.
+     </ul>
+<li> Optimized for dense data
+<li> Minimal instruction set (ADF Core)
+</ul>
+
+<p>
+CFD General Notation System (CGNS)
+<ul>
+<li> Data stored in ADF files
+<li> Accessed by "Mid" level API which understands CFD
+</ul>
+
+<h2>ADF (Advanced Data Format)</h2>
+
+<ul>
+<li> Stand-alone general Database Manager
+<li> Stores tree-structured binary data, patterned on St. Louis' Common
+     File Format (CFF)
+<li> Coded in C, with FORTRAN access
+<li> Code and files fully portable
+<li> Extensively debugged and tested
+<li> Thoroughly documented
+<li> In use in place of CFF at St. Louis, and in Wind code
+</ul>
+
+<h2>CGNS (CFD General Notation System)</h2>
+
+<p>
+Standards:
+<ul>
+<li> SIDS (Standard Interface Data Structures)
+     <ul>
+     <li> Defines the intellectual content of CFD data in detail
+     </ul>
+<li> File Mapping Conventions
+     <ul>
+     <li> Define the way the content is stored in the ADF file(s)
+     </ul>
+</ul>
+
+<p>
+Software:
+<ul>
+<li> CGNS Mid-level Library (API)
+     <ul>
+     <li> Routines to access CFD-related objects stored in ADF files
+          at a level much higher than the ADF Core. Meant to be
+          incorporated into applications code.
+     </ul>
+</ul>
+
+<h2>CGNS System Current Completion Status (5/99)</h2>
+
+<p>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr align=left><td colspan=7><hr width=100% noshade>
+<tr valign=baseline>
+   <td><td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col align=left>SIDS<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col align=left>File Mapping<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col align=left>Mid-Level Routines
+<tr align=left><td colspan=7><hr width=100% noshade>
+<tr valign=baseline>
+   <td scope=row>CAD Pointers<td>
+   <td nowrap>Agreement achieved 3/27/98,<br>
+              implementation in V1.1<td>
+   <td nowrap>Agreement achieved 3/27/98,<br>
+              implementation in V1.1<td>
+   <td>In work, V1.1
+<tr valign=baseline>
+   <td scope=row>Structured<td>
+   <td>Complete V1.0<td>
+   <td>Complete V1.0<td>
+   <td>Complete V1.0
+<tr valign=baseline>
+   <td scope=row>Unstructured<td>
+   <td>Complete V1.1<td>
+   <td>Complete V1.1<td>
+   <td>In work, V1.1
+<tr valign=baseline>
+   <td scope=row>Chemistry<td>
+   <td>Nomenclature proposal on table<td>
+   <td>Complete<td>
+   <td>No special code needed
+<tr valign=baseline>
+   <td scope=row>Moving Grid<td>
+   <td colspan=3>Proposals on table<td>
+   <td>Some code needed
+<tr align=left><td colspan=7><hr width=100% noshade>
+</table>
+</center>
+
+<h2>Software Development Status</h2>
+
+<ul>
+<li> Wind (NPARC) converted from CFF to ADF; conversion to CGNS underway
+     at Boeing (V3.0)
+<li> CFF-to-CGNS Converter
+     <ul>
+     <li> Done at Boeing S.L. using ADF Core level
+     <li> CGNS-to-CFF in work at UTRC using API
+     </ul>
+<li> Plot3d-to-CGNS Converter
+<li> Overflow converted to CGNS (Kiris) - ADF and API levels
+<li> Pegasus-to-CGNS converter (Kiris)
+     <ul>
+     <li> Installation into V5 at MicroCraft
+     </ul>
+<li> CFL3D converted (non-overset) (Rumsey)
+<li> TLNS3D underway (Poirier)
+<li> ICEM CFD
+     <ul>
+     <li> Grid Generation, V3 Visualizer, etc.
+     </ul>
+</ul>
+
+<h2>System Demonstration</h2>
+
+<ul>
+<li> Grid generated at NASA-Ames using local tools
+<li> Sent to St. Louis; overset connections calculated by G-man, written
+     in CGNS format
+<li> Sent to Ames, run in Overflow
+<li> (Runs in CFL3D, but point-match grid only partially complete)
+<li> Demonstrated at Team Meeting, March 98:
+     <ul>
+     <li> (Displayed in V3 via ICEM-CFD implementation)
+     </ul>
+</ul>
+
+<h2>CGNS/CAD Software Relationships</h2>
+
+<center>
+<img src="OpenMtgSummary/fig2.png"
+     alt="Figure illustrating CGNS/CAD software relationships"
+     longdesc="OpenMtgSummary/fig2.html">
+</center>
+
+<h2>Current CGNS Documentation and Software (V1.0)</h2>
+<ul>
+<li> Documents:
+     <ul>
+     <li> CGNS Overview
+     <li> The CGNS System (AIAA 98-3007)
+     <li> ADF Core User's Manual
+     <li> SIDS (Standard Interface Data Structures
+     <li> SIDS-to-ADF File Mapping Document
+     <li> CGNS Mid-level Library Document
+     </ul>
+<li> Software:
+     <ul>
+     <li> CGNS Midlevel Library (API)
+     <li> ADF Core
+     </ul>
+<li> Site:
+     <ul>
+     <li> www.CGNS.org
+     </ul>
+</ul>
+
+<h2>What's Happening Now</h2>
+<ul>
+<li> Web Site
+     <ul>
+     <li> 120+ registrants
+     <li> 20+ countries
+     </ul>
+<li> Expansion of Interest
+     <ul>
+     <li> Engine Manufacturers
+     <li> Software Vendors
+     <li> Other Industries
+     </ul>
+<li> Transfer of Control
+     <ul>
+     <li> Open, public forum
+     <li> Boeing support for ISO standard
+     </ul>
+</ul>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 10 Dec 2007
+
+</body>
+</html>

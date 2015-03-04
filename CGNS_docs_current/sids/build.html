@@ -1,0 +1,416 @@
+<!-- CGNS SIDS document - Building-Block Structure Definitions -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Building-Block Structure Definitions </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<span class=nav><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></span>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Building-Block Structure Definitions</h2>
+
+<ul>
+<li> <a href="#DataClass">Definition: <tt>DataClass_t</tt></a>
+<li> <a href="#Descriptor">Definition: <tt>Descriptor_t</tt></a>
+<li> <a href="#DimensionalUnits">Definition: <tt>DimensionalUnits_t</tt></a>
+<li> <a href="#DimensionalExponents">Definition: <tt>DimensionalExponents_t</tt></a>
+<li> <a href="#GridLocation">Definition: <tt>GridLocation_t</tt></a>
+<li> <a href="#IndexArray">Definition: <tt>IndexArray_t</tt></a>
+<li> <a href="#IndexRange">Definition: <tt>IndexRange_t</tt></a>
+<li> <a href="#Rind">Definition: <tt>Rind_t</tt></a>
+</ul>
+
+<p>
+This section defines and describes low-level structures types that are
+used in the definition of more complex structures within the hierarchy.
+
+<a name="DataClass"></a>
+<h3>Definition: <tt>DataClass_t</tt></h3>
+
+<tt>DataClass_t</tt> is an enumeration type that identifies the class of
+a given piece of data.
+<pre>
+  DataClass_t := Enumeration( 
+    DataClassNull, 
+    DataClassUserDefined,
+    Dimensional,
+    NormalizedByDimensional,
+    NormalizedByUnknownDimensional,
+    NondimensionalParameter,
+    DimensionlessConstant ) ;
+</pre>
+
+<p>
+These classes divide data into different categories depending on
+dimensional units or normalization associated with the data.
+<tt>Dimensional</tt> specifies dimensional data.
+<tt>NormalizedByDimensional</tt> specifies nondimensional data that is
+normalized by dimensional reference quantities.
+In contrast, <tt>NormalizedByUnknownDimensional</tt> specifies
+nondimensional data typically found in completely nondimensional
+databases, where all field and reference data is nondimensional.
+<tt>NondimensionalParameter</tt> specifies nondimensional parameters
+such as Mach number and lift coefficient.
+Constants such as <i>&pi;</i> are designated
+by <tt>DimensionlessConstant</tt>.
+The distinction between these different classes is further discussed in
+<a href="data.html">Data-Array Structure Definition</a>.
+
+<a name="Descriptor"></a>
+<h3>Definition: <tt>Descriptor_t</tt></h3>
+
+<p>
+<tt>Descriptor_t</tt> is a documentation or annotation structure that
+contains a character string.
+Characters allowed within the string include newlines, tabs and other
+special characters; this potentially allows for unlimited documentation
+inclusion within the database.
+For example, a single <tt>Descriptor_t</tt> structure could be used to
+"swallow" an entire ASCII file.
+In the hierarchical structures defined in the next sections, each allows
+for the inclusion of multiple <tt>Descriptor_t</tt> substructures.
+Conventions could be made for names of often-used
+<tt>Descriptor_t</tt> structure entities, such as <tt>ReadMe</tt> or
+<tt>YouReallyWantToReadMeFirst</tt>.
+<pre>
+  Descriptor_t :=
+    {
+    Data(char, 1, string_length) ;                                     (r)
+    } ;
+</pre>
+where <tt>string_length</tt> is the length of the character string.
+
+<a name="DimensionalUnits"></a>
+<h3>Definition: <tt>DimensionalUnits_t</tt></h3>
+
+<p>
+<tt>DimensionalUnits_t</tt> describes the system of units used to
+measure dimensional data.
+It is composed of a set of enumeration types that define the units for
+mass, length, time, temperature, angle, electric current, substance
+amount, and luminous intensity.
+
+<pre>
+  MassUnits_t              := Enumeration( MassUnitsNull, MassUnitsUserDefined,
+                                           Kilogram, Gram, Slug, PoundMass ) ;
+
+  LengthUnits_t            := Enumeration( LengthUnitsNull, LengthUnitsUserDefined,
+                                           Meter, Centimeter, Millimeter, Foot,
+                                           Inch ) ;
+
+  TimeUnits_t              := Enumeration( TimeUnitsNull, TimeUnitsUserDefined,
+                                           Second ) ;
+
+  TemperatureUnits_t       := Enumeration( TemperatureUnitsNull,
+                                           TemperatureUnitsUserDefined, Kelvin,
+                                           Celsius, Rankine, Fahrenheit ) ;
+
+  AngleUnits_t             := Enumeration( AngleUnitsNull, AngleUnitsUserDefined,
+                                           Degree, Radian ) ;
+
+  ElectricCurrentUnits_t   := Enumeration( ElectricCurrentUnitsNull,
+                                           ElectricCurrentUnitsUserDefined, Ampere,
+                                           Abampere, Statampere, Edison, auCurrent ) ;
+
+  SubstanceAmountUnits_t   := Enumeration( SubstanceAmountUnitsNull,
+                                           SubstanceAmountUnitsUserDefined, Mole,
+                                           Entities, StandardCubicFoot,
+                                           StandardCubicMeter ) ;
+
+  LuminousIntensityUnits_t := Enumeration( LuminousIntensityUnitsNull,
+                                           LuminousIntensityUnitsUserDefined,
+                                           Candela, Candle, Carcel, Hefner, Violle ) ;
+</pre>
+
+<pre>
+  DimensionalUnits_t :=
+    {
+    MassUnits_t        MassUnits ;                                     (r)
+    LengthUnits_t      LengthUnits ;                                   (r)
+    TimeUnits_t        TimeUnits ;                                     (r)
+    TemperatureUnits_t TemperatureUnits ;                              (r)
+    AngleUnits_t       AngleUnits ;                                    (r)
+
+    AdditionalUnits_t :=                                               (o)
+      {
+      ElectricCurrentUnits_t   ElectricCurrentUnits ;                  (r)
+      SubstanceAmountUnits_t   SubstanceAmountUnits ;                  (r)
+      LuminousIntensityUnits_t LuminousIntensityUnits ;                (r)
+      }
+    } ;
+</pre>
+
+<p>
+The International System (SI) uses the following units.
+
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr align=left><td colspan=3><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col>Physical Quantity<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Unit
+<tr align=left><td colspan=3><hr width=100% noshade>
+<tr valign=baseline>
+   <td>Mass<td>
+   <td>Kilogram
+<tr valign=baseline>
+   <td>Length<td>
+   <td>Meter
+<tr valign=baseline>
+   <td>Time<td>
+   <td>Second
+<tr valign=baseline>
+   <td>Temperature<td>
+   <td>Kelvin
+<tr valign=baseline>
+   <td>Angle<td>
+   <td>Radian
+<tr valign=baseline>
+   <td>Electric Current<td>
+   <td>Ampere
+<tr valign=baseline>
+   <td>Substance Amount<td>
+   <td>Mole
+<tr valign=baseline>
+   <td>Luminous Intensity<td>
+   <td>Candela
+<tr align=left><td colspan=3><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+For an entity of type <tt>DimensionalUnits_t</tt>, if all the elements
+of that entity have the value <tt>Null</tt> (i.e., <tt>MassUnits</tt>
+= <tt>MassUnitsNull</tt>, etc.), this is equivalent to stating that the data
+described by the entity is nondimensional.
+
+<a name="DimensionalExponents"></a>
+<h3>Definition: <tt>DimensionalExponents_t</tt></h3>
+
+<p>
+<tt>DimensionalExponents_t</tt> describes the dimensionality of data by
+defining the exponents associated with each of the fundamental units.
+<pre>
+  DimensionalExponents_t :=
+    {
+    real MassExponent ;                                                (r)
+    real LengthExponent ;                                              (r)
+    real TimeExponent ;                                                (r)
+    real TemperatureExponent ;                                         (r)
+    real AngleExponent ;                                               (r)
+
+    AdditionalExponents_t :=                                           (o)
+      {
+      real ElectricCurrentExponent   ;                                 (r)
+      real SubstanceAmountExponent   ;                                 (r)
+      real LuminousIntensityExponent ;                                 (r)
+      }
+    } ;
+</pre>
+
+<p>
+For example, an instance of <tt>DimensionalExponents_t</tt> that
+describes velocity is,
+<pre>
+  DimensionalExponents_t =
+    {{
+    MassExponent        =  0 ;
+    LengthExponent      = +1 ;
+    TimeExponent        = -1 ;
+    TemperatureExponent =  0 ;
+    AngleExponent       =  0 ;
+    }} ;
+</pre>
+
+<a name="GridLocation"></a>
+<h3>Definition: <tt>GridLocation_t</tt></h3>
+
+<p>
+<tt>GridLocation_t</tt> identifies locations with respect to the grid;
+it is an enumeration type.
+<pre>
+  GridLocation_t := Enumeration( 
+    GridLocationNull,
+    GridLocationUserDefined,
+    Vertex,
+    CellCenter,
+    FaceCenter,
+    IFaceCenter,
+    JFaceCenter,
+    KFaceCenter,
+    EdgeCenter ) ;
+</pre>
+
+<p>
+<tt>Vertex</tt> is coincident with the grid vertices.
+<tt>CellCenter</tt> is the center of a cell; this is also appropriate
+for entities associated with cells but not necessarily with a given
+location in a cell.
+For structured zones, <tt>IFaceCenter</tt> is the center of a face in
+3-D whose computational normal points in the <i>i</i> direction.
+<tt>JFaceCenter</tt> and <tt>KFaceCenter</tt> are similarly defined,
+again only for structured zones.
+<tt>FaceCenter</tt> is the center of a generic face that can point in
+any coordinate direction.
+These are also appropriate for entities associated with a face, but not
+located at a specific place on the face.
+<tt>EdgeCenter</tt> is the center of an edge.
+See <a href="conv.html#structgrid">Structured Grid Notation and Indexing
+Conventions</a> for descriptions of cells, faces and edges.
+
+<p>
+All of the entities of type <tt>GridLocation_t</tt> defined in this
+document use a default value of <tt>Vertex</tt>.
+
+<a name="IndexArray"></a>
+<h3>Definition: <tt>IndexArray_t</tt></h3>
+
+<p>
+<tt>IndexArray_t</tt> specifies an array of indices.
+An argument is included that allows for specifying the data type of each
+index; typically the data type will be integer (<tt>int</tt>).
+<tt>IndexArray_t</tt> defines an array of indices of size
+<tt>ArraySize</tt>, where the dimension of each index is
+<tt>IndexDimension</tt>.
+<pre>
+  IndexArray_t&lt; int IndexDimension, int ArraySize, DataType &gt; :=
+    {
+    Data( DataType, 2, [IndexDimension,ArraySize] ) ;                  (r)
+    } ;
+</pre>
+
+<a name="IndexRange"></a>
+<h3>Definition: <tt>IndexRange_t</tt></h3>
+
+<p>
+<tt>IndexRange_t</tt> specifies the beginning and ending indices of a
+subrange.
+The subrange may describe a portion of a grid line, grid plane, or grid
+volume.
+<pre>
+  IndexRange_t&lt; int IndexDimension &gt; :=
+    {
+    int[IndexDimension] Begin ;                                        (r)
+    int[IndexDimension] End ;                                          (r)
+    } ;
+</pre>
+where <tt>Begin</tt> and <tt>End</tt> are the indices of the opposing
+corners of the subrange.
+
+<a name="Rind"></a>
+<h3>Definition: <tt>Rind_t</tt></h3>
+
+<p>
+<tt>Rind_t</tt> describes the number of <a href="conv.html#rind_struct">rind
+planes</a> (for structured grids) or <a href="conv.html#rind_unstruct">rind
+points and elements</a> (for unstructured grids)
+associated with a data array containing grid coordinates,
+flow-solution data or any other grid-related discrete data.
+<pre>
+  Rind_t&lt; int IndexDimension &gt; :=
+    {
+    int[2*IndexDimension] RindPlanes ;                                 (r)
+    } ;
+</pre>
+
+<p>
+For structured grids, <tt>RindPlanes</tt> contains the number of rind
+planes attached to the minimum and maximum faces of a zone.
+The face corresponding to each index <i>n</i> of <tt>RindPlanes</tt> in
+3-D is:
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>n</i> = 1&nbsp;&nbsp;--&gt;&nbsp;&nbsp;<i>i</i>-min<td><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>n</i> = 2&nbsp;&nbsp;--&gt;&nbsp;&nbsp;<i>i</i>-max
+<tr valign=baseline><td>
+   <td><i>n</i> = 3&nbsp;&nbsp;--&gt;&nbsp;&nbsp;<i>j</i>-min<td>
+   <td><i>n</i> = 4&nbsp;&nbsp;--&gt;&nbsp;&nbsp;<i>j</i>-max
+<tr valign=baseline><td>
+   <td><i>n</i> = 5&nbsp;&nbsp;--&gt;&nbsp;&nbsp;<i>k</i>-min<td>
+   <td><i>n</i> = 6&nbsp;&nbsp;--&gt;&nbsp;&nbsp;<i>k</i>-max
+</table>
+
+<p>
+For a 3-D grid whose "core" size is
+<tt>II</tt>&times;<tt>JJ</tt>&times;<tt>KK</tt>, a value of
+<tt>RindPlanes = [a,b,c,d,e,f]</tt> indicates that the range of indices
+for the grid with rind is:
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><i>i</i>:<td><tt>&nbsp;</tt>
+   <td><tt>(1 - a, II + b)</tt>
+<tr valign=baseline><td>
+   <td><i>j</i>:<td>
+   <td><tt>(1 - c, JJ + d)</tt>
+<tr valign=baseline><td>
+   <td><i>k</i>:<td>
+   <td><tt>(1 - e, KK + f)</tt>
+</table>
+
+<p>
+For unstructured grids, <tt>RindPlanes</tt> does not actually contain
+planes, but rather contains the number of rind points or elements.
+The points are defined by the grid coordinates rind node, and the
+elements by the element set rind node.
+Note that to maintain consistency with the structured usage
+of <tt>Rind_t</tt>, <tt>RindPlanes</tt> is still dimensioned
+<tt>2*IndexDimension</tt> for unstructured grids (and, for unstructured
+grids, <tt>IndexDimension = 1</tt>).
+The first <tt>RindPlanes</tt> value is the number of rind nodes/elements
+stored before the core data, and the second is the number stored after.
+Thus <tt>RindPlanes[2] = {1 2}</tt> would mean there is one rind value
+before the core data, and two after the core data.
+However, it is preferable to write all the rind points or elements at
+the <em>end</em> of the array; in other words, for unstructured grids
+<tt>RindPlanes[2]</tt> should be set to <tt>{0 </tt><i>nrind</i><tt>}</tt>,
+where <i>nrind</i> is the number of rind points or elements.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 07 Feb 2014
+
+</body>
+</html>

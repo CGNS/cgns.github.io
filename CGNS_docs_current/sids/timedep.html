@@ -1,0 +1,981 @@
+<!-- CGNS SIDS document - Time-Dependent Flow -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Time-Dependent Flow </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<span class=nav><b>Time-Dependent&nbsp;Flow</b></span>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Time-Dependent Flow</h2>
+
+<ul>
+<li> <a href="#IterativeData">Iterative Data Structure Definitions</a>
+<li> <a href="#RigidGridMotion">Rigid Grid Motion Structure Definition: <tt>RigidGridMotion_t</tt></a>
+<li> <a href="#ArbitraryGridMotion">Arbitrary Grid Motion Structure Definition: <tt>ArbitraryGridMotion_t</tt></a>
+<li> <a href="#ZoneGridConnectivity">Zone Grid Connectivities
+<li> <a href="#Examplestimedep">Examples for Time-Dependent Flow</a>
+</ul>
+
+<p>
+This section describes structure types intended primarily for time-dependent
+flows.
+Data structures are presented for storing time-dependent or iterative
+data, and for recording rigid and arbitary grid motion.
+The section concludes with several examples.
+
+<a name="IterativeData"></a>
+<h3>Iterative Data Structure Definitions</h3>
+
+<p>
+In order to keep a record of time dependent or iterative data, the data
+structures <tt>BaseIterativeData_t</tt> and <tt>ZoneIterativeData_t</tt>
+are used.
+
+<a name="BaseIterativeData"></a>
+<h4>Base Iterative Data Structure Definition: <tt>BaseIterativeData_t</tt></h4>
+
+<p>
+The <tt>BaseIterativeData_t</tt> data structure is located directly under
+the <a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> node.
+It contains information about the number of time steps or iterations
+being recorded, and the time and/or iteration values at each step.
+In addition, it may include the list of zones and families for each step
+of the simulation, if these vary throughout the simulation.
+
+<p>
+The <tt>BaseIterativeData_t</tt> data structure is defined as follows:
+
+<pre>
+  BaseIterativeData_t :=
+    {
+    int NumberOfSteps                                                  (r)
+
+    DataArray_t&lt;real, 1, NumberOfSteps&gt; TimeValues ;                   (o/r)
+    DataArray_t&lt;int,  1, NumberOfSteps&gt; IterationValues ;              (r/o)
+
+    DataArray_t&lt;int,  1, NumberOfSteps&gt; NumberOfZones ;                (o)
+    DataArray_t&lt;int,  1, NumberOfSteps&gt; NumberOfFamilies ;             (o)
+    DataArray_t&lt;char, 3, [32, MaxNumberOfZones, NumberOfSteps]&gt;
+       ZonePointers ;                                                  (o)
+    DataArray_t&lt;char, 3, [32, MaxNumberOfFamilies, NumberOfSteps]&gt;
+       FamilyPointers ;                                                (o)
+
+    List( DataArray_t&lt;&gt; DataArray1 ... DataArrayN ) ;                  (o)
+
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    }
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>,
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>BaseIterativeData_t</tt> and shall not include the names
+     <tt>DataClass</tt>, <tt>DimensionalUnits</tt>, <tt>FamilyPointers</tt>,
+     <tt>IterationValues</tt>, <tt>NumberOfFamilies</tt>,
+     <tt>NumberOfZones</tt>, <tt>TimeValues</tt>, or <tt>ZonePointers</tt>.
+<li> <tt>NumberOfSteps</tt> is a required element of the
+     <tt>BaseIterativeData_t</tt> data structure.
+     It holds either the number of time steps or the number of iterations
+     being recorded.
+<li> <tt>TimeValues</tt> or <tt>IterationValues</tt> must be defined.
+     If both are used, there must be a one-to-one correspondence between
+     them.
+</ol>
+
+<p>
+<tt>TimeValues</tt> and <tt>IterationValues</tt> are data-name identifiers
+corresponding to the time and iteration values stored in the file.
+When <tt>IterationValues</tt> are used, the iterative data stored in the
+database correspond to values at the end of the associated iteration.
+
+<p>
+The data-name identifiers <tt>NumberOfZones</tt> and <tt>ZonePointers</tt>
+are only used if different zone data structures apply to different steps
+of the simulation.
+(See the <a href="#ex:adaptedunstructuredmesh">Adapted Unstructured Mesh
+example</a>.)
+
+<p>
+Similarly, if the geometry varies with time or iteration, then the
+data-name identifiers <tt>NumberOfFamilies</tt> and <tt>FamilyPointers</tt>
+are used to record which <a href="misc.html#Family"><tt>Family_t</tt></a>
+data structure(s) correspond(s) to which step.
+
+<p>
+The <a href="data.html#DataArray"><tt>DataArray_t</tt></a> nodes for
+<tt>ZonePointers</tt> and <tt>FamilyPointers</tt> are defined as
+three-dimensional arrays.
+For each recorded step, the names of all zones and families being
+used for the step may be recorded.
+Note that the names are limited to 32 characters, as usual in the SIDS.
+The variables <tt>MaxNumberOfZones</tt> and <tt>MaxNumberOfFamilies</tt>
+represent the maximum number of zones and families that apply to
+one step.
+So if <tt>NumberOfSteps</tt> = 5 and <tt>NumberOfZones</tt> = {2,2,3,4,3},
+then <tt>MaxNumberOfZones</tt> equals 4.
+
+<p>
+When <tt>NumberOfZones</tt> and <tt>NumberOfFamilies</tt> vary for
+different stored time steps, the name <tt>Null</tt> is used in
+<tt>ZonePointers</tt> and <tt>FamilyPointers</tt> as appropriate for
+steps in which the <tt>NumberOfZones</tt> or <tt>NumberOfFamilies</tt>
+is less than the <tt>MaxNumberOfZones</tt> or <tt>MaxNumberOfFamilies</tt>.
+
+<p>
+Any number of extra <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+nodes are allowed.
+These should be used to record data not covered by this specification.
+
+<a name="ZoneIterativeData"></a>
+<h4>Zone Iterative Data Structure Definition: <tt>ZoneIterativeData_t</tt></h4>
+
+<p>
+The <tt>ZoneIterativeData_t</tt> data structure is located under the
+<a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a> node.
+It may be used to record pointers to zonal data for each recorded step of
+the simulation, and is defined as follows:
+
+<pre>
+  ZoneIterativeData_t&lt; int NumberOfSteps &gt; :=
+    {
+    DataArray_t&lt;char, 2, [32, NumberOfSteps]&gt;
+       RigidGridMotionPointers ;                                       (o)
+    DataArray_t&lt;char, 2, [32, NumberOfSteps]&gt;
+       ArbitraryGridMotionPointers ;                                   (o)
+    DataArray_t&lt;char, 2, [32, NumberOfSteps]&gt;
+       GridCoordinatesPointers ;                                       (o)
+    DataArray_t&lt;char, 2, [32, NumberOfSteps]&gt;
+       FlowSolutionPointers ;                                          (o)
+    DataArray_t&lt;char, 2, [32, NumberOfSteps]&gt;
+       ZoneGridConnectivityPointers ;                                  (o)
+    DataArray_t&lt;char, 2, [32, NumberOfSteps]&gt;
+       ZoneSubRegionPointers ;                                         (o)
+
+    List( DataArray_t&lt;&gt; DataArray1 ... DataArrayN ) ;                  (o)
+
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    }
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>,
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>ZoneIterativeData_t</tt> and shall not include the names
+     <tt>ArbitraryGridMotionPointers</tt>, <tt>DataClass</tt>,
+     <tt>DimensionalUnits</tt>, <tt>FlowSolutionPointers</tt>,
+     <tt>GridCoordinatesPointers</tt>, <tt>RigidGridMotionPointers</tt>,
+     <tt>ZoneGridConnectivityPointers</tt>, or <tt>ZoneSubRegionPointers</tt>.
+</ol>
+
+<p>
+The data arrays with data-name identifiers <tt><i>xxx</i>Pointers</tt>
+contain lists of associated data structures for each recorded time value
+or iteration.
+These data structures contain data at the associated time value, or at
+the end of the associated iteration.
+There is an implied one-to-one correspondence between each pointer
+(from 1, 2, ..., <tt>NumberOfSteps</tt>) and the associated
+<tt>TimeValues</tt> and/or <tt>IterationValues</tt> under
+<tt>BaseIterativeData_t</tt>.
+They refer by name to data structures within the current zone.
+The name <tt>Null</tt> is used when a particular time or iteration
+does not have a corresponding data structure to point to.
+
+<p>
+Any number of extra <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+nodes are allowed.
+These should be used to record data not covered by this specification.
+
+<p>
+The <tt>ZoneIterativeData_t</tt> data structure may not exist without
+the <tt>BaseIterativeData_t</tt> under the
+<a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> node.
+However <tt>BaseIterativeData_t</tt> may exist without
+<tt>ZoneIterativeData_t</tt>.
+
+<a name="RigidGridMotion"></a>
+<h3>Rigid Grid Motion Structure Definition: <tt>RigidGridMotion_t</tt></h3>
+
+<p>
+Adding rigid grid motion information to the CGNS file enables an
+application code to determine the mesh location without the need to
+alter the original mesh definition recorded under
+<a href="gridflow.html#GridCoordinates"><tt>GridCoordinates_t</tt></a>.
+A data structure named <tt>RigidGridMotion_t</tt> is used to record the
+necessary data defining a rigid translation and/or rotation of the grid
+coordinates.
+
+<p>
+The rigid grid motion is recorded independently for each zone of the
+CGNS base.
+Therefore the <tt>RigidGridMotion_t</tt> data structure is located under
+the zone data structure (<a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a>).
+There may be zero to several <tt>RigidGridMotion_t</tt> nodes under a
+<tt>Zone_t</tt> node.
+The multiple rigid grid motion definitions may be associated with
+different iterations or time steps in the computation.
+This association is recorded under the
+<a href="#ZoneIterativeData"><tt>ZoneIterativeData_t</tt></a> data structure.
+
+<pre>
+  RigidGridMotion_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    RigidGridMotionType_t RigidGridMotionType ;                        (r)
+
+    DataArray_t&lt;real, 2, [PhysicalDimension, 2]&gt; OriginLocation ;      (r)
+    DataArray_t&lt;real, 1,  PhysicalDimension&gt;     RigidRotationAngle ;  (o/d)
+    DataArray_t&lt;real, 1,  PhysicalDimension&gt;     RigidVelocity ;       (o)
+    DataArray_t&lt;real, 1,  PhysicalDimension&gt;     RigidRotationRate ;   (o)
+
+    List( DataArray_t DataArray1 ... DataArrayN ) ;                    (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>RigidGridMotion_t</tt> and shall not include the names
+     <tt>DataClass</tt>, <tt>DimensionalUnits</tt>, <tt>OriginLocation</tt>,
+     <tt>RigidGridMotionType</tt>, <tt>RigidRotationAngle</tt>,
+     <tt>RigidRotationRate</tt>, or <tt>RigidVelocity</tt>.
+<li> <tt>RigidGridMotionType</tt> and <tt>OriginLocation</tt>are the
+     only required elements under <tt>RigidGridMotion_t</tt>.
+     All other elements are optional.
+</ol>
+
+<p>
+<tt>RigidGridMotionType_t</tt> is an enumeration type that describes
+the type of rigid grid motion.
+
+<pre>
+  RigidGridMotionType_t := Enumeration(
+    RigidGridMotionTypeNull,
+    RigidGridMotionTypeUserDefined,
+    ConstantRate,
+    VariableRate ) ;
+</pre>
+
+<p>
+The characteristics of the grid motion are defined by the following
+data-name identifiers:
+
+<br><br>
+<a name="t:id_rigidgrid"></a>
+<center>
+<table width=80% cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Rigid Grid Motion
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>OriginLocation</tt><td>
+   <td>Physical coordinates of the origin before and after the rigid
+       grid motion<td>
+   <td align=center><b>L</b>
+<tr valign=baseline>
+   <td><tt>RigidRotationAngle</tt><td>
+   <td>Rotation angles about each axis of the translated coordinate
+       system.
+       If rotating about more than one axis, the rotation is performed first
+       about the x-axis, then the y-axis, then the z-axis.
+       If not specified, <tt>RigidRotationAngle</tt> is set to zero.<td>
+   <td align=center><b><i>&alpha;</i></b>
+<tr valign=baseline>
+   <td><tt>RigidVelocity</tt><td>
+   <td>Grid velocity vector of the origin translation<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>RigidRotationRate</tt><td>
+   <td>Rotation rate vector about the axis of the translated
+       coordinate system<td>
+   <td align=center><b><i>&alpha;</i></b>/<b>T</b>
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+Any number of <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+nodes are allowed.
+These may be used to record data not covered by this specification.
+
+<p>
+"Rigid grid motion" implies relative motion of grid zones.
+However, no attempt is made in the <tt>RigidGridMotion_t</tt> data
+structure to require that the
+<a href="cnct.html#ZoneGridConnectivity"><tt>ZoneGridConnectivity_t</tt></a>
+information be updated to be consistent with the new grid locations.
+Whether the <tt>ZoneGridConnectivity_t</tt> information refers to the
+original connectivity (of
+<a href="gridflow.html#GridCoordinates"><tt>GridCoordinates</tt></a>) or
+the latest connectivity (of the moved or deformed grid) is currently
+left up to the user.
+
+<a name="ArbitraryGridMotion"></a>
+<h3>Arbitrary Grid Motion Structure Definition: <tt>ArbitraryGridMotion_t</tt></h3>
+
+<p>
+When a grid is in motion, it is often necessary to account for the
+position of each grid point as the grid deforms.
+When all grid points move at the same velocity, the grid keeps its
+original shape.
+This particular case of grid motion may be recorded under the
+<a href="#RigidGridMotion"><tt>RigidGridMotion_t</tt></a> data structure.
+On the other hand, if the grid points have different velocity, the grid
+is deforming.
+The <tt>ArbitraryGridMotion_t</tt> data structure allows the CGNS file to
+contain information about arbitrary grid deformations.
+If not present, the grid is assumed to be rigid.
+
+<p>
+Note that multiple
+<a href="gridflow.html#GridCoordinates"><tt>GridCoordinates_t</tt></a>
+nodes may be stored under a <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a>.
+This allows the storage of the instantaneous grid locations at different
+time steps or iterations.
+
+<p>
+The arbitrary grid motion is recorded independently for each zone of the
+CGNS base.
+Therefore the <tt>ArbitraryGridMotion_t</tt> data structure is located
+under the zone data structure
+(<a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a>).
+There may be zero to several <tt>ArbitraryGridMotion_t</tt> nodes under a
+single <tt>Zone_t</tt> node.
+The multiple arbitrary grid motion definitions may be associated with
+different iterations or time steps in the computation.
+This association is recorded under the
+<a href="#ZoneIterativeData"><tt>ZoneIterativeData_t</tt></a> data structure.
+
+<pre>
+  ArbitraryGridMotion_t&lt; int IndexDimension, int VertexSize[IndexDimension], 
+                         int CellSize[IndexDimension] &gt; :=
+    {
+    ArbitraryGridMotionType_t ArbitraryGridMotionType ;                (r)
+
+    List(DataArray_t&lt;real, IndexDimension, DataSize[]&gt;
+       GridVelocityX GridVelocityY ... ) ;                             (o)
+
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    GridLocation_t GridLocation ;                                      (o/d)
+
+    Rind_t&lt;IndexDimension&gt; Rind ;                                      (o/d)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    }
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>ArbitraryGridMotion_t</tt> and shall not include the names
+     <tt>ArbitraryGridMotionType</tt>, <tt>DataClass</tt>,
+     <tt>DimensionalUnits</tt>, <tt>GridLocation</tt>, or <tt>Rind</tt>.
+<li> The only required element of the <tt>ArbitraryGridMotion_t</tt>
+     data structure is the <tt>ArbitraryGridMotionType</tt>.
+     Thus, even if a deforming grid application does not require the
+     storage of grid velocity data, the <tt>ArbitraryGridMotion_t</tt>
+     node must exist (with
+     <tt>ArbitraryGridMotionType</tt> = <tt>DeformingGrid</tt>) to indicate
+     that deformed grid points
+     (<a href="gridflow.html#GridCoordinates"><tt>GridCoordinates_t</tt></a>)
+     exist for this zone.
+<li> <a href="build.html#Rind"><tt>Rind</tt></a> is an optional field
+     that indicates the number of rind planes (for structured grids) or
+     rind points or elements (for unstructured grids) included in the
+     grid velocity data.
+<li> The <a href="build.html#GridLocation"><tt>GridLocation</tt></a>
+     specifies the location of the velocity data with respect to the
+     grid; if absent, the data is assumed to coincide with grid vertices
+     (i.e., <tt>GridLocation</tt> = <tt>Vertex</tt>).
+</ol>
+
+<p>
+<tt>ArbitraryGridMotion_t</tt> requires three structure parameters;
+<tt>IndexDimension</tt> identifies the dimensionality of the grid-size
+arrays, and <tt>VertexSize</tt> and <tt>CellSize</tt> are the number of
+core vertices and cells, respectively, in each index direction.
+For unstructured zones, <tt>IndexDimension</tt> is always 1.
+
+<p>
+<tt>ArbitraryGridMotionType_t</tt> is an enumeration type that describes
+the type of arbitrary grid motion.
+
+<pre>
+  ArbitraryGridMotionType_t := Enumeration(
+    ArbitraryGridMotionTypeNull,
+    ArbitraryGridMotionTypeUserDefined,
+    NonDeformingGrid,
+    DeformingGrid ) ;
+</pre>
+
+<p>
+The <a href="data.html#DataArray"><tt>DataArray_t</tt></a> nodes are used
+to store the components of the grid velocity vector.
+The table below lists the data-name identifiers used to record these
+vectors in Cartesian, cylindrical, and spherical coordinate systems.
+
+<br><br>
+<a name="t:id_gridvel"></a>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Grid Velocity
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>GridVelocityX</tt><td>
+   <td><i>x</i>-component of grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityY</tt><td>
+   <td><i>y</i>-component of grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityZ</tt><td>
+   <td><i>z</i>-component of grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>GridVelocityR</tt><td>
+   <td><i>r</i>-component of grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityTheta</tt><td>
+   <td><i>&theta;</i>-component of grid velocity<td>
+   <td align=center><b><i>&alpha;</i></b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityPhi</tt><td>
+   <td><i>&phi;</i>-component of grid velocity<td>
+   <td align=center><b><i>&alpha;</i></b>/<b>T</b>
+<tr valign=baseline><tt>&nbsp;</tt>
+
+<tr valign=baseline>
+   <td><tt>GridVelocityXi</tt><td>
+   <td><i>&xi;</i>-component of grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityEta</tt><td>
+   <td><i>&eta;</i>-component of grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>GridVelocityZeta</tt><td>
+   <td><i>&zeta;</i>-component of grid velocity<td>
+   <td align=center><b>L</b>/<b>T</b>
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+The field <a href="build.html#GridLocation"><tt>GridLocation</tt></a>
+specifies the location of the grid velocities with respect to the
+grid; if absent, the grid velocities are assumed to coincide with grid
+vertices (i.e., <tt>GridLocation = Vertex</tt>).
+All grid velocities within a given instance of
+<tt>ArbitraryGridMotion_t</tt> must reside at the same grid location.
+
+<p>
+<a href="build.html#Rind"><tt>Rind</tt></a> is an optional field that
+indicates the number of rind planes (for structured grids) or rind
+points or elements (for unstructured grids) included in the data.
+Its purpose and function are identical to those described for the
+<a href="gridflow.html#GridCoordinates"><tt>GridCoordinates_t</tt></a>
+structure.
+Note, however, that the <tt>Rind</tt> in this structure is independent
+of the <tt>Rind</tt> contained in
+<a href="gridflow.html#GridCoordinates"><tt>GridCoordinates_t</tt></a> or
+<a href="gridflow.html#FlowSolution"><tt>FlowSolution_t</tt></a>.
+They are not required to contain the same number of rind planes or
+elements.
+Also, the location of any rind points is assumed to be consistent
+with the location of the core data points (e.g., if
+<tt><a href="build.html#GridLocation">GridLocation</a> = CellCenter</tt>,
+rind points are assumed to be located at fictitious cell centers).
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+For dimensional grid velocities,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+Point-by-point grid velocity implies a deformation (or potentially only
+motion) of the grid points relative to each other.
+Because the original grid coordinates definition remains unchanged with
+the name <a href="gridflow.html#GridCoordinates"><tt>GridCoordinates</tt></a>,
+any deformed coordinates must be written with a different name (e.g.,
+<tt>MovedGrid#1</tt> or another used-defined name) and are pointed
+to using <tt>GridCoordinatesPointers</tt> in the data structure
+<a href="#ZoneIterativeData"><tt>ZoneIterativeData_t</tt></a>.
+
+<p>
+Point-by-point grid velocity may also lead to relative motion of grid
+zones, or movement of grid along abutting interfaces.
+However, no attempt is made here to require that the
+<a href="cnct.html#ZoneGridConnectivity"><tt>ZoneGridConnectivity_t</tt></a>
+information be updated to be consistent with the new grid locations.
+Whether the <tt>ZoneGridConnectivity_t</tt> information refers to the
+original connectivity (of
+<a href="gridflow.html#GridCoordinates"><tt>GridCoordinates</tt></a>) or
+the latest connectivity (of the moved or deformed grid) is currently
+left up to the user.
+
+<h4>FUNCTION <tt>DataSize[]</tt>:</h4>
+
+return value: one-dimensional <tt>int</tt> array of length <tt>IndexDimension</tt>
+<br>
+dependencies: <tt>IndexDimension</tt>, <tt>VertexSize[]</tt>, <tt>CellSize[]</tt>,
+              <tt>GridLocation</tt>, <tt>Rind</tt>
+
+<p>
+The function <tt>DataSize[]</tt> is the size of the <tt>DataArray</tt>s
+containing the grid velocity components.
+It is identical to the function
+<a href="gridflow.html#DataSize_flow"><tt>DataSize[]</tt></a> defined for
+<a href="gridflow.html#FlowSolution"><tt>FlowSolution_t</tt></a>.
+
+<a name="ZoneGridConnectivity"></a>
+<h3>Zone Grid Connectivities</h3>
+
+Multiple <a href="cnct.html#ZoneGridConnectivity"><tt>ZoneGridConnectivity_t</tt></a>
+nodes may be used to specify time-dependent changes in the connectivity information
+associated with the zone. The time variation is the recorded in the
+<a href="#ZoneIterativeData"><tt>ZoneIterativeData_t</tt></a> node as
+<tt>ZoneGridConnectivityPointers</tt>.
+
+<a name="Examplestimedep"></a>
+<h3>Examples for Time-Dependent Flow</h3>
+
+<h4>Example - Rigid Grid Motion</h4>
+
+<p>
+In this example, the whole mesh moves rigidly, so the only
+time-dependent data are the grid coordinates and flow solutions.
+However, since the mesh moves rigidly, the grid coordinates need not be
+recorded at each time step.
+Instead, a <a href="#RigidGridMotion"><tt>RigidGridMotion_t</tt></a>
+data structure is recorded for each step of the computation.
+
+<p>
+The number of steps and time values for each step are recorded under
+<a href="#BaseIterativeData"><tt>BaseIterativeData_t</tt></a>.
+
+<pre>
+  CGNSBase_t {
+    BaseIterativeData_t {
+      NumberOfSteps = N ;
+      TimeValues = time1, time2, ..., timeN ;
+    } ;
+  } ;
+</pre>
+
+<p>
+The multiple rigid grid motion and flow solution data structures are
+recorded under the zone.
+<tt>RigidGridMotionPointers</tt> and <tt>FlowSolutionPointers</tt> keep the
+lists of which <a href="#RigidGridMotion"><tt>RigidGridMotion_t</tt></a>
+and <a href="gridflow.html#FlowSolution"><tt>FlowSolution_t</tt></a> nodes
+correspond to each time step.
+
+<pre>
+  Zone_t Zone {
+
+    <i>--- Time independent data</i>
+    GridCoordinates_t GridCoordinates
+    ZoneBC_t ZoneBC
+    ZoneGridConnectivity_t ZoneGridConnectivity
+
+    <i>--- Time dependent data</i>
+    RigidGridMotion_t RigidGridMotion#1
+    RigidGridMotion_t RigidGridMotion#2
+    ...
+    RigidGridMotion_t RigidGridmotion#N
+
+    FlowSolution_t Solution#0
+    FlowSolution_t Solution#1
+    FlowSolution_t Solution#2
+    ...
+    FlowSolution_t Solution#N
+
+    ZoneIterativeData_t {
+      RigidGridMotionPointers = {"RigidGridMotion#1", "RigidGridMotion#2", ...,
+         "RigidGridMotion#N"}
+      FlowSolutionPointers = {"Solution#1", "Solution#2, ..., "Solution#N"}
+    }
+  }
+</pre>
+
+<p>
+Note that there may be more solutions under a zone than those pointed to
+by <tt>FlowSolutionPointers</tt>.
+In this example, <tt>Solution#0</tt> could correspond to a restart solution.
+
+<h4>Example - Deforming Grid Motion</h4>
+
+<p>
+In this example, velocity vectors are node dependent allowing for mesh
+deformation.
+In such a case, it is difficult or even impossible to recompute the mesh
+at each time step.
+Therefore the grid coordinates are recorded for each step.
+
+<p>
+Multiple <a href="gridflow.html#GridCoordinates"><tt>GridCoordinates_t</tt></a> and <tt>FlowSolution_t</tt> data
+structures are recorded under the zone.
+In addition, the data structure
+<a href="#ArbitraryGridMotion"><tt>ArbitraryGridMotion_t</tt></a> is
+recorded for each step.
+<tt>GridCoordinatesPointers</tt>, <tt>FlowSolutionPointers</tt>, and
+<tt>ArbitraryGridMotionPointers_t</tt> keep the list of which grid
+coordinates definition, flow solution, and arbitrary grid motion
+definition correspond to each time step.
+
+<pre>
+  Zone_t Zone {
+
+    <i>--- Time independent data</i>
+    ZoneBC_t ZoneBC
+    ZoneGridConnectivity_t ZoneGridConnectivity
+
+    <i>--- Time dependent data</i>
+    List ( GridCoordinates_t GridCoordinates MovedGrid#1 MovedGrid#2 ...
+           MovedGrid#N )
+    List ( FlowSolution_t Solution#0 Solution#1 Solution#2 ... Solution#N )
+    List ( ArbitraryGridMotion_t ArbitraryGridMotion#1 
+           ArbitraryGridMotion#2 ... ArbitraryGridMotion#N )
+    ZoneIterativeData_t {
+      GridCoordinatesPointers = {"MovedGrid#1", "MovedGrid#2", ...,
+         "MovedGrid#N"}
+      FlowSolutionPointers = {"Solution#1", "Solution#2, ..., "Solution#N"}
+      ArbitraryGridMotionPointers = {"ArbitraryGridMotion#1",
+         "ArbitraryGridMotion#2", ..., "ArbitraryGridMotion#N"}
+    }
+  }
+</pre>
+
+<a name="ex:adaptedunstructuredmesh"></a>
+<h4>Example - Adapted Unstructured Mesh</h4>
+
+<p>
+In this example, the mesh size varies at each remeshing, therefore new
+zones must be created.
+<tt>ZonePointers</tt> is used to keep a record of the zone definition
+corresponding to each recorded step.
+Let's assume that the solution is recorded every 50 iterations, and the
+grid is adapted every 100 iterations.
+
+<p>
+The number of steps, iteration values for each step, number of zones
+for each step, and name of these zones are recorded under
+<a href="#BaseIterativeData"><tt>BaseIterativeData_t</tt></a>.
+
+<pre>
+  CGNSBase_t {
+    BaseIterativeData_t {
+      NumberOfSteps = 4
+      IterationValues = {50, 100, 150, 200}
+      NumberOfZones = {1, 1, 1, 1}
+      ZonePointers = {"Zone1", "Zone1", "Zone2", "Zone2"}
+    }
+  }
+</pre>
+
+<p>
+Each zone holds 2 solutions recorded at 50 iterations apart.
+Therefore the <a href="#ZoneIterativeData"><tt>ZoneIterativeData_t</tt></a>
+data structure must be included to keep track of the
+<tt>FlowSolutionPointers</tt>.
+
+<pre>
+  Zone_t Zone1 {
+
+    <i>--- Constant data</i>
+    GridCoordinates_t GridCoordinates
+    Elements_t Elements
+    ZoneBC_t ZoneBC
+
+    <i>--- Variable data</i>
+    List ( FlowSolution_t InitialSolution Solution50 Solution100 )
+    ZoneIterativeData_t {
+      FlowSolutionPointers = {"Solution50", "Solution100", "Null", "Null"}
+    }
+  }
+
+  Zone_t Zone2 {
+
+    <i>--- Constant data</i>
+    GridCoordinates_t GridCoordinates
+    Elements_t Elements
+    ZoneBC_t ZoneBC
+
+    <i>--- Variable data</i>
+    List ( FlowSolution_t RestartSolution Solution150 Solution200 )
+    ZoneIterativeData_t {
+      FlowSolutionPointers = {"Null", "Null", "Solution150", "Solution200"}
+    }
+  }
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> If the solution was recorded every 100 iterations instead of
+     every 50 iterations, then each zone would have only one
+     <a href="gridflow.html#FlowSolution"><tt>FlowSolution_t</tt></a>
+     node and the data structure
+     <a href="#ZoneIterativeData"><tt>ZoneIterativeData_t</tt></a> would not
+     be required.
+<li> Note that <tt>FlowSolutionPointers</tt> is always an array of size
+     <tt>NumberOfSteps</tt> even if some of the steps are defined in
+     another zone.
+</ol>
+
+<h4>Example - Combination of Grid Motion and Time-Accuracy</h4>
+
+<p>
+The following is an example demonstrating the use of the rigid grid motion,
+arbitrary grid motion, and time-accurate data nodes in CGNS.
+The example is a 3-zone case.
+Zone 1 is rigidly rotating about the <i>x</i>-axis at a constant rate, with
+no translation.
+Zone 2 is a deforming zone.
+Zone 3 is a fixed zone.
+This is a time-accurate simulation with two solutions saved at times
+15.5 and 31.0, corresponding to iteration numbers 1000 and 2000.
+
+<p>
+No units are given in this example, but a real case would establish them.
+Also, a real case would include connectivity, boundary conditions, and
+possibly other information as well.
+Each indentation represents a level down (a child) from the parent node.
+
+<pre>
+  Base (CGNSBase_t)
+    SimulationType (SimulationType_t) Data=TimeAccurate
+    BaseIterativeData (BaseIterativeData_t) Data=NumberOfSteps=2
+      TimeValues (DataArray_t) Data=(15.5, 31.0)
+      IterationValues (DataArray_t) Data=(1000, 2000)
+    Zone#1 (Zone_t)
+      GridCoordinates (GridCoordinates_t)
+        CoordinateX (DataArray_t)
+        CoordinateY (DataArray_t)
+      RigidGridMotion#1(RigidGridMotion_t) Data=RigidGridMotionType=ConstantRate
+        OriginLocation (DataArray_t) Data=(0,0,0), (0,0,0)
+        RigidRotationAngle (DataArray_t) Data=(5., 0., 0.)
+      RigidGridMotion#2(RigidGridMotion_t) Data=RigidGridMotionType=ConstantRate
+        OriginLocation (DataArray_t) Data=(0,0,0), (0,0,0)
+        RigidRotationAngle (DataArray_t) Data=(10., 0., 0.)
+      ZoneIterativeData (ZoneIterativeData_t)
+        RigidGridMotionPointers (DataArray_t) Data=(RigidGridMotion#1,
+                                                    RigidGridMotion#2)
+        FlowSolutionPointers (DataArray_t) Data=(Soln#1, Soln#2)
+      Soln#1 (FlowSolution_t)
+        Density (DataArray_t)
+        VelocityX (DataArray_t)
+      Soln#2 (FlowSolution_t)
+        Density (DataArray_t)
+        VelocityX (DataArray_t)
+    Zone#2 (Zone_t)
+      GridCoordinates (GridCoordinates_t)
+        CoordinateX (DataArray_t)
+        CoordinateY (DataArray_t)
+      MovedGrid#1 (GridCoordinates_t)
+        CoordinateX (DataArray_t)
+        CoordinateY (DataArray_t)
+      MovedGrid#2 (GridCoordinates_t)
+        CoordinateX (DataArray_t)
+        CoordinateY (DataArray_t)
+      ArbitraryGridMotion#1 (ArbitraryGridMotion_t)
+                             Data=ArbitraryGridMotionType=DeformingGrid
+      ArbitraryGridMotion#2 (ArbitraryGridMotion_t)
+                             Data=ArbitraryGridMotionType=DeformingGrid
+        GridVelocityX (DataArray_t)
+        GridVelocityY (DataArray_t)
+      ZoneIterativeData (ZoneIterativeData_t)
+        ArbitraryGridMotionPointers (DataArray_t) Data=("ArbitraryGridMotion#1",
+                                                        "ArbitraryGridMotion#2")
+        GridCoordinatesPointers (DataArray_t) Data=("MovedGrid#1",
+                                                    "MovedGrid#2")
+        FlowSolutionPointers (DataArray_t) Data=("Soln#1", "Soln#2")
+      Soln#1 (FlowSolution_t)
+        Density (DataArray_t)
+        VelocityX (DataArray_t)
+      Soln#2 (FlowSolution_t)
+        Density (DataArray_t)
+        VelocityX (DataArray_t)
+    Zone#3 (Zone_t)
+      GridCoordinates (GridCoordinates_t)
+        CoordinateX (DataArray_t)
+        CoordinateY (DataArray_t)
+      ZoneIterativeData (ZoneIterativeData_t)
+        FlowSolutionPointers (DataArray_t) Data=("Soln#1", "Soln#2")
+      Soln#1 (FlowSolution_t)
+        Density (DataArray_t)
+        VelocityX (DataArray_t)
+      Soln#2 (FlowSolution_t)
+        Density (DataArray_t)
+        VelocityX (DataArray_t)
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Under <a href="#BaseIterativeData"><tt>BaseIterativeData_t</tt></a>,
+     one can give either <tt>TimeValues</tt>, or <tt>IterationValues</tt>,
+     or both.
+     In the example, both have been given.
+<li> The nodes <tt>NumberOfZones</tt> and <tt>ZonePointers</tt> are not
+     required under the
+     <a href="#BaseIterativeData"><tt>BaseIterativeData_t</tt></a> node
+     in this example because all existing zones are used for each time step.
+<li> Under <a href="#ArbitraryGridMotion"><tt>ArbitraryGridMotion</tt></a>,
+     the <tt>GridVelocity</tt> data is optional.
+     In the example, it was put under one of the nodes but not under
+     the other.
+     Hence, <tt>"ArbitraryGridMotion#1"</tt> in the example has no
+     children nodes, while <tt>"ArbitraryGridMotion#2"</tt> does.
+<li> The pointers under
+     <a href="#ZoneIterativeData"><tt>ZoneIterativeData_t</tt></a> point to
+     names of nodes within the same zone.
+     Thus, for example, <tt>Soln#1</tt> refers to the flow solution
+     named <tt>Soln#1</tt> in the same zone, even though there are flow
+     solution nodes in other zones with the same name.
+<li> The name <tt>GridCoordinates</tt> always refers to the
+     <em>original</em> grid.
+     Thus, when a grid is deforming, the deformed values must be put in
+     <a href="gridflow.html#GridCoordinates"><tt>GridCoordinates_t</tt></a>
+     nodes of a different name.
+     In the example, the deformed grids (for <tt>Zone#2</tt>) at the two
+     times of interest were put into <tt>"MovedGrid#1"</tt> and
+     <tt>"MovedGrid#2"</tt>.
+<li> Because the node <tt>"ArbitraryGridMotion#1"</tt> doesn't really
+     add any information in the current example (since it was decided
+     not to store <tt>GridVelocity</tt> data under it), one has the option
+     of not including this node in the CGNS file.
+     If it is removed, then under <tt>Zone#2</tt>'s
+     <a href="#ZoneIterativeData"><tt>ZoneIterativeData</tt></a>,
+     the <tt>ArbitraryGridMotionPointers</tt> data would be replaced by:
+     <pre>
+   Data = (Null, ArbitraryGridMotion#2)
+     </pre>
+</ol>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 07 Feb 2014
+
+</body>
+</html>

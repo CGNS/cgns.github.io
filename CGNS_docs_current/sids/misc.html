@@ -1,0 +1,1111 @@
+<!-- CGNS SIDS document - Miscellaneous Data Structures -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Miscellaneous Data Structures </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<a href="gridflow.html"><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></a>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<span class=nav><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></span>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Miscellaneous Data Structures</h2>
+
+<ul>
+<li> <a href="#ReferenceState">Reference State Structure Definition: <tt>ReferenceState_t</tt></a>
+<li> <a href="#ReferenceStateEx">Reference State Example</a>
+<li> <a href="#ConvergenceHistory">Convergence History Structure Definition: <tt>ConvergenceHistory_t</tt></a>
+<li> <a href="#DiscreteData">Discrete Data Structure Definition: <tt>DiscreteData_t</tt></a>
+<li> <a href="#IntegralData">Integral Data Structure Definition: <tt>IntegralData_t</tt></a>
+<li> <a href="#Family">Family Data Structure Definition: <tt>Family_t</tt></a>
+<li> <a href="#GeometryReference">Geometry Reference Structure Definition: <tt>GeometryReference_t</tt></a>
+<li> <a href="#FamilyBC">Family Boundary Condition Structure Definition: <tt>FamilyBC_t</tt></a>
+<li> <a href="#FamilyBCDataSet">Family Boundary Condition Data Set Structure Definition: <tt>FamilyBCDataSet_t</tt></a>
+<li> <a href="#UserDefinedData">User-Defined Data Structure Definition: <tt>UserDefinedData_t</tt></a>
+<li> <a href="#Gravity">Gravity Data Structure Definition: <tt>Gravity_t</tt></a>
+</ul>
+
+<p>
+This section contains miscellaneous structure types for describing
+reference states, convergence history, discrete field data, integral or
+global data, families, and user-defined data.
+
+<a name="ReferenceState"></a>
+<h3>Reference State Structure Definition: <tt>ReferenceState_t</tt></h3>
+
+<p>
+<tt>ReferenceState_t</tt> describes a reference state, which is a list
+of geometric or flow-state quantities defined at a common location or
+condition.
+Examples of typical reference states associated with CFD calculations
+are freestream, plenum, stagnation, inlet and exit.
+Note that providing a <tt>ReferenceState</tt> description is
+particularly important if items elsewhere in the CGNS database are
+<a href="data.html#normbyunkdim"><tt>NormalizedByUnknownDimensional</tt></a>.
+
+<pre>
+  ReferenceState_t :=
+    {
+    Descriptor_t ReferenceStateDescription ;                           (o)
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+                
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>ReferenceState_t</tt> and shall not include the names
+     <tt>DataClass</tt>, <tt>DimensionalUnits</tt>, or
+     <tt>ReferenceStateDescription</tt>.
+</ol>
+
+<p>
+Data-name identifiers associated with <tt>ReferenceState</tt> are shown in
+the table below.
+
+<br><br>
+<a name="t:id_perfect"></a>
+<center>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption>
+Data-Name Identifiers for Reference State
+<br><br>
+</caption>
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <th align=left scope=col abbr="Identifier">Data-Name Identifier<td><tt>&nbsp;&nbsp;</tt>
+   <th align=left scope=col>Description<td><tt>&nbsp;&nbsp;</tt>
+   <th scope=col>Units
+<tr align=left><td colspan=5><hr width=100% noshade>
+<tr valign=baseline>
+   <td><tt>Mach</tt><td>
+   <td>Mach number, <i>M</i> = <i>q</i>/<i>c</i><td>
+   <td>-
+<tr valign=baseline>
+   <td><tt>Mach_Velocity</tt><td>
+   <td>Velocity scale, <i>q</i><td>
+   <td><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>Mach_VelocitySound</tt><td>
+   <td>Speed of sound scale, <i>c</i><td>
+   <td><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>Reynolds</tt><td>
+   <td>Reynolds number, <i>Re</i> = <i>VL<sub>R</sub></i> / <i>&nu;</i><td>
+   <td>-
+<tr valign=baseline>
+   <td><tt>Reynolds_Velocity</tt><td>
+   <td>Velocity scale, <i>V</i><td>
+   <td><b>L</b>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>Reynolds_Length</tt><td>
+   <td>Length scale, <i>L<sub>R</sub></i><td>
+   <td><b>L</b>
+<tr valign=baseline>
+   <td><tt>Reynolds_ViscosityKinematic</tt><td>
+   <td>Kinematic viscosity scale, <i>&nu;</i><td>
+   <td><b>L</b><sup>2</sup>/<b>T</b>
+<tr valign=baseline>
+   <td><tt>LengthReference</tt><td>
+   <td>Reference length, <i>L</i><td>
+   <td><b>L</b>
+<tr align=left><td colspan=5><hr width=100% noshade>
+</table>
+</center>
+
+<p>
+In addition, any flowfield quantities (such as <tt>Density</tt>,
+<tt>Pressure</tt>, etc.) can be included in the <tt>ReferenceState</tt>.
+
+<p>
+The reference length <i>L</i> (<tt>LengthReference</tt>) may be necessary for
+<a href="data.html#normbyunkdim"><tt>NormalizedByUnknownDimensional</tt></a>
+databases, to define the length scale used for nondimensionalizations.
+It may be the same or different from the <tt>Reynolds_Length</tt> used to
+define the Reynolds number.
+
+<p>
+Because of different definitions for angle of attack and angle of yaw,
+these quantities are not explicitly defined in the SIDS.
+Instead, the user can unambigouosly denote the freestream velocity      
+vector direction by giving <tt>VelocityX</tt>, <tt>VelocityY</tt>, and      
+<tt>VelocityZ</tt> in <tt>ReferenceState</tt>, (with the reference state    
+denoting the freestream).
+
+<p>
+Care should be taken when defining the reference state quantities to
+ensure consistency.
+(See the discussion in the section on
+<a href="data.html#normbyunkdim">Nondimensional Data Normalized
+by Unknown Dimensional Quantities</a>.)
+For example, if velocity, length, and time are all defined, then the
+velocity stored should be length/time.
+If consistency is not followed, different applications could interpret
+the resulting data in different ways.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the reference state.
+If any reference state quantities are dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+We recommend using the <tt>ReferenceStateDescription</tt> entity to
+document the flow conditions.
+The format of the documentation is currently unregulated.
+
+<a name="ReferenceStateEx"></a>
+<h3>Reference State Example</h3>
+
+<p>
+An example is presented in this section of a reference state entity that
+contains dimensional data.
+An additional example of a nondimensional reference state is provided in
+the <a href="twozone.html">Structured Two-Zone Flat Plate Example</a>.
+
+<h4>Example - Reference State with Dimensional Data</h4>
+
+<p>
+A freestream reference state where all data quantities are dimensional.
+Standard atmospheric conditions at sea level are assumed for static
+quantities, and all stagnation variables are obtained using the
+isentropic relations.
+The flow velocity is 200 m/s aligned with the <i>x</i>-axis.
+Dimensional units of kilograms, meters, and seconds are used.
+The data class and system of units are specified at the
+<a href="#ReferenceState"><tt>ReferenceState_t</tt></a> level rather
+than attaching this information directly to the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities for
+each reference quantity.
+Data-name identifiers are provided in the section
+<a href="dataname.html">Conventions for Data-Name Identifiers</a>.
+<pre>
+  ReferenceState_t ReferenceState = 
+    {{
+    Descriptor_t ReferenceStateDescription = 
+      {{
+      Data(char, 1, 45) = "Freestream at standard atmospheric conditions" ;
+      }} ;
+    
+    DataClass_t DataClass = Dimensional ;
+
+    DimensionalUnits_t DimensionalUnits = 
+      {{
+      MassUnits        = Kilogram ;
+      LengthUnits      = Meter ;
+      TimeUnits        = Second ;
+      TemperatureUnits = Kelvin ;
+      AngleUnits       = Radian ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 1&gt; VelocityX = 
+      {{
+      Data(real, 1, 1) = 200. ;
+      }} ;
+    DataArray_t&lt;real, 1, 1&gt; VelocityY               = {{ 0. }} ;
+    DataArray_t&lt;real, 1, 1&gt; VelocityZ               = {{ 0. }} ;
+
+    DataArray_t&lt;real, 1, 1&gt; Pressure                = {{ 1.0132E+05 }} ;
+    DataArray_t&lt;real, 1, 1&gt; Density                 = {{ 1.226 }} ;
+    DataArray_t&lt;real, 1, 1&gt; Temperature             = {{ 288.15 }} ;
+    DataArray_t&lt;real, 1, 1&gt; VelocitySound           = {{ 340. }} ;
+    DataArray_t&lt;real, 1, 1&gt; ViscosityMolecular      = {{ 1.780E-05 }} ;
+
+    DataArray_t&lt;real, 1, 1&gt; PressureStagnation      = {{ 1.2806E+05 }} ;
+    DataArray_t&lt;real, 1, 1&gt; DensityStagnation       = {{ 1.449 }} ;
+    DataArray_t&lt;real, 1, 1&gt; TemperatureStagnation   = {{ 308.09 }} ;
+    DataArray_t&lt;real, 1, 1&gt; VelocitySoundStagnation = {{ 351.6 }} ;
+
+    DataArray_t&lt;real, 1, 1&gt; PressureDynamic         = {{ 0.2542E+05 }} ;
+    }} ;                        
+</pre>
+Note that all <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+entities except <tt>VelocityX</tt> have been abbreviated.
+
+<a name="ConvergenceHistory"></a>
+<h3>Convergence History Structure Definition: <tt>ConvergenceHistory_t</tt></h3>
+
+<p>
+Flow solver convergence history information is described by the 
+<tt>ConvergenceHistory_t</tt> structure.
+This structure contains the number of iterations and a list of data
+arrays containing convergence information at each iteration.
+
+<pre>
+  ConvergenceHistory_t :=
+    {
+    Descriptor_t NormDefinitions ;                                     (o)
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    int Iterations ;                                                   (r)
+
+    List( DataArray_t&lt;DataType, 1, Iterations&gt; 
+      DataArray1 ... DataArrayN ) ;                                    (o)
+
+    DataClass_t DataClass ;                                            (o)
+                
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>ConvergenceHistory_t</tt> and shall not include the names
+     <tt>DataClass</tt>, <tt>DimensionalUnits</tt>, or
+     <tt>NormDefinitions</tt>. 
+<li> <tt>Iterations</tt> is the only required field for
+     <tt>ConvergenceHistory_t</tt>.
+</ol>
+
+<p>
+<tt>Iterations</tt> identifies the number of iterations for which
+convergence information is recorded.
+This value is also passed into each of the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities,
+defining the length of the data arrays.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the convergence history.
+If any convergence-history data is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+Measures used to record convergence vary greatly among current
+flow-solver implementations.
+Convergence information typically includes global forces, norms of
+equation residuals, and norms of solution changes.
+Attempts to systematically define a set of convergence measures within
+the CGNS project have been futile.
+For global parameters, such as forces and moments, a set of
+<a href="dataname.html">standardized data-array identifiers</a> is used.
+For equations residuals and solution changes, no such standard list
+exists.
+It is suggested that data-array identifiers for norms of equations
+residuals begin with <tt>RSD</tt>, and those for solution changes begin with
+<tt>CHG</tt>.
+For example, <tt>RSDMassRMS</tt> could be used for the
+<i>L</i><sub>2</sub>-norm (RMS) of mass conservation residuals.
+It is also strongly recommended that <tt>NormDefinitions</tt> be utilized to
+describe the convergence information recorded in the data arrays.
+The format used to describe the convergence norms in <tt>NormDefinitions</tt>
+is currently unregulated.
+
+<a name="DiscreteData"></a>
+<h3>Discrete Data Structure Definition: <tt>DiscreteData_t</tt></h3>
+
+<p>
+<tt>DiscreteData_t</tt> provides a description of generic discrete data (i.e.,
+data defined on a computational grid); it is identical to
+<a href="gridflow.html#FlowSolution"><tt>FlowSolution_t</tt></a>
+except for its type name.
+This structure can be used to store field data, such as fluxes or
+equation residuals, that is not typically considered part of the flow
+solution.
+<tt>DiscreteData_t</tt> contains a list for data arrays, identification of
+grid location, and a mechanism for identifying rind-point data included
+in the data arrays.
+All data contained within this structure must be defined at the same
+grid location and have the same amount of rind-point data.
+<pre>
+  DiscreteData_t&lt; int CellDimension, int IndexDimension,
+                  int VertexSize[IndexDimension],
+                  int CellSize[IndexDimension] &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    GridLocation_t GridLocation ;                                      (o/d)
+
+    IndexRange&lt;IndexDimension&gt; PointRange ;                            (o)
+    IndexArray&lt;IndexDimension, ListLength[], int&gt; PointList ;          (o)
+
+    Rind_t&lt;IndexDimension&gt; Rind ;                                      (o/d)
+
+    List( DataArray_t&lt;DataType, IndexDimension, DataSize[]&gt; 
+          DataArray1 ... DataArrayN ) ;                                (o)
+
+    DataClass_t DataClass ;                                            (o)
+    
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>DiscreteData_t</tt> and shall not include the names
+     <tt>DataClass</tt>, <tt>DimensionalUnits</tt>, <tt>GridLocation</tt>,
+     <tt>PointList</tt>, <tt>PointRange</tt>, or <tt>Rind</tt>.
+<li> There are no required fields for <tt>DiscreteData_t</tt>.
+     <a href="build.html#GridLocation"><tt>GridLocation</tt></a> has a
+     default of <tt>Vertex</tt> if absent.
+     <a href="build.html#Rind"><tt>Rind</tt></a> also has a default if
+     absent; the default is equivalent to having an instance of
+     <tt>Rind</tt> whose <tt>RindPlanes</tt> array contains all zeros.
+<li> Both of the fields <tt>PointRange</tt> and <tt>PointList</tt> are optional.
+     Only one of these two fields may be specified.
+<li> The structure parameter <tt>DataType</tt> must be consistent with the
+     data stored in the <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+     entities.
+<li> For unstructured zones
+     <a href="build.html#GridLocation"><tt>GridLocation</tt></a>
+     options are limited to <tt>Vertex</tt> or <tt>CellCenter</tt>,
+     unless one of <tt>PointRange</tt> or <tt>PointList</tt> is present.
+<li> Indexing of data within the
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a> structures,
+     must be consistent with the associated numbering of vertices or elements.
+</ol>
+
+<p>
+<tt>DiscreteData_t</tt> requires four structure parameters;
+<tt>CellDimension</tt> identifies the dimensionality of cells or elements,
+<tt>IndexDimension</tt> identifies the dimensionality of the grid size
+arrays, and <tt>VertexSize</tt> and <tt>CellSize</tt> are the number of
+core vertices and cells, respectively, in each index direction.
+For unstructured zones, <tt>IndexDimension</tt> is always 1.
+
+<p>
+The arrays of discrete data are stored in the list of
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+The field <a href="build.html#GridLocation"><tt>GridLocation</tt></a>
+specifies the location of the data with respect to the grid; if
+absent, the data is assumed to coincide with grid vertices (i.e.,
+<tt>GridLocation = Vertex</tt>).
+All data within a given instance of <tt>DiscreteData_t</tt> must reside at the
+same grid location.
+
+<p>
+For structured grids, the value of <tt>GridLocation</tt> alone specifies the
+location and indexing of the discrete. Vertices are explicity indexed.
+Cell centers and face centers are indexed using the minimum of the connecting
+vertex indices, as described in the section
+<a href="conv.html#structgrid">Structured Grid Notation and Indexing Conventions</a>.
+
+<p>
+For unstructured grids, the value of <tt>GridLocation</tt> alone specifies
+location and indexing of discrete data only for vertex and cell-centered data.
+The reason for this is that element-based grid connectivity provided in the
+<a href="#Elements"><tt>Elements_t</tt></a> data structures explicitly indexes only
+vertices and cells. For data stored at alternate grid locations (e.g., edges),
+additional connectivity information is needed. This is provided by the optional
+fields <tt>PointRange</tt> and <tt>PointList</tt>; these refer to vertices,
+edges, faces or cell centers, depending on the values of <tt>CellDimension</tt>
+and <tt>GridLocation</tt>. The following table shows these relations.
+
+<center>
+<table cellspacing=0 cellpadding=3 border>
+<tr align=center>
+  <th rowspan=2>CellDimension</th>
+  <th colspan=4>GridLocation</th>
+</tr><tr align=center>
+  <th>Vertex</th>
+  <th>EdgeCenter</th>
+  <th>*FaceCenter</th>
+  <th>CellCenter</th>
+</tr><tr align=center>
+  <td>1</td>
+  <td>vertices</td>
+  <td>-</td>
+  <td>-</td>
+  <td>cells (line elements)</td>
+</tr><tr align=center>
+  <td>2</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>-</td>
+  <td>cells (area elements)</td>
+</tr><tr align=center>
+  <td>3</td>
+  <td>vertices</td>
+  <td>edges</td>
+  <td>faces</td>
+  <td>cells (volume elements)</td>
+</tr>
+</table>
+</center>
+
+<p>
+<i>Note</i>: In the table, *FaceCenter stands for the possible types:
+<tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, <tt>KFaceCenter</tt>,
+or <tt>FaceCenter</tt>.
+
+<p>
+Although intended for edge or face-based discrete data for unstructured grids,
+the fields <tt>PointRange/List</tt> may also be used to (redundantly) index vertex
+and cell-centered data. In all cases, indexing of flow solution data corresponds
+to the element numbering as defined in the <a href="#Elements"><tt>Elements_t</tt></a>
+data structures.
+
+<p>
+<a href="build.html#Rind"><tt>Rind</tt></a> is an optional field
+that indicates the number of rind planes (for
+structured grids) or rind points or elements (for unstructured grids)
+included in the data.
+Its purpose and function are identical to those described for the
+<a href="#GridCoordinates"><tt>GridCoordinates_t</tt></a> structure.
+Note, however, that the <tt>Rind</tt> in this structure is independent
+of the <tt>Rind</tt> contained in <tt>GridCoordinates_t</tt>.
+They are not required to contain the same number of rind planes or
+elements.
+Also, the location of any flow-solution rind points is assumed to be
+consistent with the location of the core flow solution points (e.g.,
+if <tt>GridLocation = CellCenter</tt>,
+rind points are assumed to be located at fictitious cell centers).
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+For dimensional data,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<h4>FUNCTION <tt>ListLength[]</tt>:</h4>
+
+return value: <tt>int</tt>
+<br>
+dependencies: <tt>PointList</tt>, <tt>PointRange[]</tt>
+
+<p>
+<tt>DiscreteData_t</tt> requires the structure function <tt>ListLength</tt>,
+which is used to specify the number of entities (e.g. vertices) corresponding
+to a given <tt>PointRange</tt> or <tt>PointList</tt>. If <tt>PointRange</tt> is
+specified, then <tt>ListLength</tt> is obtained from the number of points
+(inclusive) between the beginning and ending indices of <tt>PointRange</tt>.
+If <tt>PointList</tt> is specified, then <tt>ListLength</tt> is the number of
+indices in the list of points. In this situation, <tt>ListLength</tt> becomes
+a user input along with the indices of the list <tt>PointList</tt>.
+By <i>user</i> we mean the application code that is generating the CGNS
+database.
+
+<h4>FUNCTION <tt>DataSize[]</tt>:</h4>
+
+return value: one-dimensional <tt>int</tt> array of length <tt>IndexDimension</tt>
+<br>
+dependencies: <tt>IndexDimension</tt>, <tt>VertexSize[]</tt>, <tt>CellSize[]</tt>,
+              <tt>GridLocation</tt>, <tt>Rind</tt>, <tt>ListLength[]</tt>
+
+<p>
+The function <tt>DataSize[]</tt> is the size of discrete-data arrays.
+It is identical to the function
+<a href="gridflow.html#DataSize_flow"><tt>DataSize[]</tt></a> defined for
+<a href="gridflow.html#FlowSolution"><tt>FlowSolution_t</tt></a>.
+
+<a name="IntegralData"></a>
+<h3>Integral Data Structure Definition: <tt>IntegralData_t</tt></h3>
+
+<p>
+<tt>IntegralData_t</tt> provides a description of generic global or
+integral data that may be associated with a particular zone or an entire
+database.
+In contrast to <a href="#DiscreteData"><tt>DiscreteData_t</tt></a>,
+integral data is not associated with any specific field location.
+<pre>
+  IntegralData_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+    
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>DiscreteData_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> There are no required fields for <tt>IntegralData_t</tt>.
+<li> The structure parameter <tt>DataType</tt> must be consistent with the
+     data stored in the <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+     entities.
+</ol>
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default class for data contained in the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+For dimensional data,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="Family"></a>
+<h3>Family Data Structure Definition: <tt>Family_t</tt></h3>
+
+<p>
+Geometric associations need to be set through one layer of indirection.
+That is, rather than setting the geometry data for each mesh entity
+(nodes, edges, and faces), they are associated to intermediate objects.
+The intermediate objects are in turn linked to nodal regions of the
+computational mesh.
+We define a CFD <em>family</em> as this intermediate object.
+This layer of indirection is necessary since there is rarely a 1-to-1
+connection between mesh regions and geometric entities.
+
+<p>
+The <tt>Family_t</tt> data structure holds the CFD family data.
+Each mesh surface is linked to the geometric entities of CAD databases
+by a name attribute.
+This attribute corresponds to a family of CAD geometric entities on which
+the mesh face is projected.
+Each one of these geometric entities is described in a CAD file and is not
+redefined within the CGNS file.
+A <tt>Family_t</tt> data structure may be included in the
+<a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> structure for
+each CFD family of the model.
+
+<p>
+The <tt>Family_t</tt> structure contains all information pertinent to a
+CFD family.
+This information includes the name attribute or family name, the
+boundary conditions applicable to these mesh regions, and the referencing
+to the CAD databases.
+
+<pre>
+  Family_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    FamilyBC_t FamilyBC ;                                              (o)
+
+    List( GeometryReference_t
+          GeometryReference1 ... GeometryReferenceN ) ;                (o)
+
+    RotatingCoordinates_t RotatingCoordinates ;                        (o)
+
+    List( FamilyName_t FamilyName1 ... FamilyNameN ) ;                 (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+
+    int Ordinal ;                                                      (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> All data structures contained in <tt>Family_t</tt> are optional.
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="#GeometryReference"><tt>GeometryReference1_t</tt></a>, and
+     <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique at this level and must not include
+     the names <tt>FamilyBC</tt>, <tt>Ordinal</tt>, or
+     <tt>RotatingCoordinates</tt>.
+<li> The CAD referencing data are written in the
+     <a href="#GeometryReference"><tt>GeometryReference_t</tt></a>
+     data structures.
+     They identify the CAD systems and databases where the geometric
+     definition of the family is stored.
+<li> The boundary condition type pertaining to a family is contained in
+     the data structure <a href="#FamilyBC"><tt>FamilyBC_t</tt></a>.
+     If this boundary condition type is to be used, the
+     <a href="bc.html#BCType"><tt>BCType</tt></a> specified under
+     <a href="bc.html#BC"><tt>BC_t</tt></a> must be <tt>FamilySpecified</tt>.
+<li> For the purpose of defining zone properties, families are extended
+     to a volume of cells.
+     In such case, the
+     <a href="#GeometryReference"><tt>GeometryReference_t</tt></a>
+     structures are not used.
+<li> The mesh is linked to the family by attributing a family name to a
+     BC patch or a zone in the data structure
+     <a href="bc.html#BC"><tt>BC_t</tt></a> or
+     <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a>, respectively.
+<li> A hierarchy of families is possible through the list of <tt>FamilyName_t</tt>
+     nodes. These nodes contain both a user defined node name and a
+     family name. The node name <tt>FamilyParent</tt> may be used to specify
+     the family name for the parent of the current <tt>Family_t</tt> node.
+<li> <tt>Ordinal</tt> is defined in the SIDS as a user-defined integer with no
+     restrictions on the values that it can contain.
+     It may be used here to attribute a number to the family.
+</ol>
+
+<p>
+Rotation of the CFD family may be defined using the
+<a href="gridflow.html#RotatingCoordinates"><tt>RotatingCoordinates_t</tt></a>
+data structure.
+
+<p>
+The <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="GeometryReference"></a>
+<h3>Geometry Reference Structure Definition: <tt>GeometryReference_t</tt></h3>
+
+<p>
+The standard interface data structure identifies the CAD systems used
+to generate the geometry, the CAD files where the geometry is stored,
+and the geometric entities corresponding to the family.
+The <tt>GeometryReference_t</tt> structures contain all the information
+necessary to associate a CFD family to the CAD databases.
+For each <tt>GeometryReference_t</tt> structure, the CAD format
+is recorded in <tt>GeometryFormat</tt>, and the CAD file in
+<tt>GeometryFile</tt>.
+The geometry entity or entities within this CAD file that correspond to
+the family are recorded under the <tt>GeometryEntity_t</tt> nodes.
+
+<pre>
+  GeometryReference_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    GeometryFormat_t GeometryFormat ;                                  (r)
+
+    GeometryFile_t GeometryFile ;                                      (r)
+
+    List (GeometryEntity_t GeometryEntity1 ... GeometryEntityN) ;      (o/d)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<a name="GeometryFormat"></a>
+<p>
+The <tt>GeometryFormat</tt> is an enumeration type that identifies the CAD
+system used to generate the geometry.
+
+<pre>
+  GeometryFormat_t := Enumeration(
+    GeometryFormatNull,
+    GeometryFormatUserDefined,
+    NASA-IGES,
+    SDRC,
+    Unigraphics,
+    ProEngineer,
+    ICEM-CFD ) ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <tt>GeometryEntity_t</tt>, and
+     <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique at this level and must not include
+     the names <tt>GeometryFile</tt> or <tt>GeometryFormat</tt>.
+<li> By default, there is only one <tt>GeometryEntity</tt> and its name
+     is the family name.
+<li> There is no limit to the number of CAD files or CAD systems
+     referenced in a CGNS file.
+     Different parts of the same model may be described with different
+     CAD files of different CAD systems.
+<li> Other CAD geometry formats may be added to this list as needed.
+</ol>
+
+<a name="FamilyBC"></a>
+<h3>Family Boundary Condition Structure Definition: <tt>FamilyBC_t</tt></h3>
+
+<p>
+One of the main advantages of the concept of a layer of indirection
+(called a family here) is that the mesh density and the geometric
+entities may be modified without altering the association between
+nodes and intermediate objects, or between intermediate objects and
+geometric entities.
+This is very beneficial when handling boundary conditions and properties.
+Instead of setting boundary conditions directly on mesh entities,
+or on CAD entities, they may be associated to the intermediate objects.
+Since these intermediate objects are stable in the sense that they are
+not subject to mesh or geometric variations, the boundary conditions
+do not need to be redefined each time the model is modified.
+Using the concept of indirection, the boundary conditions and property
+settings are made independent of operations such as geometric changes,
+modification of mesh topology (i.e., splitting into zones), mesh
+refinement and coarsening, etc.
+
+<p>
+The <tt>FamilyBC_t</tt> data structure contains the boundary condition
+type.
+It is envisioned that it will be extended to hold both material and
+volume properties as well.
+
+<pre>
+  FamilyBC_t :=
+    {
+    BCType_t BCType;                                                   (r)
+
+    List( FamilyBCDataSet_t&lt;ListLength&gt; BCDataSet1 ... BCDataSetN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the <a href="#FamilyBCDataSet"><tt>FamilyBCDataSet_t</tt></a>
+     list are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>FamilyBC_t</tt> and shall not include the name <tt>BCType</tt>.
+</ol>
+
+<p>
+<a href="bc.html#BCType"><tt>BCType</tt></a> specifies the
+boundary-condition type, which gives general information on the
+boundary-condition equations to be enforced.
+Boundary conditions are to be applied at the locations specified by the
+<a href="bc.html#BC"><tt>BC_t</tt></a> structure(s) associated with the
+CFD family.
+
+<p>
+The <tt>FamilyBC_t</tt> structure provides for a list of
+boundary-condition data sets.
+In general, the proper <a href="#FamilyBCDataSet"><tt>FamilyBCDataSet_t</tt></a>
+instance to impose on the CFD family is determined by the
+<a href="bc.html#t:BCType_assoc"><tt>BCType</tt> association table</a>.
+The mechanics of determining the proper data set to impose is described
+in the section <a href="bc.html#BCType_assoc">Matching Boundary
+Condition Data Sets</a>.
+
+<p>
+For a few boundary conditions, such as a symmetry plane or polar
+singularity, the value of <a href="bc.html#BCType"><tt>BCType</tt></a>
+completely describes the equations to impose, and no instances of
+<a href="#FamilyBCDataSet"><tt>FamilyBCDataSet_t</tt></a> are needed.
+For "simple" boundary conditions, where a single set of Dirichlet and/or
+Neumann data is applied, a single <tt>FamilyBCDataSet_t</tt> will likely appear
+(although this is not a requirement).
+For "compound" boundary conditions, where the equations to impose
+are dependent on local flow conditions, several instances of
+<tt>FamilyBCDataSet_t</tt> will likely appear; the procedure for choosing
+the proper data set is more complex as described in the section
+<a href="bc.html#BCType_assoc">Matching Boundary Condition Data Sets</a>.
+
+<a name="FamilyBCDataSet"></a>
+<h3>Family Boundary Condition Data Set Structure Definition: <tt>FamilyBCDataSet_t</tt></h3>
+
+<p>
+<tt>FamilyBCDataSet_t</tt> contains Dirichlet and Neumann data for a single set
+of boundary-condition equations. Its intended use is for simple boundary-condition types,
+where the equations imposed do not depend on local flow conditions.
+
+<pre>
+  FamilyBCDataSet_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                  (o)
+
+    BCTypeSimple_t BCTypeSimple ;                                       (r)
+
+    BCData_t<1> DirichletData ;                                         (o)
+    BCData_t<1> NeumannData ;                                           (o)
+
+    ReferenceState_t ReferenceState ;                                   (o)
+
+    DataClass_t DataClass ;                                             (o)
+
+    DimensionalUnits_t DimensionalUnits ;                               (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;   (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a
+     given instance of <tt>FamilyBCDataSet_t</tt> and shall not include the names
+     <tt>BCTypeSimple</tt>, <tt>DataClass</tt>, <tt>DimensionalUnits</tt>,
+     <tt>DirichletData</tt>, <tt>NeumannData</tt> or <tt>ReferenceState</tt>.
+<li> <tt>BCTypeSimple</tt> is the only required field. All other fields are optional.
+</ol>
+
+<p>
+<a href="bc.html#BCType"><tt>BCTypeSimple</tt></a> specifies the boundary-condition type,
+which gives general information on the boundary-condition equations to be enforced.
+<tt>BCTypeSimple</tt> is also used for matching boundary condition data sets as discussed
+in the section <a href="bc.html#BCType_assoc">Matching Boundary Condition Data Sets</a>.
+
+<p>
+Boundary-condition data is separated by equation type into Dirichlet and Neumann conditions.
+Dirichlet boundary conditions impose the value of the given variables, whereas Neumann boundary
+conditions impose the normal derivative of the given variables. The mechanics of specifying Dirichlet
+and Neumann data for boundary conditions is covered in section
+<a href="bc.html#BC_specdata">Boundary Condition Specification Data</a>.
+
+<p>
+The substructures <tt>DirichletData</tt> and <tt>NeumannData</tt> contain boundary-condition data
+defined as globally constant over the family.
+
+<p>
+Reference quantities applicable to the set of boundary-condition data are contained in the
+<a href="#ReferenceState"><tt>ReferenceState</tt></a> structure.
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the default for the class of
+data contained in the boundary condition data. If the boundary conditions contain dimensional data,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> may be
+used to describe the system of dimensional units employed. If present, these three entities take
+precedence over all corresponding entities at higher levels of the hierarchy,
+following the standard <a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="#UserDefinedData"><tt>UserDefinedData_t</tt></a> data structure allows arbitrary
+user-defined data to be stored in <tt>Descriptor_t</tt> and <tt>DataArray_t</tt>
+children without the restrictions or implicit meanings imposed on these
+node types at other node locations.
+
+<p>
+Note that <tt>FamilyBCDataSet_t</tt> is similar to the data structure
+<a href="bc.html#BCDataSet"><tt>BCDataSet_t</tt></a>. The
+primary difference is that <tt>FamilyBCDataSet_t</tt> only allows for globally
+constant Dirichlet and Neumann data.
+
+<a name="UserDefinedData"></a>
+<h3>User-Defined Data Structure Definition: <tt>UserDefinedData_t</tt></h3>
+
+<p>
+Since the needs of all CGNS users cannot be anticipated,
+<tt>UserDefinedData_t</tt> provides a means of storing arbitrary
+user-defined data in <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>
+and <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+children without the restrictions or implicit meanings imposed on these
+node types at other node locations.
+
+<pre>
+  UserDefinedData_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    GridLocation_t GridLocation ;                                      (o/d)
+
+    IndexRange_t&lt;IndexDimension&gt; PointRange ;                          (o)
+    IndexArray_t&lt;IndexDimension, ListLength, int&gt; PointList ;          (o)
+
+    List( DataArray_t&lt;&gt; DataArray1 ... DataArrayN ) ;                  (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    FamilyName_t FamilyName ;                                          (o)
+
+    List( AdditionalFamilyName_t AddFamilyName1 ... AddFamilyNameN ) ; (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+
+    int Ordinal ;                                                      (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <tt>UserDefinedData_t</tt>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>UserDefinedData_t</tt> and shall not include the names
+     <tt>DataClass</tt>, <tt>DimensionalUnits</tt>, <tt>FamilyName</tt>,
+     <tt>GridLocation</tt>, <tt>Ordinal</tt>, <tt>PointList</tt>, or
+     <tt>PointRange</tt>.
+<li> <tt>GridLocation</tt> may be set to <tt>Vertex</tt>,
+     <tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, <tt>KFaceCenter</tt>,
+     <tt>FaceCenter</tt>, <tt>CellCenter</tt>, or <tt>EdgeCenter</tt>.
+     If <tt>GridLocation</tt> is absent, then its default value is
+     <tt>Vertex</tt>.
+     When <a href="build.html#GridLocation"><tt>GridLocation</tt></a>
+     is set to <tt>Vertex</tt>, then <tt>PointList</tt> or
+     <tt>PointRange</tt> refer to node indices, for both structured and
+     unstructured grids.
+     When <tt>GridLocation</tt> is set to <tt>FaceCenter</tt>, then
+     <tt>PointList</tt> or <tt>PointRange</tt> refer to face elements.
+<li> <tt>GridLocation</tt>, <tt>PointRange</tt>, and <tt>PointList</tt>
+     may only be used when <tt>UserDefinedData_t</tt> is located below a
+     <tt>Zone_t</tt> structure in the database hierarchy.
+<li> Only one of <tt>PointRange</tt> and <tt>PointList</tt> may be
+     specified.
+</ol>
+
+<a name="Gravity"></a>
+<h3>Gravity Data Structure Definition: <tt>Gravity_t</tt></h3>
+
+<p>
+The <tt>Gravity_t</tt> data structure may be used to define the
+gravitational vector.
+
+<pre>
+  Gravity_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    DataArray_t&lt;real, 1, PhysicalDimension&gt; GravityVector ;            (r)
+
+    DataClass_t DataClass ;                                            (o)
+    
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>Gravity_t</tt> and shall not include the names
+     <tt>DataClass</tt>, <tt>DimensionalUnits</tt>, or
+     <tt>GravityVector</tt>.
+</ol>
+
+<p>
+The only required field under the <tt>Gravity_t</tt> data structure is
+<tt>GravityVector</tt>, which contains the components of the gravity
+vector in the coordinate system being used.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the default
+class for data contained in the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entity.
+For dimensional data,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> may be
+used to describe the system of units employed.
+If present, these two entities take precedence over the corresponding
+entities at higher levels of the CGNS hierarchy, following the
+standard <a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 28 Aug 2014
+
+</body>
+</html>
+

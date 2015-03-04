@@ -1,0 +1,249 @@
+<!-- CGNS Steering Committee Minutes -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="minutes.css" rel="stylesheet" type="text/css">
+<title> CGNS Steering Committee Minutes </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS-to-ADF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../filemap_hdf/index.html"><b>SIDS-to-HDF&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h1>CGNS Steering Committee</h1>
+
+<h2>Telecon Minutes</h2>
+
+29 May 2003<br>
+11:00 AM Eastern Time<br><br>
+
+<ol>
+<li> The meeting was called to order at 11:05 AM.
+     There were <a href="#attendees">11 attendees</a>, listed below.
+<br><br>
+<li> The minutes of the <a href="telecon_mar03.html">20 March 2003
+     telecon meeting</a> were reviewed and approved as posted on the web
+     site.
+<br><br>
+<li> Status of previous action items:<br><br>
+     <ol type="a">
+     <li> Poinot's HDF-5 implementation:  Wedan &amp; Rumsey both
+          checked it out and tried the test case, but nothing done
+          beyond that.  <u>Power said they are currently looking into it
+          as a part of CHSSI project, and will report to the group when
+          they get further along.</u>
+     <li> <a href="../cgnstools/adfviewer/index.html">ADFVIEWER
+          documentation</a>:  Wedan has completed - it comes with the
+          package, through SourceForge. Towne has also put documentation
+          separately on the web documentation page.  ADFVIEWER also
+          now has "CGNS compatibility" button functional, for limited
+          checking of file for compatibility with the standard.
+     <li> SourceForge status: up and running and working fine.  Wedan
+          and Rumsey are administrators, Poinot is currently the only
+          developer.  Access is available by downloading tar files or
+          by accessing via CVS (see (g) below for further discussion).
+          Need SSH to use CVS.
+     <li> Rewording of BC section in SIDS:  Towne has completed.
+     <li> Accessibility of <a href="../cgnstools/index.html">tools and
+          utilities documentation</a>:  Towne has revamped so that
+          documentation is now accessible through 1 link as opposed to
+          being difficult to navigate to.
+     <li> New proposals for extension:
+          Rumsey has posted on CGNS website - <u>reviews
+          and comments needed by August.</u>
+     <li> Removal of beta status: done, as of initiation of
+          <a href="http://sourceforge.net/projects/cgns/">SourceForge
+          accessibility</a> <img src="../external.png" alt="external link">
+          (by Wedan) Version 2.2 is now the latest
+          official CGNS release.
+          <ol type="i">
+          <li> Issue: if get tar file, you get latest "official"
+               release, if download using CVS, you get official + bug
+               fixes.
+          <li> We will recommend that users get the "official" release;
+               CVS version is unofficial.
+          <li> When enough fixes accumulate, or when a "major" bug is
+               corrected, then there should be a new "official" release
+               issued.
+          <li> Developers should "tag" any significant series of changes
+               that are committed.
+          <li> <u>Wedan will add comment(s) on web page and/or on
+               SourceForge regarding this policy.</u>
+          </ol>
+     <li> Archiving CGNSTALK:  Towne completed this.
+     <li> Reno 2004 paper:  Poinot, Rumsey, Bush submitted abstract
+          "Impact of CGNS on CFD Workflow".
+     <li> Orlando meeting:  Rumsey set up for Tues, June 24 at 7PM in
+          Jasmine room.
+     </ol>
+<br>
+<li> ISO Status - Ray Cosner (via e-mail) reported that there was still
+     a problem with the 2003 budget for ISO at Boeing. It is a long shot
+     to get restored funding this year; it is more likely that budgets
+     will be restored in 2004.  Some limited efforts have continued in
+     Seattle, but the funding has been week-to-week and it is likely to
+     stop soon.  In spite of the budget problem, they still may get to
+     present the Committee Draft Proposal (via e-mail) for all 4 parts
+     in June at the ISO-STEP meeting in Stuttgart.
+<br><br>
+<li> Documentation - Towne asked if we want to submit the latest (2.2)
+     <a href="../sids/index.html">SIDS documentation</a> to AIAA for a
+     revised <a href="../aiaa.html">recommended practice guideline</a>.
+     The answer is yes, although there may be a minor modification to
+     make first regarding the
+     <a href="../filemap/nodes.html#CGNSLibraryVersion"><tt>CGNSLibraryVersion</tt>
+     node</a> (see item (7b) below).  <u>After that issue is resolved,
+     Towne will proceed with forwarding the latest documentation to
+     AIAA.</u> The spam problem we were having with the cgnstalk mailing
+     list seems to have died down, so a decision on how to deal with the
+     problem was tabled for now.
+<br><br>
+<li> Software status - Wedan mentioned that recent bug (a check testing
+     index range in pnts) was fixed in the official release of 2.2: the
+     check was taken out (so it is possible for a user to end up with
+     invalid point ranges - the software does not check for it).  This
+     bug is a result of a change made at the release of version 2.0 for
+     unstructured grids, having to do with element list and element
+     range being taken out.  Wedan asked details about the change made,
+     but those present could not remember enough.  <u>Wedan will speak to
+     Poirier to get more details on why it was taken out and whether or
+     not it is possible or practical to put back in.</u>
+<br><br>
+<li> Discussion on extensions:<br><br>
+     <ol type="a">
+     <li> Regarding a need for allowing <tt>GridLocation</tt>
+          and <tt>PointRange</tt>/<tt>PointList</tt> under
+          <tt>UserDefinedData_t</tt>, and also regarding additional
+          specification of <tt>GridLocation</tt> for data deep under
+          <tt>BC_t</tt>: these proposals have been posted on the CGNS
+          website under Proposals
+          For Extension.
+          <u>Deadline is 30 Aug 2003 for comments (Bush
+          volunteered as one reviewer, more are needed).</u>
+     <li> It has come up on cgnstalk: the need to make
+          <a href="../filemap/nodes.html#CGNSLibraryVersion"><tt>CGNSLibraryVersion</tt>
+          node</a> node mandatory (currently, if it is not present, the
+          MLL assumes a default version of 1.05).  The MLL automatically
+          adds this node, but other software may not; and then it
+          runs into trouble if the MLL is used to read the file
+          subsequently. Also, there is the question of a possible need
+          for a node referring to the version of the SIDS, as opposed to
+          the version of the MLL.  After discussion, it was decided to
+          make the current <tt>CGNSLibraryVersion</tt> node mandatory.
+          This will be a change in documentation only.  Because the MLL
+          and the SIDS keep identical numbering and stay current of each
+          other, the number to include is either the MLL library version
+          or the SIDS version (they are the exact same number). It was
+          decided that a proposal for a separate node for the SIDS
+          version number was not crucial at this time, because the
+          numbers are identical. The wording "Library" is unfortunate,
+          but is difficult to change; the documentation will hopefully
+          clarify what is meant. Other issues related to this have
+          been brought up on cgnstalk, but it appears possible to work
+          within the current framework for the present. Documentation
+          needs to be added (in SIDS?) to describe the fact that the
+          <tt>CGNSLibraryVersion</tt> node is mandatory &amp; what it
+          means, and also documentation is needed somewhere (in MLL
+          docs?) to describe how the MLL handles files without the node
+          present. <u>Towne will look into where it is most appropriate to
+          add documentation regarding this policy.</u>
+     </ol>
+<br>
+<li> Other issues - Rumsey mentioned two mailing lists for other mesh
+     standards that are under development (mail
+     <a href="mailto:majordomo@ncsa.uiuc.edu">majordomo@ncsa.uiuc.edu</a>;
+     subscribe hdf5mesh) (mail
+     <a href="mailto:majordomo@mcs.anl.gov">majordomo@mcs.anl.gov</a>;
+     subscribe tstt-interface) for those people interested in keeping
+     abreast.  There has been some communication with these groups, but
+     so far common ground has not been found.  They are aware of CGNS.
+<br><br>
+<li> Next CGNS meeting will be at the Orlando AIAA Meeting in June -
+     anyone is welcome (Tues, June 24 at 7PM in the Jasmine Room).  Next
+     Telecon will probably be in Aug-Sept time frame.
+<br><br>
+<li> Meeting was adjourned at 12:00 PM.
+<br><br>
+<li> Summary of action items:<br><br>
+     <ol type="a">
+     <li> Power to report on his group's assessment of HDF-5
+          implementation of CGNS.
+     <li> Bush (and other volunteers) to review 2 new proposals for
+          extension.
+     <li> Wedan to add comments to website and/or SourceForge regarding
+          policy of "official" release vs. CVS updates.
+     <li> Towne to propose documentation regarding
+          <tt>CGNSLibraryVersion</tt> node being mandatory - Rumsey will
+          involve several people (including Robert Magnan, the person
+          who originally pointed out the problem) via e-mail to help
+          wordsmith and agree to it.
+     <li> Towne to submit latest 2.2 documentation to AIAA to update the
+          recommended practice guideline document.
+     <li> Wedan to discuss with Poirier the issue of element list and
+          element range.
+     </ol>
+</ol>
+
+<a name="attendees"></a>
+<h2>Attendees</h2>
+
+<table cellspacing=0 cellpadding=2 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;</tt>
+   <td>Bob Bush<td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td>Pratt &amp; Whitney
+<tr valign=baseline><td>
+   <td>Armen Darian<td>
+   <td>Boeing Space
+<tr valign=baseline><td>
+   <td>David Edwards<td>
+   <td>Intelligent Light
+<tr valign=baseline><td>
+   <td>Richard Hann<td>
+   <td>ANSYS/CFX
+<tr valign=baseline><td>
+   <td>Steve Karman<td>
+   <td>UT Chattanooga
+<tr valign=baseline><td>
+   <td>Greg Power<td>
+   <td>USAF/AEDC
+<tr valign=baseline><td>
+   <td>Chris Rumsey<td>
+   <td>NASA Langley
+<tr valign=baseline><td>
+   <td>Charlie Towne<td>
+   <td>NASA Glenn
+<tr valign=baseline><td>
+   <td>Kurt Weber<td>
+   <td>Rolls-Royce
+<tr valign=baseline><td>
+   <td>Bruce Wedan<td>
+   <td>ICEM CFD Engineering
+<tr valign=baseline><td>
+   <td>Nick Wyman<td>
+   <td>Pointwise
+</table>
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 2 June 2003
+
+</body>
+</html>

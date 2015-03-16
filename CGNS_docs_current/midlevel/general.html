@@ -512,20 +512,21 @@ or modify your code to use <tt>cgsize_t</tt>.
 <h3>64-bit Fortran Portability and Issues</h3>
 
 <p>
-All integer arguments in the Fortran interface - including
-<a href="general.html#typedefs">enumerated values (enums)</a> - are taken to be
-<tt>integer*4</tt> in 32-bit mode and <tt>integer*8</tt>
-in 64-bit mode. If you have used default or implicit integers in
-your Fortran code, it should port to 64-bit mode in most cases by
-simply turning on your compiler option that promotes implicit
-integers to <tt>integer*8</tt>. If you have explicitly defined your
-integers as <tt>integer*4</tt>, your code will not work in 64-bit mode.
-In that case, you will either need to change them to <tt>integer</tt>
-(recommended for portability) or <tt>integer*8</tt>.
+Starting with version 3.3, the Fortran APIs have the following specifications (recommended for portability):
+</p><ul><li>Fortran arguments should be 
+declared as the default <font color="blue"><tt>INTEGER</tt></font> if the corresponding 
+argument in the C API is declared as an <font color="blue"><tt>int</tt></font>.</li>
+
+<li>Fortran arguments should be declared as <font color="blue"><tt>INTEGER(CG_SIZE_T)</tt></font> if the corresponding 
+argument in the C API is declared as  <font color="blue"></tt>cgsize_t</tt></font>.</li>
+
+<li>Fortran  arguments should be declared as type
+ <font color="blue"><tt>INTEGER(cgenum_t)</tt></font> if the corresponding 
+argument in the C API is declared as <a href="general.html#typedefs">enumerated values (enums)</a>.
+</ul>
 
 <p>
-A new integer parameter has been added to the <i>cgnslib_f.h</i>
-header, <tt>CG_BUILD_64BIT</tt>, which will be set
+An integer parameter, <tt>CG_BUILD_64BIT</tt>, can be used to tell the size of <tt>cgsize_t</tt>, which will be set
 to 1 in 64-bit mode and 0 otherwise. You may use this parameter
 to check at run time if the CGNS library has been compiled in 64-bit
 mode or not, as in:
@@ -535,75 +536,23 @@ if (CG_BUILD_64BIT .ne. 0) then
     stop
 endif
 </pre>
+
 If you are using a CGNS library prior to version 3.1, this parameter will
 not be defined and you will need to rely on your compiler initializing all
 undefined values to 0 (not always the case) for this test to work.
 
-<p>
-If your compiler supports automatic promotion of integers, and you use
-implicit integers, your code should port to 64-bit with the following
-exception.
 
 <p>
-If you use an <tt>Integer</tt> data type in any routine that takes
-a data type specification, and an implicit integer for the data, the code
-will fail when compiled in 64-bit mode with automatic integer promotion.
-An example of this would be:
-<pre>
-integer dim
-integer data(dim)
-call cg_array_write_f('array',Integer,1,dim,data)
-</pre>
-This is because the MLL interprets the <tt>Integer</tt> data type
-as <tt>integer*4</tt> regardless of the compilation mode. The compiler,
-however, has automatically promoted <i>data</i> to be
-<tt>integer*8</tt>. What you will need to do to prevent this problem,
-is to either explicitly define <i>data</i> as in:
-<pre>
-integer dim
-integer*4 data(dim)
-call cg_array_write_f('array',Integer,1,dim,data)
-</pre>
-or
-<pre>
-integer dim
-integer*8 data(dim)
-call cg_array_write_f('array',LongInteger,1,dim,data)
-</pre>
-or test on <tt>CG_BUILD_64BIT</tt> as in:
-<pre>
-integer dim
-integer data(dim)
-if (CG_BUILD_64BIT .eq. 0) then
-  call cg_array_write_f('array',Integer,1,dim,data)
-else
-  call cg_array_write_f('array',LongInteger,1,dim,data)
-endif
-</pre>
-The last 2 options will only work with CGNS Version 3.1, since
-<tt>LongInteger</tt> and <tt>CG_BUILD_64BIT</tt> are
-not defined in previous versions.
+<font color="red">DISCLAMER: This following section's practice is not recommend!</font> 
 
 <p>
-You may also need to be careful when using integer constants as arguments
-in 64-bit mode. If your compiler automatically promotes integer constants
-to <tt>integer*8</tt>, then there is no problem. This is probably
-the case if your compiler supports implicit integer promotion. If not,
-then the constants will be <tt>integer*4</tt>, and your code
-will not work in 64-bit mode. In that case you will need to do something
-like:
-<pre>
-integer*8 one,dim
-integer*4 data(dim)
-one = 1
-call cg_array_write_f('array',Integer,one,dim,data)
-</pre>
+If you have explicitly defined your default integers which are passed to the CGNS library as <tt>INTEGER*8</tt>, or used a compiler option to promote implicit integers to <tt>INTEGER*8</tt>, then you MUST compile the CGNS library with the same compiler option in order to promote implicit integers to <tt>INTEGER*8</tt>. If you really must promote all integers to <tt>INTEGER*8</tt> in your code, and you are not able to compile the CGNS library with the same compilar options,  then it is recommended that all arguments in the CGNS Fortran APIs should be declared as <font color="blue"><tt>INTEGER(C_INT)</tt></font> if the corresponding argument in the C API is declared as an <font color="blue"></tt>int</tt></font>.
 
 <p>
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 08 Feb 2013
+Last updated 15 March 2015
 
 </body>
 </html>

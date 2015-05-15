@@ -58,7 +58,7 @@
 <li> <a href="#typedefs">Typedefs</a>
 <li> <a href="#typedefs_char">Character Names for Typedefs</a>
 <li> <a href="#c-port">64-bit C Portability and Issues</a>
-<li> <a href="#f-port">64-bit Fortran Portability and Issues</a>
+<li> <a href="#fortran">Calling CGNS from Fortran</a>
 </ul>
 
 <a name="acquiring"></a>
@@ -508,16 +508,42 @@ to add something like this to your code:
 </pre>
 or modify your code to use <tt>cgsize_t</tt>.
 
-<a name="f-port"></a>
-<h3>64-bit Fortran Portability and Issues</h3>
+<a name="fortran"></a>
 
+<h3>Calling CGNS from Fortran</h3>
+<p>
+Starting with version 3.3, a new CGNS module was added to the library. Fortran programs 
+can use the new module by adding <font color="blue"><tt>USE CGNS</tt></font>. The use of
+<font color="blue"><tt>include 'cgnslib_f.h'</tt></font> is depricated and should no longer be
+used.
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#ced9ff">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Fortran Helper Functions
+    <th scope=col>Modes
+<tr><td nowrap>
+        <tt><b>FUNCTION cg_get_type(<span class=in><i>buf</i></span>)</b></tt>
+<p>
+Returns the data type of <i>buf</i>, where <i>buf</i> is a scalar. This is a useful function
+for automatically passing the correct date type of a buffer.
+</p>
+<p>
+For example:
+</p>
+CALL cg_coord_read_f(cg, base, zone, coordname,<font color="blue"><tt> cg_get_type(data(1))</tt></font>, rmin, DataSize, data, ier)
+</table>
+
+<h4>64-bit Fortran Portability</h4>
 <p>
 Starting with version 3.3, the Fortran APIs have the following specifications (recommended for portability):
 </p><ul><li>Fortran arguments should be 
 declared as the default <font color="blue"><tt>INTEGER</tt></font> if the corresponding 
 argument in the C API is declared as an <font color="blue"><tt>int</tt></font>.</li>
 
-<li>Fortran arguments should be declared as <font color="blue"><tt>INTEGER(CG_SIZE_T)</tt></font> if the corresponding 
+<li>Fortran arguments should be declared as <font color="blue"><tt>INTEGER(cgsize_t)</tt></font> if the corresponding 
 argument in the C API is declared as  <font color="blue"></tt>cgsize_t</tt></font>.</li>
 
 <li>Fortran  arguments should be declared as type
@@ -543,7 +569,7 @@ undefined values to 0 (not always the case) for this test to work.
 
 
 <p>
-<font color="red">DISCLAMER: This following section's practice is not recommend!</font> 
+<font color="red">DISCLAMER: The following section's practice is not recommend!</font> 
 
 <p>
 If you have explicitly defined your default integers which are passed to the CGNS library as <tt>INTEGER*8</tt>, or used a compiler option to promote implicit integers to <tt>INTEGER*8</tt>, then you MUST compile the CGNS library with the same compiler option in order to promote implicit integers to <tt>INTEGER*8</tt>. If you really must promote all integers to <tt>INTEGER*8</tt> in your code, and you are not able to compile the CGNS library with the same compilar options,  then it is recommended that all arguments in the CGNS Fortran APIs should be declared as <font color="blue"><tt>INTEGER(C_INT)</tt></font> if the corresponding argument in the C API is declared as an <font color="blue"></tt>int</tt></font>.
@@ -552,7 +578,7 @@ If you have explicitly defined your default integers which are passed to the CGN
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 15 March 2015
+<script src="lastupdated.js"></script>
 
 </body>
 </html>

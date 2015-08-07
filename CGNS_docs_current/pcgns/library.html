@@ -39,6 +39,7 @@
 <li> <a href="#misc">Miscellaneous Routines</a>
      <ul>
      <li> <tt><b>cgp_mpi_comm</b></tt> - Set the MPI communicator
+     <li> <tt><b>cgp_mpi_info</b></tt> - Set the MPI info object
      <li> <tt><b>cgp_pio_mode</b></tt> - Set the parallel IO mode
      <li> <tt><b>cgp_queue_set</b></tt> - Enable/Disable queued output
      <li> <tt><b>cgp_queue_flush</b></tt> - Flush the output queue
@@ -89,6 +90,10 @@
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cgp_mpi_comm(<span class=in>int mpicomm</span>);</b></tt>
     <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt><tr>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgp_mpi_info(<span class=in>MPI_Info info</span>);</b></tt>
+    <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cgp_pio_mode(<span class=in>PIOmode_t mode</span>);</b></tt>
@@ -109,6 +114,10 @@
 <tbody>
 <tr><td nowrap>
         <tt><b>call cgp_mpi_comm_f(<span class=in>mpicomm</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cgp_mpi_info_f(<span class=in>info</span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -153,6 +162,11 @@
 <p>
 The routine <tt>cgp_mpi_comm</tt> sets the MPI communicator for parallel
 operations by the CGNS library. The default value is <tt>MPI_COMM_WORLD</tt>.
+
+<p>
+The routine <tt>cgp_mpi_info</tt> passes the MPI info object for parallel
+operations to the CGNS library. Notes for Fortran: the data type for <tt>info</tt>
+is an INTEGER.
 
 <p>
 The routine <tt>cgp_pio_mode</tt> sets the mode for parallel

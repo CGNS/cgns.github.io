@@ -247,11 +247,16 @@ twice in the database - once for each adjacent zone.
      <tt>PointRangeDonor</tt>, <tt>Transform</tt>, or <tt>Ordinal</tt>.
 <li> If <tt>Transform</tt> is absent, then its default value is
      <tt>[</tt>+1,+2,+3<tt>]</tt>.
-<li> <tt>ZoneDonorName</tt> must be equated to a zone identifier
+<li> <tt>ZoneDonorName</tt> must be equated to a 32 character maximum zone identifier
      within the current CGNS database (i.e., it must be equal to one
      of the <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a> identifiers
      contained in the current
-     <a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> entity).
+     <a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> entity)
+     or to a 65 character maximum zone identifier
+     in another base of the same CGNS tree; in that case the
+     <tt>ZoneDonorName</tt> string has the pattern <tt>base/zone</tt>, only one
+     single "/" character is allowed, and neither <tt>basename</tt> nor
+     <tt>zonename</tt> should be empty. <tt>ZoneDonorName</tt> should also not be empty.
 <li> Beginning indices of <tt>PointRange</tt> and
      <tt>PointRangeDonor</tt> must coincide (i.e., must be the same
      physical point); ending indices of <tt>PointRange</tt> and
@@ -597,11 +602,16 @@ several overlapping zones.
      <tt>GridConnectivityType</tt>, <tt>GridLocation</tt>,
      <tt>InterpolantsDonor</tt>, <tt>Ordinal</tt>, <tt>PointList</tt>,
      <tt>PointListDonor</tt>, or <tt>PointRange</tt>.
-<li> <tt>ZoneDonorName</tt> must be equated to a zone identifier
+<li> <tt>ZoneDonorName</tt> must be equated to a 32 character maximum zone identifier
      within the current CGNS database (i.e., it must be equal to one
      of the <a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a> identifiers
      contained in the current
-     <a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> entity).
+     <a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> entity)
+     or to a 65 character maximum zone identifier
+     in another base of the same CGNS tree; in that case the
+     <tt>ZoneDonorName</tt> string has the pattern <tt>base/zone</tt>, only one
+     single "/" character is allowed, and neither <tt>basename</tt> nor
+     <tt>zonename</tt> should be empty. <tt>ZoneDonorName</tt> should also not be empty.
 <li> If <tt>GridConnectivityType</tt> is absent, then its default value
      is <tt>Overset</tt>.
 <li> For <tt>Abutting</tt> or <tt>Abutting1to1</tt> interfaces,
@@ -1352,7 +1362,7 @@ array.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 07 Feb 2014
+Last updated 25 Sep 2015
 
 </body>
 </html>

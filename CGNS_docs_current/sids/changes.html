@@ -47,6 +47,7 @@
 <h2>Major Differences from Previous CGNS Versions</h2>
 
 <ul>
+<li> <a href="#Version33">Version 3.3</a>
 <li> <a href="#Version32">Version 3.2</a>
 <li> <a href="#Version31">Version 3.1</a>
 <li> <a href="#Version25">Version 2.5</a>
@@ -62,6 +63,39 @@
 The following items represent noteworthy alterations and additions to
 the SIDS <u>in reverse chronological order</u>.  References to CPEX in the following refer to 
 <a href="http://www.cgns.org/Proposals.html">CGNS Proposals for Extension</a>.
+
+<a name="Version33"></a>
+<h3>Version 3.3</h3>
+
+<p>
+The following changes were made for Version 3.3.
+<ul>
+<li>Added CPEX 0039 to define inter-base reference for multi-zone
+      connectivities, families,
+      and time dependent pointers to Zones and
+      Families. A reference to a zone or a family can
+      now have the pattern <tt>{base name}/{zone name}</tt> or
+      <tt>{base name}/{family name}</tt> in order to refer to
+      a zone or a family defined in another base.
+      65 characters are allowed for identifiers in another base.
+      <a href="cgnsbase.html#BaseLevelFamilies">Base Level Families</a> section added.
+      New subsection on <a href="cgnsbase.html#MultipleBases">Multiple Bases</a> added.
+      Mention of use of 65 characters made in <a href="cnct.html#GridConnectivity1to1">GridConnectivity1to1_t</a>
+      and <a href="cnct.html#GridConnectivity">GridConnectivity_t</a>.
+      Added note in <a href="misc.html#UserDefinedData">UserDefinedData_t</a>.
+      New maximum character size of 65 in ZonePointers and FamilyPointers in
+      <a href="timedep.html#BaseIterativeData">BaseIterativeData_t</a>.
+<li>Added mention that <tt>FamilyName</tt> and <tt>AdditionalFamilyName</tt>
+      in <a href="gridflow.html#ZoneSubRegion">ZoneSubRegion_t</a> must respect appropriate rules.
+<li>Added ".." to be avoided in names in <a href="conv.html#notation">Data Structure Notation Conventions</a>,
+      and added mention that entity names cannot exceed 32 characters.
+<li>Added mention that default value for SimulationType is SimulationTypeNull
+      (in <a href="cgnsbase.html#CGNSBase">CGNSBase_t</a>).
+<li>Added a note in <a href="gridflow.html#FlowSolution">FlowSolution_t</a> to mention that the <tt>NODE</tt> element
+      is not to be used in place of the vertex.
+<li>Added some new subsection headings.
+</ul>
+
 
 <a name="Version32"></a>
 <h3>Version 3.2</h3>
@@ -108,7 +142,7 @@ The following changes were made for Version 3.1.
      <br><br>
 <li> Added section <a href="floweqn.html#ModelType">Model Type Structure Definition</a>.
      <br><br>
-<li> Added <a href="gridflow.html##ZoneSubRegion">ZoneSubRegion_t</a> (CPEX 0030).
+<li> Added <a href="gridflow.html#ZoneSubRegion">ZoneSubRegion_t</a> (CPEX 0030).
         Made changes associated with CPEX 0031:
         (1) added CellDimension to several places in <a href="cgnsbase.html#Zone">Zone_t</a>,
         (2) added new ParentElements and ParentElementsPosition
@@ -338,7 +372,7 @@ The following changes were made for Version 2.0, Beta 1.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 28 Aug 2014
+Last updated 25 Sep 2015
 
 </body>
 </html>

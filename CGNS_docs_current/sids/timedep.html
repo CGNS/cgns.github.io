@@ -93,9 +93,9 @@ The <tt>BaseIterativeData_t</tt> data structure is defined as follows:
 
     DataArray_t&lt;int,  1, NumberOfSteps&gt; NumberOfZones ;                (o)
     DataArray_t&lt;int,  1, NumberOfSteps&gt; NumberOfFamilies ;             (o)
-    DataArray_t&lt;char, 3, [32, MaxNumberOfZones, NumberOfSteps]&gt;
+    DataArray_t&lt;char, 3, [65, MaxNumberOfZones, NumberOfSteps]&gt;
        ZonePointers ;                                                  (o)
-    DataArray_t&lt;char, 3, [32, MaxNumberOfFamilies, NumberOfSteps]&gt;
+    DataArray_t&lt;char, 3, [65, MaxNumberOfFamilies, NumberOfSteps]&gt;
        FamilyPointers ;                                                (o)
 
     List( DataArray_t&lt;&gt; DataArray1 ... DataArrayN ) ;                  (o)
@@ -157,7 +157,13 @@ The <a href="data.html#DataArray"><tt>DataArray_t</tt></a> nodes for
 three-dimensional arrays.
 For each recorded step, the names of all zones and families being
 used for the step may be recorded.
-Note that the names are limited to 32 characters, as usual in the SIDS.
+Note that the names are limited to 65 characters;
+this is the
+maximum size of a name of a zone from another base: 32 chars + '/' + 32 chars.
+Only one '/' character is allowed, then the first token before the '/' is
+the CGNSBase name and the second token is the Zone or Family name.
+If no '/' is found, the name is a Zone or a Family name of the current
+CGNS Base.
 The variables <tt>MaxNumberOfZones</tt> and <tt>MaxNumberOfFamilies</tt>
 represent the maximum number of zones and families that apply to
 one step.
@@ -975,7 +981,7 @@ Each indentation represents a level down (a child) from the parent node.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 07 Feb 2014
+Last updated 25 Sep 2015
 
 </body>
 </html>

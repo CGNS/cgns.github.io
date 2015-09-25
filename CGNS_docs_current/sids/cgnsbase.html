@@ -103,7 +103,30 @@ to the CGNS version number, and other libraries should also.
 
 <p>
 The highest level structure in a CGNS database is <tt>CGNSBase_t</tt>.
-It contains the cell dimension and physical dimension of the
+This top level entity is designed to be self-contained,
+a complete CFD computation can be archived and reproduced using the data
+defined in the CGNSBase. However a CGNS tree can contain more than one base,
+these can be related to the same CFD case or not. The behavior of a multi-base
+CGNS tree is application dependant, even if inter-base relationships are
+authorized in three cases:
+<ul>
+ <li> A reference to another base's zone name (including its sub-nodes' names)
+  as defined in the multi-zone connectivities (see 
+  <a href="cnct.html">Multizone Interface Connectivity</a> and
+  time-dependant pointers 
+  <a href="timedep.html">Time-Dependent Flow</a>);
+ <li> A reference to another base's family name (see 
+  <a href="misc.html#Family">Family Data Structure Definition: <tt>Family_t</tt></a>) as
+  as <tt>FamilyName_t</tt> data;
+ <li> A LogicalLink() from one base to another on any kind of node;
+</ul>
+
+Care must be taken on precedence rules and scope in the case of parsing
+multiple CGNS bases (see <a href="cgnsbase.html#precedence">Precedence Rules and Scope
+Within the Hierarchy</a>).
+
+<p>
+The CGNS Base contains the cell dimension and physical dimension of the
 computational grid and lists of zones and families making up the domain.
 Globally applicable information, including a reference state, a set of
 flow equations, dimensional units, time step or iteration information,
@@ -277,7 +300,7 @@ the gravitational vector.
 <a name="SimulationType"></a>
 <p>
 <tt>SimulationType</tt> is an enumeration type identifying the type
-of simulation.
+of simulation. The default value is <tt>SimulationTypeNull</tt>.
 
 <pre>
   SimulationType_t := Enumeration (
@@ -329,12 +352,27 @@ Miscellaneous global data may be contained in the
 <a href="misc.html#IntegralData"><tt>IntegralData_t</tt></a> list.
 Candidates for inclusion here are global forces and moments.
 
+<a name="BaseLevelFamilies"></a>
+<h4>Base Level Families</h4>
+
 <p>
 The <a href="misc.html#Family"><tt>Family_t</tt></a> data structure
 is used to record geometry reference data.
 It may also include boundary conditions linked to geometry patches.
 For the purpose of defining material properties, families may also be
 defined for groups of elements.
+
+The family-mesh association is defined under the <tt>Zone_t</tt>,
+ the <tt>ZoneSubRegion_t</tt> and
+<tt>BC_t</tt> data structures by specifying the family name corresponding
+to a zone or a boundary patch. The familyname can refer to a <tt>Family_t</tt>
+defined in a <tt>CGNSBase_t</tt> other than the referring <tt>Zone_t</tt>,
+the <tt>ZoneSubRegion_t</tt> or <tt>BC_t</tt>. In this case, the actual
+name of the <tt>Family_t</tt> has to be prefixed by the <tt>CGNSBase_t</tt> name.
+The pattern is then <tt>basename/familyname</tt>, only one single /
+character is allowed, and neither of <tt>basename</tt> nor <tt>familyname</tt>
+should be empty.
+
 The family-mesh association is defined under the
 <a href="#Zone"><tt>Zone_t</tt></a> and
 <a href="bc.html#BC"><tt>BC_t</tt></a> data structures by specifying
@@ -529,6 +567,9 @@ deforming) grid motion.
 Families may be used to define material properties. Where multiple
 families are desired, <tt>AdditionalFamilyName</tt> nodes may be used
 to specify them.
+Both <tt>FamilyName</tt> and <tt>AdditionalFamilyName</tt> should refer to
+a <tt>CGNSBase_t</tt> level <tt>Family_t</tt>, in the parent base of the zone
+or in another sibbling base (see <a href="#BaseLevelFamilies">Base Level Families</a>).
 
 <p>
 Flow-solution quantities are contained in the list of
@@ -662,6 +703,9 @@ Use of <tt>Ordinal</tt> is discouraged and is on a user-beware basis.
 <a name="precedence"></a>
 <h3>Precedence Rules and Scope Within the Hierarchy</h3>
 
+<a name="SingleBase"></a>
+<h4>Single Base</h4>
+
 <p>
 The dependence of a structure entity's information on data contained at 
 higher levels of the hierarchy is typically explicitly expressed through
@@ -767,11 +811,39 @@ data arrays are dimensional and use a consistent set of units,
 can be set appropriately at the <a href="#CGNSBase"><tt>CGNSBase_t</tt></a>
 level and thereafter omitted when outputting data.
 
+<a name="MultipleBases"></a>
+<h4>Multiple Bases</h4>
+
+<p>
+With a multiple-bases CGNS tree, some nodes defined at
+the base level may lead to an inconsistent CGNS set of data. In that case
+it is up to the application using the CGNS tree to define its own
+understanding of the data. In particular, the following nodes are not
+required to be the same in all bases of a CGNS tree, thus inter-base
+references may lead to inconsistency:
+
+<ul>
+  <li><tt>CellDimension</tt> and <tt>PhysicalDimension</tt>
+  <li><tt>ReferenceState</tt>
+  <li><tt>Axisymmetry</tt>
+  <li><tt>RotatingCoordinates</tt>
+  <li><tt>Gravity</tt>
+  <li><tt>SimulationType</tt>
+  <li><tt>DataClass</tt>
+  <li><tt>DimensionalUnits</tt>
+  <li><tt>FlowEquationSet</tt>
+  <li><tt>Family_t</tt>
+</ul>
+
+<p>
+The application has to take into account the corresponding base definition
+for the referred-to node.
+
 <p>
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 07 Feb 2014
+Last updated 25 Sep 2015
 
 </body>
 </html>

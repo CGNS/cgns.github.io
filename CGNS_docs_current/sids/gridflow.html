@@ -1123,6 +1123,10 @@ additional connectivity information is needed. This is provided by the optional
 fields <tt>PointRange</tt> and <tt>PointList</tt>; these refer to vertices,
 edges, faces or cell centers, depending on the values of <tt>CellDimension</tt>
 and <tt>GridLocation</tt>. The following table shows these relations.
+The <tt>NODE</tt> element type should not be used in place of the vertex. A
+vertex <tt>GridLocation</tt> should use the <tt>GridLocation = Vertex</tt> pattern,
+which implies an indexing on the grid coordinates arrays and not a <tt>NODE</tt>
+<tt>Elements_t</tt> array.
 
 <center>
 <table cellspacing=0 cellpadding=3 border>
@@ -1639,6 +1643,11 @@ time-dependent simulation (in which case
 <a href="timedep.html#ZoneIterativeData">ZoneIterativeData</a> should be
 used to associate them).
 
+<p>
+All <tt>FamilyName</tt> and <tt>AdditionalFamilyName</tt> entries should respect
+the rules defined in 
+<a href="cgnsbase.html#BaseLevelFamilies">Base Level Families</a> and
+<a href="cgnsbase.html#Zone"><tt>Zone_t</tt></a>.
 
 <a name="subreg_example"></a>
 <h3>Zone Subregion Examples</h3>
@@ -1792,7 +1801,7 @@ Under Zone_t:
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 28 Aug 2014
+Last updated 25 Sep 2015
 
 </body>
 </html>

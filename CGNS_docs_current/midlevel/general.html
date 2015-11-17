@@ -52,6 +52,7 @@
 <ul>
 <li> <a href="#acquiring">Acquiring the Software and Documentation</a>
 <li> <a href="#organization">Organization of This Manual</a>
+<li> <a href="#syntax">Syntax</a>
 <li> <a href="#language">Language</a>
 <li> <a href="#character">Character Strings</a>
 <li> <a href="#error">Error Status</a>
@@ -95,24 +96,27 @@ the applicable CGNS node label, with links to that node's description
 in the <a href="../sids/index.html">SIDS</a> and
 <a href="../filemap/index.html">SIDS File Mapping</a> manuals.
 
+<a name="syntax"></a>
+<h3>Syntax</h3>
+
 <p>
 Next is a table illustrating the syntax for the Mid-Level Library
 functions.
 The C functions are shown in the top half of the table, followed by the
-corresponding Fortran routines in the bottom half of the table.
+corresponding Fortran routines in the bottom half of the table. Fortran subroutines
+identified in
+<span class=cgf><b><tt> green </tt></b></span>indicates APIs which <b>do not</b> have 
+explicit interfaces.
 Input variables are shown in an
 <span class=in><b><tt>upright blue</tt></b></span> font, and
 output variables are shown in a
 <span class=out><b><tt><i>slanted red</i></tt></b></span> font.
-As of Version 3.1, some of the arguments to the Mid-Level Library
+Note, as of Version 3.1, some of the arguments to the Mid-Level Library
 have changed from <b><tt>int</tt></b> to <b><tt>cgsize_t</tt></b>
-in order to support 64-bit data. These changes are shown in an
-<span class=cgin><b><tt>upright green</tt></b></span> font for input
-variables, and a
-<span class=cgout><b><tt><i>slanted bright red</i></tt></b></span>
-font for output variables.
+in order to support 64-bit data. Changed APIs can quickly be identified by
+searching for <b><tt>cgsize_t</tt></b>.
 For each function, the right-hand column lists the modes (read, write,
-and/or modify) applicable to that function.
+and/or modify) applicable to that function. 
 
 <p>
 The input and output variables are then listed and defined.
@@ -399,7 +403,7 @@ The routines have the same name as the global data arrays, but with a
 For the example above, use "<tt>cg_LengthUnitsName(Meter)</tt>".
 
 <p>
-<table bgcolor="#ced9ff" border="1" cellpadding="5" cellspacing="0" rules="groups" width="100%">
+<table bgcolor="#f5f5f0" border="1" cellpadding="5" cellspacing="0" rules="groups" width="100%">
 <colgroup width="90%">
 </colgroup><colgroup>
 </colgroup><thead>
@@ -523,7 +527,7 @@ can use the new module by adding <font color="blue"><tt>USE CGNS</tt></font>. Th
 used.
 
 <table width=100% cellspacing=0 cellpadding=5 border rules=groups
-       bgcolor="#ced9ff">
+       bgcolor="#f5f5f0">
 <colgroup width=90%>
 <colgroup>
 <thead>

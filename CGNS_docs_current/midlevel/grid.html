@@ -200,8 +200,8 @@ The above functions are applicable to any <tt>GridCoordinates_t</tt> node.
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_coord_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>char *coordname</span>, <span class=cgin>cgsize_t *range_min</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_max</span>, <span class=in>void *coord_array</span>, <span class=out><i>int *C</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>char *coordname</span>, <span class=in>cgsize_t *range_min</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_max</span>, <span class=in>void *coord_array</span>, <span class=out><i>int *C</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -215,18 +215,18 @@ The above functions are applicable to any <tt>GridCoordinates_t</tt> node.
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_coord_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>char *coordname</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *coord_array</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
-        <tt><b>call cg_coord_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>datatype</span>, <span class=in>coordname</span>, <span class=in>coord_array</span>,<br>
+        <tt><b>call <span class=cgf>cg_coord_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>datatype</span>, <span class=in>coordname</span>, <span class=in>coord_array</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>C</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_coord_partial_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>datatype</span>, <span class=in>coordname</span>,<br>
+        <tt><b>call <span class=cgf>cg_coord_partial_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>datatype</span>, <span class=in>coordname</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>coord_array</span>, <span class=out><i>C</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
@@ -239,7 +239,7 @@ The above functions are applicable to any <tt>GridCoordinates_t</tt> node.
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_coord_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>coordname</span>, <span class=in>datatype</span>,<br>
+        <tt><b>call <span class=cgf>cg_coord_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>coordname</span>, <span class=in>datatype</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=out><i>coord_array</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
@@ -354,29 +354,29 @@ indices for the returned coordinates will be wrong.
 <tbody>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_section_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *ElementSectionName</span>, <span class=in>ElementType_t type</span>, <span class=cgin>cgsize_t start</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t end</span>, <span class=in>int nbndry</span>, <span class=cgin>cgsize_t *Elements</span>, <span class=out><i>int *S</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *ElementSectionName</span>, <span class=in>ElementType_t type</span>, <span class=in>cgsize_t start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t end</span>, <span class=in>int nbndry</span>, <span class=in>cgsize_t *Elements</span>, <span class=out><i>int *S</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_section_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *ElementSectionName</span>, <span class=in>ElementType_t type</span>, <span class=cgin>cgsize_t start</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t end</span>, <span class=in>int nbndry</span>, <span class=out><i>int *S</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *ElementSectionName</span>, <span class=in>ElementType_t type</span>, <span class=in>cgsize_t start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t end</span>, <span class=in>int nbndry</span>, <span class=out><i>int *S</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_elements_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cgin">cgsize_t start</span>, <span class="cgin">cgsize_t end</span>, <span class="cgin">cgsize_t *Elements</span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="in">cgsize_t start</span>, <span class="in">cgsize_t end</span>, <span class="in">cgsize_t *Elements</span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_parent_data_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *ParentData</span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *ParentData</span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_parent_data_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t start</span>, <span class=cgin>cgsize_t end</span>, <span class=cgin>cgsize_t *ParentData</span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t start</span>, <span class=in>cgsize_t end</span>, <span class=in>cgsize_t *ParentData</span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -396,7 +396,7 @@ indices for the returned coordinates will be wrong.
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_ElementPartialSize(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t start</span>, <span class=cgin>cgsize_t end</span>, <span class=out><i>cgsize_t *ElementDataSize</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t start</span>, <span class=in>cgsize_t end</span>, <span class=out><i>cgsize_t *ElementDataSize</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -406,7 +406,7 @@ indices for the returned coordinates will be wrong.
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_elements_partial_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t start</span>, <span class=cgin>cgsize_t end</span>, <span class=out><i>cgsize_t *Elements</i></span>, <span class=out><i>cgsize_t *ParentData</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t start</span>, <span class=in>cgsize_t end</span>, <span class=out><i>cgsize_t *Elements</i></span>, <span class=out><i>cgsize_t *ParentData</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>

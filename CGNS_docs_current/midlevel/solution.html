@@ -100,7 +100,7 @@
 
 <br><br>
 <table width=100% cellspacing=0 cellpadding=5 border rules=groups
-       bgcolor="#ced9ff">
+       bgcolor="#f5f5f0">
 <colgroup width=90%>
 <colgroup>
 <thead>
@@ -124,21 +124,21 @@
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_sol_ptset_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>const char *solname</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>GridLocation_t location</span>, <span class=in>PointSetType_t ptset_type</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t npnts</span>, <span class=cgin>const cgsize_t *pnts</span>, <span class=out><i>int *S</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t npnts</span>, <span class=in>const cgsize_t *pnts</span>, <span class=out><i>int *S</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_sol_ptset_info(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>PointSetType_t *ptset_type</i></span>, <span class=cgout><i>cgsize_t *npnts</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>PointSetType_t *ptset_type</i></span>, <span class=out><i>cgsize_t *npnts</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_sol_ptset_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=cgout><i>cgsize_t *pnts</i></span>);</b></tt>
+        <tt><b><span class=out><i>ier</i></span> = cg_sol_ptset_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=out><i>cgsize_t *pnts</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_sol_size(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=out><i>int *data_dim</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgout><i>cgsize_t *dim_vals</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>cgsize_t *dim_vals</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
@@ -156,19 +156,19 @@
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_sol_ptset_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>solname</span>, <span class=in>location</span>, <span class=in>ptset_type</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>npnts</span>, <span class=cgin>pnts</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>npnts</span>, <span class=in>pnts</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_sol_ptset_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>ptset_type</i></span>, <span class=cgout><i>npnts</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_sol_ptset_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>ptset_type</i></span>, <span class=out><i>npnts</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_sol_ptset_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=cgout><i>pnts</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_sol_ptset_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>pnts</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_sol_size_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>data_dim</i></span>, <span class=cgout><i>dim_vals</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_sol_size_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>data_dim</i></span>, <span class=out><i>dim_vals</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
@@ -273,7 +273,7 @@ and <tt>KFaceCenter</tt>, are also acceptable.
 <h3>Flow Solution Data</h3>
 
 <table width=100% cellspacing=0 cellpadding=5 border rules=groups
-       bgcolor="#ced9ff">
+       bgcolor="#f5f5f0">
 <colgroup width=90%>
 <colgroup>
 <thead>
@@ -288,8 +288,8 @@ and <tt>KFaceCenter</tt>, are also acceptable.
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_field_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>char *fieldname</span>, <span class=cgin>cgsize_t *range_min</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_max</span>, <span class=in>void *solution_array</span>, <span class=out><i>int *F</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>char *fieldname</span>, <span class=in>cgsize_t *range_min</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_max</span>, <span class=in>void *solution_array</span>, <span class=out><i>int *F</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -303,7 +303,7 @@ and <tt>KFaceCenter</tt>, are also acceptable.
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_field_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=in>char *fieldname</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *solution_array</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
@@ -432,7 +432,7 @@ indices for the returned array values will be wrong.
 
 <br><br>
 <table width=100% cellspacing=0 cellpadding=5 border rules=groups
-       bgcolor="#ced9ff">
+       bgcolor="#f5f5f0">
 <colgroup width=90%>
 <colgroup>
 <thead>
@@ -456,21 +456,21 @@ indices for the returned array values will be wrong.
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_discrete_ptset_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>const char *DiscreteName</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>GridLocation_t location</span>, <span class=in>PointSetType_t ptset_type</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t npnts</span>, <span class=cgin>const cgsize_t *pnts</span>, <span class=out><i>int *D</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t npnts</span>, <span class=in>const cgsize_t *pnts</span>, <span class=out><i>int *D</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_discrete_ptset_info(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int D</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>PointSetType_t *ptset_type</i></span>, <span class=cgout><i>cgsize_t *npnts</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>PointSetType_t *ptset_type</i></span>, <span class=out><i>cgsize_t *npnts</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_discrete_ptset_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int D</span>, <span class=cgout><i>cgsize_t *pnts</i></span>);</b></tt>
+        <tt><b><span class=out><i>ier</i></span> = cg_discrete_ptset_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int D</span>, <span class=out><i>cgsize_t *pnts</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_discrete_size(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int D</span>, <span class=out><i>int *data_dim</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgout><i>cgsize_t *dim_vals</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>cgsize_t *dim_vals</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
@@ -488,19 +488,19 @@ indices for the returned array values will be wrong.
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_discrete_ptset_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>DiscreteName</span>, <span class=in>location</span>, <span class=in>ptset_type</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>npnts</span>, <span class=cgin>pnts</span>, <span class=out><i>D</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>npnts</span>, <span class=in>pnts</span>, <span class=out><i>D</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_discrete_ptset_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>D</span>, <span class=out><i>ptset_type</i></span>, <span class=cgout><i>npnts</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_discrete_ptset_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>D</span>, <span class=out><i>ptset_type</i></span>, <span class=out><i>npnts</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_discrete_ptset_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>D</span>, <span class=cgout><i>pnts</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_discrete_ptset_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>D</span>, <span class=out><i>pnts</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_discrete_size_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>D</span>, <span class=out><i>data_dim</i></span>, <span class=cgout><i>dim_vals</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_discrete_size_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>D</span>, <span class=out><i>data_dim</i></span>, <span class=out><i>dim_vals</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
@@ -586,7 +586,7 @@ To read and write the discrete data, use
 
 <br><br>
 <table width=100% cellspacing=0 cellpadding=5 border rules=groups
-       bgcolor="#ced9ff">
+       bgcolor="#f5f5f0">
 <colgroup width=90%>
 <colgroup>
 <thead>
@@ -600,12 +600,12 @@ To read and write the discrete data, use
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_subreg_info(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=out><i>char *regname</i></span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *dimension</i></span>, <span class=out><i>GridLocation_t *location</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>PointSetType_t *ptset_type</i></span>, <span class=cgout><i>cgsize_t *npnts</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>PointSetType_t *ptset_type</i></span>, <span class=out><i>cgsize_t *npnts</i></span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *bcname_len</i></span>, <span class=out><i>int *gcname_len</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_subreg_ptset_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=cgout><i>cgsize_t *pnts</i></span>);</b></tt>
+        <tt><b><span class=out><i>ier</i></span> = cg_subreg_ptset_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=out><i>cgsize_t *pnts</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -619,8 +619,8 @@ To read and write the discrete data, use
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_subreg_ptset_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>const char *regname</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>int dimension</span>, <span class=in>GridLocation_t location</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>PointSetType_t ptset_type</span>, <span class=cgin>cgsize_t npnts</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>const cgsize_t *pnts</span>, <span class=out><i>int *S</i></span>);</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>PointSetType_t ptset_type</span>, <span class=in>cgsize_t npnts</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>const cgsize_t *pnts</span>, <span class=out><i>int *S</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -640,11 +640,11 @@ To read and write the discrete data, use
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_subreg_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>regname</i></span>, <span class=out><i>dimension</i></span>, <span class=out><i>location</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ptset_type</i></span>, <span class=cgout><i>npnts</i></span>, <span class=out><i>bcname_len</i></span>, <span class=out><i>gcname_len</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ptset_type</i></span>, <span class=out><i>npnts</i></span>, <span class=out><i>bcname_len</i></span>, <span class=out><i>gcname_len</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_subreg_ptset_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=cgout><i>pnts</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+        <tt><b>call cg_subreg_ptset_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>pnts</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -657,7 +657,7 @@ To read and write the discrete data, use
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_subreg_ptset_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>regname</span>,  <span class=in>dimension</span>, <span class=in>location</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>ptset_type</span>, <span class=cgin>npnts</span>, <span class=cgin>pnts</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>ptset_type</span>, <span class=in>npnts</span>, <span class=in>pnts</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>

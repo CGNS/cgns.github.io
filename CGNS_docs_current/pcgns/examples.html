@@ -131,20 +131,13 @@ c---- create the coordinate data for this process
         enddo
       enddo
 
-c---- write the coordinate data in parallel to the queue
-      call cgp_queue_set_f(1, ierr)
-      if (ierr .ne. CG_OK) call cgp_error_exit_f
+c---- write the coordinate data in parallel
       call cgp_coord_write_data_f(F, B, Z, Cx, start, end, fx, ierr)
       if (ierr .ne. CG_OK) call cgp_error_exit_f
       call cgp_coord_write_data_f(F, B, Z, Cy, start, end, fy, ierr)
       if (ierr .ne. CG_OK) call cgp_error_exit_f
       call cgp_coord_write_data_f(F, B, Z, Cz, start, end, fz, ierr)
       if (ierr .ne. CG_OK) call cgp_error_exit_f
-
-c---- write out the queued coordinate data
-      call cgp_queue_flush_f(ierr)
-      if (ierr .ne. CG_OK) call cgp_error_exit_f
-      call cgp_queue_set_f(0, ierr)
 
 c---- create data node for elements
       call cgp_section_write_f(F, B, Z, 'Hex', HEXA_8, 1, totelems,
@@ -308,17 +301,12 @@ int main(int argc, char *argv[])
         }
     }
 
-    /* write the coordinate data in parallel to the queue */
-    if (cgp_queue_set(1) ||
-        cgp_coord_write_data(F, B, Z, Cx, &start, &end, x) ||
+    /* write the coordinate data in parallel */
+    if (cgp_coord_write_data(F, B, Z, Cx, &start, &end, x) ||
         cgp_coord_write_data(F, B, Z, Cy, &start, &end, y) ||
         cgp_coord_write_data(F, B, Z, Cz, &start, &end, z))
         cgp_error_exit();
     
-    /* write out the queued coordinate data */
-    if (cgp_queue_flush()) cgp_error_exit();
-    cgp_queue_set(0);
-
     /* create data node for elements */
     if (cgp_section_write(F, B, Z, "Hex", HEXA_8, 1, tot_nelems, 0, &E))
         cgp_error_exit();

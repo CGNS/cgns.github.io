@@ -111,7 +111,7 @@ Input variables are shown in an
 <span class=in><b><tt>upright blue</tt></b></span> font, and
 output variables are shown in a
 <span class=out><b><tt><i>slanted red</i></tt></b></span> font.
-Note, as of Version 3.1, some of the arguments to the Mid-Level Library
+Note, as of CGNS-3.1.0, some of the arguments to the Mid-Level Library
 have changed from <b><tt>int</tt></b> to <b><tt>cgsize_t</tt></b>
 in order to support 64-bit data. Changed APIs can quickly be identified by
 searching for <b><tt>cgsize_t</tt></b>.
@@ -165,7 +165,7 @@ The error codes are coded in the C and Fortran include files
 <h3>Typedefs</h3>
 
 <p>
-Beginning with version 3.1, two new typedef variables have been
+Beginning with CGNS-3.1.0, two new typedef variables have been
 introduced to support 64-bit mode. The <tt>cglong_t</tt> typedef
 is always a 64-bit integer, and <tt>cgsize_t</tt> will be either
 a 32-bit or 64-bit integer depending on how the library was built.
@@ -521,11 +521,10 @@ or modify your code to use <tt>cgsize_t</tt>.
 
 <h3>Calling CGNS from Fortran</h3>
 <p>
-Starting with version 3.3, a new CGNS module was added to the library. Fortran programs 
+Starting with CGNS-3.3.0, a new CGNS module was added to the library. Fortran programs 
 can use the new module by adding <font color="blue"><tt>USE CGNS</tt></font>. The use of
-<font color="blue"><tt>include 'cgnslib_f.h'</tt></font> is depricated and should no longer be
-used.
-
+<font color="blue"><tt>include 'cgnslib_f.h'</tt></font> is deprecated as of CGNS-3.3.0.
+<p> 
 <table width=100% cellspacing=0 cellpadding=5 border rules=groups
        bgcolor="#f5f5f0">
 <colgroup width=90%>
@@ -545,9 +544,12 @@ For example:
 CALL cg_coord_read_f(cg, base, zone, coordname,<font color="blue"><tt> cg_get_type(data(1))</tt></font>, rmin, DataSize, data, ier)
 </table>
 
+<p>
+Fortran APIs which can except a null character or an empty string are encouraged to pass <font color="blue"><tt><i>C_NULL_CHAR</i></font> as opposed to "\0" or "".
+
 <h4>64-bit Fortran Portability</h4>
 <p>
-Starting with version 3.3, the Fortran APIs have the following specifications (recommended for portability):
+Starting with CGNS-3.3.0, the Fortran APIs have the following specifications (recommended for portability):
 </p><ul><li>Fortran arguments should be 
 declared as the default <font color="blue"><tt>INTEGER</tt></font> if the corresponding 
 argument in the C API is declared as an <font color="blue"><tt>int</tt></font>.</li>

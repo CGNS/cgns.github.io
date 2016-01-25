@@ -87,8 +87,8 @@ to GitHub (<a href="https://github.com/CGNS">https://github.com/CGNS</a>).
 <!--Previous stable releases are still available on 
 <a href="http://sourceforge.net/projects/cgns/files/"> SourceForge</a>.-->
 
-<p>For the up-to-date release, visit the 
-<a href="https://github.com/CGNS">GitHub page</a>.
+<p>For the up-to-date <b>development</b> source, visit
+<a href="https://github.com/CGNS/CGNS">GitHub Development</a>.
 <style>
 div.codebox {
     border:1px solid black;
@@ -97,15 +97,26 @@ div.codebox {
     width:400px;
     overflow:auto;
 }
+
 </style>
 <p>
 <div class="codebox">
-git clone https://github.com/CGNS/CGNS/tree/release-3.3.0
+git clone -b develop https://github.com/CGNS/CGNS.git
 </div> 
-<a id="cgns-github-button" href="https://github.com/CGNS/CGNS/tree/release-3.3.0"><img src="gitHub-download-button.png" alt="Download CGNS from GitHub"></a>
+</a>
 </p>
 
-<p>Future releases will be made from the GitHub site.
+
+<p>For the <b>stable</b> source, visit
+<a href="https://github.com/CGNS/CGNS/tree/master">GitHub Stable</a>.
+
+</style>
+<p>
+<div class="codebox">
+git clone https://github.com/CGNS/CGNS.git
+</div> 
+</a>
+</p>
 
 <p>As a minimum, you will need to download and compile the CGNS library code.
 Compilation requires an ANSI compliant C compiler.
@@ -113,14 +124,19 @@ The source code may
 downloaded as a gzipped, tar file:  <br>
 <ul>
 <li>
-<b>Current Alpha Release (not stable):</b>
-<a href="https://github.com/CGNS/CGNS/releases/tag/v3.3.0-alpha.1">
+<b>Current Stable Release:</b>
+<a href="https://github.com/CGNS/CGNS/releases/tag/v3.3.0">
 CGNS Version 3.3.0</a><br>
 This Version implements CPEX 0038 and 0039, adds new functionality to the
 parallel capability, and makes extensive changes related to the Fortran library.
+<p>Important note for Fortran users:  V3.3 removes the usage of "include cgnslib_f.h".
+Instead, from this release forward, one must now employ the module "use CGNS".
+Also, if making use of 64-bit integers, Fortran programs must declare the
+relevant 64-bit integers via, e.g.:  integer(cgsize_t) integername.
+
 <p>
 <li>
-<b>Current Stable Release:</b>
+<b>Previous Stable Release:</b>
 <a href="https://github.com/CGNS/CGNS/releases/tag/v3.2.1">
 CGNS Version 3.2.1</a><br>
 This Version 3.2 release provides partial
@@ -213,7 +229,7 @@ in codes using CGNS when it is feasible to do so.-->
 <h2>Note to Users of Version 2.5 CGNS</h2>
 <p>Current users of Version 2.5 should read the following short guide:
 <ul>
-<a href="goingtoV3_2.pdf">Quick Guide to Upgrading from CGNS v2.5 to v3.x</a>
+<a href="goingtoV3_3.pdf">Quick Guide to Upgrading from CGNS v2.5 to v3.x</a>
 </ul> 
 <p>which describes some of the reasons for upgrading to the latest version 3 software as well as how to
 handle portability issues between versions.

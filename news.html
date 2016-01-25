@@ -61,6 +61,87 @@ Latest News</font></h1>
 
 <td VALIGN=TOP>
 
+<p><b>January 25, 2016</b>: Version 3.3.0 of the CGNS Software released.
+New features:
+<ul>
+  <li>Example build scripts for supercomputer systems can be found in src/SampleScripts 
+      of the CGNS source code. They include scripts for building zlib, 
+      hdf5 (assuming the user does not already have them installed system wide) 
+      and a script for building CGNS. All the scripts use autotools; cmake remains untested.
+  <li>The Fortran compiler environment variable can now be set with "FC", this is the preferred
+      method.
+  <li>The Fortran compiler flags can now be set with "FCFLAGS", this is the preferred method.
+      If both FFLAGS (which predates FCFLAGS) and FCFLAGS are set then FCFLAGS is ignored.
+  <li>Replaced the hid_t to double (and vice-versa) utilities to_HDF_ID and to_ADF_ID 
+      from a type cast to a function which uses memcpy for the conversion. This is needed 
+      for the upcomming release of HDF5 1.10 where hid_t was changed from a 32 bit integer 
+      to a 64 bit integer. Should be transparent to user.
+  <li>Implemented CPEX0039 : To enable with CGNS_ENABLE_BASE_SCOPE
+  <li>Implemented CPEX0038 : Quadratic Elements for High Order
+  <li>In the parallel library, the default parallel input/output mode was changed from CGP_INDEPENDENT 
+      to CGP_COLLECTIVE.
+  <li>In the parallel library, a new function was added for passing MPI info to the CGNS library:
+      cgp_mpi_info (cgp_mpi_info_f).
+  <li>In the parallel library, a new parallel example benchmark program, benchmark_hdf5.c, was added 
+      to directory ptests.
+  <li>In the parallel library, the cgp_*_read/write_dataset APIs now excepts non-allocated arrays, or NULL, 
+      as valid parameters for the datasets. Additionally, the dimensional arrays, 
+      rmin and rmax, can also be NULL. If the data array is NULL and the dimensional 
+      arrays are not NULL, then the validity of the dimensional arrays, rmin and rmax, 
+      is not checked. For collective parallel IO, this is used as a mechanism to 
+      indicated that processes with NULL API parameters will not write any data to the file.
+  <li>In the parallel library, cgp_queue_set and cgp_queue_flush were depreciated in this release.
+  <li>SUPPORT WAS DROPPED FOR NON-FORTRAN 2003 COMPLIANT COMPILERS.
+  <li>Configure was changed to check if the Fortran compiler is Fortran 2003 compliant.
+  <li>In the Fortran library, the predefined CGNS constant parameters data types were changed from 
+      INTEGER to ENUM, BIND(C) for better C interoperability. The users should use the 
+      predefined constants whenever possible and not the numerical value represented by 
+      the constants. A variable expecting an enum value returned from a Fortran API should be 
+      declared, INTEGER(cgenum_t).
+  <li>In the Fortran library, INCLUDE "cgnslib_f.h" was removed in favor of using a module, USE CGNS.
+      - This allows defining a KIND type for integers instead of 
+        the current way of using the preprocessor dependent cgsize_t.
+  <li>The user should be sure to declare the arguments 
+      declared int in the C APIs as INTEGER in Fortran. The ONLY 
+      Fortran arguments declared as type cgsize_t should be the 
+      arguments which are also declared cgsize_t in the C APIs. This 
+      is very important when building with option --enable-64bit. The 
+      test programs were updated in order to conform to this convention.
+  <li>Assuming the rules in step [enu:int64] were followed, users 
+      should not need to use parameter CG_BUILD_64BIT since Fortran's 
+      cgsize_t is now guaranteed to match C's cgsize_t.
+  <li>Fortran programs defining CGNS data types with a default 
+      INTEGER size of 8 bytes also then need to compile the CGNS 
+      library with the default INTEGER size of 8 bytes. This is 
+      independent of whether or not --enable-64bit is being used. For 
+      clarification, using --enable-64bit allows for data types (i.e. 
+      those declared as cgsize_t) to be able to store values which 
+      are too large to be stored as 4 byte integers (i.e. numbers 
+      greater than 2,147,483,647). It is not necessary, or advisable 
+      (since it waste memory), to have CGNS INTEGER types (types 
+      declared int in C) to be 8 bytes; the variables declared as 
+      cgsize_t will automatically handle data types that can not be 
+      stored as 4 byte integers when --enable-64bit is being used. If 
+      the CGNS library was not compiled with a default INTEGER of 8 
+      bytes, but the calling program was, then all integers passed to 
+      CGNS with C type int should be declared INTEGER(C_INT). 
+  <li>A new Fortran API was added for determining the CGNS data type of a 
+      variable which is interoperable with the C data type.<br>
+      <br>
+      Function cg_get_type(var)<br>
+         type, INTENT(IN) :: var<br>
+         INTEGER(KIND(enumvar)) :: cg_get_type<br>
+      <br>
+      An example of using the new function to automatically specify the CGNS 
+      type corresponding to the Fortran data type is,<br>
+      <br>
+      INTEGER, DIMENSION(1:10) :: Array_i<br>
+         CALL cgp_array_write_f("ArrayI",cg_get_type(Array_i(1)),1,INT(nijk(1),cgsize_t),Ai, err)<br>
+      <br>
+  <li>Removed all parallel flush/queue functions
+  <li>Removed support of "include cgnslib_f.h", all examples and tests were updated to reflect these changes.
+</ul>
+
 <p><b>December 8, 2015</b>: Marc Poinot will be presenting a CGNS paper at AIAA SciTech in January:
 "CGNS test suites for CFD software components", Thursday January 7, 2016 at 2pm in session MVC-02.
 
@@ -69,7 +150,7 @@ Latest News</font></h1>
 Updates since the v3.3.0-alpha.2 release:
 <ul>
    <li> Removed all parallel flush/queue functions (CGNS-9)
-   <li> Removed support of “include cgns_f.h”, all examples and tests were updated to reflect these changes (CGNS-34)
+   <li> Removed support of “include cgnslib_f.h”, all examples and tests were updated to reflect these changes (CGNS-34)
    <li> Fixed parallel issue when not all processors involved in reading/writing (CGNS-51)
    <li> Fixed argument being passed to H5Pget_driver in ADFH.c (CGNS-50)
    <li> Added multiple Fortran and C tests to testing

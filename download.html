@@ -237,12 +237,13 @@ handle portability issues between versions.
 <h2>Known Bugs/Issues in Latest Official (Stable) Release</h2>
 
 <ul>
-<li>In the file /cgns/trunk/src/cgnslib_f.h.in, the comment lines on the first 28 lines should be
-changed from "c" to "!".  This has been fixed in the SVN version of the code.
-<li>In the file /cgns/trunk/src/cgnslib.h, the macro I could conflict with the I in complex.h (if used).
-This has been fixed in the SVN version of the code by redefining I to Ii.
-<li>Parallel cgp_open can show major slowdown when many processors are employed.  This issue is 
-being worked.
+<li>Building CGNS with Fortran enabled is not working on Windows.
+<li>When building with PGI and gcc compilers it might be necassary to set the
+     environment variables:<br>
+     <ul>
+           <li> FLIBS="-Wl,--no-as-needed -ldl"
+           <li> LIBS="-Wl,--no-as-needed -ldl"
+     </ul>
 </ul>
 
 </tr>

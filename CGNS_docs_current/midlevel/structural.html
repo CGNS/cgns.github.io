@@ -292,11 +292,23 @@
 </table>
 
 <p>
-Note that the zones are sorted alphanumerically to insure that
+Note: When a CGNS file is opened via the cg_open() MLL function, the zones are sorted 
+<i>alphanumerically</i> by name (the creation order is ignored/discarded).  This mechanism is
+provided to enable ordinal zone indexing.  Therefore, in general, it is considered good standard
+practice to always <u>choose zone names to 
+be alphabetically increasing.</u>  For example, Zone0001, Zone0002, etc. is appropriate for up to
+9999 zones.
+<p>
+(Important: Because the cgnsview tool uses the low-level cgio API, it does not sort the zones
+by name and zone order presented may not match that of the MLL API.  Generally, cgnsview
+presents the zones in creation order for both ADF and HDF5 formats.  One exception is CGNS files
+that are either created or opened using the HDF5 v1.6 library (or older) will always be presented
+alphabetically (creation order tracking was added to HDF5 in v1.8).)
+<!--Note that the zones are sorted alphanumerically to insure that
 they can always be retrieved in the same order (for the same
 model).
 <em>Therefore, users must name their zones alphanumerically to ensure proper
-retrieval.</em>
+retrieval.</em>-->
 
 <a name="simulationtype"></a>
 <h3>Simulation Type</h3>

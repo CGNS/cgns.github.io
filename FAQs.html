@@ -131,6 +131,24 @@ might be useful to others, please consider submitting a proposal for extension
 (see <a href="Proposals.html">Proposed Extensions</a> page).
 
 <br>&nbsp;
+<p> Q: <b>When there are multiple ZONES associated with a given CGNS file, is there a 
+particular way that they should be named?
+</b> </p>
+<p> A: 
+It is important for CGNS users to know that
+when a CGNS file is opened via the cg_open() MLL function, the zones are sorted
+<i>alphanumerically</i> by name (the creation order is ignored/discarded).  This mechanism is
+provided to enable ordinal zone indexing.  Therefore, in general, it is considered good standard
+practice to always <u>choose zone names to 
+be alphabetically increasing.</u>  For example, Zone0001, Zone0002, etc. is appropriate for up to
+9999 zones.
+(Important: Because the cgnsview tool uses the low-level cgio API, it does not sort the zones
+by name and zone order presented may not match that of the MLL API.  Generally, cgnsview
+presents the zones in creation order for both ADF and HDF5 formats.  One exception is CGNS files
+that are either created or opened using the HDF5 v1.6 library (or older) will always be presented
+alphabetically (creation order tracking was added to HDF5 in v1.8).)
+
+<br>&nbsp;
 <p> Q: <b>How do I view my CGNS files?</b> </p>
 <p> A: CGNS files are most easily viewed using the tool "cgnsview" 
 (part of the cgnstools).  This tool is
@@ -202,7 +220,7 @@ and Telecon Minutes</a>.
 This new ISO effort was being conducted completely outside of
 the control of the CGNS committee. Therefore, the current status is not known.</p>
 
-<p>For information purposes, this lists some of the original documents from
+<!--<p>For information purposes, this lists some of the original documents from
 the earlier 1999-2002 effort. <b>Note:</b> due to copyright restrictions these documents
 are no longer provided here, and must be obtained directly from ISO.</p>
 
@@ -244,7 +262,7 @@ mesh. This document will be referenced from AP 237 and Part 1xx.&nbsp;
 <p>Integrated resource: Mesh-based topology&nbsp;
 <br>Part_52_CD_030721.pdf
 </dir>
-</blockquote>
+</blockquote>-->
 
 </body>
 </html>

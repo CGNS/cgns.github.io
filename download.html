@@ -127,7 +127,13 @@ downloaded as a gzipped, tar file:  <br>
 <ul>
 <li>
 <b>Current Stable Release:</b>
-<a href="https://github.com/CGNS/CGNS/releases/tag/v3.3.0">
+<a href="https://github.com/CGNS/CGNS/releases/tag/v3.3.1">
+CGNS Version 3.3.1</a><br>
+This Version is mainly a bug fix maintenance release. This release also addressed Fortran
+Windows support for both serial and parallel versions of CGNS.
+<p>
+<li>
+<b>Previous Stable Release:</b><a href="https://github.com/CGNS/CGNS/releases/tag/v3.3.0">
 CGNS Version 3.3.0</a><br>
 This Version implements CPEX 0038 and 0039, adds new functionality to the
 parallel capability, and makes extensive changes related to the Fortran library.
@@ -135,10 +141,11 @@ parallel capability, and makes extensive changes related to the Fortran library.
 Instead, from this release forward, one must now employ the module "use CGNS".
 Also, if making use of 64-bit integers, Fortran programs must declare the
 relevant 64-bit integers via, e.g.:  integer(cgsize_t) integername.
-
+</li>
+<li>
+<b>Historical Stable Releases:</b>
 <p>
 <li>
-<b>Previous Stable Release:</b>
 <a href="https://github.com/CGNS/CGNS/releases/tag/v3.2.1">
 CGNS Version 3.2.1</a><br>
 This Version 3.2 release provides partial
@@ -161,7 +168,6 @@ cases, tools and CGNStools utilities.
 Note: CGNStools is no longer built automatically, you need to set
 the configure flag, <em>--enable-cgnstools</em> if using configure.
 </li>
-<b>Previous Stable Releases:</b>
 <li>
 <a href="https://github.com/CGNS/CGNS/releases/tag/v3.1.4">
 CGNS Version 3.1.4</a><br>
@@ -172,17 +178,14 @@ when CGNS is built with HDF5 version 1.8 or later.
 (CGNS can always read or write both HDF5 and ADF
 file types.)
 </li>
+</ul>
+
 <br>
-<li>
 Older recent release versions are also available from
-<a href="https://github.com/CGNS/CGNS/releases">https://github.com/CGNS/CGNS/releases</a>
-</li>
+<a href="https://github.com/CGNS/CGNS/releases">https://github.com/CGNS/CGNS/releases</a>.
 <br>
-<li>
 Even earlier releases can be found in the archives:
 <a href="https://github.com/CGNS/CGNS_archives">https://github.com/CGNS/CGNS_archives</a>.
-</li>
-</ul>
 
 <p>Also available:
 
@@ -219,6 +222,13 @@ of development files, included source and documentation.
 <p>
 (NOTE: if building CGNS with an HDF5 version <u>earlier</u> than 1.8, then links will not work
 when using HDF5 file type.)
+
+
+<h2>Note about HDF5</h2>
+It is currently recommended that CGNS be compiled against the HDF5 1.8.x library. The following figure shows the typical performance of CGNS "make check" for various versions of HDF5 for serial I/O.
+
+<img src="HDF5CGNS.png" alt="CGNS/HDF5 performance" style="width:1048px;height:617px;">
+   
 
 <h2>Note about Compilers</h2>
 <p>Users should be aware that many new features in CGNS require the use of up-to-date

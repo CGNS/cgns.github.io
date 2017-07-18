@@ -61,6 +61,52 @@ Latest News</font></h1>
 
 <td VALIGN=TOP>
 
+<p><b>July 16, 2017</b>: Version 3.3.1 of CGNS is released.
+
+New Features
+==============
+
+    Configuration:
+    ------------------
+     * Windows Parallel CGNS with Fortran enabled, PR-40.
+Bug Fixes since CGNS 3.3.0 Release
+==================================
+
+    Configuration:
+    ------------------
+    * Implement FortranCInterface_HEADER in cmake, CGNS-78.
+    * Cmake target link libraries need to be set on systems other than just WIN32 and CYGWIN, CGNS-64.
+    * Support Mac's dylib shared library suffix with CMake, CGNS-61.
+    * CMake needs to be updated to handle new fortran features, CGNS-10.
+    * Add missing dependency in cgns_to_plot3d (cmake build), CGNS-16.
+    * Add missing include path, fix hdf5, PR 18.
+    
+    Library:
+    ------------
+    * Hang in parallel read/write, CGNS-105.
+    * Header files contain functions not existing in code, CGNS-115.
+    * Fixes for CGNS-83: Large files fail on 64-bit windows.
+    * Remove incorrect semicolon, PR-13.
+    * Add missing close paren, PR-15.
+    * Fix incorrect structured field array access -- cut paste error, PR-17.
+    * Fix a few missing CGNS_ENUMV uses, PR-20.
+    * Fix to avoid hang due to collective requirement, PR-21.
+    * Freeing incorrect pointer, PR-23
+    * Initialize err, add missing return, PR-25.
+    * Handle case where wbuf or rbuf is NULL, PR-26.
+    * Tests can run with ENUM_SCOPING enabled, PR-34.
+    * Implementation and test for cgp_parent_data_write, PR-36.
+    * Add cmake support for memory debugging; fix memory debug routines, PR-39.
+    
+
+    Fortran:
+    ------------
+    * Missing C binding for cg_conversion_write_f
+    
+    Tools:
+    ----------
+    * cgnsconvert fails to process a file written by the parallel CGNS library, CGNS-77.
+
 <p><b>January 25, 2016</b>: Version 3.3.0 of the CGNS Software released.
 New features:
 <ul>

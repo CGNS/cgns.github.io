@@ -63,17 +63,21 @@
      </ul>
 <li> <a href="#elements">Element Connectivity</a>
      <ul>
-     <li> <tt><b>cg_section_write</b></tt> - Write element data
+     <li> <tt><b>cg_section_write</b></tt> - Write fixed size element data
+     <li> <tt><b>cg_poly_section_write</b></tt> - Write element data
      <li> <tt><b>cg_section_partial_write</b></tt> - Write subset of element data
-     <li> <tt><b>cg_elements_partial_write</b></tt> - Write element data for an element section
+     <li> <tt><b>cg_elements_partial_write</b></tt> - Write element data for a fixed size element section
+     <li> <tt><b>cg_poly_elements_partial_write</b></tt> - Write element data for an element section
      <li> <tt><b>cg_parent_data_write</b></tt> - Write parent info for an element section
      <li> <tt><b>cg_parent_data_partial_write</b></tt> - Write subset of parent info for an element section
      <li> <tt><b>cg_nsections</b></tt> - Get number of element sections
      <li> <tt><b>cg_section_read</b></tt> - Get info for an element section
      <li> <tt><b>cg_ElementDataSize</b></tt> - Get size of element connectivity data array
      <li> <tt><b>cg_ElementPartialSize</b></tt> - Get size of element connectivity data array for partial read
-     <li> <tt><b>cg_elements_read</b></tt> - Read element data
-     <li> <tt><b>cg_elements_partial_read</b></tt> - Read subset of element data
+     <li> <tt><b>cg_elements_read</b></tt> - Read fixed size element data
+     <li> <tt><b>cg_elements_partial_read</b></tt> - Read subset of fixed size element data
+     <li> <tt><b>cg_poly_elements_read</b></tt> - Read element data
+     <li> <tt><b>cg_poly_elements_partial_read</b></tt> - Read subset of element data
      <li> <tt><b>cg_npe</b></tt> - Get number of nodes for an element type
      </ul>
 <li> <a href="#axisymmetry">Axisymmetry</a>
@@ -359,6 +363,13 @@ indices for the returned coordinates will be wrong.
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_poly_section_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *ElementSectionName</span>, <span class=in>ElementType_t type</span>, <span class=in>cgsize_t start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t end</span>, <span class=in>int nbndry</span>, <span class=in>cgsize_t *Elements</span>, <span class=in>cgsize_t *ConnectOffset</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *S</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_section_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *ElementSectionName</span>, <span class=in>ElementType_t type</span>, <span class=in>cgsize_t start</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t end</span>, <span class=in>int nbndry</span>, <span class=out><i>int *S</i></span>);</b></tt>
@@ -367,6 +378,12 @@ indices for the returned coordinates will be wrong.
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_elements_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="in">cgsize_t start</span>, <span class="in">cgsize_t end</span>, <span class="in">cgsize_t *Elements</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_poly_elements_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="in">cgsize_t start</span>, <span class="in">cgsize_t end</span>, <span class="in">cgsize_t *Elements</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *ConnectOffset</span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -410,6 +427,17 @@ indices for the returned coordinates will be wrong.
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_poly_elements_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=out><i>cgsize_t *Elements</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>cgsize_t *ConnectOffset</i></span>, <span class=out><i>cgsize_t *ParentData</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_poly_elements_partial_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t start</span>, <span class=in>cgsize_t end</span>, <span class=out><i>cgsize_t *Elements</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>cgsize_t *ConnectOffset</i></span>, <span class=out><i>cgsize_t *ParentData</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_npe(<span class=in>ElementType_t type</span>, <span class=out><i>int *npe</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
@@ -420,6 +448,11 @@ indices for the returned coordinates will be wrong.
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_poly_section_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>ElementSectionName</span>, <span class=in>type</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>start</span>, <span class=in>end</span>, <span class=in>nbndry</span>, <span class=in>Elements</span>, <span class=in>ConnectOffset</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)<br>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b>call cg_section_partial_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>ElementSectionName</span>, <span class=in>type</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>start</span>, <span class=in>end</span>, <span class=in>nbndry</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)<br>
     <td align=center valign=baseline>
@@ -427,6 +460,11 @@ indices for the returned coordinates will be wrong.
 <tr><td nowrap>
         <tt><b>call <span class=cgf>cg_elements_partial_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class="in">start</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=in>Elements</span>, <span class=out><i>ier</i></span>)<br>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_poly_elements_partial_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class="in">start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=in>Elements</span>, <span class=in>ConnectOffset</span>, <span class=out><i>ier</i></span>)<br>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -462,6 +500,16 @@ indices for the returned coordinates will be wrong.
 <tr><td nowrap>
         <tt><b>call <span class=cgf>cg_elements_partial_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>start</span>, <span class=in>end</span>, <span class=out><i>Elements</i></span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ParentData</i></span>, <span class=out><i>ier</i></span>)<br>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_poly_elements_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>Elements</i></span>, <span class=out><i>ConnectOffset</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ParentData</i></span>, <span class=out><i>ier</i></span>)<br>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_poly_elements_partial_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>start</span>, <span class=in>end</span>, <span class=out><i>Elements</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ConnectOffset</i></span>, <span class=out><i>ParentData</i></span>, <span class=out><i>ier</i></span>)<br>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -523,6 +571,10 @@ indices for the returned coordinates will be wrong.
    <td>Element connectivity data. The element connectivity order is given in
        <a href="../sids/conv.html#unstructgrid">Element Numbering Conventions</a>.
 <tr valign=baseline><td>
+   <td><tt>ConnectOffset</tt><td>
+   <td>Element connectivity offset data. This is required for <tt>NGON_n</tt>, <tt>NFACE_n</tt> and <tt>MIXED</tt> according to
+       <a href="../sids/gridflow.html#Elements">Elements_t Structure Definition</a>.
+<tr valign=baseline><td>
    <td><tt>ParentData</tt><td>
    <td>For boundary or interface elements, this array contains
        information on the cell(s) and cell face(s) sharing the element.
@@ -547,26 +599,34 @@ within a zone is uniquely identified by its number.
 If the specified <tt>Elements_t</tt> node doesn't yet exist, it may be
 created using either <tt>cg_section_write</tt> or
 <tt>cg_section_partial_write</tt>.
+<tt>MIXED</tt>, <tt>NGON_n</tt>, and <tt>NFACE_n</tt> element sets
+ may be created using <tt>cg_poly_section_write</tt> or <tt>cg_poly_section_partial_write</tt>.
 The function <tt>cg_section_write</tt> writes the full range as
 indicated by <tt>start</tt> and <tt>end</tt> and supplied by the element
 connectivity array <tt>Elements</tt>.
 The <tt>cg_section_partial_write</tt> function will create the element section
 data for the range <tt>start</tt> to <tt>end</tt> with the element data
-intialized to 0. To add elements to the section, use <tt>cg_elements_partial_write</tt>
+intialized to 0. <tt>cg_poly_section_write</tt> and <tt>cg_poly_section_partial_write</tt>
+ have a comparable behavior for <tt>MIXED</tt>, <tt>NGON_n</tt>, and <tt>NFACE_n</tt>. 
+To add elements to the section, use <tt>cg_elements_partial_write</tt>
+or <tt>cg_poly_elements_partial_write</tt>
 and parent data (it it exists) using <tt>cg_parent_data_partial_write</tt>.
-Both of these functions will replace the data for the range
+These functions will replace the data for the range
 as indicated by <tt>start</tt> and <tt>end</tt> with the new values.
-In most cases, the data is not duplicated in the mid-level library, but
-written directly from the user data to disk. The exception to this is in the case
-of <tt>MIXED</tt>, <tt>NGON_n</tt>, and <tt>NFACE_n</tt> element sets. Since
-the size of the element connectivity array is not known directly, the MLL
+In most cases, the data is not duplicated in the mid-level library and
+written directly from the user data to disk.The exception to this is in the case
+of <tt>MIXED</tt>, <tt>NGON_n</tt>, and <tt>NFACE_n</tt> element sets. Even if 
+the size of the element connectivity array can be known through <tt>ConnectOffset</tt>, the MLL
 will keep a copy of the data in memory for the partial writes.
 
 <p>
-The function <tt>cg_elements_read</tt> returns all of the element
+The functions <tt>cg_elements_read</tt> and <tt>cg_poly_elements_read</tt> returns all of the element
 connectivity and parent data.
 Specified subsets of the element connectivity and parent data may be
-read using <tt>cg_elements_partial_read</tt>.
+read using <tt>cg_elements_partial_read</tt> or <tt>cg_poly_elements_partial_read</tt> (<tt>MIXED</tt>, <tt>NGON_n</tt>, <tt>NFACE_n</tt>).
+
+<p>
+<tt><b><font color="red">Note : cg_elements_read, cg_elements_partial_read, cg_section_write and cg_element_partial_write functions only work with fixed size elements.</font></b>
 
 <a name="axisymmetry"></a>
 <h3>Axisymmetry</h3>

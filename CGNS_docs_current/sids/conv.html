@@ -44,23 +44,23 @@
 </small>
 <a name="endnav"></a>
 
-<h2>Conventions</h2>
+<h2>3 Conventions</h2>
 
 <ul>
-<li> <a href="#notation">Data Structure Notation Conventions</a>
-<li> <a href="#structgrid">Structured Grid Notation and Indexing Conventions</a>
-<li> <a href="#unstructgrid">Unstructured Grid Element Numbering Conventions</a>
+<li> <a href="#notation">3.1 Data Structure Notation Conventions</a>
+<li> <a href="#structgrid">3.2 Structured Grid Notation and Indexing Conventions</a>
+<li> <a href="#unstructgrid">3.3 Unstructured Grid Element Numbering Conventions</a>
      <ul>
-     <li> <a href="#unst_line">1-D (Line) Elements</a>
-     <li> <a href="#unst_2d">2-D (Surface) Elements</a>
-     <li> <a href="#unst_3d">3-D (Volume) Elements</a>
-     <li> <a href="#unst_example">Unstructured Grid Example</a>
+     <li> <a href="#unst_line">3.3.1 1-D (Line) Elements</a>
+     <li> <a href="#unst_2d">3.3.2 2-D (Surface) Elements</a>
+     <li> <a href="#unst_3d">3.3.3 3-D (Volume) Elements</a>
+     <li> <a href="#unst_example">3.3.4 Unstructured Grid Example</a>
      </ul>
-<li> <a href="#interfaces">Multizone Interfaces</a>
+<li> <a href="#interfaces">3.4 Multizone Interfaces</a>
 </ul>
 
 <a name="notation"></a>
-<h3>Data Structure Notation Conventions</h3>
+<h3>3.1 Data Structure Notation Conventions</h3>
 
 <p>
 The intellectual content of the CGNS database is defined in terms of C-like
@@ -434,7 +434,7 @@ mapping, defined by the appropriate
 <a href="../index.html#filemapping">File Mapping Manual</a>.
 
 <a name="structgrid"></a>
-<h3>Structured Grid Notation and Indexing Conventions</h3>
+<h3>3.2 Structured Grid Notation and Indexing Conventions</h3>
 
 <p>
 A <em>grid</em> is defined by its vertices.  In a 3-D structured grid, the volume 
@@ -508,7 +508,7 @@ For example, <i>i</i>-min is the face or grid plane whose core vertices
 have minimum <i>i</i> index (which if using default indexing is 1).
 
 <a name="unstructgrid"></a>
-<h3>Unstructured Grid Element Numbering Conventions</h3>
+<h3>3.3 Unstructured Grid Element Numbering Conventions</h3>
 
 <p>
 The major difference in the way structured and unstructured
@@ -662,7 +662,7 @@ points and their element connectivity information should always be
 given.
 
 <a name="unst_line"></a>
-<h3>1-D (Line) Elements</h3>
+<h3>3.3.1 1-D (Line) Elements</h3>
 
 <p>
 1-D elements represent geometrically a line (or bar).
@@ -747,8 +747,11 @@ interior to the endpoints.
    <td align=center class=midnode><tt>N3,N4,N5</tt></td>
 </table>
 
+<p>
+Note that nodes are uniformly spaced on all edges for all higher order elements.
+
 <a name="unst_2d"></a>
-<h3>2-D (Surface) Elements</h3>
+<h3>3.3.2 2-D (Surface) Elements</h3>
 
 <p>
 2-D elements represent a surface in either 2-D or 3-D space.
@@ -777,7 +780,7 @@ In a 2-D mesh, all elements must be oriented the same way; i.e., all
 normals must point toward the same side of the mesh.
 
 <a name="unst_tri"></a>
-<h4>Triangular Elements</h4>
+<h4>3.3.2.1 Triangular Elements</h4>
 
 <p>
 Six types of triangular elements are supported in CGNS, <tt>TRI_3</tt>,
@@ -997,7 +1000,7 @@ in the case of <tt>TRI_15</tt>.
 
 
 <a name="unst_quad"></a>
-<h4>Quadrilateral Elements</h4>
+<h4>3.3.2.2 Quadrilateral Elements</h4>
 
 <p>
 CGNS supports seven types of quadrilateral elements, <tt>QUAD_4</tt>,
@@ -1215,7 +1218,7 @@ in the case of <tt>QUAD_25</tt>.
 </table>
 
 <a name="unst_3d"></a>
-<h3>3-D (Volume) Elements</h3>
+<h3>3.3.3 3-D (Volume) Elements</h3>
 
 <p>
 3-D elements represent a volume in 3-D space, and constitute the cells
@@ -1225,7 +1228,7 @@ CGNS supports four different shapes of 3-D elements -
 <a href="#unst_penta">pentahedra</a>, and <a href="#unst_hexa">hexahedra</a>.
 
 <a name="unst_tetra"></a>
-<h4>Tetrahedral Elements</h4>
+<h4>3.3.3.1 Tetrahedral Elements</h4>
 
 <p>
 CGNS supports seven types of tetrahedral elements, <tt>TETRA_4</tt>,
@@ -1589,7 +1592,7 @@ node in the case of <tt>TETRA_35</tt>.
 </table>
 
 <a name="unst_pyramid"></a>
-<h4>Pyramid Elements</h4>
+<h4>3.3.3.2 Pyramid Elements</h4>
 
 <p>
 CGNS supports nine types of pyramid elements, <tt>PYRA_5</tt>,
@@ -2025,7 +2028,7 @@ interior volume nodes for <tt>PYRA_55</tt>.
 </table>
 
 <a name="unst_penta"></a>
-<h4>Pentahedral Elements</h4>
+<h4>3.3.3.3 Pentahedral Elements</h4>
 
 <p>
 CGNS supports nine types of pentahedral elements, <tt>PENTA_6</tt>,
@@ -2474,7 +2477,7 @@ nine interior volume nodes for <tt>PENTA_75</tt>.
 </table>
 
 <a name="unst_hexa"></a>
-<h4>Hexahedral Elements</h4>
+<h4>3.3.3.4 Hexahedral Elements</h4>
 
 <p>
 CGNS supports nine types of hexahedral elements, <tt>HEXA_8</tt>,
@@ -2903,7 +2906,7 @@ in the case of <tt>HEXA_98</tt>, and 54 interior face nodes and an additonal
 </table>
 
 <a name="unst_example"></a>
-<h4>Unstructured Grid Example</h4>
+<h4>3.3.4 Unstructured Grid Example</h4>
 
 <p>
 Consider an unstructured zone in the shape of a cube, with each edge
@@ -3126,7 +3129,7 @@ as well as the element number and face number of its parent cell.
 </center>
 
 <a name="interfaces"></a>
-<h3>Multizone Interfaces</h3>
+<h3>3.4 Multizone Interfaces</h3>
 
 <center>
 <img src="conv.figs/interface1.gif"
@@ -3205,7 +3208,7 @@ role of donor zone.
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 25 Sep 2015
+Last updated 12 Sep 2017
 
 </body>
 </html>

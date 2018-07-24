@@ -61,7 +61,12 @@ Download</font></h1>
 </table>
 </td>
 
-<td VALIGN=TOP>If you have not done so already, please <b>REGISTER</b> by e-mailing to the
+<td VALIGN=TOP>All CGNS files are stored on 
+GitHub (<a href="https://github.com/CGNS">https://github.com/CGNS</a>).
+Issue tracking is located at:
+<a href="https://cgnsorg.atlassian.net">https://cgnsorg.atlassian.net</a>.
+
+<p>If you have not done so already, please <b>REGISTER</b> by e-mailing to the
 <a href="mailto:c.l.rumsey@nasa.gov">CGNS REGISTRAR</a> the following information:
 <ul>
 <li>Your name</li>
@@ -71,6 +76,7 @@ Download</font></h1>
 </ul>
 Although there is no registration requirement in order to obtain
 CGNS, by registering you will help the CGNS team to serve its users better.
+We never give, sell, or distribute emails to anyone.
 
 <p>We also <b>strongly</b> recommend that you join the <a href="CGNStalk.html">Discussion
 Group</a>. This forum is the primary method used to keep CGNS users
@@ -81,11 +87,11 @@ other CGNS users.
 <h2>
 What to Download</h2>
 
-<p>Note: CGNS has switched from SourceForge 
-(<a href="http://sourceforge.net/projects/cgns">http://sourceforge.net/projects/cgns</a>)
-to GitHub (<a href="https://github.com/CGNS">https://github.com/CGNS</a>). 
-<!--Previous stable releases are still available on 
-<a href="http://sourceforge.net/projects/cgns/files/"> SourceForge</a>.-->
+<p><b>First and most importantly, we recommend that you read the 
+<a href="CGNS_docs_current/user/index.html">CGNS User Guide</a>.
+This guide also includes sample code 
+(<a href="https://github.com/CGNS/CGNS/tree/master/src/Test_UserGuideCode">UserGuideCode</a>)
+for helping to get started with CGNS.</b>
 
 <p>For the up-to-date <b>development</b> source, visit
 <a href="https://github.com/CGNS/CGNS">GitHub Development</a>.
@@ -150,11 +156,6 @@ This Version 3.2 release provides partial
 integration of parallel I/O using HDF5 with MPI. It also implements
 the Hierarchy of families (CPEX 0033),
 Multiple families (CPEX 0034), and Cubic elements (CPEX 0036).
-Compression (rewriting) of modified CGNS files is no longer
-automatically done, since this may interfere with parallel I/O. This
-may be reenabled within an application with the <em>cg_set_compress</em>
-function, or done later through the CGNSview GUI or with the
-<em>cgnscompress</em> program in the <em>tools</em> subdirectory.
 Conversion programs to and from AFLR3, FAST, and TetGen have also
 been added to CGNStools.
 <p>
@@ -196,8 +197,8 @@ Fortran_examples</a></b> - Fortran CGNS examples.
 
 <li>
 <b>
-<a href="https://github.com/CGNS/CGNS/tree/master/UserGuideCode">
-UserGuideCode</a></b> - examples from the <a href="CGNS_docs_current/user/index.html">CGNS
+<a href="https://github.com/CGNS/CGNS/tree/master/src/Test_UserGuideCode">UserGuideCode</a></b> - 
+examples from the <a href="CGNS_docs_current/user/index.html">CGNS
 User Guide</a>.
 </li>
 
@@ -217,15 +218,28 @@ of development files, included source and documentation.
 </li>-->
 </ul>
 
+<p>NOTE: CGNS has switched from SourceForge 
+(http://sourceforge.net/projects/cgns)
+to GitHub (<a href="https://github.com/CGNS">https://github.com/CGNS</a>). 
+Issue tracking is located at:
+<a href="https://cgnsorg.atlassian.net">https://cgnsorg.atlassian.net</a>.
+<!--Previous stable releases are still available on 
+<a href="http://sourceforge.net/projects/cgns/files/"> SourceForge</a>.-->
+
 <p>
-(NOTE: if building CGNS with an HDF5 version <u>earlier</u> than 1.8, then links will not work
-when using HDF5 file type.)
+NOTE: if building CGNS with an HDF5 version <u>earlier</u> than 1.8, then links will not work
+when using HDF5 file type.
+</p>
 
 
-<h2>Note about HDF5 and CGNS</h2>
-It is currently recommended that CGNS be compiled against the HDF5 1.8.x library. The following figure shows the typical performance of CGNS "make check" for various versions of HDF5 for serial I/O.
+<h2>Note about Linking CGNS with HDF5</h2>
+<p>
+When using HDF5, it is currently recommended that CGNS be compiled against the HDF5 1.8.x library. 
+The following figure shows the typical performance of CGNS "make check" for various versions of HDF5 for 
+serial I/O.
+</p>
 
-<img src="HDF5CGNS.png" alt="CGNS/HDF5 performance" >
+<img src="HDF5CGNS.png" alt="CGNS/HDF5 performance" style="width:860px;height:491px;">
    
 
 <h2>Note about Compilers</h2>
@@ -247,12 +261,13 @@ handle portability issues between versions.
 <h2>Known Bugs/Issues in Latest Official (Stable) Release</h2>
 
 <ul>
-<li>In the file /cgns/trunk/src/cgnslib_f.h.in, the comment lines on the first 28 lines should be
-changed from "c" to "!".  This has been fixed in the SVN version of the code.
-<li>In the file /cgns/trunk/src/cgnslib.h, the macro I could conflict with the I in complex.h (if used).
-This has been fixed in the SVN version of the code by redefining I to Ii.
-<li>Parallel cgp_open can show major slowdown when many processors are employed.  This issue is 
-being worked.
+<li>Compression currently does not work for CGNS.
+<li>When building with PGI and gcc compilers it might be necessary to set the
+     environment variables:<br>
+     <ul>
+           <li> FLIBS="-Wl,--no-as-needed -ldl"
+           <li> LIBS="-Wl,--no-as-needed -ldl"
+     </ul>
 </ul>
 
 </tr>

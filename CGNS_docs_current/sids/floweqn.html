@@ -44,20 +44,20 @@
 </small>
 <a name="endnav"></a>
 
-<h2>Governing Flow Equations</h2>
+<h2>10 Governing Flow Equations</h2>
 
 <ul>
-<li> <a href="#FlowEquationSet">Flow Equation Set Structure Definition: <tt>FlowEquationSet_t</tt></a>
-<li> <a href="#GoverningEquations">Governing Equations Structure Definition: <tt>GoverningEquations_t</tt></a>
-<li> <a href="#ModelType">Model Type Structure Definition: <tt>ModelType_t</tt></a>
-<li> <a href="#GasModel">Thermodynamic Gas Model Structure Definition: <tt>GasModel_t</tt></a>
-<li> <a href="#ViscosityModel">Molecular Viscosity Model Structure Definition: <tt>ViscosityModel_t</tt></a>
-<li> <a href="#ThermalConductivityModel">Thermal Conductivity Model Structure Definition: <tt>ThermalConductivityModel_t</tt></a>
-<li> <a href="#Turbulence">Turbulence Structure Definitions</a>
-<li> <a href="#ThermalRelaxationModel">Thermal Relaxation Model Structure Definition: <tt>ThermalRelaxationModel_t</tt></a>
-<li> <a href="#ChemicalKineticsModel">Chemical Kinetics Model Structure Definition: <tt>ChemicalKineticsModel_t</tt></a>
-<li> <a href="#EM">Electromagnetics Structure Definitions</a>
-<li> <a href="#flowexample">Flow Equation Examples</a>
+<li> <a href="#FlowEquationSet">10.1 Flow Equation Set Structure Definition: <tt>FlowEquationSet_t</tt></a>
+<li> <a href="#GoverningEquations">10.2 Governing Equations Structure Definition: <tt>GoverningEquations_t</tt></a>
+<li> <a href="#ModelType">10.3 Model Type Structure Definition: <tt>ModelType_t</tt></a>
+<li> <a href="#GasModel">10.4 Thermodynamic Gas Model Structure Definition: <tt>GasModel_t</tt></a>
+<li> <a href="#ViscosityModel">10.5 Molecular Viscosity Model Structure Definition: <tt>ViscosityModel_t</tt></a>
+<li> <a href="#ThermalConductivityModel">10.6 Thermal Conductivity Model Structure Definition: <tt>ThermalConductivityModel_t</tt></a>
+<li> <a href="#Turbulence">10.7 Turbulence Structure Definitions</a>
+<li> <a href="#ThermalRelaxationModel">10.8 Thermal Relaxation Model Structure Definition: <tt>ThermalRelaxationModel_t</tt></a>
+<li> <a href="#ChemicalKineticsModel">10.9 Chemical Kinetics Model Structure Definition: <tt>ChemicalKineticsModel_t</tt></a>
+<li> <a href="#EM">10.10 Electromagnetics Structure Definitions</a>
+<li> <a href="#flowexample">10.11 Flow Equation Examples</a>
 </ul>
 
 <p>
@@ -80,7 +80,7 @@ structures may eventually be also used as inputs for grid generators,
 flow solvers, and post-processors.
 
 <a name="FlowEquationSet"></a>
-<h3>Flow Equation Set Structure Definition: <tt>FlowEquationSet_t</tt></h3>
+<h3>10.1 Flow Equation Set Structure Definition: <tt>FlowEquationSet_t</tt></h3>
 
 <p>
 <tt>FlowEquationSet_t</tt> is a general description of the governing
@@ -192,7 +192,7 @@ restrictions or implicit meanings imposed on these node types at other
 node locations.
 
 <a name="GoverningEquations"></a>
-<h3>Governing Equations Structure Definition: <tt>GoverningEquations_t</tt></h3>
+<h3>10.2 Governing Equations Structure Definition: <tt>GoverningEquations_t</tt></h3>
 
 <p>
 <tt>GoverningEquations_t</tt> describes the class of governing flow
@@ -315,13 +315,13 @@ restrictions or implicit meanings imposed on these node types at other
 node locations.
 
 <a name="ModelType"></a>
-<h3>Model Type Structure Definition: <tt>ModelType_t</tt></h3>
+<h3>10.3 Model Type Structure Definition: <tt>ModelType_t</tt></h3>
 
 <p>
 <tt>ModelType_t</tt> is a complete list of all models covered in subsequent
 sections. A specific model will contain a subset of this enumeration.
 <pre>
-  GasModelType_t := Enumeration(
+  ModelType_t := Enumeration(
     ModelTypeNull, ModelTypeUserDefined,
     Ideal, VanderWaals, Constant, PowerLaw,
     SutherlandLaw, ConstantPrandtl, EddyViscosity,
@@ -339,7 +339,7 @@ sections. A specific model will contain a subset of this enumeration.
 </pre>
 
 <a name="GasModel"></a>
-<h3>Thermodynamic Gas Model Structure Definition: <tt>GasModel_t</tt></h3>
+<h3>10.4 Thermodynamic Gas Model Structure Definition: <tt>GasModel_t</tt></h3>
 
 <p>
 <tt>GasModel_t</tt> describes the equation of state model used in the
@@ -475,7 +475,7 @@ restrictions or implicit meanings imposed on these node types at other
 node locations.
 
 <a name="ViscosityModel"></a>
-<h3>Molecular Viscosity Model Structure Definition: <tt>ViscosityModel_t</tt></h3>
+<h3>10.5 Molecular Viscosity Model Structure Definition: <tt>ViscosityModel_t</tt></h3>
 
 <p>
 <tt>ViscosityModel_t</tt> describes the model for relating molecular
@@ -616,7 +616,7 @@ restrictions or implicit meanings imposed on these node types at other
 node locations.
 
 <a name="ThermalConductivityModel"></a>
-<h3>Thermal Conductivity Model Structure Definition: <tt>ThermalConductivityModel_t</tt></h3>
+<h3>10.6 Thermal Conductivity Model Structure Definition: <tt>ThermalConductivityModel_t</tt></h3>
 
 <p>
 <tt>ThermalConductivityModel_t</tt> describes the model for relating the
@@ -764,7 +764,7 @@ restrictions or implicit meanings imposed on these node types at other
 node locations.
 
 <a name="Turbulence"></a>
-<h3>Turbulence Structure Definitions</h3>
+<h3>10.7 Turbulence Structure Definitions</h3>
 
 <p>
 This section presents structure definitions for describing the form of
@@ -779,7 +779,7 @@ viscosity closure or an algebraic Reynolds-stress closure with a
 two-equation model).
 
 <a name="TurbulenceClosure"></a>
-<h4>Turbulence Closure Structure Definition: <tt>TurbulenceClosure_t</tt></h4>
+<h4>10.7.1 Turbulence Closure Structure Definition: <tt>TurbulenceClosure_t</tt></h4>
 
 <p>
 <tt>TurbulenceClosure_t</tt> describes the turbulence closure for the
@@ -902,7 +902,7 @@ restrictions or implicit meanings imposed on these node types at other
 node locations.
 
 <a name="TurbulenceModel"></a>
-<h4>Turbulence Model Structure Definition: <tt>TurbulenceModel_t</tt></h4>
+<h4>10.7.2 Turbulence Model Structure Definition: <tt>TurbulenceModel_t</tt></h4>
 
 <p>
 <tt>TurbulenceModel_t</tt> describes the equation set used to model the
@@ -1100,7 +1100,7 @@ Note that each <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
 entity is abbreviated.
 
 <a name="ThermalRelaxationModel"></a>
-<h3>Thermal Relaxation Model Structure Definition: <tt>ThermalRelaxationModel_t</tt></h3>
+<h3>10.8 Thermal Relaxation Model Structure Definition: <tt>ThermalRelaxationModel_t</tt></h3>
 
 <p>
 <tt>ThermalRelaxationModel_t</tt> describes the equation set used to model
@@ -1174,7 +1174,7 @@ restrictions or implicit meanings imposed on these node types at other
 node locations.
 
 <a name="ChemicalKineticsModel"></a>
-<h3>Chemical Kinetics Model Structure Definition: <tt>ChemicalKineticsModel_t</tt></h3>
+<h3>10.9 Chemical Kinetics Model Structure Definition: <tt>ChemicalKineticsModel_t</tt></h3>
 
 <p>
 <tt>ChemicalKineticsModel_t</tt> describes the equation set used to model
@@ -1360,7 +1360,7 @@ restrictions or implicit meanings imposed on these node types at other
 node locations.
 
 <a name="EM"></a>
-<h3>Electromagnetics Structure Definitions</h3>
+<h3>10.10 Electromagnetics Structure Definitions</h3>
 
 <p>
 This section presents structure definitions for describing the electric
@@ -1368,7 +1368,7 @@ field, magnetic field, and conductivity models used for electromagnetic
 flows.
 
 <a name="EMElectricFieldModel"></a>
-<h4>Electromagnetics Electric Field Model Structure Definition: <tt>EMElectricFieldModel_t</tt></h4>
+<h4>10.10.1 Electromagnetics Electric Field Model Structure Definition: <tt>EMElectricFieldModel_t</tt></h4>
 
 <p>
 <tt>EMElectricFieldModel_t</tt> describes the electric field model used
@@ -1442,7 +1442,7 @@ restrictions or implicit meanings imposed on these node types at other
 node locations.
 
 <a name="EMMagneticFieldModel"></a>
-<h4>Electromagnetics Magnetic Field Model Structure Definition: <tt>EMMagneticFieldModel_t</tt></h4>
+<h4>10.10.2 Electromagnetics Magnetic Field Model Structure Definition: <tt>EMMagneticFieldModel_t</tt></h4>
 
 <p>
 <tt>EMMagneticFieldModel_t</tt> describes the magnetic field model used
@@ -1515,7 +1515,7 @@ restrictions or implicit meanings imposed on these node types at other
 node locations.
 
 <a name="EMConductivityModel"></a>
-<h4>Electromagnetics Conductivity Model Structure Definition: <tt>EMConductivityModel_t</tt></h4>
+<h4>10.10.3 Electromagnetics Conductivity Model Structure Definition: <tt>EMConductivityModel_t</tt></h4>
 
 <p>
 <tt>EMConductivityModel_t</tt> describes the conductivity model used
@@ -1673,7 +1673,7 @@ restrictions or implicit meanings imposed on these node types at other
 node locations.
 
 <a name="flowexample"></a>
-<h3>Flow Equation Examples</h3>
+<h3>10.11 Flow Equation Examples</h3>
 
 <p>
 This section presents two examples of flow-equation sets.
@@ -1780,7 +1780,7 @@ Note that all <a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities ar
 <hr size=4 width=75%>
 <div class=footer>
 <!--#include virtual="../include/footer_small.html" -->
-Last updated 28 Aug 2014
+Last updated 20 May 2016
 
 </body>
 </html>

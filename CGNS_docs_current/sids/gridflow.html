@@ -431,6 +431,7 @@ elements.
     ElementType_t ElementType ;                                        (r)
 
     DataArray_t&lt;int, 1, ElementDataSize&gt; ElementConnectivity ;         (r)
+    DataArray_t&lt;int, 1, ElementSize + 1&gt; ElementStartOffset ;          (r)
 
     DataArray_t&lt;int, 2, [ElementSize, 2]&gt; ParentElements;              (o)
     DataArray_t&lt;int, 2, [ElementSize, 2]&gt; ParentElementsPosition;      (o)
@@ -455,6 +456,7 @@ elements.
      <a href="#ElementType"><tt>ElementType_t</tt></a>, and
      <a href="#ElementConnectivity"><tt>ElementConnectivity</tt></a>
      are the required fields within the <tt>Elements_t</tt> structure.
+     <tt>ElementStartOffset</tt> is required only for <tt>MIXED</tt>, <tt>NGON_n</tt> and <tt>NFACE_n</tt> element type.
      <a href="build.html#Rind"><tt>Rind</tt></a> has a default if absent;
      the default is equivalent to having a <tt>Rind</tt> structure
      whose <tt>RindPlanes</tt> array contains all zeros.
@@ -536,9 +538,8 @@ Element Numbering Conventions</a>.
 
 <a name="ElementConnectivity"></a>
 <p>
-For all element types except <tt>MIXED</tt>, <tt>NGON_n</tt>, and
-<tt>NFACE_n</tt>, <tt>ElementConnectivity</tt> contains the list of
-nodes for each element.
+For all element types except <tt>MIXED</tt>, <tt>ElementConnectivity</tt>
+ contains the list of nodes for each element.
 If the elements are sorted, then it must first list the connectivity of
 the boundary elements, then that of the interior elements.
 <pre>
@@ -574,6 +575,12 @@ hold each individual element type:
 </pre>
 where again <tt>M</tt> is the total number of elements, and
 <tt>N</tt><sub><i>i</i></sub> is the number of nodes in element <i>i</i>.
+The data array <tt>ElementStartOffset</tt> contains the starting positions of each element in the <tt>ElementConnectivity</tt> data array
+and its last value corresponds to the ElementConnectivity total size:
+<pre>
+  ElementStartOffset  = 0, NPE[Etype<sub>1</sub>] + 1, ... ElementStartOffset[n-1] + NPE[Etype<sub>n</sub>] + 1,
+                        ..., ElementStartOffset[M-1] + NPE[Etype<sub>M</sub>] + 1 = ElementDataSize
+</pre>
 In the case of <tt>MIXED</tt> element section, <tt>ElementDataSize</tt> is
 given by:
 <pre>
@@ -593,41 +600,54 @@ shared by another polyhedral element.
 
 <p>
 For example, for <tt>NGON_n</tt>, the data array <tt>ElementConnectivity</tt>
-contains a list of nodes making up each face in the grid, with the first
-value for each face defining the number of nodes making up that face:
+contains a list of nodes making up each face in the grid while <tt>ElementStartOffset</tt>
+provides the starting position of each face in the <tt>ElementConnectivity</tt> array:
 <pre>
-  ElementConnectivity = Nnodes<sub>1</sub>, Node1<sub>1</sub>, Node2<sub>1</sub>, ... NodeN<sub>1</sub>,
-                        Nnodes<sub>2</sub>, Node1<sub>2</sub>, Node2<sub>2</sub>, ... NodeN<sub>2</sub>,
+  ElementConnectivity = Node1<sub>1</sub>, Node2<sub>1</sub>, ... NodeN<sub>1</sub>,
+                        Node1<sub>2</sub>, Node2<sub>2</sub>, ... NodeN<sub>2</sub>,
                         ...
-                        Nnodes<sub>M</sub>, Node1<sub>M</sub>, Node2<sub>M</sub>, ... NodeN<sub>M</sub>
+                        Node1<sub>M</sub>, Node2<sub>M</sub>, ... NodeN<sub>M</sub>
+
+  ElementStartOffset  = 0, Nnodes<sub>1</sub>, Nnodes<sub>1</sub> + Nnodes<sub>2</sub>, ...
+                        ..., ElementStartOffset[i-1] + Nnodes<sub>i</sub>,
+                        ..., ElementStartOffset[M-1] + Nnodes<sub>M</sub> = ElementDataSize
 </pre>
 where here <tt>M</tt> is the total number of faces, and
-<tt>N</tt><sub><i>i</i></sub> is the number of nodes in face <i>i</i>.
+<tt>Nnodes</tt><sub><i>i</i></sub> is the number of nodes in face <i>i</i>.
 The <tt>ElementDataSize</tt> is the total number of nodes defining all
-the faces, plus one value per face specifying the number of nodes making
-up that face.
+the faces.
+Note that the number of nodes in face <i>i</i> is given by:
+<pre>
+<tt>&nbsp;&nbsp;Nnodes<sub>i</sub></tt> = <tt>ElementStartOffset[i+1] - ElementStartOffset[i]</tt>
+</pre>
 
 <p>
 Then for <tt>NFACE_n</tt>, <tt>ElementConnectivity</tt> contains the
-list of face elements making up each polyhedral element, with the first
-value for each element defining the number of faces making up that
-element.
+list of face elements making up each polyhedral element, while <tt>ElementStartOffset</tt>
+provides the starting position of each polyhedral element in the <tt>ElementConnectivity</tt> array:
 <pre>
-  ElementConnectivity = Nfaces<sub>1</sub>, Face1<sub>1</sub>, Face2<sub>1</sub>, ... FaceN<sub>1</sub>,
-                        Nfaces<sub>2</sub>, Face1<sub>2</sub>, Face2<sub>2</sub>, ... FaceN<sub>2</sub>,
+  ElementConnectivity = Face1<sub>1</sub>, Face2<sub>1</sub>, ... FaceN<sub>1</sub>,
+                        Face1<sub>2</sub>, Face2<sub>2</sub>, ... FaceN<sub>2</sub>,
                         ...
-                        Nfaces<sub>M</sub>, Face1<sub>M</sub>, Face2<sub>M</sub>, ... FaceN<sub>M</sub>
+                        Face1<sub>M</sub>, Face2<sub>M</sub>, ... FaceN<sub>M</sub>
+
+  ElementStartOffset  = 0, Nfaces<sub>1</sub>, Nfaces<sub>1</sub> + Nfaces<sub>2</sub>, ...
+                        ..., ElementStartOffset[i-1] + Nfaces<sub>i</sub>,
+                        ..., ElementStartOffset[M-1] + Nfaces<sub>M</sub> = ElementDataSize
 </pre>
 where now <tt>M</tt> is the total number of polyhedral elements, and
-<tt>N</tt><sub><i>i</i></sub> is the number of faces in element <i>i</i>.
+<tt>Nfaces</tt><sub><i>i</i></sub> is the number of faces in element <i>i</i>.
 The sign of the face number determines its orientation (i.e., the
 direction of the face normal, constructed as defined by the
 <a href="conv.html#unst_2d">convention for 2-D elements</a>).
 If the face number is positive, the face normal is directed outward; if
 it's negative, the face normal is directed inward.
 The <tt>ElementDataSize</tt> is the sum of the number of faces defining
-each polyhedral element, plus one value per polyhedral element
-specifying the number of faces making up that element.
+each polyhedral element.
+Note that the number of faces in element <i>i</i> is given by:
+<pre>
+<tt>&nbsp;&nbsp;Nfaces<sub>i</sub></tt> = <tt>ElementStartOffset[i+1] - ElementStartOffset[i]</tt>
+</pre>
 
 <p>
 For face elements in 3-D, or bar element in 2-D, additonal data may be provided
@@ -717,18 +737,16 @@ For each face, the nodes comprising that face are listed in
 <tt>ElementConnectivity</tt> for the <tt>NGON_n</tt> element type.
 The <tt>ElementRange</tt> is <tt>[1,10]</tt>, corresponding to the 10
 total faces in the grid.
-The <tt>ElementDataSize</tt> is 40, corresponding to the total of 30
-nodes defining the 10 faces, plus one value per face specifying the
-number of nodes making up that face.
+The <tt>ElementDataSize</tt> is 30, corresponding to the total of 30
+nodes defining the 10 faces.
 
 <p>
 The faces making up the three volume elements are then listed in
 <tt>ElementConnectivity</tt> for the <tt>NFACE_n</tt> element type.
 The <tt>ElementRange</tt> is <tt>[11,13]</tt>, corresponding to the three
 volume elements.
-The <tt>ElementDataSize</tt> is 15, corresponding to three volume
-elements with four faces per element, plus one value per volume element
-specifying the number of faces making up that element.
+The <tt>ElementDataSize</tt> is 12, corresponding to three volume
+elements with four faces per element.
 Note that the face numbers for faces 3 and 8 are negative in the
 definition of volume element 3, since their normals point inward for
 that element.
@@ -743,12 +761,19 @@ presentation purposes only.
 
       ElementType_t ElementType = NGON_n ;
 
-      DataArray_t&lt;int, 1, 40&gt; ElementConnectivity =
+      DataArray_t&lt;int, 1, 30&gt; ElementConnectivity =
         {{
-        Data(int, 1, 40) =
-          (3, 1, 3, 2), (3, 1, 2, 4), (3, 2, 3, 4), (3, 3, 1, 4),
-          (3, 2, 3, 5), (3, 2, 5, 6), (3, 5, 3, 6), (3, 3, 2, 6),
-          (3, 2, 6, 4), (3, 6, 3, 4) ;
+        Data(int, 1, 30) =
+          (1, 3, 2), (1, 2, 4), (2, 3, 4), (3, 1, 4),
+          (2, 3, 5), (2, 5, 6), (5, 3, 6), (3, 2, 6),
+          (2, 6, 4), (6, 3, 4) ;
+        }} ;
+      DataArray_t&lt;int, 1, 11&gt; ElementStartOffset =
+        {{
+        Data(int, 1, 11) =
+           0,  3,  6,  9,
+          12, 15, 18, 21,
+          24, 27, 30 ;
         }} ;
       }} ;
     Elements_t NfaceElements =
@@ -757,12 +782,17 @@ presentation purposes only.
 
       ElementType_t ElementType = NFACE_n ;
 
-      DataArray_t&lt;int, 1, 15&gt; ElementConnectivity =
+      DataArray_t&lt;int, 1, 12&gt; ElementConnectivity =
         {{
-        Data(int, 1, 15) =
-          (4,  1,  2,  3,  4),
-          (4,  5,  6,  7,  8),
-          (4, -8,  9, 10, -3) ;
+        Data(int, 1, 12) =
+          ( 1,  2,  3,  4),
+          ( 5,  6,  7,  8),
+          (-8,  9, 10, -3) ;
+        }} ;
+      DataArray_t&lt;int, 1, 4&gt; ElementStartOffset =
+        {{
+        Data(int, 1, 4) =
+           0,  4,  8,  12 ;
         }} ;
       }} ;
     }} ;
@@ -830,6 +860,11 @@ example is written in a single element section of type <tt>MIXED</tt>
              i=1,NPE[etype(j)]), j=1,25) ;
         }} ;
       }} ;
+      DataArray_t&lt;int, 1, 26&gt; ElementStartOffset =
+        {{
+        Data(int, 1, 26) =
+           0, (NPE[etype(j)]+ElementStartOffset[j], j=1,25) ;
+        }} ;
     }} ;
 </pre>
 

@@ -64,9 +64,11 @@
      <ul>
      <li> <tt><b>cg_field_write</b></tt> - Write flow solution
      <li> <tt><b>cg_field_partial_write</b></tt> - Write subset of flow solution
+     <li> <tt><b>cg_field_general_write</b></tt> - Write shaped array to a subset of flow solution
      <li> <tt><b>cg_nfields</b></tt> - Get number of flow solution arrays
      <li> <tt><b>cg_field_info</b></tt> - Get info about a flow solution array
      <li> <tt><b>cg_field_read</b></tt> - Read flow solution
+     <li> <tt><b>cg_field_general_read</b></tt> - Read subset of flow solution to a shaped array
      </ul>
 <li> <a href="#discretedata">Discrete Data</a>
      <ul>
@@ -293,6 +295,14 @@ and <tt>KFaceCenter</tt>, are also acceptable.
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_field_general_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=in>char *fieldname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *solution_array</span>, <span class=out><i>int *F</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_nfields(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=out><i>int *nfields</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
@@ -303,7 +313,15 @@ and <tt>KFaceCenter</tt>, are also acceptable.
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_field_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=in>char *fieldname</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *solution_array</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_field_general_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=in>char *fieldname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *solution_array</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
@@ -319,6 +337,12 @@ and <tt>KFaceCenter</tt>, are also acceptable.
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_field_general_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>fieldname</span>, <span class=in>datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>mem_datatype</span>, <span class=in>mem_rank</span>, <span class=in>mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_range_min</span>, <span class=in>mem_range_max</span>, <span class=in>solution_array</span>, <span class=out><i>F</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b>call cg_nfields_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>nfields</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
@@ -327,8 +351,14 @@ and <tt>KFaceCenter</tt>, are also acceptable.
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call <span class=cgf>cg_field_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>fieldname</span>, <span class=in>datatype</span>, <span class=in>range_min</span>,<br>
+        <tt><b>call <span class=cgf>cg_field_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>fieldname</span>, <span class=in>mem_datatype</span>, <span class=in>range_min</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_max</span>, <span class=out><i>solution_array</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_field_general_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>fieldname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>mem_datatype</span>, <span class=in>mem_rank</span>, <span class=in>mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_range_min</span>, <span class=in>mem_range_max</span>, <span class=out><i>solution_array</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
@@ -361,7 +391,7 @@ and <tt>KFaceCenter</tt>, are also acceptable.
    <td>Number of data arrays in flow solution <tt>S</tt>.
 <tr valign=baseline><td>
    <td><tt>datatype</tt><td>
-   <td>Data type in which the solution array is written.
+   <td>Data type of the solution array written to the file.
        Admissible data types for a solution array are <tt>Integer</tt>,
        <tt>LongInteger</tt>, <tt>RealSingle</tt>, and <tt>RealDouble</tt>.
 <tr valign=baseline><td>
@@ -373,10 +403,27 @@ and <tt>KFaceCenter</tt>, are also acceptable.
        compatibility.
 <tr valign=baseline><td>
    <td><tt>range_min</tt><td>
-   <td>Lower range index (eg., <tt>imin, jmin, kmin</tt>).
+   <td>Lower range index in file (eg., <tt>imin, jmin, kmin</tt>).
 <tr valign=baseline><td>
    <td><tt>range_max</tt><td>
-   <td>Upper range index (eg., <tt>imax, jmax, kmax</tt>).
+   <td>Upper range index in file (eg., <tt>imax, jmax, kmax</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_datatype</tt><td>
+   <td>Data type of an array in memory.
+       Admissible data types for a solution array are <tt>Integer</tt>,
+       <tt>LongInteger</tt>, <tt>RealSingle</tt>, and <tt>RealDouble</tt>.
+<tr valign=baseline><td>
+   <td><tt>mem_rank</tt><td>
+   <td>Number of dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_dimensions</tt><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_range_min</tt><td>
+   <td>Lower range index in memory (eg., <tt>imin, jmin, kmin</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_range_max</tt><td>
+   <td>Upper range index in memory (eg., <tt>imax, jmax, kmax</tt>).
 <tr valign=baseline><td>
    <td><tt>solution_array</tt><td>
    <td>Array of solution values for the range prescribed.
@@ -393,7 +440,7 @@ below a <tt>FlowSolution_t</tt> node.
 When writing, the function <tt>cg_field_write</tt> will
 automatically write the full range of the solution (i.e., the entire
 <tt>solution_array</tt>).
-The function <tt>cg_field_partial_write</tt> may be used to write
+The functions <tt>cg_field_partial_write</tt> and <tt>cg_field_general_write</tt> may be used to write
 only a subset of <tt>solution_array</tt>.
 When using the partial write, any existing data from <tt>range_min</tt>
 to <tt>range_max</tt> will be overwritten by the new values.
@@ -404,11 +451,13 @@ The function <tt>cg_field_read</tt> returns the solution array
 <tt>fieldname</tt>, for the range prescribed by <tt>range_min</tt> and
 <tt>range_max</tt>.
 The array is returned to the application in the data type requested in
-<tt>datatype</tt>.
+<tt>mem_datatype</tt>.
 This data type does not need to be the same as the one in which the data is
 stored in the file.
 A solution array stored as double precision in the CGNS file can be
 returned to the application as single precision, or vice versa.
+The functions <tt>cg_field_general_read</tt> and <tt>cg_field_general_write</tt>
+allow for type conversion when both reading from and writing to the file.
 
 <p>
 In Fortran, when using <tt>cg_field_read_f</tt> to read a 2D or 3D
@@ -422,6 +471,20 @@ to read a subset of the solution, then <tt>solution_array</tt> must be
 dimensioned (10,10).
 If <tt>solution_array</tt> is declared larger (e.g., (100,50)) the
 indices for the returned array values will be wrong.
+These restrictions can be avoided by using <tt>cg_field_general_read_f</tt> instead.
+
+<p> When using <tt>cg_field_general_write</tt> and
+<tt>cg_field_general_read</tt>, the lower <em>core</em> locations in the file
+have index 1 for defining <tt>range_min</tt> and <tt>range_max</tt>; whereas
+for the array in memory, defined by <tt>mem_rank</tt> and
+<tt>mem_dimensions</tt>, the lower <em>array</em> locations in memory have
+index 1 for defining <tt>mem_range_min</tt> and <tt>mem_range_max</tt>.
+The actual lower and upper bounds of the array in memory can be anything.
+For example, to fully read a two-dimensional 6 &times 6 solution array with 1
+rind plane on each side in the file to an 8 &times 8 array in memory
+(<tt>mem_rank</tt> = 2 and <tt>mem_dimensions</tt> = (8,8)), set
+<tt>range_min</tt> and <tt>range_max</tt> to (0,0) and (7,7), and set
+<tt>mem_range_min</tt> and <tt>mem_range_max</tt> to (1,1) and (8,8).
 
 <a name="discretedata"></a>
 <h3>Discrete Data</h3>
@@ -576,7 +639,7 @@ To read and write the discrete data, use
 <tt>DiscreteData_t</tt> node, then
 <a href="physical.html#dataarray"><tt>cg_array_read</tt></a> and
 <a href="physical.html#dataarray"><tt>cg_array_write</tt></a>.
-The dimensions provided to array-write family of functions must match the dimensions specified by the <tt>Zone_t</tt> and DiscreteData_t</tt> nodes.  Use <a href="location.html#gridlocation"><tt>cg_gridlocation_write</tt></a> and
+The dimensions provided to the array-write family of functions must match the dimensions specified by the <tt>Zone_t</tt> and DiscreteData_t</tt> nodes.  Use <a href="location.html#gridlocation"><tt>cg_gridlocation_write</tt></a> and
 <a href="location.html#rind"><tt>cg_rind_write</tt></a> under the <tt>DiscreteData_t</tt> node, as required.
 
 <a name="subregion"></a>

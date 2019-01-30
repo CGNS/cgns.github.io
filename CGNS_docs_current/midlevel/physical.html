@@ -53,10 +53,12 @@
 <li> <a href="#dataarray">Data Arrays</a>
      <ul>
      <li> <tt><b>cg_array_write</b></tt> - Write data array
+     <li> <tt><b>cg_array_general_write</b></tt> - Write shaped array to a subset of data array
      <li> <tt><b>cg_narrays</b></tt> - Get number of data arrays under current node
      <li> <tt><b>cg_array_info</b></tt> - Get data array info
      <li> <tt><b>cg_array_read</b></tt> - Read data array
      <li> <tt><b>cg_array_read_as</b></tt> - Read data array as a certain type
+     <li> <tt><b>cg_array_general_read</b></tt> - Read subset of data array to a shaped array
      </ul>
 <li> <a href="#dataclass">Data Class</a>
      <ul>
@@ -105,8 +107,17 @@
     <th scope=col>Modes
 <tbody>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_array_write(<span class=in>char *ArrayName</span>, <span class=in>DataType_t DataType</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>int DataDimension</span>, <span class=in>cgsize_t *DimensionVector</span>, <span class=in>void *Data</span>);</b></tt>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_write(<span class=in>char *arrayname</span>, <span class=in>DataType_t datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>int rank</span>, <span class=in>cgsize_t *dimensions</span>, <span class=in>void *data</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_general_write(<span class=in>char *arrayname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>int rank</span>, <span class=in>cgsize_t *dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *data</span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -114,22 +125,36 @@
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_array_info(<span class=in>int A</span>, <span class=out><i>char *ArrayName</i></span>, <span class=out><i>DataType_t *DataType</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *DataDimension</i></span>, <span class=out><i>cgsize_t *DimensionVector</i></span>);</b></tt>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_info(<span class=in>int A</span>, <span class=out><i>char *arrayname</i></span>, <span class=out><i>DataType_t *datatype</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *rank</i></span>, <span class=out><i>cgsize_t *dimensions</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_array_read(<span class=in>int A</span>, <span class=out><i>void *Data</i></span>);</b></tt>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_read(<span class=in>int A</span>, <span class=out><i>void *data</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_array_read_as(<span class=in>int A</span>, <span class=in>DataType_t DataType</span>, <span class=out><i>void *Data</i></span>);</b></tt>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_read_as(<span class=in>int A</span>, <span class=in>DataType_t datatype</span>, <span class=out><i>void *data</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_general_read(<span class=in>int A</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *data</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
-        <tt><b>call cg_array_write_f(<span class=in>ArrayName</span>, <span class=in>DataType</span>, <span class=in>DataDimension</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DimensionVector</span>, <span class=in>Data</span>, <span class=out><i>ier</i></span>)</b></tt>
+        <tt><b>call cg_array_write_f(<span class=in>arrayname</span>, <span class=in>datatype</span>, <span class=in>rank</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>dimensions</span>, <span class=in>data</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_array_general_write_f</span>(<span class=in>arrayname</span>, <span class=in>datatype</span>, <span class=in>rank</span>, <span class=in>dimensions</span><br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>mem_datatype</span>, <span class=in>mem_rank</span>, <span class=in>mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_range_min</span>, <span class=in>mem_range_max</span>, <span class=in>data</span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -137,16 +162,22 @@
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_array_info_f(<span class=in>A</span>, <span class=out><i>ArrayName</i></span>, <span class=out><i>DataType</i></span>, <span class=out><i>DataDimension</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>DimensionVector</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+        <tt><b>call cg_array_info_f(<span class=in>A</span>, <span class=out><i>arrayname</i></span>, <span class=out><i>datatype</i></span>, <span class=out><i>rank</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>dimensions</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call <span class=cgf>cg_array_read_f</span>(<span class=in>A</span>, <span class=out><i>Data</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+        <tt><b>call <span class=cgf>cg_array_read_f</span>(<span class=in>A</span>, <span class=out><i>data</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call <span class=cgf>cg_array_read_as_f</span>(<span class=in>A</span>, <span class=in>DataType</span>, <span class=out><i>Data</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+        <tt><b>call <span class=cgf>cg_array_read_as_f</span>(<span class=in>A</span>, <span class=in>datatype</span>, <span class=out><i>data</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_array_general_read_f</span>(<span class=in>A</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>mem_datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_rank</span>, <span class=in>mem_dimensions</span>, <span class=in>mem_range_min</span>, <span class=in>mem_range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>data</i></span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
@@ -163,27 +194,75 @@
    <td><tt>A</tt><td>
    <td>Data array index, where 1 &le; <tt>A</tt> &le; <tt>narrays</tt>.
 <tr valign=baseline><td>
-   <td><tt>ArrayName</tt><td>
+   <td><tt>arrayname</tt><td>
    <td>Name of the <tt>DataArray_t</tt> node.
 <tr valign=baseline><td>
-   <td><tt>DataType</tt><td>
+   <td><tt>datatype</tt><td>
    <td>Type of data held in the <tt>DataArray_t</tt> node.
        The admissible types are <tt>Integer</tt>, <tt>LongInteger</tt>,
        <tt>RealSingle</tt>, <tt>RealDouble</tt>, and <tt>Character</tt>.
 <tr valign=baseline><td>
-   <td><tt>DataDimension</tt><td>
-   <td>Number of dimensions (max 12). See
+   <td><tt>rank</tt><td>
+   <td>Number of dimensions of array in file (max 12). See
 <a href="../cgio/node.html">Node Management Routines</a> in CGIO User's Guide.
 <tr valign=baseline><td>
-   <td><tt>DimensionVector</tt><td>
-   <td>Number of data elements in each dimension.
+   <td><tt>dimensions</tt><td>
+  <td>Dimensions of array in file.
 <tr valign=baseline><td>
-   <td><tt>Data</tt><td>
-   <td>The data array.
+   <td><tt>range_min</tt><td>
+   <td>Lower range index in file (eg., <tt>imin, jmin, kmin</tt>).
+<tr valign=baseline><td>
+   <td><tt>range_max</tt><td>
+   <td>Upper range index in file (eg., <tt>imax, jmax, kmax</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_datatype</tt><td>
+   <td>The type of data held in memory.
+       The admissible types are <tt>Integer</tt>, <tt>LongInteger</tt>,
+       <tt>RealSingle</tt>, <tt>RealDouble</tt>, and <tt>Character</tt>.
+<tr valign=baseline><td>
+   <td><tt>mem_rank</tt><td>
+   <td>Number of dimensions of array in memory (max 12).
+<tr valign=baseline><td>
+   <td><tt>mem_dimensions</tt><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_range_min</tt><td>
+   <td>Lower range index in memory (eg., <tt>imin, jmin, kmin</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_range_max</tt><td>
+   <td>Upper range index in memory (eg., <tt>imax, jmax, kmax</tt>).
+<tr valign=baseline><td>
+   <td><tt>data</tt><td>
+   <td>The data array in memory.
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.
 </table>
+
+<p>
+The function <tt>cg_array_general_write</tt> may be used to write
+from a subset of the array in memory to a subset of the array in the file.
+When using the partial write, any existing data from <tt>range_min</tt>
+to <tt>range_max</tt> will be overwritten by the new values.
+All other values will not be affected.
+
+<p>
+The functions <tt>cg_array_general_read</tt> and <tt>cg_array_general_write</tt>
+allow for type conversion when both reading from and writing to the file.
+
+<p>
+When using <tt>cg_array_general_write</tt> and
+<tt>cg_array_general_read</tt>, the lower <em>core</em> elements in the file
+have index 1 for defining <tt>range_min</tt> and <tt>range_max</tt>; whereas
+for the array in memory, defined by <tt>mem_rank</tt> and
+<tt>mem_dimensions</tt>, the lower <em>array</em> elements in memory have
+index 1 for defining <tt>mem_range_min</tt> and <tt>mem_range_max</tt>.
+The actual lower and upper bounds of the array in memory can be anything.
+For example, to fully read a two-dimensional 6 &times 6 data array with 1
+rind plane on each side in the file to an 8 &times 8 array in memory
+(<tt>mem_rank</tt> = 2 and <tt>mem_dimensions</tt> = (8,8)), set
+<tt>range_min</tt> and <tt>range_max</tt> to (0,0) and (7,7), and set
+<tt>mem_range_min</tt> and <tt>mem_range_max</tt> to (1,1) and (8,8).
 
 <a name="dataclass"></a>
 <h3>Data Class</h3>

@@ -347,8 +347,8 @@ This allows creation of a 2.5 compatible CGNS file.
    <td>The option to configure, currently one of
        <tt>CG_CONFIG_ERROR</tt>, <tt>CG_CONFIG_COMPRESS</tt>,
        <tt>CG_CONFIG_SET_PATH</tt>, <tt>CG_CONFIG_ADD_PATH</tt>,
-       <tt>CG_CONFIG_FILE_TYPE</tt>, <tt>CG_CONFIG_HDF5_COMPRESS</tt>,
-       or <tt>CG_CONFIG_HDF5_MPI_COMM</tt> as
+       <tt>CG_CONFIG_FILE_TYPE</tt>, <tt>CG_CONFIG_RIND_INDEX</tt>,
+       <tt>CG_CONFIG_HDF5_COMPRESS</tt>, or <tt>CG_CONFIG_HDF5_MPI_COMM</tt> as
        defined in <i>cgnslib.h</i>.
 <tr valign=baseline><td>
    <td><tt>value</tt><td>
@@ -427,6 +427,29 @@ The currently supported options and expected values are:
        <tt>CG_FILE_NONE</tt>, <tt>CG_FILE_ADF</tt>, <tt>CG_FILE_HDF5</tt>,
        or <tt>CG_FILE_ADF2</tt>. See the discussion above for
        <tt>cg_set_file_type</tt>.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_RIND_INDEX</tt><td>
+  <td>This option affects index bounds on structured arrays with rind planes.
+      The <a href=../sids/gridflow.html#GridCoordinates>SIDS specifies</a> that
+      core array locations begin at index 1.  Lower rind planes, if present,
+      would have an index less than 1 (see
+      <a href=../sids/conv.html#structgrid> structured grid indexing
+      conventions</a>).  Versions of
+      the Mid-Level Library &lt 3.4 did not produce this behavior.  Index 1
+      always represented the start of an array: in an array with no rind
+      planes, the core location would have index 1; in an array with 1 rind
+      plane, the core location would have index 2.  In version 3.4 of the
+      Mid-Level Library, the behavior of the API was fixed to match that
+      specified in the SIDS: core array locations always begin at index 1.
+      This option allows for configuring the library to pre-3.4 indexing
+      behavior (set value to <tt>CG_CONFIG_RIND_ZERO</tt>) or the new default
+      behavior (set value to <tt>CG_CONFIG_RIND_CORE</tt>).  Note that using
+      <tt>CG_CONFIG_RIND_ZERO</tt> is considered obsolete, but is provided for
+      backwards compatability.  Most users should not set this option and use
+      the default.  Values used for this option do not need to be explicitly
+      cast as <tt>void*</tt>.  Use of this option does not change the cgns file
+      in any way; it only modifies the API to the library.
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_HDF5_COMPRESS</tt><td>

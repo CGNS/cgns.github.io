@@ -54,7 +54,9 @@
      <ul>
      <li> <tt><b>cgp_coord_write</b></tt> - Create a coordinate data node
      <li> <tt><b>cgp_coord_write_data</b></tt> - Write coordinate data in parallel
+     <li> <tt><b>cgp_coord_general_write_data</b></tt> - Write shaped array to a subset of grid coordinates in parallel
      <li> <tt><b>cgp_coord_read_data</b></tt> - Read coordinate data in parallel
+     <li> <tt><b>cgp_coord_general_read_data</b></tt> - Read subset of grid coordinates to a shaped array in parallel
      </ul>
 <li> <a href="#element">Element Connectivity Data</a>
      <ul>
@@ -66,13 +68,17 @@
      <ul>
      <li> <tt><b>cgp_field_write</b></tt> - Create a solution field data node
      <li> <tt><b>cgp_field_write_data</b></tt> - Write field data in parallel
+     <li> <tt><b>cgp_field_general_write_data</b></tt> - Write shaped array to a subset of flow solution field in parallel
      <li> <tt><b>cgp_field_read_data</b></tt> - Read field data in parallel
+     <li> <tt><b>cgp_field_general_read_data</b></tt> - Read subset of flow solution field to a shaped array in parallel
      </ul>
 <li> <a href="#array">Array Data</a>
      <ul>
      <li> <tt><b>cgp_array_write</b></tt> - Create an array data node
      <li> <tt><b>cgp_array_write_data</b></tt> - Write array data in parallel
+     <li> <tt><b>cgp_array_general_write_data</b></tt> - Write shaped array to a subset of data array in parallel
      <li> <tt><b>cgp_array_read_data</b></tt> - Read array data in parallel
+     <li> <tt><b>cgp_array_general_read_data</b></tt> - Read subset of data array to a shaped array in parallel
      </ul>
 </ul>
 
@@ -275,8 +281,20 @@ explicitly sets an internal CGNS flag to indicate parallel access.
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgp_coord_general_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int C</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *coord_array</span>);</b></tt>
+<tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cgp_coord_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int C</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=out><i>void *coord_array</i></span>);</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgp_coord_general_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int C</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *coord_array</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
@@ -316,7 +334,7 @@ explicitly sets an internal CGNS flag to indicate parallel access.
        1 &le; <tt>C</tt> &le; <tt>ncoords</tt>.
 <tr valign=baseline><td>
    <td><tt>datatype</tt><td>
-   <td>Data type in which the coordinate array is written.
+   <td>Data type of the coordinate array written to the file.
        Admissible data types for a coordinate array are <tt>RealSingle</tt>
        and <tt>RealDouble</tt>.
 <tr valign=baseline><td>
@@ -328,10 +346,27 @@ explicitly sets an internal CGNS flag to indicate parallel access.
        compatibility.
 <tr valign=baseline><td>
    <td><tt>range_min</tt><td>
-   <td>Lower range index (eg., <tt>imin, jmin, kmin</tt>).
+   <td>Lower range index in file (eg., <tt>imin, jmin, kmin</tt>).
 <tr valign=baseline><td>
    <td><tt>range_max</tt><td>
-   <td>Upper range index (eg., <tt>imax, jmax, kmax</tt>).
+   <td>Upper range index in file (eg., <tt>imax, jmax, kmax</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_datatype</tt><td>
+   <td>Data type of an array in memory.
+       Admissible data types for a coordinate array are <tt>RealSingle</tt>
+       and <tt>RealDouble</tt>..
+<tr valign=baseline><td>
+   <td><tt>mem_rank</tt><td>
+   <td>Number of dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_dimensions</tt><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_range_min</tt><td>
+   <td>Lower range index in memory (eg., <tt>imin, jmin, kmin</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_range_max</tt><td>
+   <td>Upper range index in memory (eg., <tt>imax, jmax, kmax</tt>).
 <tr valign=baseline><td>
    <td><tt>coord_array</tt><td>
    <td>Array of coordinate values for the range prescribed.
@@ -347,16 +382,20 @@ parallel, first call <tt>cgp_coord_write</tt> to create an empty
 data node. This call is indentical to
 <a href="../midlevel/grid.html#gridcoordinates"><tt>cg_coord_write</tt></a>
 with <tt>coord_array</tt> set to <tt>NULL</tt> (no data written). The
-actual data is then written to the node in parallel using
-<tt>cgp_coord_write_data</tt> where <tt>range_min</tt> and
-<tt>range_max</tt> specify the subset of coordinate data to be written
-by a given process. The routine <tt>cgp_coord_read_data</tt> performs
+actual data is then written to the node in parallel using either
+<tt>cgp_coord_write_data</tt> or <tt>cgp_coord_general_write_data</tt>
+where <tt>range_min</tt> and <tt>range_max</tt> specify the subset of
+coordinate data to be written by a given process.
+The routines <tt>cgp_coord_read_data</tt> and
+<tt>cgp_coord_general_read_data</tt> perform
 the same function for reading the coordinate data in parallel.
 
 <p>
-<b>Note:</b> It is the responsibility of the application to ensure
-that the data type for the coordinate data matches that as
-defined in the file; no conversions are done.
+<b>Note:</b> The routines <tt>cgp_coord_general_write_data</tt> and
+<tt>cgp_coord_general_read_data</tt> perform data conversions if
+<tt>datatype</tt> is different from <tt>mem_datatype</tt>.  For other routines,
+it is the responsibility of the application to ensure that the data type for the
+coordinate data matches that as defined in the file; no conversions are done.
 
 <a name="element"></a>
 <h3>Element Connectivity Data</h3>
@@ -494,10 +533,22 @@ defined in the file; no conversions are done.
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgp_field_general_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *solution_array</span>);</b></tt>
+<tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cgp_field_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=out><i>void *solution_array</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgp_field_general_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *solution_array</i></span>);</b></tt>
 <tbody>
 <tr><td nowrap>
        <tt><b>call cgp_field_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>datatype</span>, <span class=in>fieldname</span>, <span class=out><i>F</i></span>, <span class=out><i>ier</i></span>)</b></tt>
@@ -541,7 +592,7 @@ defined in the file; no conversions are done.
        1 &le; <tt>F</tt> &le; <tt>nfields</tt>.
 <tr valign=baseline><td>
    <td><tt>datatype</tt><td>
-   <td>Data type in which the solution array is written.
+   <td>Data type of the solution array written to the file.
        Admissible data types for a solution array are <tt>Integer</tt>,
        <tt>LongInteger</tt>, <tt>RealSingle</tt>, and <tt>RealDouble</tt>.
 <tr valign=baseline><td>
@@ -553,10 +604,27 @@ defined in the file; no conversions are done.
        compatibility.
 <tr valign=baseline><td>
    <td><tt>range_min</tt><td>
-   <td>Lower range index (eg., <tt>imin, jmin, kmin</tt>).
+   <td>Lower range index in file (eg., <tt>imin, jmin, kmin</tt>).
 <tr valign=baseline><td>
    <td><tt>range_max</tt><td>
-   <td>Upper range index (eg., <tt>imax, jmax, kmax</tt>).
+   <td>Upper range index in file (eg., <tt>imax, jmax, kmax</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_datatype</tt><td>
+   <td>Data type of an array in memory.
+       Admissible data types for a solution array are <tt>Integer</tt>,
+       <tt>LongInteger</tt>, <tt>RealSingle</tt>, and <tt>RealDouble</tt>.
+<tr valign=baseline><td>
+   <td><tt>mem_rank</tt><td>
+   <td>Number of dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_dimensions</tt><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_range_min</tt><td>
+   <td>Lower range index in memory (eg., <tt>imin, jmin, kmin</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_range_max</tt><td>
+   <td>Upper range index in memory (eg., <tt>imax, jmax, kmax</tt>).
 <tr valign=baseline><td>
    <td><tt>solution_array</tt><td>
    <td>Array of solution values for the range prescribed.
@@ -572,16 +640,20 @@ parallel, first call <tt>cgp_field_write</tt> to create an empty
 data node. This call is indentical to
 <a href="../midlevel/solution.html#flowsolution_array"><tt>cg_field_write</tt></a>
 with <tt>solution_array</tt> set to <tt>NULL</tt> (no data written). The
-actual data is then written to the node in parallel using
-<tt>cgp_field_write_data</tt> where <tt>range_min</tt> and
-<tt>range_max</tt> specify the subset of the solution data to be written
-by a given process. The routine <tt>cgp_field_read_data</tt> performs
+actual data is then written to the node in parallel using either
+<tt>cgp_field_write_data</tt> or <tt>cgp_field_general_write_data</tt>
+where <tt>range_min</tt> and <tt>range_max</tt> specify the subset of
+the solution data to be written by a given process.
+The routines <tt>cgp_field_read_data</tt> and
+<tt>cgp_field_general_read_data</tt> perform
 the same function for reading the solution data in parallel.
 
 <p>
-<b>Note:</b> It is the responsibility of the application to ensure
-that the data type for the solution data matches that as
-defined in the file; no conversions are done.
+<b>Note:</b> The routines <tt>cgp_field_general_write_data</tt> and
+<tt>cgp_field_general_read_data</tt> perform data conversions if
+<tt>datatype</tt> is different from <tt>mem_datatype</tt>.  For other routines,
+it is the responsibility of the application to ensure that the data type for the
+solution data matches that as defined in the file; no conversions are done.
 
 <a name="array"></a>
 <h3>Array Data</h3>
@@ -595,29 +667,41 @@ defined in the file; no conversions are done.
     <th scope=col>Modes
 <tbody>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cgp_array_write(<span class=in>char *ArrayName</span>, <span class=in>DataType_t DataType</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>int DataDimension</span>, <span class=cgin>cgsize_t *DimensionVector</span>, <span class=out>int *A</i></span>);</b></tt>
+        <tt><b><span class=out><i>ier</i></span> = cgp_array_write(<span class=in>char *arrayname</span>, <span class=in>DataType_t datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>int rank</span>, <span class=cgin>cgsize_t *dimensions</span>, <span class=out><i>int *A</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cgp_array_write_data(<span class=in>int A</span>, <span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=in>void *Data</span>);</b></tt>
+        <tt><b><span class=out><i>ier</i></span> = cgp_array_write_data(<span class=in>int A</span>, <span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=in>void *data</span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cgp_array_read_data(<span class=in>int A</span>, <span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=out><i>void *Data</i></span>);</b></tt>
+        <tt><b><span class=out><i>ier</i></span> = cgp_array_general_write_data(<span class=in>int A</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *data</span>);</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgp_array_read_data(<span class=in>int A</span>, <span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=out><i>void *data</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgp_array_general_read_data(<span class=in>int A</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *data</i></span>);</b></tt>
 <tbody>
 <tr><td nowrap>
-        <tt><b>call <span class=cgf>cgp_array_write_f</span>(<span class=in>ArrayName</span>, <span class=in>DataType</span>, <span class=in>DataDimension</span>, <span class=in>DimensionVector</span>, <span class=out><i>A</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+        <tt><b>call <span class=cgf>cgp_array_write_f</span>(<span class=in>arrayname</span>, <span class=in>datatype</span>, <span class=in>rank</span>, <span class=in>dimensions</span>, <span class=out><i>A</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call <span class=cgf>cgp_array_write_data_f</span>(<span class=in>A</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>Data</span>, <span class=out><i>ier</i></span>)</b></tt>
+        <tt><b>call <span class=cgf>cgp_array_write_data_f</span>(<span class=in>A</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>data</span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call <span class=cgf>cgp_array_read_data_f</span>(<span class=in>A</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=out><i>Data</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+        <tt><b>call <span class=cgf>cgp_array_read_data_f</span>(<span class=in>A</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=out><i>data</i></span>, <span class=out><i>ier</i></span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
@@ -633,21 +717,44 @@ defined in the file; no conversions are done.
    <td><tt>A</tt><td><tt>&nbsp;&nbsp;</tt>
    <td>Data array index, where 1 &le; <tt>A</tt> &le; <tt>narrays</tt>.
 <tr valign=baseline><td>
-   <td><tt>ArrayName</tt><td>
+   <td><tt>arrayname</tt><td>
    <td>Name of the <tt>DataArray_t</tt> node.
 <tr valign=baseline><td>
-   <td><tt>DataType</tt><td>
+   <td><tt>datatype</tt><td>
    <td>Type of data held in the <tt>DataArray_t</tt> node.
        The admissible types are <tt>Integer</tt>, <tt>LongInteger</tt>,
        <tt>RealSingle</tt>, <tt>RealDouble</tt>, and <tt>Character</tt>.
 <tr valign=baseline><td>
-   <td><tt>DataDimension</tt><td>
-   <td>Number of dimensions.
+   <td><tt>rank</tt><td>
+   <td>Number of dimensions of array in file.
 <tr valign=baseline><td>
-   <td><tt>DimensionVector</tt><td>
-   <td>Number of data elements in each dimension.
+   <td><tt>dimensions</tt><td>
+   <td>Dimensions of array in file.
 <tr valign=baseline><td>
-   <td><tt>Data</tt><td>
+   <td><tt>range_min</tt><td>
+   <td>Lower range index in file (eg., <tt>imin, jmin, kmin</tt>).
+<tr valign=baseline><td>
+   <td><tt>range_max</tt><td>
+   <td>Upper range index in file (eg., <tt>imax, jmax, kmax</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_datatype</tt><td>
+   <td>The type of data held in memory.
+       The admissible types are <tt>Integer</tt>, <tt>LongInteger</tt>,
+       <tt>RealSingle</tt>, <tt>RealDouble</tt>, and <tt>Character</tt>.
+<tr valign=baseline><td>
+   <td><tt>mem_rank</tt><td>
+   <td>Number of dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_dimensions</tt><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_range_min</tt><td>
+   <td>Lower range index in memory (eg., <tt>imin, jmin, kmin</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_range_max</tt><td>
+   <td>Upper range index in memory (eg., <tt>imax, jmax, kmax</tt>).
+<tr valign=baseline><td>
+   <td><tt>data</tt><td>
    <td>The data array.
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
@@ -665,14 +772,19 @@ data node. This call is similar to
 <a href="../midlevel/physical.html#dataarray"><tt>cg_array_write</tt></a>
 with <tt>Data</tt> set to <tt>NULL</tt> (no data written). This
 function will return the array index, <tt>A</tt>, which is used to
-write the actual data to the node in parallel using
-<tt>cgp_array_write_data</tt> where <tt>range_min</tt> and
-<tt>range_max</tt> specify the subset of the array data to be written
-by a given process. The routine <tt>cgp_array_read_data</tt> performs
+write the actual data to the node in parallel using either
+<tt>cgp_array_write_data</tt> or <tt>cgp_array_general_write_data</tt>
+where <tt>range_min</tt> and <tt>range_max</tt> specify the subset of
+the array data to be written by a given process.
+The routines <tt>cgp_array_read_data</tt> and
+<tt>cgp_array_general_read_data</tt> perform
 the same function for reading the array data in parallel.
 
 <p>
-<b>Note:</b> It is the responsibility of the application to ensure
+<b>Note:</b>  The routines <tt>cgp_array_general_write_data</tt> and
+<tt>cgp_array_general_read_data</tt> perform data conversions if
+<tt>datatype</tt> is different from <tt>mem_datatype</tt>.  For other routines,
+it is the responsibility of the application to ensure
 that the data type for the array data matches that as
 defined in the file; no conversions are done.
 

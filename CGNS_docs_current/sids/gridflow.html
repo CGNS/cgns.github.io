@@ -145,11 +145,16 @@ If <tt>Rind</tt> is absent, then the
 entities contain only "core" vertices of a zone; core refers to all
 interior and bounding vertices of a zone - <tt>VertexSize</tt> is the
 number of core vertices.
-Core vertices in a zone are assumed to begin at <tt>[1,1,1]</tt> (for
-a structured zone in 3-D) and end at <tt>VertexSize</tt>.
+Core vertices in a zone begin at <tt>[1,1,1]</tt> (for a structured
+zone in 3-D) and end at <tt>VertexSize</tt>.
 If <tt>Rind</tt> is present, it will provide information on the number
 of "rind" points in addition to the core points that are contained in
 the <tt>DataArray_t</tt> structures.
+Indices in <tt>DataArray_t</tt> structures have the range
+<tt>[1 - a,1 - c,1 - e]</tt> to <tt>[II + b,JJ + d,KK + f]</tt> where
+<tt>VertexSize = [II,JJ,...]</tt> and <tt>RindPlanes = [a,b,...]</tt>
+(see the <a href="build.html#Rind"><tt>Rind_t</tt></a> structure for
+the definition of <tt>RindPlanes</tt>).
 
 <p>
 <a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
@@ -1123,7 +1128,11 @@ within the data arrays.
 identifies the dimensionality of cells or elements,
 <tt>IndexDimension</tt> identifies the dimensionality of the grid-size
 arrays, and <tt>VertexSize</tt> and <tt>CellSize</tt> are the number of
-core vertices and cells, respectively, in each index direction.
+core vertices and cells, respectively, in each index direction,
+excluding rind points.
+For structured zones, core vertices and cells begin at <tt>[1,1,1]</tt>
+(in 3-D) and end at <tt>VertexSize</tt> and <tt>CellSize</tt>,
+respectively.
 For unstructured zones, <tt>IndexDimension</tt> is always 1.
 
 <p>

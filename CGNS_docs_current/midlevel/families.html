@@ -52,13 +52,23 @@
 <ul>
 <li> <a href="#family">Family Definition</a>
      <ul>
-     <li> <tt><b>cg_family_write</b></tt> - Create a Family_t node
-     <li> <tt><b>cg_nfamilies</b></tt> - Get number of families
-     <li> <tt><b>cg_family_read</b></tt> - Read family info
-     <li> <tt><b>cg_family_name_write</b></tt> - Write multiple family names under Family_t
-     <li> <tt><b>cg_nfamily_names</b></tt> - Get number of family names under Family_t
-     <li> <tt><b>cg_family_name_read</b></tt> - Read multiple family names under Family_t
+     <li> <tt><b>cg_family_write</b></tt> - Create a Family_t node (CGNSBase_t level)
+     <li> <tt><b>cg_nfamilies</b></tt> - Get number of families (CGNSBase_t level)
+     <li> <tt><b>cg_family_read</b></tt> - Read family info (CGNSBase_t level)
+     <li> <tt><b>cg_family_name_write</b></tt> - Write multiple family names under Family_t (CGNSBase_t level)
+     <li> <tt><b>cg_nfamily_names</b></tt> - Get number of family names under Family_t (CGNSBase_t level)
+     <li> <tt><b>cg_family_name_read</b></tt> - Read multiple family names under Family_t (CGNSBase_t level)
      </ul>
+<li> <a href="#familytree">Family Hierarchy Tree</a>
+     <ul>
+     <li> <tt><b>cg_node_family_write</b></tt> - Create a Family_t node (Family_t level)
+     <li> <tt><b>cg_node_nfamilies</b></tt> - Get number of families (Family_t level)
+     <li> <tt><b>cg_node_family_read</b></tt> - Read family info (Family_t level)
+     <li> <tt><b>cg_node_family_name_write</b></tt> - Write multiple family names under Family_t (Family_t level)
+     <li> <tt><b>cg_node_nfamily_names</b></tt> - Get number of family names under Family_t (Family_t level)
+     <li> <tt><b>cg_node_family_name_read</b></tt> - Read multiple family names under Family_t (Family_t level)
+     </ul>
+</ul>
 <li> <a href="#geometry">Geometry Reference</a>
      <ul>
      <li> <tt><b>cg_geo_write</b></tt> - Create a GeometryReference_t node 
@@ -194,6 +204,120 @@
    <td><tt>ier</tt><td>
    <td>Error status.
 </table>
+
+
+<a name="familytree"></a>
+<h3>Family Hierarchy Tree Definition</h3>
+
+<i>Node</i>: <tt>Family_t</tt>
+             (<a href="../sids/misc.html#Family">SIDS</a>,
+              <a href="../filemap/nodes.html#Family">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_node_family_write(<span class=in>char *FamilyName</span>, <span class=out><i>int *Fam</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_node_nfamilies(<span class=out><i>int *nfamilies</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_node_family_read(<span class=in>int Fam</span>, <span class=out><i>char *FamilyName</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *nFamBC</i></span>, <span class=out><i>int *nGeo</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_node_family_name_write(<span class=in>int Fam</span>, <span class=in>char *NodeName</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *FamilyName</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_node_nfamily_names(<span class=in>int Fam</span>, <span class=out><i>int *nNames</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_node_family_name_read(<span class=in>int Fam</span>, <span class=in>int N</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>char *NodeName</i></span>, <span class=out><i>char *FamilyName</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+       <tt><b>call cg_node_family_write_f(<span class=in>FamilyName</span>, <span class=out><i>Fam</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_node_nfamilies_f(<span class=out><i>nfamilies</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_node_family_read_f(<span class=in>Fam</span>, <span class=out><i>FamilyName</i></span>, <span class=out><i>nFamBC</i></span>, <span class=out><i>nGeo</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_node_family_name_write_f(<span class=in>Fam</span>, <span class=in>NodeName</span>, <span class=in>FamilyName</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_node_nfamily_names_f(<span class=in>Fam</span>, <span class=out><i>nNames</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_node_family_name_read_f(<span class=in>Fam</span>, <span class=in>N</span>, <span class=out><i>NodeName</i></span>, <span class=out><i>FamilyName</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td>
+   <td><tt>nfamilies</tt><td>
+   <td>Number of families in current node (<tt>CGNSBase_t</tt> or <tt>Family_t</tt>).
+<tr valign=baseline><td>
+   <td><tt>Fam</tt><td>
+   <td>Family index number, where
+       1 &le; <tt>Fam</tt> &le; <tt>nfamilies</tt>.
+<tr valign=baseline><td>
+   <td><tt>FamilyName</tt><td>
+   <td>Name of the family.
+<tr valign=baseline><td>
+   <td><tt>NodeName</tt><td>
+   <td>Name of the <tt>FamilyName_t</tt> node. <tt>FamilyParent</tt> is used to refer
+       to the parent family of the <tt>Family_t</tt> node.
+<tr valign=baseline><td>
+   <td><tt>nFamBC</tt><td>
+   <td>Number of boundary conditions for this family.
+       This should be either 0 or 1.
+<tr valign=baseline><td>
+   <td><tt>nGeo</tt><td>
+   <td>Number of geometry references for this family.
+<tr valign=baseline><td>
+   <td><tt>nNames</tt><td>
+   <td>Number of <tt>FamilyName_t</tt> nodes for this family.
+<tr valign=baseline><td>
+   <td><tt>N</tt><td>
+   <td>Family name index number, where
+       1 &le; <tt>N</tt> &le; <tt>nNames</tt>.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+Note that a current node with <tt>CGNSBase_t</tt> or <tt>FamilyName_t</tt> type has to be set with a
+<a href="navigating.html#goto"><tt>cg_goto</tt></a> function
+or equivalent prior any of these function calls.
 
 <a name="geometry"></a>
 <h3>Geometry Reference</h3>

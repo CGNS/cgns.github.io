@@ -454,7 +454,7 @@ only when information is requested about the linked node or it's children.
        dimension varying the slowest.
        <br><br>
        The index starting at one is used in
-       <a href="dataio.html#read_data"><tt>cgio_read_data</tt></a>,
+       <a href="dataio.html#read_data_type"><tt>cgio_read_data_type</tt></a>,
        <a href="dataio.html#write_data"><tt>cgio_write_data</tt></a>,
        <a href="structure.html#children_names"><tt>cgio_children_names</tt></a>,
        and <a href="structure.html#children_ids"><tt>cgio_children_ids</tt></a>.
@@ -462,7 +462,7 @@ only when information is requested about the linked node or it's children.
        The user should be aware of the differences in array indexing
        between Fortran and C.
        The subroutines
-       <a href="dataio.html#read_all_data"><tt>cgio_read_all_data</tt></a> and
+       <a href="dataio.html#read_all_data_type"><tt>cgio_read_all_data_type</tt></a> and
        <a href="dataio.html#write_all_data"><tt>cgio_write_all_data</tt></a>
        merely take a pointer to the beginning of the data, compute how
        much data is to be read/written, and process as many bytes as
@@ -472,7 +472,7 @@ only when information is requested about the linked node or it's children.
        Given this convention, it is possible for a C program to
        use standard C conventions for array indexing and use
        <tt>cgio_write_all_data</tt> to store the array on disk.
-       Then a Fortran program might use <tt>cgio_read_all_data_f</tt> to
+       Then a Fortran program might use <tt>cgio_read_all_data_type_f</tt> to
        read the data set.
        Unless the user is aware of the structure of the data, it is
        possible for the array to be transposed relative to what is
@@ -481,7 +481,7 @@ only when information is requested about the linked node or it's children.
        The implications of the assumed array structure convention can be
        quite subtle.
        The subroutines <tt>cgio_write_data</tt> and
-       <tt>cgio_read_data</tt> assume the Fortran array structure in
+       <tt>cgio_read_data_type</tt> assume the Fortran array structure in
        order to index the data.
        Again, unless the user is aware of the implications of this, it
        is possible to write an array on disk and later try to change a

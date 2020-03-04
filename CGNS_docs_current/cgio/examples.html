@@ -178,7 +178,7 @@ C
       CALL CGIO_GET_LABEL_F(ICGIO,PID,TSTLBL,IERR)
       CALL CGIO_GET_DATA_TYPE_F(ICGIO,PID,DTYPE,IERR)
       CALL CGIO_GET_DIMENSIONS_F(ICGIO,PID,NUMDIM,IDIM,IERR)
-      CALL CGIO_READ_ALL_DATA_F(ICGIO,PID,B,IERR)
+      CALL CGIO_READ_ALL_DATA_TYPE_F(ICGIO,PID,'R4',B,IERR)
       PRINT *,' NODE F3 THROUGH LINK L3:'
       PRINT *,'   LABEL       = ',TSTLBL
       PRINT *,'   DATA TYPE   = ',DTYPE
@@ -194,7 +194,7 @@ C
       CALL CGIO_GET_LABEL_F(ICGIO,PID,TSTLBL,IERR)
       CALL CGIO_GET_DATA_TYPE_F(ICGIO,PID,DTYPE,IERR)
       CALL CGIO_GET_DIMENSIONS_F(ICGIO,PID,NUMDIM,IDIMD,IERR)
-      CALL CGIO_READ_ALL_DATA_F(ICGIO,PID,ID,IERR)
+      CALL CGIO_READ_ALL_DATA_TYPE_F(ICGIO,PID,'I4',ID,IERR)
       PRINT *,' '
       PRINT *,' NODE N13:'
       PRINT *,'   LABEL       = ',TSTLBL
@@ -209,7 +209,7 @@ C     3.) N13 THROUGH L1
 C
       CALL CGIO_GET_NODE_ID_F(ICGIO,RID,'N3/N10/L1',TMPID,IERR)
       CALL CGIO_GET_LABEL_F(ICGIO,TMPID,TSTLBL,IERR)
-      CALL CGIO_READ_ALL_DATA_F(ICGIO,TMPID,ID,IERR)
+      CALL CGIO_READ_ALL_DATA_TYPE_F(ICGIO,TMPID,'I4',ID,IERR)
       PRINT *,' '
       PRINT *,' NODE N13 THROUGH LINK L1:'
       PRINT *,'   LABEL       = ',TSTLBL
@@ -220,7 +220,7 @@ C     4.) N13 THROUTH L2
 C
       CALL CGIO_GET_NODE_ID_F(ICGIO,RID,'N3/N11/L2',CID,IERR)
       CALL CGIO_GET_LABEL_F(ICGIO,CID,TSTLBL,IERR)
-      CALL CGIO_READ_ALL_DATA_F(ICGIO,CID,ID,IERR)
+      CALL CGIO_READ_ALL_DATA_TYPE_F(ICGIO,CID,'I4',ID,IERR)
       PRINT *,' '
       PRINT *,' NODE N13 THROUGH LINK L2:'
       PRINT *,'   LABEL       = ',TSTLBL
@@ -467,7 +467,7 @@ int main ()
    cgio_get_label(cgio_num,tmp_id,label);
    cgio_get_data_type(cgio_num,tmp_id,data_type);
    cgio_get_dimensions(cgio_num,tmp_id,&num_dims,dims_b);
-   cgio_read_all_data(cgio_num,tmp_id,b);
+   cgio_read_all_data_type(cgio_num,tmp_id,"R4",b);
    printf (" node f3 through link l3:\n");
    printf ("   label       = %s\n",label);
    printf ("   data_type   = %s\n",data_type);
@@ -488,7 +488,7 @@ int main ()
    cgio_get_label(cgio_num,tmp_id,label);
    cgio_get_data_type(cgio_num,tmp_id,data_type);
    cgio_get_dimensions(cgio_num,tmp_id,&num_dims,&dim_d);
-   cgio_read_all_data(cgio_num,tmp_id,d);
+   cgio_read_all_data_type(cgio_num,tmp_id,"I4",d);
    printf (" node n13:\n");
    printf ("   label       = %s\n",label);
    printf ("   data_type   = %s\n",data_type);
@@ -504,7 +504,7 @@ int main ()
   /* access data in node n13 through l1 */
    cgio_get_node_id(cgio_num,root_id,"/n3/n10/l1",&tmp_id);
    cgio_get_label(cgio_num,tmp_id,label);
-   cgio_read_all_data(cgio_num,tmp_id,d);
+   cgio_read_all_data_type(cgio_num,tmp_id,"I4",d);
    printf (" node n13 through l1:\n");
    printf ("   label       = %s\n",label);
    printf ("   data:\n");
@@ -517,7 +517,7 @@ int main ()
   /* access data in node n13 through l2 */
    cgio_get_node_id(cgio_num,root_id,"/n3/n11/l2",&tmp_id);
    cgio_get_label(cgio_num,tmp_id,label);
-   cgio_read_all_data(cgio_num,tmp_id,d);
+   cgio_read_all_data_type(cgio_num,tmp_id,"I4",d);
    printf (" node n13 through l2:\n");
    printf ("   label       = %s\n",label);
    printf ("   data:\n");

@@ -103,7 +103,13 @@ div.codebox {
     width:400px;
     overflow:auto;
 }
-
+</style>
+<style>
+div.genbox {
+    border:1px solid black;
+    background-color:#f5f5f0;
+    padding: 5px;
+}
 </style>
 <p>
 <div class="codebox">
@@ -127,26 +133,52 @@ git clone -b master https://github.com/CGNS/CGNS.git
 <p>As a minimum, you will need to download and compile the CGNS library code.
 Compilation requires an ANSI compliant C compiler.
 The source code may downloaded as a gzipped, tar file:
-<ul>
+</style>
+<p>
+<div class="genbox">
+
 <b>Current Stable Release:</b>
+
+ <a href="https://github.com/CGNS/CGNS/releases/tag/v4.1.0"> CGNS Version 4.1.0</a><br><br>
+
+This version implements: <br>
+    &emsp; - CPEX42 (Storing bounding box of a grid, CGNS-149)<br>
+    &emsp; - CPEX43 (Family hierarchy as a tree, CGNS-180)<br>
+CGNS switched to using HDF5 compact storage for smaller datasets.<br><br>
+The following APIs were removed: <br>
+    &emsp; cgio_read_all_data, cgio_read_data, cgio_read_block_data<br>
+    &emsp; cgio_read_all_data_f, cgio_read_data_f, cgio_read_block_data_f<br>
+
+These APIs should be used instead:<br>
+
+      &emsp; cgio_read_all_data_type, cgio_read_data_type, cgio_read_block_data_type<br>
+      &emsp; cgio_read_all_data_type_f, cgio_read_data_type_f, cgio_read_block_data_type_f<br><br>
+
+See RELEASE.txt for additional bug fixes.
+
+</div>
+
+<p><b>Historical Stable Releases:</b></p>
+<li> <a href="https://github.com/CGNS/CGNS/releases/tag/v4.0.0">
+CGNS Version 4.0.0</a><br>
+<p><b>Background</b> <a href="https://cgnsorg.atlassian.net/wiki/spaces/CGNS/pages/220463122/Resolve+issue+with+release+s+3.4.0+version+compatibility+the+4.0.0+release+and+forward+compatibility.">[1]</a>: The CGNS versions are currently numbered as follows: "Version x.y, Revision z", or "Version x.y-z".The first number represents the "major" version number. <b>Within this number, the library maintains forward compatibility.</b></p>
+
+<p><b>Issue</b>: With the introduction of CPEX 0041 "NGON modification proposal", CGNS 3.4.0 broke the convention of maintaining forward compatibility with-in the major versioning of CGNS.</p>
+
+<p>Version 4.0.0 was released with CPEX 0041 implemented, (essentially this is CGNS 3.4.0 released as version 4.0.0).</p>
+<li>
+<a href="https://github.com/CGNS/CGNS/releases/tag/v3.4.1">
+CGNS Version 3.4.1 (Patch) </a><br>
+Patched version v3.4.1 removed CPEX 0041.
+</li>
+<p>
+<li>
 <a href="https://github.com/CGNS/CGNS/releases/tag/v3.4.0">
 CGNS Version 3.4.0</a><br>
 In addition to numerous bug fixes, this version added new features: CPEX 40 Rind Plane Indexing,
  CPEX 41 NGON modification proposal, added support for NAG Fortran compilers,
-enforce the HDF5 version >= 1.8 is used in building HDF5, automatic detection and linking of szip and zlib if required by HDF5. 
-<p>
-<ul>
-<li>
-<b>Previous Stable Release:</b>
-<li>
-<a href="https://github.com/CGNS/CGNS/releases/tag/v3.3.1">
-CGNS Version 3.3.1</a><br>
-This Version is mainly a bug fix maintenance release. This release also addressed Fortran
-Windows support for both serial and parallel versions of CGNS.
+enforce the HDF5 version >= 1.8 is used in building HDF5, automatic detection and linking of szip and zlib if required by HDF5.
 </li>
-<p>
-<li>
-<b>Historical Stable Releases:</b>
 <p>
 <li>
 <a href="https://github.com/CGNS/CGNS/releases/tag/v3.3.0">
@@ -247,6 +279,8 @@ When using HDF5, it is currently recommended that CGNS be compiled against the H
 The following figure shows the typical performance of CGNS "make check" for various versions of HDF5 for 
 serial I/O.
 </p>
+
+<p style="color:#9e1044">It is recommended to NOT link with HDF5 versions 1.10.0-patch1, 1.10.1 or 1.10.2.</p>
 
 <img src="HDF5CGNS.png" alt="CGNS/HDF5 performance" style="width:860px;height:491px;">
    

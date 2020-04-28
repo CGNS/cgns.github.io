@@ -76,8 +76,10 @@ components of the position vector.
 It also provides a mechanism for identifying rind-point data included
 within the position-vector arrays.
 <pre>
-  GridCoordinates_t&lt; int IndexDimension, int VertexSize[IndexDimension] &gt; :=
+  GridCoordinates_t&lt; int IndexDimension, int VertexSize[IndexDimension], int PhysicalDimension&gt; :=
     {
+    DataArray_t&lt;DataType,PhysicalDimension, 2&gt; BoundingBox ;           (o)
+
     List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
  
     Rind_t&lt;IndexDimension&gt; Rind ;                                      (o/d)
@@ -175,6 +177,64 @@ data structure allows arbitrary user-defined data to be stored in
 <tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
 restrictions or implicit meanings imposed on these node types at other
 node locations.
+
+<p>
+The <tt>BoundingBox</tt> array is optional and provides a measure within which all the grid points lie. It stores minima and maxima of Coordinates values sorted by alphabetical order for Cartesian and Cylindrical coordinate systems while Spherical and Auxiliary coordinate systems retain a specific order to be coherent with the existing SIDS notation:
+<center>
+<table cellspacing=0 cellpadding=3 border=0>
+<tr align=left><td colspan=3><hr width=100% noshade></tr>
+<tr valign=baseline>
+  <th align=left scope=col>System</th>
+  <th> Bounding Box</th>
+</tr>
+<tr align=left><td colspan=3><hr width=100% noshade></tr>
+<tr valign=baseline>
+  <td align=left scope=col>Cartesian 3-D</td><tt></tt>
+  <td align=center>
+    <div>[[<i>Min(<tt>CoordinateX</tt>), Min(<tt>CoordinateY</tt>), Min(<tt>CoordinateZ</tt>)</i>],</div>
+    <div>[<i>Max(<tt>CoordinateX</tt>), Max(<tt>CoordinateY)</tt>, Max(<tt>CoordinateZ</tt>)</i>]]</div>
+  </td>
+</tr>
+<tr valign=left><td colspan=3></tr>
+<tr valign=baseline>
+  <td align=left scope=col>Cylindrical 3-D</td>
+  <td align=center>
+      <div>[[<i>Min(<tt>CoordinateR</tt>), Inf(<tt>CoordinateTheta</tt>), Min(<tt>CoordinateX</tt>)</i>],</div>
+      <div>[<i>Max(<tt>CoordinateR</tt>), Sup(<tt>CoordinateTheta)</tt>, Max(<tt>CoordinateX</tt>)</i>]]</div>or
+      <div>[[<i>Min(<tt>CoordinateR</tt>), Inf(<tt>CoordinateTheta</tt>), Min(<tt>CoordinateY</tt>)</i>],</div>
+      <div>[<i>Max(<tt>CoordinateR</tt>), Sup(<tt>CoordinateTheta)</tt>, Max(<tt>CoordinateY</tt>)</i>]]</div>or
+      <div>[[<i>Min(<tt>CoordinateR</tt>), Inf(<tt>CoordinateTheta</tt>), Min(<tt>CoordinateZ</tt>)</i>],</div>
+      <div>[<i>Max(<tt>CoordinateR</tt>), Sup(<tt>CoordinateTheta)</tt>, Max(<tt>CoordinateZ</tt>)</i>]]</div>
+  </td>
+</tr>
+<tr valign=left><td colspan=3></tr>
+<tr valign=baseline>
+  <td align=left scope=col>Spherical</td>
+  <td align=center>
+     <div>[[<i>Min(<tt>CoordinateR</tt>), Inf(<tt>CoordinateTheta</tt>), Inf(<tt>CoordinatePhi</tt>)</i>],</div>
+     <div>[<i>Max(<tt>CoordinateR</tt>), Sup(<tt>CoordinateTheta)</tt>, Sup(<tt>CoordinatePhi</tt>)</i>]]</div>
+  </td>
+</tr>
+<tr valign=left><td colspan=3>
+<tr valign=baseline>
+  <td align=left scope=col>Auxiliary 3-D</td>
+  <td align=center>
+      <div>[[<i>Min(<tt>CoordinateXi</tt>), Min(<tt>CoordinateEta</tt>), Min(<tt>CoordinateZeta</tt>)</i>],</div>
+      <div>[<i>Max(<tt>CoordinateXi</tt>), Max(<tt>CoordinateEta)</tt>, Max(<tt>CoordinateZeta</tt>)</i>]]</div>
+  </td>
+</tr>
+<tr align=left><td colspan=3><hr width=100% noshade></tr>
+</table>
+</center>
+<p>
+Thus, all coordinate systems are handled in a deterministic way. For 2-D coordinate system, the order is kept the same as for 3-D.
+<br>
+Angle coordinate part of a bounding box is defined by <i>Inf(<tt>CoordinateTheta</tt>)</i> and <i>Sup(<tt>CoordinateTheta</tt>)</i> (respectively <i>Inf(<tt>CoordinatePhi</tt>)</i> and <i>Sup(<tt>CoordinatePhi</tt>)</i> for spherical coordinate angle) where <i>Inf</i> and <i>Sup</i> operators ensure unicity of the angle interval. The constraints for valid angle bounding box limits are:
+<ul>
+  <li><i>Inf(<tt>CoordinateTheta</tt>)</i> is included in [0; 2&pi;]</li>
+  <li><i>Inf(<tt>CoordinateTheta</tt>)</i> &lt; <i>Sup(<tt>CoordinateTheta</tt></i>)</li>
+  <li><i>Sup(<tt>CoordinateTheta</tt>)</i> - <i>Inf(<tt>CoordinateTheta</tt>)</i> &le; 2 &pi;</li>
+</ul>
 
 <a name="DataSize_grid"></a>
 <h4>FUNCTION <tt>DataSize[]</tt>:</h4>

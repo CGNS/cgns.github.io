@@ -55,6 +55,8 @@
      <li> <tt><b>cg_grid_write</b></tt> - Create a <tt>GridCoordinates_t</tt> node
      <li> <tt><b>cg_ngrids</b></tt> - Get number of <tt>GridCoordinates_t</tt> nodes
      <li> <tt><b>cg_grid_read</b></tt> - Get name of a <tt>GridCoordinates_t</tt> node
+     <li> <tt><b>cg_grid_bounding_box_read</b></tt> - Get bounding box associated to a <tt>GridCoordinates_t</tt> node
+     <li> <tt><b>cg_grid_bounding_box_write</b></tt> - Write bounding box associated to a <tt>GridCoordinates_t</tt> node
      <li> <tt><b>cg_coord_write</b></tt> - Write grid coordinates
      <li> <tt><b>cg_coord_partial_write</b></tt> - Write subset of grid coordinates
      <li> <tt><b>cg_coord_general_write</b></tt> - Write shaped array to a subset of grid coordinates
@@ -139,6 +141,16 @@ nodes in the SIDS manual.
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>char *GridCoordName</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_grid_bounding_box_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int G</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in><i>void *bbox_array</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_grid_bounding_box_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int G</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=out><i>void *bbox_array</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
         <tt><b>call cg_grid_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>GridCoordName</span>, <span class=out><i>G</i></span>, <span class=out><i>ier</i></span>)</b></tt>
@@ -150,6 +162,14 @@ nodes in the SIDS manual.
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_grid_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>G</span>, <span class=out><i>GridCoordName</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_grid_bounding_box_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>G</span>, <span class=in>datatype</span>, <span class=in>bbox_array</span>, <span class=out><i>ier</i></span>)<br>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_grid_bounding_box_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>G</span>, <span class=in>datatype</span>, <span class=out>bbox_array</span>, <span class=out><i>ier</i></span>)<br>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
@@ -180,14 +200,25 @@ nodes in the SIDS manual.
    <td>Name of the <tt>GridCoordinates_t</tt> node.
        Note that the name "<tt>GridCoordinates</tt>" is reserved for the
        original grid and must be the first <tt>GridCoordinates_t</tt>
-       node to be defined. 
+       node to be defined.
+<tr valign=baseline><td>
+   <td><tt>datatype</tt><td>
+   <td>Data type of the bounding box array written to the file or read.
+       Admissible data types for a coordinate bounding box are <tt>RealSingle</tt>
+       and <tt>RealDouble</tt>.
+<tr valign=baseline><td>
+   <td><tt>bbox_array</tt><td>
+   <td>Data Array with bounding box values.
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.
 </table>
 
 <p>
-The above functions are applicable to any <tt>GridCoordinates_t</tt> node.
+The above functions are applicable to any <tt>GridCoordinates_t</tt> node.</br>
+When reading a bounding box, if the information is missing from the file, the <tt>bbox_array</tt> will remain untouched and a warning is emitted.</br>
+The CGNS MLL relies on the user to compute the bounding box and ensure that the bounding box being stored is coherent with the coordinates under <tt>GridCoordinates_t</tt> node.
+
 
 <a name="gridcoordinates_original"></a>
 <br><br>

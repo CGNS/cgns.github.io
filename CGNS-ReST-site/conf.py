@@ -18,6 +18,8 @@ extensions = [
 extlinks = {
     'issue': ('https://cgnsorg.atlassian.net/projects/CGNS/issues/', '#'),
     'version': ('https://github.com/CGNS/CGNS/releases/tag/', 'version ')}
+
+# --- sphinx code generation params
 templates_path = ['_templates']
 source_suffix = '.rst'
 master_doc = 'index'
@@ -25,22 +27,26 @@ language = None
 exclude_patterns = ['build']
 pygments_style = 'sphinx'
 
-# --- Options for HTML output -------------------------------------------------
-#html_logo = 'images/logo/CGNS_empty.svg'
+import guzzle_sphinx_theme
+
+html_theme_path = guzzle_sphinx_theme.html_theme_path()
+html_theme = 'guzzle_sphinx_theme'
+
+# Register the theme as an extension to generate a sitemap.xml
+# CGNS is based on the guzzle theme
+extensions.append("guzzle_sphinx_theme")
+
+# --- Options for HTML output 
 html_favicon =  'images/logo/CGNS_tiny.ico'
 html_use_index = True
 html_title = 'CGNS Official Web Site'
 html_static_path = ['_static']
 html_sidebars={
-'**':['searchbox.html','localtoc.html','sitemap.html'],
+    '**':['searchbox.html','localtoc.html'],
 }
-
-# --- sphinx-theme -----
-html_theme = 'p-main_theme'
-import os
-from PSphinxTheme import utils
-
-p, html_theme, needs_sphinx = utils.set_psphinxtheme(html_theme)
-html_theme_path = p
+html_theme_options = {
+    'touch_icon': 'images/logo/CGNS_empty.svg',
+    'project_nav_name': 'CGNS doc test',
+}    
 
 # --- last line

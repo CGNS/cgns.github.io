@@ -51,15 +51,19 @@ different computing platforms, and to provide a mechanism for archive and
 retrieval of CFD data
 
 .. list-table::
-   :widths: 30 30 30
    :width: 100
 
-   * - .. image:: ../../images/members/NASA_logo.svg
+   * - .. image:: ../../_images/members/NASA_logo.svg
           :align: center
-     - .. image:: ../../images/members/Boeing_logo.svg
+          :width: 150
+     -
+     - .. image:: ../../_images/members/Boeing_logo.svg
           :align: center
-     - .. image:: ../../images/members/McDonnellDouglas_logo.svg
+          :width: 150
+     -
+     - .. image:: ../../_images/members/McDonnellDouglas_logo.svg
           :align: center
+          :width: 150
    
 At that time, the de facto standard for CFD data was the file format
 used by Plot3D, a flow visualization program developed at NASA Ames.

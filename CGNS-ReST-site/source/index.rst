@@ -5,9 +5,10 @@
    04/2020 - (marc.poinot@safrangroup.com)
              start Markdown translation and change layout, see how pages
 	     are changed/moved in the MIGRATION.txt file
+	     See governance/support about this web site migration
 
 .. IGNORE warning message produced by the image directive below	     
-.. image:: ./images/logo/CGNS_logo.png
+.. image:: /images/logo/CGNS_logo_1.png
    :width: 400px
    :align: center
 	   
@@ -40,8 +41,10 @@ The API (Application Program Interface) is platform independent and
 can be easily implemented in C, C++, Fortran and Fortran90
 applications.
 
-Quick Links
+Main Topics
 -----------
+
+.. cssclass:: table-bordered
 
 .. list-table::
    :widths: 33 34 33
@@ -49,35 +52,37 @@ Quick Links
    :align: center
    
    * - :ref:`What is CGNS? <WhatIsCGNS>`
-     - Getting Started
-     - Latest News
-   * - Switch to HDF5
-     - Steering Committee
-     - Implementations
-   * - Discussion Group (CGNSTalk)
-     - Download the Software
-     - Contributed CGNS Utilities
-   * - Example CGNS Files
-     - Proposals for Extensions (CPEX)
-     - FAQs
-       
-Documentation links
--------------------
-       
+     - :ref:`Getting Started <QuickStartGuide>`
+     - :ref:`News <LatestNews>`
+   * - :ref:`Switch to HDF5 <HDF5Implementation>`
+     - :ref:`Steering Committee <YeMightySteeringCommittee>`
+     - :ref:`Implementations <IntroImplementations>`
+   * - :ref:`Discussion Group (CGNSTalk) <SupportCGNSTalk>`
+     - :ref:`Download the Software <SupportDownload>`
+     - :ref:`Contributed CGNS Utilities <Contributed>`
+   * - :ref:`Example CGNS Files <SupportExamples>`
+     - :ref:`Proposals for Extensions (CPEX) <CPEX>`
+     - :ref:`FAQ <SupportFAQ>`
+
+Reference Documentation
+-----------------------
+
+.. cssclass:: table-bordered
+	      
 .. list-table::
    :widths: 33 34 33
    :width: 100%
    :align: center
 	   
-   * - Documentation Home Page
+   * - :ref:`Documentation map <DocMap>`
      - :ref:`Standard Interface Data Structures (CGNS/SIDS) <CGNS-SIDS>`
-     - Meeting and Telecon Minutes
-   * - A User's Guide to CGNS
-     - Overview and Entry-Level Document
-     - Conference Papers and Slide Presentations
-   * - SIDS File Mapping Manual (FMM)
-     - Mid-Level Library (MLL)
-     - CGIO User's Guide                          
+     - :ref:`Meeting and Telecon Minutes <DocMinutes>`
+   * - :ref:`A User's Guide to CGNS <DocUserGuide>`
+     - :ref:`Overview and Entry-Level Document <Overview>`
+     - :ref:`Conference Papers and Slide Presentations <DocExtra>`
+   * - :ref:`SIDS File Mapping Manual (FMM) <StandardFMM>`
+     - :ref:`Mid-Level Library (MLL) <StandardMLL>`
+     - :ref:`CGIO User's Guide (CGIO) <StandardCGIO>`                        
 
 Site map
 -------------

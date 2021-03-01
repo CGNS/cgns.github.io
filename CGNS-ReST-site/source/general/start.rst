@@ -6,4 +6,8 @@
 Quick Start Guide
 =================
 
+.. note::
+
+   This section waits for its writer...
+
 .. last line

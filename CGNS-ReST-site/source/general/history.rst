@@ -10,6 +10,9 @@ CGNS has now more than 20 years of history.
 The section below details its history, the current status and some of
 the noticeable contribution to the standard.
 
+See also some history facts in 
+the :ref:`Steering committee section <YeMightyStrrringCommittee`.
+
 Current Status
 ^^^^^^^^^^^^^^
 **Current Status**

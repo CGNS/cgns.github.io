@@ -11,7 +11,7 @@ Ressources
    current/CPEX
    current/download
    current/examples
-   current/contributed
+   current/softwarelist
    doc
 
 .. last line 

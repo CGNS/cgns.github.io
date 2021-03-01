@@ -85,7 +85,16 @@ For example, on a Unix platform with a *sh* shell:
 
    cd /tmp/gz/install/lib/python3.7/site-packages
    unzip guzzle_sphinx_theme-0.7.11-py3.7.egg
-   
+
+Second you run the `build.sh` script, it generates all the stuff and
+copies a final/ usable html directory with all required files.
+You can copy this directory at any place you want, the directory is
+self-contained. 
+
+The equation rendering makes a reference to an external link,
+so that you may have issues with the equations if you are not connected
+to the public internet.
+
 Documentation editing
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -200,11 +209,12 @@ Simple Table
 +--------+--------+-----------+
 | Header | Header with 2 cols |
 +========+========+===========+
-| A      | Lists: | **C**     |
-+--------+  - aha +-----------+
-| B::    |  - yes | | a block |
-|        |        |   of text |
-|  *hey* |  #. hi | | a break |
+| CFD    | Data : | **TURB**  |
++--------+  - cfl +-----------+
+| CSM::  |  - rms | | K       |
+|        |        |   Epsilon |
+|  *v1a* |  #. a  | | Spalart |
+|  *v2a* |  #. b  | | K-l     |
 +--------+--------+-----------+
 
 Admonition

@@ -7,6 +7,9 @@
 	     are changed/moved in the MIGRATION.txt file
 	     See governance/support about this web site migration
 
+   03/2021 - (marc.poinot@safrangroup.com)
+             Major update with the help of mickael.philit@safrangroup.com
+
 .. IGNORE warning message produced by the image directive below	     
 .. image:: /images/logo/CGNS_logo_1.png
    :width: 400px
@@ -19,7 +22,7 @@ The official CGNS home page
 The **CFD General Notation System** (CGNS) provides a general, portable,
 and extensible standard for the storage and retrieval of computational
 fluid dynamics (CFD) analysis data.  It consists of a collection of
-conventions, and free and open software implementing those
+conventions, and :ref:`free and open software <CGNSLicense>` implementing those
 conventions. It is self-descriptive, machine-independent,
 well-documented, and administered by an international steering
 committee.

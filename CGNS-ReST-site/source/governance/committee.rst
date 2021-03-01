@@ -438,32 +438,6 @@ the proposal, individual organizations may implement UserDefined
 functions, provided that they adhere to the conventions and standards
 as defined in the SIDS.
 
-CGNS License
-------------
-
-The distribution and use of the CGNS software is covered by the
-following license:
-
-This software is provided "as-is", without any express or implied
-warranty. In no event will the authors be held liable for any damages
-arising from the use of this software.  Permission is granted to
-anyone to use this software for any purpose, including commercial
-applications, and to alter it and redistribute it freely, subject to
-the following restrictions:
-
-The origin of this software must not be misrepresented; you must not
-claim that you wrote the original software. If you use this software
-in a product, an acknowledgment in the product documentation would be
-appreciated but is not required.  Altered source versions must be
-plainly marked as such, and must not be misrepresented as being the
-original software.  This notice may not be removed or altered from any
-source distribution.  This license is borrowed from the zlib/libpng
-License external link, and supercedes the GNU Lesser General Public
-License (LGPL) which previously governed the use and distribution of
-the software.
-
-For details on the policy governing the distribution of the CGNS
-standard and software see the section of the CGNS Steering Committee
-Charter describing the Standard and Software Governing Principles.
+Please read the :ref:`CGNS License terms <CGNSLicense>`.
 
 .. last line

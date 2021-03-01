@@ -3,7 +3,7 @@
 
 .. _StandardCGIO:
    
-CGNS/CGIO
-=========
+CGNS/CGIO - Basic node implementation
+=====================================
 
 .. last line

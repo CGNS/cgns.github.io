@@ -10,8 +10,9 @@ Standard Specification
    standard/reference
    standard/SIDS/CGNS_SIDS
    standard/CGNS_FMM
-   standard/CGNS_MLL
+   standard/MLL/CGNS_MLL
    standard/CGNS_CGIO
    standard/hdf5
+   standard/python
 
 .. last line 

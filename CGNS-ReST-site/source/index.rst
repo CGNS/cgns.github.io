@@ -48,42 +48,48 @@ Main Topics
 
 .. list-table::
    :widths: 33 34 33
-   :width: 100%
    :align: center
    
    * - :ref:`What is CGNS? <WhatIsCGNS>`
      - :ref:`Getting Started <QuickStartGuide>`
      - :ref:`News <LatestNews>`
-   * - :ref:`Switch to HDF5 <HDF5Implementation>`
+   * - :ref:`Documentation map <DocMap>`
      - :ref:`Steering Committee <YeMightySteeringCommittee>`
      - :ref:`Implementations <IntroImplementations>`
-   * - :ref:`Discussion Group (CGNSTalk) <SupportCGNSTalk>`
+   * - :ref:`Support <Support>`
      - :ref:`Download the Software <SupportDownload>`
      - :ref:`Contributed CGNS Utilities <Contributed>`
    * - :ref:`Example CGNS Files <SupportExamples>`
+     - :ref:`A User's Guide to CGNS <DocUserGuide>`
+     - :ref:`Discussion Group (CGNSTalk) <SupportCGNSTalk>`
+   * - :ref:`Meeting and Telecon Minutes <DocMinutes>`
+     - :ref:`Conference Papers and Slide Presentations <DocExtra>`
      - :ref:`Proposals for Extensions (CPEX) <CPEX>`
-     - :ref:`FAQ <SupportFAQ>`
 
 Reference Documentation
 -----------------------
 
 .. cssclass:: table-bordered
+
+.. removed quicklink below (same as above links)	      
+..     - :ref:`Overview and Entry-Level Document <Overview>`
 	      
 .. list-table::
-   :widths: 33 34 33
-   :width: 100%
+   :widths: 50 50
    :align: center
 	   
-   * - :ref:`Documentation map <DocMap>`
-     - :ref:`Standard Interface Data Structures (CGNS/SIDS) <CGNS-SIDS>`
-     - :ref:`Meeting and Telecon Minutes <DocMinutes>`
-   * - :ref:`A User's Guide to CGNS <DocUserGuide>`
-     - :ref:`Overview and Entry-Level Document <Overview>`
-     - :ref:`Conference Papers and Slide Presentations <DocExtra>`
-   * - :ref:`SIDS File Mapping Manual (FMM) <StandardFMM>`
-     - :ref:`Mid-Level Library (MLL) <StandardMLL>`
-     - :ref:`CGIO User's Guide (CGIO) <StandardCGIO>`                        
+   * - :ref:`CGNS/SIDS <CGNS-SIDS>`
+     - :ref:`CGNS/HDF5 <HDF5Implementation>`
+   * - :ref:`CGNS/MLL <StandardMLL>`
+     - :ref:`CGNS/Python <PythonImplementation>`
+   * - :ref:`CGNS/FMM <StandardFMM>`
+     - :ref:`CGNS/CGIO <StandardCGIO>`                        
 
+.. admonition:: Lost with terms?
+
+   Jump to :ref:`the glossary <CGNSGlossary>`
+
+		
 Site map
 -------------
 
@@ -93,7 +99,6 @@ Site map
    general
    standard
    current
-   doc
    governance
 
 .. last line 

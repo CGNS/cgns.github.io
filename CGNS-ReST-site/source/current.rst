@@ -1,8 +1,8 @@
 .. CGNS Documentation files
    See LICENSING/COPYRIGHT at root dir of this documentation sources
 
-Past, current & future statuses
-===============================
+Ressources
+==========
 
 .. toctree::
    :maxdepth: 2
@@ -12,5 +12,6 @@ Past, current & future statuses
    current/download
    current/examples
    current/contributed
+   doc
 
 .. last line 

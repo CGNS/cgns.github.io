@@ -1,7 +1,7 @@
 .. CGNS Documentation files
    See LICENSING/COPYRIGHT at root dir of this documentation sources
 
-.. image:: ../../../images/logo/CGNS_logo.png
+.. image:: ../../../images/logo/CGNS_logo_1.png
    :width: 400px
    :align: center
  

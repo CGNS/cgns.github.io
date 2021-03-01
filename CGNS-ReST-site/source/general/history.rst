@@ -51,17 +51,16 @@ different computing platforms, and to provide a mechanism for archive and
 retrieval of CFD data
 
 .. list-table::
-   :width: 100
 
-   * - .. image:: ../../_images/members/NASA_logo.svg
+   * - .. image:: ../../images/members/NASA_logo.svg
           :align: center
           :width: 150
      -
-     - .. image:: ../../_images/members/Boeing_logo.svg
+     - .. image:: ../../images/members/Boeing_logo.svg
           :align: center
           :width: 150
      -
-     - .. image:: ../../_images/members/McDonnellDouglas_logo.svg
+     - .. image:: ../../images/members/McDonnellDouglas_logo.svg
           :align: center
           :width: 150
    

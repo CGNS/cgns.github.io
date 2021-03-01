@@ -72,7 +72,7 @@ established and deployed in 1989 and significantly revised in 1992.
 
 It should be noted that the CGNS data standard consists of two major elements:
 
-   	Data Content and Format The definition of the intellectual
+Data Content and Format The definition of the intellectual
 content of the data to be represented in this standard, and the format
 of the representation in the standard-conforming data file.
 Implementing Software Software packages developed to ease the process

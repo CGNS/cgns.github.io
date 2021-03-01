@@ -6,6 +6,14 @@
 Support
 =======
 
+The CGNS community can help you to understand, use and even participate
+to the CGNS standard. There are various means.
+As a **user** of the CGNS files and tools,
+you can browse the :ref:`web resources <WebResources>`
+or ask to the :ref:`CGNS mailing list <SupportCGNSTalk>`.
+If you are a **developper** and you want to install the libs, the docs or
+the tools you jump to Development support.
+
 .. _SupportCGNSTalk:
 
 Discussion list
@@ -14,13 +22,77 @@ Discussion list
 This is a mailman system, if you want to join you have
 `to register on this page <https://lists.nasa.gov/mailman/listinfo/cgnstalk/>`_
 
-Doc is built using :term:`Sphinx`
+The mailing list archives are there:
+
+<link to archives>
+
+.. _WebResources:
+
+Web resources
+-------------
+
+list here some web sites...
+
+
+.. _SupportDev:
+
+Development support
+-------------------
+
+Building libraries and tools
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The CGNS libs and tools are hosted on Github, the associated documentation
+can be found on `this page <http://www.github.com/CGNS/CGNS>`_.
+
+Building the documentation
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The documentation is generated from text files. We use **Sphinx** to produce
+the web pages from these text files and a set of layout templates.
+The template we use for CGNS is a modified version of the **Guzzle** template.
+This modified version is released with the doc sources.
+
+First, you have to install the production libs and tools, you have to
+make available:
+
+  - Python (v3+)
+  - Sphinx (v3.2+) and all its associated libs (see below)
+  - guzzle sphinx theme
+
+Jump to the glossary to get more info about :term:`Python` and :term:`Sphinx`.
+The *guzzle* theme can be found in the CGNS doc sources.
+You can find below an example installation of *guzzle* you have to modify 
+to fit your own environment.
+
+.. code-block:: shell
+
+   mkdir /tmp/gz
+   cp guzzle_sphinx_theme-master.zip /tmp/gz
+   cd /tmp/gz
+   unzip guzzle_sphinx_theme-master.zip
+   cd guzzle_sphinx_theme-master/
+   python setup.py build
+   mkdir /tmp/gz/install
+   export PYTHONPATH=/tmp/gz/install/lib/python3.7/site-packages/:$PYTHONPATH
+   python setup.py install --prefix=/tmp/gz/install
+
+Once you have installed *guzzle*,
+make sure the Python .egg file is uncompressed.
+For example, on a Unix platform with a *sh* shell:
+
+.. code-block:: shell
+
+   cd /tmp/gz/install/lib/python3.7/site-packages
+   unzip guzzle_sphinx_theme-0.7.11-py3.7.egg
+   
+Documentation editing
+^^^^^^^^^^^^^^^^^^^^^
 
 Doc Conventions for these CGNS web pages
-----------------------------------------
 
 header
-^^^^^^
+~~~~~~
 
 .. code-block:: rest
 
@@ -65,7 +137,7 @@ vice-versa.
    appropriate boundary condition equations. 
 
 Internal link
-^^^^^^^^^^^^^
+~~~~~~~~~~~~~
 
 An internal link is composed of its *anchor* (the place in the web site
 where you want to go to) and a *reference* (the words wich triggers
@@ -89,16 +161,39 @@ The actual link is inserted with:
 
 The anchor in into angular brackets, the clickable text is user defined.   
 
+External link
+~~~~~~~~~~~~~
+
+For an external reference the syntax is:
+
+.. code-block:: rest
+
+   Info can be found on `other site web page < URL to other site page >`_.
+
+Do not miss the trailing underscore.
+
 Block quote
-^^^^^^^^^^^
+~~~~~~~~~~~
 
-    This theory, that is mine, is mine.
+To add a quote in the text, inside a box (this is the default style 
+of our template), shift the text block on the right:
 
-    -- Anne Elk (Miss)
+.. code-block:: rest
 
+   Generating documentation from source code is possible.
+
+      But code does not explain by itself
+
+      -- C compiler (stdout)
+
+Generating documentation from source code is possible.
+
+   But code does not explain by itself
+
+   -- C compiler (stdout)
 
 Simple Table
-^^^^^^^^^^^^
+~~~~~~~~~~~~
 
 .. cssclass:: table-bordered
 	      
@@ -112,12 +207,43 @@ Simple Table
 |  *hey* |  #. hi | | a break |
 +--------+--------+-----------+
 
+Admonition
+~~~~~~~~~~
+
+A set of special blocks are called *admonitions*. These includes notes,
+warnings... their layout, again, is set by the style we use.
+
+.. code-block:: rest
+
+   .. note::
+
+      if you do not read the doc
+
+   .. warning::
+
+      no way you succeed
+
+   .. tip::
+
+      start from first page
+
+.. note::
+
+   if you do not read the doc
+
+.. warning::
+
+   no way you succeed
+
+.. tip::
+
+   start from first page
+
 Image
-^^^^^
+~~~~~
 
 There are several ways to insert an image. 
-The first example adds an
-image as a new paragraph:
+The first example adds an image as a new paragraph:
 
 .. code-block:: rest
 
@@ -158,10 +284,26 @@ Then you refer to thus label in the text where you want the insertion:
    related to ``source/standard/SIDS``.
 
    Your image in this file has the path: ``../../../images/sids/figs/bar_2.png``
+   
 Citation
-^^^^^^^^
+~~~~~~~~
 
-In the text [2]_, [1]_, [CIT2002]_.
+Inserting footnotes, citation or any reference can be defined in
+several ways:
+
+.. code-block:: rest
+
+   In the text you can add references such as [2]_, [1]_, [CIT2002]_.
+
+   .. [2] In the footnote.
+          
+   .. [1] A footnote contains body elements, consistently
+      indented by at least 3 spaces.
+
+   .. [CIT2002] Just like a footnote, except the label is
+      textual.
+
+In the text you can add references such as [2]_, [1]_, [CIT2002]_.
 
 .. [2] In the footnote.
        
@@ -171,25 +313,9 @@ In the text [2]_, [1]_, [CIT2002]_.
 .. [CIT2002] Just like a footnote, except the label is
    textual.
 
-.. _Python: http://www.python.org
+CPEX guidelines
+^^^^^^^^^^^^^^^
 
-.. |example| function:: module=xml.xslt class=Processor
-
-.. _example:
-
-The "_example" target above points to this paragraph.
-
-Admonition
-^^^^^^^^^^
-
-A set of special blocks are called *admonitions*.
-
-.. note::
-
-   if you do not read the doc
-
-.. warning::
-
-   no way you succeed
+The CPEX process requires multiple docs.
 
 .. last line

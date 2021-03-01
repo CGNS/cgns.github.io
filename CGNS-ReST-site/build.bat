@@ -1,11 +1,13 @@
-REM CGNS Documentation files
-REM See LICENSING/COPYRIGHT at root dir of this documentation sources
-
-REM this is doc generation for a MS-Windows host
-REm use Anaconda python distribution
-
 @ECHO OFF
 
+REM CGNS Documentation files
+REM
+REM See https://poinot.github.io/cgns-test.github.io/governance/support.html
+REM for support in producing this doc
+REM
+REM See LICENSING/COPYRIGHT at root dir of this documentation sources
+REM this is doc generation for a MS-Windows host
+REm use Anaconda python distribution
 REM generation is made in a separate directory, change its path here:
 
 set build_dir=..\..\cgns-test.github.io

@@ -3,7 +3,7 @@
 
 .. _StandardFMM:
    
-CGNS/FMM
-========
+CGNS/FMM - Data model mapping to implementation
+===============================================
 
 .. last line

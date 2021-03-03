@@ -46,6 +46,7 @@ html_theme = 'guzzle_sphinx_theme'
 # CGNS is based on the guzzle theme
 extensions.append("guzzle_sphinx_theme")
 extensions.append('sphinx.ext.mathjax')
+extensions.append('sphinxfortran.fortran_domain')
 
 # --- Options for HTML output 
 html_favicon =  'CGNS_empty.ico'

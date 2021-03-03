@@ -6,45 +6,88 @@
 Miscellaneous Routines
 ======================
 
-.. c:function:: int cgio_is_supported(int file_type)
+cgio_flush_to_disk
+------------------
+:C Signature:
+  .. c:function:: int cgio_flush_to_disk(int cgio_num)
+
+:Fortran Signature:
+  .. f:subroutine:: cgio_flush_to_disk_f(cgio_num, ier)
+
+:Parameters:
+  .. list-table::
+    :widths: 15 85
+    
+    * - :code:`cgio_num`
+      - IN: Database identifier.
+
+:Returns:    :code:`ier` - Error status
   
-  Determines if the database type given by :code:`file_type` is supported by the library.
-     
-  :param file_type: Type of database file. acceptable values are :code:`CGIO_FILE_NONE`, :code:`CGIO_FILE_ADF`, :code:`CGIO_FILE_HDF5` and :code:`CGIO_FILE_ADF2`.
-  :returns:         Error status
+:Modes:  `- w m`
 
-  :modes:  `- - -`
+:Description:
+  Forces any buffered data in the database manager to be written to disk. Returns 0 if successfull, else an error code.
 
-  Determines if the database type given by :code:`file_type` is supported by the library. Returns 0 if supported, else :code:`CGIO_ERR_FILE_TYPE` if not. :code:`CGIO_FILE_ADF` is always supported; :code:`CGIO_FILE_HDF5` is supported if the library was built with HDF5; and :code:`CGIO_FILE_ADF2` is supported when built in 32-bit mode.
+cgio_library_version
+--------------------
 
-.. c:function:: int cgio_check_file(const char *filename, int *file_type)
+:C Signature:
+  .. c:function:: int cgio_library_version(int cgio_num, char *version)
 
-   :param filename:   Name of the database file, including path name if necessary. There is no limit on the length of this character variable. 
-   :param file_type:  Type of database file. acceptable values are :code:`CGIO_FILE_NONE`, :code:`CGIO_FILE_ADF`, :code:`CGIO_FILE_HDF5` and :code:`CGIO_FILE_ADF2`.
-   :returns:         Error status
+:Fortran Signature:
+  .. f:subroutine:: cgio_library_version_f(cgio_num, version, ier)
 
-   :modes:  `- - -`
+:Parameters:
+  .. list-table::
+    :widths: 15 85
+    
+    * - :code:`cgio_num`
+      - IN: Database identifier.
+    * - :code:`version`
+      - OUT: 32-byte character string containing the database library version.
 
-   Checks the file filename to determine if it is a valid database. If so, returns 0 and the type of database in file_type, otherwise returns an error code and file_type will be set to CGIO_FILE_NONE.
-     
-.. c:function:: int cgio_open_file(const char *filename, int file_mode, int file_type, int *cgio_num)
-   
-   Opens a database file of the specified type and mode.
+:Returns:    :code:`ier` - Error status
+  
+:Modes:  `r w m`
 
-   :param filename:   Name of the database file, including path name if necessary. There is no limit on the length of this character variable. 
-   :param file_type:  Type of database file. acceptable values are :code:`CGIO_FILE_NONE`, :code:`CGIO_FILE_ADF`, :code:`CGIO_FILE_HDF5` and :code:`CGIO_FILE_ADF2`.
-   :param file_mode:  Mode used for opening the file. The supported modes are. CGIO_MODE_READ, CGIO_MODE_WRITE, and CGIO_MODE_MODIFY.
-   :param cgio_num:	  Indentifier for the open database file. 
-   :returns:          Error status
+:Description:
+  Gets the current library version for the database given by :code:`cgio_num`.
+  The version is returned in version which is of maximum length :code:`CGIO_MAX_VERSION_LENGTH` (32).
+  In C, version should be dimensioned at least 33 in the calling routine to allow for the terminating :code:`'0'`. The function returns 0 if successfull, else an error code. 
+ 
 
-   :modes:  `r w m`
+cgio_file_version
+-----------------
+:C Signature:
+  .. c:function:: int cgio_file_version(int cgio_num, char *file_version, char *creation_date, char *modified_date)
 
-   Opens a database file of the specified type and mode. If successfull, returns 0, and the database identifier in cgio_num, otherwise returns an error code. The database identifier is used to access the database in subsequent function calls.
+:Fortran Signature:
+  .. f:subroutine:: cgio_file_version_f(cgio_num, file_version, creation_date, modified_date, ier)
 
-   The mode in which the database is opened is given by file_mode, which may take the value CGIO_MODE_READ, CGIO_MODE_WRITE, or CGIO_MODE_MODIFY. New databases should be opened with CGIO_MODE_WRITE, while existing databases are opened with either CGIO_MODE_READ (for read-only access) or CGIO_MODE_MODIFY (for read/write access).
+:Parameters:
+  .. list-table::
+    :widths: 15 85
+    
+    * - :code:`cgio_num`
+      - IN: Database identifier.
+    * - :code:`file_version`
+      - OUT: 32-byte character string containing the database file version.
+    * - :code:`creation_date`
+      - OUT: 32-byte character string containing the database file creation date.
+    * - :code:`modified_date`
+      - OUT: 32-byte character string containing the last modification date for the database file.
 
-   A specific database type may be specified by file_type, which may be one of CGIO_FILE_NONE, CGIO_FILE_ADF, CGIO_FILE_HDF5, or CGIO_FILE_ADF2. When opening a database in write mode, CGIO_FILE_NONE indicates that the default database type should be used, otherwise the specified database type will be opened. When opening in read or modify mode, CGIO_FILE_NONE indicates that any database type is acceptable, otherwise if the database type does not match that given by file_type an error will be retuned.
-     
+:Returns:    :code:`ier` - Error status
+  
+:Modes:  `r w m`
+
+:Description:
+  Gets the version, creation and last modified dates, for the database file given by :code:`cgio_num`.
+  The version is returned in :code:`file_version`, which is of maximum length :code:`CGIO_MAX_VERSION_LENGTH` (32).
+  The creation date is returned in :code:`creation_date`, and the last modified date in :code:`modified_date`,
+  which are of maximum length :code:`CGIO_MAX_DATE_LENGTH` (32).
+  In C, these should be dimensioned at least 33 in the calling routine to allow for the terminating :code:`'0'`.
+  The function returns 0 if successfull, else an error code.
 
 
 .. last line

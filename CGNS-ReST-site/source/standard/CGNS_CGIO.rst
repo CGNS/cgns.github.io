@@ -25,11 +25,20 @@ A database is a hierarchical system that is built around the concept of a "node"
   - data
   - IDs of child nodes 
 
-There are no restrictions on the number of child nodes that a node can have associated with it in the database. This structure allows the construction of a hierarchical system as shown in the figure below. As illustrated in the figure, it is possible to reference nodes in a second file (File_Two) from the original file (File_One). This is the concept of "linking."
+There are no restrictions on the number of child nodes that a node can have associated with it in the database.
+This structure allows the construction of a hierarchical system as shown in the figure below.
+As illustrated in the figure, it is possible to reference nodes in a second file (*File_Two*) from the original file (*File_One*).
+This is the concept of "linking."
 
-.. figure:: toto.png
-    :alt: Example Database Hierarchy of Nodes
-	Example database showing node connections and links.
+.. _ExampleNodeDatabase:
+
+.. figure:: ../../images/cgio/figs/database.gif
+   :width: 600px
+   :align: center
+   :alt: Example database showing node connections and links.
+    
+   *Example Database Hierarchy of Nodes*
+	
 
 
 A node knows about itself and its children, but it does not know anything about its parent. This means that it is possible to traverse "down" the tree by making queries about what lies below the current node, but it is not possible to traverse "up" the tree by making queries about nodes above a given node. If it is desired to move back up the tree, the user must keep track of that information.
@@ -77,8 +86,8 @@ The following table lists the data types supported by CGNS.
     U8      64-bit Unsigned Integer    cgulong_t        integer*8
     R4      32-bit Real                float            real*4
     R8      64-bit Real                double           real*8
-    X4      32-bit Complex             complex          complex*8
-    X8      64-bit Complex             complex double   complex*16
+    X4      64-bit Complex             complex          complex*8
+    X8      128-bit Complex            complex double   complex*16
     C1      Character                  char             character
     B1      Byte (unsigned byte)       unsigned char    character*1
     LK      Link				

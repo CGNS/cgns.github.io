@@ -6,7 +6,7 @@
 Code Examples
 =============
 
-The following examples build the database file shown in the example database figure.
+The following examples build the database file shown in the :ref:`example database figure <ExampleNodeDatabase>`.
 
 C example
 ---------

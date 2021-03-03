@@ -20,23 +20,17 @@ Grid Connectivity
    :widths: 2 8
 
    * -
-     - `Opening and closing a File`_
-   * - ``cg_open`` 
-     - Open a CGNS file
-   * - ``cg_version``
-     - Get CGNS file version
-   * - ``cg_precision`` 
-     - Get CGNS file precision
-   * - ``cg_close``
-     - Close a CGNS file
-   * - ``cg_is_cgns``
-     - Check for a valid CGNS file
-   * - ``cg_save_as``
-     - Save the open CGNS file
-   * - ``cg_set_file_type`` 
-     - Set default file type
-   * - ``cg_get_file_type``
-     - Get file type for open CGNS file
+     - `One-to-One Connectivity`_
+   * - ``cg_n1to1_global``
+     - Get total number of 1-to-1 interfaces in a database
+   * - ``cg_1to1_read_global``
+     - Read data for all 1-to-1 interfaces in a database
+   * - ``cg_1to1_write``
+     - Write 1-to-1 connectivity data for a zone
+   * - ``cg_n1to1``
+     - Get number of 1-to-1 interfaces in a zone
+   * - ``cg_1to1_read``
+     - Read 1-to-1 connectivity data for a zone 
 
        
 .. list-table::
@@ -44,31 +38,48 @@ Grid Connectivity
    :widths: 2 8
        
    * - 
-     - `Configuring CGNS internals`_
-   * - ``cg_configure`` 
-     - Configure CGNS internals
-   * - ``cg_error_handler`` 
-     - Set CGNS error handler
-   * - ``cg_set_compress`` 
-     - Set CGNS compression mode
-   * - ``cg_get_compress`` 
-     - Get CGNS compression mode
-   * - ``cg_set_path`` 
-     - Set the CGNS link search path
-   * - ``cg_add_path`` 
-     - Add to the CGNS link search path
+     - `Generalized Connectivity`_
+     
+   * - ``cg_conn_write``
+     - Write generalized connectivity data
+   * - ``cg_conn_write_short``
+     - Write generalized connectivity data without donor information
+   * - ``cg_nconns``
+     - Get number of generalized connectivity interfaces in a zone
+   * - ``cg_conn_info``
+     - Get info about a generalized connectivity interface
+   
+.. list-table::
+   :header-rows: 1
+   :widths: 2 8
+
+   * - 
+     - `Special Grid Connectivity Properties`_
+   * - ``cg_conn_periodic_write``
+     - Write data for periodic interface
+   * - ``cg_conn_average_write``
+     - Write data for averaging interface
+   * - ``cg_conn_periodic_read``
+     - Read data for periodic interface
+   * - ``cg_conn_average_read``
+     - Read data for averaging interface 
 
 .. list-table::
    :header-rows: 1
    :widths: 2 8
 
    * - 
-     - `Interfacing with CGIO`_
-   * - ``cg_get_cgio`` 
-     - get the CGIO index number
-   * - ``cg_root_id`` 
-     - get the root node ID
+     - `Overset Holes`_
+   * - ``cg_hole_write``
+     - Write overset hole data
+   * - ``cg_nholes``
+     - Get number of overset holes in a zone
+   * - ``cg_hole_info``
+     - Get info about an overset hole
+   * - ``cg_hole_read``
+     - Read overset hole data 
 
+   
 
 One-to-One Connectivity
 ^^^^^^^^^^^^^^^^^^^^^^^

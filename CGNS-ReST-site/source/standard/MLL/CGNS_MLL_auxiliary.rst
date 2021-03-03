@@ -19,70 +19,94 @@ Auxiliary Data
    :widths: 2 8
 
    * -
-     - `Opening and closing a File`_
-   * - ``cg_open`` 
-     - Open a CGNS file
-   * - ``cg_version``
-     - Get CGNS file version
-   * - ``cg_precision`` 
-     - Get CGNS file precision
-   * - ``cg_close``
-     - Close a CGNS file
-   * - ``cg_is_cgns``
-     - Check for a valid CGNS file
-   * - ``cg_save_as``
-     - Save the open CGNS file
-   * - ``cg_set_file_type`` 
-     - Set default file type
-   * - ``cg_get_file_type``
-     - Get file type for open CGNS file
+     - `Reference State`_
+   * - ``cg_state_write``
+     - Create ReferenceState_t node
+   * - ``cg_state_size``
+     - Get length of reference state description string.
+   * - ``cg_state_read``
+     - Read text description of reference state.
 
-       
+
 .. list-table::
    :header-rows: 1
    :widths: 2 8
        
    * - 
-     - `Configuring CGNS internals`_
-   * - ``cg_configure`` 
-     - Configure CGNS internals
-   * - ``cg_error_handler`` 
-     - Set CGNS error handler
-   * - ``cg_set_compress`` 
-     - Set CGNS compression mode
-   * - ``cg_get_compress`` 
-     - Get CGNS compression mode
-   * - ``cg_set_path`` 
-     - Set the CGNS link search path
-   * - ``cg_add_path`` 
-     - Add to the CGNS link search path
+     - `Gravity`_
+   * - ``cg_gravity_write``
+     - Create Gravity_t node
+   * - ``cg_gravity_read``
+     - Read Gravity_t node 
 
 .. list-table::
    :header-rows: 1
    :widths: 2 8
 
    * - 
-     - `Interfacing with CGIO`_
-   * - ``cg_get_cgio`` 
-     - get the CGIO index number
-   * - ``cg_root_id`` 
-     - get the root node ID
+     - `Convergence History`_
+   * - ``cg_convergence_write``
+     - Create ConvergenceHistory_t node
+   * - ``cg_convergence_read``
+     - Read ConvergenceHistory_t node
+
+.. list-table::
+   :header-rows: 1
+   :widths: 2 8
+
+   * - 
+     - `Integral Data`_
+   * - ``cg_integral_write``
+     - Create IntegralData_t node
+   * - ``cg_nintegrals``
+     - Get number of IntegralData_t nodes
+   * - ``cg_integral_read``
+     - Get name of an IntegralData_t node 
+
+.. list-table::
+   :header-rows: 1
+   :widths: 2 8
+
+   * - 
+     - `User-Defined Data`_
+   * - ``cg_user_data_write``
+     - Create UserDefinedData_t node
+   * - ``cg_nuser_data``
+     - Get number of UserDefinedData_t nodes
+   * - ``cg_user_data_read``
+     - Get name of an UserDefinedData_t node
+
+
+.. list-table::
+   :header-rows: 1
+   :widths: 2 8
+
+   * - 
+     - `Freeing Memory`_
+   * - ``cg_free``
+     - Release library-allocated memory 
 
 
 Reference State
 ^^^^^^^^^^^^^^^
+Node: ReferenceState_t (SIDS, File Mapping)
+
 
 Gravity
 ^^^^^^^
+Node: Gravity_t (SIDS, File Mapping)
 
 Convergence History
 ^^^^^^^^^^^^^^^^^^^
+Node: ConvergenceHistory_t (SIDS, File Mapping)
 
 Integral Data
 ^^^^^^^^^^^^^
+Node: IntegralData_t (SIDS, File Mapping) 
 
 User-Defined Data
 ^^^^^^^^^^^^^^^^^
+Node: UserDefinedData_t (SIDS, File Mapping)
 
 Freeing Memory
 ^^^^^^^^^^^^^^

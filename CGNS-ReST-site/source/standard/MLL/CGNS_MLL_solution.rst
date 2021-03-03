@@ -13,32 +13,27 @@
 Solution Data
 -------------
 
-These functions usually are found the the preamble or the epilog of your
-application code using the :term:`CGNS/MLL`.
-
 
 .. list-table::
    :header-rows: 1
    :widths: 2 8
 
    * -
-     - `Opening and closing a File`_
-   * - ``cg_open`` 
-     - Open a CGNS file
-   * - ``cg_version``
-     - Get CGNS file version
-   * - ``cg_precision`` 
-     - Get CGNS file precision
-   * - ``cg_close``
-     - Close a CGNS file
-   * - ``cg_is_cgns``
-     - Check for a valid CGNS file
-   * - ``cg_save_as``
-     - Save the open CGNS file
-   * - ``cg_set_file_type`` 
-     - Set default file type
-   * - ``cg_get_file_type``
-     - Get file type for open CGNS file
+     - `Flow Solution`_
+   * - ``cg_sol_write``
+     - Create and/or write to a FlowSolution_t node
+   * - ``cg_nsols``
+     - Get number of FlowSolution_t nodes
+   * - ``cg_sol_info``
+     - Get info about a FlowSolution_t node
+   * - ``cg_sol_ptset_write``
+     - Create a point set FlowSolution_t node
+   * - ``cg_sol_ptset_info``
+     - Get info about a point set FlowSolution_t node
+   * - ``cg_sol_ptset_read``
+     - Read a point set FlowSolution_t node
+   * - ``cg_sol_size``
+     - Get the dimensions of a FlowSolution_t node
 
        
 .. list-table::
@@ -46,30 +41,68 @@ application code using the :term:`CGNS/MLL`.
    :widths: 2 8
        
    * - 
-     - `Configuring CGNS internals`_
-   * - ``cg_configure`` 
-     - Configure CGNS internals
-   * - ``cg_error_handler`` 
-     - Set CGNS error handler
-   * - ``cg_set_compress`` 
-     - Set CGNS compression mode
-   * - ``cg_get_compress`` 
-     - Get CGNS compression mode
-   * - ``cg_set_path`` 
-     - Set the CGNS link search path
-   * - ``cg_add_path`` 
-     - Add to the CGNS link search path
+     - `Flow Solution Data`_
+   * - ``cg_field_write``
+     - Write flow solution
+   * - ``cg_field_partial_write``
+     - Write subset of flow solution
+   * - ``cg_field_general_write``
+     - Write shaped array to a subset of flow solution
+   * - ``cg_nfields``
+     - Get number of flow solution arrays
+   * - ``cg_field_info`` 
+     - Get info about a flow solution array
+   * - ``cg_field_read``
+     - Read flow solution
+   * - ``cg_field_general_read``
+     - Read subset of flow solution to a shaped array
+
 
 .. list-table::
    :header-rows: 1
    :widths: 2 8
 
    * - 
-     - `Interfacing with CGIO`_
-   * - ``cg_get_cgio`` 
-     - get the CGIO index number
-   * - ``cg_root_id`` 
-     - get the root node ID
+     - `Discrete Data`_
+   * - ``cg_discrete_write``
+     - Create a DiscreteData_t node
+   * - ``cg_ndiscrete``
+     - Get number of DiscreteData_t nodes
+   * - ``cg_discrete_read``
+     - Get name of a DiscreteData_t node
+   * - ``cg_discrete_ptset_write``
+     - Create a point set DiscreteData_t node
+   * - ``cg_discrete_ptset_info``
+     - Get info about a point set DiscreteData_t node
+   * - ``cg_discrete_ptset_read``
+     - Read a point set DiscreteData_t node
+   * - ``cg_discrete_size``
+     - Get the dimensions of a DiscreteData_t node 
+
+.. list-table::
+   :header-rows: 1
+   :widths: 2 8
+
+   * - 
+     - `Zone Subregions`_
+   * - ``cg_nsubregs``
+     - Get number of ZoneSubRegion_t nodes
+   * - ``cg_subreg_info``
+     - Get info about a ZoneSubRegion_t node
+   * - ``cg_subreg_ptset_read``
+     - Read point set data for a ZoneSubRegion_t node
+   * - ``cg_subreg_bcname_read``
+     - Read the BC_t node name for a ZoneSubRegion_t node
+   * - ``cg_subreg_gcname_read``
+     - Read the GridConnectivity_t node name for a ZoneSubRegion_t node
+   * - ``cg_subreg_ptset_write``
+     - Create a point set ZoneSubRegion_t node
+   * - ``cg_subreg_bcname_write``
+     - Create a ZoneSubRegion_t node that references a BC_t node
+   * - ``cg_subreg_gcname_write``
+     - Create a ZoneSubRegion_t node that references a GridConnectivity_t node 
+
+
 
 
 Flow Solution

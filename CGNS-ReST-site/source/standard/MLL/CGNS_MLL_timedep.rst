@@ -19,23 +19,11 @@ Time Dependent Data
    :widths: 2 8
 
    * -
-     - `Opening and closing a File`_
-   * - ``cg_open`` 
-     - Open a CGNS file
-   * - ``cg_version``
-     - Get CGNS file version
-   * - ``cg_precision`` 
-     - Get CGNS file precision
-   * - ``cg_close``
-     - Close a CGNS file
-   * - ``cg_is_cgns``
-     - Check for a valid CGNS file
-   * - ``cg_save_as``
-     - Save the open CGNS file
-   * - ``cg_set_file_type`` 
-     - Set default file type
-   * - ``cg_get_file_type``
-     - Get file type for open CGNS file
+     - `Base Iterative Data`_
+   * - ``cg_biter_write``
+     - Create BaseIterativeData_t node
+   * - ``cg_biter_read``
+     - Read BaseIterativeData_t node
 
        
 .. list-table::
@@ -43,30 +31,57 @@ Time Dependent Data
    :widths: 2 8
        
    * - 
-     - `Configuring CGNS internals`_
-   * - ``cg_configure`` 
-     - Configure CGNS internals
-   * - ``cg_error_handler`` 
-     - Set CGNS error handler
-   * - ``cg_set_compress`` 
-     - Set CGNS compression mode
-   * - ``cg_get_compress`` 
-     - Get CGNS compression mode
-   * - ``cg_set_path`` 
-     - Set the CGNS link search path
-   * - ``cg_add_path`` 
-     - Add to the CGNS link search path
+     - `Zone Iterative Data`_   
+   * - ``cg_ziter_write``
+     - Create ZoneIterativeData_t node
+   * - ``cg_ziter_read``
+     - Read ZoneIterativeData_t node
+
 
 .. list-table::
    :header-rows: 1
    :widths: 2 8
 
    * - 
-     - `Interfacing with CGIO`_
-   * - ``cg_get_cgio`` 
-     - get the CGIO index number
-   * - ``cg_root_id`` 
-     - get the root node ID
+     - `Rigid Grid Motion`_
+   * - ``cg_rigid_motion_write``
+     - Create RigidGridMotion_t node
+   * - ``cg_n_rigid_motions``
+     - Get number of RigidGridMotion_t nodes
+   * - ``cg_rigid_motion_read``
+     - Read RigidGridMotion_t node 
+
+
+.. list-table::
+   :header-rows: 1
+   :widths: 2 8
+
+   * - 
+     - `Arbitrary Grid Motion`_
+   * - ``cg_arbitrary_motion_write``
+     - Create ArbitraryGridMotion_t node
+   * - ``cg_n_arbitrary_motions``
+     - Get number of ArbitraryGridMotion_t nodes
+   * - ``cg_arbitrary_motion_read``
+     - Read ArbitraryGridMotion_t node 
+
+
+.. list-table::
+   :header-rows: 1
+   :widths: 2 8
+
+   * - 
+     - `Zone Grid Connectivity`_
+   * - ``cg_nzconns``
+     - Get number of ZoneGridConnectivity_t nodes
+   * - ``cg_zconn_read``
+     - Read ZoneGridConnectivity_t node
+   * - ``cg_zconn_write``
+     - Create ZoneGridConnectivity_t node
+   * - ``cg_zconn_set``
+     - Set the current ZoneGridConnectivity_t node
+   * - ``cg_zconn_get``
+     - Get the current ZoneGridConnectivity_t node 
 
 
 Base Iterative Data

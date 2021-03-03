@@ -13,32 +13,25 @@
 Families
 --------
 
-These functions usually are found the the preamble or the epilog of your
-application code using the :term:`CGNS/MLL`.
-
 
 .. list-table::
    :header-rows: 1
    :widths: 2 8
 
    * -
-     - `Opening and closing a File`_
-   * - ``cg_open`` 
-     - Open a CGNS file
-   * - ``cg_version``
-     - Get CGNS file version
-   * - ``cg_precision`` 
-     - Get CGNS file precision
-   * - ``cg_close``
-     - Close a CGNS file
-   * - ``cg_is_cgns``
-     - Check for a valid CGNS file
-   * - ``cg_save_as``
-     - Save the open CGNS file
-   * - ``cg_set_file_type`` 
-     - Set default file type
-   * - ``cg_get_file_type``
-     - Get file type for open CGNS file
+     - `Family Definition`_
+   * - ``cg_family_write``
+     - Create a Family_t node (CGNSBase_t level)
+   * - ``cg_nfamilies``
+     - Get number of families (CGNSBase_t level)
+   * - ``cg_family_read``
+     - Read family info (CGNSBase_t level)
+   * - ``cg_family_name_write``
+     - Write multiple family names under Family_t (CGNSBase_t level)
+   * - ``cg_nfamily_names``
+     - Get number of family names under Family_t (CGNSBase_t level)
+   * - ``cg_family_name_read``
+     - Read multiple family names under Family_t (CGNSBase_t level) 
 
        
 .. list-table::
@@ -46,26 +39,55 @@ application code using the :term:`CGNS/MLL`.
    :widths: 2 8
        
    * - 
-     - `Configuring CGNS internals`_
-   * - ``cg_configure`` 
-     - Configure CGNS internals
-   * - ``cg_error_handler`` 
-     - Set CGNS error handler
-   * - ``cg_set_compress`` 
-     - Set CGNS compression mode
-   * - ``cg_get_compress`` 
-     - Get CGNS compression mode
-   * - ``cg_set_path`` 
-     - Set the CGNS link search path
-   * - ``cg_add_path`` 
-     - Add to the CGNS link search path
+     - `Family Hierarchy Tree`_
+   * - ``cg_node_family_write``
+     - Create a Family_t node (Family_t level)
+   * - ``cg_node_nfamilies``
+     - Get number of families (Family_t level)
+   * - ``cg_node_family_read``
+     - Read family info (Family_t level)
+   * - ``cg_node_family_name_write``
+     - Write multiple family names under Family_t (Family_t level)
+   * - ``cg_node_nfamily_names``
+     - Get number of family names under Family_t (Family_t level)
+   * - ``cg_node_family_name_read``
+     - Read multiple family names under Family_t (Family_t level)
+
 
 .. list-table::
    :header-rows: 1
    :widths: 2 8
 
    * - 
-     - `Interfacing with CGIO`_
+     - `Geometry Reference`_
+   * - ``cg_geo_write``
+     - Create a GeometryReference_t node
+   * - ``cg_geo_read``
+     - Read geometry reference info
+   * - ``cg_part_write``
+     - Write geometry entity name
+   * - ``cg_part_read``
+     - Get geometry entity name 
+
+
+.. list-table::
+   :header-rows: 1
+   :widths: 2 8
+
+   * - 
+     - `Family Boundary Condition`_
+   * - ``cg_fambc_write``
+     - Write boundary condition type for a family
+   * - ``cg_fambc_read``
+     - Read boundary condition type for a family 
+
+
+.. list-table::
+   :header-rows: 1
+   :widths: 2 8
+
+   * - 
+     - `Family Name`_
    * - ``cg_get_cgio`` 
      - get the CGIO index number
    * - ``cg_root_id`` 

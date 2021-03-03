@@ -19,23 +19,21 @@ Boundary Conditions
    :widths: 2 8
 
    * -
-     - `Opening and closing a File`_
-   * - ``cg_open`` 
-     - Open a CGNS file
-   * - ``cg_version``
-     - Get CGNS file version
-   * - ``cg_precision`` 
-     - Get CGNS file precision
-   * - ``cg_close``
-     - Close a CGNS file
-   * - ``cg_is_cgns``
-     - Check for a valid CGNS file
-   * - ``cg_save_as``
-     - Save the open CGNS file
-   * - ``cg_set_file_type`` 
-     - Set default file type
-   * - ``cg_get_file_type``
-     - Get file type for open CGNS file
+     - `Boundary Condition Type and Location`_
+   * - ``cg_boco_write``
+     - Write boundary condition type and data
+   * - ``cg_boco_normal_write``
+     - Write boundary condition normals
+   * - ``cg_nbocos``
+     - Get number of boundary condition in zone
+   * - ``cg_boco_info``
+     - Get boundary condition info
+   * - ``cg_boco_read``
+     - Read boundary condition data and normals
+   * - ``cg_boco_gridlocation_write``
+     - Write boundary condition location
+   * - ``cg_boco_gridlocation_read``
+     - Read boundary condition location
 
        
 .. list-table::
@@ -43,30 +41,44 @@ Boundary Conditions
    :widths: 2 8
        
    * - 
-     - `Configuring CGNS internals`_
-   * - ``cg_configure`` 
-     - Configure CGNS internals
-   * - ``cg_error_handler`` 
-     - Set CGNS error handler
-   * - ``cg_set_compress`` 
-     - Set CGNS compression mode
-   * - ``cg_get_compress`` 
-     - Get CGNS compression mode
-   * - ``cg_set_path`` 
-     - Set the CGNS link search path
-   * - ``cg_add_path`` 
-     - Add to the CGNS link search path
+     - `Boundary Condition Datasets`_
+   * - ``cg_dataset_write``
+     - Write boundary condition dataset info
+   * - ``cg_dataset_read``
+     - Read boundary condition dataset info
+   * - ``cg_bcdataset_write``
+     - Write family boundary condition dataset info
+   * - ``cg_bcdataset_info``
+     - Get number of family boundary condition datasets
+   * - ``cg_bcdataset_read``
+     - Read family boundary condition dataset info
+
 
 .. list-table::
    :header-rows: 1
    :widths: 2 8
 
    * - 
-     - `Interfacing with CGIO`_
-   * - ``cg_get_cgio`` 
-     - get the CGIO index number
-   * - ``cg_root_id`` 
-     - get the root node ID
+     - `Boundary Condition Data`_
+   * - ``cg_bcdata_write``
+     - Write boundary condition data 
+
+
+.. list-table::
+   :header-rows: 1
+   :widths: 2 8
+
+   * - 
+     - `Special Boundary Condition Properties`_
+   * - ``cg_bc_wallfunction_write``
+     - Write wall function data
+   * - ``cg_bc_area_write``
+     - Write area-related data
+   * - ``cg_bc_wallfunction_read``
+     - Read wall function data
+   * - ``cg_bc_area_read``
+     - Read area-related data 
+   
 
 
 Boundary Condition Type and Location

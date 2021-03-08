@@ -83,15 +83,22 @@ Boundary Conditions
 
 Boundary Condition Type and Location
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Node: BC_t (SIDS, File Mapping)
+
  
 Boundary Condition Datasets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Node: BCDataSet_t (SIDS, File Mapping)
+
 
 Boundary Condition Data
 ^^^^^^^^^^^^^^^^^^^^^^^
+Node: BCData_t (SIDS, File Mapping) 
+
 
 Special Boundary Condition Properties
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Node: BCProperty_t (SIDS, File Mapping)
 
 
 .. last line

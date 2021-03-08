@@ -6,6 +6,9 @@
 .. role:: out
 .. role:: sig-name(code)
    :language: c
+   
+.. role:: implicit
+
 
 
 .. _MLLNavigating:
@@ -50,21 +53,15 @@ Accessing a Node
    +--------------------------------------------------------------------------------------------------------------------------------+-------+
    | C Functions                                                                                                                    | Modes |
    +================================================================================================================================+=======+
-   | :out:`ier` = :sig-name:`cg_open` (:in:`char *filename`, :in:`int mode`, :out:`int *fn`);                                       | r w m |
+   | :out:`ier` = :sig-name:`cg_goto` (:in:`int fn`, :in:`int B`, ..., :in:`"end"`);                                                | r w m |
    +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_version` (:in:`int fn`, :out:`float *version`);                                                     | r w m |
+   | :out:`ier` = :sig-name:`cg_gorel` (:in:`int fn`, ..., :in:`"end"`);                                                            | r w m |
    +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_precision` (:in:`int fn`, :out:`int *precision`);                                                   | r w m |
+   | :out:`ier` = :sig-name:`cg_gopath` (:in:`int fn`, :in:`const char *path`);                                                     | r w m |
    +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_close` (:in:`int fn`);                                                                              | r w m |
+   | :out:`ier` = :sig-name:`cg_golist` (:in:`int fn`, :in:`int B`, :in:`int depth`, :in:`char **label`, :in:`int *index`);         | r w m |
    +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_is_cgns` (:in:`const char *filename`, :out:`int *file_type`);                                       | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_save_as` (:in:`int fn`, :in:`const char *filename`, :in:`int file_type`, :in:`int follow_links`);   | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_set_file_type` (:in:`int file_type`);                                                               | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_get_file_type` (:in:`int fn`, :out:`int *file_type`);                                               | r w m |
+   | :out:`ier` = :sig-name:`cg_where` (:out:`int *fn`, :in:`int *B`, :out:`int *depth`, :out:`char **label`, :out:`int *index`);   | r w m |
    +--------------------------------------------------------------------------------------------------------------------------------+-------+
 .. table::
    :widths: 110 15
@@ -72,70 +69,106 @@ Accessing a Node
    +--------------------------------------------------------------------------------------------------------------------------------+-------+
    | Fortran interfaces                                                                                                             | Modes |
    +================================================================================================================================+=======+
-   | call ``cg_open_f`` (:in:`filename`, :in:`mode`, :out:`fn`, :out:`ier`)                                                         | r w m |
+   | call :implicit:`cg_goto_f` (:in:`fn`, :in:`B`, :out:`ier`, ..., :in:`'end'`)                                                   | r w m |
    +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_version_f`` (:in:`fn`, :out:`version`, :out:`ier`)                                                                   | r w m |
+   | call :implicit:`cg_gorel_f` (:in:`fn`, :out:`ier`, ..., :in:`'end'`)                                                           | r w m |
    +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_precision_f`` (:in:`fn`, :out:`precision`, :out:`ier`)                                                               | r w m |
+   | call `cg_gopath_f` (:in:`fn`, :in:`path`, :out:`ier`)                                                                          | r w m |
    +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_close_f`` (:in:`fn`)                                                                                                 | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_is_cgns_f`` (:in:`filename`, :out:`file_type`)                                                                       | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_save_as_f`` (:in:`fn`, :in:`filename`, :in:`file_type`, :in:`follow_links`)                                          | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_set_file_type_f`` (:in:`file_type`)                                                                                  | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_get_file_type_f`` (:in:`fn`, :out:`file_type`)                                                                       | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
+   
 
 :in:`Input` / :out:`Ouput`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-:filename:	   	Name of the CGNS file, including path name if necessary. There is no limit on the length of this character variable.
-:mode:		Mode used for opening the file. The modes currently supported are :code:`CG_MODE_READ`, :code:`CG_MODE_WRITE`, and :code:`CG_MODE_MODIFY`.
-:fn:		CGNS file index number.
-:version:		CGNS version number.
-:precision:		Precision used to write the CGNS file. The return value will be one of 32 (32-bit), 64 (64-bit), or 0 if not known.
-:file_type:		Type of CGNS file. This will typically be either :code:`CG_FILE_ADF` or :code:`CG_FILE_HDF5` depending on the underlying file format. However, note that when built in 32-bit, there is also an option to create a Version 2.5 CGNS file by setting the file type to :code:`CG_FILE_ADF2`.
-:follow_links:	This flag determines whether links are left intact when saving a CGNS file. If non-zero, then the links will be removed and the data associated with the linked files copied to the new file.
-:ier:		Error status. 
+:fn:  CGNS file index number.
 
-The function :code:`cg_open` must always be the first one called. It opens a CGNS file for reading and/or writing and returns an index number :code:`fn`. The index number serves to identify the CGNS file in subsequent function calls. Several CGNS files can be opened simultaneously. The current limit on the number of files opened at once depends on the platform.
+:B:   Base index number, where 1 ≤ B ≤ nbases.
 
-The file can be opened in one of the following modes:
+:`...`:   Variable argument list used to specify the path to a node. It is composed of an unlimited list of pair-arguments identifying each node in the path. Nodes may be identified by their label or name. Thus, a pair-argument may be of the form
 
-.. list-table::
+       "CGNS_NodeLabel", NodeIndex
 
-  * - **CG_MODE_READ**
-    - Read only mode.
-  * - **CG_MODE_WRITE**
-    - Write only mode.
-  * - **CG_MODE_MODIFY**
-    - Reading and/or writing is allowed.
+    where CGNS_NodeLabel is the node label and NodeIndex is the node index, or
 
+        "CGNS_NodeName", 0
 
-The function :code:`cg_close` must always be the last one called.
-It closes the CGNS file designated by the index number :code:`fn` and frees the memory where the CGNS data was kept.
-When a file is opened for writing, :code:`cg_close` writes all the CGNS data in memory onto disk prior to closing the file.
-Consequently, if is omitted, the CGNS file is not written properly.
+    where CGNS_NodeName is the node name. The 0 in the second form is required, to indicate that a node name is being specified rather than a node label. In addition, a pair-argument may be specified as
 
-In order to reduce memory usage and improve execution speed, large arrays such as grid coordinates or flow solutions are not actually stored in memory.
-Instead, only basic information about the node is kept, while reads and writes of the data is directly to and from the application's memory.
-An attempt is also made to do the same with unstructured mesh element data.
+         "..", 0
 
-When a CGNS file is newly created using :code:`CG_MODE_WRITE`, the default type of database manager used is determined at compile time.
-If the CGNS library was built with HDF5 version 1.8 or later support, the file type will be :code:`CG_FILE_HDF5`, otherwise :code:`CG_FILE_ADF` is used.
-This may be changed either by setting an environment variable, :code:`CGNS_FILETYPE`, to one of adf, hdf5, or adf2, or by calling the routine :code:`cg_set_file_type` prior to the :code:`cg_open` call.
-Calling :code:`cg_set_file_type` with the argument :code:`CG_FILE_NONE` will reset the library to use the default file type.
+    indicating the parent of the current node. The different pair-argument forms may be intermixed in the same function call.
 
-.. note::
-  If the environment variable :code:`CGNS_FILETYPE` is set, it takes precedence.
+    There is one exception to this rule. When accessing a BCData_t node, the index must be set to either Dirichlet or Neumann since only these two types are allowed. (Note that Dirichlet and Neumann are defined in the include files cgnslib.h and cgnslib_f.h). Since "Dirichlet" and "Neuman" are also the names for these nodes, you may also use the "Dirichlet", 0 or "Neuman", 0 to access the node. See the example below.
 
-For existing files, the function :code:`cg_is_cgns` may be used to determine if a file is a CGNS file or not, and the type of file (:code:`CG_FILE_ADF` or :code:`CG_FILE_HDF5`).
-If the file is a CGNS file, :code:`cg_is_cgns` returns :code:`CG_OK`,
-otherwise :code:`CG_ERROR` is returned and :code:`file_type` is set to :code:`CG_FILE_NONE`.
+:end:		The character string "end" (or 'end' for the Fortran function) must be the last argument. It is used to indicate the end of the argument list. You may also use the empty string, "" ('' for Fortran), or the NULL string in C, to terminate the list.
 
-The CGNS file identified by :code:`fn` may be saved to a different filename and type using :code:`cg_save_as`. In order to save as an HDF5 file, the library must have been built with HDF5 support. ADF support is always built. The function :code:`cg_set_file_type` sets the default file type for newly created CGNS files. The function :code:`cg_get_file_type` returns the file type for the CGNS file identified by :code:`fn`. If the CGNS library is built as 32-bit, the additional file type, :code:`CG_FILE_ADF2`, is available. This allows creation of a 2.5 compatible CGNS file.
+:path:		The pathname for the node to go to. If a position has been already set, this may be a relative path, otherwise it is an absolute path name, starting with "/Basename", where Basename is the base under which you wish to move.
+
+:depth:		Depth of the path list. The maximum depth is defined in cgnslib.h by CG_MAX_GOTO_DEPTH, and is currently equal to 20.
+
+:label:		Array of node labels for the path. This argument may be passed as NULL to cg_where(), otherwise it must be dimensioned by the calling program. The maximum size required is label[MAX_GO_TO_DEPTH][33]. You may call cg_where() with both label and index set to NULL in order to get the current depth, then dimension to that value.
+
+:index: 	Array of node indices for the path. This argument may be passed as NULL to cg_where(), otherwise it must be dimensioned by the calling program. The maximum size required is index[MAX_GO_TO_DEPTH]. You may call cg_where() with both label and index set to NULL in order to get the current depth, then dimension to that value.
+
+:ier:  Error status. The possible values, with the corresponding C names (or Fortran parameters) defined in cgnslib.h (or cgnslib_f.h) are listed below.
+
+   .. table::
+
+     =======    ===================
+      Value      Name/Parameter
+     =======    ===================
+      0          CG_OK
+      1          CG_ERROR
+      2          CG_NODE_NOT_FOUND
+      3          CG_INCORRECT_PATH
+     =======    ===================
+
+   For non-zero values, an error message may be printed using cg_error_print().
+
+This function allows access to any parent-type nodes in a CGNS file. A parent-type node is one that can have children. Nodes that cannot have children, like Descriptor_t, are not supported by this function. 
+
+To illustrate the use of the above routines, assume you have a file with CGNS index number filenum, a base node named Base with index number basenum, 2 zones (named Zone1 and Zone2, with indices 1 and 2), and user-defined data (User, index 1) below each zone. To move to the user-defined data node under zone 1, you may use any of the following:
+
+.. code-block::
+
+   cg_goto(filenum, basenum, "Zone_t", 1, "UserDefinedData_t", 1, NULL);
+   cg_goto(filenum, basenum "Zone1", 0, "UserDefinedData_t", 1, NULL);
+   cg_goto(filenum, basenum, "Zone_t", 1, "User", 0, NULL);
+   cg_goto(filenum, basenum, "Zone1", 0, "User", 0, NULL);
+   cg_gopath(filenum, "/Base/Zone1/User");
+
+Now, to change to the user-defined data node under zone 2, you may use the full path specification as above, or else a relative path, using one of the following:
+
+.. code-block::
+
+   cg_gorel(filenum, "..", 0, "..", 0, "Zone_t", 2, "UserDefinedData_t", 1, NULL);
+   cg_gorel(filenum, "..", 0, "..", 0, "Zone2", 0, "UserDefinedData_t", 1, NULL);
+   cg_gorel(filenum, "..", 0, "..", 0, "Zone_t", 2, "User", 0, NULL);
+   cg_gorel(filenum, "..", 0, "..", 0, "Zone2", 0, "User", 0, NULL);
+   cg_gopath(filenum, "../../Zone2/User");
+
+Shown below are some additional examples of various uses of these routines, in both C and Fortran, where fn, B, Z, etc., are index numbers.
+
+.. code-block::
+
+   ier = cg_goto(fn, B, "Zone_t", Z, "FlowSolution_t", F, "..", 0, "MySolution", 0, "end");
+
+   ier = cg_gorel(fn, "..", 0, "FlowSolution_t", F, NULL);
+
+   ier = cg_gopath(fn, "/MyBase/MyZone/MySolution");
+
+   ier = cg_gopath(fn, "../../MyZoneBC");
+
+.. code-block::
+
+   call cg_goto_f(fn, B, ier, 'Zone_t', Z, 'GasModel_t', 1, 'DataArray_t', A, 'end')
+
+   call cg_goto_f(fn, B, ier, 'Zone_t', Z, 'ZoneBC_t', 1, 'BC_t', BC, 'BCDataSet_t', S,
+                  'BCData_t', Dirichlet, 'end')
+
+   call cg_gorel_f(fn, ier, '..', 0, 'Neumann', 0, '')
+
+   call cg_gopath_f(fn, '../../MyZoneBC', ier)
+
 
 Deleting a Node
 ^^^^^^^^^^^^^^^
@@ -143,85 +176,50 @@ Deleting a Node
 .. table:: Configuring CGNS Internals
    :widths: 110 15
    
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | C Functions                                                                                                                    | Modes |
-   +================================================================================================================================+=======+
-   | :out:`ier` = :sig-name:`cg_configure` (:in:`int option`, :in:`void *value`);                                                   | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_error_handler` (:in:`void (*)(int, char *)`);                                                       | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_set_compress` (:in:`int compress`);                                                                 | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_get_compress` (:out:`int *compress`);                                                               | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_set_path` (:in:`const char *path`);                                                                 | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_add_path` (:in:`const char *path`);                                                                 | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
+   +--------------------------------------------------------------------------------------------------------------------------------+---------+
+   | C Functions                                                                                                                    | Modes   |
+   +================================================================================================================================+=========+
+   | :out:`ier` = :sig-name:`cg_delete_node` (:in:`char *NodeName`)                                                                 | `- - m` |
+   +--------------------------------------------------------------------------------------------------------------------------------+---------+
+   
 .. table::
    :widths: 110 15
    
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | Fortran interfaces                                                                                                             | Modes |
-   +================================================================================================================================+=======+
-   | call ``cg_exit_on_errors_f`` (:in:`flag`)                                                                                      | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_set_compress_f`` (:in:`compress`, :out:`ier`)                                                                        | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_get_compress_f`` (:out:`compress`, :out:`ier`)                                                                       | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_set_path_f`` (:in:`path`, :out:`ier`)                                                                                | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_add_path_f`` (:in:`path`, :out:`ier`)                                                                                | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   
+   +--------------------------------------------------------------------------------------------------------------------------------+---------+
+   | Fortran interfaces                                                                                                             | Modes   |
+   +================================================================================================================================+=========+
+   | call ``cg_delete_node`` (:in:`NodeName`, :out:`ier`)                                                                           | `- - m` |
+   +--------------------------------------------------------------------------------------------------------------------------------+---------+
+
 
 :in:`Input` / :out:`Ouput`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-  :option:	   	The option to configure, currently one of :code:`CG_CONFIG_ERROR`, :code:`CG_CONFIG_COMPRESS`, :code:`CG_CONFIG_SET_PATH`, :code:`CG_CONFIG_ADD_PATH`,  :code:`CG_CONFIG_FILE_TYPE`, :code:`CG_CONFIG_RIND_INDEX`, :code:`CG_CONFIG_HDF5_COMPRESS`, or :code:`CG_CONFIG_HDF5_MPI_COMM` as defined in ``cgnslib.h``.
-  :value:		The value to set, type cast as :code:`void *`.
-  :compress:	CGNS compress (rewrite) setting.
-  :path:		Pathname to search for linked to files when opening a file with external links.
-  :flag:		Fortran flag to set automatic exit in the case of error.
-  :ier:         Error status. 
+  :NodeName:    Name of the child to be deleted.
+  :ier:         Error status.
 
-The function :code:`cg_configure` allows certain CGNS library internal options to be configured. The currently supported options and expected values are:
 
-:CG_CONFIG_ERROR:        This allows an error call-back function to be defined by the user. The value should be a pointer to a function to receive the error. The function is defined as :code:`void err_callback(int is_error, char *errmsg)`, and will be called for errors and warnings. The first argument, is_error, will be 0 for warning messages, 1 for error messages, and −1 if the program is going to terminate (i.e., a call to :code:`cg_error_exit()`). The second argument is the error or warning message. If this is defined, warning and error messages will go to the function, rather than the terminal. A value of :code:`NULL` will remove the call-back function.
- 
-:CG_CONFIG_COMPRESS:	 This is the rewrite-upon-close setting.     
+The function cg_delete_node is used is conjunction with cg_goto. Once positioned at a parent node with cg_goto, a child of this node can be deleted with cg_delete_node. This function requires a single argument, NodeName, which is the name of the child to be deleted.
 
-  .. note::
-    Prior versions of the library would automatically rewrite the CGNS file when it was closed after being opened in modify mode if there was unused space. This is no longer done, due to possible conflicts when using parallel I/O. The previous behavior may be recovered by setting value to a positive integer. In this case the file will be rewritten if the number of node deletions or modifications are equal to or exceed this number. Setting value to a negative number will force the rewrite when the file is closed. The default value is 0 (no rewrite).
- 
-:CG_CONFIG_SET_PATH:		Sets the search path for locating linked-to files. The argument value should be a character string containing one or more directories, formatted the same as for the :code:`PATH` environment variable. This will replace any current settings. Setting value to :code:`NULL` will remove all paths.
- 
-:CG_CONFIG_ADD_PATH:		Adds a directory, or list of directories, to the linked-to file search path. This is the same as :code:`CG_CONFIG_SET_PATH`, but adds to the path instead of replacing it.
- 
-:CG_CONFIG_FILE_TYPE:		Sets the default file type for newly created CGNS files. The argument, value should be set to one of :code:`CG_FILE_NONE`, :code:`CG_FILE_ADF`, :code:`CG_FILE_HDF5`, or :code:`CG_FILE_ADF2`. See the discussion above for :code:`cg_set_file_type`.
- 
-:CG_CONFIG_RIND_INDEX:		This option affects index bounds on structured arrays with rind planes.
-                            By default (`CG_CONFIG_RIND_CORE`), the core array locations always begin at index 1. Lower rind planes, if present, would have an index less than 1.
-                            For backward compatibility, `CG_CONFIG_RIND_ZERO` is provided and the index 1 will then locate the start of the array and not necessarily the start the core array.
+Since the highest level that can be pointed to with cg_goto is a base node for a CGNS database (CGNSBase_t), the highest-level nodes that can be deleted are the children of a CGNSBase_t node. In other words, nodes located directly under the ADF (or HDF) root node (CGNSBase_t and CGNSLibraryVersion_t) can not be deleted with cg_delete.
 
-                            .. note::
-                                 Use of this option does not change the cgns file in any way; it only modifies the API to the library.
-                                 The API changed for versions of the Mid-Level Library greater than 3.4. Before, it did not produce this behavior.
-                                 Index 1 always represented the start of an array: in an array with no rind planes, the core location would have index 1; in an array with 1 rind plane, the core location would have index 2. In version 3.4 of the Mid-Level Library, the behavior of the API was fixed to match that specified in the SIDS: core array locations always begin at index 1. This option allows for configuring the library to pre-3.4 indexing behavior (set value to :code:`CG_CONFIG_RIND_ZERO`) or the new default behavior (set value to :code:`CG_CONFIG_RIND_CORE`). Note that using :code:`CG_CONFIG_RIND_ZERO` is considered obsolete, but is provided for backwards compatability.
-                                 Most users should not set this option and use the default.
-                                 Values used for this option do not need to be explicitly cast as :code:`void*`.
-   
- 
-:CG_CONFIG_HDF5_COMPRESS:		Sets the compression level for data written from HDF5. The default is no compression. Setting value to -1, will use the default compression level of 6. The acceptable values are 0 to 9, corresponding to gzip compression levels.
- 
-:CG_CONFIG_HDF5_MPI_COMM:		Sets the MPI communicator for parallel I/O. The default is :code:`MPI_COMM_WORLD`. The new communicator is given by typecasting it to a :code:`void *`. This is generally used internally - see :ref:`cgp_mpi_comm` instead.
+A few other nodes are not allowed to be deleted from the database because these are required nodes as defined by the SIDS, and deleting them would make the file non-CGNS compliant.
+These are:
 
-The routines :code:`cg_error_handler`, :code:`cg_set_compress`, :code:`cg_set_path`, :code:`cg_add_path`, and :code:`cg_set_file_type` are convenience functions built on top of :code:`cg_configure`.
+- Under Zone_t: ZoneType
+- Under GridConnectivity1to1_t: PointRange, PointRangeDonor, Transform
+- Under OversetHoles_t: PointList and any IndexRange_t
+- Under GridConnectivity_t: PointRange, PointList, CellListDonor, PointListDonor
+- Under BC_t: PointList, PointRange
+- Under GeometryReference_t: GeometryFile, GeometryFormat
+- Under Elements_t: ElementRange, ElementConnectivity
+- Under Gravity_t: GravityVector
+- Under Axisymmetry_t: AxisymmetryReferencePoint, AxisymmetryAxisVector
+- Under RotatingCoordinates_t: RotationCenter, RotationRateVector
+- Under Periodic_t: RotationCenter, RotationAngle, Translation
+- Under AverageInterface_t: AverageInterfaceType
+- Under WallFunction_t: WallFunctionType
+- Under Area_t: AreaType, SurfaceArea, RegionName 
 
-There is no Fortran counterpart to function :code:`cg_configure` or :code:`cg_error_handler`. The Fortran function :code:`cg_exit_on_error_f` routine be be used in place of :code:`cg_error_handler`. If flag is non-zero, then when an error is encountered, the library will print the error message and exit with an code of 1. Setting flag to zero (the default) prevents this and the error is returned to the user code.
-
-.. note::
-  The HDF5 implementation does not support search paths for linked files. The links need to be either absolute or relative pathnames. As a result, it is recommended that the search path options not be used as they may be removed in future versions.
-
+When a child node is deleted, both the database and the file on disk are updated to remove the node. One must be careful not to delete a node from within a loop of that node type. For example, if the number of zones below a CGNSBase_t node is nzones, a zone should never be deleted from within a zone loop! By deleting a zone, the total number of zones (nzones) changes, as well as the zone indexing. Suppose for example that nzones is 5, and that the third zone is deleted. After calling cg_delete_node, nzones is changed to 4, and the zones originally indexed 4 and 5 are now indexed 3 and 4. 
  
 .. last line

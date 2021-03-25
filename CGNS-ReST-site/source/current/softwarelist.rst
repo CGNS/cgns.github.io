@@ -31,6 +31,7 @@ The **status** key has the following meaning:
    :header: "Status", "Organization/owner", "Software", "Purpose", "Web site or email"
    :widths: 2, 10, 10, 10, 90
 
+   --, BETA CAE Systems, "ANSA", Mesher, https://www.beta-cae.com/ansa
    ??, ANSYS, "ANSYS ICEM CFD", Mesher, ansysinfo@ansys.com
    ??, NUMECA, IGG, Mesher, http://www.numeca.be
    ??, Pointwise, GRIDGEN, Mesher, http://www.pointwise.com
@@ -38,7 +39,7 @@ The **status** key has the following meaning:
    ??, ANSYS, CFX-TASCFlow, solver, ansysinfo@ansys.com
    ??, Aerosoft, GASP, Solver, http://www.aerosft.com
    ??, "CD ADAPCO",  STAR-CD, Solver, http://www.cd-adapco.com
-   ??, Fluent, Fluent, Solver, http://www.fluent.com
+   ??, "ANSYS", Fluent, Solver, https://www.ansys.com/fr-fr/products/fluids/ansys-fluent
    ??, "Newmerical Tech.", FENSAP, Solver, http://www.newmerical.com
    ??, NUMECA, EURANUS, Solver, http://www.numeca.be
    ??, DLR/MTU, TRACE, Solver, Frank.Eulitz@dlr.de
@@ -54,9 +55,10 @@ The **status** key has the following meaning:
    ??, "Rolls-Royce Oxford", HYDRA, -, pierre.moinier@comlab.ox.ac.uk
    ??, "Advanced Visual Sys.", AVS/Express, -, http://www.avs.com
    ??, "Aerosoft, Inc.", GASP, -, http://www.aerosft.com
-   ??, "Tecplot, Inc.", Tecplot, -, http://www.tecplot.com
-   ??, CEI, Ensight, -, http://www.ensight.com
-   ??, "Intelligent Light", Fieldview, -, fieldview@ilight.com
+   ??, "Tecplot - Vela software", Tecplot, -, http://www.tecplot.com
+   ??, "ANSYS", Ensight, -, https://www.ansys.com/fr-fr/products/fluids/ansys-ensight
+   ??, "Fieldview CFD - Vela software", Fieldview, -, info@fieldviewcfd.com
+   ??, "Lawrence Livermore National Laboratory", VisIt, -, https://wci.llnl.gov/simulation/computer-codes/visit
    ??, "Newmerical Tech.", DROP3D, -, http://www.newmerical.com
    ??, "Newmerical Tech.", ICE3D, -,  http://www.newmerical.com
    ??, NUMECA, CFView, -, http://www.numeca.be

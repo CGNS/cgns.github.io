@@ -26,7 +26,7 @@ An early decision in the CGNS project was that any new CFD I/O standard should i
 There are two major alternatives to organizing a CFD hierarchy: topologically based and data-type based. In a topologically based graph, overall organization is by; information pertaining to a particular zone, including its grid coordinates or flow solution, hangs off the zone. In a data-type based graph, organization is by related data. For example, there would be two nodes at the same level, one for grid coordinates and another for the flow solution. Hanging off each of these nodes would be separate lists of the zones.
 
 .. figure:: ../../../images/sids/figs/tree.gif
-   :width: 400px
+   :width: 500px
    :align: center
    :alt: Nodes in a sample CGNS database
 

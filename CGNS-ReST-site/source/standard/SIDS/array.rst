@@ -300,7 +300,9 @@ The structure parameters for :sidskey:`DataArray_t` state the data is an one-dim
 Example - Two-Dimensional Data Array, Pressures
 """""""""""""""""""""""""""""""""""""""""""""""
 
-A two-dimensional array of pressures with size 11 × 9 given by the array P(i,j). The data is dimensional with units of N/m2 (i.e., kg/(m-s2)). Note that Pressure is the data-name identifier for static pressure.
+A two-dimensional array of pressures with size :math:`11 \times 9` given by the array :math:`P(i,j)`.
+The data is dimensional with units of :math:`N/m^{2}` (i.e., :math:`kg/(m s^{2})`).
+Note that Pressure is the data-name identifier for static pressure.
 
 .. code-block:: sids
 
@@ -332,14 +334,69 @@ A two-dimensional array of pressures with size 11 × 9 given by the array P(i,j)
       }} ;
     }} ;
 
-From the data-name identifier conventions, Pressure has a floating-point data type; hence, the appropriate structure parameter for DataArray_t is real.
+From the :ref:`data-name identifier conventions <dataname>`, :sidskey:`Pressure` has a floating-point data type; hence, the appropriate structure parameter for :sidskey:`DataArray_t` is :code:`real`.
 
-The value of DataClass indicates that the data is dimensional, and both the dimensional units and dimensional exponents are provided. DimensionalUnits specifies that the units are kilograms, meters, and seconds, and DimensionalExponents specifies the appropriate exponents for pressure. Combining the information gives pressure as kg/(m-s2). DimensionalExponents could have been defaulted, since the dimensional exponents are part of the standardized data-name identifier for Pressure.
+The value of :sidskey:`DataClass` indicates that the data is :ref:`dimensional <dim>`, and both the dimensional units and dimensional exponents are provided.
+:sidskey:`DimensionalUnits` specifies that the units are kilograms, meters, and seconds, and :sidskey:`DimensionalExponents` specifies the appropriate exponents for pressure.
+Combining the information gives pressure as :math:`kg/(m s^{2})`.
+:sidskey:`DimensionalExponents` could have been defaulted, since the dimensional exponents are part of the :ref:`standardized data-name identifier <dataname>` for :sidskey:`Pressure`.
 
-Note that FORTRAN multidimensional array indexing is used to store the data; this is reflected in the FORTRAN-like implied do-loops for P(i,j). 
+Note that FORTRAN multidimensional array indexing is used to store the data; this is reflected in the FORTRAN-like implied do-loops for :math:`P(i,j)`.
 
 Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+A 3-D array of size :math:`33 \times 9 \times 17` containing nondimensional static enthalpy.
+The data is normalized by freestream velocity as follows:
+
+.. math::
+
+    h'_{ijk} = h_{ijk} / q_{ref}^{2}
+
+where :math:`h'_{ijk}` is nondimensional static enthalpy.
+The freestream velocity is dimensional with a value of 10 m/s.
+
+.. code-block:: sids
+
+  !  DataType = real
+  !  Dimension = 3
+  !  DimensionValues = [33,9,17]
+  DataArray_t<real, 3, [33,9,17]> Enthalpy =
+    {{
+    Data(real, 3, [33,9,17]) = (((H(i,j,k), i=1,33), j=1,9), k=1,17) ;
+    
+    DataClass_t DataClass = NormalizedByDimensional ;
+    
+    DataConversion_t DataConversion =
+      {{
+      real ConversionScale  = 100 ;
+      real ConversionOffset = 0 ;
+      }} ;
+      
+    DimensionalUnits_t DimensionalUnits =
+      {{
+      MassUnits        = MassUnitsNull ;
+      LengthUnits      = Meter ;
+      TimeUnits        = Second ;
+      TemperatureUnits = TemperatureUnitsNull ;
+      AngleUnits       = AngleUnitsNull ;
+      }} ;
+	
+    DimensionalExponents_t DimensionalExponents =
+      {{
+      MassExponent        =  0 ;
+      LengthExponent      = +2 ;
+      TimeExponent        = -2 ;
+      TemperatureExponent =  0 ;
+      AngleExponent       =  0 ;
+      }} ;
+    }} ;
+
+From the list of :ref:`standardized data-name identifiers <dataname>`, the identifier for static enthalpy is :sidskey:`Enthalpy` and its data type is :code:`real`.
+
+The value of :sidskey:`DataClass` indicates that the data is :ref:`nondimensional and normalized by a dimensional reference quantity <normbydim>`.
+:sidskey:`DataConversion` provides the conversion factors for recovering the raw static enthalpy, which has units of :math:`m^{2}/s^{2}` as indicated by :sidskey:`DimensionalUnits` and :sidskey:`DimensionalExponents`.
+Note that :sidskey:`DimensionalExponents` could have been defaulted using the conventions for the data-name identifier :sidskey:`Enthalpy`. 
 
 Example - Three-Dimensional Data Array, Nondimensional Database
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -362,6 +419,41 @@ The value of :sidskey:`DataClass` indicates the appropriate class.
 
 Example - Data Arrays for Reynolds Number
 """""""""""""""""""""""""""""""""""""""""
+Reynolds number of :math:`1.554 \times 10^{6}` based on a velocity scale of :math:`10\ m/s`, a length scale of :math:`2.3\ m` and a kinematic viscosity scale of :math:`1.48 \times 10^{−5}\ m^{2}/s`.
+Assume the database has globally set the dimensional units to kilograms, meters, and seconds, and the global default data class to dimensional (:sidskey:`DataClass = Dimensional`).
+
+.. code-block:: sids
+
+  !  DataType = real
+  !  Dimension = 1
+  !  DimensionValues = 1
+  DataArray_t<real, 1, 1> Reynolds =
+    {{
+    Data(real, 1, 1) = 1.554e+06 ;
+    
+    DataClass_t DataClass = NondimensionalParameter ;
+    }} ;
+
+  DataArray_t<real, 1, 1> Reynolds_Velocity =
+    {{
+    Data(real, 1, 1) = 10. ;
+    }} ;
+
+  DataArray_t<real, 1, 1> Reynolds_Length =
+    {{
+    Data(real, 1, 1) = 2.3 ;
+    }} ;
+
+  DataArray_t<real, 1, 1> Reynolds_ViscosityKinematic =
+    {{
+    Data(real, 1, 1) = 1.48e-05 ;
+    }} ;
+
+:sidskey:`Reynolds` contains the value of the Reynolds number, and the value of its :sidskey:`DataClass` qualifier designates it as a :ref:`nondimensional parameter <nondimparam>`. By conventions for :ref:`standardized data-name identifiers for nondimensional parameters <dataname_nondim>`, the defining scales are contained in the associated entities :sidskey:`Reynolds_Velocity`, :sidskey:`Reynolds_Length`, and :sidskey:`Reynolds_ViscosityKinematic`.
+Since each of these entities contain no qualifiers, global information is used to decipher that they are all dimensional with mass, length, and time units of kilograms, meters, and seconds.
+The structure parameters for each :sidskey:`DataArray_t` entity state that they contain a real scalar.
+
+If a user wanted to convey the dimensional units of the defining scales using optional qualifiers of :sidskey:`DataArray_t`, then the last three entities in this example would have a form similar to that in the :ref:`Two-Dimensional Data Array example <ex_data2>`.
 
 
 .. last line

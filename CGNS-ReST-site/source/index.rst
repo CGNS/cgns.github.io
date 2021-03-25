@@ -14,7 +14,8 @@
 .. image:: /images/logo/CGNS_logo_1.png
    :width: 400px
    :align: center
-	   
+
+.. _CGNSHomePage:
 
 The official CGNS home page
 ===========================

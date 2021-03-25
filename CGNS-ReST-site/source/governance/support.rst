@@ -323,6 +323,8 @@ In the text you can add references such as [2]_, [1]_, [CIT2002]_.
 .. [CIT2002] Just like a footnote, except the label is
    textual.
 
+.. _CPEXguidelines:
+
 CPEX guidelines
 ^^^^^^^^^^^^^^^
 

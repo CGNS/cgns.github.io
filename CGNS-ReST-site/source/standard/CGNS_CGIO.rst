@@ -177,6 +177,8 @@ Define                             Value   Attribute
 ================================== ======= =================================
 
 
+.. _CGIOCoreRoutines:
+
 CGIO core routines
 ------------------
 

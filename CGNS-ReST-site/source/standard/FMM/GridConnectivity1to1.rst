@@ -7,8 +7,10 @@
 
 .. role:: sidsref(code)
 
- SIDS File Mapping Manual - GridConnectivity1to1 Figure 
-========================================================
+.. _GridConnectivity1to1Figure:
+
+GridConnectivity1to1 Figure 
+===========================
 
 .. container:: fighead
      

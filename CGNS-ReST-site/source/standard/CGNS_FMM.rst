@@ -185,5 +185,10 @@ Similarly, if a reacting flow problem requires the specification of rate tables 
 
 
 
+.. toctree::
+
+   FMM/nodes
+   FMM/figures
+
 
 .. last line

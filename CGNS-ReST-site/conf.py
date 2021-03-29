@@ -61,4 +61,8 @@ html_theme_options = {
     'project_nav_name': 'CGNS doc test',
 }    
 
+html_css_files = [
+    'css/filemap.css',
+]
+
 # --- last line

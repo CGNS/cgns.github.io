@@ -19,6 +19,7 @@ An example file hierarchy is shown below, but without any internal detail of the
 Just below the :sidskey:`Root Node` is a :sidsref:`CGNSLibraryVersion_t` node, and one or more :sidsref:`CGNSBase_t` nodes.
 Each :sidskey:`CGNSBase_t` node represents the root node of a CGNS database.
 
+.. _example-hierarchy:
 
 .. figure:: ../../../images/filemap/cgns_figure1.gif
    :width: 600px

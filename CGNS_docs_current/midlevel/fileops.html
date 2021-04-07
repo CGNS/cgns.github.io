@@ -316,6 +316,10 @@ This allows creation of a 2.5 compatible CGNS file.
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_configure_f(<span class=in>option</span>, <span class=in>value</span>, <span class=out><i>ier</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b>call cg_exit_on_errors_f(<span class=in>flag</span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
@@ -355,7 +359,7 @@ This allows creation of a 2.5 compatible CGNS file.
        defined in <i>cgnslib.h</i>.
 <tr valign=baseline><td>
    <td><tt>value</tt><td>
-   <td>The value to set, type cast as <tt>void *</tt>.
+   <td>The value to set, type cast as <tt>void *</tt>. In Fortran the type is <tt>TYPE(C_PTR)</tt>.
 <tr valign=baseline><td>
    <td><tt>compress</tt><td>
    <td>CGNS compress (rewrite) setting.
@@ -372,7 +376,7 @@ This allows creation of a 2.5 compatible CGNS file.
 </table>
 
 <p>
-The function <tt>cg_configure</tt> allows certain CGNS library internal
+The function <tt>cg_configure</tt> allows particular CGNS library internal
 options to be configured.
 The currently supported options and expected values are:
 
@@ -414,14 +418,16 @@ The currently supported options and expected values are:
        containing one or more directories, formatted the same as for the
        <tt>PATH</tt> environment variable.
        This will replace any current settings.
-       Setting <tt>value</tt> to <tt>NULL</tt> will remove all paths.
+       Setting <tt>value</tt> to <tt>NULL</tt> will remove all paths. In Fortran,
+       the path must terminate with a NULL character, CHAR(0) or C_NULL_CHAR. 
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_ADD_PATH</tt><td>
    <td>Adds a directory, or list of directories, to the linked-to file
        search path.
        This is the same as <tt>CG_CONFIG_SET_PATH</tt>, but adds to the
-       path instead of replacing it.
+       path instead of replacing it. In Fortran,
+       the path must terminate with a NULL character, CHAR(0) or C_NULL_CHAR.
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_FILE_TYPE</tt><td>
@@ -485,7 +491,7 @@ The currently supported options and expected values are:
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_HDF5_DISKLESS_WRITE</tt><td>
-   <td><tt>Value</tt> indicates whether to write (<tt>value</tt> = 1) the memory contents to disk when the file is closed. Otherwise, a <tt>value</tt> of 0 does not persist the memory to disk.
+   <td><tt>Value</tt> indicates whether to write (<tt>value=1</tt>) the memory contents to disk when the file is closed. Otherwise, <tt>value=0</tt> does not persist the memory to disk.
 </table>
 
 <p>
@@ -494,12 +500,12 @@ The routines <tt>cg_error_handler</tt>, <tt>cg_set_compress</tt>,
 are convenience functions built on top of <tt>cg_configure</tt>.
 
 <p>
-There is no Fortran counterpart to function <tt>cg_configure</tt> or
+There is no Fortran counterpart for function
 <tt>cg_error_handler</tt>. The Fortran function <tt>cg_exit_on_error_f</tt>
-routine be be used in place of <tt>cg_error_handler</tt>. If <tt>flag</tt>
+routine can be used in place of <tt>cg_error_handler</tt>. If <tt>flag</tt>
 is non-zero, then when an error is encountered, the library will print
-the error message and exit with an code of 1. Setting <tt>flag</tt> to
-zero (the default) prevents this and the error is returned to the user
+the error message and exit with a code of 1. Setting <tt>flag</tt> to
+zero (the default) prevents this, and the error is returned to the user
 code.
 
 <p>

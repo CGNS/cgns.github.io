@@ -316,7 +316,7 @@ This allows creation of a 2.5 compatible CGNS file.
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_configure_f(<span class=in>option</span>, <span class=in>value</span>, <span class=out><i>ier</i></span>);</b></tt>
+        <tt><b>call cg_configure_f(<span class=in>option</span>, <span class=in>value</span>, <span class=out><i>ier</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -487,7 +487,7 @@ The currently supported options and expected values are:
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_HDF5_DISKLESS_INCR</tt><td>
    <td><tt>Value</tt> specifies the increment by which allocated memory is to be increased each time more memory is required, in bytes.
-       The default is 10MiB. Ideally, <tt>value</tt> should be set large enough to minimize repeated increases.
+       The default is 10MiB. Ideally, <tt>value</tt> should be set large enough to minimize repeated increases. The type of <tt>value</tt> is <em>size_t</em> in C and <em>C_SIZE_T</em> in Fortran. Due to a bug with gfortran, it is advisable to use <em>C_LOC</em> or <em>C_FUNLOC</em> in-line of the call instead of using a variable.
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_HDF5_DISKLESS_WRITE</tt><td>

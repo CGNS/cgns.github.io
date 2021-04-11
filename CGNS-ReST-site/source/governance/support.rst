@@ -330,4 +330,16 @@ CPEX guidelines
 
 The CPEX process requires multiple docs.
 
+The CPEX should include the following information:
+
+  - Name(s) and organization(s) of proposer(s)
+  - E-mail contact information
+  - General description of extension
+  - Reason or need for extension
+  - A SIDS detailed description of extension using similar documentation style found in the SIDS
+  - File Mapping description of Node Attributes, following the prescription given in existing Node Description Documentation
+  - Specific example(s) of extension
+
+
+
 .. last line

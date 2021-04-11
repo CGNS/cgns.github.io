@@ -353,8 +353,10 @@ Committee meeting minutes, Charter, and archive information.
 Standard and Software Governing Principles
 ------------------------------------------
 
-Distribution Changes or Additions to the Standard Distribution This
-section describes the policy governing the distribution of the CGNS
+Distribution
+^^^^^^^^^^^^
+
+This section describes the policy governing the distribution of the CGNS
 standard and software to the engineering and scientific community at
 large. By definition, the CGNS standard refers to the Standard
 Interface Data Structures (SIDS) definitions, the SIDS File Mapping,
@@ -396,8 +398,12 @@ not become part of the CGNS Standard, that is, either the SIDS or the
 API, without the approval of the CGNS Steering Committee.  The
 Steering Committee may agree to support or endorse additional utility
 software.  The Steering Committee will not endorse third party
-software.  Changes or Additions to the Standard CGNS is a standard
-that has been developed with the key concepts of flexibility and
+software.
+
+Changes or Additions to the Standard
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+CGNS is a standard that has been developed with the key concepts of flexibility and
 extendibility in mind. The standard can accommodate the majority of
 CFD data quantities in practical usage today; however, some additional
 capabilities are still being implemented. It is also understood that

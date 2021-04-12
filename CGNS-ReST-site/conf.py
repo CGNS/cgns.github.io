@@ -63,6 +63,7 @@ html_theme_options = {
 
 html_css_files = [
     'css/filemap.css',
+    'css/math_override.css'
 ]
 
 # --- last line

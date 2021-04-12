@@ -22,9 +22,15 @@ Discussion list
 This is a mailman system, if you want to join you have
 `to register on this page <https://lists.nasa.gov/mailman/listinfo/cgnstalk/>`_
 
-The mailing list archives are there:
+The mailing list archives are available from 2008 forward from: https://lists.nasa.gov/mailman/private/cgnstalk/ (you may need to sign up to be a member of CGNSTalk in order to view).
+For convenience, they are also given below, along with older archives extending back to 2000.
+
+:2000-2020:
+  Archives	(Gzipped Text File)
 
 <link to archives>
+
+
 
 .. _WebResources:
 
@@ -337,7 +343,7 @@ The CPEX should include the following information:
   - General description of extension
   - Reason or need for extension
   - A SIDS detailed description of extension using similar documentation style found in the SIDS
-  - File Mapping description of Node Attributes, following the prescription given in existing Node Description Documentation
+  - File Mapping description of Node Attributes, following the prescription given in existing `Node Description Documentation <FMMNodeDescriptions>`
   - Specific example(s) of extension
 
 

@@ -27,6 +27,15 @@ made available here by permission).
 ISO Step initiative
 -------------------
 
+Between 1999 and 2002, an effort was spearheaded by Boeing to establish an ISO-STEP standard for the representation, storage, and exchange of digital data in fluid dynamics based on the CGNS standard.
+Unfortunately, the effort had to be curtailed because of budget problems.
+It was subsequently decided that an existing ISO standard on finite element solid mechanics would be rewritten and submitted to include CGNS as well as an integrated engineering analysis framework.
+Some details on this subsequent effort can be found in archives of the :ref:`Meeting and Telecon Minutes <DocMinutes>`. This new ISO effort was being conducted completely outside of the control of the CGNS committee.
+Therefore, the current status is not known.
+
+.. note::
+
+  Due to copyright restrictions standardization documents can not be provided here, and must be obtained directly from ISO.
 
 
 .. last line

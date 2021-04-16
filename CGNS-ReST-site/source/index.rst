@@ -80,6 +80,7 @@ Reference Documentation
 	      
 .. list-table::
    :widths: 50 50
+   :width: 100%
    :align: center
 	   
    * - :ref:`CGNS/SIDS <CGNS-SIDS>`

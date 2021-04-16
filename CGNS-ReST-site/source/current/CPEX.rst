@@ -135,8 +135,8 @@ CPEX0044
 
 .. _CPEX0043:
 
-CPEX0043 Family hierarchy as a tree
------------------------------------
+CPEX0043
+--------
 
 .. list-table::
   :stub-columns: 1
@@ -163,8 +163,8 @@ CPEX0043 Family hierarchy as a tree
 
 .. _CPEX0042:
 
-CPEX0042 Storing the bounding box of a Grid
--------------------------------------------
+CPEX0042
+--------
 
 .. list-table::
   :stub-columns: 1

@@ -139,16 +139,23 @@ The source code may downloaded as a gzipped, tar file:
 
 <b>Current Stable Release:</b>
 
-<a href="https://github.com/CGNS/CGNS/releases/tag/v4.1.2">
+<a href="https://github.com/CGNS/CGNS/releases/tag/v4.2.0">
 <p>
-CGNS Version 4.1.2 (Patch) </a><br>
+CGNS Version 4.2.0  </a><br>
 
-Patched version v4.1.2 addressed backward compatibility issues.
+See <a href="https://github.com/CGNS/CGNS/blob/master/release_docs/RELEASE.txt">Release.txt</a> for new features and bug fixes.
 </p>
 
 </div>
 
 <p><b>Historical Stable Releases:</b></p>
+<li>
+<a href="https://github.com/CGNS/CGNS/releases/tag/v4.1.2">
+CGNS Version 4.1.2 (Patch) </a><br>
+
+Patched version v4.1.2 addressed backward compatibility issues.
+</p>
+</li>
 
 <li>
 <a href="https://github.com/CGNS/CGNS/releases/tag/v4.1.1">
@@ -319,7 +326,15 @@ in codes using CGNS when it is feasible to do so.-->
 handle portability issues between versions.
 
 <h2>Known Bugs/Issues in Latest Official (Stable) Release</h2>
-
+<ul>
+    <li>A gfortran bug in version 10.2 broke Fortran mapping and caused cg_goto_f 
+     to segfault. All other versions of gfortran are suitable.
+     (ref. CGNS-246, GNU BUG 100149)
+</ul>
+<ul>
+     <li>A gfortran bug (all versions) causes cg_configure_f to fail,
+     GNU BUG 99982. Other Fortran compilers are fine.
+</ul>
 <ul>
 <li>Compression currently does not work for CGNS.
 <li>When building with PGI and gcc compilers it might be necessary to set the

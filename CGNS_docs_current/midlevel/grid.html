@@ -69,9 +69,13 @@
      <ul>
      <li> <tt><b>cg_section_write</b></tt> - Write fixed size element data
      <li> <tt><b>cg_poly_section_write</b></tt> - Write element data
+     <li> <tt><b>cg_section_general_write</b></tt> - Write section data without element data
+     <li> <tt><b>cg_section_initialize</b></tt> - Initialize element data for not fixed size elements
      <li> <tt><b>cg_section_partial_write</b></tt> - Write subset of element data
      <li> <tt><b>cg_elements_partial_write</b></tt> - Write element data for a fixed size element section
      <li> <tt><b>cg_poly_elements_partial_write</b></tt> - Write element data for an element section
+     <li> <tt><b>cg_elements_general_write</b></tt> - Write element data for a fixed size element section
+     <li> <tt><b>cg_poly_elements_general_write</b></tt> - Write element data for an element section
      <li> <tt><b>cg_parent_data_write</b></tt> - Write parent info for an element section
      <li> <tt><b>cg_parent_data_partial_write</b></tt> - Write subset of parent info for an element section
      <li> <tt><b>cg_nsections</b></tt> - Get number of element sections
@@ -80,8 +84,12 @@
      <li> <tt><b>cg_ElementPartialSize</b></tt> - Get size of element connectivity data array for partial read
      <li> <tt><b>cg_elements_read</b></tt> - Read fixed size element data
      <li> <tt><b>cg_elements_partial_read</b></tt> - Read subset of fixed size element data
+     <li> <tt><b>cg_elements_general_read</b></tt> - Read subset of fixed size element data to a typed array
      <li> <tt><b>cg_poly_elements_read</b></tt> - Read element data
      <li> <tt><b>cg_poly_elements_partial_read</b></tt> - Read subset of element data
+     <li> <tt><b>cg_poly_elements_general_read</b></tt> - Read subset of element data to typed arrays
+     <li> <tt><b>cg_parent_elements_general_read</b></tt> - Read parent info for an element section
+     <li> <tt><b>cg_parent_elements_position_general_read</b></tt> - Read parent position info for an element section
      <li> <tt><b>cg_npe</b></tt> - Get number of nodes for an element type
      </ul>
 <li> <a href="#axisymmetry">Axisymmetry</a>
@@ -165,11 +173,11 @@ nodes in the SIDS manual.
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call <span class=cgf>cg_grid_bounding_box_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>G</span>, <span class=in>datatype</span>, <span class=in>bbox_array</span>, <span class=out><i>ier</i></span>)<br>
+        <tt><b>call <span class=cgf>cg_grid_bounding_box_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>G</span>, <span class=in>datatype</span>, <span class=in>bbox_array</span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call <span class=cgf>cg_grid_bounding_box_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>G</span>, <span class=in>datatype</span>, <span class=out>bbox_array</span>, <span class=out><i>ier</i></span>)<br>
+        <tt><b>call <span class=cgf>cg_grid_bounding_box_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>G</span>, <span class=in>datatype</span>, <span class=out>bbox_array</span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
@@ -215,8 +223,8 @@ nodes in the SIDS manual.
 </table>
 
 <p>
-The above functions are applicable to any <tt>GridCoordinates_t</tt> node.</br>
-When reading a bounding box, if the information is missing from the file, the <tt>bbox_array</tt> will remain untouched and a warning is emitted.</br>
+The above functions are applicable to any <tt>GridCoordinates_t</tt> node.<br>
+When reading a bounding box, if the information is missing from the file, the <tt>bbox_array</tt> will remain untouched, and a warning is emitted.<br>
 The CGNS MLL relies on the user to compute the bounding box and ensure that the bounding box being stored is coherent with the coordinates under <tt>GridCoordinates_t</tt> node.
 
 
@@ -464,6 +472,17 @@ rind plane on each side in the file to an 8 &times 8 array in memory
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_section_general_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *ElementSectionName</span>, <span class=in>ElementType_t type</span>, <span class=in>DataType_t ElementDataType</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t start</span>, <span class=in>cgsize_t end</span>, <span class=in>cgsize_t ElementDataSize</span>, <span class=in>int nbndry</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *S</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_section_initialize(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_section_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *ElementSectionName</span>, <span class=in>ElementType_t type</span>, <span class=in>cgsize_t start</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t end</span>, <span class=in>int nbndry</span>, <span class=out><i>int *S</i></span>);</b></tt>
@@ -478,6 +497,18 @@ rind plane on each side in the file to an 8 &times 8 array in memory
         <tt><b><span class=out><i>ier</i></span> = cg_poly_elements_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="in">cgsize_t start</span>, <span class="in">cgsize_t end</span>, <span class="in">cgsize_t *Elements</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *ConnectOffset</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_elements_general_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="in">cgsize_t start</span>, <span class="in">cgsize_t end</span>, <span class="in">DataType_t mem_datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="in">void *Elements</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_poly_elements_general_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="in">cgsize_t start</span>, <span class="in">cgsize_t end</span>, <span class="in">DataType_t mem_datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="in">void *Elements</span>, <span class=in>void *ConnectOffset</span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -521,6 +552,11 @@ rind plane on each side in the file to an 8 &times 8 array in memory
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_elements_general_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t start</span>, <span class=in>cgsize_t end</span>, <span class=in>DataType_t mem_datatype</span>, <span class=out><i>void *Elements</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_poly_elements_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=out><i>cgsize_t *Elements</i></span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>cgsize_t *ConnectOffset</i></span>, <span class=out><i>cgsize_t *ParentData</i></span>);</b></tt>
     <td align=center valign=baseline>
@@ -532,78 +568,135 @@ rind plane on each side in the file to an 8 &times 8 array in memory
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_poly_elements_general_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t start</span>, <span class=in>cgsize_t end</span>, <span class=in>DataType_t *mem_datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *Elements</i></span>, <span class=out><i>void *ConnectOffset</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_parent_elements_general_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t start</span>, <span class=in>cgsize_t end</span>, <span class=in>DataType_t *mem_datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *ParentElement</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_parent_elements_position_general_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t start</span>, <span class=in>cgsize_t end</span>, <span class=in>DataType_t *mem_datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *ParentFace</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cg_npe(<span class=in>ElementType_t type</span>, <span class=out><i>int *npe</i></span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
         <tt><b>call <span class=cgf>cg_section_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>ElementSectionName</span>, <span class=in>type</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>start</span>, <span class=in>end</span>, <span class=in>nbndry</span>, <span class=in>Elements</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>start</span>, <span class=in>end</span>, <span class=in>nbndry</span>, <span class=in>Elements</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call <span class=cgf>cg_poly_section_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>ElementSectionName</span>, <span class=in>type</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>start</span>, <span class=in>end</span>, <span class=in>nbndry</span>, <span class=in>Elements</span>, <span class=in>ConnectOffset</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>start</span>, <span class=in>end</span>, <span class=in>nbndry</span>, <span class=in>Elements</span>, <span class=in>ConnectOffset</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)</b><br>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_section_general_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>ElementSectionName</span>, <span class=in>type</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>ElementDataType</span>, <span class=in>start</span>, <span class=in>end</span>, <span class=in>ElementDataSize</span>, <span class=in>nbndry</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)</b><br>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_section_initialize_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_section_partial_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>ElementSectionName</span>, <span class=in>type</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>start</span>, <span class=in>end</span>, <span class=in>nbndry</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>start</span>, <span class=in>end</span>, <span class=in>nbndry</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call <span class=cgf>cg_elements_partial_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class="in">start</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=in>Elements</span>, <span class=out><i>ier</i></span>)<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=in>Elements</span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call <span class=cgf>cg_poly_elements_partial_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class="in">start</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=in>Elements</span>, <span class=in>ConnectOffset</span>, <span class=out><i>ier</i></span>)<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=in>Elements</span>, <span class=in>ConnectOffset</span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call <span class=cgf>cg_parent_data_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>ParentData</span>, <span class=out><i>ier</i></span>)<br>
+        <tt><b>call <span class=cgf>cg_elements_general_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class="in">start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=in>mem_datatype</span>, <span class=in>Elements</span>, <span class=out><i>ier</i></span>)</b><br>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_poly_elements_general_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class="in">start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=in>mem_datatype</span>, <span class=in>Elements</span>, <span class=in>ConnectOffset</span>, <span class=out><i>ier</i></span>)</b><br>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_parent_data_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>ParentData</span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call <span class=cgf>cg_parent_data_partial_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>start</span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=in>ParentData</span>, <span class=out><i>ier</i></span>)<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=in>ParentData</span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_nsections_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=out><i>nsections</i></span>, <span class=out><i>ier</i></span>)<br>
+        <tt><b>call cg_nsections_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=out><i>nsections</i></span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call cg_section_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>ElementSectionName</i></span>, <span class=out><i>type</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>start</i></span>, <span class=out><i>end</i></span>, <span class=out><i>nbndry</i></span>, <span class=out><i>parent_flag</i></span>, <span class=out><i>ier</i></span>)<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>start</i></span>, <span class=out><i>end</i></span>, <span class=out><i>nbndry</i></span>, <span class=out><i>parent_flag</i></span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_ElementDataSize_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>ElementDataSize</i></span>, <span class=out><i>ier</i></span>)<br>
+        <tt><b>call cg_ElementDataSize_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>ElementDataSize</i></span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call cg_ElementPartialSize_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>start</span>, <span class=in>end</span>, <span class=out><i>ElementDataSize</i></span>, <span class=out><i>ier</i></span>)<br>
+        <tt><b>call cg_ElementPartialSize_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>start</span>, <span class=in>end</span>, <span class=out><i>ElementDataSize</i></span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
-        <tt><b>call <span class=cgf>cg_elements_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>Elements</i></span>, <span class=out><i>ParentData</i></span>, <span class=out><i>ier</i></span>)<br>
+        <tt><b>call <span class=cgf>cg_elements_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>Elements</i></span>, <span class=out><i>ParentData</i></span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call <span class=cgf>cg_elements_partial_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>start</span>, <span class=in>end</span>, <span class=out><i>Elements</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ParentData</i></span>, <span class=out><i>ier</i></span>)<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ParentData</i></span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call <span class=cgf>cg_poly_elements_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>Elements</i></span>, <span class=out><i>ConnectOffset</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ParentData</i></span>, <span class=out><i>ier</i></span>)<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ParentData</i></span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
         <tt><b>call <span class=cgf>cg_poly_elements_partial_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>start</span>, <span class=in>end</span>, <span class=out><i>Elements</i></span>,<br>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ConnectOffset</i></span>, <span class=out><i>ParentData</i></span>, <span class=out><i>ier</i></span>)<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ConnectOffset</i></span>, <span class=out><i>ParentData</i></span>, <span class=out><i>ier</i></span>)</b><br>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+<tt><b>call <span class=cgf>cg_elements_general_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>start</span>, <span class=in>end</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_datatype</span>, <span class=out><i>Elements</i></span>, <span class=out><i>ier</i></span>)</b><br>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+<tt><b>call <span class=cgf>cg_poly_elements_general_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>start</span>, <span class=in>end</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_datatype</span>, <span class=out><i>Elements</i></span>, <span class=out><i>ConnectOffset</i></span>, <span class=out><i>ier</i></span>)</b><br>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+<tt><b>call <span class=cgf>cg_parent_elements_general_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>start</span>, <span class=in>end</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_datatype</span>, <span class=out><i>ParentElement</i></span>, <span class=out><i>ier</i></span>)</b><br>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+<tt><b>call <span class=cgf>cg_parent_elements_position_general_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>start</span>, <span class=in>end</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_datatype</span>, <span class=out><i>ParentFace</i></span>, <span class=out><i>ier</i></span>)</b><br>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -658,6 +751,9 @@ rind plane on each side in the file to an 8 &times 8 array in memory
        If the parent data exist, <tt>parent_flag</tt> is set to 1;
        otherwise it is set to 0.
 <tr valign=baseline><td>
+   <td><tt>ElementDataType</tt><td>
+   <td>Data type of an array. Admissible data types are <tt>Integer</tt> and <tt>LongInteger</tt>.
+<tr valign=baseline><td>
    <td><tt>ElementDataSize</tt><td>
    <td>Number of element connectivity data values.
 <tr valign=baseline><td>
@@ -674,6 +770,17 @@ rind plane on each side in the file to an 8 &times 8 array in memory
        information on the cell(s) and cell face(s) sharing the element.
        If you do not need to read the <tt>ParentData</tt> when reading
        the <tt>ElementData</tt>, you may set the value to <tt>NULL</tt>.
+<tr valign=baseline><td>
+   <td><tt>ParentElement</tt><td>
+   <td>For boundary or interface elements, this array contains
+       information on the cell(s) sharing the element.
+<tr valign=baseline><td>
+   <td><tt>ParentFace</tt><td>
+   <td>For boundary or interface elements, this array contains
+       information on the cell face(s) sharing the element.
+<tr valign=baseline><td>
+   <td><tt>mem_datatype</tt><td>
+   <td>Data type of an array in memory. Admissible data types are <tt>Integer</tt> and <tt>LongInteger</tt>.
 <tr valign=baseline><td>
    <td><tt>npe</tt><td>
    <td>Number of nodes for an element of type <tt>type</tt>.

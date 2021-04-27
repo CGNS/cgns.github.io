@@ -61,7 +61,9 @@
 <li> <a href="#element">Element Connectivity Data</a>
      <ul>
      <li> <tt><b>cgp_section_write</b></tt> - Create a section data node
+     <li> <tt><b>cgp_poly_section_write</b></tt> - Create a section data node
      <li> <tt><b>cgp_elements_write_data</b></tt> - Write element data in parallel
+     <li> <tt><b>cgp_poly_elements_write_data</b></tt> - Write element data in parallel
      <li> <tt><b>cgp_elements_read_data</b></tt> - Read element data in parallel
      </ul>
 <li> <a href="#solution">Solution Data</a>
@@ -415,8 +417,19 @@ coordinate data matches that as defined in the file; no conversions are done.
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgp_poly_section_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *ElementSectionName</span>, <span class=in>ElementType_t type</span>, <span class=cgin>cgsize_t start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t end</span>, <span class=cgin>cgsize_t MaxOffset</span>, <span class=in>int nbndry</span>, <span class=out><i>int *S</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b><span class=out><i>ier</i></span> = cgp_elements_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cgin">cgsize_t start</span>, <span class="cgin">cgsize_t end</span>, <span class="cgin">cgsize_t *Elements</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cgp_poly_elements_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cgin">cgsize_t start</span>, <span class="cgin">cgsize_t end</span>, <span class="cgin">cgsize_t *Elements</span>, <span class="cgin">cgsize_t *Offsets</span>);</b></tt>
     <td align=center valign=baseline>
         <tt><b>-&nbsp;w&nbsp;m</b></tt>
 <tr><td nowrap>
@@ -483,6 +496,12 @@ coordinate data matches that as defined in the file; no conversions are done.
 <tr valign=baseline><td>
    <td><tt>Elements</tt><td>
    <td>Element connectivity data.
+<tr valign=baseline><td>
+   <td><tt>Offsets</tt><td>
+   <td>Element connectivity offsets data.
+<tr valign=baseline><td>
+   <td><tt>MaxOffset</tt><td>
+   <td>Maximum data size that should be reserved for Element connectivity data.
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.

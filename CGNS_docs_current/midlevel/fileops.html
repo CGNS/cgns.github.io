@@ -316,6 +316,10 @@ This allows creation of a 2.5 compatible CGNS file.
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tbody>
 <tr><td nowrap>
+        <tt><b>call cg_configure_f(<span class=in>option</span>, <span class=in>value</span>, <span class=out><i>ier</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
         <tt><b>call cg_exit_on_errors_f(<span class=in>flag</span>)</b></tt>
     <td align=center valign=baseline>
         <tt><b>r&nbsp;w&nbsp;m</b></tt>
@@ -348,11 +352,14 @@ This allows creation of a 2.5 compatible CGNS file.
        <tt>CG_CONFIG_ERROR</tt>, <tt>CG_CONFIG_COMPRESS</tt>,
        <tt>CG_CONFIG_SET_PATH</tt>, <tt>CG_CONFIG_ADD_PATH</tt>,
        <tt>CG_CONFIG_FILE_TYPE</tt>, <tt>CG_CONFIG_RIND_INDEX</tt>,
+       <tt>CG_CONFIG_HDF5_DISKLESS</tt>,
+       <tt>CG_CONFIG_HDF5_DISKLESS_INCR</tt>,
+       <tt>CG_CONFIG_HDF5_DISKLESS_WRITE</tt>,
        <tt>CG_CONFIG_HDF5_COMPRESS</tt>, or <tt>CG_CONFIG_HDF5_MPI_COMM</tt> as
        defined in <i>cgnslib.h</i>.
 <tr valign=baseline><td>
    <td><tt>value</tt><td>
-   <td>The value to set, type cast as <tt>void *</tt>.
+   <td>The value to set, type cast as <tt>void *</tt>. In Fortran the type is <tt>TYPE(C_PTR)</tt>.
 <tr valign=baseline><td>
    <td><tt>compress</tt><td>
    <td>CGNS compress (rewrite) setting.
@@ -369,7 +376,7 @@ This allows creation of a 2.5 compatible CGNS file.
 </table>
 
 <p>
-The function <tt>cg_configure</tt> allows certain CGNS library internal
+The function <tt>cg_configure</tt> allows particular CGNS library internal
 options to be configured.
 The currently supported options and expected values are:
 
@@ -387,7 +394,7 @@ The currently supported options and expected values are:
        going to terminate (i.e., a call to <tt>cg_error_exit()</tt>).
        The second argument is the error or warning message.
        If this is defined, warning and error messages will go to the
-       function, rather than the terminal.
+       function rather than the terminal.
        A <tt>value</tt> of <tt>NULL</tt> will remove the call-back
        function.
 <tr valign=baseline><td>&nbsp;
@@ -396,10 +403,10 @@ The currently supported options and expected values are:
    <td>This is the rewrite-upon-close setting.
        <b>Note:</b> Prior versions of the library would automatically rewrite
        the CGNS file when it was closed after being opened in modify mode
-       if there was unused space. This is no longer done, due to possible
+       if there was unused space. This is no longer done due to possible
        conflicts when using parallel I/O. The previous behavior may be
        recovered by setting <tt>value</tt> to a positive integer. In this
-       case the file will be rewritten if the number of node deletions or
+       case, the file will be rewritten if the number of node deletions or
        modifications are equal to or exceed this number. Setting
        <tt>value</tt> to a negative number will force the rewrite
        when the file is closed. The default value is 0 (no rewrite).
@@ -411,14 +418,16 @@ The currently supported options and expected values are:
        containing one or more directories, formatted the same as for the
        <tt>PATH</tt> environment variable.
        This will replace any current settings.
-       Setting <tt>value</tt> to <tt>NULL</tt> will remove all paths.
+       Setting <tt>value</tt> to <tt>NULL</tt> will remove all paths. In Fortran,
+       the path must terminate with a NULL character, CHAR(0) or C_NULL_CHAR. 
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_ADD_PATH</tt><td>
    <td>Adds a directory, or list of directories, to the linked-to file
        search path.
        This is the same as <tt>CG_CONFIG_SET_PATH</tt>, but adds to the
-       path instead of replacing it.
+       path instead of replacing it. In Fortran,
+       the path must terminate with a NULL character, CHAR(0) or C_NULL_CHAR.
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_FILE_TYPE</tt><td>
@@ -440,23 +449,23 @@ The currently supported options and expected values are:
       always represented the start of an array: in an array with no rind
       planes, the core location would have index 1; in an array with 1 rind
       plane, the core location would have index 2.  In version 3.4 of the
-      Mid-Level Library, the behavior of the API was fixed to match that
+      Mid-Level Library, the API's behavior was fixed to match that
       specified in the SIDS: core array locations always begin at index 1.
       This option allows for configuring the library to pre-3.4 indexing
       behavior (set value to <tt>CG_CONFIG_RIND_ZERO</tt>) or the new default
       behavior (set value to <tt>CG_CONFIG_RIND_CORE</tt>).  Note that using
       <tt>CG_CONFIG_RIND_ZERO</tt> is considered obsolete, but is provided for
-      backwards compatability.  Most users should not set this option and use
+      backward compatibility.  Most users should not select this option and use
       the default.  Values used for this option do not need to be explicitly
-      cast as <tt>void*</tt>.  Use of this option does not change the cgns file
+      cast as <tt>void*</tt>.  This option does not change the cgns file
       in any way; it only modifies the API to the library.
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_HDF5_COMPRESS</tt><td>
    <td>Sets the compression level for data written from HDF5. The default is
-       no compression. Setting <tt>value</tt> to -1, will use the default
+       no compression. Setting <tt>value</tt> to -1 will use the default
        compression level of 6. The acceptable values are 0 to 9, corresponding
-       to gzip compression levels.
+       to gzip compression levels. <b>This option currently does nothing as compression is not yet implemented</b>.
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_HDF5_MPI_COMM</tt><td>
@@ -465,6 +474,24 @@ The currently supported options and expected values are:
        typecasting it to a <tt>void *</tt>. This is generally used
        internally - see <a href="../pcgns/library.html#misc">cgp_mpi_comm</a>
        instead.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_HDF5_DISKLESS</tt><td>
+   <td>Performs I/O directly to memory and can be used to create temporary CGNS files that never exist on permanent storage.
+       The memory is written to disk depending on the state of <tt>CG_CONFIG_HDF5_DISKLESS_WRITE</tt>. CGNS will use the
+       <em>core</em> file driver in HDF5 via <em>H5Pset_fapl_core</em>, and the parameters associated with
+       <em>CG_CONFIG_HDF5_DISKLESS</em> are associated with that API. When <tt>value</tt> is 1, any previously defined driver mode is ignored.
+       Setting <tt>value</tt> to 0 disables the diskless mode, enabling the previous mode. This configuration is
+       not a valid option when accessing the memory by more than one process.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_HDF5_DISKLESS_INCR</tt><td>
+   <td><tt>Value</tt> specifies the increment by which allocated memory is to be increased each time more memory is required, in bytes.
+       The default is 10MiB. Ideally, <tt>value</tt> should be set large enough to minimize repeated increases. The type of <tt>value</tt> is <em>size_t</em> in C and <em>C_SIZE_T</em> in Fortran. Due to a bug with gfortran, it is advisable to use <em>C_LOC</em> or <em>C_FUNLOC</em> in-line of the call instead of using a variable.
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_HDF5_DISKLESS_WRITE</tt><td>
+   <td><tt>Value</tt> indicates whether to write (<tt>value=1</tt>) the memory contents to disk when the file is closed. Otherwise, <tt>value=0</tt> does not persist the memory to disk.
 </table>
 
 <p>
@@ -473,12 +500,12 @@ The routines <tt>cg_error_handler</tt>, <tt>cg_set_compress</tt>,
 are convenience functions built on top of <tt>cg_configure</tt>.
 
 <p>
-There is no Fortran counterpart to function <tt>cg_configure</tt> or
+There is no Fortran counterpart for function
 <tt>cg_error_handler</tt>. The Fortran function <tt>cg_exit_on_error_f</tt>
-routine be be used in place of <tt>cg_error_handler</tt>. If <tt>flag</tt>
+routine can be used in place of <tt>cg_error_handler</tt>. If <tt>flag</tt>
 is non-zero, then when an error is encountered, the library will print
-the error message and exit with an code of 1. Setting <tt>flag</tt> to
-zero (the default) prevents this and the error is returned to the user
+the error message and exit with a code of 1. Setting <tt>flag</tt> to
+zero (the default) prevents this, and the error is returned to the user
 code.
 
 <p>

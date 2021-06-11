@@ -492,6 +492,33 @@ The currently supported options and expected values are:
 <tr valign=baseline><td>
    <td><tt>CG_CONFIG_HDF5_DISKLESS_WRITE</tt><td>
    <td><tt>Value</tt> indicates whether to write (<tt>value=1</tt>) the memory contents to disk when the file is closed. Otherwise, <tt>value=0</tt> does not persist the memory to disk.
+
+
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_HDF5_ALIGNMENT</tt><td>
+   <td>Configures HDF5's <em>H5Pset_alignment</em> and sets the <em>alignment</em>, <tt>value[1]</tt>, properties of a file access property list so that any file object greater than or equal in size to a <em>threshold</em>, <tt>value[0]</tt>,  bytes will be aligned on an address which is a multiple of alignment.
+
+
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_HDF5_MD_BLOCK_SIZE</tt><td>
+   <td>Configures HDF5's <em>H5Pset_meta_block_size</em> and sets the minimum size, <tt>value (in bytes)</tt>, of metadata block allocations. 
+
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_HDF5_BUFFER</tt><td>
+   <td>Configures HDF5's <em>H5Pset_buffer</em> and sets the maximum size, <tt>value (in bytes)</tt>, for the type conversion buffer and background buffer.
+
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_HDF5_SIEVE_BUF_SIZE</tt><td>
+   <td>Configures HDF5's <em>H5Pset_sieve_buf_size</em> and sets the maximum size, <tt>value (in bytes)</tt>, of the data sieve buffer.
+
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><tt>CG_CONFIG_RESET</tt><td>
+   <td><tt>Value</tt> indicates the configuration values to reset to their default values. Currently, only <em>CG_CONFIG_RESET_HDF5</em> is a valid <tt>value</tt> and will reset all the <tt>CG_CONFIG_HDF5_*</tt> parameters, excluding <em>CG_CONFIG_HDF5_MPI_COMM</em> and <em>CG_CONFIG_HDF5_DISKLESS</em>, to their default values.
 </table>
 
 <p>

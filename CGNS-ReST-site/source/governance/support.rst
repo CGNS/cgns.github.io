@@ -59,15 +59,63 @@ the web pages from these text files and a set of layout templates.
 The template we use for CGNS is a modified version of the **Guzzle** template.
 This modified version is released with the doc sources.
 
-First, you have to install the production libs and tools, you have to
+## STEP 0
+#########
+
+You have to install the production libs and tools, you have to
 make available:
 
   - Python (v3+)
   - Sphinx (v3.2+) and all its associated libs (see below)
   - guzzle sphinx theme
 
-Jump to the glossary to get more info about :term:`Python` and :term:`Sphinx`.
-The *guzzle* theme can be found in the CGNS doc sources.
+To check your production configuration, 
+open an Unix shell, for example **bash** and run the commands
+(do not type the `$` sign which is supposed to be the shell prompt:
+
+.. code-block:: shell
+
+   $ python
+   Python 3.9.1 (default, Feb  8 2021, 12:46:16) 
+   [GCC 4.8.5 20150623 (Red Hat 4.8.5-16)] on linux
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>> 
+
+If the python version is not 3.x.y or if you do not have python, you
+have to install it. On some systems, you would have to type `python3`
+to run python instead of only `python` without version number.
+
+Once python 3.x.y is there, go to **STEP 2**.
+
+.. warning::
+
+  Now your python version is 3.x.y and you have to use the **3.x**
+  version in all path we mention in next steps. The example are using **3.7**
+  and you **should** change these path with your own **3.x** to make it
+  work properly.
+
+## STEP 1
+#########
+
+The `>>>` sign is the python interpreter prompt. We resume our test by
+trying to find out if our python installation has all required packages:
+
+.. code-block:: python
+
+   >>> import sphinx
+   >>> import guzzle_sphinx_theme
+
+If the command fails on `import sphinx`, you can install it using 
+the shell command (**not** a python command):
+
+.. code-block:: shell
+
+   $ pip install sphinx
+
+If the command fails on the `import guzzle_sphinx_theme` you have to
+install the guzzle package.
+The *guzzle* theme can be found in the CGNS doc sources, you find the package
+in <clone-directory>/
 You can find below an example installation of *guzzle* you have to modify 
 to fit your own environment.
 
@@ -92,6 +140,64 @@ For example, on a Unix platform with a *sh* shell:
    cd /tmp/gz/install/lib/python3.7/site-packages
    unzip guzzle_sphinx_theme-0.7.11-py3.7.egg
 
+If you still have an error in `import guzzle_sphinx_theme' you can move
+the pacge this way:
+
+.. code-block:: shell
+
+   cd /tmp/gz/install/lib/python3.7/site-packages
+   mv guzzle_sphinx_theme-0.7.11-py3.7.egg/guzzle_sphix_theme .
+
+Try again this **STEP 1** if succeed, you jump to **STEP 2**
+
+## STEP 2
+#########
+
+Congrats! you are now ready to contribute to the CGNS documentation.
+We retrieve the last version from the *git* repository.
+Go to the directory where you want to produce the documentation,
+say for example: ``/my/own/local/doc/directory``
+
+.. code-block:: shell
+
+   cd /my/own/local/doc/directory
+   git clone https://github.com/CGNS/cgns.github.io.git
+   git checkout doc-rest-migration
+
+.. note::
+
+   You need to have **git** to get the actual documentation source tree.
+   We cannot detail here how to install git or how to allow it to access to
+   the CGNS repository. If you really are lost, please use CGNS mailing list.
+
+## STEP 3
+#########
+
+Everything is ready now, once you are in ``/my/own/local/doc/directory`` 
+all sources are into::
+
+  CGNS-ReST-site
+
+.. note::
+
+  If this directory is not there, be sure you are on the *doc-rest-migration*
+  branch.
+  
+To produce the documentation, you run::
+
+  cd CGNS-ReST-site
+  sh ./build.sh
+
+All doc is generated into::
+
+  /my/own/local/doc/directory/cgns-test.github.io
+
+To check the produced documentation, you open a web browser (*chrome*, 
+*firefox*, whatever...) and you open the top page which is ``index.html``
+(in this example we are still in the  ``CGNS-ReST-site``)::
+
+  firefox ../../cgns-test.github.io/index.html
+
 Second you run the `build.sh` script, it generates all the stuff and
 copies a final/ usable html directory with all required files.
 You can copy this directory at any place you want, the directory is
@@ -100,6 +206,27 @@ self-contained.
 The equation rendering makes a reference to an external link,
 so that you may have issues with the equations if you are not connected
 to the public internet.
+
+## STEP 4
+#########
+
+Now you open your favorite text editor. You follow the documentation
+editing recommendations described hereafter and you loop on steps 3 and 4.
+
+## STEP 5
+#########
+
+You are done with your editing. You commit your changes with a nice
+comment and you push it to the repository::
+
+   git add -A
+   git commit -m 'update section 4.2.1'
+   git push
+
+.. note::
+
+   If some modifications have been applied since you where editing, you have to
+   perform a merge by yourself after a ``git pull``
 
 Documentation editing
 ^^^^^^^^^^^^^^^^^^^^^

@@ -17,156 +17,17 @@ These functions usually are found the the preamble or the epilog of your
 application code using the :term:`CGNS/MLL`.
 
 
-.. list-table::
-   :header-rows: 1
-   :widths: 2 8
-
-   * -
-     - `Opening and closing a File`_
-   * - ``cg_open`` 
-     - Open a CGNS file
-   * - ``cg_version``
-     - Get CGNS file version
-   * - ``cg_precision`` 
-     - Get CGNS file precision
-   * - ``cg_close``
-     - Close a CGNS file
-   * - ``cg_is_cgns``
-     - Check for a valid CGNS file
-   * - ``cg_save_as``
-     - Save the open CGNS file
-   * - ``cg_set_file_type`` 
-     - Set default file type
-   * - ``cg_get_file_type``
-     - Get file type for open CGNS file
-
-       
-.. list-table::
-   :header-rows: 1
-   :widths: 2 8
-       
-   * - 
-     - `Configuring CGNS internals`_
-   * - ``cg_configure`` 
-     - Configure CGNS internals
-   * - ``cg_error_handler`` 
-     - Set CGNS error handler
-   * - ``cg_set_compress`` 
-     - Set CGNS compression mode
-   * - ``cg_get_compress`` 
-     - Get CGNS compression mode
-   * - ``cg_set_path`` 
-     - Set the CGNS link search path
-   * - ``cg_add_path`` 
-     - Add to the CGNS link search path
-
-.. list-table::
-   :header-rows: 1
-   :widths: 2 8
-
-   * - 
-     - `Interfacing with CGIO`_
-   * - ``cg_get_cgio`` 
-     - get the CGIO index number
-   * - ``cg_root_id`` 
-     - get the root node ID
-
 
 Opening and closing a File
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. table::
-   :widths: 110 15
-   
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | C Functions                                                                                                                    | Modes |
-   +================================================================================================================================+=======+
-   | :out:`ier` = :sig-name:`cg_open` (:in:`char *filename`, :in:`int mode`, :out:`int *fn`);                                       | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_version` (:in:`int fn`, :out:`float *version`);                                                     | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_precision` (:in:`int fn`, :out:`int *precision`);                                                   | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_close` (:in:`int fn`);                                                                              | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_is_cgns` (:in:`const char *filename`, :out:`int *file_type`);                                       | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_save_as` (:in:`int fn`, :in:`const char *filename`, :in:`int file_type`, :in:`int follow_links`);   | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_set_file_type` (:in:`int file_type`);                                                               | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | :out:`ier` = :sig-name:`cg_get_file_type` (:in:`int fn`, :out:`int *file_type`);                                               | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-.. table::
-   :widths: 110 15
-   
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | Fortran interfaces                                                                                                             | Modes |
-   +================================================================================================================================+=======+
-   | call ``cg_open_f`` (:in:`filename`, :in:`mode`, :out:`fn`, :out:`ier`)                                                         | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_version_f`` (:in:`fn`, :out:`version`, :out:`ier`)                                                                   | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_precision_f`` (:in:`fn`, :out:`precision`, :out:`ier`)                                                               | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_close_f`` (:in:`fn`)                                                                                                 | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_is_cgns_f`` (:in:`filename`, :out:`file_type`)                                                                       | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_save_as_f`` (:in:`fn`, :in:`filename`, :in:`file_type`, :in:`follow_links`)                                          | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_set_file_type_f`` (:in:`file_type`)                                                                                  | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-   | call ``cg_get_file_type_f`` (:in:`fn`, :out:`file_type`)                                                                       | r w m |
-   +--------------------------------------------------------------------------------------------------------------------------------+-------+
-
-:in:`Input` / :out:`Ouput`
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-:filename:	   	Name of the CGNS file, including path name if necessary. There is no limit on the length of this character variable.
-:mode:		Mode used for opening the file. The modes currently supported are :code:`CG_MODE_READ`, :code:`CG_MODE_WRITE`, and :code:`CG_MODE_MODIFY`.
-:fn:		CGNS file index number.
-:version:		CGNS version number.
-:precision:		Precision used to write the CGNS file. The return value will be one of 32 (32-bit), 64 (64-bit), or 0 if not known.
-:file_type:		Type of CGNS file. This will typically be either :code:`CG_FILE_ADF` or :code:`CG_FILE_HDF5` depending on the underlying file format. However, note that when built in 32-bit, there is also an option to create a Version 2.5 CGNS file by setting the file type to :code:`CG_FILE_ADF2`.
-:follow_links:	This flag determines whether links are left intact when saving a CGNS file. If non-zero, then the links will be removed and the data associated with the linked files copied to the new file.
-:ier:		Error status. 
-
-The function :code:`cg_open` must always be the first one called. It opens a CGNS file for reading and/or writing and returns an index number :code:`fn`. The index number serves to identify the CGNS file in subsequent function calls. Several CGNS files can be opened simultaneously. The current limit on the number of files opened at once depends on the platform.
-
-The file can be opened in one of the following modes:
-
-.. list-table::
-
-  * - **CG_MODE_READ**
-    - Read only mode.
-  * - **CG_MODE_WRITE**
-    - Write only mode.
-  * - **CG_MODE_MODIFY**
-    - Reading and/or writing is allowed.
+.. doxygengroup:: CGNSFile
+    :project: CGNSMLLDoxygenBreathe
+    :members:
+    :content-only:
 
 
-The function :code:`cg_close` must always be the last one called.
-It closes the CGNS file designated by the index number :code:`fn` and frees the memory where the CGNS data was kept.
-When a file is opened for writing, :code:`cg_close` writes all the CGNS data in memory onto disk prior to closing the file.
-Consequently, if is omitted, the CGNS file is not written properly.
 
-In order to reduce memory usage and improve execution speed, large arrays such as grid coordinates or flow solutions are not actually stored in memory.
-Instead, only basic information about the node is kept, while reads and writes of the data is directly to and from the application's memory.
-An attempt is also made to do the same with unstructured mesh element data.
-
-When a CGNS file is newly created using :code:`CG_MODE_WRITE`, the default type of database manager used is determined at compile time.
-If the CGNS library was built with HDF5 version 1.8 or later support, the file type will be :code:`CG_FILE_HDF5`, otherwise :code:`CG_FILE_ADF` is used.
-This may be changed either by setting an environment variable, :code:`CGNS_FILETYPE`, to one of adf, hdf5, or adf2, or by calling the routine :code:`cg_set_file_type` prior to the :code:`cg_open` call.
-Calling :code:`cg_set_file_type` with the argument :code:`CG_FILE_NONE` will reset the library to use the default file type.
-
-.. note::
-  If the environment variable :code:`CGNS_FILETYPE` is set, it takes precedence.
-
-For existing files, the function :code:`cg_is_cgns` may be used to determine if a file is a CGNS file or not, and the type of file (:code:`CG_FILE_ADF` or :code:`CG_FILE_HDF5`).
-If the file is a CGNS file, :code:`cg_is_cgns` returns :code:`CG_OK`,
-otherwise :code:`CG_ERROR` is returned and :code:`file_type` is set to :code:`CG_FILE_NONE`.
-
-The CGNS file identified by :code:`fn` may be saved to a different filename and type using :code:`cg_save_as`. In order to save as an HDF5 file, the library must have been built with HDF5 support. ADF support is always built. The function :code:`cg_set_file_type` sets the default file type for newly created CGNS files. The function :code:`cg_get_file_type` returns the file type for the CGNS file identified by :code:`fn`. If the CGNS library is built as 32-bit, the additional file type, :code:`CG_FILE_ADF2`, is available. This allows creation of a 2.5 compatible CGNS file.
 
 Configuring CGNS Internals
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

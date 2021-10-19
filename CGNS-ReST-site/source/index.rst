@@ -55,7 +55,7 @@ Main Topics
    :align: center
    
    * - :ref:`What is CGNS? <WhatIsCGNS>`
-     - :ref:`Getting Started <QuickStartGuide>`
+     - :ref:`Quick Start Guide <QuickStartGuide>`
      - :ref:`News <LatestNews>`
    * - :ref:`Documentation map <DocMap>`
      - :ref:`Steering Committee <YeMightySteeringCommittee>`

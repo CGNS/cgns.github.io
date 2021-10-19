@@ -9,35 +9,29 @@ Support
 The CGNS community can help you to understand, use and even participate
 to the CGNS standard. There are various means.
 As a **user** of the CGNS files and tools,
-you can browse the :ref:`web resources <WebResources>`
-or ask to the :ref:`CGNS mailing list <SupportCGNSTalk>`.
-If you are a **developper** and you want to install the libs, the docs or
+you can 
+ask questions to the :ref:`CGNS Discussion Forum <SupportDiscussionForum>` or
+browse the :ref:`web resources <WebResources>`.
+If you are a **developer** and you want to install the libs, the docs or
 the tools you jump to Development support.
 
-.. _SupportCGNSTalk:
+.. _SupportDiscussionForum:
 
-Discussion list
----------------
+Discussion Forum
+----------------
 
-This is a mailman system, if you want to join you have
-`to register on this page <https://lists.nasa.gov/mailman/listinfo/cgnstalk/>`_
+The discussion forum is available on GitHub.com.  You must have an account.
+Notifications of new posts are controlled by setting the proper watch notifications for the CGNS/CGNS repository. 
 
-The mailing list archives are available from 2008 forward from: https://lists.nasa.gov/mailman/private/cgnstalk/ (you may need to sign up to be a member of CGNSTalk in order to view).
-For convenience, they are also given below, along with older archives extending back to 2000.
-
-:2000-2020:
-  Archives	(Gzipped Text File)
-
-<link to archives>
-
-
+Prior to 2020, there was a CGNSTalk mailing list (connected to NASA) that has since been discontinued.
+The CGNSTalk mailing list archives [:download:`GZIPPED TXT FILE<../../cgnstalk_archives/2000-2020.txt.gz>`] are available from 2000 to 2020.
 
 .. _WebResources:
 
 Web resources
 -------------
 
-list here some web sites...
+None listed yet.
 
 
 .. _SupportDev:
@@ -48,7 +42,7 @@ Development support
 Building libraries and tools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The CGNS libs and tools are hosted on Github, the associated documentation
+The CGNS libs and tools are hosted on Github; the associated documentation
 can be found on `this page <http://www.github.com/CGNS/CGNS>`_.
 
 Building the documentation
@@ -174,15 +168,17 @@ say for example: ``/my/own/local/doc/directory``
 #########
 
 Everything is ready now, once you are in ``/my/own/local/doc/directory`` 
-all sources are into::
+all sources are in::
 
-  CGNS-ReST-site
+  CGNS-ReST-site/
 
 .. note::
 
   If this directory is not there, be sure you are on the *doc-rest-migration*
   branch.
   
+Most of the files to be created/edited are **rst** files located in and below CGNS-ReST-site/source/
+
 To produce the documentation, you run::
 
   cd CGNS-ReST-site

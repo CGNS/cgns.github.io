@@ -3,7 +3,7 @@
 
 .. _DocUserGuide:
 
-userguide
+Userguide
 =========
 
 .. last line

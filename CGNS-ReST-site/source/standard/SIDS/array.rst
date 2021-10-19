@@ -297,6 +297,8 @@ A one-dimensional array of integers; the array is the integers from 1 to 10. The
 
 The structure parameters for :sidskey:`DataArray_t` state the data is an one-dimensional integer array of length ten. The value of :sidskey:`DataClass` indicates the data is :ref:`unitless constants <dimensionless>`.
 
+.. _ex_data2:
+
 Example - Two-Dimensional Data Array, Pressures
 """""""""""""""""""""""""""""""""""""""""""""""
 

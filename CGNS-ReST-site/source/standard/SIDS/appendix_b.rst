@@ -7,8 +7,8 @@
 
 .. role:: sidsref(code)
 
-Appendix B
-==========
+Appendix B: Structured Two-Zone Flat Plate Example
+==================================================
 
 This section describes a complete database for a sample test case. The test case is compressible turbulent flow past a flat plat at zero incidence. The domain is divided into two zones as shown in the figure below. The interface between the two zones is 1-to-1.
 

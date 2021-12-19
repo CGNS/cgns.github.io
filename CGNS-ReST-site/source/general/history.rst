@@ -11,7 +11,7 @@ The section below details its history, the current status and some of
 the noticeable contribution to the standard.
 
 See also some history facts in 
-the :ref:`Steering committee section <YeMightyStrrringCommittee`.
+the :ref:`Steering committee section <YeMightySteeringCommittee>`.
 
 Current Status
 ^^^^^^^^^^^^^^

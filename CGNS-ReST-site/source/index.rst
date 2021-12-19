@@ -65,7 +65,7 @@ Main Topics
      - :ref:`Contributed CGNS Utilities <Contributed>`
    * - :ref:`Example CGNS Files <SupportExamples>`
      - :ref:`A User's Guide to CGNS <DocUserGuide>`
-     - :ref:`Discussion Group (CGNSTalk) <SupportCGNSTalk>`
+     - :ref:`Discussion Group (CGNSTalk) <SupportDiscussionForum>`
    * - :ref:`Meeting and Telecon Minutes <DocMinutes>`
      - :ref:`Conference Papers and Slide Presentations <DocExtra>`
      - :ref:`Proposals for Extensions (CPEX) <CPEX>`

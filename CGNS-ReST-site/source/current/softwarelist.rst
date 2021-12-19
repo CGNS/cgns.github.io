@@ -8,7 +8,7 @@ More CGNS Software
 
 This list may be outdated. If you want to add/change/remove any entry, 
 please contact the CGNS Steering Committee 
-on the :ref:`mailing list <SupportCGNSTalk>`.
+on the :ref:`mailing list <SupportDiscussionForum>`.
 
 The CGNS Steering Committee did not check the compliance of these tools,
 the listing is informative and does not implies the CGNS Steering Committee

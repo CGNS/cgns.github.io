@@ -23,7 +23,7 @@ How can I get help if I run into problems?
 There is no full-time CGNS *"help desk"*. Instead, the CGNS community relies on both extensive documentation and other CGNS users for help and support.
 The documentation is available at :ref:`Documentation Home <CGNSHomePage>`.
 In particular, we recommend that beginning users consult the :ref:`User's Guide <DocUserGuide>`, which includes many example programs in both Fortran and C.
-If you still need help, please make use of the :ref:`Discussion Group <SupportCGNSTalk>`, via e-mail: cgnstalk@lists.nasa.gov. We strongly encourage you to join this group so you can be a part of ongoing CGNS discussions and updates.
+If you still need help, please make use of the :ref:`Discussion Group <SupportDiscussionForum>`, via e-mail: cgnstalk@lists.nasa.gov. We strongly encourage you to join this group so you can be a part of ongoing CGNS discussions and updates.
 
 .. tip::
   
@@ -102,7 +102,7 @@ For example, Version 4.0 of the library can read a Version 4.1 CGNS file, but Ve
 A new "major" version number is assigned either when forward compatibility is lost, or else when there is a significant change made to the API.
 The second number is the "point release" number. It increments when there are relatively minor changes to the API, or with the addition of new features.
 The third number (the revision number) changes with bug fixes.
-Major releases and point releases are announced (via the :ref:`Latest News <LatestNews>` page and via the :ref:`CGNSTalk Discussion Group <SupportCGNSTalk>`), whereas revisions are generally not announced.
+Major releases and point releases are announced (via the :ref:`Latest News <LatestNews>` page and via the :ref:`CGNSTalk Discussion Group <SupportDiscussionForum>`), whereas revisions are generally not announced.
 Note that CGNS always maintains backward compatibility: the most recent version of the library will be able to read all older versions CGNS files.
  
 

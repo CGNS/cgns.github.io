@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
@@ -94,52 +95,75 @@
             
   <section id="error-handling">
 <span id="mllerrors"></span><h1>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h1>
-<table class="colwidths-given docutils align-default">
+<!-- CGNS Mid-Level Library - Error Handling -->
+
+<html>
+<head>
+<title> CGNS Mid-Level Library - Error Handling </title>
+</head>
+
+<h2>Error Handling</h2>
+
+<br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
 <colgroup>
-<col style="width: 88%" />
-<col style="width: 12%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>C Functions</p></th>
-<th class="head"><p>Modes</p></th>
-</tr>
-</thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
 <tbody>
-<tr class="row-even"><td><p><span class="out">const char* error_message</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_get_error</span></span></code> ();</p></td>
-<td><p>r w m</p></td>
-</tr>
-<tr class="row-odd"><td><p>void <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_error_exit</span></span></code> ();</p></td>
-<td><p>r w m</p></td>
-</tr>
-<tr class="row-even"><td><p>void <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_error_print</span></span></code> ();</p></td>
-<td><p>r w m</p></td>
-</tr>
-</tbody>
-</table>
-<table class="colwidths-given docutils align-default">
-<colgroup>
-<col style="width: 88%" />
-<col style="width: 12%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Fortran interfaces</p></th>
-<th class="head"><p>Modes</p></th>
-</tr>
-</thead>
+<tr><td nowrap>
+        <tt><b><span class=out><i>error_message</i></span> = const char *cg_get_error();</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>void cg_error_exit();</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>void cg_error_print();</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
 <tbody>
-<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_get_error_f</span></code> (<span class="out">error_message</span>)</p></td>
-<td><p>r w m</p></td>
-</tr>
-<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_error_exit_f</span></code> ()</p></td>
-<td><p>r w m</p></td>
-</tr>
-<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_error_print_f</span></code> ()</p></td>
-<td><p>r w m</p></td>
-</tr>
-</tbody>
+<tr><td nowrap>
+       <tt><b>call cg_get_error_f(<span class=out><i>error_message</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_error_exit_f()</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_error_print_f()</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;w&nbsp;m</b></tt>
 </table>
-<p>If an error occurs during the execution of a CGNS library function, signified by a non-zero value of the error status variable ier, an error message may be retrieved using the function cg_get_error. The function cg_error_exit may then be used to print the error message and stop the execution of the program. Alternatively, cg_error_print may be used to print the error message and continue execution of the program.</p>
-<p>In C, you may define a function to be called automatically in the case of a warning or error using the cg_configure routine. The function is of the form <code class="code docutils literal notranslate"><span class="pre">void</span> <span class="pre">err_func(int</span> <span class="pre">is_error,</span> <span class="pre">char</span> <span class="pre">*errmsg)</span></code>, and will be called whenever an error or warning occurs. The first argument, is_error, will be 0 for warning messages, 1 for error messages, and −1 if the program is going to terminate (i.e., a call to cg_error_exit). The second argument is the error or warning message.</p>
+
+<p>
+If an error occurs during the execution of a CGNS library function,
+signified by a non-zero value of the error status variable
+<tt>ier</tt>, an error message may be retrieved using the function
+<tt>cg_get_error</tt>.
+The function <tt>cg_error_exit</tt> may then be used to print the
+error message and stop the execution of the program.
+Alternatively, <tt>cg_error_print</tt> may be used to print the
+error message and continue execution of the program.
+
+<p>
+In C, you may define a function to be called automatically in the case
+of a warning or error using the
+<a href="fileops.html#configure"><tt>cg_configure</tt></a> routine.
+The function is of the form <tt>void err_func(int is_error, char
+*errmsg)</tt>, and will be called whenever an error or warning occurs.
+The first argument, <tt>is_error</tt>, will be 0 for warning messages,
+1 for error messages, and &minus;1 if the program is going to terminate
+(i.e., a call to <tt>cg_error_exit</tt>).
+The second argument is the error or warning message.
+
+<p>
+</body>
+</html>
 </section>
 
 

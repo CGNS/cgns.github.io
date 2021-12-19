@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
@@ -73,23 +74,6 @@
     </div>
   </div>
 </div>
-<div class="sidebar-block">
-  <div class="sidebar-wrapper">
-    <h2>Contents</h2>
-    <div class="sidebar-localtoc">
-      <ul>
-<li><a class="reference internal" href="#">Links</a><ul>
-<li><a class="reference internal" href="#link-functions">Link functions</a><ul>
-<li><a class="reference internal" href="#input-ouput"><span class="in">Input</span> / <span class="out">Ouput</span></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-    </div>
-  </div>
-</div>
       
     </div>
   </div>
@@ -111,98 +95,118 @@
             
   <section id="links">
 <span id="mlllinks"></span><h1>Links<a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h1>
-<table class="colwidths-given docutils align-default">
+<!-- CGNS Mid-Level Library - Links -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title> CGNS Mid-Level Library - Links </title>
+</head>
+
+<h2>Links</h2>
+
+<ul type=circle>
+<li> <tt><b>cg_link_write</b></tt> - Create a link at the current location
+<li> <tt><b>cg_is_link</b></tt> - Test if a node is a link
+<li> <tt><b>cg_link_read</b></tt> - Get path information for a link at the current location
+</ul>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_link_write</span></code></p></td>
-<td><p>Create a link at the current location</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_is_link</span></code></p></td>
-<td><p>Test if a node is a link</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_link_read</span></code></p></td>
-<td><p>Get path information for a link at the current location</p></td>
-</tr>
-</tbody>
-</table>
-<section id="link-functions">
-<h2>Link functions<a class="headerlink" href="#link-functions" title="Permalink to this headline">¶</a></h2>
-<table class="colwidths-given docutils align-default">
-<colgroup>
-<col style="width: 88%" />
-<col style="width: 12%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>C Functions</p></th>
-<th class="head"><p>Modes</p></th>
-</tr>
-</thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
 <tbody>
-<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_link_write</span></span></code> (<span class="in">char *nodename</span>, <span class="in">char *filename</span>, <span class="in">char *name_in_file</span>);</p></td>
-<td><p>- w m</p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_is_link</span></span></code> (<span class="out">int *path_length</span>);</p></td>
-<td><p>r - m</p></td>
-</tr>
-<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_link_read</span></span></code> (<span class="out">char **filename</span>, <span class="out">char **link_path</span>);</p></td>
-<td><p>r - m</p></td>
-</tr>
-</tbody>
-</table>
-<table class="colwidths-given docutils align-default">
-<colgroup>
-<col style="width: 88%" />
-<col style="width: 12%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Fortran interfaces</p></th>
-<th class="head"><p>Modes</p></th>
-</tr>
-</thead>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_link_write(<span class=in>char *nodename</span>, <span class=in>char *filename</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *name_in_file</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_is_link(<span class=out><i>int *path_length</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_link_read(<span class=out><i>char **filename</i></span>, <span class=out><i>char **link_path</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
-<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_link_write_f</span></code> (<span class="in">filename</span>, <span class="in">mode</span>, <span class="out">fn</span>, <span class="out">ier</span>)</p></td>
-<td><p>- w m</p></td>
-</tr>
-<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_is_link_f</span></code> (<span class="out">path_length</span>, <span class="out">ier</span>)</p></td>
-<td><p>r - m</p></td>
-</tr>
-<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_link_read_f</span></code> (<span class="out">filename</span>, <span class="out">link_path</span>, <span class="out">ier</span>)</p></td>
-<td><p>r - m</p></td>
-</tr>
-</tbody>
+<tr><td nowrap>
+        <tt><b>call cg_link_write_f(<span class=in>nodename</span>, <span class=in>filename</span>, <span class=in>name_in_file</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_is_link_f(<span class=out><i>path_length</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_link_read_f(<span class=out><i>filename</i></span>, <span class=out><i>link_path</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
-<section id="input-ouput">
-<h3><span class="in">Input</span> / <span class="out">Ouput</span><a class="headerlink" href="#input-ouput" title="Permalink to this headline">¶</a></h3>
-<dl class="field-list simple">
-<dt class="field-odd">nodename</dt>
-<dd class="field-odd"><p>Name of the link node to create, e.g., <code class="code docutils literal notranslate"><span class="pre">GridCoordinates</span></code>.</p>
-</dd>
-<dt class="field-even">filename</dt>
-<dd class="field-even"><p>Name of the linked file, or empty string if the link is within the same file.</p>
-</dd>
-<dt class="field-odd">name_in_file</dt>
-<dd class="field-odd"><p>Path name of the node which the link points to. This can be a simple or a compound name, e.g., <code class="code docutils literal notranslate"><span class="pre">Base/Zone</span> <span class="pre">1/GridCoordinates</span></code>.</p>
-</dd>
-<dt class="field-even">path_length</dt>
-<dd class="field-even"><p>Length of the path name of the linked node. The value 0 is returned if the node is not a link.</p>
-</dd>
-<dt class="field-odd">link_path</dt>
-<dd class="field-odd"><p>Path name of the node which the link points to.</p>
-</dd>
-<dt class="field-even">ier</dt>
-<dd class="field-even"><p>Error status.</p>
-</dd>
-</dl>
-<p>Use <code class="code docutils literal notranslate"><span class="pre">cg_goto(_f)</span></code> to position to a location in the file prior to calling these routines.</p>
-<p>When using <code class="code docutils literal notranslate"><span class="pre">cg_link_write</span></code>, the node being linked to does not have to exist when the link is created. However, when the link is used, an error will occur if the linked-to node does not exist.</p>
-<p>Only nodes that support child nodes will support links.</p>
-<p>It is assumed that the CGNS version for the file containing the link, as determined by the <code class="code docutils literal notranslate"><span class="pre">CGNSLibraryVersion_t</span></code> node, is also applicable to <code class="code docutils literal notranslate"><span class="pre">filename</span></code>, the file containing the linked node.</p>
-<p>Memory is allocated by the library for the return values of the C function <code class="code docutils literal notranslate"><span class="pre">cg_link_read</span></code>. This memory should be freed by the user when no longer needed by calling <code class="code docutils literal notranslate"><span class="pre">cg_free(filename)</span></code> and <code class="code docutils literal notranslate"><span class="pre">cg_free(link_path)</span></code>.</p>
-</section>
-</section>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>nodename</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Name of the link node to create, e.g., <tt>GridCoordinates</tt>.
+<tr valign=baseline><td>
+   <td><tt>filename</tt><td>
+   <td>Name of the linked file, or empty string if the link is within the
+       same file.
+<tr valign=baseline><td>
+   <td><tt>name_in_file</tt><td>
+   <td>Path name of the node which the link points to.
+       This can be a simple or a compound name, e.g.,
+       <tt>Base/Zone 1/GridCoordinates</tt>.
+<tr valign=baseline><td>
+   <td><tt>path_length</tt><td>
+   <td>Length of the path name of the linked node.
+       The value 0 is returned if the node is not a link.
+<tr valign=baseline><td>
+   <td><tt>link_path</tt><td>
+   <td>Path name of the node which the link points to.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+Use <a href="navigating.html"><tt>cg_goto(_f)</tt></a> to
+position to a location in the file prior to calling these routines.
+
+<p>
+When using <tt>cg_link_write</tt>, the node being linked to does not have 
+to exist when the link is created.
+However, when the link is used, an error will occur if the linked-to
+node does not exist.
+
+<p>
+Only nodes that support child nodes will support links.
+
+<p>
+It is assumed that the CGNS version for the file containing the link,
+as determined by the
+<a href="fileops.html#openclose"><tt>CGNSLibraryVersion_t</tt> node</a>,
+is also applicable to <tt>filename</tt>, the file containing the linked
+node.
+
+<p>
+Memory is allocated by the library for the return values of the C
+function <tt>cg_link_read</tt>.
+This memory should be freed by the user when no longer needed by calling
+<a href="auxiliary.html#free"><tt>cg_free(filename)</tt> and
+<tt>cg_free(link_path)</tt></a>.
+
+<p>
+
+</body>
+</html>
 </section>
 
 

@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>File Operations &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Navigating a CGNS File" href="CGNS_MLL_navigating.html" />
+    <link rel="prev" title="General Remarks" href="CGNS_MLL_general.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_navigating.html" title="Navigating a CGNS File"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_general.html" title="General Remarks"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" accesskey="U">CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">File Operations</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">File Operations</a><ul>
+<li><a class="reference internal" href="#opening-and-closing-a-file">Opening and closing a File</a></li>
+<li><a class="reference internal" href="#configuring-cgns-internals">Configuring CGNS Internals</a><ul>
+<li><a class="reference internal" href="#input-ouput"><span class="in">Input</span> / <span class="out">Ouput</span></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#interfacing-with-cgio">Interfacing with CGIO</a><ul>
+<li><a class="reference internal" href="#id1"><span class="in">Input</span> / <span class="out">Ouput</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_MLL.html">CGNS/MLL - An API for C and Fortran applications</a></li>
+              
+              <li>File Operations</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <div class="section" id="file-operations">
+<span id="mllfileoperations"></span><h1>File Operations<a class="headerlink" href="#file-operations" title="Permalink to this headline">¶</a></h1>
+<p>These functions usually are found the the preamble or the epilog of your
+application code using the <a class="reference internal" href="../../general/glossary.html#term-CGNS-MLL"><span class="xref std std-term">CGNS/MLL</span></a>.</p>
+<div class="section" id="opening-and-closing-a-file">
+<h2>Opening and closing a File<a class="headerlink" href="#opening-and-closing-a-file" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="configuring-cgns-internals">
+<h2>Configuring CGNS Internals<a class="headerlink" href="#configuring-cgns-internals" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-given docutils align-default" id="id2">
+<caption><span class="caption-text">Configuring CGNS Internals</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>C Functions</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_configure</span></span></code> (<span class="in">int option</span>, <span class="in">void *value</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_error_handler</span></span></code> (<span class="in">void (*)(int, char *)</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_set_compress</span></span></code> (<span class="in">int compress</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_get_compress</span></span></code> (<span class="out">int *compress</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_set_path</span></span></code> (<span class="in">const char *path</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_add_path</span></span></code> (<span class="in">const char *path</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Fortran interfaces</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_exit_on_errors_f</span></code> (<span class="in">flag</span>)</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_set_compress_f</span></code> (<span class="in">compress</span>, <span class="out">ier</span>)</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_get_compress_f</span></code> (<span class="out">compress</span>, <span class="out">ier</span>)</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_set_path_f</span></code> (<span class="in">path</span>, <span class="out">ier</span>)</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_add_path_f</span></code> (<span class="in">path</span>, <span class="out">ier</span>)</p></td>
+<td><p>r w m</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="input-ouput">
+<h3><span class="in">Input</span> / <span class="out">Ouput</span><a class="headerlink" href="#input-ouput" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">option</dt>
+<dd class="field-odd"><p>The option to configure, currently one of <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_ERROR</span></code>, <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_COMPRESS</span></code>, <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_SET_PATH</span></code>, <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_ADD_PATH</span></code>,  <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_FILE_TYPE</span></code>, <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_RIND_INDEX</span></code>, <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_HDF5_COMPRESS</span></code>, or <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_HDF5_MPI_COMM</span></code> as defined in <code class="docutils literal notranslate"><span class="pre">cgnslib.h</span></code>.</p>
+</dd>
+<dt class="field-even">value</dt>
+<dd class="field-even"><p>The value to set, type cast as <code class="code docutils literal notranslate"><span class="pre">void</span> <span class="pre">*</span></code>.</p>
+</dd>
+<dt class="field-odd">compress</dt>
+<dd class="field-odd"><p>CGNS compress (rewrite) setting.</p>
+</dd>
+<dt class="field-even">path</dt>
+<dd class="field-even"><p>Pathname to search for linked to files when opening a file with external links.</p>
+</dd>
+<dt class="field-odd">flag</dt>
+<dd class="field-odd"><p>Fortran flag to set automatic exit in the case of error.</p>
+</dd>
+<dt class="field-even">ier</dt>
+<dd class="field-even"><p>Error status.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>The function <code class="code docutils literal notranslate"><span class="pre">cg_configure</span></code> allows certain CGNS library internal options to be configured. The currently supported options and expected values are:</p>
+<dl class="field-list">
+<dt class="field-odd">CG_CONFIG_ERROR</dt>
+<dd class="field-odd"><p>This allows an error call-back function to be defined by the user. The value should be a pointer to a function to receive the error. The function is defined as <code class="code docutils literal notranslate"><span class="pre">void</span> <span class="pre">err_callback(int</span> <span class="pre">is_error,</span> <span class="pre">char</span> <span class="pre">*errmsg)</span></code>, and will be called for errors and warnings. The first argument, is_error, will be 0 for warning messages, 1 for error messages, and −1 if the program is going to terminate (i.e., a call to <code class="code docutils literal notranslate"><span class="pre">cg_error_exit()</span></code>). The second argument is the error or warning message. If this is defined, warning and error messages will go to the function, rather than the terminal. A value of <code class="code docutils literal notranslate"><span class="pre">NULL</span></code> will remove the call-back function.</p>
+</dd>
+<dt class="field-even">CG_CONFIG_COMPRESS</dt>
+<dd class="field-even"><p>This is the rewrite-upon-close setting.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior versions of the library would automatically rewrite the CGNS file when it was closed after being opened in modify mode if there was unused space. This is no longer done, due to possible conflicts when using parallel I/O. The previous behavior may be recovered by setting value to a positive integer. In this case the file will be rewritten if the number of node deletions or modifications are equal to or exceed this number. Setting value to a negative number will force the rewrite when the file is closed. The default value is 0 (no rewrite).</p>
+</div>
+</dd>
+<dt class="field-odd">CG_CONFIG_SET_PATH</dt>
+<dd class="field-odd"><p>Sets the search path for locating linked-to files. The argument value should be a character string containing one or more directories, formatted the same as for the <code class="code docutils literal notranslate"><span class="pre">PATH</span></code> environment variable. This will replace any current settings. Setting value to <code class="code docutils literal notranslate"><span class="pre">NULL</span></code> will remove all paths.</p>
+</dd>
+<dt class="field-even">CG_CONFIG_ADD_PATH</dt>
+<dd class="field-even"><p>Adds a directory, or list of directories, to the linked-to file search path. This is the same as <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_SET_PATH</span></code>, but adds to the path instead of replacing it.</p>
+</dd>
+<dt class="field-odd">CG_CONFIG_FILE_TYPE</dt>
+<dd class="field-odd"><p>Sets the default file type for newly created CGNS files. The argument, value should be set to one of <code class="code docutils literal notranslate"><span class="pre">CG_FILE_NONE</span></code>, <code class="code docutils literal notranslate"><span class="pre">CG_FILE_ADF</span></code>, <code class="code docutils literal notranslate"><span class="pre">CG_FILE_HDF5</span></code>, or <code class="code docutils literal notranslate"><span class="pre">CG_FILE_ADF2</span></code>. See the discussion above for <code class="code docutils literal notranslate"><span class="pre">cg_set_file_type</span></code>.</p>
+</dd>
+<dt class="field-even">CG_CONFIG_RIND_INDEX</dt>
+<dd class="field-even"><p>This option affects index bounds on structured arrays with rind planes.
+By default (<cite>CG_CONFIG_RIND_CORE</cite>), the core array locations always begin at index 1. Lower rind planes, if present, would have an index less than 1.
+For backward compatibility, <cite>CG_CONFIG_RIND_ZERO</cite> is provided and the index 1 will then locate the start of the array and not necessarily the start the core array.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use of this option does not change the cgns file in any way; it only modifies the API to the library.
+The API changed for versions of the Mid-Level Library greater than 3.4. Before, it did not produce this behavior.
+Index 1 always represented the start of an array: in an array with no rind planes, the core location would have index 1; in an array with 1 rind plane, the core location would have index 2. In version 3.4 of the Mid-Level Library, the behavior of the API was fixed to match that specified in the SIDS: core array locations always begin at index 1. This option allows for configuring the library to pre-3.4 indexing behavior (set value to <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_RIND_ZERO</span></code>) or the new default behavior (set value to <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_RIND_CORE</span></code>). Note that using <code class="code docutils literal notranslate"><span class="pre">CG_CONFIG_RIND_ZERO</span></code> is considered obsolete, but is provided for backwards compatability.
+Most users should not set this option and use the default.
+Values used for this option do not need to be explicitly cast as <code class="code docutils literal notranslate"><span class="pre">void*</span></code>.</p>
+</div>
+</dd>
+<dt class="field-odd">CG_CONFIG_HDF5_COMPRESS</dt>
+<dd class="field-odd"><p>Sets the compression level for data written from HDF5. The default is no compression. Setting value to -1, will use the default compression level of 6. The acceptable values are 0 to 9, corresponding to gzip compression levels.</p>
+</dd>
+<dt class="field-even">CG_CONFIG_HDF5_MPI_COMM</dt>
+<dd class="field-even"><p>Sets the MPI communicator for parallel I/O. The default is <code class="code docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code>. The new communicator is given by typecasting it to a <code class="code docutils literal notranslate"><span class="pre">void</span> <span class="pre">*</span></code>. This is generally used internally - see <span class="xref std std-ref">cgp_mpi_comm</span> instead.</p>
+</dd>
+</dl>
+<p>The routines <code class="code docutils literal notranslate"><span class="pre">cg_error_handler</span></code>, <code class="code docutils literal notranslate"><span class="pre">cg_set_compress</span></code>, <code class="code docutils literal notranslate"><span class="pre">cg_set_path</span></code>, <code class="code docutils literal notranslate"><span class="pre">cg_add_path</span></code>, and <code class="code docutils literal notranslate"><span class="pre">cg_set_file_type</span></code> are convenience functions built on top of <code class="code docutils literal notranslate"><span class="pre">cg_configure</span></code>.</p>
+<p>There is no Fortran counterpart to function <code class="code docutils literal notranslate"><span class="pre">cg_configure</span></code> or <code class="code docutils literal notranslate"><span class="pre">cg_error_handler</span></code>. The Fortran function <code class="code docutils literal notranslate"><span class="pre">cg_exit_on_error_f</span></code> routine be be used in place of <code class="code docutils literal notranslate"><span class="pre">cg_error_handler</span></code>. If flag is non-zero, then when an error is encountered, the library will print the error message and exit with an code of 1. Setting flag to zero (the default) prevents this and the error is returned to the user code.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The HDF5 implementation does not support search paths for linked files. The links need to be either absolute or relative pathnames. As a result, it is recommended that the search path options not be used as they may be removed in future versions.</p>
+</div>
+</div>
+</div>
+<div class="section" id="interfacing-with-cgio">
+<h2>Interfacing with CGIO<a class="headerlink" href="#interfacing-with-cgio" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>C Functions</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_get_cgio</span></span></code> (<span class="in">int fn</span>, <span class="out">int *cgio_num</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_root_id</span></span></code> (<span class="in">int fn</span>, <span class="out">double *rootid</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Fortran interfaces</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_get_cgio_f</span></code> (<span class="in">fn</span>, <span class="out">cgio_num</span>, <span class="out">ier</span>)</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_root_id_f</span></code>  (<span class="in">fn</span>, <span class="out">rootid</span>, <span class="out">ier</span>)</p></td>
+<td><p>r w m</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id1">
+<h3><span class="in">Input</span> / <span class="out">Ouput</span><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">fn</dt>
+<dd class="field-odd"><p>CGNS file index number.</p>
+</dd>
+<dt class="field-even">cgio_num</dt>
+<dd class="field-even"><p>CGIO indentifier for the CGNS file.</p>
+</dd>
+<dt class="field-odd">rootid</dt>
+<dd class="field-odd"><p>Root node identifier for the CGNS file.</p>
+</dd>
+<dt class="field-even">ier</dt>
+<dd class="field-even"><p>Error status.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>These allow for the use of the <span class="xref std std-ref">low-level CGIO functions</span> in conjunction with the Mid Level Library. The function <code class="code docutils literal notranslate"><span class="pre">cg_get_cgio</span></code>
+returns the CGIO database identifier for the specified CGNS file, which is used in the CGIO routines. The root node identifier for the CGNS file is returned by <code class="code docutils literal notranslate"><span class="pre">cg_root_id</span></code>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="CGNS_MLL_general.html" title="previous chapter (use the left arrow)">General Remarks</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGNS_MLL_navigating.html" title="next chapter (use the right arrow)">Navigating a CGNS File</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_navigating.html" title="Navigating a CGNS File"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_general.html" title="General Remarks"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" >CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">File Operations</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

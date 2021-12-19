@@ -1,0 +1,1225 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>10. Governing Flow Equations &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="11. Time-Dependent Flow" href="time.html" />
+    <link rel="prev" title="9. Boundary Conditions" href="boundary.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="time.html" title="11. Time-Dependent Flow"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="boundary.html" title="9. Boundary Conditions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" accesskey="U">CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">10. </span>Governing Flow Equations</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">10. Governing Flow Equations</a><ul>
+<li><a class="reference internal" href="#flow-equation-set-structure-definition-flowequationset-t">10.1. Flow Equation Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code></a></li>
+<li><a class="reference internal" href="#governing-equations-structure-definition-governingequations-t">10.2. Governing Equations Structure Definition: <code class="docutils literal notranslate"><span class="pre">GoverningEquations_t</span></code></a></li>
+<li><a class="reference internal" href="#model-type-structure-definition-modeltype-t">10.3. Model Type Structure Definition: <code class="docutils literal notranslate"><span class="pre">ModelType_t</span></code></a></li>
+<li><a class="reference internal" href="#thermodynamic-gas-model-structure-definition-gasmodel-t">10.4. Thermodynamic Gas Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">GasModel_t</span></code></a></li>
+<li><a class="reference internal" href="#molecular-viscosity-model-structure-definition-viscositymodel-t">10.5. Molecular Viscosity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ViscosityModel_t</span></code></a></li>
+<li><a class="reference internal" href="#thermal-conductivity-model-structure-definition-thermalconductivitymodel-t">10.6. Thermal Conductivity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ThermalConductivityModel_t</span></code></a></li>
+<li><a class="reference internal" href="#turbulence-structure-definitions">10.7. Turbulence Structure Definitions</a><ul>
+<li><a class="reference internal" href="#turbulence-closure-structure-definition-turbulenceclosure-t">10.7.1. Turbulence Closure Structure Definition: <code class="docutils literal notranslate"><span class="pre">TurbulenceClosure_t</span></code></a></li>
+<li><a class="reference internal" href="#turbulence-model-structure-definition-turbulencemodel-t">10.7.2. Turbulence Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">TurbulenceModel_t</span></code></a></li>
+<li><a class="reference internal" href="#example-spalart-allmaras-turbulence-model">10.7.3. Example - Spalart-Allmaras Turbulence Model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#thermal-relaxation-model-structure-definition-thermalrelaxationmodel-t">10.8. Thermal Relaxation Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ThermalRelaxationModel_t</span></code></a></li>
+<li><a class="reference internal" href="#chemical-kinetics-model-structure-definition-chemicalkineticsmodel-t">10.9. Chemical Kinetics Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ChemicalKineticsModel_t</span></code></a></li>
+<li><a class="reference internal" href="#electromagnetics-structure-definitions">10.10. Electromagnetics Structure Definitions</a><ul>
+<li><a class="reference internal" href="#electromagnetics-electric-field-model-structure-definition-emelectricfieldmodel-t">10.10.1. Electromagnetics Electric Field Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMElectricFieldModel_t</span></code></a></li>
+<li><a class="reference internal" href="#electromagnetics-magnetic-field-model-structure-definition-emmagneticfieldmodel-t">10.10.2. Electromagnetics Magnetic Field Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMMagneticFieldModel_t</span></code></a></li>
+<li><a class="reference internal" href="#electromagnetics-conductivity-model-structure-definition-emconductivitymodel-t">10.10.3. Electromagnetics Conductivity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMConductivityModel_t</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#flow-equation-examples">10.11. Flow Equation Examples</a><ul>
+<li><a class="reference internal" href="#example-3-d-compressible-euler">10.11.1. Example - 3-D Compressible Euler</a></li>
+<li><a class="reference internal" href="#example-3-d-compressible-navier-stokes">10.11.2. Example - 3-D Compressible Navier-Stokes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a></li>
+              
+              <li><span class="section-number">10. </span>Governing Flow Equations</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <div class="section" id="governing-flow-equations">
+<h1><span class="section-number">10. </span>Governing Flow Equations<a class="headerlink" href="#governing-flow-equations" title="Permalink to this headline">¶</a></h1>
+<p>This section provides structure type definitions for describing the governing flow-equation set associated with the database. The description includes the general class of governing equations, the turbulent closure equations, the gas and chemistry models, the viscosity and thermal-conductivity models, and the electromagnetics models. Included with each equation description are associated constants. The structure definitions attempt to balance the opposing requirements for future growth and extensibility with initial ease of implementation. Included in the final section are examples of flow-equation sets.</p>
+<p>The intended use of these structures initially is primarily for archival purposes and to provide additional documentation of the flow solution. If successful in this role, it is foreseeable that these flow-equation structures may eventually be also used as inputs for grid generators, flow solvers, and post-processors.</p>
+<div class="section" id="flow-equation-set-structure-definition-flowequationset-t">
+<h2><span class="section-number">10.1. </span>Flow Equation Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code><a class="headerlink" href="#flow-equation-set-structure-definition-flowequationset-t" title="Permalink to this headline">¶</a></h2>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code> is a general description of the governing flow equations. It includes the dimensionality of the governing equations, and the collection of specific equation-set descriptions covered in subsequent sections. It can be a child node of either <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> or <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code> (or both).</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">FlowEquationSet_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">EquationDimension</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">GoverningEquations_t</span><span class="o">&lt;</span><span class="n">CellDimension</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GoverningEquations</span><span class="w"> </span><span class="p">;</span><span class="w">           </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">GasModel_t</span><span class="w"> </span><span class="n">GasModel</span><span class="w"> </span><span class="p">;</span><span class="w">                                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">ViscosityModel_t</span><span class="w"> </span><span class="n">ViscosityModel</span><span class="w"> </span><span class="p">;</span><span class="w">                                  </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">ThermalConductivityModel_t</span><span class="w"> </span><span class="n">ThermalConductivityModel</span><span class="w"> </span><span class="p">;</span><span class="w">              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">TurbulenceClosure_t</span><span class="w"> </span><span class="n">TurbulenceClosure</span><span class="w"> </span><span class="p">;</span><span class="w">                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">TurbulenceModel_t</span><span class="o">&lt;</span><span class="n">CellDimension</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulenceModel</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">ThermalRelaxationModel_t</span><span class="w"> </span><span class="n">ThermalRelaxationModel</span><span class="w"> </span><span class="p">;</span><span class="w">                  </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">ChemicalKineticsModel_t</span><span class="w"> </span><span class="n">ChemicalKineticsModel</span><span class="w"> </span><span class="p">;</span><span class="w">                    </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">EMElectricFieldModel_t</span><span class="w"> </span><span class="n">EMElectricFieldModel</span><span class="w"> </span><span class="p">;</span><span class="w">                      </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">EMMagneticFieldModel_t</span><span class="w"> </span><span class="n">EMMagneticFieldModel</span><span class="w"> </span><span class="p">;</span><span class="w">                      </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">EMConductivityModel_t</span><span class="w"> </span><span class="n">EMConductivityModel</span><span class="w"> </span><span class="p">;</span><span class="w">                        </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">EMConductivityModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">EMElectricFieldModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">EMMagneticFieldModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">EquationDimension</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">GoverningEquations</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">GasModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivityModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceClosure</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ThermalRelaxationModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ChemicalKineticsModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code>, or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p>There are no required elements for <code class="code sidskey docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code>.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code> requires a single structure parameter, <code class="code sidskey docutils literal notranslate"><span class="pre">CellDimension</span></code>, to identify the dimensionality of index arrays for structured grids. This parameter is passed onto several substructures.</p>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">EquationDimension</span></code> is the dimensionality of the governing equations; it is the number of spatial variables describing the flow. <code class="code sidsref docutils literal notranslate"><span class="pre">GoverningEquations</span></code> describes the general class of flow equations. <code class="code sidsref docutils literal notranslate"><span class="pre">GasModel</span></code> describes the equation of state, and <code class="code sidsref docutils literal notranslate"><span class="pre">ViscosityModel</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">ThermalConductivityModel</span></code> describe the auxiliary relations for molecular viscosity and the thermal conductivity coefficient. <code class="code sidsref docutils literal notranslate"><span class="pre">TurbulenceClosure</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">TurbulenceModel</span></code> describe the turbulent closure for the Reynolds-averaged Navier-Stokes equations. <code class="code sidsref docutils literal notranslate"><span class="pre">ThermalRelaxationModel</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">ChemicalKineticsModel</span></code> describe the equations used to model thermal relaxation and chemical kinetics. <code class="code sidskey docutils literal notranslate"><span class="pre">EMElectricFieldModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">EMMagneticFieldModel</span></code>, and <code class="code sidskey docutils literal notranslate"><span class="pre">EMConductivityModel</span></code> describe the equations used to model electromagnetics.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the flow-equation set. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+<div class="section" id="governing-equations-structure-definition-governingequations-t">
+<h2><span class="section-number">10.2. </span>Governing Equations Structure Definition: <code class="docutils literal notranslate"><span class="pre">GoverningEquations_t</span></code><a class="headerlink" href="#governing-equations-structure-definition-governingequations-t" title="Permalink to this headline">¶</a></h2>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">GoverningEquations_t</span></code> describes the class of governing flow equations associated with the solution.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">GoverningEquationsType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">GoverningEquationsTypeNull</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">GoverningEquationsTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">FullPotential</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Euler</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">NSLaminar</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">NSTurbulent</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">NSLaminarIncompressible</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">NSTurbulentIncompressible</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">GoverningEquations_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">GoverningEquationsType_t</span><span class="w"> </span><span class="n">GoverningEquationsType</span><span class="w"> </span><span class="p">;</span><span class="w">                  </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">int</span><span class="p">[</span><span class="n">CellDimension</span><span class="o">*</span><span class="p">(</span><span class="n">CellDimension</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="n">DiffusionModel</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">GoverningEquations_t</span></code> and shall not include the name <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">GoverningEquationsType</span></code> is the only required element.</p></li>
+<li><p>The length of the <code class="code sidsref docutils literal notranslate"><span class="pre">DiffusionModel</span></code> array is as follows: in 1-D it is int[1]; in 2-D it is <code class="code sidskey docutils literal notranslate"><span class="pre">int[3]</span></code>; and in 3-D it is <code class="code sidskey docutils literal notranslate"><span class="pre">int[6]</span></code>. For unstructured zones, <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span></code> is not supported, and should not be used.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">GoverningEquations_t</span></code> requires a single structure parameter, <code class="code sidskey docutils literal notranslate"><span class="pre">CellDimension</span></code>. It is used to define the length of the array <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span></code>.</p>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span></code> describes the viscous diffusion terms modeled in the flow equations, and is applicable only to the Navier-Stokes equations with structured grids. Typically, thin-layer approximations include only the diffusion terms in one or two computational-coordinate directions. <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span></code> encodes the coordinate directions that include second-derivative and cross-derivative diffusion terms. The first <code class="code sidskey docutils literal notranslate"><span class="pre">CellDimension</span></code> elements are second-derivative terms and the remainder elements are cross-derivative terms. Allowed values for individual elements in the array <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span></code> are 0 and 1; a value of 1 indicates the diffusion term is modeled, and 0 indicates that they are not modeled. In 3-D, the encoding of <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span></code> is as follows:</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 93%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Element</p></th>
+<th class="head"><p>Modeled Terms</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>n</em> = 1</p></td>
+<td><p>Diffusion terms in <em>i</em> (<span class="math notranslate nohighlight">\(\partial^2 / \partial \xi^{2}\)</span>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>n</em> = 2</p></td>
+<td><p>Diffusion terms in <em>j</em> (<span class="math notranslate nohighlight">\(\partial^2 / \partial \eta^{2}\)</span>)</p></td>
+</tr>
+<tr class="row-even"><td><p><em>n</em> = 3</p></td>
+<td><p>Diffusion terms in <em>k</em> (<span class="math notranslate nohighlight">\(\partial^2 / \partial \zeta^{2}\)</span>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>n</em> = 4</p></td>
+<td><p>Cross-diffusion terms in <em>i</em>-<em>j</em> (<span class="math notranslate nohighlight">\(\partial^2/\partial \xi \partial \eta\)</span> and <span class="math notranslate nohighlight">\(\partial^2 / \partial \eta \partial \xi\)</span>)</p></td>
+</tr>
+<tr class="row-even"><td><p><em>n</em> = 5</p></td>
+<td><p>Cross-diffusion terms in <em>j</em>-<em>k</em> (<span class="math notranslate nohighlight">\(\partial^2/\partial \eta \partial \zeta\)</span> and <span class="math notranslate nohighlight">\(\partial^2/\partial \zeta \partial \eta\)</span>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>n</em> = 6</p></td>
+<td><p>Cross-diffusion terms in <em>k</em>-<em>i</em> (<span class="math notranslate nohighlight">\(\partial^2/\partial \zeta \partial \xi\)</span> and <span class="math notranslate nohighlight">\(\partial^2/\partial \xi \partial \zeta\)</span>)</p></td>
+</tr>
+</tbody>
+</table>
+<p>where derivatives in the <em>i</em>, <em>j</em> and <em>k</em> computational-coordinates are <span class="math notranslate nohighlight">\(\xi\)</span>, <span class="math notranslate nohighlight">\(eta\)</span> and <span class="math notranslate nohighlight">\(zeta\)</span>, respectively.
+The full Navier-Stokes equations in 3-D are indicated by <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span> <span class="pre">=</span> <span class="pre">[1,1,1,1,1,1]</span></code>, and the thin-layer equations including only diffusion in the <em>j</em>-direction are <code class="code docutils literal notranslate"><span class="pre">[0,1,0,0,0,0]</span></code>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+<div class="section" id="model-type-structure-definition-modeltype-t">
+<h2><span class="section-number">10.3. </span>Model Type Structure Definition: <code class="docutils literal notranslate"><span class="pre">ModelType_t</span></code><a class="headerlink" href="#model-type-structure-definition-modeltype-t" title="Permalink to this headline">¶</a></h2>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> is a complete list of all models covered in subsequent sections. A specific model will contain a subset of this enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span><span class="w"> </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Ideal</span><span class="p">,</span><span class="w"> </span><span class="n">VanderWaals</span><span class="p">,</span><span class="w"> </span><span class="n">Constant</span><span class="p">,</span><span class="w"> </span><span class="n">PowerLaw</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">SutherlandLaw</span><span class="p">,</span><span class="w"> </span><span class="n">ConstantPrandtl</span><span class="p">,</span><span class="w"> </span><span class="n">EddyViscosity</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ReynoldsStress</span><span class="p">,</span><span class="w"> </span><span class="n">ReynoldsStressAlgebraic</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Algebraic_BaldwinLomax</span><span class="p">,</span><span class="w"> </span><span class="n">Algebraic_CebeciSmith</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">HalfEquation_JohnsonKing</span><span class="p">,</span><span class="w"> </span><span class="n">OneEquation_BaldwinBarth</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">OneEquation_SpalartAllmaras</span><span class="p">,</span><span class="w"> </span><span class="n">TwoEquation_JonesLaunder</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">TwoEquation_MenterSST</span><span class="p">,</span><span class="w"> </span><span class="n">TwoEquation_Wilcox</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">CaloricallyPerfect</span><span class="p">,</span><span class="w"> </span><span class="n">ThermallyPerfect</span><span class="p">,</span><span class="w"> </span><span class="n">ConstantDensity</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">RedlichKwong</span><span class="p">,</span><span class="w"> </span><span class="n">Frozen</span><span class="p">,</span><span class="w"> </span><span class="n">ThermalEquilib</span><span class="p">,</span><span class="w"> </span><span class="n">ThermalNonequilib</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ChemicalEquilibCurveFit</span><span class="p">,</span><span class="w"> </span><span class="n">ChemicalEquilibMinimization</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ChemicalNonequilib</span><span class="p">,</span><span class="w"> </span><span class="n">EMElectricField</span><span class="p">,</span><span class="w"> </span><span class="n">EMMagneticField</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">EMConductivity</span><span class="p">,</span><span class="w"> </span><span class="n">Voltage</span><span class="p">,</span><span class="w"> </span><span class="n">Interpolated</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Equilibrium_LinRessler</span><span class="p">,</span><span class="w"> </span><span class="n">Chemistry_LinRessler</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="thermodynamic-gas-model-structure-definition-gasmodel-t">
+<h2><span class="section-number">10.4. </span>Thermodynamic Gas Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">GasModel_t</span></code><a class="headerlink" href="#thermodynamic-gas-model-structure-definition-gasmodel-t" title="Permalink to this headline">¶</a></h2>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">GasModel_t</span></code> describes the equation of state model used in the governing equations to relate pressure, temperature and density. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">GasModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">GasModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Ideal</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">VanderWaals</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">CaloricallyPerfect</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ThermallyPerfect</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ConstantDensity</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">RedlichKwong</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">GasModel_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">GasModelType_t</span><span class="w"> </span><span class="n">GasModelType</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">GasModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">GasModelType</span></code> is the only required element.</p></li>
+<li><p>The <code class="code sidskey docutils literal notranslate"><span class="pre">GasModelType</span></code> enumeration name <code class="code sidskey docutils literal notranslate"><span class="pre">Ideal</span></code> implies a calorically perfect single-component gas, but the more descriptive name <code class="code sidskey docutils literal notranslate"><span class="pre">CaloricallyPerfect</span></code> is generally preferred.</p></li>
+</ol>
+</div>
+<p>For a perfect gas (<code class="code sidskey docutils literal notranslate"><span class="pre">GasModelType</span> <span class="pre">=</span> <span class="pre">CaloricallyPerfect</span></code>), the pressure, temperature, and density are related by</p>
+<div class="math notranslate nohighlight">
+\[p = \rho R T\]</div>
+<p>where <span class="math notranslate nohighlight">\(R\)</span> is the ideal gas constant. Related quantities are the specific heat at constant pressure (<span class="math notranslate nohighlight">\(c_{p}\)</span>), specific heat at constant volume (<span class="math notranslate nohighlight">\(c_{v}\)</span>) and specific heat ratio <span class="math notranslate nohighlight">\(\gamma = c_{p}/c_{v}\)</span>).
+The gas constant and specific heats are related by <span class="math notranslate nohighlight">\(R = c_{p} − c_{v}\)</span>. Data-name identifiers associated with the perfect gas law are listed below.</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Perfect Gas</strong></span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 53%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>IdealGasConstant</p></td>
+<td><p>Ideal gas constant (<span class="math notranslate nohighlight">\(R\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^2/(T^2 \Theta)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>SpecificHeatRatio</p></td>
+<td><p>Ratio of specific heats (<span class="math notranslate nohighlight">\(\gamma = c_{p}/c_{v}\)</span>)</p></td>
+<td><p><cite>-</cite></p></td>
+</tr>
+<tr class="row-even"><td><p>SpecificHeatVolume</p></td>
+<td><p>Specific heat at constant volume (<span class="math notranslate nohighlight">\(c_{v}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^2/(T^2 \Theta)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>SpecificHeatPressure</p></td>
+<td><p>Specific heat at constant pressure (<span class="math notranslate nohighlight">\(c_{p}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^2/(T^2 \Theta)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>If it is desired to specify any of these identifiers in a CGNS database, they should be defined as <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray</span></code> under <code class="code sidskey docutils literal notranslate"><span class="pre">GasModel_t</span></code>.</p>
+<p>The dimensional units are defined as follows: <span class="math notranslate nohighlight">\(M\)</span> is mass, <span class="math notranslate nohighlight">\(L\)</span> is length, <span class="math notranslate nohighlight">\(T\)</span> is time and <span class="math notranslate nohighlight">\(\Theta\)</span> is temperature.
+These are further described in the section on <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">Conventions for Data-Name Identifiers</span></a>.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the thermodynamic gas model. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+<div class="section" id="molecular-viscosity-model-structure-definition-viscositymodel-t">
+<h2><span class="section-number">10.5. </span>Molecular Viscosity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ViscosityModel_t</span></code><a class="headerlink" href="#molecular-viscosity-model-structure-definition-viscositymodel-t" title="Permalink to this headline">¶</a></h2>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityModel_t</span></code> describes the model for relating molecular viscosity (<span class="math notranslate nohighlight">\(\mu\)</span>) to temperature. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ViscosityModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Constant</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">PowerLaw</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">SutherlandLaw</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">ViscosityModel_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">ViscosityModelType_t</span><span class="w"> </span><span class="n">ViscosityModelType</span><span class="w"> </span><span class="p">;</span><span class="w">                          </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p>The molecular viscosity models are as follows: <code class="code sidskey docutils literal notranslate"><span class="pre">Constant</span></code> states that molecular viscosity is constant throughout the field and is equal to some reference value (<span class="math notranslate nohighlight">\(\mu = \mu_{ref}\)</span>); <code class="code sidskey docutils literal notranslate"><span class="pre">PowerLaw</span></code> states that molecular viscosity follows a power-law relation,</p>
+<div class="math notranslate nohighlight">
+\[\mu = \mu_{ref} (T/T_{ref})^{n}\]</div>
+<p>and <code class="code sidsref docutils literal notranslate"><span class="pre">SutherlandLaw</span></code> is Sutherland’s Law for molecular viscosity,</p>
+<div class="math notranslate nohighlight">
+\[\mu = \mu_{ref} (T/T_{ref})^{3/2} (T_{ref} + T_{s}) / (T + T_{s})\]</div>
+<p>where <span class="math notranslate nohighlight">\(T_{s}\)</span> is the Sutherland’s Law constant, and <span class="math notranslate nohighlight">\(\mu_{ref}\)</span> and <span class="math notranslate nohighlight">\(T_{ref}\)</span> are the reference viscosity and temperature, respectively.
+For air [White, F. M., <em>Viscous Fluid Flow</em>, McGraw-Hill, 1974, p. 28-29], the power-law exponent is n = 0.666, Sutherland’s law constant (<span class="math notranslate nohighlight">\(T_{s}\)</span>) is 110.6 K, the reference temperature (<span class="math notranslate nohighlight">\(T_{ref}\)</span>) is 273.15 K, and the reference viscosity (<span class="math notranslate nohighlight">\(\mu_{ref}\)</span>) is <span class="math notranslate nohighlight">\(1.716 \times 10^{-5}\ kg/(m s)\)</span>.
+The data-name identifiers for molecular viscosity models are defined below.</p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Molecular Viscosity Models</strong></span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 31%" />
+<col style="width: 36%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">ViscosityModelType</span></code></p></th>
+<th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">PowerLaw</span></code></p></td>
+<td><p><code class="code sidskey docutils literal notranslate"><span class="pre">PowerLawExponent</span></code></p></td>
+<td><p>Power-law exponent (<em>n</em>)</p></td>
+<td><p><cite>-</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SutherlandLaw</span></code></p></td>
+<td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SutherlandLawConstant</span></code></p></td>
+<td><p>Sutherland’s Law constant (<span class="math notranslate nohighlight">\(T_{s}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>All</p></td>
+<td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TemperatureReference</span></code></p></td>
+<td><p>Reference temperature (<span class="math notranslate nohighlight">\(T_{ref}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>All</p></td>
+<td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityMolecularReference</span></code></p></td>
+<td><p>Reference viscosity (<span class="math notranslate nohighlight">\(\mu_{ref}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>If it is desired to specify any of these identifiers in a CGNS database, they should be defined as <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray</span></code> under <code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityModel_t</span></code>.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the molecular viscosity model. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+<div class="section" id="thermal-conductivity-model-structure-definition-thermalconductivitymodel-t">
+<h2><span class="section-number">10.6. </span>Thermal Conductivity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ThermalConductivityModel_t</span></code><a class="headerlink" href="#thermal-conductivity-model-structure-definition-thermalconductivitymodel-t" title="Permalink to this headline">¶</a></h2>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivityModel_t</span></code> describes the model for relating the thermal-conductivity coefficient (<span class="math notranslate nohighlight">\(k\)</span>) to temperature. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivityModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ThermalConductivityModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ConstantPrandtl</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">PowerLaw</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">SutherlandLaw</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">ThermalConductivityModel_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">ThermalConductivityModelType_t</span><span class="w"> </span><span class="n">ThermalConductivityModelType</span><span class="w"> </span><span class="p">;</span><span class="w">      </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivityModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivityModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p>The thermal-conductivity models parallel the molecular viscosity models. <code class="code sidskey docutils literal notranslate"><span class="pre">ConstantPrandtl</span></code> states that the Prandtl number (<span class="math notranslate nohighlight">\(Pr = \mu c_{p}/k\)</span>) is constant and equal to some reference value.
+PowerLaw relates <span class="math notranslate nohighlight">\(k\)</span> to temperature via a power-law relation,</p>
+<div class="math notranslate nohighlight">
+\[k = k_{ref} (T/T_{ref})^{n}\]</div>
+<p>and <code class="code sidskey docutils literal notranslate"><span class="pre">SutherlandLaw</span></code> is Sutherland’s Law for molecular viscosity,</p>
+<div class="math notranslate nohighlight">
+\[k = k_{ref} (T/T_{ref})^{3/2} (T_{ref} + T_{s}) / (T + T_{s})\]</div>
+<p>where <span class="math notranslate nohighlight">\(k_{ref}\)</span> is the reference thermal conductivity, <span class="math notranslate nohighlight">\(T_{ref}\)</span> is the reference temperature, and <span class="math notranslate nohighlight">\(T_{s}\)</span> is the Sutherland’s law constant.
+For air [White, F. M., <em>Viscous Fluid Flow</em>, McGraw-Hill, 1974, p. 32-33], the Prandtl number is <span class="math notranslate nohighlight">\(Pr = 0.72\)</span>, the power-law exponent is <span class="math notranslate nohighlight">\(n = 0.81\)</span>, Sutherland’s law constant (<span class="math notranslate nohighlight">\(T_{s}\)</span>) is 194.4 K, the reference temperature (<span class="math notranslate nohighlight">\(T_{ref}\)</span>) is 273.15 K, and the reference thermal conductivity (<span class="math notranslate nohighlight">\(k_{ref}\)</span>) is <span class="math notranslate nohighlight">\(2.414 \times 10^{-2}\ kg\ m/(s^{3} K)\)</span>.
+Data-name identifiers for thermal conductivity models are listed below.</p>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Thermal Conductivity Models</strong></span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 27%" />
+<col style="width: 32%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">ThermalConductivityModelType</span></code></p></th>
+<th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ConstantPrandtl</span></code></p></td>
+<td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Prandtl</span></code></p></td>
+<td><p>Prandtl number (<span class="math notranslate nohighlight">\(Pr\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">PowerLaw</span></code></p></td>
+<td><p><code class="code sidskey docutils literal notranslate"><span class="pre">PowerLawExponent</span></code></p></td>
+<td><p>Power-law exponent (<span class="math notranslate nohighlight">\(n\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SutherlandLaw</span></code></p></td>
+<td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SutherlandLawConstant</span></code></p></td>
+<td><p>Sutherland’s Law constant (<span class="math notranslate nohighlight">\(T_{s}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>All</p></td>
+<td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TemperatureReference</span></code></p></td>
+<td><p>Reference temperature (<span class="math notranslate nohighlight">\(T_{ref}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>All</p></td>
+<td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivityReference</span></code></p></td>
+<td><p>Reference thermal conductivity (<span class="math notranslate nohighlight">\(k_{ref}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M L/(T^{3} \Theta)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>If it is desired to specify any of these identifiers in a CGNS database, they should be defined as DataArrays under <code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivityModel_t</span></code>.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the thermal conductivity model. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+<div class="section" id="turbulence-structure-definitions">
+<h2><span class="section-number">10.7. </span>Turbulence Structure Definitions<a class="headerlink" href="#turbulence-structure-definitions" title="Permalink to this headline">¶</a></h2>
+<p>This section presents structure definitions for describing the form of closure used in the Reynolds-averaged (or Favre-averaged) Navier-Stokes equations for determining the Reynolds stress terms. Here “turbulence closure” refers to eddy viscosity or other approximations for the Reynolds stress terms, and “turbulence model” refers to the actual algebraic or turbulence-transport equation models used. To an extent these are independent choices (e.g., using either an eddy viscosity closure or an algebraic Reynolds-stress closure with a two-equation model).</p>
+<div class="section" id="turbulence-closure-structure-definition-turbulenceclosure-t">
+<h3><span class="section-number">10.7.1. </span>Turbulence Closure Structure Definition: <code class="docutils literal notranslate"><span class="pre">TurbulenceClosure_t</span></code><a class="headerlink" href="#turbulence-closure-structure-definition-turbulenceclosure-t" title="Permalink to this headline">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceClosure_t</span></code> describes the turbulence closure for the Reynolds stress terms of the Navier-Stokes equations. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceClosureType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">TurbulenceClosureType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">EddyViscosity</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ReynoldsStress</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ReynoldsStressAlgebraic</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">TurbulenceClosure_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">TurbulenceClosureType_t</span><span class="w"> </span><span class="n">TurbulenceClosureType</span><span class="w"> </span><span class="p">;</span><span class="w">                    </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceClosure_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceClosureType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p>The different types of turbulent closure are as follows: <code class="code sidskey docutils literal notranslate"><span class="pre">EddyViscosity</span></code> is the Boussinesq eddy-viscosity closure, where the Reynolds stresses are approximated as the product of an eddy viscosity (<span class="math notranslate nohighlight">\(nu_{t}\)</span>) and the mean strain tensor. Using indicial notation, the relation is,</p>
+<div class="math notranslate nohighlight">
+\[−(u′_{i} u′_{j})_{ave} = \nu_{t} ( \partial u_{i} / \partial x_{j} + \partial u_{j} / \partial x_{i} )\]</div>
+<p>where <span class="math notranslate nohighlight">\(−(u′_{i} u′_{j})_{ave}\)</span> are the Reynolds stresses; the notation is further discussed under <span class="xref std std-ref">Flowfield Solution</span> in the section on <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">Conventions for Data-Name Identifiers</span></a>.
+<code class="code sidskey docutils literal notranslate"><span class="pre">ReynoldsStress</span></code> is no approximation of the Reynolds stresses.
+<code class="code sidskey docutils literal notranslate"><span class="pre">ReynoldsStressAlgebraic</span></code> is an algebraic approximation for the Reynolds stresses based on some intermediate transport quantities.</p>
+<p>Associated with the turbulent closure is a list of constants, where each constant is described by a separate <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entity. Constants associated with the eddy-viscosity closure are listed below.</p>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Turbulence Closure</strong></span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 60%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">PrandtlTurbulent</span></code></p></td>
+<td><p>Turbulent Prandtl number (<span class="math notranslate nohighlight">\(\rho \nu_{t} c_{p} / k_{t}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>If it is desired to specify any of these identifiers in a CGNS database, they should be defined as <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray</span></code> under <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceClosure_t</span></code>.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the turbulence closure. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+<div class="section" id="turbulence-model-structure-definition-turbulencemodel-t">
+<h3><span class="section-number">10.7.2. </span>Turbulence Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">TurbulenceModel_t</span></code><a class="headerlink" href="#turbulence-model-structure-definition-turbulencemodel-t" title="Permalink to this headline">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceModel_t</span></code> describes the equation set used to model the turbulence quantities. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">TurbulenceModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Algebraic_BaldwinLomax</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Algebraic_CebeciSmith</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">HalfEquation_JohnsonKing</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">OneEquation_BaldwinBarth</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">OneEquation_SpalartAllmaras</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">TwoEquation_JonesLaunder</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">TwoEquation_MenterSST</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">TwoEquation_Wilcox</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">TurbulenceModel_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">TurbulenceModelType_t</span><span class="w"> </span><span class="n">TurbulenceModelType</span><span class="w"> </span><span class="p">;</span><span class="w">                        </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">int</span><span class="p">[</span><span class="n">CellDimension</span><span class="o">*</span><span class="p">(</span><span class="n">CellDimension</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="n">DiffusionModel</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code>, or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceModelType</span></code> is the only required element.</p></li>
+<li><p>The length of the <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span></code> array is as follows: in 1-D it is <code class="code docutils literal notranslate"><span class="pre">int[1]</span></code>; in 2-D it is <code class="code docutils literal notranslate"><span class="pre">int[3]</span></code>; and in 3-D it is <code class="code docutils literal notranslate"><span class="pre">int[6]</span></code>. For unstructured zones, <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span></code> is not supported, and should not be used.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceModel_t</span></code> requires a single structure parameter, <code class="code sidskey docutils literal notranslate"><span class="pre">CellDimension</span></code>.
+It is used to define the length of the array <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span></code>. <code class="code sidsref docutils literal notranslate"><span class="pre">DiffusionModel</span></code> describes the viscous diffusion terms included in the turbulent transport model equations.</p>
+<p>The <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceModelType</span></code> names currently listed correspond to the following particular references.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Algebraic_BaldwinLomax</span></code></p></td>
+<td><p>Baldwin, B. S., and Lomax, H. (1978) “Thin Layer Approximations and Algebraic Model for Separated Turbulent Flows,” AIAA Paper 78-257.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Algebraic_CebeciSmith</span></code></p></td>
+<td><p>Cebeci, T., and Smith, A. M. O. (1974) Analysis of Turbulent Boundary Layers, Academic Press, New York.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">HalfEquation_JohnsonKing</span></code></p></td>
+<td><p>Johnson, D., and King, L. (1985) “A Mathematically Simple Turbulence Closure Model for Attached and Separated Turbulent Boundary Layers,” AIAA Journal, Vol. 23, No. 11, pp. 1684-1692.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">OneEquation_BaldwinBarth</span></code></p></td>
+<td><p>Baldwin, B., and Barth, T. (1990) “A One-Equation Turbulent Transport Model for High Reynolds Number Wall-Bounded Flows,” NASA TM-102847.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">OneEquation_SpalartAllmaras</span></code></p></td>
+<td><p>Spalart, P. R., and Allmaras, S. R. (1994) “A One-Equation Turbulence Model for Aerodynamic Flows,” La Recherche Aerospatiale, Vol. 1, pp. 5-21.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TwoEquation_JonesLaunder</span></code></p></td>
+<td><p>Jones, W., and Launder, B. (1972) “The Prediction of Laminarization with a Two-Equation Model of Turbulence,” International Journal of Heat and Mass Transfer, Vol. 15, pp. 301-314.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TwoEquation_MenterSST</span></code></p></td>
+<td><p>Menter, F. R. (1994) “Two-Equation Eddy-Viscosity Turbulence Models for Engineering Application,” AIAA Journal, Vol. 32, No. 8, pp. 1598-1605.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TwoEquation_Wilcox</span></code></p></td>
+<td><p>Wilcox, D. C. (1994) Turbulence Modeling for CFD, First Edition, DCW Industries, La Canada, California.</p></td>
+</tr>
+</tbody>
+</table>
+<p>There is no formal mechanism for accounting for subsequent changes to these models. (For example, Wilcox later published 1998 and 2006 versions of his k-ω model).
+If it is a mere change to constant(s), then this could be described by retaining the same <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceModelType</span></code> name and listing each constant using a separate <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entry.
+If the change is more involved, then it is recommended to employ <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceModelType</span> <span class="pre">=</span> <span class="pre">UserDefined</span></code> with a child <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> node giving details about it.</p>
+<p>Associated with each choice of turbulence model may be a list of constants, where each constant is described by a separate <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entity.
+If used, the Data-Name Identifier of each constant should include the turbulence model name, as well as the constant name (e.g., <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulentSACb1</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulentSSTCmu</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulentKESigmak</span></code>, etc.).
+However, no attempt is made here to formalize the names for all possible turbulence models.</p>
+<p>DataClass defines the default for the class of data contained in the turbulence model equation set.
+For any data that is dimensional, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+<div class="section" id="example-spalart-allmaras-turbulence-model">
+<h3><span class="section-number">10.7.3. </span>Example - Spalart-Allmaras Turbulence Model<a class="headerlink" href="#example-spalart-allmaras-turbulence-model" title="Permalink to this headline">¶</a></h3>
+<p>Description for the eddy-viscosity closure and Spalart-Allmaras turbulence model, including associated constants.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">TurbulenceClosure_t</span><span class="w"> </span><span class="n">TurbulenceClosure</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">TurbulenceClosureType_t</span><span class="w"> </span><span class="n">TurbulenceClosureType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EddyViscosity</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PrandtlTurbulent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">0.90</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">TurbulenceModel_t</span><span class="w"> </span><span class="n">TurbulenceModel</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">TurbulenceModelType_t</span><span class="w"> </span><span class="n">TurbulenceModelType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OneEquation_SpalartAllmaras</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSACb1</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">0.1355</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSACb2</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">0.622</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSASigma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSAKappa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">0.41</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSACw1</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">3.2391</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSACw2</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">0.3</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSACw3</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSACv1</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">7.1</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSACt1</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSACt2</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSACt3</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">1.2</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulentSACt4</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">0.5</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note that each <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entity is abbreviated.</p>
+</div>
+</div>
+<div class="section" id="thermal-relaxation-model-structure-definition-thermalrelaxationmodel-t">
+<h2><span class="section-number">10.8. </span>Thermal Relaxation Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ThermalRelaxationModel_t</span></code><a class="headerlink" href="#thermal-relaxation-model-structure-definition-thermalrelaxationmodel-t" title="Permalink to this headline">¶</a></h2>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ThermalRelaxationModel_t</span></code> describes the equation set used to model thermal relaxation quantities. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ThermalRelaxationModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ThermalRelaxationModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Frozen</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ThermalEquilib</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ThermalNonequilib</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">ThermalRelaxationModel_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">ThermalRelaxationModelType_t</span><span class="w"> </span><span class="n">ThermalRelaxationModelType</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ThermalRelaxationModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">ThermalRelaxationModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ThermalRelaxationModelType_t</span></code> is an enumeration type describing the type of thermal relaxation model.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> data structures may be used to store data associated with the thermal relaxation model. <code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data being used. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>Additional information, if needed, may be stored using <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> data structures.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+<div class="section" id="chemical-kinetics-model-structure-definition-chemicalkineticsmodel-t">
+<h2><span class="section-number">10.9. </span>Chemical Kinetics Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ChemicalKineticsModel_t</span></code><a class="headerlink" href="#chemical-kinetics-model-structure-definition-chemicalkineticsmodel-t" title="Permalink to this headline">¶</a></h2>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ChemicalKineticsModel_t</span></code> describes the equation set used to model chemical kinetics quantities. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ChemicalKineticsModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ChemicalKineticsModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Frozen</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ChemicalEquilibCurveFit</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ChemicalEquilibMinimization</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ChemicalNonequilib</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">ChemicalKineticsModel_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">ChemicalKineticsModelType_t</span><span class="w"> </span><span class="n">ChemicalKineticsModelType</span><span class="w"> </span><span class="p">;</span><span class="w">            </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ChemicalKineticsModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">ChemicalKineticsModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ChemicalKineticsModelType_t</span></code> is an enumeration type describing the type of chemical kinetics model.</p>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> data structures may be used to store data associated with the chemical kinetics model.
+Recommended data-name identifiers are listed in the following table.</p>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Chemical Kinetics Models</strong></span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 48%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MolecularWeightSymbol</span></code></p></td>
+<td><p>Molecular weight for species Symbol</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">HeatOfFormationSymbol</span></code></p></td>
+<td><p>Heat of formation per unit mass for species Symbol</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">FuelAirRatio</span></code></p></td>
+<td><p>Fuel/air mass ratio</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceTemperatureHOF</span></code></p></td>
+<td><p>Reference temperature for the heat of formation</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>The dimensional units are defined as follows: <span class="math notranslate nohighlight">\(L\)</span> is length, <span class="math notranslate nohighlight">\(T\)</span> is time and <span class="math notranslate nohighlight">\(\Theta\)</span> is temperature.
+These are further described in the section on <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">Conventions for Data-Name Identifiers</span></a>.</p>
+<p>The variable string <em>Symbol</em> in the above data-name identifiers represents the chemical symbol for the desired species.
+For example, <code class="code sidskey docutils literal notranslate"><span class="pre">H</span></code> represents hydrogen atoms, <code class="code sidskey docutils literal notranslate"><span class="pre">O</span></code> represents oxygen atoms, <code class="code sidskey docutils literal notranslate"><span class="pre">H2</span></code> represents hydrogen molecules, <code class="code sidskey docutils literal notranslate"><span class="pre">H2O</span></code> represents water molecules, and <code class="code sidskey docutils literal notranslate"><span class="pre">C3H5O3(NO2)3</span></code> represents nitroglycerin molecules.
+Any symbols from the periodic table of the elements can be used. For charged molecules or particles, the word “<code class="code sidskey docutils literal notranslate"><span class="pre">plus</span></code>” or “<code class="code sidskey docutils literal notranslate"><span class="pre">minus</span></code>” should be spelled out in lower case. For example, a CNO+ molecule should be denoted as <code class="code sidskey docutils literal notranslate"><span class="pre">CNOplus</span></code>.</p>
+<p>Other commonly used mixtures that are usually not referred to by their chemical symbols, are defined in the following table. Individual users may define new names, but these may not be recognized by other CGNS applications.
+For consistency, additional names should be proposed as SIDS extensions.</p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-text"><strong>Defined Names (Symbols) for Commonly Used Mixtures</strong></span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Mixture</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Air</span></code></p></td>
+<td><p>Generic air model</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">eminus</span></code></p></td>
+<td><p>Electrons</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Fuel</span></code></p></td>
+<td><p>Generic fuel model</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">FuelAir</span></code></p></td>
+<td><p>Generic fuel/air mixture</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">JP5</span></code></p></td>
+<td><p>JP5 jet fuel</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">JP7</span></code></p></td>
+<td><p>JP7 jet fuel</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">JP10</span></code></p></td>
+<td><p>JP10 jet fuel</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Product</span></code></p></td>
+<td><p>Generic fuel/air product of combustion</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RP1</span></code></p></td>
+<td><p>RP1 rocket fuel</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data being used.
+For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>Additional information, if needed, may be stored using <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> data structures.
+For example, if CHEMKIN is used, it is recommended that a <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> data structure be used to indicate this.
+Reaction equations could also be specified using <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> data structures.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+<div class="section" id="electromagnetics-structure-definitions">
+<h2><span class="section-number">10.10. </span>Electromagnetics Structure Definitions<a class="headerlink" href="#electromagnetics-structure-definitions" title="Permalink to this headline">¶</a></h2>
+<p>This section presents structure definitions for describing the electric field, magnetic field, and conductivity models used for electromagnetic flows.</p>
+<div class="section" id="electromagnetics-electric-field-model-structure-definition-emelectricfieldmodel-t">
+<h3><span class="section-number">10.10.1. </span>Electromagnetics Electric Field Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMElectricFieldModel_t</span></code><a class="headerlink" href="#electromagnetics-electric-field-model-structure-definition-emelectricfieldmodel-t" title="Permalink to this headline">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">EMElectricFieldModel_t</span></code> describes the electric field model used for electromagnetic flows. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">EMElectricFieldModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">EMElectricFieldModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Constant</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Frozen</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Interpolated</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Voltage</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">EMElectricFieldModel_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">EMElectricFieldModelType_t</span><span class="w"> </span><span class="n">EMElectricFieldModelType</span><span class="w"> </span><span class="p">;</span><span class="w">              </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">EMElectricFieldModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">EMElectricFieldModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">EMElectricFieldModelType_t</span></code> is an enumeration type describing the type of electric field model.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> data structures may be used to store data associated with the electric field model. Recommended data-name identifiers are listed in the section describing the <a class="reference internal" href="../FMM/save_nodes.html#emconductivitymodel"><span class="std std-ref">electromagnetics conductivity model</span></a>.</p>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the electric field model. For any data that is dimensional, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+<div class="section" id="electromagnetics-magnetic-field-model-structure-definition-emmagneticfieldmodel-t">
+<h3><span class="section-number">10.10.2. </span>Electromagnetics Magnetic Field Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMMagneticFieldModel_t</span></code><a class="headerlink" href="#electromagnetics-magnetic-field-model-structure-definition-emmagneticfieldmodel-t" title="Permalink to this headline">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">EMMagneticFieldModel_t</span></code> describes the magnetic field model used for electromagnetic flows. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">EMMagneticFieldModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">EMMagneticFieldModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Constant</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Frozen</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Interpolated</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">EMMagneticFieldModel_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">EMMagneticFieldModelType_t</span><span class="w"> </span><span class="n">EMMagneticFieldModelType</span><span class="w"> </span><span class="p">;</span><span class="w">              </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">EMMagneticFieldModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">EMMagneticFieldModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">EMMagneticFieldModelType_t</span></code> is an enumeration type describing the type of magnetic field model.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> data structures may be used to store data associated with the magnetic field model. Recommended data-name identifiers are listed in the section describing the <a class="reference internal" href="../FMM/save_nodes.html#emconductivitymodel"><span class="std std-ref">electromagnetics conductivity model</span></a>.</p>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the magnetic field model.
+For any data that is dimensional, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in Descriptor_t and DataArray_t children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+<div class="section" id="electromagnetics-conductivity-model-structure-definition-emconductivitymodel-t">
+<h3><span class="section-number">10.10.3. </span>Electromagnetics Conductivity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMConductivityModel_t</span></code><a class="headerlink" href="#electromagnetics-conductivity-model-structure-definition-emconductivitymodel-t" title="Permalink to this headline">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">EMConductivityModel_t</span></code> describes the conductivity model used for electromagnetic flows. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">EMConductivityModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">EMConductivityModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Constant</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Frozen</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Equilibrium_LinRessler</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">Chemistry_LinRessler</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">EMConductivityModel_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">EMConductivityModelType_t</span><span class="w"> </span><span class="n">EMConductivityModelType</span><span class="w"> </span><span class="p">;</span><span class="w">                </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">EMConductivityModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">EMConductivityModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">EMConductivityModelType_t</span></code> is an enumeration type describing the type of conductivity model.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> data structures may be used to store data associated with the conductivity model. Recommended data-name identifiers for all three electromagnetics models are listed in the following table.</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Electromagnetics Models</strong></span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 42%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Voltage</span></code></p></td>
+<td><p>Voltage</p></td>
+<td><p><span class="math notranslate nohighlight">\(M L^{2}/TI\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ElectricFieldX</span></code></p></td>
+<td><p>x-component of electric field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/TI\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ElectricFieldY</span></code></p></td>
+<td><p>y-component of electric field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/TI\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ElectricFieldZ</span></code></p></td>
+<td><p>z-component of electric field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/TI\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MagneticFieldX</span></code></p></td>
+<td><p>x-component of magnetic field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MagneticFieldY</span></code></p></td>
+<td><p>y-component of magnetic field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MagneticFieldZ</span></code></p></td>
+<td><p>z-component of magnetic field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CurrentDensityX</span></code></p></td>
+<td><p>x-component of current density vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CurrentDensityY</span></code></p></td>
+<td><p>y-component of current density vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CurrentDensityZ</span></code></p></td>
+<td><p>z-component of current density vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ElectricConductivity</span></code></p></td>
+<td><p>Electrical conductivity</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{3}I^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">LorentzForceX</span></code></p></td>
+<td><p>x-component of Lorentz force vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">LorentzForceY</span></code></p></td>
+<td><p>y-component of Lorentz force vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">LorentzForceZ</span></code></p></td>
+<td><p>z-component of Lorentz force vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">JouleHeating</span></code></p></td>
+<td><p>Joule heating</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/T^{2}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>The dimensional units are defined as follows: <span class="math notranslate nohighlight">\(M\)</span> is mass, <span class="math notranslate nohighlight">\(L\)</span> is length, <span class="math notranslate nohighlight">\(T\)</span> is time, and <span class="math notranslate nohighlight">\(I\)</span> is electric current.
+These are further described in the section on <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">Conventions for Data-Name Identifiers</span></a>.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the conductivity model. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</div>
+</div>
+<div class="section" id="flow-equation-examples">
+<h2><span class="section-number">10.11. </span>Flow Equation Examples<a class="headerlink" href="#flow-equation-examples" title="Permalink to this headline">¶</a></h2>
+<p>This section presents two examples of flow-equation sets. The first is an inviscid case and the second is a turbulent case with a one-equation turbulence model.</p>
+<div class="section" id="example-3-d-compressible-euler">
+<h3><span class="section-number">10.11.1. </span>Example - 3-D Compressible Euler<a class="headerlink" href="#example-3-d-compressible-euler" title="Permalink to this headline">¶</a></h3>
+<p>3-D compressible Euler with a perfect gas assumption for a monatomic gas:</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">FlowEquationSet_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">EulerEquations</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">EquationDimension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">GoverningEquations_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GoverningEquations</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">GoverningEquationsType_t</span><span class="w"> </span><span class="n">GoverningEquationsType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Euler</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">GasModel_t</span><span class="w"> </span><span class="n">GasModel</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">GasModelType_t</span><span class="w"> </span><span class="n">GasModelType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CaloricallyPerfect</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">SpecificHeatRatio</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="p">{{</span><span class="w"></span>
+<span class="w">      </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.667</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NondimensionalParameter</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-3-d-compressible-navier-stokes">
+<h3><span class="section-number">10.11.2. </span>Example - 3-D Compressible Navier-Stokes<a class="headerlink" href="#example-3-d-compressible-navier-stokes" title="Permalink to this headline">¶</a></h3>
+<p>3-D compressible Navier-Stokes for a structured grid, with the S-A turbulence model, a perfect gas assumption, Sutherland’s law for the molecular viscosity, a constant Prandtl-number assumption, and inclusion of the full Navier-Stokes diffusion terms; all models assume air:</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">FlowEquationSet_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">NSEquations</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">EquationDimension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">GoverningEquations_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GoverningEquations</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">GoverningEquationsType_t</span><span class="w"> </span><span class="n">GoverningEquationsType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NSTurbulent</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="w"> </span><span class="n">DiffusionModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">GasModel_t</span><span class="w"> </span><span class="n">GasModel</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">GasModelType_t</span><span class="w"> </span><span class="n">GasModelType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CaloricallyPerfect</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">SpecificHeatRatio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">1.4</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">ViscosityModel_t</span><span class="w"> </span><span class="n">ViscosityModel</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">ViscosityModelType_t</span><span class="w"> </span><span class="n">ViscosityModelType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SutherlandLaw</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">SutherlandLawConstant</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="p">{{</span><span class="w"></span>
+<span class="w">      </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">110.6</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dimensional</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="n">TemperatureUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kelvin</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">ThermalConductivityModel_t</span><span class="w"> </span><span class="n">ThermalConductivityModel</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">ThermalConductivityModelType_t</span><span class="w"> </span><span class="n">ThermalConductivityModelType</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">       </span><span class="n">ConstantPrandtl</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Prandtl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">0.72</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">TurbulenceClosure_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulenceClosure</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">TurbulenceClosureType_t</span><span class="w"> </span><span class="n">TurbulenceClosureType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EddyViscosity</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PrandtlTurbulent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="mf">0.90</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">TurbulenceModel_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">TurbulenceModel</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">TurbulenceModelType_t</span><span class="w"> </span><span class="n">TurbulenceModelType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OneEquation_SpalartAllmaras</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="w"> </span><span class="n">DiffusionModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note that all <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities are abbreviated except <code class="code sidskey docutils literal notranslate"><span class="pre">SutherlandLawConstant</span></code>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="boundary.html" title="previous chapter (use the left arrow)"><span class="section-number">9. </span>Boundary Conditions</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="time.html" title="next chapter (use the right arrow)"><span class="section-number">11. </span>Time-Dependent Flow</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="time.html" title="11. Time-Dependent Flow"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="boundary.html" title="9. Boundary Conditions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" >CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">10. </span>Governing Flow Equations</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

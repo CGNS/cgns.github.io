@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Navigating a CGNS File &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Error Handling" href="CGNS_MLL_error.html" />
+    <link rel="prev" title="File Operations" href="CGNS_MLL_fileops.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_error.html" title="Error Handling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_fileops.html" title="File Operations"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" accesskey="U">CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Navigating a CGNS File</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">Navigating a CGNS File</a><ul>
+<li><a class="reference internal" href="#accessing-a-node">Accessing a Node</a><ul>
+<li><a class="reference internal" href="#input-ouput"><span class="in">Input</span> / <span class="out">Ouput</span></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deleting-a-node">Deleting a Node</a><ul>
+<li><a class="reference internal" href="#id1"><span class="in">Input</span> / <span class="out">Ouput</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_MLL.html">CGNS/MLL - An API for C and Fortran applications</a></li>
+              
+              <li>Navigating a CGNS File</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <div class="section" id="navigating-a-cgns-file">
+<span id="mllnavigating"></span><h1>Navigating a CGNS File<a class="headerlink" href="#navigating-a-cgns-file" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#accessing-a-node">Accessing a Node</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_goto</span></code></p></td>
+<td><p>Access a node via label/name, index pairs</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_gorel</span></code></p></td>
+<td><p>Access a node via relative path</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_gopath</span></code></p></td>
+<td><p>Access a node via pathname</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_golist</span></code></p></td>
+<td><p>Access a node via arrays of labels and indices</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_where</span></code></p></td>
+<td><p>Get path to current node</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#deleting-a-node">Deleting a Node</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_delete_node</span></code></p></td>
+<td><p>Delete a node</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="accessing-a-node">
+<h2>Accessing a Node<a class="headerlink" href="#accessing-a-node" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>C Functions</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_goto</span></span></code> (<span class="in">int fn</span>, <span class="in">int B</span>, …, <span class="in">“end”</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_gorel</span></span></code> (<span class="in">int fn</span>, …, <span class="in">“end”</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_gopath</span></span></code> (<span class="in">int fn</span>, <span class="in">const char *path</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_golist</span></span></code> (<span class="in">int fn</span>, <span class="in">int B</span>, <span class="in">int depth</span>, <span class="in">char **label</span>, <span class="in">int *index</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_where</span></span></code> (<span class="out">int *fn</span>, <span class="in">int *B</span>, <span class="out">int *depth</span>, <span class="out">char **label</span>, <span class="out">int *index</span>);</p></td>
+<td><p>r w m</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Fortran interfaces</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>call <span class="implicit">cg_goto_f</span> (<span class="in">fn</span>, <span class="in">B</span>, <span class="out">ier</span>, …, <span class="in">‘end’</span>)</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-odd"><td><p>call <span class="implicit">cg_gorel_f</span> (<span class="in">fn</span>, <span class="out">ier</span>, …, <span class="in">‘end’</span>)</p></td>
+<td><p>r w m</p></td>
+</tr>
+<tr class="row-even"><td><p>call <cite>cg_gopath_f</cite> (<span class="in">fn</span>, <span class="in">path</span>, <span class="out">ier</span>)</p></td>
+<td><p>r w m</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="input-ouput">
+<h3><span class="in">Input</span> / <span class="out">Ouput</span><a class="headerlink" href="#input-ouput" title="Permalink to this headline">¶</a></h3>
+<dl class="field-list">
+<dt class="field-odd">fn</dt>
+<dd class="field-odd"><p>CGNS file index number.</p>
+</dd>
+<dt class="field-even">B</dt>
+<dd class="field-even"><p>Base index number, where 1 ≤ B ≤ nbases.</p>
+</dd>
+<dt class="field-odd"><cite>…</cite></dt>
+<dd class="field-odd"><p>Variable argument list used to specify the path to a node. It is composed of an unlimited list of pair-arguments identifying each node in the path. Nodes may be identified by their label or name. Thus, a pair-argument may be of the form</p>
+<blockquote>
+<div><p>“CGNS_NodeLabel”, NodeIndex</p>
+</div></blockquote>
+<p>where CGNS_NodeLabel is the node label and NodeIndex is the node index, or</p>
+<blockquote>
+<div><p>“CGNS_NodeName”, 0</p>
+</div></blockquote>
+<p>where CGNS_NodeName is the node name. The 0 in the second form is required, to indicate that a node name is being specified rather than a node label. In addition, a pair-argument may be specified as</p>
+<blockquote>
+<div><p>“..”, 0</p>
+</div></blockquote>
+<p>indicating the parent of the current node. The different pair-argument forms may be intermixed in the same function call.</p>
+<p>There is one exception to this rule. When accessing a BCData_t node, the index must be set to either Dirichlet or Neumann since only these two types are allowed. (Note that Dirichlet and Neumann are defined in the include files cgnslib.h and cgnslib_f.h). Since “Dirichlet” and “Neuman” are also the names for these nodes, you may also use the “Dirichlet”, 0 or “Neuman”, 0 to access the node. See the example below.</p>
+</dd>
+<dt class="field-even">end</dt>
+<dd class="field-even"><p>The character string “end” (or ‘end’ for the Fortran function) must be the last argument. It is used to indicate the end of the argument list. You may also use the empty string, “” (‘’ for Fortran), or the NULL string in C, to terminate the list.</p>
+</dd>
+<dt class="field-odd">path</dt>
+<dd class="field-odd"><p>The pathname for the node to go to. If a position has been already set, this may be a relative path, otherwise it is an absolute path name, starting with “/Basename”, where Basename is the base under which you wish to move.</p>
+</dd>
+<dt class="field-even">depth</dt>
+<dd class="field-even"><p>Depth of the path list. The maximum depth is defined in cgnslib.h by CG_MAX_GOTO_DEPTH, and is currently equal to 20.</p>
+</dd>
+<dt class="field-odd">label</dt>
+<dd class="field-odd"><p>Array of node labels for the path. This argument may be passed as NULL to cg_where(), otherwise it must be dimensioned by the calling program. The maximum size required is label[MAX_GO_TO_DEPTH][33]. You may call cg_where() with both label and index set to NULL in order to get the current depth, then dimension to that value.</p>
+</dd>
+<dt class="field-even">index</dt>
+<dd class="field-even"><p>Array of node indices for the path. This argument may be passed as NULL to cg_where(), otherwise it must be dimensioned by the calling program. The maximum size required is index[MAX_GO_TO_DEPTH]. You may call cg_where() with both label and index set to NULL in order to get the current depth, then dimension to that value.</p>
+</dd>
+<dt class="field-odd">ier</dt>
+<dd class="field-odd"><p>Error status. The possible values, with the corresponding C names (or Fortran parameters) defined in cgnslib.h (or cgnslib_f.h) are listed below.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Value</p></th>
+<th class="head"><p>Name/Parameter</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>CG_OK</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>CG_ERROR</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>CG_NODE_NOT_FOUND</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>CG_INCORRECT_PATH</p></td>
+</tr>
+</tbody>
+</table>
+<p>For non-zero values, an error message may be printed using cg_error_print().</p>
+</dd>
+</dl>
+<p>This function allows access to any parent-type nodes in a CGNS file. A parent-type node is one that can have children. Nodes that cannot have children, like Descriptor_t, are not supported by this function.</p>
+<p>To illustrate the use of the above routines, assume you have a file with CGNS index number filenum, a base node named Base with index number basenum, 2 zones (named Zone1 and Zone2, with indices 1 and 2), and user-defined data (User, index 1) below each zone. To move to the user-defined data node under zone 1, you may use any of the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cg_goto</span><span class="p">(</span><span class="n">filenum</span><span class="p">,</span> <span class="n">basenum</span><span class="p">,</span> <span class="s2">&quot;Zone_t&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;UserDefinedData_t&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
+<span class="n">cg_goto</span><span class="p">(</span><span class="n">filenum</span><span class="p">,</span> <span class="n">basenum</span> <span class="s2">&quot;Zone1&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;UserDefinedData_t&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
+<span class="n">cg_goto</span><span class="p">(</span><span class="n">filenum</span><span class="p">,</span> <span class="n">basenum</span><span class="p">,</span> <span class="s2">&quot;Zone_t&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
+<span class="n">cg_goto</span><span class="p">(</span><span class="n">filenum</span><span class="p">,</span> <span class="n">basenum</span><span class="p">,</span> <span class="s2">&quot;Zone1&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
+<span class="n">cg_gopath</span><span class="p">(</span><span class="n">filenum</span><span class="p">,</span> <span class="s2">&quot;/Base/Zone1/User&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Now, to change to the user-defined data node under zone 2, you may use the full path specification as above, or else a relative path, using one of the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cg_gorel</span><span class="p">(</span><span class="n">filenum</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Zone_t&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;UserDefinedData_t&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
+<span class="n">cg_gorel</span><span class="p">(</span><span class="n">filenum</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Zone2&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;UserDefinedData_t&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
+<span class="n">cg_gorel</span><span class="p">(</span><span class="n">filenum</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Zone_t&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
+<span class="n">cg_gorel</span><span class="p">(</span><span class="n">filenum</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Zone2&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
+<span class="n">cg_gopath</span><span class="p">(</span><span class="n">filenum</span><span class="p">,</span> <span class="s2">&quot;../../Zone2/User&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Shown below are some additional examples of various uses of these routines, in both C and Fortran, where fn, B, Z, etc., are index numbers.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ier</span> <span class="o">=</span> <span class="n">cg_goto</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="s2">&quot;Zone_t&quot;</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="s2">&quot;FlowSolution_t&quot;</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;MySolution&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">);</span>
+
+<span class="n">ier</span> <span class="o">=</span> <span class="n">cg_gorel</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;FlowSolution_t&quot;</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
+
+<span class="n">ier</span> <span class="o">=</span> <span class="n">cg_gopath</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s2">&quot;/MyBase/MyZone/MySolution&quot;</span><span class="p">);</span>
+
+<span class="n">ier</span> <span class="o">=</span> <span class="n">cg_gopath</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s2">&quot;../../MyZoneBC&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">call</span> <span class="n">cg_goto_f</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">ier</span><span class="p">,</span> <span class="s1">&#39;Zone_t&#39;</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="s1">&#39;GasModel_t&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;DataArray_t&#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">)</span>
+
+<span class="n">call</span> <span class="n">cg_goto_f</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">ier</span><span class="p">,</span> <span class="s1">&#39;Zone_t&#39;</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="s1">&#39;ZoneBC_t&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;BC_t&#39;</span><span class="p">,</span> <span class="n">BC</span><span class="p">,</span> <span class="s1">&#39;BCDataSet_t&#39;</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span>
+               <span class="s1">&#39;BCData_t&#39;</span><span class="p">,</span> <span class="n">Dirichlet</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">)</span>
+
+<span class="n">call</span> <span class="n">cg_gorel_f</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">ier</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Neumann&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="n">call</span> <span class="n">cg_gopath_f</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s1">&#39;../../MyZoneBC&#39;</span><span class="p">,</span> <span class="n">ier</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="deleting-a-node">
+<h2>Deleting a Node<a class="headerlink" href="#deleting-a-node" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-given docutils align-default" id="id2">
+<caption><span class="caption-text">Configuring CGNS Internals</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>C Functions</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_delete_node</span></span></code> (<span class="in">char *NodeName</span>)</p></td>
+<td><p><cite>- - m</cite></p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Fortran interfaces</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_delete_node</span></code> (<span class="in">NodeName</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>- - m</cite></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id1">
+<h3><span class="in">Input</span> / <span class="out">Ouput</span><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">NodeName</dt>
+<dd class="field-odd"><p>Name of the child to be deleted.</p>
+</dd>
+<dt class="field-even">ier</dt>
+<dd class="field-even"><p>Error status.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>The function cg_delete_node is used is conjunction with cg_goto. Once positioned at a parent node with cg_goto, a child of this node can be deleted with cg_delete_node. This function requires a single argument, NodeName, which is the name of the child to be deleted.</p>
+<p>Since the highest level that can be pointed to with cg_goto is a base node for a CGNS database (CGNSBase_t), the highest-level nodes that can be deleted are the children of a CGNSBase_t node. In other words, nodes located directly under the ADF (or HDF) root node (CGNSBase_t and CGNSLibraryVersion_t) can not be deleted with cg_delete.</p>
+<p>A few other nodes are not allowed to be deleted from the database because these are required nodes as defined by the SIDS, and deleting them would make the file non-CGNS compliant.
+These are:</p>
+<ul class="simple">
+<li><p>Under Zone_t: ZoneType</p></li>
+<li><p>Under GridConnectivity1to1_t: PointRange, PointRangeDonor, Transform</p></li>
+<li><p>Under OversetHoles_t: PointList and any IndexRange_t</p></li>
+<li><p>Under GridConnectivity_t: PointRange, PointList, CellListDonor, PointListDonor</p></li>
+<li><p>Under BC_t: PointList, PointRange</p></li>
+<li><p>Under GeometryReference_t: GeometryFile, GeometryFormat</p></li>
+<li><p>Under Elements_t: ElementRange, ElementConnectivity</p></li>
+<li><p>Under Gravity_t: GravityVector</p></li>
+<li><p>Under Axisymmetry_t: AxisymmetryReferencePoint, AxisymmetryAxisVector</p></li>
+<li><p>Under RotatingCoordinates_t: RotationCenter, RotationRateVector</p></li>
+<li><p>Under Periodic_t: RotationCenter, RotationAngle, Translation</p></li>
+<li><p>Under AverageInterface_t: AverageInterfaceType</p></li>
+<li><p>Under WallFunction_t: WallFunctionType</p></li>
+<li><p>Under Area_t: AreaType, SurfaceArea, RegionName</p></li>
+</ul>
+<p>When a child node is deleted, both the database and the file on disk are updated to remove the node. One must be careful not to delete a node from within a loop of that node type. For example, if the number of zones below a CGNSBase_t node is nzones, a zone should never be deleted from within a zone loop! By deleting a zone, the total number of zones (nzones) changes, as well as the zone indexing. Suppose for example that nzones is 5, and that the third zone is deleted. After calling cg_delete_node, nzones is changed to 4, and the zones originally indexed 4 and 5 are now indexed 3 and 4.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="CGNS_MLL_fileops.html" title="previous chapter (use the left arrow)">File Operations</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGNS_MLL_error.html" title="next chapter (use the right arrow)">Error Handling</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_error.html" title="Error Handling"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_fileops.html" title="File Operations"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" >CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Navigating a CGNS File</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

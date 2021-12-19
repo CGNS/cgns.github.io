@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Grid Specification &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Solution Data" href="CGNS_MLL_solution.html" />
+    <link rel="prev" title="Auxiliary Data" href="CGNS_MLL_auxiliary.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_solution.html" title="Solution Data"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_auxiliary.html" title="Auxiliary Data"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" accesskey="U">CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Grid Specification</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">Grid Specification</a><ul>
+<li><a class="reference internal" href="#zone-grid-coordinates">Zone Grid Coordinates</a></li>
+<li><a class="reference internal" href="#element-connectivity">Element Connectivity</a></li>
+<li><a class="reference internal" href="#axisymmetry">Axisymmetry</a></li>
+<li><a class="reference internal" href="#rotating-coordinates">Rotating Coordinates</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_MLL.html">CGNS/MLL - An API for C and Fortran applications</a></li>
+              
+              <li>Grid Specification</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <div class="section" id="grid-specification">
+<span id="mllgridspecification"></span><h1>Grid Specification<a class="headerlink" href="#grid-specification" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#zone-grid-coordinates">Zone Grid Coordinates</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_grid_write</span></code></p></td>
+<td><p>Create a GridCoordinates_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_ngrids</span></code></p></td>
+<td><p>Get number of GridCoordinates_t nodes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_grid_read</span></code></p></td>
+<td><p>Get name of a GridCoordinates_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_grid_bounding_box_read</span></code></p></td>
+<td><p>Get bounding box associated to a GridCoordinates_t node</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_grid_bounding_box_write</span></code></p></td>
+<td><p>Write bounding box associated to a GridCoordinates_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_coord_write</span></code></p></td>
+<td><p>Write grid coordinates</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_coord_partial_write</span></code></p></td>
+<td><p>Write subset of grid coordinates</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_coord_general_write</span></code></p></td>
+<td><p>Write shaped array to a subset of grid coordinates</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_ncoords</span></code></p></td>
+<td><p>Get number of coordinate arrays</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_coord_info</span></code></p></td>
+<td><p>Get info about a coordinate array</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_coord_read</span></code></p></td>
+<td><p>Read grid coordinates</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_coord_general_read</span></code></p></td>
+<td><p>Read subset of grid coordinates to a shaped array</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#element-connectivity">Element Connectivity</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_section_write</span></code></p></td>
+<td><p>Write fixed size element data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_poly_section_write</span></code></p></td>
+<td><p>Write element data</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_section_general_write</span></code></p></td>
+<td><p>Write section data without element data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_section_initialize</span></code></p></td>
+<td><p>Initialize element data for not fixed size elements</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_section_partial_write</span></code></p></td>
+<td><p>Write subset of element data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_elements_partial_write</span></code></p></td>
+<td><p>Write element data for a fixed size element section</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_poly_elements_partial_write</span></code></p></td>
+<td><p>Write element data for an element section</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_elements_general_write</span></code></p></td>
+<td><p>Write element data for a fixed size element section</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_poly_elements_general_write</span></code></p></td>
+<td><p>Write element data for an element section</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_parent_data_write</span></code></p></td>
+<td><p>Write parent info for an element section</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_parent_data_partial_write</span></code></p></td>
+<td><p>Write subset of parent info for an element section</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_nsections</span></code></p></td>
+<td><p>Get number of element sections</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_section_read</span></code></p></td>
+<td><p>Get info for an element section</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_ElementDataSize</span></code></p></td>
+<td><p>Get size of element connectivity data array</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_ElementPartialSize</span></code></p></td>
+<td><p>Get size of element connectivity data array for partial read</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_elements_read</span></code></p></td>
+<td><p>Read fixed size element data</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_elements_partial_read</span></code></p></td>
+<td><p>Read subset of fixed size element data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_elements_general_read</span></code></p></td>
+<td><p>Read subset of fixed size element data to a typed array</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_poly_elements_read</span></code></p></td>
+<td><p>Read element data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_poly_elements_partial_read</span></code></p></td>
+<td><p>Read subset of element data</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_poly_elements_general_read</span></code></p></td>
+<td><p>Read subset of element data to typed arrays</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_parent_elements_general_read</span></code></p></td>
+<td><p>Read parent info for an element section</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_parent_elements_position_general_read</span></code></p></td>
+<td><p>Read parent position info for an element section</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_npe</span></code></p></td>
+<td><p>Get number of nodes for an element type</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#axisymmetry">Axisymmetry</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_axisym_write</span></code></p></td>
+<td><p>Create axisymmetry data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_axisym_read</span></code></p></td>
+<td><p>Read axisymmetry data</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#rotating-coordinates">Rotating Coordinates</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_rotating_write</span></code></p></td>
+<td><p>Create rotating coordinates data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_rotating_read</span></code></p></td>
+<td><p>Read rotating coordinates data</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="zone-grid-coordinates">
+<h2>Zone Grid Coordinates<a class="headerlink" href="#zone-grid-coordinates" title="Permalink to this headline">¶</a></h2>
+<p>Node: GridCoordinates_t (SIDS, File Mapping)</p>
+<p>GridCoordinates_t nodes are used to describe grids associated with a particular zone. The original grid must be described by a GridCoordinates_t node named GridCoordinates. Additional GridCoordinates_t nodes may be used, with user-defined names, to store grids at multiple time steps or iterations. In addition to the discussion of the GridCoordinates_t node in the SIDS and File Mapping manuals, see the discussion of the ZoneIterativeData_t and ArbitraryGridMotion_t nodes in the SIDS manual.</p>
+</div>
+<div class="section" id="element-connectivity">
+<h2>Element Connectivity<a class="headerlink" href="#element-connectivity" title="Permalink to this headline">¶</a></h2>
+<p>Node: Elements_t (SIDS, File Mapping)</p>
+</div>
+<div class="section" id="axisymmetry">
+<h2>Axisymmetry<a class="headerlink" href="#axisymmetry" title="Permalink to this headline">¶</a></h2>
+<p>Node: Axisymmetry_t (SIDS, File Mapping)</p>
+</div>
+<div class="section" id="rotating-coordinates">
+<h2>Rotating Coordinates<a class="headerlink" href="#rotating-coordinates" title="Permalink to this headline">¶</a></h2>
+<p>Node: RotatingCoordinates_t (SIDS, File Mapping)</p>
+</div>
+</div>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="CGNS_MLL_auxiliary.html" title="previous chapter (use the left arrow)">Auxiliary Data</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGNS_MLL_solution.html" title="next chapter (use the right arrow)">Solution Data</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_solution.html" title="Solution Data"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_auxiliary.html" title="Auxiliary Data"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" >CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Grid Specification</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

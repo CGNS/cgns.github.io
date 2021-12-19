@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Grid Connectivity &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Boundary Conditions" href="CGNS_MLL_bc.html" />
+    <link rel="prev" title="Solution Data" href="CGNS_MLL_solution.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_bc.html" title="Boundary Conditions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_solution.html" title="Solution Data"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" accesskey="U">CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Grid Connectivity</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">Grid Connectivity</a><ul>
+<li><a class="reference internal" href="#one-to-one-connectivity">One-to-One Connectivity</a></li>
+<li><a class="reference internal" href="#generalized-connectivity">Generalized Connectivity</a></li>
+<li><a class="reference internal" href="#special-grid-connectivity-properties">Special Grid Connectivity Properties</a></li>
+<li><a class="reference internal" href="#overset-holes">Overset Holes</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_MLL.html">CGNS/MLL - An API for C and Fortran applications</a></li>
+              
+              <li>Grid Connectivity</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <div class="section" id="grid-connectivity">
+<span id="mllgridconnectivity"></span><h1>Grid Connectivity<a class="headerlink" href="#grid-connectivity" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#one-to-one-connectivity">One-to-One Connectivity</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_n1to1_global</span></code></p></td>
+<td><p>Get total number of 1-to-1 interfaces in a database</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_1to1_read_global</span></code></p></td>
+<td><p>Read data for all 1-to-1 interfaces in a database</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_1to1_write</span></code></p></td>
+<td><p>Write 1-to-1 connectivity data for a zone</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_n1to1</span></code></p></td>
+<td><p>Get number of 1-to-1 interfaces in a zone</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_1to1_read</span></code></p></td>
+<td><p>Read 1-to-1 connectivity data for a zone</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#generalized-connectivity">Generalized Connectivity</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_conn_write</span></code></p></td>
+<td><p>Write generalized connectivity data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_conn_write_short</span></code></p></td>
+<td><p>Write generalized connectivity data without donor information</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_nconns</span></code></p></td>
+<td><p>Get number of generalized connectivity interfaces in a zone</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_conn_info</span></code></p></td>
+<td><p>Get info about a generalized connectivity interface</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#special-grid-connectivity-properties">Special Grid Connectivity Properties</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_conn_periodic_write</span></code></p></td>
+<td><p>Write data for periodic interface</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_conn_average_write</span></code></p></td>
+<td><p>Write data for averaging interface</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_conn_periodic_read</span></code></p></td>
+<td><p>Read data for periodic interface</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_conn_average_read</span></code></p></td>
+<td><p>Read data for averaging interface</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#overset-holes">Overset Holes</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_hole_write</span></code></p></td>
+<td><p>Write overset hole data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_nholes</span></code></p></td>
+<td><p>Get number of overset holes in a zone</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_hole_info</span></code></p></td>
+<td><p>Get info about an overset hole</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_hole_read</span></code></p></td>
+<td><p>Read overset hole data</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="one-to-one-connectivity">
+<h2>One-to-One Connectivity<a class="headerlink" href="#one-to-one-connectivity" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="generalized-connectivity">
+<h2>Generalized Connectivity<a class="headerlink" href="#generalized-connectivity" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="special-grid-connectivity-properties">
+<h2>Special Grid Connectivity Properties<a class="headerlink" href="#special-grid-connectivity-properties" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="overset-holes">
+<h2>Overset Holes<a class="headerlink" href="#overset-holes" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="CGNS_MLL_solution.html" title="previous chapter (use the left arrow)">Solution Data</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGNS_MLL_bc.html" title="next chapter (use the right arrow)">Boundary Conditions</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_bc.html" title="Boundary Conditions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_solution.html" title="Solution Data"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" >CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Grid Connectivity</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

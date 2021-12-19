@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Solution Data &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Grid Connectivity" href="CGNS_MLL_connectivity.html" />
+    <link rel="prev" title="Grid Specification" href="CGNS_MLL_grid.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_connectivity.html" title="Grid Connectivity"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_grid.html" title="Grid Specification"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" accesskey="U">CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Solution Data</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">Solution Data</a><ul>
+<li><a class="reference internal" href="#flow-solution">Flow Solution</a></li>
+<li><a class="reference internal" href="#flow-solution-data">Flow Solution Data</a></li>
+<li><a class="reference internal" href="#discrete-data">Discrete Data</a></li>
+<li><a class="reference internal" href="#zone-subregions">Zone Subregions</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_MLL.html">CGNS/MLL - An API for C and Fortran applications</a></li>
+              
+              <li>Solution Data</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <div class="section" id="solution-data">
+<span id="mllsolutiondata"></span><h1>Solution Data<a class="headerlink" href="#solution-data" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#flow-solution">Flow Solution</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_sol_write</span></code></p></td>
+<td><p>Create and/or write to a FlowSolution_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_nsols</span></code></p></td>
+<td><p>Get number of FlowSolution_t nodes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_sol_info</span></code></p></td>
+<td><p>Get info about a FlowSolution_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_sol_ptset_write</span></code></p></td>
+<td><p>Create a point set FlowSolution_t node</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_sol_ptset_info</span></code></p></td>
+<td><p>Get info about a point set FlowSolution_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_sol_ptset_read</span></code></p></td>
+<td><p>Read a point set FlowSolution_t node</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_sol_size</span></code></p></td>
+<td><p>Get the dimensions of a FlowSolution_t node</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#flow-solution-data">Flow Solution Data</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_field_write</span></code></p></td>
+<td><p>Write flow solution</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_field_partial_write</span></code></p></td>
+<td><p>Write subset of flow solution</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_field_general_write</span></code></p></td>
+<td><p>Write shaped array to a subset of flow solution</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_nfields</span></code></p></td>
+<td><p>Get number of flow solution arrays</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_field_info</span></code></p></td>
+<td><p>Get info about a flow solution array</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_field_read</span></code></p></td>
+<td><p>Read flow solution</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_field_general_read</span></code></p></td>
+<td><p>Read subset of flow solution to a shaped array</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#discrete-data">Discrete Data</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_discrete_write</span></code></p></td>
+<td><p>Create a DiscreteData_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_ndiscrete</span></code></p></td>
+<td><p>Get number of DiscreteData_t nodes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_discrete_read</span></code></p></td>
+<td><p>Get name of a DiscreteData_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_discrete_ptset_write</span></code></p></td>
+<td><p>Create a point set DiscreteData_t node</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_discrete_ptset_info</span></code></p></td>
+<td><p>Get info about a point set DiscreteData_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_discrete_ptset_read</span></code></p></td>
+<td><p>Read a point set DiscreteData_t node</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_discrete_size</span></code></p></td>
+<td><p>Get the dimensions of a DiscreteData_t node</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#zone-subregions">Zone Subregions</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_nsubregs</span></code></p></td>
+<td><p>Get number of ZoneSubRegion_t nodes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_subreg_info</span></code></p></td>
+<td><p>Get info about a ZoneSubRegion_t node</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_subreg_ptset_read</span></code></p></td>
+<td><p>Read point set data for a ZoneSubRegion_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_subreg_bcname_read</span></code></p></td>
+<td><p>Read the BC_t node name for a ZoneSubRegion_t node</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_subreg_gcname_read</span></code></p></td>
+<td><p>Read the GridConnectivity_t node name for a ZoneSubRegion_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_subreg_ptset_write</span></code></p></td>
+<td><p>Create a point set ZoneSubRegion_t node</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_subreg_bcname_write</span></code></p></td>
+<td><p>Create a ZoneSubRegion_t node that references a BC_t node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_subreg_gcname_write</span></code></p></td>
+<td><p>Create a ZoneSubRegion_t node that references a GridConnectivity_t node</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="flow-solution">
+<h2>Flow Solution<a class="headerlink" href="#flow-solution" title="Permalink to this headline">¶</a></h2>
+<p>Node: FlowSolution_t (SIDS, File Mapping)</p>
+</div>
+<div class="section" id="flow-solution-data">
+<h2>Flow Solution Data<a class="headerlink" href="#flow-solution-data" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="discrete-data">
+<h2>Discrete Data<a class="headerlink" href="#discrete-data" title="Permalink to this headline">¶</a></h2>
+<p>Node: DiscreteData_t (SIDS, File Mapping)</p>
+</div>
+<div class="section" id="zone-subregions">
+<h2>Zone Subregions<a class="headerlink" href="#zone-subregions" title="Permalink to this headline">¶</a></h2>
+<p>Node: ZoneSubRegion_t (SIDS, File Mapping)</p>
+</div>
+</div>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="CGNS_MLL_grid.html" title="previous chapter (use the left arrow)">Grid Specification</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGNS_MLL_connectivity.html" title="next chapter (use the right arrow)">Grid Connectivity</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_connectivity.html" title="Grid Connectivity"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_grid.html" title="Grid Specification"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" >CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Solution Data</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
@@ -72,27 +73,6 @@
     </div>
   </div>
 </div>
-<div class="sidebar-block">
-  <div class="sidebar-wrapper">
-    <h2>Contents</h2>
-    <div class="sidebar-localtoc">
-      <ul>
-<li><a class="reference internal" href="#">Physical Data</a><ul>
-<li><a class="reference internal" href="#data-arrays">Data Arrays</a><ul>
-<li><a class="reference internal" href="#input-ouput"><span class="in">Input</span> / <span class="out">Ouput</span></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#data-class">Data Class</a></li>
-<li><a class="reference internal" href="#data-conversion-factors">Data Conversion Factors</a></li>
-<li><a class="reference internal" href="#dimensional-units">Dimensional Units</a></li>
-<li><a class="reference internal" href="#dimensional-exponents">Dimensional Exponents</a></li>
-</ul>
-</li>
-</ul>
-
-    </div>
-  </div>
-</div>
       
     </div>
   </div>
@@ -114,287 +94,632 @@
             
   <div class="section" id="physical-data">
 <span id="mllphysicaldata"></span><h1>Physical Data<a class="headerlink" href="#physical-data" title="Permalink to this headline">¶</a></h1>
-<table class="colwidths-given docutils align-default">
+<!-- CGNS Mid-Level Library - Physical Data -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title> CGNS Mid-Level Library - Physical Data </title>
+</head>
+
+<h2>Physical Data</h2>
+
+<ul>
+<li> <a href="#dataarray">Data Arrays</a>
+     <ul>
+     <li> <tt><b>cg_array_write</b></tt> - Write data array
+     <li> <tt><b>cg_array_general_write</b></tt> - Write shaped array to a subset of data array
+     <li> <tt><b>cg_narrays</b></tt> - Get number of data arrays under current node
+     <li> <tt><b>cg_array_info</b></tt> - Get data array info
+     <li> <tt><b>cg_array_read</b></tt> - Read data array
+     <li> <tt><b>cg_array_read_as</b></tt> - Read data array as a certain type
+     <li> <tt><b>cg_array_general_read</b></tt> - Read subset of data array to a shaped array
+     </ul>
+<li> <a href="#dataclass">Data Class</a>
+     <ul>
+     <li> <tt><b>cg_dataclass_write</b></tt> - Write data class
+     <li> <tt><b>cg_dataclass_read</b></tt> - Read data class
+     </ul>
+<li> <a href="#dataconversion">Data Conversion Factors</a>
+     <ul>
+     <li> <tt><b>cg_conversion_write</b></tt> - Write conversion factors
+     <li> <tt><b>cg_conversion_info</b></tt> - Get conversion factors data type
+     <li> <tt><b>cg_conversion_read</b></tt> - Read conversion factors
+     </ul>
+<li> <a href="#dimensionalunits">Dimensional Units</a>
+     <ul>
+     <li> <tt><b>cg_units_write</b></tt> - Write first five dimensional units
+     <li> <tt><b>cg_unitsfull_write</b></tt> - Write all eight dimensional units
+     <li> <tt><b>cg_nunits</b></tt> - Get number of dimensional units
+     <li> <tt><b>cg_units_read</b></tt> - Read first five dimensional units
+     <li> <tt><b>cg_unitsfull_read</b></tt> - Read all eight dimensional units
+     </ul>
+<li> <a href="#dimensionalexponents">Dimensional Exponents</a>
+     <ul>
+     <li> <tt><b>cg_exponents_write</b></tt> - Write first five dimensional exponents
+     <li> <tt><b>cg_expfull_write</b></tt> - Write all eight dimensional exponents
+     <li> <tt><b>cg_nexponents</b></tt> - Get number of dimensional exponents
+     <li> <tt><b>cg_exponents_info</b></tt> - Get exponent data type
+     <li> <tt><b>cg_exponents_read</b></tt> - Read first five dimensional exponents
+     <li> <tt><b>cg_expfull_read</b></tt> - Read all eight dimensional exponents
+     </ul>
+</ul>
+
+<a name="dataarray"></a>
+<h3>Data Arrays</h3>
+
+<i>Node</i>: <tt>DataArray_t</tt>
+             (<a href="../sids/data.html#DataArray">SIDS</a>,
+              <a href="../filemap/nodes.html#DataArray">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"></th>
-<th class="head"><p><a class="reference internal" href="#data-arrays">Data Arrays</a></p></th>
-</tr>
-</thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_array_write</span></code></p></td>
-<td><p>Write data array</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_array_general_write</span></code></p></td>
-<td><p>Write shaped array to a subset of data array</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_narrays</span></code></p></td>
-<td><p>Get number of data arrays under current node</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_array_info</span></code></p></td>
-<td><p>Get data array info</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_array_read</span></code></p></td>
-<td><p>Read data array</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_array_read_as</span></code></p></td>
-<td><p>Read data array as a certain type</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_array_general_read</span></code></p></td>
-<td><p>Read subset of data array to a shaped array</p></td>
-</tr>
-</tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_write(<span class=in>char *arrayname</span>, <span class=in>DataType_t datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>int rank</span>, <span class=in>cgsize_t *dimensions</span>, <span class=in>void *data</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_general_write(<span class=in>char *arrayname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>int rank</span>, <span class=in>cgsize_t *dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *data</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+       <tt><b><span class=out><i>ier</i></span> = cg_narrays(<span class=out><i>int *narrays</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_info(<span class=in>int A</span>, <span class=out><i>char *arrayname</i></span>, <span class=out><i>DataType_t *datatype</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *rank</i></span>, <span class=out><i>cgsize_t *dimensions</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_read(<span class=in>int A</span>, <span class=out><i>void *data</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_read_as(<span class=in>int A</span>, <span class=in>DataType_t datatype</span>, <span class=out><i>void *data</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_array_general_read(<span class=in>int A</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *data</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_array_write_f(<span class=in>arrayname</span>, <span class=in>datatype</span>, <span class=in>rank</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>dimensions</span>, <span class=in>data</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_array_general_write_f</span>(<span class=in>arrayname</span>, <span class=in>datatype</span>, <span class=in>rank</span>, <span class=in>dimensions</span><br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>mem_datatype</span>, <span class=in>mem_rank</span>, <span class=in>mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_range_min</span>, <span class=in>mem_range_max</span>, <span class=in>data</span>, <span class=out><i>ier</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_narrays_f(<span class=out><i>narrays</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_array_info_f(<span class=in>A</span>, <span class=out><i>arrayname</i></span>, <span class=out><i>datatype</i></span>, <span class=out><i>rank</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>dimensions</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_array_read_f</span>(<span class=in>A</span>, <span class=out><i>data</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_array_read_as_f</span>(<span class=in>A</span>, <span class=in>datatype</span>, <span class=out><i>data</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_array_general_read_f</span>(<span class=in>A</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>mem_datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_rank</span>, <span class=in>mem_dimensions</span>, <span class=in>mem_range_min</span>, <span class=in>mem_range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>data</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
-<table class="colwidths-given docutils align-default">
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>narrays</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Number of <tt>DataArray_t</tt> nodes under the current node.
+<tr valign=baseline><td>
+   <td><tt>A</tt><td>
+   <td>Data array index, where 1 &le; <tt>A</tt> &le; <tt>narrays</tt>.
+<tr valign=baseline><td>
+   <td><tt>arrayname</tt><td>
+   <td>Name of the <tt>DataArray_t</tt> node.
+<tr valign=baseline><td>
+   <td><tt>datatype</tt><td>
+   <td>Type of data held in the <tt>DataArray_t</tt> node.
+       The admissible types are <tt>Integer</tt>, <tt>LongInteger</tt>,
+       <tt>RealSingle</tt>, <tt>RealDouble</tt>, and <tt>Character</tt>.
+<tr valign=baseline><td>
+   <td><tt>rank</tt><td>
+   <td>Number of dimensions of array in file (max 12). See
+<a href="../cgio/node.html">Node Management Routines</a> in CGIO User's Guide.
+<tr valign=baseline><td>
+   <td><tt>dimensions</tt><td>
+  <td>Dimensions of array in file.
+<tr valign=baseline><td>
+   <td><tt>range_min</tt><td>
+   <td>Lower range index in file (eg., <tt>imin, jmin, kmin</tt>).
+<tr valign=baseline><td>
+   <td><tt>range_max</tt><td>
+   <td>Upper range index in file (eg., <tt>imax, jmax, kmax</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_datatype</tt><td>
+   <td>The type of data held in memory.
+       The admissible types are <tt>Integer</tt>, <tt>LongInteger</tt>,
+       <tt>RealSingle</tt>, <tt>RealDouble</tt>, and <tt>Character</tt>.
+<tr valign=baseline><td>
+   <td><tt>mem_rank</tt><td>
+   <td>Number of dimensions of array in memory (max 12).
+<tr valign=baseline><td>
+   <td><tt>mem_dimensions</tt><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_range_min</tt><td>
+   <td>Lower range index in memory (eg., <tt>imin, jmin, kmin</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_range_max</tt><td>
+   <td>Upper range index in memory (eg., <tt>imax, jmax, kmax</tt>).
+<tr valign=baseline><td>
+   <td><tt>data</tt><td>
+   <td>The data array in memory.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+The function <tt>cg_array_general_write</tt> may be used to write
+from a subset of the array in memory to a subset of the array in the file.
+When using the partial write, any existing data from <tt>range_min</tt>
+to <tt>range_max</tt> will be overwritten by the new values.
+All other values will not be affected.
+
+<p>
+The functions <tt>cg_array_general_read</tt> and <tt>cg_array_general_write</tt>
+allow for type conversion when both reading from and writing to the file.
+
+<p>
+When using <tt>cg_array_general_write</tt> and
+<tt>cg_array_general_read</tt>, the lower <em>core</em> elements in the file
+have index 1 for defining <tt>range_min</tt> and <tt>range_max</tt>; whereas
+for the array in memory, defined by <tt>mem_rank</tt> and
+<tt>mem_dimensions</tt>, the lower <em>array</em> elements in memory have
+index 1 for defining <tt>mem_range_min</tt> and <tt>mem_range_max</tt>.
+The actual lower and upper bounds of the array in memory can be anything.
+For example, to fully read a two-dimensional 6 &times 6 data array with 1
+rind plane on each side in the file to an 8 &times 8 array in memory
+(<tt>mem_rank</tt> = 2 and <tt>mem_dimensions</tt> = (8,8)), set
+<tt>range_min</tt> and <tt>range_max</tt> to (0,0) and (7,7), and set
+<tt>mem_range_min</tt> and <tt>mem_range_max</tt> to (1,1) and (8,8).
+
+<a name="dataclass"></a>
+<h3>Data Class</h3>
+
+<i>Node</i>: <tt>DataClass_t</tt>
+             (<a href="../sids/build.html#DataClass">SIDS</a>,
+              <a href="../filemap/nodes.html#DataClass">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"></th>
-<th class="head"><p><a class="reference internal" href="#data-class">Data Class</a></p></th>
-</tr>
-</thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_dataclass_write</span></code></p></td>
-<td><p>Write data class</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_dataclass_read</span></code></p></td>
-<td><p>Read data class</p></td>
-</tr>
-</tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_dataclass_write(<span class=in>DataClass_t dataclass</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_dataclass_read(<span class=out><i>DataClass_t *dataclass</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_dataclass_write_f(<span class=in>dataclass</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_dataclass_read_f(<span class=out><i>dataclass</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
-<table class="colwidths-given docutils align-default">
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>dataclass</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Data class for the nodes at this level.
+       See below for the data classes currently supported in CGNS.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+The data classes currently supported in CGNS are:
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>Dimensional</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Regular dimensional data.
+<tr valign=baseline><td>
+   <td><tt>NormalizedByDimensional</tt><td>
+   <td>Nondimensional data that is normalized by dimensional reference
+       quantities.
+<tr valign=baseline><td>
+   <td><tt>NormalizedByUnknownDimensional</tt><td>
+   <td>All fields and reference data are nondimensional.
+<tr valign=baseline><td>
+   <td><tt>NondimensionalParameter</tt><td>
+   <td>Nondimensional parameters such as Mach number and lift coefficient.
+<tr valign=baseline><td>
+   <td><tt>DimensionlessConstant</tt><td>
+   <td>Constant such as <i>&pi;</i>.
+</table>
+<br>
+These classes are declared within typedef <tt>DataClass_t</tt> in
+<i>cgnslib.h</i>, and as parameters in <i>cgnslib_f.h</i>.
+
+<a name="dataconversion"></a>
+<h3>Data Conversion Factors</h3>
+
+<i>Node</i>: <tt>DataConversion_t</tt>
+             (<a href="../sids/data.html#DataConversion">SIDS</a>,
+              <a href="../filemap/nodes.html#DataConversion">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"></th>
-<th class="head"><p><a class="reference internal" href="#data-conversion-factors">Data Conversion Factors</a></p></th>
-</tr>
-</thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_conversion_write</span></code></p></td>
-<td><p>Write conversion factors</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_conversion_info</span></code></p></td>
-<td><p>Get conversion factors data type</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_conversion_read</span></code></p></td>
-<td><p>Read conversion factors</p></td>
-</tr>
-</tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_conversion_write(<span class=in>DataType_t DataType</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *ConversionFactors</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_conversion_info(<span class=out><i>DataType_t *DataType</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_conversion_read(<span class=out><i>void *ConversionFactors</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_conversion_write_f</span>(<span class=in>DataType</span>, <span class=in>ConversionFactors</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_conversion_info_f(<span class=out><i>DataType</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_conversion_read_f(<span class=out><i>ConversionFactors</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
-<table class="colwidths-given docutils align-default">
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>DataType</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Data type in which the conversion factors are recorded.
+       Admissible data types for conversion factors are <tt>RealSingle</tt>
+       and <tt>RealDouble</tt>.
+<tr valign=baseline><td>
+   <td><tt>ConversionFactors</tt><td>
+   <td>Two-element array containing the scaling and offset factors.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+The <tt>DataConversion_t</tt> data structure contains factors to convert
+the nondimensional data to "raw" dimensional data.
+The scaling and offset factors are contained in the two-element array
+<tt>ConversionFactors</tt>.
+In pseudo-Fortran, the conversion process is as follows:
+
+<pre>
+   ConversionScale  = ConversionFactors(1)
+   ConversionOffset = ConversionFactors(2)
+   Data(<i>raw</i>) = Data(<i>nondimensional</i>)*ConversionScale + ConversionOffset
+</pre>
+
+<a name="dimensionalunits"></a>
+<h3>Dimensional Units</h3>
+
+<i>Nodes</i>: <tt>DimensionalUnits_t</tt>
+              (<a href="../sids/build.html#DimensionalUnits">SIDS</a>,
+               <a href="../filemap/nodes.html#DimensionalUnits">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"></th>
-<th class="head"><p><a class="reference internal" href="#dimensional-units">Dimensional Units</a></p></th>
-</tr>
-</thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_units_write</span></code></p></td>
-<td><p>Write first five dimensional units</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_unitsfull_write</span></code></p></td>
-<td><p>Write all eight dimensional units</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_nunits</span></code></p></td>
-<td><p>Get number of dimensional units</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_units_read</span></code></p></td>
-<td><p>Read first five dimensional units</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_unitsfull_read</span></code></p></td>
-<td><p>Read all eight dimensional units</p></td>
-</tr>
-</tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_units_write(<span class=in>MassUnits_t mass</span>, <span class=in>LengthUnits_t length</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>TimeUnits_t time</span>, <span class=in>TemperatureUnits_t temperature</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>AngleUnits_t angle</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_unitsfull_write(<span class=in>MassUnits_t mass</span>, <span class=in>LengthUnits_t length</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>TimeUnits_t time</span>, <span class=in>TemperatureUnits_t temperature</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>AngleUnits_t angle</span>, <span class=in>ElectricCurrentUnits_t current</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>SubstanceAmountUnits_t amount</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>LuminousIntensityUnits_t intensity</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_nunits(<span class=out><i>int *nunits</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_units_read(<span class=out><i>MassUnits_t *mass</i></span>, <span class=out><i>LengthUnits_t *length</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>TimeUnits_t *time</i></span>, <span class=out><i>TemperatureUnits_t *temperature</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>AngleUnits_t *angle</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_unitsfull_read(<span class=out><i>MassUnits_t *mass</i></span>, <span class=out><i>LengthUnits_t *length</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>TimeUnits_t *time</i></span>, <span class=out><i>TemperatureUnits_t *temperature</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>AngleUnits_t *angle</i></span>, <span class=out><i>ElectricCurrentUnits_t *current</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>SubstanceAmountUnits_t *amount</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>LuminousIntensityUnits_t *intensity</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_units_write_f(<span class=in>mass</span>, <span class=in>length</span>, <span class=in>time</span>, <span class=in>temperature</span>, <span class=in>angle</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_unitsfull_write_f(<span class=in>mass</span>, <span class=in>length</span>, <span class=in>time</span>, <span class=in>temperature</span>, <span class=in>angle</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>current</span>, <span class=in>amount</span>, <span class=in>intensity</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_nunits_f(<span class=out><i>nunits</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_units_read_f(<span class=out><i>mass</i></span>, <span class=out><i>length</i></span>, <span class=out><i>time</i></span>, <span class=out><i>temperature</i></span>, <span class=out><i>angle</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_unitsfull_read_f(<span class=out><i>mass</i></span>, <span class=out><i>length</i></span>, <span class=out><i>time</i></span>, <span class=out><i>temperature</i></span>, <span class=out><i>angle</i></span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>current</i></span>, <span class=out><i>amount</i></span>, <span class=out><i>intensity</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
-<table class="colwidths-given docutils align-default">
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>mass</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Mass units.
+       Admissible values are <tt>CG_Null</tt>, <tt>CG_UserDefined</tt>,
+       <tt>Kilogram</tt>, <tt>Gram</tt>, <tt>Slug</tt>, and
+       <tt>PoundMass</tt>.
+<tr valign=baseline><td>
+   <td><tt>length</tt><td>
+   <td>Length units.
+       Admissible values are <tt>CG_Null</tt>, <tt>CG_UserDefined</tt>,
+       <tt>Meter</tt>, <tt>Centimeter</tt>, <tt>Millimeter</tt>,
+       <tt>Foot</tt>, and <tt>Inch</tt>.
+<tr valign=baseline><td>
+   <td><tt>time</tt><td>
+   <td>Time units.
+       Admissible values are <tt>CG_Null</tt>, <tt>CG_UserDefined</tt>, and
+       <tt>Second</tt>.
+<tr valign=baseline><td>
+   <td><tt>temperature</tt><td>
+   <td>Temperature units.
+       Admissible values are <tt>CG_Null</tt>, <tt>CG_UserDefined</tt>,
+       <tt>Kelvin</tt>, <tt>Celsius</tt>, <tt>Rankine</tt>, and
+       <tt>Fahrenheit</tt>.
+<tr valign=baseline><td>
+   <td><tt>angle</tt><td>
+   <td>Angle units.
+       Admissible values are <tt>CG_Null</tt>, <tt>CG_UserDefined</tt>,
+       <tt>Degree</tt>, and <tt>Radian</tt>.
+<tr valign=baseline><td>
+   <td><tt>current</tt><td>
+   <td>Electric current units.
+       Admissible values are <tt>CG_Null</tt>, <tt>CG_UserDefined</tt>,
+       <tt>Ampere</tt>, <tt>Abampere</tt>, <tt>Statampere</tt>,
+       <tt>Edison</tt>, and <tt>auCurrent</tt>.
+<tr valign=baseline><td>
+   <td><tt>amount</tt><td>
+   <td>Substance amount units.
+       Admissible values are <tt>CG_Null</tt>, <tt>CG_UserDefined</tt>,
+       <tt>Mole</tt>, <tt>Entities</tt>, <tt>StandardCubicFoot</tt>, and
+       <tt>StandardCubicMeter</tt>.
+<tr valign=baseline><td>
+   <td><tt>intensity</tt><td>
+   <td>Luminous intensity units.
+       Admissible values are <tt>CG_Null</tt>, <tt>CG_UserDefined</tt>,
+       <tt>Candela</tt>, <tt>Candle</tt>, <tt>Carcel</tt>,
+       <tt>Hefner</tt>, and <tt>Violle</tt>.
+<tr valign=baseline><td>
+   <td><tt>nunits</tt><td>
+   <td>Number of units used in the file (i.e., either 5 or 8).
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+The supported units are declared within typedefs in <i>cgnslib.h</i>
+and as parameters in <i>cgnslib_f.h</i>.
+
+<p>
+When reading units data, either <tt>cg_units_read</tt> or
+<tt>cg_unitsfull_read</tt> may be used, regardless of the number of
+units used in the file.
+If <tt>cg_unitsfull_read</tt> is used, but only five units are used
+in the file, the returned values of <tt>current</tt>, <tt>amount</tt>,
+and <tt>intensity</tt> will be <tt>CG_Null</tt>.
+
+<a name="dimensionalexponents"></a>
+<h3>Dimensional Exponents</h3>
+
+<i>Node</i>: <tt>DimensionalExponents_t</tt>
+             (<a href="../sids/build.html#DimensionalExponents">SIDS</a>,
+              <a href="../filemap/nodes.html#DimensionalExponents">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"></th>
-<th class="head"><p><a class="reference internal" href="#dimensional-exponents">Dimensional Exponents</a></p></th>
-</tr>
-</thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_exponents_write</span></code></p></td>
-<td><p>Write first five dimensional exponents</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_expfull_write</span></code></p></td>
-<td><p>Write all eight dimensional exponents</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_nexponents</span></code></p></td>
-<td><p>Get number of dimensional exponents</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_exponents_info</span></code></p></td>
-<td><p>Get exponent data type</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_exponents_read</span></code></p></td>
-<td><p>Read first five dimensional exponents</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_expfull_read</span></code></p></td>
-<td><p>Read all eight dimensional exponents</p></td>
-</tr>
-</tbody>
-</table>
-<div class="section" id="data-arrays">
-<h2>Data Arrays<a class="headerlink" href="#data-arrays" title="Permalink to this headline">¶</a></h2>
-<p>Node: DataArray_t (SIDS, File Mapping)</p>
-<table class="colwidths-given docutils align-default">
-<colgroup>
-<col style="width: 88%" />
-<col style="width: 12%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>C Functions</p></th>
-<th class="head"><p>Modes</p></th>
-</tr>
-</thead>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_exponents_write(<span class=in>DataType_t DataType</span>, <span class=in>void *exponents</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_expfull_write(<span class=in>DataType_t DataType</span>, <span class=in>void *exponents</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_nexponents(<span class=out><i>int *nexponents</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_exponents_info(<span class=out><i>DataType_t *DataType</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_exponents_read(<span class=out><i>void *exponents</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_expfull_read(<span class=out><i>void *exponents</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 <tbody>
-<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_array_write</span></span></code> (<span class="in">char *arrayname</span>, <span class="in">DataType_t datatype</span>, <span class="in">int rank</span>, <span class="in">cgsize_t *dimensions</span>, <span class="in">void *data</span>);</p></td>
-<td><p><cite>- w m</cite></p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_array_general_write</span></span></code> (<span class="in">char *arrayname</span>, <span class="in">DataType_t datatype</span>, <span class="in">int rank</span>, <span class="in">cgsize_t *dimensions</span>,
-<span class="in">cgsize_t *range_min</span>, <span class="in">cgsize_t *range_max</span>, <span class="in">DataType_t mem_datatype</span>, <span class="in">int mem_rank</span>, <span class="in">cgsize_t *mem_dimensions</span>,
-<span class="in">cgsize_t *mem_range_min</span>, <span class="in">cgsize_t *mem_range_max</span>, <span class="in">void *data</span>);</p></td>
-<td><p><cite>- w m</cite></p></td>
-</tr>
-<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_narrays</span></span></code> (<span class="out">int *narrays</span>);</p></td>
-<td><p><cite>r - m</cite></p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_array_info</span></span></code> (<span class="in">int A</span>, <span class="out">char *arrayname</span>, <span class="out">DataType_t *datatype</span>, <span class="out">int *rank</span>, <span class="out">cgsize_t *dimensions</span>);</p></td>
-<td><p><cite>r - m</cite></p></td>
-</tr>
-<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_array_read</span></span></code> (<span class="in">int A</span>, <span class="out">void *data</span>);</p></td>
-<td><p><cite>r - m</cite></p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_array_read_as</span></span></code> (<span class="in">int A</span>, <span class="in">DataType_t datatype</span>, <span class="out">void *data</span>);</p></td>
-<td><p><cite>r - m</cite></p></td>
-</tr>
-<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_array_general_read</span></span></code> (<span class="in">int A</span>, <span class="in">cgsize_t *range_min</span>, <span class="in">cgsize_t *range_max</span>, <span class="in">DataType_t mem_datatype</span>,
-<span class="in">int mem_rank</span>, <span class="in">cgsize_t *mem_dimensions</span>, <span class="in">cgsize_t *mem_range_min</span>, <span class="in">cgsize_t *mem_range_max</span>, <span class="out">void *data</span>);</p></td>
-<td><p><cite>r - m</cite></p></td>
-</tr>
-</tbody>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_exponents_write_f</span>(<span class=in>DataType</span>, <span class=in>exponents</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_expfull_write_f</span>(<span class=in>DataType</span>, <span class=in>exponents</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_nexponents_f(<span class=out><i>nexponents</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_exponents_info_f(<span class=out><i>DataType</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_exponents_read_f</span>(<span class=out><i>exponents</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_expfull_read_f</span>(<span class=out><i>exponents</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
-<table class="colwidths-given docutils align-default">
-<colgroup>
-<col style="width: 88%" />
-<col style="width: 12%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Fortran interfaces</p></th>
-<th class="head"><p>Modes</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_array_write_f</span></code> (<span class="in">arrayname</span>, <span class="in">datatype</span>, <span class="in">rank</span>, <span class="in">dimensions</span>, <span class="in">data</span>, <span class="out">ier</span>)</p></td>
-<td><p><cite>- w m</cite></p></td>
-</tr>
-<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_array_general_write_f</span></code> (<span class="in">arrayname</span>, <span class="in">datatype</span>, <span class="in">rank</span>, <span class="in">dimensions</span>,
-<span class="in">range_min</span>, <span class="in">range_max</span>, <span class="in">mem_datatype</span>, <span class="in">mem_rank</span>, <span class="in">mem_dimensions</span>,
-<span class="in">mem_range_min</span>, <span class="in">mem_range_max</span>, <span class="in">data</span>, <span class="out">ier</span>)</p></td>
-<td><p><cite>- w m</cite></p></td>
-</tr>
-<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_narrays_f</span></code> (<span class="out">narrays</span>, <span class="out">ier</span>)</p></td>
-<td><p><cite>r - m</cite></p></td>
-</tr>
-<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_array_info_f</span></code> (<span class="in">A</span>, <span class="out">arrayname</span>, <span class="out">datatype</span>, <span class="out">rank</span>, <span class="out">dimensions</span>, <span class="out">ier</span>)</p></td>
-<td><p><cite>r - m</cite></p></td>
-</tr>
-<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_array_read_f</span></code> (<span class="in">A</span>, <span class="out">data</span>, <span class="out">ier</span>)</p></td>
-<td><p><cite>r - m</cite></p></td>
-</tr>
-<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_array_read_as_f</span></code> (<span class="in">A</span>, <span class="in">datatype</span>, <span class="out">data</span>, <span class="out">ier</span>)</p></td>
-<td><p><cite>r - m</cite></p></td>
-</tr>
-<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_array_general_read_f</span></code> (<span class="in">A</span>, <span class="in">range_min</span>, <span class="in">range_max</span>, <span class="in">mem_datatype</span>,
-<span class="in">mem_rank</span>, <span class="in">mem_dimensions</span>, <span class="in">mem_range_min</span>, <span class="in">mem_range_max</span>, <span class="out">data</span>, <span class="out">ier</span>)</p></td>
-<td><p><cite>r - m</cite></p></td>
-</tr>
-</tbody>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>DataType</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Data type in which the exponents are recorded.
+       Admissible data types for the exponents are <tt>RealSingle</tt>
+       and <tt>RealDouble</tt>.
+<tr valign=baseline><td>
+   <td><tt>exponents</tt><td>
+   <td>Exponents for the dimensional units for mass, length, time,
+       temperature, angle, electric current, substance amount, and
+       luminous intensity, in that order.
+<tr valign=baseline><td>
+   <td><tt>nexponents</tt><td>
+   <td>Number of exponents used in the file (i.e., either 5 or 8).
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
 </table>
-<div class="section" id="input-ouput">
-<h3><span class="in">Input</span> / <span class="out">Ouput</span><a class="headerlink" href="#input-ouput" title="Permalink to this headline">¶</a></h3>
-<dl class="field-list simple">
-<dt class="field-odd">narrays</dt>
-<dd class="field-odd"><p>Number of DataArray_t nodes under the current node.</p>
-</dd>
-<dt class="field-even">A</dt>
-<dd class="field-even"><p>Data array index, where 1 ≤ A ≤ narrays.</p>
-</dd>
-<dt class="field-odd">arrayname</dt>
-<dd class="field-odd"><p>Name of the DataArray_t node.</p>
-</dd>
-<dt class="field-even">datatype</dt>
-<dd class="field-even"><p>Type of data held in the DataArray_t node. The admissible types are Integer, LongInteger, RealSingle, RealDouble, and Character.</p>
-</dd>
-<dt class="field-odd">rank</dt>
-<dd class="field-odd"><p>Number of dimensions of array in file (max 12). See Node Management Routines in CGIO User’s Guide.</p>
-</dd>
-<dt class="field-even">dimensions</dt>
-<dd class="field-even"><p>Dimensions of array in file.</p>
-</dd>
-<dt class="field-odd">range_min</dt>
-<dd class="field-odd"><p>Lower range index in file (eg., imin, jmin, kmin).</p>
-</dd>
-<dt class="field-even">range_max</dt>
-<dd class="field-even"><p>Upper range index in file (eg., imax, jmax, kmax).</p>
-</dd>
-<dt class="field-odd">mem_datatype</dt>
-<dd class="field-odd"><p>The type of data held in memory. The admissible types are Integer, LongInteger, RealSingle, RealDouble, and Character.</p>
-</dd>
-<dt class="field-even">mem_rank</dt>
-<dd class="field-even"><p>Number of dimensions of array in memory (max 12).</p>
-</dd>
-<dt class="field-odd">mem_dimensions</dt>
-<dd class="field-odd"><p>Dimensions of array in memory.</p>
-</dd>
-<dt class="field-even">mem_range_min</dt>
-<dd class="field-even"><p>Lower range index in memory (eg., imin, jmin, kmin).</p>
-</dd>
-<dt class="field-odd">mem_range_max</dt>
-<dd class="field-odd"><p>Upper range index in memory (eg., imax, jmax, kmax).</p>
-</dd>
-<dt class="field-even">data</dt>
-<dd class="field-even"><p>The data array in memory.</p>
-</dd>
-<dt class="field-odd">ier</dt>
-<dd class="field-odd"><p>Error status.</p>
-</dd>
-</dl>
-<p>The function cg_array_general_write may be used to write from a subset of the array in memory to a subset of the array in the file. When using the partial write, any existing data from range_min to range_max will be overwritten by the new values. All other values will not be affected.</p>
-<p>The functions cg_array_general_read and cg_array_general_write allow for type conversion when both reading from and writing to the file.</p>
-<p>When using cg_array_general_write and cg_array_general_read, the lower core elements in the file have index 1 for defining range_min and range_max; whereas for the array in memory, defined by mem_rank and mem_dimensions, the lower array elements in memory have index 1 for defining mem_range_min and mem_range_max. The actual lower and upper bounds of the array in memory can be anything. For example, to fully read a two-dimensional 6 × 6 data array with 1 rind plane on each side in the file to an 8 × 8 array in memory (mem_rank = 2 and mem_dimensions = (8,8)), set range_min and range_max to (0,0) and (7,7), and set mem_range_min and mem_range_max to (1,1) and (8,8).</p>
-</div>
-</div>
-<div class="section" id="data-class">
-<h2>Data Class<a class="headerlink" href="#data-class" title="Permalink to this headline">¶</a></h2>
-<p>Node: DataClass_t (SIDS, File Mapping)</p>
-</div>
-<div class="section" id="data-conversion-factors">
-<h2>Data Conversion Factors<a class="headerlink" href="#data-conversion-factors" title="Permalink to this headline">¶</a></h2>
-<p>Node: DataConversion_t (SIDS, File Mapping)</p>
-</div>
-<div class="section" id="dimensional-units">
-<h2>Dimensional Units<a class="headerlink" href="#dimensional-units" title="Permalink to this headline">¶</a></h2>
-<p>Nodes: DimensionalUnits_t (SIDS, File Mapping)</p>
-</div>
-<div class="section" id="dimensional-exponents">
-<h2>Dimensional Exponents<a class="headerlink" href="#dimensional-exponents" title="Permalink to this headline">¶</a></h2>
-<p>Node: DimensionalExponents_t (SIDS, File Mapping)</p>
-</div>
+
+<p>
+When reading exponent data, either <tt>cg_exponents_read</tt> or
+<tt>cg_expfull_read</tt> may be used, regardless of the number of
+exponents used in the file.
+If <tt>cg_exponents_read</tt> is used, but all eight exponents are used
+in the file, only the first five exponents are returned.
+If <tt>cg_expfull_read</tt> is used, but only five exponents are used
+in the file, the returned values of the exponents for electric current,
+substance amount, and luminous intensity will be zero.
+
+<p>
+
+</body>
+</html>
 </div>
 
 

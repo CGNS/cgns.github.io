@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
@@ -72,22 +73,6 @@
     </div>
   </div>
 </div>
-<div class="sidebar-block">
-  <div class="sidebar-wrapper">
-    <h2>Contents</h2>
-    <div class="sidebar-localtoc">
-      <ul>
-<li><a class="reference internal" href="#">Location and Position</a><ul>
-<li><a class="reference internal" href="#grid-location">Grid Location</a></li>
-<li><a class="reference internal" href="#point-sets">Point Sets</a></li>
-<li><a class="reference internal" href="#rind-layers">Rind Layers</a></li>
-</ul>
-</li>
-</ul>
-
-    </div>
-  </div>
-</div>
       
     </div>
   </div>
@@ -111,78 +96,229 @@
 <span id="mlllocationandposition"></span><h1>Location and Position<a class="headerlink" href="#location-and-position" title="Permalink to this headline">¶</a></h1>
 <p>These functions usually are found the the preamble or the epilog of your
 application code using the <a class="reference internal" href="../../general/glossary.html#term-CGNS-MLL"><span class="xref std std-term">CGNS/MLL</span></a>.</p>
-<table class="colwidths-given docutils align-default">
+<!-- CGNS Mid-Level Library - Location and Position -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title> CGNS Mid-Level Library - Location and Position </title>
+</head>
+
+<h2>Location and Position</h2>
+
+<ul>
+<li> <a href="#gridlocation">Grid Location</a>
+     <ul>
+     <li> <tt><b>cg_gridlocation_write</b></tt> - Write grid location
+     <li> <tt><b>cg_gridlocation_read</b></tt> - Read grid location
+     </ul>
+<li> <a href="#ptset">Point Sets</a>
+     <ul>
+     <li> <tt><b>cg_ptset_write</b></tt> - Write point set data
+     <li> <tt><b>cg_ptset_info</b></tt> - Get point set information
+     <li> <tt><b>cg_ptset_read</b></tt> - Read point set data
+     </ul>
+<li> <a href="#rind">Rind Layers</a>
+     <ul>
+     <li> <tt><b>cg_rind_write</b></tt> - Write number of rind layers
+     <li> <tt><b>cg_rind_read</b></tt> - Read number of rind layers
+     </ul>
+</ul>
+
+<a name="gridlocation"></a>
+<h3>Grid Location</h3>
+
+<i>Node</i>: <tt>GridLocation_t</tt>
+             (<a href="../sids/build.html#GridLocation">SIDS</a>,
+              <a href="../filemap/nodes.html#GridLocation">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"></th>
-<th class="head"><p><a class="reference internal" href="#grid-location">Grid Location</a></p></th>
-</tr>
-</thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_gridlocation_write</span></code></p></td>
-<td><p>Write grid location</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_gridlocation_read</span></code></p></td>
-<td><p>Read grid location</p></td>
-</tr>
-</tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_gridlocation_write(<span class=in>GridLocation_t GridLocation</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_gridlocation_read(<span class=out><i>GridLocation_t *GridLocation</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_gridlocation_write_f(<span class=in>GridLocation</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_gridlocation_read_f(<span class=out><i>GridLocation</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
-<table class="colwidths-given docutils align-default">
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>GridLocation</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Location in the grid.
+       The admissible locations are <tt>CG_Null</tt>, <tt>CG_UserDefined</tt>,
+       <tt>Vertex</tt>, <tt>CellCenter</tt>, <tt>FaceCenter</tt>,
+       <tt>IFaceCenter</tt>, <tt>JFaceCenter</tt>, <tt>KFaceCenter</tt>,
+       and <tt>EdgeCenter</tt>.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<a name="ptset"></a>
+<h3>Point Sets</h3>
+
+<i>Node</i>: <tt>IndexArray_t</tt>, <tt>IndexRange_t</tt>
+             (<a href="../sids/build.html#IndexArray">SIDS</a>,
+              <a href="../filemap/nodes.html#IndexRange">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"></th>
-<th class="head"><p><a class="reference internal" href="#point-sets">Point Sets</a></p></th>
-</tr>
-</thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_ptset_write</span></code></p></td>
-<td><p>Write point set data</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_ptset_info</span></code></p></td>
-<td><p>Get point set information</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_ptset_read</span></code></p></td>
-<td><p>Read point set data</p></td>
-</tr>
-</tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_ptset_write(<span class=in>PointSetType_t ptset_type</span>, <span class=in>cgsize_t npnts</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *pnts</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_ptset_info(<span class=out><i>PointSetType_t *ptset_type</i></span>, <span class=out><i>cgsize_t *npnts</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_ptset_read(<span class=out><i>cgsize_t *pnts</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_ptset_write_f</span>(<span class=in>ptset_type</span>, <span class=in>npnts</span>, <span class=in>pnts</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_ptset_info_f(<span class=out><i>ptset_type</i></span>, <span class=out><i>npnts</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_ptset_read_f</span>(<span class=out><i>pnts</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
-<table class="colwidths-given docutils align-default">
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>ptset_type</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>The point set type; either <tt>PointRange</tt> for a range of
+       points or cells, or <tt>PointList</tt> for a list of discrete
+       points or cells.
+<tr valign=baseline><td>
+   <td><tt>npnts</tt><td>
+   <td>The number of points or cells in the point set.
+       For a point set type of <tt>PointRange</tt>, <tt>npnts</tt> is
+       always two.
+       For a point set type of <tt>PointList</tt>, <tt>npnts</tt> is
+       the number of points or cells in the list.
+<tr valign=baseline><td>
+   <td><tt>pnts</tt><td>
+   <td>The array of point or cell indices defining the point set.
+       There should be <tt>npnts</tt> values, each of dimension
+       <a href="../sids/cgnsbase.html#IndexDimension"><tt>IndexDimension</tt></a>
+       (i.e., 1 for unstructured grids, and 2 or 3 for structured grids
+       with 2-D or 3-D elements, respectively).
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+These functions may be used to write and read point set data (i.e., an
+<tt>IndexArray_t</tt> node named <tt>PointList</tt>, or an
+<tt>IndexRange_t</tt> node named <tt>PointRange</tt>).
+They are only applicable at nodes that are descendents of a
+<a href="structural.html#zone"><tt>Zone_t</tt> node</a>.
+
+<a name="rind"></a>
+<h3>Rind Layers</h3>
+
+<i>Node</i>: <tt>Rind_t</tt>
+             (<a href="../sids/build.html#Rind">SIDS</a>,
+              <a href="../filemap/nodes.html#Rind">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"></th>
-<th class="head"><p><a class="reference internal" href="#rind-layers">Rind Layers</a></p></th>
-</tr>
-</thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_rind_write</span></code></p></td>
-<td><p>Write number of rind layers</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_rind_read</span></code></p></td>
-<td><p>Read number of rind layers</p></td>
-</tr>
-</tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_rind_write(<span class=in>int *RindData</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_rind_read(<span class=out><i>int *RindData</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_rind_write_f(<span class=in>RindData</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_rind_read_f(<span class=out><i>RindData</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
 </table>
-<div class="section" id="grid-location">
-<h2>Grid Location<a class="headerlink" href="#grid-location" title="Permalink to this headline">¶</a></h2>
-<p>Node: GridLocation_t (SIDS, File Mapping)</p>
-</div>
-<div class="section" id="point-sets">
-<h2>Point Sets<a class="headerlink" href="#point-sets" title="Permalink to this headline">¶</a></h2>
-<p>Node: IndexArray_t, IndexRange_t (SIDS, File Mapping)</p>
-</div>
-<div class="section" id="rind-layers">
-<h2>Rind Layers<a class="headerlink" href="#rind-layers" title="Permalink to this headline">¶</a></h2>
-<p>Node: Rind_t (SIDS, File Mapping)</p>
-</div>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>RindData</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Number of rind layers for each computational direction
+       (structured grid) or number of rind points or elements
+       (unstructured grid).  For structured grids, the low/high sides have unit stride in the array (e.g., <tt>[NRindLowI, NRindHighI, NRindLowJ, NRindHighJ, NRindLowK, NRindHighK]</tt>).
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+When writing rind data for elements,
+<a href="grid.html#elements"><tt>cg_section_write</tt></a> must be
+called first, followed by
+<a href="navigating.html#goto"><tt>cg_goto</tt></a> to access the
+<a href="../sids/gridflow.html#Elements"><tt>Elements_t</tt></a> node,
+and then <tt>cg_rind_write</tt>.
+
+<p>
+
+</body>
+</html>
 </div>
 
 

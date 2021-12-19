@@ -9,7 +9,7 @@
 # this is doc generation for a UNIX host
 # generation is made in a separate directory, change its path here:
 
-export build_dir=../../cgns-test.github.io
+export build_dir=./docs/_build/html
 
 cp -r ./images ${build_dir}/
 

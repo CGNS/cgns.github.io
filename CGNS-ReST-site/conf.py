@@ -47,7 +47,7 @@ html_theme = 'guzzle_sphinx_theme'
 extensions.append("guzzle_sphinx_theme")
 extensions.append('sphinx.ext.mathjax')
 extensions.append('sphinxfortran.fortran_domain')
-extensions.append('breathe')
+#extensions.append('breathe')
 
 # --- Options for HTML output 
 html_favicon =  'CGNS_empty.ico'
@@ -67,42 +67,43 @@ html_css_files = [
     'css/math_override.css'
 ]
 
-# -- Breathe configuration ---
-
-import subprocess
-import os
-import shutil
-
-# clone src with doxygen
-if os.path.exists("_breathe/CGNS"):
-   shutil.rmtree(os.path.join("_breathe","CGNS"))
-
-git_proc = subprocess.Popen(["git", "clone", "-b", "doxygen", "https://github.com/CGNS/CGNS.git", "_breathe/CGNS"])
-git_proc.communicate()
-
-# Generate doxygen config file
-with open("_breathe/Doxyfile.in", "r") as f:
-    doxy_conf = f.read()
-doxy_conf = doxy_conf.replace("@CMAKE_CURRENT_SOURCE_DIR@", "./_breathe/CGNS")
-doxy_conf = doxy_conf.replace("@CMAKE_CURRENT_BINARY_DIR@", "./_breathe")
-with open("Doxyfile", "w") as f:
-    f.write(doxy_conf)
-
-# Run doxygen
-run_doxygen =subprocess.Popen(["doxygen", "Doxyfile"])
-run_doxygen.communicate()
-
-breathe_projects = {
-        "CGNSMLLDoxygenBreathe": "_breathe/docs_mll/xml/"
-        }
-breathe_default_project = "CGNSMLLDoxygenBreathe"
-breathe_domain_by_extension = { "h" : "c" , "c" : "c"} 
-
-# Clean up
-for dirpath, dirnames, filenames in os.walk(os.path.join("_breathe","CGNS")):
-    for dname in dirnames:
-        os.chmod(os.path.join(dirpath, dname), 0o775)
-    for fname in filenames:
-        os.chmod(os.path.join(dirpath, fname), 0o775)
-shutil.rmtree(os.path.join("_breathe","CGNS"))
+## -- Breathe configuration ---
+#
+#import subprocess
+#import os
+#import shutil
+#
+## clone src with doxygen
+#if os.path.exists("_breathe/CGNS"):
+#   shutil.rmtree(os.path.join("_breathe","CGNS"))
+#
+#git_proc = subprocess.Popen(["git", "clone", "-b", "doxygen", "https://github.com/CGNS/CGNS.git", "_breathe/CGNS"])
+#git_proc.communicate()
+#
+## Generate doxygen config file
+#with open("_breathe/Doxyfile.in", "r") as f:
+#    doxy_conf = f.read()
+#doxy_conf = doxy_conf.replace("@CMAKE_CURRENT_SOURCE_DIR@", "./_breathe/CGNS")
+#doxy_conf = doxy_conf.replace("@CMAKE_CURRENT_BINARY_DIR@", "./_breathe")
+#with open("Doxyfile", "w") as f:
+#    f.write(doxy_conf)
+#
+## Run doxygen
+#run_doxygen =subprocess.Popen(["doxygen", "Doxyfile"])
+#run_doxygen.communicate()
+#
+#breathe_projects = {
+#        "CGNSMLLDoxygenBreathe": "_breathe/docs_mll/xml/"
+#        }
+#breathe_default_project = "CGNSMLLDoxygenBreathe"
+#breathe_domain_by_extension = { "h" : "c" , "c" : "c"} 
+#
+## Clean up
+#for dirpath, dirnames, filenames in os.walk(os.path.join("_breathe","CGNS")):
+#    for dname in dirnames:
+#        os.chmod(os.path.join(dirpath, dname), 0o775)
+#    for fname in filenames:
+#        os.chmod(os.path.join(dirpath, fname), 0o775)
+#shutil.rmtree(os.path.join("_breathe","CGNS"))
+##
 # --- last line

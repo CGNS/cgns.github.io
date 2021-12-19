@@ -10,7 +10,7 @@ REM this is doc generation for a MS-Windows host
 REm use Anaconda python distribution
 REM generation is made in a separate directory, change its path here:
 
-set build_dir=..\..\cgns-test.github.io
+set build_dir=docs\_build\html
 
 xcopy /q /i /s /e /y ".\images" "%build_dir%\images"
 

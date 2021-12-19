@@ -1,0 +1,55 @@
+name: "Build and deploy docs pages"
+
+on: 
+  push:
+    branches:
+      - doc-rest-migration
+
+jobs:
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: "Checkout"
+        uses: actions/checkout@v2
+        with:
+          persist-credentials:false
+
+      - name: "Setup python for sphinx"
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: "Install python dependencies"
+        run: |
+          pip3 install setuptools
+          pip3 install sphinx sphinx-rtd-theme
+          pip3 install sphinx-fortran
+          # pip3 install sphinx-mathjax-offline
+
+      - name: "Build sphinx doc"
+        run: |
+          cd CGNS-ReST-site
+          ./build.sh
+        shell: bash
+      
+      - name: "Deploy"
+        run: |
+          cd CGNS-ReST-site
+          git clone -b gh-pages --single-branch https://github.com/CGNS/cgns-modern.github.io.git docs/_build/deploy
+          rsync -q -av --checksum --progress docs/_build/html docs/_build/deploy
+          cd CGNS-ReST-site/docs/_build/deploy
+          git config --global user.name 'autopages'
+          git config --global user.email 'cgns@users.noreply.github.com'
+          git add --all .
+          git commit -m "Update gh-pages"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git push
+        shell: bash
+
+
+
+
+

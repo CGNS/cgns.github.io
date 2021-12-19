@@ -229,8 +229,8 @@ YF-17
       - Revised by
     * - `Bruce Wedan <brucewedan@gmail.com>`_
       - Mar.17.11
-      - Feb.03.14
-      - `Chris Rumsey <c.l.rumsey@nasa.gov>`_
+      - Dec.19.21
+      - `Vicky Moschou <ansa@beta-cae.com>`_
 
   .. image:: ../../example_cgns_files/YF-17/yf17.gif
      :width: 200px
@@ -268,9 +268,11 @@ SC10 Blade
     * - Contact
       - Posted Date
       - Revision Date
+      - Revised by
     * - `Andrew McGhee <cgns2007@rpmturbo.com>`_
       - Feb.07.07
-      -	Feb.07.07
+      - Dec.19.21
+      - `Vicky Moschou <ansa@beta-cae.com>`_
 
   .. image:: ../../example_cgns_files/SC10/SC10.gif
      :width: 200px
@@ -346,9 +348,11 @@ Obstructed Elbow
     * - Contact
       - Posted Date
       - Revision Date
+      - Revised by
     * - `Steve Feldman <stevef@adapco.com>`_
       - Apr.07.00
-      -	Apr.07.00
+      - Dec.19.21
+      - `Vicky Moschou <ansa@beta-cae.com>`_
 
   .. image:: ../../example_cgns_files/AdapcoTut21/tut21.gif
      :width: 200px

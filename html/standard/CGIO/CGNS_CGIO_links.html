@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Link Management Routines &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Node Management Routines" href="CGNS_CGIO_node.html" />
+    <link rel="prev" title="Data Structure Management Routines" href="CGNS_CGIO_structure.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGNS_CGIO_node.html" title="Node Management Routines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_CGIO_structure.html" title="Data Structure Management Routines"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../CGNS_CGIO.html" accesskey="U">CGNS/CGIO - Basic node implementation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Link Management Routines</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">Link Management Routines</a><ul>
+<li><a class="reference internal" href="#cgio-is-link">cgio_is_link</a></li>
+<li><a class="reference internal" href="#cgio-link-size">cgio_link_size</a></li>
+<li><a class="reference internal" href="#cgio-create-link">cgio_create_link</a></li>
+<li><a class="reference internal" href="#cgio-get-link">cgio_get_link</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a></li>
+              
+              <li>Link Management Routines</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <section id="link-management-routines">
+<span id="standardcgiolinks"></span><h1>Link Management Routines<a class="headerlink" href="#link-management-routines" title="Permalink to this headline">¶</a></h1>
+<section id="cgio-is-link">
+<h2>cgio_is_link<a class="headerlink" href="#cgio-is-link" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_is_link">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_is_link</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">cgio_num</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">id</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">link_len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_is_link" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_is_link_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_is_link_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cgio_num</span></em>, <em class="sig-param"><span class="pre">id</span></em>, <em class="sig-param"><span class="pre">link_len</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_is_link_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">cgio_num</span></code></p></td>
+<td><p>IN: Identifier for the open database file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">id</span></code></p></td>
+<td><p>IN: Node identifier.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">link_len</span></code></p></td>
+<td><p>OUT: Total length of the link information (<code class="code docutils literal notranslate"><span class="pre">file_len</span> <span class="pre">+</span> <span class="pre">name_len</span></code>).</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="code docutils literal notranslate"><span class="pre">ier</span></code> - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>r w m</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Determines if the node indentified by <code class="code docutils literal notranslate"><span class="pre">id</span></code> in the database given by <code class="code docutils literal notranslate"><span class="pre">cgio_num</span></code> is a link or not. The function returns 0 if successfull, else an error code. If this node is a link, then the total length of the linked-to file and node information is returned in <code class="code docutils literal notranslate"><span class="pre">link_len</span></code>. If the node is not a link, <code class="code docutils literal notranslate"><span class="pre">link_len</span></code> will be 0.</p>
+</dd>
+</dl>
+</section>
+<section id="cgio-link-size">
+<h2>cgio_link_size<a class="headerlink" href="#cgio-link-size" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_link_size">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_link_size</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">cgio_num</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">id</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">file_len</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name_len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_link_size" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_link_size_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_link_size_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cgio_num</span></em>, <em class="sig-param"><span class="pre">id</span></em>, <em class="sig-param"><span class="pre">file_len</span></em>, <em class="sig-param"><span class="pre">name_len</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_link_size_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">cgio_num</span></code></p></td>
+<td><p>IN: Identifier for the open database file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">id</span></code></p></td>
+<td><p>IN: Node identifier.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">file_len</span></code></p></td>
+<td><p>OUT: Length of the name of the linked-to file. This will be 0 if this is an internal link.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">name_len</span></code></p></td>
+<td><p>OUT: Length of the pathname of the linked-to node.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="code docutils literal notranslate"><span class="pre">ier</span></code> - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>r w m</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Gets the size of the linked-to file name in file_len and the node pathname length in name_len for the node identified by id in the database given by cgio_num. The function returns 0 for success, else an error code. If this is an internal link (link to a node in the same database), then file_len will be returned as 0.</p>
+</dd>
+</dl>
+</section>
+<section id="cgio-create-link">
+<h2>cgio_create_link<a class="headerlink" href="#cgio-create-link" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_create_link">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_create_link</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">cgio_num</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">pid</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">filename</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name_in_file</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_create_link" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_create_link_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_create_link_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cgio_num</span></em>, <em class="sig-param"><span class="pre">pid</span></em>, <em class="sig-param"><span class="pre">name</span></em>, <em class="sig-param"><span class="pre">filename</span></em>, <em class="sig-param"><span class="pre">name_in_file</span></em>, <em class="sig-param"><span class="pre">id</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_create_link_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">cgio_num</span></code></p></td>
+<td><p>IN: Identifier for the open database file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">pid</span></code></p></td>
+<td><p>IN: Parent node identifier.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>IN: Name of the link node.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">filename</span></code></p></td>
+<td><p>IN: Name of the linked-to file. If creating an internal link, then this should be NULL or an empty string. When reading an internal link, this will be returned as an empty string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">name_in_file</span></code></p></td>
+<td><p>IN: Pathname of the linked-to node.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">id</span></code></p></td>
+<td><p>OUT: Node identifier.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="code docutils literal notranslate"><span class="pre">ier</span></code> - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>- w m</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Creates a link node as a child of the parent node identified by pid in the database given by cgio_num. The name of the node is given by name, the name of the linked-to file by filename, and the pathname to the linked-to node by name_in_file. If this is an internal link (link to a node in the same database), then filename should be defined as NULL or an empty string. The function returns 0 and the indentifier of the new node in id on success, otherwise an error code is returned.</p>
+</dd>
+</dl>
+</section>
+<section id="cgio-get-link">
+<h2>cgio_get_link<a class="headerlink" href="#cgio-get-link" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_get_link">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_get_link</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">cgio_num</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">id</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">filename</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name_in_file</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_get_link" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_get_link_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_get_link_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cgio_num</span></em>, <em class="sig-param"><span class="pre">id</span></em>, <em class="sig-param"><span class="pre">filename</span></em>, <em class="sig-param"><span class="pre">name_in_file</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_get_link_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">cgio_num</span></code></p></td>
+<td><p>IN: Identifier for the open database file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">id</span></code></p></td>
+<td><p>IN: Node identifier.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">filename</span></code></p></td>
+<td><p>OUT: Name of the linked-to file. If creating an internal link, then this should be NULL or an empty string. When reading an internal link, this will be returned as an empty string.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">name_in_file</span></code></p></td>
+<td><p>OUT: Pathname of the linked-to node.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="code docutils literal notranslate"><span class="pre">ier</span></code> - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>r w m</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Gets the link information for the node identified by id in the database given by cgio_num. If successfull, the function returns 0 and the linked-to file name in filename and the node pathname in name_in_file. These strings are ‘0’-terminated, and thus should be dimensioned at least (file_len + 1) and (name_len + 1), respectively If this is an internal link (link to a node in the same database), then filename will be an empty string. The maximum length for a file name is given by CGIO_MAX_FILE_LENGTH (1024) and for a link pathname by CGIO_MAX_LINK_LENGTH (4096).</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="CGNS_CGIO_structure.html" title="previous chapter (use the left arrow)">Data Structure Management Routines</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGNS_CGIO_node.html" title="next chapter (use the right arrow)">Node Management Routines</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGNS_CGIO_node.html" title="Node Management Routines"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_CGIO_structure.html" title="Data Structure Management Routines"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../CGNS_CGIO.html" >CGNS/CGIO - Basic node implementation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Link Management Routines</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

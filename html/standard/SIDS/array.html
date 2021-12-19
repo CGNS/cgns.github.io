@@ -1,0 +1,605 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>5. Data-Array Structure Definitions &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6. Hierarchical Structures" href="hierarchy.html" />
+    <link rel="prev" title="4. Building Block Structure Definition" href="block.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="hierarchy.html" title="6. Hierarchical Structures"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="block.html" title="4. Building Block Structure Definition"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" accesskey="U">CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>Data-Array Structure Definitions</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">5. Data-Array Structure Definitions</a><ul>
+<li><a class="reference internal" href="#definition-dataarray-t">5.1. Definition <code class="docutils literal notranslate"><span class="pre">DataArray_t</span></code></a><ul>
+<li><a class="reference internal" href="#definition-dataconversion-t">5.1.1. Definition <code class="docutils literal notranslate"><span class="pre">DataConversion_t</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-manipulation">5.2. Data Manipulation</a><ul>
+<li><a class="reference internal" href="#dimensional-data">5.2.1. Dimensional Data</a></li>
+<li><a class="reference internal" href="#nondimensional-data-normalized-by-dimensional-quantities">5.2.2. Nondimensional Data Normalized by Dimensional Quantities</a></li>
+<li><a class="reference internal" href="#nondimensional-data-normalized-by-unknown-dimensional-quantities">5.2.3. Nondimensional Data Normalized by Unknown Dimensional Quantities</a></li>
+<li><a class="reference internal" href="#nondimensional-parameters">5.2.4. Nondimensional Parameters</a></li>
+<li><a class="reference internal" href="#dimensionless-constants">5.2.5. Dimensionless Constants</a></li>
+<li><a class="reference internal" href="#data-array-examples">5.2.6. Data-Array Examples</a><ul>
+<li><a class="reference internal" href="#example-one-dimensional-data-array-constants">5.2.6.1. Example - One-Dimensional Data Array, Constants</a></li>
+<li><a class="reference internal" href="#example-two-dimensional-data-array-pressures">5.2.6.2. Example - Two-Dimensional Data Array, Pressures</a></li>
+<li><a class="reference internal" href="#example-three-dimensional-data-array-nondimensional-static-enthalpy">5.2.6.3. Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy</a></li>
+<li><a class="reference internal" href="#example-three-dimensional-data-array-nondimensional-database">5.2.6.4. Example - Three-Dimensional Data Array, Nondimensional Database</a></li>
+<li><a class="reference internal" href="#example-data-arrays-for-reynolds-number">5.2.6.5. Example - Data Arrays for Reynolds Number</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a></li>
+              
+              <li><span class="section-number">5. </span>Data-Array Structure Definitions</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <section id="data-array-structure-definitions">
+<span id="standarddataarraystruct"></span><h1><span class="section-number">5. </span>Data-Array Structure Definitions<a class="headerlink" href="#data-array-structure-definitions" title="Permalink to this headline">¶</a></h1>
+<p>This section defines the structure type <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> for describing data arrays.
+This general-purpose structure is used to declare data arrays and scalars throughout the CGNS hierarchy.
+It is used to describe grid coordinates, flow-solution data, governing flow parameters, boundary-condition data, and other information.
+For most of these different types of CFD data, we have also established a <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">list of standardized identifiers</span></a> for entities of type <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code>.
+For example, <code class="code sidskey docutils literal notranslate"><span class="pre">Density</span></code> is used for data arrays containing static density.</p>
+<p>We address five classes of data with the <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> structure type:</p>
+<ol class="arabic simple">
+<li><p>dimensional data (e.g., velocity in units of m/s);</p></li>
+<li><p>nondimensional data normalized by dimensional reference quantities;</p></li>
+<li><p>nondimensional data with associated nondimensional reference quantities;</p></li>
+<li><p>nondimensional parameters (e.g., Reynolds number, pressure coefficient);</p></li>
+<li><p>pure constants (e.g., <span class="math notranslate nohighlight">\(π\)</span>, <span class="math notranslate nohighlight">\(e\)</span>).</p></li>
+</ol>
+<p>The first two of these classes often occur within the same test case, where each piece of data is either dimensional itself or normalized by a dimensional quantity.
+The third data class is typical of a completely nondimensional test case, where all field data and reference quantities are nondimensional.
+The fourth class, nondimensional parameters, are universal in CFD, although not always consistently defined.
+The individual components of nondimensional parameters may be data from any of the first three classes.</p>
+<p>Each of the five classes of data requires different information to describe dimensional units or normalization associated with the data.
+These requirements are reflected in the structure definition for <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code>.</p>
+<p>The remainder of this section is as follows: The structure type <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is first defined.
+Then the class identification and data manipulation is discussed for each of the five data classes. Finally, examples of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities are presented.</p>
+<section id="definition-dataarray-t">
+<h2><span class="section-number">5.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataArray_t</span></code><a class="headerlink" href="#definition-dataarray-t" title="Permalink to this headline">¶</a></h2>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> describes a multi-dimensional data array of given type, dimensionality and size in each dimension. The data may be dimensional, nondimensional or pure constants. Qualifiers are provided to describe dimensional units or normalization information associated with the data.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Dimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">Dimension</span><span class="p">]</span><span class="w"> </span><span class="n">DimensionValues</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="w"> </span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="n">Dimension</span><span class="p">,</span><span class="w"> </span><span class="n">DimensionValues</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                     </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalExponents_t</span><span class="w"> </span><span class="n">DimensionalExponents</span><span class="w"> </span><span class="p">;</span><span class="w">                      </span><span class="kr">(o)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataConversion_t</span><span class="w"> </span><span class="n">DataConversion</span><span class="w"> </span><span class="p">;</span><span class="w">                                  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> list are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code>, or <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">Data()</span></code> is the only required field for <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code>.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> requires three structure parameters: <code class="code sidskey docutils literal notranslate"><span class="pre">Dimension</span></code> is the dimensionality of the data array; <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionValues</span></code> is an array of length <code class="code sidskey docutils literal notranslate"><span class="pre">Dimension</span></code> that contains the size of the data arrays in each dimension; and <code class="code sidskey docutils literal notranslate"><span class="pre">DataType</span></code> is the data type of the data stored. <code class="code sidskey docutils literal notranslate"><span class="pre">DataType</span></code> will usually be real, but other data types are permissible.</p>
+<p>The optional entities <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">DataConversion</span></code> provide information on dimensional units and normalization associated with the data. The function of these qualifiers is provided in the next section.</p>
+<p>This structure type is formulated to describe an array of scalars.
+Therefore, for vector quantities (e.g., the position vector or the velocity vector), separate structure entities are required for each component of the vector.
+For example, the Cartesian coordinates of a 3-D grid are described by three separate <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities: one for x, one for y and one for z (see the example for <span class="xref std std-ref">Cartesian Coordinates for a 2-D Structured Grid</span>).</p>
+<section id="definition-dataconversion-t">
+<h3><span class="section-number">5.1.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataConversion_t</span></code><a class="headerlink" href="#definition-dataconversion-t" title="Permalink to this headline">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion_t</span></code> contains conversion factors for recovering raw dimensional data from given nondimensional data. These conversion factors are typically associated with nondimensional data that is normalized by dimensional reference quantities.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">DataConversion_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionScale</span><span class="w"> </span><span class="p">;</span><span class="w">                                             </span><span class="kr">(r)</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionOffset</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(r)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Given a nondimensional piece of data, <code class="code sidskey docutils literal notranslate"><span class="pre">Data(nondimensional)</span></code>, the conversion to “raw” dimensional form is:</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">Data</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="n">nondimensional</span><span class="p">)</span><span class="o">*</span><span class="n">ConversionScale</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ConversionOffset</span><span class="w"></span>
+</pre></div>
+</div>
+<p>These conversion factors are further described in the section <a class="reference internal" href="#normbydim"><span class="std std-ref">Nondimensional Data Normalized by Dimensional Quantities</span></a>.</p>
+</section>
+</section>
+<section id="data-manipulation">
+<h2><span class="section-number">5.2. </span>Data Manipulation<a class="headerlink" href="#data-manipulation" title="Permalink to this headline">¶</a></h2>
+<p>The optional entities of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> provide information for manipulating the data, including changing units or normalization.
+This section describes the rules under which these optional entities operate and the specific manipulations that can be performed on the data.</p>
+<p>Within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code>, the class of data and all information required for manipulations may be completely and precisely specified by the entities <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code>.
+<code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> identifies the class of data and governs the manipulations that can be performed.
+Each of the five data classes is treated separately in the subsequent sections.</p>
+<p>The entities <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> serve special functions in the CGNS hierarchy.
+If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> is absent from a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code>, then its value is determined from “global” data.
+This global data may be set at any level of the CGNS hierarchy with the data set at the lowest level taking precedence.
+<code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be similarly set by global data.
+The rules for determining the appropriate set of global data to apply is further detailed in the section <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">Precedence Rules and Scope Within the Hierarchy</span></a>.</p>
+<p>This alternate functionality provides a measure of economy in describing dimensional units or normalization within the hierarchy.
+Examples that make use of global data are available for both <a class="reference internal" href="grid.html#grid-example"><span class="std std-ref">grid coordinates</span></a> and <span class="xref std std-ref">flow solutions</span>.
+A complete <span class="xref std std-ref">two-zone example</span> case also depicts this alternate functionality.</p>
+<section id="dimensional-data">
+<span id="dimensional"></span><h3><span class="section-number">5.2.1. </span>Dimensional Data<a class="headerlink" href="#dimensional-data" title="Permalink to this headline">¶</a></h3>
+<p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">Dimensional</span></code>, the data is dimensional.
+The optional qualifiers <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> describe dimensional units associated with the data.
+These qualifiers are provided to specify the system of dimensional units and the dimensional exponents, respectively.
+For example, if the data is the x-component of velocity, then <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> will state that the pertinent dimensional units are, say, <code class="code sidskey docutils literal notranslate"><span class="pre">Meter</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">Second</span></code>; <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> will specify that the pertinent dimensional exponents are <code class="code sidskey docutils literal notranslate"><span class="pre">LengthExponent</span> <span class="pre">=</span> <span class="pre">1</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">TimeExponent</span> <span class="pre">=</span> <span class="pre">-1</span></code>.
+Combining the information gives the units m/s. Examples showing the use of these two qualifiers are provided.</p>
+<p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> is absent, then the appropriate set of dimensional units is obtained from “global” data.
+The rules for determining this appropriate set of global dimensional units are presented in the section <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">Precedence Rules and Scope Within the Hierarchy</span></a>.</p>
+<p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> is absent, then the appropriate dimensional exponents can be determined by convention if the specific instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> corresponds to one of the <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">standardized data-name identifiers</span></a>.
+Otherwise, the exponents are unspecified. We strongly recommend inclusion of the <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> qualifier whenever the data is dimensional and the instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is not among the list of standardized identifiers.</p>
+</section>
+<section id="nondimensional-data-normalized-by-dimensional-quantities">
+<span id="normbydim"></span><h3><span class="section-number">5.2.2. </span>Nondimensional Data Normalized by Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-dimensional-quantities" title="Permalink to this headline">¶</a></h3>
+<p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByDimensional</span></code>, the data is nondimensional and is normalized by dimensional reference quantities.
+All optional entities in <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> are used. <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> contains factors to convert the nondimensional data to “raw” dimensional data; these factors are <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionScale</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionOffset</span></code>.
+The conversion process is as follows:</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">Data</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="n">nondimensional</span><span class="p">)</span><span class="o">*</span><span class="n">ConversionScale</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ConversionOffset</span><span class="w"></span>
+</pre></div>
+</div>
+<p>where <code class="code sidskey docutils literal notranslate"><span class="pre">Data(nondimensional)</span></code> is the original nondimensional data, and <code class="code sidskey docutils literal notranslate"><span class="pre">Data(raw)</span></code> is the converted raw data.
+This converted raw data is dimensional, and the optional qualifiers <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> describe the appropriate dimensional units and exponents.
+Note that <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> also describe the units for <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionScale</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionOffset</span></code>.</p>
+<p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> is absent, the equivalent defaults are <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionScale</span> <span class="pre">=</span> <span class="pre">1</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionOffset</span> <span class="pre">=</span> <span class="pre">0</span></code>.
+If either <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> is absent, follow the rules described in the previous section.</p>
+<p>Note that functionally there is little difference between these first two data classes (<code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <a class="reference internal" href="#dimensional"><span class="std std-ref">Dimensional</span></a> and <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByDimensional</span></code>).
+In the first case the data is dimensional, and in the second, the converted raw data is dimensional.
+Also, the equivalent defaults for <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> produce no changes in the data; hence, it is almost the same as stating the original data is dimensional.</p>
+</section>
+<section id="nondimensional-data-normalized-by-unknown-dimensional-quantities">
+<h3><span class="section-number">5.2.3. </span>Nondimensional Data Normalized by Unknown Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-unknown-dimensional-quantities" title="Permalink to this headline">¶</a></h3>
+<p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByUnknownDimensional</span></code>, the data is nondimensional and is normalized by some unspecified dimensional quantities.
+This type of data is typical of a completely nondimensional test case, where all field data and all reference quantities are nondimensional.</p>
+<p>Only the <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> qualifier is used in this case, although it is expected that this qualifier will be seldom utilized in practice.
+For entities of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> that are not among the list of standardized data-name identifiers, the qualifier could provide useful information by defining the exponents of the dimensional form of the nondimensional data.</p>
+<p>Rather than providing qualifiers to describe the normalization of the data, we instead dictate that all data of type <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByUnknownDimensional</span></code> in a given database be nondimensionalized consistently.
+This is done by picking one set of mass, length, time and temperature scales and normalizing all appropriate data by these scales.
+We describe this process in detail in the following. A complete <span class="xref std std-ref">two-zone example case</span> is also available that uses a completely nondimensional database with consistent normalization used throughout.</p>
+<p>The practice of nondimensionalization within flow solvers and other application codes is quite popular.
+The problem with this practice is that to manipulate the data from a given code, one must often know the particulars of the nondimensionalization used.
+This largely results from what we call inconsistent normalization - more than the minimum required scales are used to normalize data within the code.
+For example, in the <em>OVERFLOW</em> flow solver, the following nondimensionalization is used:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 34%" />
+<col style="width: 38%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x' = x / L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(u' = u / (L/T)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho' = \rho / (M/L^{3})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(y' = y / L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(v' = v / (L/T)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(p' = p / (M/(LT^{2}))\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(z' = z / L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(w' = w / (L/T)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu' = \mu / (M/(LT))\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>where primed quantities are nondimensional and all others are dimensional.</p>
+<p>Consider an existing database where all field data and all reference data is nondimensional and normalized as shown. Assume the database has a single reference state given by,</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 34%" />
+<col style="width: 40%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x'_{ref} = x_{ref}  / L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(u'_{ref} = u_{ref}  / (L/T)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho'_{ref}  = \rho_{ref}  / (M/L^{3})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(y'_{ref} = y_{ref}  / L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(v'_{ref} = v_{ref}  / (L/T)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(p'_{ref}  = p_{ref}  / (M/(LT^{2}))\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(z'_{ref} = z_{ref}  / L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(w'_{ref} = w_{ref}  / (L/T)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu'_{ref}  = \mu_{ref}  / (M/(LT))\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>If a user wanted to change the nondimensionalization of grid-point pressures, the procedure is straightforward. Let the desired new normalization be given by <span class="math notranslate nohighlight">\(p''_{ijk} = p_{ijk} / (\rho_{ref} c_{ref}^{2})\)</span>, where all terms on the right-hand-side are <em>dimensional</em>, and as such they are unknown to the database user.
+However, the desired manipulation is possible using only nondimensional data provided in the database,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}p''_{ijk} &amp;\equiv p_{ijk} / (\rho_{ref} c_{ref}^{2}) \\
+          &amp;= [p_{ijk} / (M/(LT^{2})] [(M/L^{3}) / \rho_{ref}] [(L/T) / c_{ref}]^{2} \\
+          &amp;= p'_{ijk} / (\rho'_{ref} (c'_{ref})^{2})\end{split}\]</div>
+<p>Thus, the desired renormalization is possible using the database’s nondimensional data as if it were actually dimensional. There is, in fact, a high degree of equivalence between dimensional data and consistently normalized nondimensional data. The procedure shown in this example should extend to any desired renormalization, provided the needed <a class="reference internal" href="../FMM/nodes.html#referencestate"><span class="std std-ref">reference-state quantities</span></a> are included in the database.</p>
+<p>This example points out two stipulations that we now dictate for data in the class <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByUnknownDimensional</span></code>,</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>All nondimensional data within a given database that has <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">NormalizedByUnknownDimensional</span></code> shall be consistently normalized.</p></li>
+<li><p>Any nondimensional <a class="reference internal" href="../FMM/nodes.html#referencestate"><span class="std std-ref">reference state</span></a> appearing in a database should be sufficiently populated with reference quantities to allow for renormalization procedures.</p></li>
+</ol>
+</div></blockquote>
+<p>The second of these stipulations is somewhat ambiguous, but good practice would suggest that a flow solver, for example, should output to the database enough static and/or stagnation reference quantities to sufficiently define the state.</p>
+<p>A <span class="xref std std-ref">two-zone example case</span> is available that shows an example of a well-populated reference state.</p>
+<p>With these two stipulations, we contend the following:</p>
+<ul class="simple">
+<li><p>The dimensional scales used to nondimensionalize all data are immaterial, and there is no need to identify these quantities in a CGNS database.</p></li>
+<li><p>The dimensional scales need not be reference-state quantities provided in the database. For example, a given database could contain freestream reference state conditions, but all the data is normalized by sonic conditions (which are not provided in the database).</p></li>
+<li><p>All renormalization procedures can be carried out treating the data as if it were dimensional with a consistent set of units.</p></li>
+<li><p>Any application code that internally uses consistent normalization can use the data provided in a CGNS database without modification or transformation to the code’s internal normalization.</p></li>
+</ul>
+<p>Before ending this section, we note that the <em>OVERFLOW</em> flow solver mentioned above (or any other application code that internally uses inconsistent normalization) could easily read and write data to a nondimensional CGNS database that conforms to the above stipulations.
+On output, the code could renormalize data so it is consistently normalized.
+Probably, the easiest method would be to remove the molecular viscosity scale (<span class="math notranslate nohighlight">\(\mu_\infty\)</span>), and only use <span class="math notranslate nohighlight">\(L\)</span>, <span class="math notranslate nohighlight">\(\rho_\infty\)</span> and <span class="math notranslate nohighlight">\(c_\infty\)</span> for all normalizations (recall these are dimensional scales).
+The only change from the above example would be the nondimensionalization of viscosity, which would become <span class="math notranslate nohighlight">\(\mu'' = \mu / (\rho_\infty c_\infty L)\)</span>.
+The code could then output all field data as,</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 29%" />
+<col style="width: 45%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x'_{ijk} = x_{ijk} / L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(u'_{ijk} = u_{ijk} / c_\infty\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho'_{ijk}  = \rho_{ijk}  / \rho_\infty\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(y'_{ijk} = y_{ijk} / L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(v'_{ijk} = v_{ijk} / c_\infty\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(p'_{ijk}  = p_{ijk}  / (\rho_\infty c_\infty^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(z'_{ijk} = z_{ijk} / L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(w'_{ijk} = w_{ijk} / c_\infty\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu'_{ijk}  = \mu_{ijk}  / (\rho_\infty c_\infty^{2} L)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>and output the freestream reference quantities,</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 62%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(u'_\infty = u_\infty / c_\infty\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho'_\infty = \rho_\infty / \rho_\infty = 1\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(v'_\infty = v_\infty / c_\infty\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(p'_\infty = p_\infty / (\rho_\infty c_\infty^{2}) = 1 / \gamma\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(w'_\infty = w_\infty / c_\infty\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu''_\infty = \mu_\infty / (\rho_\infty c_\infty L) \sim O (1/Re)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(c'_\infty = c_\infty / c_\infty = 1\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L' = L / L = 1\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>where <span class="math notranslate nohighlight">\(\gamma\)</span> is the specific heat ratio (assumes a perfect gas) and <span class="math notranslate nohighlight">\(Re\)</span> is the Reynolds number.</p>
+<p>On input, the flow solver should be able to recover its internal normalizations from the data in a nondimensional CGNS database by treating the data as if it were dimensional.</p>
+</section>
+<section id="nondimensional-parameters">
+<h3><span class="section-number">5.2.4. </span>Nondimensional Parameters<a class="headerlink" href="#nondimensional-parameters" title="Permalink to this headline">¶</a></h3>
+<p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">NondimensionalParameter</span></code>, the data is a nondimensional parameter (or array of nondimensional parameters). Examples include Mach number, Reynolds number and pressure coefficient. These parameters are prevalent in CFD, although their definitions tend to vary between different application codes. A list of <span class="xref std std-ref">standardized data-name identifiers for nondimensional parameters</span> is provided.</p>
+<p>We distinguish nondimensional parameters from other data classes by the fact that they are <em>always</em> dimensionless. In a completely nondimensional database, they are distinct in that their normalization is not necessarily consistent with other data.</p>
+<p>Typically, the <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> qualifiers are not used for nondimensional parameters; although, there are a few situations where they may be used (these are discussed below).
+Rather than rely on optional qualifiers to describe the normalization, we establish the convention that <em>any nondimensional parameters should be accompanied by their defining scales</em>; this is further discussed in the <span class="xref std std-ref">section on standardized data-name identifiers for nondimensional parameters</span>.
+An example is Reynolds number defined as <span class="math notranslate nohighlight">\(Re = V L_{R} / \nu\)</span>, where <span class="math notranslate nohighlight">\(V\)</span>, <span class="math notranslate nohighlight">\(L_R\)</span> and <span class="math notranslate nohighlight">\(\nu\)</span> are velocity, length, and viscosity scales, respectively.
+Note that these defining scales may be dimensional or nondimensional data.
+We establish the data-name identifiers <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_Velocity</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_Length</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_ViscosityKinematic</span></code> for the Reynolds number and its defining scales.
+Anywhere an instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is found with the identifier <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds</span></code>, there should also be entities for the defining scales.
+An <span class="xref std std-ref">example of this use for Reynolds number</span> is available.</p>
+<p>In certain situations, it may be more convenient to use the optional qualifiers of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> to describe the normalization used in nondimensional parameters.
+These situations must satisfy two requirements: First, the defining scales are dimensional; and second, the nondimensional parameter is a normalization of a single “raw” data quantity and it is clear what this raw data is.
+Examples that satisfy this second constraint are pressure coefficient, where the raw data is static pressure, and lift coefficient, where the raw data is the lift force.
+Conversely, Reynolds number is a parameter that violates the second requirement - there are three pieces of raw data rather than one that make up <em>Re</em>.
+For nondimensional parameters that satisfy these two requirements, the qualifiers <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> may be used as in the section <a class="reference internal" href="#normbydim"><span class="std std-ref">Nondimensional Data Normalized by Dimensional Quantities</span></a> to recover the raw dimensional data.</p>
+</section>
+<section id="dimensionless-constants">
+<h3><span class="section-number">5.2.5. </span>Dimensionless Constants<a class="headerlink" href="#dimensionless-constants" title="Permalink to this headline">¶</a></h3>
+<p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">DimensionlessConstant</span></code>, the data is a constant (or array of constants) with no associated dimensional units. The <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> qualifiers are not used.</p>
+</section>
+<section id="data-array-examples">
+<h3><span class="section-number">5.2.6. </span>Data-Array Examples<a class="headerlink" href="#data-array-examples" title="Permalink to this headline">¶</a></h3>
+<p>This section presents five examples of data-array entities and illustrates the use of optional information for describing dimensional and nondimensional data.</p>
+<section id="example-one-dimensional-data-array-constants">
+<h4><span class="section-number">5.2.6.1. </span>Example - One-Dimensional Data Array, Constants<a class="headerlink" href="#example-one-dimensional-data-array-constants" title="Permalink to this headline">¶</a></h4>
+<p>A one-dimensional array of integers; the array is the integers from 1 to 10. The data is pure constants.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = int</span>
+<span class="c1">!  Dimension = 1</span>
+<span class="c1">!  DimensionValues = 10</span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Data1</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DimensionlessConstant</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The structure parameters for <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> state the data is an one-dimensional integer array of length ten. The value of <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> indicates the data is <span class="xref std std-ref">unitless constants</span>.</p>
+</section>
+<section id="example-two-dimensional-data-array-pressures">
+<span id="ex-data2"></span><h4><span class="section-number">5.2.6.2. </span>Example - Two-Dimensional Data Array, Pressures<a class="headerlink" href="#example-two-dimensional-data-array-pressures" title="Permalink to this headline">¶</a></h4>
+<p>A two-dimensional array of pressures with size <span class="math notranslate nohighlight">\(11 \times 9\)</span> given by the array <span class="math notranslate nohighlight">\(P(i,j)\)</span>.
+The data is dimensional with units of <span class="math notranslate nohighlight">\(N/m^{2}\)</span> (i.e., <span class="math notranslate nohighlight">\(kg/(m s^{2})\)</span>).
+Note that Pressure is the data-name identifier for static pressure.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = real</span>
+<span class="c1">!  Dimension = 2</span>
+<span class="c1">!  DimensionValues = [11,9]</span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pressure</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">P</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">),</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dimensional</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="n">MassUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">Kilogram</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">LengthUnits</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">Meter</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">TimeUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">Second</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">TemperatureUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TemperatureUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">AngleUnits</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">AngleUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalExponents_t</span><span class="w"> </span><span class="n">DimensionalExponents</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="n">MassExponent</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">LengthExponent</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">TimeExponent</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">TemperatureExponent</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">AngleExponent</span><span class="w">       </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>From the <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">data-name identifier conventions</span></a>, <code class="code sidskey docutils literal notranslate"><span class="pre">Pressure</span></code> has a floating-point data type; hence, the appropriate structure parameter for <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is <code class="code docutils literal notranslate"><span class="pre">real</span></code>.</p>
+<p>The value of <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> indicates that the data is <span class="xref std std-ref">dimensional</span>, and both the dimensional units and dimensional exponents are provided.
+<code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> specifies that the units are kilograms, meters, and seconds, and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> specifies the appropriate exponents for pressure.
+Combining the information gives pressure as <span class="math notranslate nohighlight">\(kg/(m s^{2})\)</span>.
+<code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> could have been defaulted, since the dimensional exponents are part of the <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">standardized data-name identifier</span></a> for <code class="code sidskey docutils literal notranslate"><span class="pre">Pressure</span></code>.</p>
+<p>Note that FORTRAN multidimensional array indexing is used to store the data; this is reflected in the FORTRAN-like implied do-loops for <span class="math notranslate nohighlight">\(P(i,j)\)</span>.</p>
+</section>
+<section id="example-three-dimensional-data-array-nondimensional-static-enthalpy">
+<h4><span class="section-number">5.2.6.3. </span>Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-static-enthalpy" title="Permalink to this headline">¶</a></h4>
+<p>A 3-D array of size <span class="math notranslate nohighlight">\(33 \times 9 \times 17\)</span> containing nondimensional static enthalpy.
+The data is normalized by freestream velocity as follows:</p>
+<div class="math notranslate nohighlight">
+\[h'_{ijk} = h_{ijk} / q_{ref}^{2}\]</div>
+<p>where <span class="math notranslate nohighlight">\(h'_{ijk}\)</span> is nondimensional static enthalpy.
+The freestream velocity is dimensional with a value of 10 m/s.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = real</span>
+<span class="c1">!  Dimension = 3</span>
+<span class="c1">!  DimensionValues = [33,9,17]</span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Enthalpy</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((</span><span class="n">H</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">33</span><span class="p">),</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">17</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NormalizedByDimensional</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataConversion_t</span><span class="w"> </span><span class="n">DataConversion</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionScale</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionOffset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="n">MassUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">MassUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">LengthUnits</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">Meter</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">TimeUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">Second</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">TemperatureUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TemperatureUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">AngleUnits</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">AngleUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DimensionalExponents_t</span><span class="w"> </span><span class="n">DimensionalExponents</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="p">{{</span><span class="w"></span>
+<span class="w">    </span><span class="n">MassExponent</span><span class="w">        </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">LengthExponent</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="mi">2</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">TimeExponent</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">TemperatureExponent</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">AngleExponent</span><span class="w">       </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>From the list of <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">standardized data-name identifiers</span></a>, the identifier for static enthalpy is <code class="code sidskey docutils literal notranslate"><span class="pre">Enthalpy</span></code> and its data type is <code class="code docutils literal notranslate"><span class="pre">real</span></code>.</p>
+<p>The value of <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> indicates that the data is <a class="reference internal" href="#normbydim"><span class="std std-ref">nondimensional and normalized by a dimensional reference quantity</span></a>.
+<code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> provides the conversion factors for recovering the raw static enthalpy, which has units of <span class="math notranslate nohighlight">\(m^{2}/s^{2}\)</span> as indicated by <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code>.
+Note that <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> could have been defaulted using the conventions for the data-name identifier <code class="code sidskey docutils literal notranslate"><span class="pre">Enthalpy</span></code>.</p>
+</section>
+<section id="example-three-dimensional-data-array-nondimensional-database">
+<h4><span class="section-number">5.2.6.4. </span>Example - Three-Dimensional Data Array, Nondimensional Database<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-database" title="Permalink to this headline">¶</a></h4>
+<p>The previous example for nondimensional enthalpy is repeated for a completely nondimensional database.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = real</span>
+<span class="c1">!  Dimension = 3</span>
+<span class="c1">!  DimensionValues = [33,9,17]</span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Enthalpy</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((</span><span class="n">H</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">33</span><span class="p">),</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">17</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NormalizedByUnknownDimensional</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The value of <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> indicates the appropriate class.</p>
+</section>
+<section id="example-data-arrays-for-reynolds-number">
+<h4><span class="section-number">5.2.6.5. </span>Example - Data Arrays for Reynolds Number<a class="headerlink" href="#example-data-arrays-for-reynolds-number" title="Permalink to this headline">¶</a></h4>
+<p>Reynolds number of <span class="math notranslate nohighlight">\(1.554 \times 10^{6}\)</span> based on a velocity scale of <span class="math notranslate nohighlight">\(10\ m/s\)</span>, a length scale of <span class="math notranslate nohighlight">\(2.3\ m\)</span> and a kinematic viscosity scale of <span class="math notranslate nohighlight">\(1.48 \times 10^{−5}\ m^{2}/s\)</span>.
+Assume the database has globally set the dimensional units to kilograms, meters, and seconds, and the global default data class to dimensional (<code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">Dimensional</span></code>).</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = real</span>
+<span class="c1">!  Dimension = 1</span>
+<span class="c1">!  DimensionValues = 1</span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.554</span><span class="n">e</span><span class="o">+</span><span class="mi">06</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NondimensionalParameter</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds_Velocity</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10.</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds_Length</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.3</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds_ViscosityKinematic</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="p">{{</span><span class="w"></span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.48</span><span class="n">e</span><span class="mi">-05</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds</span></code> contains the value of the Reynolds number, and the value of its <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> qualifier designates it as a <span class="xref std std-ref">nondimensional parameter</span>. By conventions for <span class="xref std std-ref">standardized data-name identifiers for nondimensional parameters</span>, the defining scales are contained in the associated entities <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_Velocity</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_Length</span></code>, and <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_ViscosityKinematic</span></code>.
+Since each of these entities contain no qualifiers, global information is used to decipher that they are all dimensional with mass, length, and time units of kilograms, meters, and seconds.
+The structure parameters for each <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entity state that they contain a real scalar.</p>
+<p>If a user wanted to convey the dimensional units of the defining scales using optional qualifiers of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code>, then the last three entities in this example would have a form similar to that in the <a class="reference internal" href="#ex-data2"><span class="std std-ref">Two-Dimensional Data Array example</span></a>.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="block.html" title="previous chapter (use the left arrow)"><span class="section-number">4. </span>Building Block Structure Definition</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="hierarchy.html" title="next chapter (use the right arrow)"><span class="section-number">6. </span>Hierarchical Structures</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="hierarchy.html" title="6. Hierarchical Structures"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="block.html" title="4. Building Block Structure Definition"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" >CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>Data-Array Structure Definitions</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

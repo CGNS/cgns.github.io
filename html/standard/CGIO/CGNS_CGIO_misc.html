@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Miscellaneous Routines &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Code Examples" href="CGNS_CGIO_example.html" />
+    <link rel="prev" title="Error Handling Routines" href="CGNS_CGIO_errors.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGNS_CGIO_example.html" title="Code Examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_CGIO_errors.html" title="Error Handling Routines"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../CGNS_CGIO.html" accesskey="U">CGNS/CGIO - Basic node implementation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Miscellaneous Routines</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">Miscellaneous Routines</a><ul>
+<li><a class="reference internal" href="#cgio-flush-to-disk">cgio_flush_to_disk</a></li>
+<li><a class="reference internal" href="#cgio-library-version">cgio_library_version</a></li>
+<li><a class="reference internal" href="#cgio-file-version">cgio_file_version</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a></li>
+              
+              <li>Miscellaneous Routines</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <section id="miscellaneous-routines">
+<span id="standardcgiomiscellaneous"></span><h1>Miscellaneous Routines<a class="headerlink" href="#miscellaneous-routines" title="Permalink to this headline">¶</a></h1>
+<section id="cgio-flush-to-disk">
+<h2>cgio_flush_to_disk<a class="headerlink" href="#cgio-flush-to-disk" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_flush_to_disk">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_flush_to_disk</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">cgio_num</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_flush_to_disk" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_flush_to_disk_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_flush_to_disk_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cgio_num</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_flush_to_disk_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">cgio_num</span></code></p></td>
+<td><p>IN: Database identifier.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="code docutils literal notranslate"><span class="pre">ier</span></code> - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>- w m</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Forces any buffered data in the database manager to be written to disk. Returns 0 if successfull, else an error code.</p>
+</dd>
+</dl>
+</section>
+<section id="cgio-library-version">
+<h2>cgio_library_version<a class="headerlink" href="#cgio-library-version" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_library_version">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_library_version</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">cgio_num</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">version</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_library_version" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_library_version_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_library_version_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cgio_num</span></em>, <em class="sig-param"><span class="pre">version</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_library_version_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">cgio_num</span></code></p></td>
+<td><p>IN: Database identifier.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">version</span></code></p></td>
+<td><p>OUT: 32-byte character string containing the database library version.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="code docutils literal notranslate"><span class="pre">ier</span></code> - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>r w m</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Gets the current library version for the database given by <code class="code docutils literal notranslate"><span class="pre">cgio_num</span></code>.
+The version is returned in version which is of maximum length <code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_VERSION_LENGTH</span></code> (32).
+In C, version should be dimensioned at least 33 in the calling routine to allow for the terminating <code class="code docutils literal notranslate"><span class="pre">'0'</span></code>. The function returns 0 if successfull, else an error code.</p>
+</dd>
+</dl>
+</section>
+<section id="cgio-file-version">
+<h2>cgio_file_version<a class="headerlink" href="#cgio-file-version" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_file_version">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_file_version</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">cgio_num</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">file_version</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">creation_date</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">modified_date</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_file_version" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_file_version_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_file_version_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cgio_num</span></em>, <em class="sig-param"><span class="pre">file_version</span></em>, <em class="sig-param"><span class="pre">creation_date</span></em>, <em class="sig-param"><span class="pre">modified_date</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_file_version_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">cgio_num</span></code></p></td>
+<td><p>IN: Database identifier.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">file_version</span></code></p></td>
+<td><p>OUT: 32-byte character string containing the database file version.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">creation_date</span></code></p></td>
+<td><p>OUT: 32-byte character string containing the database file creation date.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">modified_date</span></code></p></td>
+<td><p>OUT: 32-byte character string containing the last modification date for the database file.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="code docutils literal notranslate"><span class="pre">ier</span></code> - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>r w m</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Gets the version, creation and last modified dates, for the database file given by <code class="code docutils literal notranslate"><span class="pre">cgio_num</span></code>.
+The version is returned in <code class="code docutils literal notranslate"><span class="pre">file_version</span></code>, which is of maximum length <code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_VERSION_LENGTH</span></code> (32).
+The creation date is returned in <code class="code docutils literal notranslate"><span class="pre">creation_date</span></code>, and the last modified date in <code class="code docutils literal notranslate"><span class="pre">modified_date</span></code>,
+which are of maximum length <code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_DATE_LENGTH</span></code> (32).
+In C, these should be dimensioned at least 33 in the calling routine to allow for the terminating <code class="code docutils literal notranslate"><span class="pre">'0'</span></code>.
+The function returns 0 if successfull, else an error code.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="CGNS_CGIO_errors.html" title="previous chapter (use the left arrow)">Error Handling Routines</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGNS_CGIO_example.html" title="next chapter (use the right arrow)">Code Examples</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGNS_CGIO_example.html" title="Code Examples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_CGIO_errors.html" title="Error Handling Routines"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../CGNS_CGIO.html" >CGNS/CGIO - Basic node implementation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Miscellaneous Routines</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

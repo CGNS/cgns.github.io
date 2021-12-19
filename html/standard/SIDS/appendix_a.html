@@ -1,0 +1,1537 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Appendix A: Conventions for Data-Name Identifiers &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Appendix B: Structured Two-Zone Flat Plate Example" href="appendix_b.html" />
+    <link rel="prev" title="12. Miscellaneous Data Structures" href="misc.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="appendix_b.html" title="Appendix B: Structured Two-Zone Flat Plate Example"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="misc.html" title="12. Miscellaneous Data Structures"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" accesskey="U">CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Appendix A: Conventions for Data-Name Identifiers</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">Appendix A: Conventions for Data-Name Identifiers</a><ul>
+<li><a class="reference internal" href="#a1-coordinate-systems">A1 Coordinate Systems</a></li>
+<li><a class="reference internal" href="#a2-flowfield-solution">A2 Flowfield Solution</a></li>
+<li><a class="reference internal" href="#a3-turbulence-model-solution">A3 Turbulence Model Solution</a></li>
+<li><a class="reference internal" href="#a4-nondimensional-parameters">A4 Nondimensional Parameters</a></li>
+<li><a class="reference internal" href="#a5-characteristics-and-riemann-invariants-based-on-1d-flow">A5 Characteristics and Riemann Invariants Based on 1D flow</a></li>
+<li><a class="reference internal" href="#a6-forces-and-moments">A6 Forces and Moments</a></li>
+<li><a class="reference internal" href="#a7-time-dependant-flows">A7 Time-Dependant flows</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a></li>
+              
+              <li>Appendix A: Conventions for Data-Name Identifiers</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <section id="appendix-a-conventions-for-data-name-identifiers">
+<span id="dataname"></span><h1>Appendix A: Conventions for Data-Name Identifiers<a class="headerlink" href="#appendix-a-conventions-for-data-name-identifiers" title="Permalink to this headline">¶</a></h1>
+<p>Identifiers or names can be attached to <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities to identify and describe the quantity being stored.
+To facilitate communication between different application codes, we propose to establish a set of standardized data-name identifiers with fairly precise definitions.
+For any identifier in this set, the associated data should be unambiguously understood. In essence, this section proposes standardized terminology for labeling CFD-related data, including grid coordinates, flow solution, turbulence model quantities, nondimensional governing parameters, boundary condition quantities, and forces and moments.</p>
+<p>We use the convention that all standardized identifiers denote scalar quantities; this is consistent with the intended use of the <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> structure type to describe an array of scalars.
+For quantities that are vectors, such as velocity, their components are listed.</p>
+<p>Included with the lists of standard data-name identifiers are the fundamental units of dimensions associated with that quantity.
+The following notation is used for the fundamental units: <span class="math notranslate nohighlight">\(M\)</span> is mass, <span class="math notranslate nohighlight">\(L\)</span> is length, <span class="math notranslate nohighlight">\(T\)</span> is time, <span class="math notranslate nohighlight">\(\Theta\)</span> is temperature, <span class="math notranslate nohighlight">\(\alpha\)</span> is angle, and <span class="math notranslate nohighlight">\(I\)</span> is electric current.
+These fundamental units are directly associated with the elements of the <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents_t</span></code> structure.
+For example, a quantity that has dimensions <span class="math notranslate nohighlight">\(ML/T\)</span> corresponds to <code class="code sidskey docutils literal notranslate"><span class="pre">MassExponent</span> <span class="pre">=</span> <span class="pre">+1</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">LengthExponent</span> <span class="pre">=</span> <span class="pre">+1</span></code>, and <code class="code sidskey docutils literal notranslate"><span class="pre">TimeExponent</span> <span class="pre">=</span> <span class="pre">-1</span></code>.</p>
+<p>Unless otherwise noted, all quantities in the following sections denote floating-point data types, and the appropriate <code class="code sidskey docutils literal notranslate"><span class="pre">DataType</span></code> structure parameter for <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is <code class="code docutils literal notranslate"><span class="pre">real</span></code>.</p>
+<section id="a1-coordinate-systems">
+<h2>A1 Coordinate Systems<a class="headerlink" href="#a1-coordinate-systems" title="Permalink to this headline">¶</a></h2>
+<p>Coordinate systems for identifying physical location are as follows:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 30%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>System</p></th>
+<th class="head"><p>3-D</p></th>
+<th class="head"><p>2-D</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Cartesian</p></td>
+<td><p><span class="math notranslate nohighlight">\((x,y,z)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((x,y)\)</span> or <span class="math notranslate nohighlight">\((x,z)\)</span> or <span class="math notranslate nohighlight">\((y,z)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Cylindrical</p></td>
+<td><p><span class="math notranslate nohighlight">\((r,\theta,z)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((r,\theta)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Spherical</p></td>
+<td><p><span class="math notranslate nohighlight">\((r,\theta,\phi)\)</span></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Auxiliary</p></td>
+<td><p><span class="math notranslate nohighlight">\((\xi,\eta,\zeta)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((\xi,\eta)\)</span> or <span class="math notranslate nohighlight">\((\xi,\zeta)\)</span> or <span class="math notranslate nohighlight">\((\eta,\zeta)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>Associated with these coordinate systems are the following unit vector conventions:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x\)</span>-direction: <span class="math notranslate nohighlight">\(\mathbf{e}_x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(r\)</span>-direction: <span class="math notranslate nohighlight">\(\mathbf{e}_r\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\xi\)</span>-direction: <span class="math notranslate nohighlight">\(\mathbf{e}_\xi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(y\)</span>-direction: <span class="math notranslate nohighlight">\(\mathbf{e}_y\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta\)</span>-direction: <span class="math notranslate nohighlight">\(\mathbf{e}_\theta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\eta\)</span>-direction: <span class="math notranslate nohighlight">\(\mathbf{e}_\eta\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(z\)</span>-direction: <span class="math notranslate nohighlight">\(\mathbf{e}_z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\phi\)</span>-direction: <span class="math notranslate nohighlight">\(\mathbf{e}_\phi\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\zeta\)</span>-direction: <span class="math notranslate nohighlight">\(\mathbf{e}_\zeta\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>Note that <span class="math notranslate nohighlight">\(\mathbf{e}_r\)</span>, <span class="math notranslate nohighlight">\(\mathbf{e}_\theta\)</span> and <span class="math notranslate nohighlight">\(\mathbf{e}_\phi\)</span> are functions of position.</p>
+<p>We envision that one of the “standard” coordinate systems (Cartesian, cylindrical or spherical) will be used within a zone (or perhaps the entire database) to define grid coordinates and other related data.
+The auxiliary coordinates will be used for special quantities, including forces and moments, which may not be defined in the same coordinate system as the rest of the data.
+When auxiliary coordinates are used, a transformation must also be provided to uniquely define them.
+For example, the transform from Cartesian to orthogonal auxiliary coordinates is,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix} \hat{e}_\xi \\ \hat{e}_\eta\\ \hat{e}_\zeta \end{pmatrix} = T \begin{pmatrix} \hat{e}_x \\ \hat{e}_y \\ \hat{e}_z \end{pmatrix}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(T\)</span> is an orthonormal matrix (<span class="math notranslate nohighlight">\(2\times2\)</span> in 2-D and <span class="math notranslate nohighlight">\(3\times3\)</span> in 3-D).</p>
+<p>In addition, normal and tangential coordinates are often used to define boundary conditions and data related to surfaces. The normal coordinate is identified as <span class="math notranslate nohighlight">\(n\)</span> with the unit vector <span class="math notranslate nohighlight">\(\mathbf{e}_n\)</span>.</p>
+<p>The data-name identifiers defined for coordinate systems are listed in the following table. All represent real <code class="code sidskey docutils literal notranslate"><span class="pre">DataTypes</span></code>, except for <code class="code sidskey docutils literal notranslate"><span class="pre">ElementConnectivity</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">ParentData</span></code>, which are integer.</p>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Coordinate Systems</strong></span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 51%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateX</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateY</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(y\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateZ</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateR</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(r\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateTheta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinatePhi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\phi\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span></p></td>
+</tr>
+<tr class="row-even"><td colspan="3"></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateNormal</span></code></p></td>
+<td><p>Coordinate in direction of <span class="math notranslate nohighlight">\(\mathbf{e}_n\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateTangential</span></code></p></td>
+<td><p>Tangential coordinate (2-D only)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateXi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\xi\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateEta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\eta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateZeta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\zeta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateTransform</span></code></p></td>
+<td><p>Transformation matrix (<span class="math notranslate nohighlight">\(\mathbf{T}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">InterpolantsDonor</span></code></p></td>
+<td><p>Interpolation factors</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ElementConnectivity</span></code></p></td>
+<td><p>Nodes making up an element</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ParentData</span></code></p></td>
+<td><p>Element parent identification</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="a2-flowfield-solution">
+<h2>A2 Flowfield Solution<a class="headerlink" href="#a2-flowfield-solution" title="Permalink to this headline">¶</a></h2>
+<p>This section describes data-name identifiers for typical Navier-Stokes solution variables. The list is obviously incomplete, but should suffice for initial implementation of the CGNS system. The variables listed in this section are dimensional or raw quantities; nondimensional parameters and coefficients based on these variables are discussed in the section :ref:<a href="#id1"><span class="problematic" id="id2">`</span></a>Nondimensional Parameters &lt;dataname-nondim&gt;.</p>
+<p>We use fairly universal notation for state variables. Static quantities are measured with the fluid at speed: static density (<span class="math notranslate nohighlight">\(\rho\)</span>), static pressure (<span class="math notranslate nohighlight">\(p\)</span>), static temperature (<span class="math notranslate nohighlight">\(T\)</span>), static internal energy per unit mass (<span class="math notranslate nohighlight">\(e\)</span>), static enthalpy per unit mass (<span class="math notranslate nohighlight">\(h\)</span>), entropy (<span class="math notranslate nohighlight">\(s\)</span>), and static speed of sound (<span class="math notranslate nohighlight">\(c\)</span>).
+We also approximate the true entropy by the function <span class="math notranslate nohighlight">\(s_{app} = p / \rho^{\gamma}\)</span> (this assumes an ideal gas).
+The velocity is <span class="math notranslate nohighlight">\(\mathbf{q} = u \mathbf{e}_x + v \mathbf{e}_y + w \mathbf{e}_z\)</span>, with magnitude <span class="math notranslate nohighlight">\(q = ( \mathbf{q} \cdot  \mathbf{q})^{1/2}\)</span>.
+Stagnation quantities are obtained by bringing the fluid isentropically to rest; these are identified by a subscript “0”. The term “total” is also used to refer to stagnation quantities.</p>
+<p>Conservation variables are density, momentum (<span class="math notranslate nohighlight">\(\rho \mathbf{q} = \rho u \mathbf{e}_x + \rho v \mathbf{e}_y + \rho w \mathbf{e}_z\)</span>), and stagnation energy per unit volume (<span class="math notranslate nohighlight">\(\rho e_{0}\)</span>).</p>
+<p>For <a class="reference internal" href="../FMM/nodes.html#rotatingcoordinates"><span class="std std-ref">rotating coordinate systems</span></a>, <span class="math notranslate nohighlight">\(u\)</span>, <span class="math notranslate nohighlight">\(v\)</span>, and <span class="math notranslate nohighlight">\(w\)</span> are the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(z\)</span> components of the velocity vector in the inertial frame; <span class="math notranslate nohighlight">\(\mathbf{\omega}\)</span> is the rotation rate vector; <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> is a vector from the center of rotation to the point of interest; and <span class="math notranslate nohighlight">\(\mathbf{w}_r = \mathbf{\omega} \times \mathbf{R}\)</span> is the rotational velocity vector of the rotating frame of reference, with components <span class="math notranslate nohighlight">\(w_{rx}\)</span>, <span class="math notranslate nohighlight">\(w_{ry}\)</span>, and <span class="math notranslate nohighlight">\(w_{rz}\)</span>.</p>
+<p>Molecular diffusion and heat transfer introduce the molecular viscosity (<span class="math notranslate nohighlight">\(\mu\)</span>), kinematic viscosity (<span class="math notranslate nohighlight">\(\nu\)</span>) and thermal conductivity coefficient (<span class="math notranslate nohighlight">\(k\)</span>). These are obtained from the state variables through auxiliary correlations.
+For a perfect gas, <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(k\)</span> are functions of static temperature only.</p>
+<p>The Navier-Stokes equations involve the strain tensor (<span class="math notranslate nohighlight">\(\bar{\bar{S}}\)</span>) and the shear-stress tensor (<span class="math notranslate nohighlight">\(\bar{\bar{\tau}}\)</span>). Using indicial notation, the 3-D Cartesian components of the strain tensor are,</p>
+<div class="math notranslate nohighlight">
+\[\bar{\bar{S}}_{ij} = \left( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right)\]</div>
+<p>and the stress tensor is,</p>
+<div class="math notranslate nohighlight">
+\[\bar{\bar{\tau}}_{ij} = \mu \left( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right) + \lambda \frac{\partial u_k}{\partial x_k}\]</div>
+<p>where <span class="math notranslate nohighlight">\((x_1,x_2,x_3) = (x,y,z)\)</span> and <span class="math notranslate nohighlight">\((u_1,u_2,u_3) = (u,v,w)\)</span>.
+The bulk viscosity is usually approximated as <span class="math notranslate nohighlight">\(\lambda = − 2 \mu /3\)</span>.</p>
+<p>Reynolds averaging of the Navier-Stokes equations introduce Reynolds stresses (<span class="math notranslate nohighlight">\(−\rho(u′v′)_{ave}\)</span>, etc.) and turbulent heat flux terms (:math:<a href="#id3"><span class="problematic" id="id4">`</span></a>−rho(u′e′)_{ave}, etc.), where primed quantities are instantaneous fluctuations.
+These quantities are obtained from auxiliary turbulence closure models. Reynolds-stress models formulate transport equations for the Reynolds stresses directly; whereas, eddy-viscosity models correlate the Reynolds stresses with the mean strain rate,</p>
+<div class="math notranslate nohighlight">
+\[−(u′v′)_{ave} = \nu_t (\partial u/\partial y + \partial v/\partial x)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\nu_t\)</span> is the kinematic eddy viscosity. The eddy viscosity is either correlated to mean flow quantities by algebraic models or by auxiliary transport models.
+An example two-equation turbulence transport model is the <span class="math notranslate nohighlight">\(k\)</span>-<span class="math notranslate nohighlight">\(\epsilon\)</span> model, where transport equations are formulated for the turbulent kinetic energy (<span class="math notranslate nohighlight">\(k = [(u′u′)_{ave} + (v′v′)_{ave} + (w′w′)_{ave}] / 2\)</span>) and turbulent dissipation (<span class="math notranslate nohighlight">\(\epsilon\)</span>).</p>
+<p>Skin friction evaluated at a surface is the dot product of the shear stress tensor with the surface normal:</p>
+<div class="math notranslate nohighlight">
+\[\overrightarrow{\tau} = \bar{\bar{\tau}} \cdot \hat{n}\]</div>
+<p>Note that skin friction is a vector.</p>
+<p>The data-name identifiers defined for flow solution quantities are listed below.</p>
+<p>Note that for some vector quantities, like momentum, the table only explicitly lists data-name identifiers for the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(z\)</span> components, and for the magnitude.
+It should be understood, however, that for any vector quantity with a standardized data name “<code class="code sidskey docutils literal notranslate"><span class="pre">Vector</span></code>”, the following standardized data names are also defined:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 39%" />
+<col style="width: 61%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VectorX</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(x\)</span>-component of vector</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VectorY</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(y\)</span>-component of vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VectorZ</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(z\)</span>-component of vector</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VectorR</span></code></p></td>
+<td><p>Radial component of vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VectorTheta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta\)</span>-component of vector</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VectorPhi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\phi\)</span>-component of vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VectorMagnitude</span></code></p></td>
+<td><p>Magnitude of vector</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VectorNormal</span></code></p></td>
+<td><p>Normal component of vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VectorTangential</span></code></p></td>
+<td><p>Tangential component of vector (2-D only)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Also note that some data-name identifiers used with multi-species flows include the variable string <em>Symbol</em>, which represents either the chemical symbol for a species, or a defined name for a mixture.
+See the section describing the <code class="code sidskey docutils literal notranslate"><span class="pre">ChemicalKineticsModel</span></code> <a class="reference internal" href="../FMM/nodes.html#chemicalkineticsmodel"><span class="std std-ref">data structure</span></a> for examples and a table of defined names.</p>
+<table class="colwidths-given docutils align-default" id="id6">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Flow Solution Quantities</strong></span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 64%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Potential</span></code></p></td>
+<td><p>Potential: <span class="math notranslate nohighlight">\(\nabla\phi = q\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">StreamFunction</span></code></p></td>
+<td><p>Stream function (2-D): <span class="math notranslate nohighlight">\(\nabla \times \psi = q\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Density</span></code></p></td>
+<td><p>Static density (<span class="math notranslate nohighlight">\(\rho\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/L^{3}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Pressure</span></code></p></td>
+<td><p>Static pressure (<span class="math notranslate nohighlight">\(p\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Temperature</span></code></p></td>
+<td><p>Static temperature (<span class="math notranslate nohighlight">\(T\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">EnergyInternal</span></code></p></td>
+<td><p>Static internal energy per unit mass (<span class="math notranslate nohighlight">\(e\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Enthalpy</span></code></p></td>
+<td><p>Static enthalpy per unit mass (<span class="math notranslate nohighlight">\(h\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Entropy</span></code></p></td>
+<td><p>Entropy (<span class="math notranslate nohighlight">\(s\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M L^{2}/(T^{2} \Theta)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">EntropyApprox</span></code></p></td>
+<td><p>Approximate entropy (<span class="math notranslate nohighlight">\(s_{app} = p / \rho^{\gamma}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{3\gamma−1}/(M^{\gamma−1} T^{2})\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">DensityStagnation</span></code></p></td>
+<td><p>Stagnation density (<span class="math notranslate nohighlight">\(\rho_0\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/L^{3}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">PressureStagnation</span></code></p></td>
+<td><p>Stagnation pressure (<span class="math notranslate nohighlight">\(p_0\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TemperatureStagnation</span></code></p></td>
+<td><p>Stagnation temperature (<span class="math notranslate nohighlight">\(T_0\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">EnergyStagnation</span></code></p></td>
+<td><p>Stagnation energy per unit mass (<span class="math notranslate nohighlight">\(e_0\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">EnthalpyStagnation</span></code></p></td>
+<td><p>Stagnation enthalpy per unit mass (<span class="math notranslate nohighlight">\(h_0\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">EnergyStagnationDensity</span></code></p></td>
+<td><p>Stagnation energy per unit volume (<span class="math notranslate nohighlight">\(\rho e_0\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L T^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityX</span></code></p></td>
+<td><p>x-component of velocity (<span class="math notranslate nohighlight">\(u = \mathbf{q} \cdot \mathbf{e}_x\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityY</span></code></p></td>
+<td><p>y-component of velocity (<span class="math notranslate nohighlight">\(v = \mathbf{q} \cdot \mathbf{e}_y\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityZ</span></code></p></td>
+<td><p>z-component of velocity (<span class="math notranslate nohighlight">\(w = \mathbf{q} \cdot \mathbf{e}_z\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityR</span></code></p></td>
+<td><p>Radial velocity component (<span class="math notranslate nohighlight">\(\mathbf{q} \cdot \mathbf{e}_r\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityTheta</span></code></p></td>
+<td><p>Velocity component in <span class="math notranslate nohighlight">\(\theta\)</span> direction (<span class="math notranslate nohighlight">\(\mathbf{q} \cdot \mathbf{e}_\theta\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityPhi</span></code></p></td>
+<td><p>Velocity component in <span class="math notranslate nohighlight">\(\phi\)</span> direction (<span class="math notranslate nohighlight">\(\mathbf{q} \cdot \mathbf{e}_\phi\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityMagnitude</span></code></p></td>
+<td><p>Velocity magnitude (<span class="math notranslate nohighlight">\(q = (\mathbf{q} \cdot \mathbf{q})^{1/2}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityNormal</span></code></p></td>
+<td><p>Normal velocity component (<span class="math notranslate nohighlight">\(\mathbf{q} \cdot \mathbf{n}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityTangential</span></code></p></td>
+<td><p>Tangential velocity component (2-D)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocitySound</span></code></p></td>
+<td><p>Static speed of sound</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocitySoundStagnation</span></code></p></td>
+<td><p>Stagnation speed of sound</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentumX</span></code></p></td>
+<td><p>x-component of momentum (<span class="math notranslate nohighlight">\(\rho u\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L^{2}T)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentumY</span></code></p></td>
+<td><p>y-component of momentum (<span class="math notranslate nohighlight">\(\rho v\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L^{2}T)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentumZ</span></code></p></td>
+<td><p>z-component of momentum (<span class="math notranslate nohighlight">\(\rho w\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L^{2}T)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentumMagnitude</span></code></p></td>
+<td><p>Magnitude of momentum (<span class="math notranslate nohighlight">\(\rho q\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L^{2}T)\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingVelocityX</span></code></p></td>
+<td><p>x-component of velocity, relative to rotating frame (<span class="math notranslate nohighlight">\(u_{rx} = u − w_{rx}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingVelocityY</span></code></p></td>
+<td><p>y-component of velocity, relative to rotating frame (<span class="math notranslate nohighlight">\(u_{ry} = v − w_{ry}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingVelocityZ</span></code></p></td>
+<td><p>z-component of velocity, relative to rotating frame (<span class="math notranslate nohighlight">\(u_{rz} = w − w_{rz}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingMomentumX</span></code></p></td>
+<td><p>x-component of momentum, relative to rotating frame (<span class="math notranslate nohighlight">\(\rho u_{rx}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L^{2}T)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingMomentumY</span></code></p></td>
+<td><p>y-component of momentum, relative to rotating frame (<span class="math notranslate nohighlight">\(\rho u_{ry}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L^{2}T)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingMomentumZ</span></code></p></td>
+<td><p>z-component of momentum, relative to rotating frame (<span class="math notranslate nohighlight">\(\rho u_{rz}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L^{2}T)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingVelocityMagnitude</span></code></p></td>
+<td><p>Velocity magnitude in rotating frame (<span class="math notranslate nohighlight">\(q_r = (u_{rx} + u_{ry} + u_{rz})^{1/2}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingPressureStagnation</span></code></p></td>
+<td><p>Stagnation pressure in rotating frame</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingEnergyStagnation</span></code></p></td>
+<td><p>Stagnation energy per unit mass in rotating frame (<span class="math notranslate nohighlight">\((e_{0})_r\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingEnergyStagnationDensity</span></code></p></td>
+<td><p>Stagnation energy per unit volume in rotating frame (<span class="math notranslate nohighlight">\(\rho (e_{0})_r\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingEnthalpyStagnation</span></code></p></td>
+<td><p>Stagnation enthalpy per unit mass in rotating frame, rothalpy</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">EnergyKinetic</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\((u^{2} + v^{2} + w^{2})/2 = q^{2}/2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">PressureDynamic</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho q^{2}/2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SoundIntensityDB</span></code></p></td>
+<td><p>Sound intensity level in decibels, <span class="math notranslate nohighlight">\(10 {log_{10}}(I/I_{ref}) = 20 {log_{10}}(p/p_{ref})\)</span>, where <span class="math notranslate nohighlight">\(I\)</span> is the sound power per unit area, <span class="math notranslate nohighlight">\(I_{ref} = 10−12 watts/m^{2}\)</span> is the reference sound power per unit area, <span class="math notranslate nohighlight">\(p\)</span> is the pressure wave amplitude, and <span class="math notranslate nohighlight">\(p_{ref} = 2\times10^{−5}\ N/m^{2}\)</span> is the reference pressure.</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SoundIntensity</span></code></p></td>
+<td><p>Sound intensity (i.e., sound power per unit area, <span class="math notranslate nohighlight">\(I\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/T^{3}\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VorticityX</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\omega_x = \partial w/ \partial y − \partial v/ \partial z = \mathbf{\omega} \cdot \mathbf{e}_x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(T^{−1}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VorticityY</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\omega_y = \partial u/ \partial z − \partial w/ \partial x = \mathbf{\omega} \cdot \mathbf{e}_y\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(T^{−1}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VorticityZ</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\omega_z = \partial v/ \partial x − \partial u/ \partial y = \mathbf{\omega} \cdot \mathbf{e}_z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(T^{−1}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VorticityMagnitude</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\omega = (\mathbf{\omega} \times \mathbf{\omega})^{1/2}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(T^{−1}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SkinFrictionX</span></code></p></td>
+<td><p>x-component of skin friction (<span class="math notranslate nohighlight">\(\mathbf{\tau} \cdot \mathbf{e}_x\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SkinFrictionY</span></code></p></td>
+<td><p>y-component of skin friction (<span class="math notranslate nohighlight">\(\mathbf{\tau} \cdot \mathbf{e}_y\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SkinFrictionZ</span></code></p></td>
+<td><p>z-component of skin friction (<span class="math notranslate nohighlight">\(\mathbf{\tau} \cdot \mathbf{e}_z\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SkinFrictionMagnitude</span></code></p></td>
+<td><p>Skin friction magnitude (<span class="math notranslate nohighlight">\((\mathbf{\tau} \times \mathbf{\tau})^{1/2}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityAngleX</span></code></p></td>
+<td><p>Velocity angle (<span class="math notranslate nohighlight">\(arccos(u/q) \in [0, \pi]\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityAngleY</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(arccos(v/q)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityAngleZ</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(arccos(w/q)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityUnitVectorX</span></code></p></td>
+<td><p>x-component of velocity unit vector (<span class="math notranslate nohighlight">\(\mathbf{q} \cdot \mathbf{e}_x / q\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityUnitVectorY</span></code></p></td>
+<td><p>y-component of velocity unit vector (<span class="math notranslate nohighlight">\(\mathbf{q} \cdot \mathbf{e}_y / q\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VelocityUnitVectorZ</span></code></p></td>
+<td><p>z-component of velocity unit vector (<span class="math notranslate nohighlight">\(\mathbf{q} \cdot \mathbf{e}_z / q\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MassFlow</span></code></p></td>
+<td><p>Mass flow normal to a plane (<span class="math notranslate nohighlight">\(\rho \mathbf{q} \cdot \mathbf{n}\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L^{2}T)\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityKinematic</span></code></p></td>
+<td><p>Kinematic viscosity (<span class="math notranslate nohighlight">\(\nu = \mu/\rho\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityMolecular</span></code></p></td>
+<td><p>Molecular viscosity (<span class="math notranslate nohighlight">\(\mu\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityEddyKinematic</span></code></p></td>
+<td><p>Kinematic eddy viscosity (<span class="math notranslate nohighlight">\(\nu_t\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityEddy</span></code></p></td>
+<td><p>Eddy viscosity (<span class="math notranslate nohighlight">\(\mu_t\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivity</span></code></p></td>
+<td><p>Thermal conductivity coefficient (<span class="math notranslate nohighlight">\(k\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/(T^{3}\Theta)\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">PowerLawExponent</span></code></p></td>
+<td><p>Power-law exponent (<span class="math notranslate nohighlight">\(n\)</span>) in molecular viscosity or thermal conductivity model</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SutherlandLawConstant</span></code></p></td>
+<td><p>Sutherland’s Law constant (<span class="math notranslate nohighlight">\(T_{s}\)</span>) in molecular viscosity or thermal conductivity model</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TemperatureReference</span></code></p></td>
+<td><p>Reference temperature (<span class="math notranslate nohighlight">\(T_{ref}\)</span>) in molecular viscosity or thermal conductivity model</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityMolecularReference</span></code></p></td>
+<td><p>Reference viscosity (<span class="math notranslate nohighlight">\(\mu_{ref}\)</span>) in molecular viscosity model</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivityReference</span></code></p></td>
+<td><p>Reference thermal conductivity (<span class="math notranslate nohighlight">\(k_{ref}\)</span>) in thermal conductivity model</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/(T^{3}\Theta)\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">IdealGasConstant</span></code></p></td>
+<td><p>Ideal gas constant (<span class="math notranslate nohighlight">\(R = c_p − c_v\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/(T^{2}\Theta)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SpecificHeatPressure</span></code></p></td>
+<td><p>Specific heat at constant pressure (<span class="math notranslate nohighlight">\(c_p\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/(T^{2}\Theta)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SpecificHeatVolume</span></code></p></td>
+<td><p>Specific heat at constant volume (<span class="math notranslate nohighlight">\(c_v\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/(T^{2}\Theta)\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ReynoldsStressXX</span></code></p></td>
+<td><p>Reynolds stress <span class="math notranslate nohighlight">\(−\rho (u′u′)_{ave}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ReynoldsStressXY</span></code></p></td>
+<td><p>Reynolds stress <span class="math notranslate nohighlight">\(−\rho (u′v′)_{ave}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ReynoldsStressXZ</span></code></p></td>
+<td><p>Reynolds stress <span class="math notranslate nohighlight">\(−\rho (u′w′)_{ave}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ReynoldsStressYY</span></code></p></td>
+<td><p>Reynolds stress <span class="math notranslate nohighlight">\(−\rho (v′v′)_{ave}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ReynoldsStressYZ</span></code></p></td>
+<td><p>Reynolds stress <span class="math notranslate nohighlight">\(−\rho (v′w′)_{ave}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ReynoldsStressZZ</span></code></p></td>
+<td><p>Reynolds stress <span class="math notranslate nohighlight">\(−\rho (w′w′)_{ave}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MolecularWeightSymbol</span></code></p></td>
+<td><p>Molecular weight for species <em>Symbol</em></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">HeatOfFormationSymbol</span></code></p></td>
+<td><p>Heat of formation per unit mass for species <em>Symbol</em></p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">FuelAirRatio</span></code></p></td>
+<td><p>Fuel/air mass ratio</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceTemperatureHOF</span></code></p></td>
+<td><p>Reference temperature for the heat of formation</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MassFractionSymbol</span></code></p></td>
+<td><p>Mass of species <em>Symbol</em>, divided by total mass</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">LaminarViscositySymbol</span></code></p></td>
+<td><p>Laminar viscosity of species <em>Symbol</em></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivitySymbol</span></code></p></td>
+<td><p>Thermal conductivity of species <em>Symbol</em></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/(T^{3}\Theta)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">EnthalpyEnergyRatio</span></code></p></td>
+<td><p>The ratio <span class="math notranslate nohighlight">\(\beta = h / e = \int_{T_{ref}}^{T} c_{p} dT / \int_{T_{ref}}^{T} c_{v} dT\)</span> for the mixture</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CompressibilityFactor</span></code></p></td>
+<td><p>The gas constant of the mixture divided by the freestream gas constant, <span class="math notranslate nohighlight">\(Z = R / R_{\infty}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VibrationalElectronEnergy</span></code></p></td>
+<td><p>Vibrational-electronic excitation energy per unit mass</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">HeatOfFormation</span></code></p></td>
+<td><p>Heat of formation per unit mass for the entire mixture, <span class="math notranslate nohighlight">\(H = \sum_{i=1}^{n} Y_i H_i\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the number of species, <span class="math notranslate nohighlight">\(Y_i\)</span> is the mass fraction of species <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(H_i\)</span> is the heat of formation for species <span class="math notranslate nohighlight">\(i\)</span> at the reference temperature <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceTemperatureHOF</span></code>. This requires that <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceTemperatureHOF</span></code> be specified using the <code class="code sidskey docutils literal notranslate"><span class="pre">ChemicalKineticsModel</span></code> data structure.</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">VibrationalElectronTemperature</span></code></p></td>
+<td><p>Vibrational electron temperature</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SpeciesDensitySymbol</span></code></p></td>
+<td><p>Density of species <em>Symbol</em></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/L^{3}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MoleFractionSymbol</span></code></p></td>
+<td><p>Number of moles of species <em>Symbol</em> divided by the total number of moles for all species</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Voltage</span></code></p></td>
+<td><p>Voltage</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/TI\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ElectricFieldX</span></code></p></td>
+<td><p><em>x</em>-component of electric field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/TI\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ElectricFieldY</span></code></p></td>
+<td><p><em>y</em>-component of electric field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/TI\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ElectricFieldZ</span></code></p></td>
+<td><p><em>z</em>-component of electric field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/TI\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MagneticFieldX</span></code></p></td>
+<td><p><em>x</em>-component of magnetic field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MagneticFieldY</span></code></p></td>
+<td><p><em>y</em>-component of magnetic field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MagneticFieldZ</span></code></p></td>
+<td><p><em>z</em>-component of magnetic field vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CurrentDensityX</span></code></p></td>
+<td><p><em>x</em>-component of current density vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CurrentDensityY</span></code></p></td>
+<td><p><em>y</em>-component of current density vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CurrentDensityZ</span></code></p></td>
+<td><p><em>z</em>-component of current density vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(I/L^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ElectricConductivity</span></code></p></td>
+<td><p>Electrical conductivity</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{3}I^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">LorentzForceX</span></code></p></td>
+<td><p><em>x</em>-component of Lorentz force vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">LorentzForceY</span></code></p></td>
+<td><p><em>y</em>-component of Lorentz force vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">LorentzForceZ</span></code></p></td>
+<td><p><em>z</em>-component of Lorentz force vector</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">JouleHeating</span></code></p></td>
+<td><p>Joule heating</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">LengthReference</span></code></p></td>
+<td><p>Reference length <span class="math notranslate nohighlight">\(L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="a3-turbulence-model-solution">
+<h2>A3 Turbulence Model Solution<a class="headerlink" href="#a3-turbulence-model-solution" title="Permalink to this headline">¶</a></h2>
+<p>This section lists data-name identifiers for typical Reynolds-averaged Navier-Stokes turbulence model variables. Turbulence model solution quantities and model constants present a particularly difficult nomenclature problem - to be precise we need to identify both the variable and the model (and version) that it comes from. The list in the following table falls short in this respect.</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Typical Turbulence Models</strong></span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 52%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulentDistance</span></code></p></td>
+<td><p>Distance to nearest wall</p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulentEnergyKinetic</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(k = [(u′u′)_{ave} + (v′v′)_{ave} + (w′w′)_{ave}] / 2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulentDissipation</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\epsilon\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T^{3}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulentDissipationRate</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\epsilon/k = \omega\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(T^{−1}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulentBBReynolds</span></code></p></td>
+<td><p>Baldwin-Barth one-equation model <span class="math notranslate nohighlight">\(R_T\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulentSANuTilde</span></code></p></td>
+<td><p>Spalart-Allmaras one-equation model <span class="math notranslate nohighlight">\(\nu_{SA}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="a4-nondimensional-parameters">
+<h2>A4 Nondimensional Parameters<a class="headerlink" href="#a4-nondimensional-parameters" title="Permalink to this headline">¶</a></h2>
+<p>CFD codes are rich in nondimensional governing parameters, such as Mach number and Reynolds number, and nondimensional flowfield coefficients, such as pressure coefficient.
+The problem with these parameters is that the definitions and conditions at which they are evaluated can vary from code to code.
+Reynolds number is particularly notorious in this respect.</p>
+<p>These parameters have posed a difficult dilemma for us. Either we impose a rigid definition for each and force all database users to abide by it, or we develop some methodology for describing the particular definition that the user is employing.
+The first limits applicability and flexibility, and the second adds complexity.
+We have opted for the second approach, but we include only enough information about the definition of each parameter to allow for conversion operations.
+For example, the Reynolds number includes velocity, length, and kinematic viscosity scales in its definition (i.e., <span class="math notranslate nohighlight">\(Re = VLR/\nu\)</span>).
+The database description of Reynolds number includes these different scales. By providing these “definition components”, any code that reads Reynolds number from the database can transform its value to an appropriate internal definition. These definition components are identified by appending a “_” to the data-name identifier of the parameter.</p>
+<p>Definitions for nondimensional flowfield coefficients follow: the pressure coefficient is defined as,</p>
+<div class="math notranslate nohighlight">
+\[c_p = (p − p_{ref}) / (\rho_{ref} q^{2}_{ref} / 2)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho_{ref}q^{2}_{ref} / 2\)</span> is the dynamic pressure evaluated at some reference condition, and <span class="math notranslate nohighlight">\(p_{ref}\)</span> is some reference pressure.
+The skin friction coefficient is,</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{c_f} = \mathbf{\tau} / (\rho_{ref} q^{2}_{ref} / 2)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{\tau}\)</span> is the shear stress or skin friction vector. Usually, <span class="math notranslate nohighlight">\(\mathbf{\tau}\)</span> is evaluated at the wall surface.</p>
+<p>The data-name identifiers defined for nondimensional governing parameters and flowfield coefficients are listed in the following table.</p>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Nondimensional Parameters</strong></span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 47%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Mach</span></code></p></td>
+<td><p>Mach number: <span class="math notranslate nohighlight">\(M = q/c\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Mach_Velocity</span></code></p></td>
+<td><p>Velocity scale (<span class="math notranslate nohighlight">\(q\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Mach_VelocitySound</span></code></p></td>
+<td><p>Speed of sound scale (<span class="math notranslate nohighlight">\(c\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RotatingMach</span></code></p></td>
+<td><p>Mach number relative to rotating frame: <span class="math notranslate nohighlight">\(M_r = q_r /c\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds</span></code></p></td>
+<td><p>Reynolds number: <span class="math notranslate nohighlight">\(Re = VL_{R}/\nu\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_Velocity</span></code></p></td>
+<td><p>Velocity scale (<span class="math notranslate nohighlight">\(V\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_Length</span></code></p></td>
+<td><p>Length scale (<span class="math notranslate nohighlight">\(L_R\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_ViscosityKinematic</span></code></p></td>
+<td><p>Kinematic viscosity scale (<span class="math notranslate nohighlight">\(\nu\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Prandtl</span></code></p></td>
+<td><p>Prandtl number: <span class="math notranslate nohighlight">\(Pr = \mu c_p/k\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Prandtl_ThermalConductivity</span></code></p></td>
+<td><p>Thermal conductivity scale (<span class="math notranslate nohighlight">\(k\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/(T^{3}\Theta)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Prandtl_ViscosityMolecular</span></code></p></td>
+<td><p>Molecular viscosity scale (<span class="math notranslate nohighlight">\(\mu\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Prandtl_SpecificHeatPressure</span></code></p></td>
+<td><p>Specific heat scale (<span class="math notranslate nohighlight">\(c_p\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/(T^{2}\Theta)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">PrandtlTurbulent</span></code></p></td>
+<td><p>Turbulent Prandtl number, <span class="math notranslate nohighlight">\(\rho \nu_t c_p/k_t\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SpecificHeatRatio</span></code></p></td>
+<td><p>Specific heat ratio: <span class="math notranslate nohighlight">\(\gamma = c_p/c_v\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SpecificHeatRatio_Pressure</span></code></p></td>
+<td><p>Specific heat at constant pressure (<span class="math notranslate nohighlight">\(c_p\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/(T^{2}\Theta)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SpecificHeatRatio_Volume</span></code></p></td>
+<td><p>Specific heat at constant volume (<span class="math notranslate nohighlight">\(c_v\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}/(T^{2}\Theta)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefPressure</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(c_p\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefSkinFrictionX</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{c_f} \cdot \mathbf{e}_x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefSkinFrictionY</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{c_f} \cdot \mathbf{e}_y\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefSkinFrictionZ</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{c_f} \cdot \mathbf{e}_z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Coef_PressureDynamic</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho_{ref} q^{2}_{ref} / 2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Coef_PressureReference</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(p_{ref}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="a5-characteristics-and-riemann-invariants-based-on-1d-flow">
+<h2>A5 Characteristics and Riemann Invariants Based on 1D flow<a class="headerlink" href="#a5-characteristics-and-riemann-invariants-based-on-1d-flow" title="Permalink to this headline">¶</a></h2>
+<p>Boundary condition specification for inflow/outflow or farfield boundaries often involves Riemann invariants or characteristics of the linearized inviscid flow equations. For an ideal compressible gas, these are typically defined as follows: Riemann invariants for an isentropic 1-D flow are,</p>
+<div class="math notranslate nohighlight">
+\[[\partial/\partial t + (u \pm c) \partial/\partial x] [u \pm 2c / (\gamma − 1)] = 0\]</div>
+<p>Characteristic variables for the 3-D Euler equations linearized about a constant mean flow are,</p>
+<div class="math notranslate nohighlight">
+\[[\partial /\partial t + \Delta_{n} \partial/\partial x] W′_{n}(x,t) = 0  \;\;\;\;\;\; n = 1, 2, ..., 5\]</div>
+<p>where the characteristics and corresponding characteristic variables are</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Characteristic</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\Delta_n\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(W'_n\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Entropy</p></td>
+<td><p><span class="math notranslate nohighlight">\(u\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(p′ − \rho′c^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Vorticity</p></td>
+<td><p><span class="math notranslate nohighlight">\(u\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(v′\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Vorticity</p></td>
+<td><p><span class="math notranslate nohighlight">\(u\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(w′\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Acoustic</p></td>
+<td><p><span class="math notranslate nohighlight">\(u \pm c\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(p′ \pm u′ \rho c\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>Primed quantities are linearized perturbations, and the remainder are evaluated at the mean flow.
+The only non-zero mean-flow velocity component is <span class="math notranslate nohighlight">\(u\)</span>.
+The data-name identifiers defined for Riemann invariants and characteristic variables are listed in the following table.</p>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Characteristics and Riemann Invariants</strong></span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 36%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RiemannInvariantPlus</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(u + 2c / (\gamma − 1)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RiemannInvariantMinus</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(u − 2c / (\gamma − 1)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CharacteristicEntropy</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(p′ − \rho′ c^{2}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L T^{2})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CharacteristicVorticity1</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(v′\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CharacteristicVorticity2</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(w′\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CharacteristicAcousticPlus</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(p′ + u′\rho c\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L T^{2})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CharacteristicAcousticMinus</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(p′ − u′\rho c\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(L T^{2})\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="a6-forces-and-moments">
+<h2>A6 Forces and Moments<a class="headerlink" href="#a6-forces-and-moments" title="Permalink to this headline">¶</a></h2>
+<p>Conventions for data-name identifiers for forces and moments are defined in this section. Ideally, forces and moments should be attached to geometric components or less ideally to surface grids. Currently, the standard mechanism for storing forces and moments is generally through the <code class="code sidsref docutils literal notranslate"><span class="pre">ConvergenceHistory_t</span></code> node, either attached to the entire configuration (under <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code>) or attached to a zone (under <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code>).</p>
+<p>Given a differential force <span class="math notranslate nohighlight">\(f\)</span> (i.e., a force per unit area), the force integrated over a surface is,</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{F} = F_x \mathbf{e}_x + F_y \mathbf{e}_y + F_z \mathbf{e}_z = \int f dA\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{e}_x\)</span>, <span class="math notranslate nohighlight">\(\mathbf{e}_y\)</span> and <span class="math notranslate nohighlight">\(\mathbf{e}_z\)</span> are the unit vectors in the <em>x</em>, <em>y</em> and <em>z</em> directions, respectively.
+The moment about a point <span class="math notranslate nohighlight">\(r_{0}\)</span> integrated over a surface is,</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{M} = M_x \mathbf{e}_x + M_y \mathbf{e}_y + M_z \mathbf{e}_z = \int (\mathbf{r} − \mathbf{r}_{0}) \times f dA\]</div>
+<p>Lift and drag components of the integrated force are,</p>
+<div class="math notranslate nohighlight">
+\[L = \mathbf{F} \cdot \mathbf{L}  \;\;\;\;\;\;    D = \mathbf{F} \cdot \mathbf{D}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{L}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{D}\)</span> are the unit vectors in the positive lift and drag directions, respectively.</p>
+<p>Lift, drag and moment are often computed in auxiliary coordinate frames (e.g., wind axes or stability axes).
+We introduce the convention that lift, drag and moment are computed in the <span class="math notranslate nohighlight">\((\xi, \eta, \zeta)\)</span> coordinate system.
+Positive drag is assumed parallel to the <span class="math notranslate nohighlight">\(\xi\)</span>-direction (i.e., <span class="math notranslate nohighlight">\(\mathbf{D} = \mathbf{e}_\xi\)</span>); and positive lift is assumed parallel to the <span class="math notranslate nohighlight">\(\eta\)</span>-direction (i.e., <span class="math notranslate nohighlight">\(\mathbf{L} = \mathbf{e}_\eta\)</span>).
+Thus, forces and moments defined in this auxiliary coordinate system are,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}L = \mathbf{F} \cdot \mathbf{e}_{\eta} \;\;\;\;\;\;\; D = \mathbf{F} \cdot \mathbf{e}_\xi
+\\
+\mathbf{M} = M_\xi \mathbf{e}_\xi + M_\eta \mathbf{e}_\eta + M_\zeta \mathbf{e}_\zeta = \int (\mathbf{r} − \mathbf{r}_0) \times f dA\end{split}\]</div>
+<p>Lift, drag and moment coefficients in 3-D are defined as,</p>
+<div class="math notranslate nohighlight">
+\[C_{L} = L / (\rho_{ref}q^{2}_{ref}S_{ref} / 2) \;\;\;\;\;\;  C_{D} = D / (\rho_{ref}q^{2}_{ref}S_{ref} / 2)  \;\;\;\;\;\; \mathbf{C_{M}} = \mathbf{M} / (\rho_{ref}q^{2}_{ref}c_{ref}S{ref} / 2)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho_{ref}q^{2}_{ref} / 2\)</span> is a reference dynamic pressure, <span class="math notranslate nohighlight">\(S_{ref}\)</span> is a reference area, and <span class="math notranslate nohighlight">\(c_{ref}\)</span> is a reference length.
+For a wing, <span class="math notranslate nohighlight">\(S_{ref}\)</span> is typically the wing area and <span class="math notranslate nohighlight">\(c_{ref}\)</span> is the mean aerodynamic chord.
+In 2-D, the sectional force coefficients are,</p>
+<div class="math notranslate nohighlight">
+\[c_{l} = L′ / (\rho_{ref}q^{2}_{ref}c_{ref} / 2)  \;\;\;\;\;\;  c_{d} = D′ / (\rho_{ref}q^{2}_{ref}c_{ref} / 2)  \;\;\;\;\;\;  \mathbf{c_m} = \mathbf{M'} / (\rho_{ref}q^{2}_{ref} c^{2}_{ref} / 2)\]</div>
+<p>where the forces are integrated along a contour (e.g., an airfoil cross-section) rather than a surface.</p>
+<p>The data-name identifiers and definitions provided for forces and moments and their associated coefficients are listed in the table below. For coefficients, the dynamic pressure and length scales used in the normalization are provided.</p>
+<table class="colwidths-given docutils align-default" id="id10">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Forces and Moments</strong></span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 33%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ForceX</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(F_x = \mathbf{F} \cdot \mathbf{e}_x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ForceY</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(F_y = \mathbf{F} \cdot \mathbf{e}_y\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ForceZ</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(F_z = \mathbf{F} \cdot \mathbf{e}_z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ForceR</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(F_r = \mathbf{F} \cdot \mathbf{e}_r\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ForceTheta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(F_\theta = \mathbf{F} \cdot \mathbf{e}_\theta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ForcePhi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(F_\phi = \mathbf{F} \cdot \mathbf{e}_\phi\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Lift</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span> or <span class="math notranslate nohighlight">\(L'\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Drag</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(D\)</span> or <span class="math notranslate nohighlight">\(D'\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentX</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(M_x = \mathbf{M} \cdot \mathbf{e}_x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentY</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(M_y = \mathbf{M} \cdot \mathbf{e}_y\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentZ</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(M_z = \mathbf{M} \cdot \mathbf{e}_z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentR</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(M_r = \mathbf{M} \cdot \mathbf{e}_r\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentTheta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(M_\theta = \mathbf{M} \cdot \mathbf{e}_\theta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentPhi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(M_\phi = \mathbf{M} \cdot \mathbf{e}_\phi\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentXi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(M_\xi = \mathbf{M} \cdot \mathbf{e}_\xi\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentEta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(M_\eta = \mathbf{M} \cdot \mathbf{e}_\eta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">MomentZeta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(M_\zeta = \mathbf{M} \cdot \mathbf{e}_\zeta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ML^{2}/T^{2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Moment_CenterX</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(x_0 = \mathbf{r}_0 \cdot \mathbf{e}_x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Moment_CenterY</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(y_0 = \mathbf{r}_0 \cdot \mathbf{e}_y\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Moment_CenterZ</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(z_0 = \mathbf{r}_0 \cdot \mathbf{e}_z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefLift</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(C_L\)</span> or <span class="math notranslate nohighlight">\(c_l\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefDrag</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(C_D\)</span> or <span class="math notranslate nohighlight">\(c_d\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefMomentX</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{C_M} \cdot \mathbf{e}_x\)</span> or <span class="math notranslate nohighlight">\(\mathbf{c_m} \cdot e_x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefMomentY</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{C_M} \cdot \mathbf{e}_y\)</span> or <span class="math notranslate nohighlight">\(\mathbf{c_m} \cdot e_y\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefMomentZ</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{C_M} \cdot \mathbf{e}_z\)</span> or <span class="math notranslate nohighlight">\(\mathbf{c_m} \cdot e_z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefMomentR</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{C_M} \cdot \mathbf{e}_r\)</span> or <span class="math notranslate nohighlight">\(\mathbf{c_m} \cdot e_r\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefMomentTheta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{C_M} \cdot \mathbf{e}_\theta\)</span> or <span class="math notranslate nohighlight">\(\mathbf{c_m} \cdot \mathbf{e}_\theta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefMomentPhi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{C_M} \cdot \mathbf{e}_\phi\)</span>  or <span class="math notranslate nohighlight">\(\mathbf{c_m} \cdot \mathbf{e}_\phi\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefMomentXi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{C_M} \cdot \mathbf{e}_\xi\)</span>   or <span class="math notranslate nohighlight">\(\mathbf{c_m} \cdot \mathbf{e}_\xi\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefMomentEta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{C_M} \cdot \mathbf{e}_\eta\)</span>  or <span class="math notranslate nohighlight">\(\mathbf{c_m} \cdot \mathbf{e}_\eta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CoefMomentZeta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathbf{C_M} \cdot \mathbf{e}_\zeta\)</span> or <span class="math notranslate nohighlight">\(\mathbf{c_m} \cdot \mathbf{e}_\zeta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Coef_PressureDynamic</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho_{ref} q^{2}_{ref} / 2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(M/(LT^{2})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Coef_Area</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(S_{ref}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Coef_Length</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(c_{ref}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="a7-time-dependant-flows">
+<h2>A7 Time-Dependant flows<a class="headerlink" href="#a7-time-dependant-flows" title="Permalink to this headline">¶</a></h2>
+<p>Data-name identifiers related to time-dependent flow include those associated with the storage of grid coordinates and flow solutions as a function of time level or iteration. Also included are identifiers for storing information defining both rigid and arbitrary (i.e., deforming) grid motion.</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-text"><strong>Data-Name Identifiers for Time-Dependent Flow</strong></span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 11%" />
+<col style="width: 55%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data-Name Identifier</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="4"></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">TimeValues</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p>Time values</p></td>
+<td><p><span class="math notranslate nohighlight">\(T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">IterationValues</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Iteration values</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">NumberOfZones</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Number of zones used for each recorded step</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">NumberOfFamilies</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Number of families used for each recorded step</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ZonePointers</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">char</span></code></p></td>
+<td><p>Names of zones used for each recorded step</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">FamilyPointers</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">char</span></code></p></td>
+<td><p>Names of families used for each recorded step</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td colspan="4"></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RigidGridMotionPointers</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">char</span></code></p></td>
+<td><p>Names of RigidGridMotion structures used for each recorded step for a zone</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ArbitraryGridMotionPointers</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">char</span></code></p></td>
+<td><p>Names of ArbitraryGridMotion structures used for each recorded step for a zone</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridCoordinatesPointers</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">char</span></code></p></td>
+<td><p>Names of GridCoordinates structures used for each recorded step for a zone</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolutionPointers</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">char</span></code></p></td>
+<td><p>Names of FlowSolution structures used for each recorded step for a zone</p></td>
+<td><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+</tr>
+<tr class="row-even"><td colspan="4"></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">OriginLocation</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p>Physical coordinates of the origin before and after a rigid grid motion</p></td>
+<td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RigidRotationAngle</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p>Rotation angles about each axis of the translated coordinate system for rigid grid motion</p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RigidVelocity</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p>Grid velocity vector of the origin translation for rigid grid motion</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">RigidRotationRate</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p>Rotation rate vector about the axis of the translated coordinate system for rigid grid motion</p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha /T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td colspan="4"></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridVelocityX</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(x\)</span>-component of grid velocity</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridVelocityY</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(y\)</span>-component of grid velocity</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridVelocityZ</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(z\)</span>-component of grid velocity</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridVelocityR</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(r\)</span>-component of grid velocity</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridVelocityTheta</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta\)</span>-component of grid velocity</p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha /T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridVelocityPhi</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\phi\)</span>-component of grid velocity</p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha /T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridVelocityXi</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\xi\)</span>-component of grid velocity</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridVelocityEta</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\eta\)</span>-component of grid velocity</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridVelocityZeta</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">real</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\zeta\)</span>-component of grid velocity</p></td>
+<td><p><span class="math notranslate nohighlight">\(L/T\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="misc.html" title="previous chapter (use the left arrow)"><span class="section-number">12. </span>Miscellaneous Data Structures</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="appendix_b.html" title="next chapter (use the right arrow)">Appendix B: Structured Two-Zone Flat Plate Example</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="appendix_b.html" title="Appendix B: Structured Two-Zone Flat Plate Example"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="misc.html" title="12. Miscellaneous Data Structures"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" >CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Appendix A: Conventions for Data-Name Identifiers</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Structural Nodes &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Descriptors" href="CGNS_MLL_descriptor.html" />
+    <link rel="prev" title="Error Handling" href="CGNS_MLL_error.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_descriptor.html" title="Descriptors"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_error.html" title="Error Handling"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" accesskey="U">CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Structural Nodes</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">Structural Nodes</a><ul>
+<li><a class="reference internal" href="#cgns-base-information">CGNS Base Information</a><ul>
+<li><a class="reference internal" href="#input-ouput"><span class="in">Input</span> / <span class="out">Ouput</span></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zone-information">Zone Information</a><ul>
+<li><a class="reference internal" href="#id1"><span class="in">Input</span> / <span class="out">Ouput</span></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#simulation-type">Simulation Type</a><ul>
+<li><a class="reference internal" href="#id2"><span class="in">Input</span> / <span class="out">Ouput</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_MLL.html">CGNS/MLL - An API for C and Fortran applications</a></li>
+              
+              <li>Structural Nodes</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <section id="structural-nodes">
+<span id="mllstructuralnodes"></span><h1>Structural Nodes<a class="headerlink" href="#structural-nodes" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#cgns-base-information">CGNS Base Information</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_base_write</span></code></p></td>
+<td><p>Create and/or write to a CGNS base node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_nbases</span></code></p></td>
+<td><p>Get number of CGNS base nodes in file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_base_read</span></code></p></td>
+<td><p>Read CGNS base information</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_cell_dim</span></code></p></td>
+<td><p>Get the cell dimension for the CGNS base</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#zone-information">Zone Information</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_zone_write</span></code></p></td>
+<td><p>Create and/or write to a zone node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_nzones</span></code></p></td>
+<td><p>Get number of zones in base</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_zone_read</span></code></p></td>
+<td><p>Read zone information</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_zone_type</span></code></p></td>
+<td><p>Get type of zone (structured or unstructured)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_index_dim</span></code></p></td>
+<td><p>Get the index dimension for the CGNS zone</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#simulation-type">Simulation Type</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cg_simulation_type_write</span></code></p></td>
+<td><p>Write simulation type</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cg_simulation_type_read</span></code></p></td>
+<td><p>Read simulation type</p></td>
+</tr>
+</tbody>
+</table>
+<section id="cgns-base-information">
+<h2>CGNS Base Information<a class="headerlink" href="#cgns-base-information" title="Permalink to this headline">¶</a></h2>
+<p>Node: CGNSBase_t (SIDS, File Mapping)</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>C Functions</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_base_write</span></span></code> (<span class="in">int fn</span>, <span class="in">char *basename</span>, <span class="in">int cell_dim</span>, <span class="in">int phys_dim</span>, <span class="out">int *B</span>);</p></td>
+<td><p><cite>- w m</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_nbases</span></span></code> (<span class="in">int fn</span>, <span class="out">int *nbases</span>);</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_base_read</span></span></code> (<span class="in">int fn</span>, <span class="in">int B</span>, <span class="out">char *basename</span>, <span class="out">int *cell_dim</span>, <span class="out">int *phys_dim</span>);</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_cell_dim</span></span></code> (<span class="in">int fn</span>, <span class="in">int B</span>, <span class="out">int *cell_dim</span>);</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Fortran interfaces</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_base_write_f</span></code> (<span class="in">fn</span>, <span class="in">basename</span>, <span class="in">cell_dim</span>, <span class="in">phys_dim</span>, <span class="out">B</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>- w m</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_nbases_f</span></code> (<span class="in">fn</span>, <span class="out">nbases</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_base_read_f</span></code> (<span class="in">fn</span>, <span class="in">B</span>, <span class="out">basename</span>, <span class="out">cell_dim</span>, <span class="out">phys_dim</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_cell_dim_f</span></code> (<span class="in">fn</span>, <span class="in">B</span>, <span class="out">cell_dim</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+</tbody>
+</table>
+<section id="input-ouput">
+<h3><span class="in">Input</span> / <span class="out">Ouput</span><a class="headerlink" href="#input-ouput" title="Permalink to this headline">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">fn</dt>
+<dd class="field-odd"><p>CGNS file index number.</p>
+</dd>
+<dt class="field-even">B</dt>
+<dd class="field-even"><p>Base index number, where 1 ≤ B ≤ nbases.</p>
+</dd>
+<dt class="field-odd">nbases</dt>
+<dd class="field-odd"><p>Number of bases present in the CGNS file fn.</p>
+</dd>
+<dt class="field-even">basename</dt>
+<dd class="field-even"><p>Name of the base.</p>
+</dd>
+<dt class="field-odd">cell_dim</dt>
+<dd class="field-odd"><p>Dimension of the cells; 3 for volume cells, 2 for surface cells and 1 for line cells.</p>
+</dd>
+<dt class="field-even">phys_dim</dt>
+<dd class="field-even"><p>Number of coordinates required to define a vector in the field.</p>
+</dd>
+<dt class="field-odd">ier</dt>
+<dd class="field-odd"><p>Error status.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="zone-information">
+<h2>Zone Information<a class="headerlink" href="#zone-information" title="Permalink to this headline">¶</a></h2>
+<p>Node: Zone_t (SIDS, File Mapping)</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>C Functions</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_zone_write</span></span></code> (<span class="in">int fn</span>, <span class="in">int B</span>, <span class="in">char *zonename</span>, <span class="in">cgsize_t *size</span>, <span class="in">ZoneType_t zonetype</span>, <span class="out">int *Z</span>);</p></td>
+<td><p><cite>- w m</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_nzones</span></span></code> (<span class="in">int fn</span>, <span class="in">int B</span>, <span class="out">int *nzones</span>);</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_zone_read</span></span></code> (<span class="in">int fn</span>, <span class="in">int B</span>, <span class="in">int Z</span>, <span class="out">char *zonename</span>, <span class="out">cgsize_t *size</span>);</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_zone_type</span></span></code> (<span class="in">int fn</span>, <span class="in">int B</span>, <span class="in">int Z</span>, <span class="out">ZoneType_t *zonetype</span>);</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_index_dim</span></span></code> (<span class="in">int fn</span>, <span class="in">int B</span>, <span class="in">int Z</span>, <span class="out">int *index_dim</span>);</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Fortran interfaces</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_zone_write_f</span></code> (<span class="in">fn</span>, <span class="in">B</span>, <span class="in">zonename</span>, <span class="in">size</span>, <span class="in">zonetype</span>, <span class="out">Z</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>- w m</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_nzones_f</span></code> (<span class="in">fn</span>, <span class="in">B</span>, <span class="out">nzones</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_zone_read_f</span></code> (<span class="in">fn</span>, <span class="in">B</span>, <span class="in">Z</span>, <span class="out">zonename</span>, <span class="out">size</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_zone_type_f</span></code> (<span class="in">fn</span>, <span class="in">B</span>, <span class="in">Z</span>, <span class="out">zonetype</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_index_dim_f</span></code> (<span class="in">fn</span>, <span class="in">B</span>, <span class="in">Z</span>, <span class="out">index_dim</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+</tbody>
+</table>
+<section id="id1">
+<h3><span class="in">Input</span> / <span class="out">Ouput</span><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="field-list">
+<dt class="field-odd">fn</dt>
+<dd class="field-odd"><p>CGNS file index number.</p>
+</dd>
+<dt class="field-even">B</dt>
+<dd class="field-even"><p>Base index number, where 1 ≤ B ≤ nbases.</p>
+</dd>
+<dt class="field-odd">Z</dt>
+<dd class="field-odd"><p>Zone index number, where 1 ≤ Z ≤ nzones.</p>
+</dd>
+<dt class="field-even">nzones</dt>
+<dd class="field-even"><p>Number of zones present in base B.</p>
+</dd>
+<dt class="field-odd">zonename</dt>
+<dd class="field-odd"><p>Name of the zone.</p>
+</dd>
+<dt class="field-even">size</dt>
+<dd class="field-even"><p>Number of vertices, cells, and boundary vertices in each (index)-dimension. For structured grids, the dimensions have unit stride in the array (e.g., [NVertexI, NVertexJ, NVertexK, NCellI, NCellJ, NCellK, NBoundVertexI, NBoundVertexJ, NBoundVertexK]).</p>
+<p>Note that for unstructured grids, the number of cells is the number of highest order elements. Thus, in three dimensions it’s the number of 3-D cells, and in two dimensions it’s the number of 2-D cells.</p>
+<p>Also for unstructured grids, if the nodes are sorted between internal nodes and boundary nodes, the optional parameter NBoundVertex must be set equal to the number of boundary nodes. By default, NBoundVertex equals zero, meaning that the nodes are unsorted.</p>
+<p>Note that a non-zero value for NBoundVertex only applies to unstructured grids. For structured grids, the NBoundVertex parameter always equals 0 in all directions.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Mesh Type</p></th>
+<th class="head"><p>Size</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>3D structured</p></td>
+<td><div class="line-block">
+<div class="line">NVertexI, NVertexJ, NVertexK</div>
+<div class="line">NCellI, NCellJ, NCellK</div>
+<div class="line">NBoundVertexI = 0, NBoundVertexJ = 0, NBoundVertexK = 0</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2D structured</p></td>
+<td><div class="line-block">
+<div class="line">NVertexI, NVertexJ</div>
+<div class="line">NCellI, NCellJ</div>
+<div class="line">NBoundVertexI = 0, NBoundVertexJ = 0</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3D unstructured</p></td>
+<td><p>NVertex, NCell3D, NBoundVertex</p></td>
+</tr>
+<tr class="row-odd"><td><p>2D unstructured</p></td>
+<td><p>NVertex, NCell2D, NBoundVertex</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="field-odd">zonetype</dt>
+<dd class="field-odd"><p>Type of the zone. The admissible types are Structured and Unstructured.</p>
+</dd>
+<dt class="field-even">index_dim</dt>
+<dd class="field-even"><p>Index dimension for the zone. For Structured zones, this will be the base cell dimension and for Unstructured zones it will be 1</p>
+</dd>
+<dt class="field-odd">ier</dt>
+<dd class="field-odd"><p>Error status.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a CGNS file is opened via the cg_open() MLL function, the zones are sorted <em>alphanumerically</em> by name (the creation order is ignored/discarded). This mechanism is provided to enable ordinal zone indexing. Therefore, if ordinal zone indexing is desired, it is considered good standard practice to always <strong>choose zone names to be alphabetically increasing</strong>. For example, Zone0001, Zone0002, etc. is appropriate for up to 9999 zones.</p>
+<p>Important: Because the cgnsview tool uses the low-level cgio API, it does not sort the zones by name and zone order presented may not match that of the MLL API. Generally, cgnsview presents the zones in creation order for both ADF and HDF5 formats.</p>
+</div>
+</section>
+</section>
+<section id="simulation-type">
+<h2>Simulation Type<a class="headerlink" href="#simulation-type" title="Permalink to this headline">¶</a></h2>
+<p>Node: SimulationType_t (SIDS, File Mapping)</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>C Functions</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_simulation_type_write</span></span></code> (<span class="in">int fn</span>, <span class="in">int B</span>, <span class="in">SimulationType_t SimulationType</span>);</p></td>
+<td><p><cite>- w m</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="out">ier</span> = <code class="code sig-name c docutils literal notranslate"><span class="name"><span class="pre">cg_simulation_type_read</span></span></code> (<span class="in">int fn</span>, <span class="in">int B</span>, <span class="out">SimulationType_t *SimulationType</span>);</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 88%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Fortran interfaces</p></th>
+<th class="head"><p>Modes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_simulation_type_write_f</span></code> (<span class="in">fn</span>, <span class="in">B</span>, <span class="out">SimulationType</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>- w m</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p>call <code class="docutils literal notranslate"><span class="pre">cg_simulation_type_read_f</span></code>  (<span class="in">fn</span>, <span class="in">B</span>, <span class="out">SimulationType</span>, <span class="out">ier</span>)</p></td>
+<td><p><cite>r - m</cite></p></td>
+</tr>
+</tbody>
+</table>
+<section id="id2">
+<h3><span class="in">Input</span> / <span class="out">Ouput</span><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">fn</dt>
+<dd class="field-odd"><p>CGNS file index number.</p>
+</dd>
+<dt class="field-even">B</dt>
+<dd class="field-even"><p>Base index number, where 1 ≤ B ≤ nbases.</p>
+</dd>
+<dt class="field-odd">SimulationType</dt>
+<dd class="field-odd"><p>Type of simulation. Valid types are CG_Null, CG_UserDefined, TimeAccurate, and NonTimeAccurate.</p>
+</dd>
+<dt class="field-even">ier</dt>
+<dd class="field-even"><p>Error status.</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="CGNS_MLL_error.html" title="previous chapter (use the left arrow)">Error Handling</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGNS_MLL_descriptor.html" title="next chapter (use the right arrow)">Descriptors</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGNS_MLL_descriptor.html" title="Descriptors"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_error.html" title="Error Handling"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" >CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Structural Nodes</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

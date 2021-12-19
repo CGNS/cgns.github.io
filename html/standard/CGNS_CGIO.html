@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>CGNS/CGIO - Basic node implementation &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/guzzle.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/math_override.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Database-Level Routines" href="CGIO/CGNS_CGIO_database.html" />
+    <link rel="prev" title="Links" href="MLL/CGNS_MLL_links.html" />
+  
+  <link rel="apple-touch-icon" href="../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGIO/CGNS_CGIO_database.html" title="Database-Level Routines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="MLL/CGNS_MLL_links.html" title="Links"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../standard.html" accesskey="U">Standard Specification</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CGNS/CGIO - Basic node implementation</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">CGNS/CGIO - Basic node implementation</a><ul>
+<li><a class="reference internal" href="#node-the-building-block">Node - The Building Block</a></li>
+<li><a class="reference internal" href="#node-attributes">Node Attributes</a></li>
+<li><a class="reference internal" href="#glossary-of-terms">Glossary of Terms</a></li>
+<li><a class="reference internal" href="#conventions-and-implementations">Conventions and Implementations</a></li>
+<li><a class="reference internal" href="#limits-and-sizes">Limits and Sizes</a></li>
+<li><a class="reference internal" href="#cgio-core-routines">CGIO core routines</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../index.html">Docs</a></li>
+              
+                <li><a href="../standard.html">Standard Specification</a></li>
+              
+              <li>CGNS/CGIO - Basic node implementation</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <section id="cgns-cgio-basic-node-implementation">
+<span id="standardcgio"></span><h1>CGNS/CGIO - Basic node implementation<a class="headerlink" href="#cgns-cgio-basic-node-implementation" title="Permalink to this headline">¶</a></h1>
+<p>The CGIO interface provides low-level access to the database manager which underlies CGNS.
+The CGIO interface supports both ADF and HDF5 database managers simultaneously, and in a fashion transparent to the application code.</p>
+<p>This document defines the general structure of a database file, but not the specific implementation details.
+See the ADF and HDF5 Implementations for the details.
+The CGIO core routines used to store and retrieve data from the database manager are also described.</p>
+<section id="node-the-building-block">
+<h2>Node - The Building Block<a class="headerlink" href="#node-the-building-block" title="Permalink to this headline">¶</a></h2>
+<p>A database is a hierarchical system that is built around the concept of a “node”. Each node contains information about itself and its ancestors and possibly data (e.g., arrays, vectors, character strings, etc.). Each of these nodes, in turn, may be connected to an arbitrary number of children, each of which is itself a node. In this system, a node contains user-accessible information related to identification, name, type, and amount of data associated with it, and pointers to child nodes. Basic nodal information includes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>a unique ID (node locator)</p></li>
+<li><p>a name (character string) used to describe the node and its data</p></li>
+<li><p>a label (character string) an additional field used to describe the node and its data. It is analogous to, but not exactly the same as, the name.</p></li>
+<li><p>information describing the type and amount of data</p></li>
+<li><p>data</p></li>
+<li><p>IDs of child nodes</p></li>
+</ul>
+</div></blockquote>
+<p>There are no restrictions on the number of child nodes that a node can have associated with it in the database.
+This structure allows the construction of a hierarchical system as shown in the figure below.
+As illustrated in the figure, it is possible to reference nodes in a second file (<em>File_Two</em>) from the original file (<em>File_One</em>).
+This is the concept of “linking.”</p>
+<figure class="align-center" id="id1">
+<span id="examplenodedatabase"></span><a class="reference internal image-reference" href="../_images/database.gif"><img alt="Example database showing node connections and links." src="../_images/database.gif" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-text"><em>Example Database Hierarchy of Nodes</em></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>A node knows about itself and its children, but it does not know anything about its parent. This means that it is possible to traverse “down” the tree by making queries about what lies below the current node, but it is not possible to traverse “up” the tree by making queries about nodes above a given node. If it is desired to move back up the tree, the user must keep track of that information.</p>
+<p>All database files start with a root node, which is created automatically when a new file is opened. There is only one root node in a database file, and may be referenced by the database Root ID or by name as “/”.</p>
+</section>
+<section id="node-attributes">
+<h2>Node Attributes<a class="headerlink" href="#node-attributes" title="Permalink to this headline">¶</a></h2>
+<p>Each node in the database may have zero to many subnodes that are associated with it, as well as its own data. The following are a list of attributes accessible by the user for a node in the hierarchical database system.</p>
+<dl class="field-list">
+<dt class="field-odd">Data</dt>
+<dd class="field-odd"><p>The data associated with a node.</p>
+</dd>
+<dt class="field-even">Data Type</dt>
+<dd class="field-even"><p>A 2-byte character field, blank filled, case sensitive. Specifies the type of data (e.g., real, integer, character) associated with this node. The supported data types are listed below.</p>
+</dd>
+<dt class="field-odd">Dimensions</dt>
+<dd class="field-odd"><p>An integer vector containing the number of elements within each dimension. For example, if the array A was declared (Fortran) as A(10,20), the Dimension vector would contain two entries (10,20).</p>
+</dd>
+<dt class="field-even">ID</dt>
+<dd class="field-even"><p>A unique identifier to access a given node within a file. This field contains sufficient information for the database manager to locate the node within a file. For any given node, the ID is generated only after the file it resides in has been opened by a program and the user requests information about the node. The ID is valid only within the program that opened the file and while that file is open. If the file is closed and reopened, the ID for any given node may be different. Within different programs, the node ID for the same node may also be different. The ID is never actually written into a file.</p>
+</dd>
+<dt class="field-odd">Label</dt>
+<dd class="field-odd"><p>A 32-byte character field. The rules for Labels are identical to those for Names. Unlike names, Labels do not have to be unique. The Label field was introduced to allow “data typing” similar to the “typedef” concept in C. Using the Label field in this way allows programs to know some additional information about the use of the node itself or its child nodes and to call specific subroutines to read the data or react in specific ways upon detection of the type.</p>
+</dd>
+<dt class="field-even">Name</dt>
+<dd class="field-even"><p>A 32-byte character field. The names of child nodes directly attached to a parent node must be unique. For example, in the example database figure, all nodes directly attached to N3 must have unique names. When a request to create a new node is made, the database manager checks the requested name against the other names of the child nodes of the specified parent. If the requested name is not unique, an error is returned.
+Legal characteristics of a name are a A-Z, a-z, 0-9, and special characters (ASCII values from 32 to 126, except for the forward slash “/” (ASCII number 47)). Names will be blank filled to 32 bytes; they are case sensitive. Leading blanks are discarded and trailing blanks are ignored, whereas internal blanks are significant.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Names passed from C must have the null “0” character appended to them.
+Names returned through the C interface will have the null character appended to them. Therefore, C programs should allocate 33 bytes for any Name in order to accommodate the null character.</p>
+<p>Fortran programs can allocate 32 characters for Names. The Fortran interface takes care of adding or removing the null character as required.</p>
+</div>
+</dd>
+<dt class="field-odd">Names of Subnodes</dt>
+<dd class="field-odd"><p>A list of names of the subnodes (children) of a node.</p>
+</dd>
+<dt class="field-even">Number of Dimensions</dt>
+<dd class="field-even"><p>The dimensionality of the data. All data is viewed as an array with from zero (i.e., no data) to 12 dimensions. A “0” is used if the data type is empty. Thus, a scalar is viewed as a vector with one dimension and length 1.</p>
+</dd>
+<dt class="field-odd">Number of Subnodes</dt>
+<dd class="field-odd"><p>The number of child nodes directly attached to any given node. Each node can have zero or more child nodes directly associated with it.</p>
+</dd>
+</dl>
+<p>The following table lists the data types supported by CGNS.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 38%" />
+<col style="width: 23%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Notation</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>C Type</p></th>
+<th class="head"><p>Fortran Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MT</p></td>
+<td><p>No Data</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>I4</p></td>
+<td><p>32-bit Integer</p></td>
+<td><p>int</p></td>
+<td><p>integer*4</p></td>
+</tr>
+<tr class="row-even"><td><p>I8</p></td>
+<td><p>64-bit Integer</p></td>
+<td><p>cglong_t</p></td>
+<td><p>integer*8</p></td>
+</tr>
+<tr class="row-odd"><td><p>U4</p></td>
+<td><p>32-bit Unsigned Integer</p></td>
+<td><p>unsigned int</p></td>
+<td><p>integer*4</p></td>
+</tr>
+<tr class="row-even"><td><p>U8</p></td>
+<td><p>64-bit Unsigned Integer</p></td>
+<td><p>cgulong_t</p></td>
+<td><p>integer*8</p></td>
+</tr>
+<tr class="row-odd"><td><p>R4</p></td>
+<td><p>32-bit Real</p></td>
+<td><p>float</p></td>
+<td><p>real*4</p></td>
+</tr>
+<tr class="row-even"><td><p>R8</p></td>
+<td><p>64-bit Real</p></td>
+<td><p>double</p></td>
+<td><p>real*8</p></td>
+</tr>
+<tr class="row-odd"><td><p>X4</p></td>
+<td><p>64-bit Complex</p></td>
+<td><p>complex</p></td>
+<td><p>complex*8</p></td>
+</tr>
+<tr class="row-even"><td><p>X8</p></td>
+<td><p>128-bit Complex</p></td>
+<td><p>complex double</p></td>
+<td><p>complex*16</p></td>
+</tr>
+<tr class="row-odd"><td><p>C1</p></td>
+<td><p>Character</p></td>
+<td><p>char</p></td>
+<td><p>character</p></td>
+</tr>
+<tr class="row-even"><td><p>B1</p></td>
+<td><p>Byte (unsigned byte)</p></td>
+<td><p>unsigned char</p></td>
+<td><p>character*1</p></td>
+</tr>
+<tr class="row-odd"><td><p>LK</p></td>
+<td><p>Link</p></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The “MT” node contains no data, and is typically used as a container for subnodes (children).</p>
+<p>A link is denoted by “LK”, and defines the linkage between nodes and subnodes. A link provides a mechanism for referring to a node that physically resides in a different part of the hierarchy or a different database file. The link parallels a soft link in the UNIX operating system in that it does not guarantee that the referenced node exists. The database manager will “resolve” the link only when information is requested about the linked node or it’s children.</p>
+</section>
+<section id="glossary-of-terms">
+<h2>Glossary of Terms<a class="headerlink" href="#glossary-of-terms" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Child</dt>
+<dd class="field-odd"><p>One of the subnodes of a Parent. A child node does not have knowledge of its parent node. The user must keep track of this relationship.</p>
+</dd>
+<dt class="field-even">Database</dt>
+<dd class="field-even"><p>The representation of a hierarchy of nodes on disk files. By use of links, it may physically span multiple files.</p>
+</dd>
+<dt class="field-odd">File</dt>
+<dd class="field-odd"><p>The database file, with a single root node and its underlying structure.</p>
+</dd>
+<dt class="field-even">ID</dt>
+<dd class="field-even"><p>A unique identifier to access a given node within a database file. This field contains sufficient information for the database manager to locate the node within a file. For any given node, the ID is generated only after the file it resides in has been opened by a program and the user requests information about the node. The ID is valid only within the program that opened the file and while that file is open. If the file is closed and reopened, the ID for any given node may be different. Within different programs, the node-ID for the same node may also be different. The ID is never actually written into a file.</p>
+</dd>
+<dt class="field-odd">Link-Node</dt>
+<dd class="field-odd"><p>A special type of node. Links are created using the cgio_create_link subroutine. The data type of this node is LK, and its data is a one-dimensional array containing the name of the file (if other than the current file) containing the node to be linked and the full path name in that file from the root node to the desired node.
+Links provide a mechanism for referring to a node that physically resides in a different part of the hierarchy. The node pointed to by a link may or may not reside in the same file as the link itself. A link is very similar to a “soft” link in the UNIX operating system in that it does not guarantee that the referenced node exists. The database manager will “resolve” the link only when information is requested about the node. If the ID of a link-node is used in an CGIO call, the effect of the call is the same as if the ID of the linked-to node was actually used. Note that a link node does not have children itself. In the example database figure, the children seen for L3 are F4 and F5. If a child is “added” to L3, then in reality, the child is added to F3. There are specialized subroutines provided to create link nodes and extract the link details.</p>
+</dd>
+<dt class="field-even">Node</dt>
+<dd class="field-even"><p>The single component used to construct a database.</p>
+</dd>
+<dt class="field-odd">Node name</dt>
+<dd class="field-odd"><p>A node has a 32-character name. Every child node directly under a given parent must have a unique name. Legal characteristics in a name are A-Z, a-z, 0-9, and special characters (ASCII values from 32 to 126, omitting the forward slash “/”, ASCII number 47). Names will be blank filled to 32 bytes; they are case sensitive. Leading blanks are discarded and trailing blanks are ignored, whereas internal blanks are significant.</p>
+</dd>
+<dt class="field-even">Parent</dt>
+<dd class="field-even"><p>A node that has subnodes directly associated with it.</p>
+</dd>
+<dt class="field-odd">Pathname</dt>
+<dd class="field-odd"><p>Within a database, nodes can be referenced using the name of a node along with its parent ID, or by using a “pathname” whose syntax is roughly the same as a path name in the UNIX environment. A pathname that begins with a leading slash “/” is assumed to begin at the root node of the file. If no leading slash is given, the name is assumed to begin at the node specified by the parent ID. Although there is a 32-character limitation on the node Name, there is no restriction on the length of the pathname. For example, equivalent ways to refer to node N8 in the hierarchy in the <span class="xref std std-ref">example database</span> figure are:</p>
+<ul class="simple">
+<li><p>Node-ID for N6 and name = “N8”</p></li>
+<li><p>Node-ID for N4 and name = “N6/N8”</p></li>
+<li><p>Node-ID for N1 and name = “N4/N6/N8”</p></li>
+<li><p>Node-ID for the Root_Node and name = “/N1/N4/N6/N8”</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="conventions-and-implementations">
+<h2>Conventions and Implementations<a class="headerlink" href="#conventions-and-implementations" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list">
+<dt class="field-odd">C</dt>
+<dd class="field-odd"><p>All input strings are to be null terminated. All returned strings will have the trailing blanks removed and will be null terminated. Variables declared to hold Names, Labels, and Data-Types should be at least 33 characters long. <em>cgns_io.h</em> has a number of variables defined. An example declaration would be:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">char</span><span class="w"> </span><span class="n">name</span><span class="p">[</span><span class="n">CGIO_MAX_NAME_LENGTH</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-even">Fortran</dt>
+<dd class="field-even"><p>Strings will be determined using inherited length. Returned strings will be blank filled to the specified length. All returned names will be left justified and blank filled on the right. There will be no null character. An example declaration would be:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">PARAMETER </span><span class="n">CGIO_MAX_NAME_LENGTH</span><span class="o">=</span><span class="mi">32</span>
+<span class="kt">CHARACTER</span><span class="o">*</span><span class="p">(</span><span class="n">CGIO_MAX_NAME_LENGTH</span><span class="p">)</span> <span class="n">NAME</span>
+</pre></div>
+</div>
+<p>or include the Fortran header file <em>cgns_io_f.h</em> which defines these parameters.</p>
+</dd>
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>A unique identifier to access a given node within a database. For any given node, the ID is generated only after the file it resides in has been opened by a program and the user requests information about the node. The ID is valid only within the program that opened the file and while that file is open. If the file is closed and reopened, the ID for any given node may be different. Within different programs, the node ID for the same node may also be different. The ID is not ever actually written into a file.
+The declaration for variables that will hold node IDs should be for an 8-byte real number.</p>
+</dd>
+<dt class="field-even">Indexing</dt>
+<dd class="field-even"><p>All indexing is Fortran-like in that the starting index is 1 and the last is N for N items in an index or array dimension. The array structure is assumed to be the same as in Fortran with the first array dimension varying the fastest and the last dimension varying the slowest.
+The index starting at one is used in <code class="code docutils literal notranslate"><span class="pre">cgio_read_data_type</span></code>, <code class="code docutils literal notranslate"><span class="pre">cgio_write_data</span></code>, <code class="code docutils literal notranslate"><span class="pre">cgio_children_names</span></code>, and <code class="code docutils literal notranslate"><span class="pre">cgio_children_ids</span></code>.
+The user should be aware of the differences in array indexing between Fortran and C. The subroutines <code class="code docutils literal notranslate"><span class="pre">cgio_read_all_data_type</span></code> and <code class="code docutils literal notranslate"><span class="pre">cgio_write_all_data</span></code> merely take a pointer to the beginning of the data, compute how much data is to be read/written, and process as many bytes as have been requested. Thus, these routines effectively make a copy of memory onto disk or vice versa. Given this convention, it is possible for a C program to use standard C conventions for array indexing and use <code class="code docutils literal notranslate"><span class="pre">cgio_write_all_data</span></code> to store the array on disk. Then a Fortran program might use cgio_read_all_data_type_f to read the data set. Unless the user is aware of the structure of the data, it is possible for the array to be transposed relative to what is expected.
+The implications of the assumed array structure convention can be quite subtle. The subroutines <code class="code docutils literal notranslate"><span class="pre">cgio_write_data</span></code> and <code class="code docutils literal notranslate"><span class="pre">cgio_read_data_type</span></code> assume the Fortran array structure in order to index the data. Again, unless the user is aware of the implications of this, it is possible to write an array on disk and later try to change a portion of the data and not change the correct numbers.
+As long as users are aware of how their data structure maps onto the database, there will not be any problems.</p>
+</dd>
+<dt class="field-odd">return codes</dt>
+<dd class="field-odd"><p>The CGIO routines return an integer code indicating whether they were successfull or not. On success, <code class="code docutils literal notranslate"><span class="pre">0</span></code> (<code class="code docutils literal notranslate"><span class="pre">CGIO_ERR_NONE</span></code>) is returned. A non-zero return indicates an error. Return codes &lt; 0 indicate an error at the CGIO level; codes &gt; 0 indicate an error in the database manager. See Error Messages for a list of error codes and mesages.</p>
+</dd>
+</dl>
+</section>
+<section id="limits-and-sizes">
+<h2>Limits and Sizes<a class="headerlink" href="#limits-and-sizes" title="Permalink to this headline">¶</a></h2>
+<p>The following default values, sizes, and limits are defined in the header file <em>cgns_io.h</em>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 9%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Define</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Attribute</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_DATATYPE_LENGTH</span></code></p></td>
+<td><p>2</p></td>
+<td><p>Data type length</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_DIMENSIONS</span></code></p></td>
+<td><p>12</p></td>
+<td><p>Maximum dimensions</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_NAME_LENGTH</span></code></p></td>
+<td><p>32</p></td>
+<td><p>Maximum node name length</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_LABEL_LENGTH</span></code></p></td>
+<td><p>32</p></td>
+<td><p>Maximum node label length</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_VERSION_LENGTH</span></code></p></td>
+<td><p>32</p></td>
+<td><p>Maximum version length</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_DATE_LENGTH</span></code></p></td>
+<td><p>32</p></td>
+<td><p>Maximum date length</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_ERROR_LENGTH</span></code></p></td>
+<td><p>80</p></td>
+<td><p>Maximum length of error string</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_LINK_DEPTH</span></code></p></td>
+<td><p>100</p></td>
+<td><p>Maximum link depth</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_FILE_LENGTH</span></code></p></td>
+<td><p>1024</p></td>
+<td><p>Maximum file name length</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_LINK_LENGTH</span></code></p></td>
+<td><p>4096</p></td>
+<td><p>Maximum link data size</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="cgio-core-routines">
+<span id="cgiocoreroutines"></span><h2>CGIO core routines<a class="headerlink" href="#cgio-core-routines" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CGIO/CGNS_CGIO_database.html">Database-Level Routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_database.html#cgio-is-supported">cgio_is_supported</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_database.html#cgio-check-file">cgio_check_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_database.html#cgio-open-file">cgio_open_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_database.html#cgio-close-file">cgio_close_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_database.html#cgio-get-file-type">cgio_get_file_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_database.html#cgio-get-root-id">cgio_get_root_id</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CGIO/CGNS_CGIO_structure.html">Data Structure Management Routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_structure.html#cgio-create-node">cgio_create_node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_structure.html#cgio-new-node">cgio_new_node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_structure.html#cgio-delete-node">cgio_delete_node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_structure.html#cgio-move-node">cgio_move_node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_structure.html#cgio-number-children">cgio_number_children</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_structure.html#cgio-children-names">cgio_children_names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_structure.html#cgio-children-ids">cgio_children_ids</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CGIO/CGNS_CGIO_links.html">Link Management Routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_links.html#cgio-is-link">cgio_is_link</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_links.html#cgio-link-size">cgio_link_size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_links.html#cgio-create-link">cgio_create_link</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_links.html#cgio-get-link">cgio_get_link</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CGIO/CGNS_CGIO_node.html">Node Management Routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_node.html#cgio-get-node-id">cgio_get_node_id</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_node.html#cgio-get-name">cgio_get_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_node.html#cgio-set-name">cgio_set_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_node.html#cgio-get-label">cgio_get_label</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_node.html#cgio-set-label">cgio_set_label</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_node.html#cgio-get-data-type">cgio_get_data_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_node.html#cgio-get-dimensions">cgio_get_dimensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_node.html#cgio-set-dimensions">cgio_set_dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CGIO/CGNS_CGIO_dataio.html">Data I/O Routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_dataio.html#cgio-read-data-type">cgio_read_data_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_dataio.html#cgio-read-all-data-type">cgio_read_all_data_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_dataio.html#cgio-read-block-data-type">cgio_read_block_data_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_dataio.html#cgio-write-data">cgio_write_data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_dataio.html#cgio-write-data-type">cgio_write_data_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_dataio.html#cgio-write-all-data">cgio_write_all_data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_dataio.html#cgio-write-all-data-type">cgio_write_all_data_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_dataio.html#cgio-write-block-data">cgio_write_block_data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CGIO/CGNS_CGIO_errors.html">Error Handling Routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_errors.html#cgio-error-message">cgio_error_message</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_errors.html#cgio-error-code">cgio_error_code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_errors.html#cgio-error-exit">cgio_error_exit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_errors.html#cgio-error-abort">cgio_error_abort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_errors.html#error-messages">Error Messages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CGIO/CGNS_CGIO_misc.html">Miscellaneous Routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_misc.html#cgio-flush-to-disk">cgio_flush_to_disk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_misc.html#cgio-library-version">cgio_library_version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_misc.html#cgio-file-version">cgio_file_version</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CGIO/CGNS_CGIO_example.html">Code Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_example.html#c-example">C example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CGIO/CGNS_CGIO_example.html#fortran-example">Fortran example</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="MLL/CGNS_MLL_links.html" title="previous chapter (use the left arrow)">Links</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGIO/CGNS_CGIO_database.html" title="next chapter (use the right arrow)">Database-Level Routines</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGIO/CGNS_CGIO_database.html" title="Database-Level Routines"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="MLL/CGNS_MLL_links.html" title="Links"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../standard.html" >Standard Specification</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CGNS/CGIO - Basic node implementation</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

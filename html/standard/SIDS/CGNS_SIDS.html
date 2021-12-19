@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>CGNS/SIDS - Standard Interface Data Structures &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1. Introduction" href="intro.html" />
+    <link rel="prev" title="Standardization bodies" href="../reference.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="intro.html" title="1. Introduction"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../reference.html" title="Standardization bodies"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" accesskey="U">Standard Specification</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CGNS/SIDS - Standard Interface Data Structures</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+              <li>CGNS/SIDS - Standard Interface Data Structures</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <a class="reference internal image-reference" href="../../_images/CGNS_logo_1.png"><img alt="../../_images/CGNS_logo_1.png" class="align-center" src="../../_images/CGNS_logo_1.png" style="width: 400px;" /></a>
+<section id="cgns-sids-standard-interface-data-structures">
+<span id="cgns-sids"></span><h1>CGNS/SIDS - Standard Interface Data Structures<a class="headerlink" href="#cgns-sids-standard-interface-data-structures" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">2. Design Philosophy of Standard Interface Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="design.html#implications-of-cfd-data-sets">2.1. Implications of CFD Data Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html#topologically-based-hierarchical-database">2.2. Topologically Based Hierarchical Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html#additional-design-objectives">2.3. Additional Design Objectives</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="convention.html">3. Conventions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="convention.html#data-structure-notation-conventions">3.1. Data Structure Notation Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="convention.html#structured-grid-notation-and-indexing-conventions">3.2. Structured Grid Notation and Indexing Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="convention.html#unstructured-grid-element-numbering-conventions">3.3. Unstructured Grid Element Numbering Conventions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="convention.html#d-line-elements">3.3.1. 1-D (Line) Elements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="convention.html#line-or-bar">3.3.1.1. Line (or bar)</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#linear-and-quadratic-elements">3.3.1.1.1. Linear and Quadratic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#cubic-elements">3.3.1.1.2. Cubic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#quartic-elements">3.3.1.1.3. Quartic Elements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="convention.html#d-surface-elements">3.3.2. 2D (Surface) Elements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="convention.html#triangular-elements">3.3.2.1. Triangular Elements</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id1">3.3.2.1.1. Linear and Quadratic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id2">3.3.2.1.2. Cubic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id3">3.3.2.1.3. Quartic Elements</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="convention.html#quadrilateral-elements">3.3.2.2. Quadrilateral Elements</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id4">3.3.2.2.1. Linear and Quadratic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id5">3.3.2.2.2. Cubic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id6">3.3.2.2.3. Quartic Elements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="convention.html#d-volume-elements">3.3.3. 3D (Volume) Elements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="convention.html#tetrahedral-elements">3.3.3.1. Tetrahedral Elements</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id7">3.3.3.1.1. Linear and Quadratic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id8">3.3.3.1.2. Cubic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id9">3.3.3.1.3. Quartic Elements</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="convention.html#pyramid-elements">3.3.3.2. Pyramid Elements</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id10">3.3.3.2.1. Linear and Quadratic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id11">3.3.3.2.2. Cubic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id12">3.3.3.2.3. Quartic Elements</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="convention.html#pentahedral-elements">3.3.3.3. Pentahedral Elements</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id13">3.3.3.3.1. Linear and Quadratic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id14">3.3.3.3.2. Cubic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id15">3.3.3.3.3. Quartic Elements</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="convention.html#hexahedral-elements">3.3.3.4. Hexahedral Elements</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id16">3.3.3.4.1. Linear and Quadratic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id17">3.3.3.4.2. Cubic Elements</a></li>
+<li class="toctree-l5"><a class="reference internal" href="convention.html#id18">3.3.3.4.3. Quartic Elements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="convention.html#unstructured-grid-example">3.3.4. Unstructured Grid Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="convention.html#multizone-interfaces">3.3.5. Multizone interfaces</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="block.html">4. Building Block Structure Definition</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="block.html#definition-dataclass-t">4.1. Definition <code class="docutils literal notranslate"><span class="pre">DataClass_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="block.html#definition-descriptor-t">4.2. Definition <code class="docutils literal notranslate"><span class="pre">Descriptor_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="block.html#definition-dimensionalunits-t">4.3. Definition <code class="docutils literal notranslate"><span class="pre">DimensionalUnits_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="block.html#definition-dimensionalexponents-t">4.4. Definition <code class="docutils literal notranslate"><span class="pre">DimensionalExponents_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="block.html#definition-gridlocation-t">4.5. Definition <code class="docutils literal notranslate"><span class="pre">GridLocation_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="block.html#definition-indexarray-t">4.6. Definition <code class="docutils literal notranslate"><span class="pre">IndexArray_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="block.html#definition-indexrange-t">4.7. Definition <code class="docutils literal notranslate"><span class="pre">IndexRange_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="block.html#definition-rind-t">4.8. Definition <code class="docutils literal notranslate"><span class="pre">Rind_t</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="array.html">5. Data-Array Structure Definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="array.html#definition-dataarray-t">5.1. Definition <code class="docutils literal notranslate"><span class="pre">DataArray_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="array.html#definition-dataconversion-t">5.1.1. Definition <code class="docutils literal notranslate"><span class="pre">DataConversion_t</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="array.html#data-manipulation">5.2. Data Manipulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="array.html#dimensional-data">5.2.1. Dimensional Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html#nondimensional-data-normalized-by-dimensional-quantities">5.2.2. Nondimensional Data Normalized by Dimensional Quantities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html#nondimensional-data-normalized-by-unknown-dimensional-quantities">5.2.3. Nondimensional Data Normalized by Unknown Dimensional Quantities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html#nondimensional-parameters">5.2.4. Nondimensional Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html#dimensionless-constants">5.2.5. Dimensionless Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html#data-array-examples">5.2.6. Data-Array Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="array.html#example-one-dimensional-data-array-constants">5.2.6.1. Example - One-Dimensional Data Array, Constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="array.html#example-two-dimensional-data-array-pressures">5.2.6.2. Example - Two-Dimensional Data Array, Pressures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="array.html#example-three-dimensional-data-array-nondimensional-static-enthalpy">5.2.6.3. Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="array.html#example-three-dimensional-data-array-nondimensional-database">5.2.6.4. Example - Three-Dimensional Data Array, Nondimensional Database</a></li>
+<li class="toctree-l4"><a class="reference internal" href="array.html#example-data-arrays-for-reynolds-number">5.2.6.5. Example - Data Arrays for Reynolds Number</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hierarchy.html">6. Hierarchical Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hierarchy.html#cgns-version">6.1. CGNS Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hierarchy.html#cgns-entry-level-structure-definition-cgnsbase-t">6.2. CGNS Entry Level Structure Definition: <code class="docutils literal notranslate"><span class="pre">CGNSBase_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#base-level-families">6.2.1. Base Level Families</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hierarchy.html#zone-structure-definition-zone-t">6.3. Zone Structure Definition: <code class="docutils literal notranslate"><span class="pre">Zone_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="hierarchy.html#precedence-rules-and-scope-within-the-hierarchy">6.4. Precedence Rules and Scope Within the Hierarchy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#single-base">6.4.1. Single Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#multiple-bases">6.4.2. Multiple Bases</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="grid.html">7. Grid Coordinates, Elements, and Flow Solution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="grid.html#grid-coordinates-structure-definition-gridcoordinates-t">7.1. Grid Coordinates Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">GridCoordinates_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid.html#grid-coordinates-examples">7.2. Grid Coordinates Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-cartesian-coordinates-for-a-2-d-structured-grid">7.2.1. Example - Cartesian Coordinates for a 2-D Structured Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-cylindrical-coordinates-for-a-3-d-structured-grid">7.2.2. Example - Cylindrical Coordinates for a 3-D Structured Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-cartesian-coordinates-for-a-3-d-unstructured-grid">7.2.3. Example - Cartesian Coordinates for a 3-D Unstructured Grid</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="grid.html#elements-structure-definition-elements-t">7.3. Elements Structure Definition: <code class="docutils literal notranslate"><span class="pre">Elements_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid.html#elements-examples">7.4. Elements Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-tetra-4-element-types">7.4.1. Example - TETRA_4 Element Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-ngon-n-and-nface-n-element-types">7.4.2. Example - NGON_n and NFACE_n Element Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-separate-element-types">7.4.3. Example - Separate Element Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-mixed-element-type">7.4.4. Example - MIXED Element Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="grid.html#axisymmetry-structure-definition-axisymmetry-t">7.5. Axisymmetry Structure Definition: <code class="docutils literal notranslate"><span class="pre">Axisymmetry_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid.html#rotating-coordinates-structure-definition-rotatingcoordinates-t">7.6. Rotating Coordinates Structure Definition: <code class="docutils literal notranslate"><span class="pre">RotatingCoordinates_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid.html#flow-solution-structure-definition-flowsolution-t">7.7. Flow Solution Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolution_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid.html#flow-solution-example">7.8. Flow Solution Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-flow-solution">7.8.1. Example - Flow Solution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="grid.html#zone-subregion-structure-definition-zonesubregion-t">7.9. Zone Subregion Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneSubRegion_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid.html#zone-subregion-examples">7.10. Zone Subregion Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-volume-subregion-for-a-structured-grid">7.10.1. Example - Volume Subregion for a Structured Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-volume-subregion-for-an-unstructured-grid">7.10.2. Example - Volume Subregion for an Unstructured Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-surface-subregion-for-an-unstructured-grid">7.10.3. Example - Surface Subregion for an Unstructured Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html#example-surface-subregion-utilizing-bc-information">7.10.4. Example - Surface Subregion Utilizing BC Information</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multizone.html">8. Multizone Interface Connectivity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="multizone.html#zonal-connectivity-structure-definition-zonegridconnectivity-t">8.1. Zonal Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="multizone.html#to-1-interface-connectivity-structure-definition-gridconnectivity1to1-t">8.2. 1-to-1 Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity1to1_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="multizone.html#to-1-interface-connectivity-examples">8.3. 1-to-1 Interface Connectivity Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multizone.html#example-1-to-1-abutting-of-complete-faces">8.3.1. Example - 1-to-1 Abutting of Complete Faces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multizone.html#example-1-to-1-abutting-complete-face-to-a-subset-of-a-face">8.3.2. Example - 1-to-1 Abutting, Complete Face to a Subset of a Face</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multizone.html#general-interface-connectivity-structure-definition-gridconnectivity-t">8.4. General Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="multizone.html#general-interface-connectivity-examples">8.5. General Interface Connectivity Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multizone.html#example-structured-abutting-zones">8.5.1. Example - Structured Abutting Zones</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multizone.html#example-unstructured-abutting-zones-hexa-8-donor-cell">8.5.2. Example - Unstructured Abutting Zones, HEXA_8 Donor Cell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multizone.html#example-unstructured-abutting-zones-tri-3-donor-cell">8.5.3. Example - Unstructured Abutting Zones, TRI_3 Donor Cell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multizone.html#grid-connectivity-property-structure-definition-gridconnectivityproperty-t">8.6. Grid Connectivity Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivityProperty_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multizone.html#periodic-interface-structure-definition-periodic-t">8.6.1. Periodic Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">Periodic_t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multizone.html#average-interface-structure-definition-averageinterface-t">8.6.2. Average Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">AverageInterface_t</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multizone.html#overset-grid-holes-structure-definition-oversetholes-t">8.7. Overset Grid Holes Structure Definition: <code class="docutils literal notranslate"><span class="pre">OversetHoles_t</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="boundary.html">9. Boundary Conditions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boundary.html#boundary-condition-structures-overview">9.1. Boundary Condition Structures Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boundary.html#zonal-boundary-condition-structure-definition-zonebc-t">9.2. Zonal Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneBC_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="boundary.html#boundary-condition-structure-definition-bc-t">9.3. Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">BC_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="boundary.html#boundary-condition-data-set-structure-definition-bcdataset-t">9.4. Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCDataSet_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="boundary.html#boundary-condition-data-structure-definition-bcdata-t">9.5. Boundary Condition Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCData_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="boundary.html#boundary-condition-property-structure-definition-bcproperty-t">9.6. Boundary Condition Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCProperty_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="boundary.html#wall-function-structure-definition-wallfunction-t">9.6.1. Wall Function Structure Definition: <code class="docutils literal notranslate"><span class="pre">WallFunction_t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="boundary.html#area-structure-definition-area-t">9.6.2. Area Structure Definition: <code class="docutils literal notranslate"><span class="pre">Area_t</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="boundary.html#boundary-condition-type-structure-definition-bctype-t">9.7. Boundary Condition Type Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCType_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="boundary.html#matching-boundary-condition-data-sets">9.8. Matching Boundary Condition Data Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boundary.html#boundary-condition-specification-data">9.9. Boundary Condition Specification Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boundary.html#boundary-condition-examples">9.10. Boundary Condition Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="boundary.html#example-symmetry-plane">9.10.1. Example - Symmetry Plane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boundary.html#example-viscous-solid-wall-i">9.10.2. Example - Viscous Solid Wall I</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boundary.html#example-subsonic-inflow">9.10.3. Example - Subsonic Inflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boundary.html#example-outflow">9.10.4. Example - Outflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boundary.html#example-farfield">9.10.5. Example - Farfield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boundary.html#example-viscous-solid-wall-ii">9.10.6. Example - Viscous Solid Wall II</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="equation.html">10. Governing Flow Equations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="equation.html#flow-equation-set-structure-definition-flowequationset-t">10.1. Flow Equation Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="equation.html#governing-equations-structure-definition-governingequations-t">10.2. Governing Equations Structure Definition: <code class="docutils literal notranslate"><span class="pre">GoverningEquations_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="equation.html#model-type-structure-definition-modeltype-t">10.3. Model Type Structure Definition: <code class="docutils literal notranslate"><span class="pre">ModelType_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="equation.html#thermodynamic-gas-model-structure-definition-gasmodel-t">10.4. Thermodynamic Gas Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">GasModel_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="equation.html#molecular-viscosity-model-structure-definition-viscositymodel-t">10.5. Molecular Viscosity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ViscosityModel_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="equation.html#thermal-conductivity-model-structure-definition-thermalconductivitymodel-t">10.6. Thermal Conductivity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ThermalConductivityModel_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="equation.html#turbulence-structure-definitions">10.7. Turbulence Structure Definitions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="equation.html#turbulence-closure-structure-definition-turbulenceclosure-t">10.7.1. Turbulence Closure Structure Definition: <code class="docutils literal notranslate"><span class="pre">TurbulenceClosure_t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="equation.html#turbulence-model-structure-definition-turbulencemodel-t">10.7.2. Turbulence Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">TurbulenceModel_t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="equation.html#example-spalart-allmaras-turbulence-model">10.7.3. Example - Spalart-Allmaras Turbulence Model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="equation.html#thermal-relaxation-model-structure-definition-thermalrelaxationmodel-t">10.8. Thermal Relaxation Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ThermalRelaxationModel_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="equation.html#chemical-kinetics-model-structure-definition-chemicalkineticsmodel-t">10.9. Chemical Kinetics Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ChemicalKineticsModel_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="equation.html#electromagnetics-structure-definitions">10.10. Electromagnetics Structure Definitions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="equation.html#electromagnetics-electric-field-model-structure-definition-emelectricfieldmodel-t">10.10.1. Electromagnetics Electric Field Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMElectricFieldModel_t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="equation.html#electromagnetics-magnetic-field-model-structure-definition-emmagneticfieldmodel-t">10.10.2. Electromagnetics Magnetic Field Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMMagneticFieldModel_t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="equation.html#electromagnetics-conductivity-model-structure-definition-emconductivitymodel-t">10.10.3. Electromagnetics Conductivity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMConductivityModel_t</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="equation.html#flow-equation-examples">10.11. Flow Equation Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="equation.html#example-3-d-compressible-euler">10.11.1. Example - 3-D Compressible Euler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="equation.html#example-3-d-compressible-navier-stokes">10.11.2. Example - 3-D Compressible Navier-Stokes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="time.html">11. Time-Dependent Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="time.html#iterative-data-structure-definitions">11.1. Iterative Data Structure Definitions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="time.html#base-iterative-data-structure-definition-baseiterativedata-t">11.1.1. Base Iterative Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">BaseIterativeData_t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html#zone-iterative-data-structure-definition-zoneiterativedata-t">11.1.2. Zone Iterative Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneIterativeData_t</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="time.html#rigid-grid-motion-structure-definition-rigidgridmotion-t">11.2. Rigid Grid Motion Structure Definition: <code class="docutils literal notranslate"><span class="pre">RigidGridMotion_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="time.html#arbitrary-grid-motion-structure-definition-arbitrarygridmotion-t">11.3. Arbitrary Grid Motion Structure Definition: <code class="docutils literal notranslate"><span class="pre">ArbitraryGridMotion_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="time.html#zone-grid-connectivities">11.4. Zone Grid Connectivities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time.html#examples-for-time-dependent-flow">11.5. Examples for Time-Dependent Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="time.html#example-rigid-grid-motion">11.5.1. Example - Rigid Grid Motion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html#example-deforming-grid-motion">11.5.2. Example - Deforming Grid Motion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html#example-adapted-unstructured-mesh">11.5.3. Example - Adapted Unstructured Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html#example-combination-of-grid-motion-and-time-accuracy">11.5.4. Example - Combination of Grid Motion and Time-Accuracy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html">12. Miscellaneous Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="misc.html#reference-state-structure-definition-referencestate-t">12.1. Reference State Structure Definition: <code class="docutils literal notranslate"><span class="pre">ReferenceState_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc.html#reference-state-example">12.2. Reference State Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="misc.html#example-reference-state-with-dimensional-data">12.2.1. Example - Reference State with Dimensional Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="misc.html#convergence-history-structure-definition-convergencehistory-t">12.3. Convergence History Structure Definition: <code class="docutils literal notranslate"><span class="pre">ConvergenceHistory_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc.html#discrete-data-structure-definition-discretedata-t">12.4. Discrete Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">DiscreteData_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc.html#integral-data-structure-definition-integraldata-t">12.5. Integral Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">IntegralData_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc.html#family-data-structure-definition-family-t">12.6. Family Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">Family_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc.html#geometry-reference-structure-definition-geometryreference-t">12.7. Geometry Reference Structure Definition: <code class="docutils literal notranslate"><span class="pre">GeometryReference_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc.html#family-boundary-condition-structure-definition-familybc-t">12.8. Family Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">FamilyBC_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc.html#family-boundary-condition-data-set-structure-definition-familybcdataset-t">12.9. Family Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc.html#user-defined-data-structure-definition-userdefineddata-t">12.10. User-Defined Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc.html#gravity-data-structure-definition-gravity-t">12.11. Gravity Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">Gravity_t</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix_a.html">Appendix A: Conventions for Data-Name Identifiers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix_a.html#a1-coordinate-systems">A1 Coordinate Systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_a.html#a2-flowfield-solution">A2 Flowfield Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_a.html#a3-turbulence-model-solution">A3 Turbulence Model Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_a.html#a4-nondimensional-parameters">A4 Nondimensional Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_a.html#a5-characteristics-and-riemann-invariants-based-on-1d-flow">A5 Characteristics and Riemann Invariants Based on 1D flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_a.html#a6-forces-and-moments">A6 Forces and Moments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_a.html#a7-time-dependant-flows">A7 Time-Dependant flows</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_b.html">Appendix B: Structured Two-Zone Flat Plate Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix_b.html#b-1-overall-layout">B.1 Overall Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_b.html#b-2-grid-coordinates">B.2 Grid Coordinates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_b.html#b-3-flowfield-solution">B.3 Flowfield Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_b.html#b-4-interface-connectivity">B.4 Interface Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_b.html#b-5-boundary-conditions">B.5 Boundary Conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_b.html#b-6-global-reference-state">B.6 Global Reference State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix_b.html#b-7-equation-description">B.7 Equation Description</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="../reference.html" title="previous chapter (use the left arrow)">Standardization bodies</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="intro.html" title="next chapter (use the right arrow)"><span class="section-number">1. </span>Introduction</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="intro.html" title="1. Introduction"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../reference.html" title="Standardization bodies"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CGNS/SIDS - Standard Interface Data Structures</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

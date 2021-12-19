@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Database-Level Routines &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Structure Management Routines" href="CGNS_CGIO_structure.html" />
+    <link rel="prev" title="CGNS/CGIO - Basic node implementation" href="../CGNS_CGIO.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGNS_CGIO_structure.html" title="Data Structure Management Routines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../CGNS_CGIO.html" title="CGNS/CGIO - Basic node implementation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../CGNS_CGIO.html" accesskey="U">CGNS/CGIO - Basic node implementation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Database-Level Routines</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">Database-Level Routines</a><ul>
+<li><a class="reference internal" href="#cgio-is-supported">cgio_is_supported</a></li>
+<li><a class="reference internal" href="#cgio-check-file">cgio_check_file</a></li>
+<li><a class="reference internal" href="#cgio-open-file">cgio_open_file</a></li>
+<li><a class="reference internal" href="#cgio-close-file">cgio_close_file</a></li>
+<li><a class="reference internal" href="#cgio-get-file-type">cgio_get_file_type</a></li>
+<li><a class="reference internal" href="#cgio-get-root-id">cgio_get_root_id</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a></li>
+              
+              <li>Database-Level Routines</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <section id="database-level-routines">
+<span id="standardcgiodatabase"></span><h1>Database-Level Routines<a class="headerlink" href="#database-level-routines" title="Permalink to this headline">¶</a></h1>
+<section id="cgio-is-supported">
+<h2>cgio_is_supported<a class="headerlink" href="#cgio-is-supported" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_is_supported">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_is_supported</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">file_type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_is_supported" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_is_supported_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_is_supported_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">file_type</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_is_supported_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">int</span> <span class="pre">file_type</span></code></dt><dd><p>IN: Type of database file. acceptable values are <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_NONE</span></code>, <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_ADF</span></code>, <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_HDF5</span></code> and <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_ADF2</span></code>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ier - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>- - -</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Determines if the database type given by <code class="code docutils literal notranslate"><span class="pre">file_type</span></code> is supported by the library. Returns 0 if supported, else <code class="code docutils literal notranslate"><span class="pre">CGIO_ERR_FILE_TYPE</span></code> if not. <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_ADF</span></code> is always supported; <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_HDF5</span></code> is supported if the library was built with HDF5; and <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_ADF2</span></code> is supported when built in 32-bit mode.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="cgio-check-file">
+<h2>cgio_check_file<a class="headerlink" href="#cgio-check-file" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_check_file">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_check_file</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">filename</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">file_type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_check_file" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_check_file_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_check_file_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">filename</span></em>, <em class="sig-param"><span class="pre">file_type</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_check_file_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">const</span> <span class="pre">char</span> <span class="pre">*filename</span></code></dt><dd><p>IN: Name of the database file, including path name if necessary. There is no limit on the length of this character variable.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">int</span> <span class="pre">*file_type</span></code></dt><dd><p>OUT: Type of database file. acceptable values are <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_NONE</span></code>, <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_ADF</span></code>, <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_HDF5</span></code> and <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_ADF2</span></code>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ier - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>- - -</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Checks the file filename to determine if it is a valid database. If so, returns 0 and the type of database in file_type, otherwise returns an error code and file_type will be set to CGIO_FILE_NONE.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="cgio-open-file">
+<h2>cgio_open_file<a class="headerlink" href="#cgio-open-file" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_open_file">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_open_file</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">filename</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">file_mode</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">file_type</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cgio_num</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_open_file" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_open_file_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_open_file_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">filename</span></em>, <em class="sig-param"><span class="pre">file_mode</span></em>, <em class="sig-param"><span class="pre">file_type</span></em>, <em class="sig-param"><span class="pre">cgio_num</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_open_file_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">char*</span> <span class="pre">filename</span></code></dt><dd><p>IN: Name of the database file, including path name if necessary. There is no limit on the length of this character variable.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">int</span> <span class="pre">file_type</span></code></dt><dd><p>IN: Type of database file. acceptable values are <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_NONE</span></code>, <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_ADF</span></code>, <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_HDF5</span></code> and <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_ADF2</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">int</span> <span class="pre">file_mode</span></code></dt><dd><p>IN: Mode used for opening the file. The supported modes are. CGIO_MODE_READ, CGIO_MODE_WRITE, and CGIO_MODE_MODIFY.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">int*</span> <span class="pre">cgio_num</span></code></dt><dd><p>OUT: Indentifier for the open database file.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ier - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>r w m</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Opens a database file of the specified type and mode. If successfull, returns 0, and the database identifier in cgio_num, otherwise returns an error code. The database identifier is used to access the database in subsequent function calls.</p>
+<p>The mode in which the database is opened is given by file_mode, which may take the value CGIO_MODE_READ, CGIO_MODE_WRITE, or CGIO_MODE_MODIFY. New databases should be opened with CGIO_MODE_WRITE, while existing databases are opened with either CGIO_MODE_READ (for read-only access) or CGIO_MODE_MODIFY (for read/write access).</p>
+<p>A specific database type may be specified by file_type, which may be one of CGIO_FILE_NONE, CGIO_FILE_ADF, CGIO_FILE_HDF5, or CGIO_FILE_ADF2. When opening a database in write mode, CGIO_FILE_NONE indicates that the default database type should be used, otherwise the specified database type will be opened. When opening in read or modify mode, CGIO_FILE_NONE indicates that any database type is acceptable, otherwise if the database type does not match that given by file_type an error will be retuned.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="cgio-close-file">
+<h2>cgio_close_file<a class="headerlink" href="#cgio-close-file" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_close_file">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_close_file</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">cgio_num</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_close_file" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_close_file_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_close_file_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cgio_num</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_close_file_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">int</span> <span class="pre">cgio_num</span></code></dt><dd><p>OUT: Indentifier for the open database file.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ier - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>r w m</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Closes the database given by cgio_num. Returns 0 for success, else an error code.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="cgio-get-file-type">
+<h2>cgio_get_file_type<a class="headerlink" href="#cgio-get-file-type" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_get_file_type">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_get_file_type</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">cgio_num</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">file_type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_get_file_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_get_file_type_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_get_file_type_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cgio_num</span></em>, <em class="sig-param"><span class="pre">file_type</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_get_file_type_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">int</span> <span class="pre">cgio_num</span></code></dt><dd><p>IN: Indentifier for the open database file.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">int</span> <span class="pre">*file_type</span></code></dt><dd><p>OUT: Type of database file. acceptable values are <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_NONE</span></code>, <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_ADF</span></code>, <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_HDF5</span></code> and <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_ADF2</span></code>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ier - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>r w m</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Gets the type of the database given by cgio_num. Returns 0 and the type in file_type if successfull, else an error code.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="cgio-get-root-id">
+<h2>cgio_get_root_id<a class="headerlink" href="#cgio-get-root-id" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">C Signature</dt>
+<dd class="field-odd"><dl class="c function">
+<dt class="sig sig-object c" id="c.cgio_get_root_id">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_get_root_id</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">cgio_num</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">rootid</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_get_root_id" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-even">Fortran Signature</dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_get_root_id_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_get_root_id_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cgio_num</span></em>, <em class="sig-param"><span class="pre">rootid</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_get_root_id_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">int</span> <span class="pre">cgio_num</span></code></dt><dd><p>IN: Indentifier for the open database file.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">double</span> <span class="pre">*rootid</span></code></dt><dd><p>OUT: Node identifier for the root node of the database.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ier - Error status</p>
+</dd>
+<dt class="field-odd">Modes</dt>
+<dd class="field-odd"><p><cite>r w m</cite></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Gets the unique node identifier for the root node in the database given by <code class="code docutils literal notranslate"><span class="pre">cgio_num</span></code>. Returns 0 and the identifier in <code class="code docutils literal notranslate"><span class="pre">rootid</span></code> if successfull, else an error code.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</section>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="../CGNS_CGIO.html" title="previous chapter (use the left arrow)">CGNS/CGIO - Basic node implementation</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGNS_CGIO_structure.html" title="next chapter (use the right arrow)">Data Structure Management Routines</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGNS_CGIO_structure.html" title="Data Structure Management Routines"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../CGNS_CGIO.html" title="CGNS/CGIO - Basic node implementation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../CGNS_CGIO.html" >CGNS/CGIO - Basic node implementation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Database-Level Routines</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

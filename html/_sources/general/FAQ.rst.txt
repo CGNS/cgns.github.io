@@ -122,9 +122,9 @@ We encourage anyone to freely use the CGNS logo when distributing or documenting
 The logo adds prestige and credibility to web sites, publications, displays, announcements, and activities.
 However, the use of the logo in such a way as to imply approval, endorsement, or responsibility of the CGNS committee is prohibited without written permission.
 
-  :download:`Logo file (color) in .gif format (13 kB)<../../../images/logo/cgns_color.gif>`        :download:`Logo file (black & white) in .gif format (12 kB)<../../../images/logo/cgns_bw.gif>`
+  :download:`Logo file (color) in .gif format (13 kB)<../../images/logo/cgns_color.gif>`        :download:`Logo file (black & white) in .gif format (12 kB)<../../images/logo/cgns_bw.gif>`
 
-  :download:`Logo file (color) in .jpg format (12 kB)<../../../images/logo/cgns_color.jpg>`        :download:`Logo file (black & white) in .jpg format (9 kB)<../../../images/logo/cgns_bw.jpg>`
+  :download:`Logo file (color) in .jpg format (12 kB)<../../images/logo/cgns_color.jpg>`        :download:`Logo file (black & white) in .jpg format (9 kB)<../../images/logo/cgns_bw.jpg>`
  
 
 Is CGNS an ISO standard?

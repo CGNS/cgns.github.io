@@ -114,51 +114,51 @@
     <th scope=col>Modes
 <tbody>
 <tr><td nowrap>
-        <tt><b><span class=out><i>error_message</i></span> = const char *cg_get_error();</b></tt>
+        <code><b><span class=out><i>error_message</i></span> = const char *cg_get_error();</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b>void cg_error_exit();</b></tt>
+        <code><b>void cg_error_exit();</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b>void cg_error_print();</b></tt>
+        <code><b>void cg_error_print();</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
 <tbody>
 <tr><td nowrap>
-       <tt><b>call cg_get_error_f(<span class=out><i>error_message</i></span>)</b></tt>
+       <code><b>call cg_get_error_f(<span class=out><i>error_message</i></span>)</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b>call cg_error_exit_f()</b></tt>
+        <code><b>call cg_error_exit_f()</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b>call cg_error_print_f()</b></tt>
+        <code><b>call cg_error_print_f()</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;w&nbsp;m</b></tt>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
 </table>
 
 <p>
 If an error occurs during the execution of a CGNS library function,
 signified by a non-zero value of the error status variable
-<tt>ier</tt>, an error message may be retrieved using the function
-<tt>cg_get_error</tt>.
-The function <tt>cg_error_exit</tt> may then be used to print the
+<code>ier</code>, an error message may be retrieved using the function
+<code>cg_get_error</code>.
+The function <code>cg_error_exit</code> may then be used to print the
 error message and stop the execution of the program.
-Alternatively, <tt>cg_error_print</tt> may be used to print the
+Alternatively, <code>cg_error_print</code> may be used to print the
 error message and continue execution of the program.
 
 <p>
 In C, you may define a function to be called automatically in the case
 of a warning or error using the
-<a href="fileops.html#configure"><tt>cg_configure</tt></a> routine.
-The function is of the form <tt>void err_func(int is_error, char
-*errmsg)</tt>, and will be called whenever an error or warning occurs.
-The first argument, <tt>is_error</tt>, will be 0 for warning messages,
+<a href="fileops.html#configure"><code>cg_configure</code></a> routine.
+The function is of the form <code>void err_func(int is_error, char
+*errmsg)</code>, and will be called whenever an error or warning occurs.
+The first argument, <code>is_error</code>, will be 0 for warning messages,
 1 for error messages, and &minus;1 if the program is going to terminate
-(i.e., a call to <tt>cg_error_exit</tt>).
+(i.e., a call to <code>cg_error_exit</code>).
 The second argument is the error or warning message.
 
 <p>

@@ -13,7 +13,7 @@
 File Operations
 ---------------
 
-These functions usually are found the the preamble or the epilog of your
+These functions usually are found in the preamble or the epilog of your
 application code using the :term:`CGNS/MLL`.
 
 .. raw:: html

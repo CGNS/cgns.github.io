@@ -134,8 +134,8 @@ For example, on a Unix platform with a *sh* shell:
    cd /tmp/gz/install/lib/python3.7/site-packages
    unzip guzzle_sphinx_theme-0.7.11-py3.7.egg
 
-If you still have an error in `import guzzle_sphinx_theme' you can move
-the pacge this way:
+If you still have an error in `import guzzle_sphinx_theme` you can move
+the page this way:
 
 .. code-block:: shell
 

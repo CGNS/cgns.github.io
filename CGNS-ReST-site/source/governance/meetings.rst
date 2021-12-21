@@ -303,7 +303,7 @@ Minutes
     - (:download:`PDF<../../minutes/telecon_dec09.pdf>`)
   * - 02 Sep	  
     - Telecon	  
-    - (:download:`PDF<../../minutes/telecon_sep09.pdf>`)
+    - (:download:`PDF<../../minutes/telecon_sept09.pdf>`)
   * - 07 Jul	  
     - Telecon	  
     - (:download:`PDF<../../minutes/telecon_jul09.pdf>`) 	   

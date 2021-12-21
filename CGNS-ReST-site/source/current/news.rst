@@ -11,25 +11,52 @@ Hot topics
 
 .. warning:: New web site layout
 
-   - the pages you are reading now are test pages
+   - the pages you are reading now are part of the new website
    - send feedback to the CGNS mailing list
    - see how to contribute in the :ref:`support section <support>`
      
 .. admonition:: DO NOT MISS...
 
-   - Next Telecon May 3rd, 4PM (CST)
-   - AIAA Scitech 2021 Nashville
+   - Next Telecon Mar 1st, 4PM (CST)
+   - AIAA Scitech 2022 San Diego and online
 
-.. topic:: March 4, 2020 - :version:`v4.1.0` of the CGNS Software is released.
+.. topic:: 2022
+
+   - Upcoming version v4.3.0` expected in 2022 with HDF5 compression 
 	   
-   - Added :ref:`CPEX0042` Storing bounding box of a grid (:issue:`CGNS-149`).
-   - Added :ref:`CPEX0043` Family hierarchy as a tree (:issue:`CGNS-180`).
+.. topic:: May, 2021
+
+   - CGNStalk mailing list is decommissioned, and replaced by a CGNStalk forum created on Github.
 
 Previous releases
 -----------------
 
 The news below are listed by date. There is a specific section for
 the documentation news and fixes and end of this page.
+
+
+.. topic:: April, 2021 - :version:`v4.2.0` of the CGNS Software is released.
+
+   - See Release.txt for new features and bug fixes.
+
+.. topic:: August, 2020 - Version 4.1.2 of the CGNS Software is released. New features:
+
+   - Fixed the Compatibility issue between v3.4.0 and v4.1.1 (:issue:`CGNS-214`).
+   - Change a wrong check in cg_poly_element_read to load older CGNS file section with CGNS 4.x API (:issue:`CGNS-219`).
+
+.. topic:: March, 2020 - Version 4.1.1 of the CGNS Software is released. New features:
+
+    - Fixed the compilation of cgnstools, which still made use of the Removed APIs in 4.1.0 (:issue:`CGNS-196`):
+    - cgio_read_all_data, cgio_read_data, cgio_read_block_data cgio_read_all_data_f, cgio_read_data_f, cgio_read_block_data_f
+    - Updated CMake's detection of tcl/tk and opengl
+    - Added CI testing cgnstoolsAdded CPEX42 Storing bounding box of a grid (:issue:`CGNS-197`)
+    - Fixed the Compatibility issue between v3.4.0 and v4.1.1 (:issue:`CGNS-214`).
+    - Change a wrong check in cg_poly_element_read to load older CGNS file section with CGNS 4.x API (:issue:`CGNS-219`).
+
+.. topic:: March 4, 2020 - :version:`v4.1.0` of the CGNS Software is released.
+	   
+   - Added :ref:`CPEX0042` Storing bounding box of a grid (:issue:`CGNS-149`).
+   - Added :ref:`CPEX0043` Family hierarchy as a tree (:issue:`CGNS-180`).
 
 .. topic:: Febuary 17, 2020
            

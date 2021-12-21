@@ -120,7 +120,7 @@ CPEX0044
   * - Contacts
     - `Koen Hillewaert <koen.hillewaert@cenaero.be>`_
   * - Documentation
-    - `CPEX-0043 familytrees <https://cgnsorg.atlassian.net/browse/CGNS-181>`_
+    - `CPEX-0044 Encoding functions <https://cgnsorg.atlassian.net/browse/CGNS-181>`_
   * - Date First Posted
     - Mar.26.19
   * - Date of Last Revision

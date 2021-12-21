@@ -126,7 +126,7 @@ The data-name identifiers defined for coordinate systems are listed in the follo
 A2 Flowfield Solution
 ^^^^^^^^^^^^^^^^^^^^^
 
-This section describes data-name identifiers for typical Navier-Stokes solution variables. The list is obviously incomplete, but should suffice for initial implementation of the CGNS system. The variables listed in this section are dimensional or raw quantities; nondimensional parameters and coefficients based on these variables are discussed in the section :ref:`Nondimensional Parameters <dataname-nondim>.
+This section describes data-name identifiers for typical Navier-Stokes solution variables. The list is obviously incomplete, but should suffice for initial implementation of the CGNS system. The variables listed in this section are dimensional or raw quantities; nondimensional parameters and coefficients based on these variables are discussed in the section :ref:`Nondimensional Parameters <dataname-nondim>`.
 
 We use fairly universal notation for state variables. Static quantities are measured with the fluid at speed: static density (:math:`\rho`), static pressure (:math:`p`), static temperature (:math:`T`), static internal energy per unit mass (:math:`e`), static enthalpy per unit mass (:math:`h`), entropy (:math:`s`), and static speed of sound (:math:`c`).
 We also approximate the true entropy by the function :math:`s_{app} = p / \rho^{\gamma}` (this assumes an ideal gas).
@@ -158,7 +158,7 @@ and the stress tensor is,
 where :math:`(x_1,x_2,x_3) = (x,y,z)` and :math:`(u_1,u_2,u_3) = (u,v,w)`.
 The bulk viscosity is usually approximated as :math:`\lambda = − 2 \mu /3`.
 
-Reynolds averaging of the Navier-Stokes equations introduce Reynolds stresses (:math:`−\rho(u′v′)_{ave}`, etc.) and turbulent heat flux terms (:math:`−\rho(u′e′)_{ave}, etc.), where primed quantities are instantaneous fluctuations.
+Reynolds averaging of the Navier-Stokes equations introduce Reynolds stresses (:math:`−\rho(u′v′)_{ave}`, etc.) and turbulent heat flux terms (:math:`−\rho(u′e′)_{ave}`, etc.), where primed quantities are instantaneous fluctuations.
 These quantities are obtained from auxiliary turbulence closure models. Reynolds-stress models formulate transport equations for the Reynolds stresses directly; whereas, eddy-viscosity models correlate the Reynolds stresses with the mean strain rate,
 
 .. math::

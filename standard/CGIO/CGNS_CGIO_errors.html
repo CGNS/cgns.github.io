@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
@@ -15,12 +16,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>Error Handling Routines &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
@@ -110,22 +111,22 @@
           
           <div class="document clearer body">
             
-  <div class="section" id="error-handling-routines">
+  <section id="error-handling-routines">
 <span id="standardcgioerrorhandling"></span><h1>Error Handling Routines<a class="headerlink" href="#error-handling-routines" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="cgio-error-message">
+<section id="cgio-error-message">
 <h2>cgio_error_message<a class="headerlink" href="#cgio-error-message" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list">
 <dt class="field-odd">C Signature</dt>
 <dd class="field-odd"><dl class="c function">
-<dt id="c.cgio_error_message">
-<span class="pre">int</span> <code class="sig-name descname"><span class="pre">cgio_error_message</span></code><span class="sig-paren">(</span><span class="pre">char</span> <span class="pre">*</span><em><span class="pre">error_msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_error_message" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object c" id="c.cgio_error_message">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_error_message</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">error_msg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_error_message" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </dd>
 <dt class="field-even">Fortran Signature</dt>
-<dd class="field-even"><dl class="subroutine">
-<dt id="f/_/cgio_error_message_f">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><code class="sig-name descname"><span class="pre">cgio_error_message_f</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">error_msg</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_error_message_f" title="Permalink to this definition">¶</a></dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_error_message_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_error_message_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">error_msg</span></em>, <em class="sig-param"><span class="pre">ier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_error_message_f" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd>
@@ -152,21 +153,21 @@
 <dd class="field-even"><p>Gets the error message for the last error encountered, and returns it in <code class="code docutils literal notranslate"><span class="pre">error_msg</span></code>, Maximum length of the error message is <code class="code docutils literal notranslate"><span class="pre">CGIO_MAX_ERROR_LENGTH</span></code> (80). In C, <code class="code docutils literal notranslate"><span class="pre">error_msg</span></code> should be dimensioned at least 81 in the calling routine to allow for the terminating <code class="code docutils literal notranslate"><span class="pre">'0'</span></code>. The function returns the error code corresponding to the error message.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="cgio-error-code">
+</section>
+<section id="cgio-error-code">
 <h2>cgio_error_code<a class="headerlink" href="#cgio-error-code" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list">
 <dt class="field-odd">C Signature</dt>
 <dd class="field-odd"><dl class="c function">
-<dt id="c.cgio_error_code">
-<span class="pre">void</span> <code class="sig-name descname"><span class="pre">cgio_error_code</span></code><span class="sig-paren">(</span><span class="pre">int</span> <span class="pre">*</span><em><span class="pre">errcode</span></em>, <span class="pre">int</span> <span class="pre">*</span><em><span class="pre">file_type</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object c" id="c.cgio_error_code">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_error_code</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">errcode</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">file_type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_error_code" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </dd>
 <dt class="field-even">Fortran Signature</dt>
-<dd class="field-even"><dl class="subroutine">
-<dt id="f/_/cgio_error_code_f">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><code class="sig-name descname"><span class="pre">cgio_error_code_f</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">errcode</span></em>, <em class="sig-param"><span class="pre">file_type</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_error_code_f" title="Permalink to this definition">¶</a></dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_error_code_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_error_code_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">errcode</span></em>, <em class="sig-param"><span class="pre">file_type</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_error_code_f" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd>
@@ -194,21 +195,21 @@
 If the error code is &lt; 0, then the error is from the CGIO library, and <code class="code docutils literal notranslate"><span class="pre">file_type</span></code> will be <code class="code docutils literal notranslate"><span class="pre">CGIO_FILE_NONE</span></code>, otherwise <code class="code docutils literal notranslate"><span class="pre">file_type</span></code> will be the type of database.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="cgio-error-exit">
+</section>
+<section id="cgio-error-exit">
 <h2>cgio_error_exit<a class="headerlink" href="#cgio-error-exit" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list">
 <dt class="field-odd">C Signature</dt>
 <dd class="field-odd"><dl class="c function">
-<dt id="c.cgio_error_exit">
-<span class="pre">void</span> <code class="sig-name descname"><span class="pre">cgio_error_exit</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_error_exit" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object c" id="c.cgio_error_exit">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_error_exit</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">msg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_error_exit" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </dd>
 <dt class="field-even">Fortran Signature</dt>
-<dd class="field-even"><dl class="subroutine">
-<dt id="f/_/cgio_error_exit_f">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><code class="sig-name descname"><span class="pre">cgio_error_exit_f</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_error_exit_f" title="Permalink to this definition">¶</a></dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_error_exit_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_error_exit_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_error_exit_f" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd>
@@ -234,21 +235,21 @@ The exit code will be <code class="code docutils literal notranslate"><span clas
 If <code class="code docutils literal notranslate"><span class="pre">msg</span></code> is <code class="code docutils literal notranslate"><span class="pre">NULL</span></code> or an empty string, then it is not printed.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="cgio-error-abort">
+</section>
+<section id="cgio-error-abort">
 <h2>cgio_error_abort<a class="headerlink" href="#cgio-error-abort" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list">
 <dt class="field-odd">C Signature</dt>
 <dd class="field-odd"><dl class="c function">
-<dt id="c.cgio_error_abort">
-<span class="pre">void</span> <code class="sig-name descname"><span class="pre">cgio_error_abort</span></code><span class="sig-paren">(</span><span class="pre">int</span> <em><span class="pre">abort_flag</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_error_abort" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object c" id="c.cgio_error_abort">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cgio_error_abort</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">abort_flag</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.cgio_error_abort" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </dd>
 <dt class="field-even">Fortran Signature</dt>
-<dd class="field-even"><dl class="subroutine">
-<dt id="f/_/cgio_error_abort_f">
-<em class="property"><span class="pre">subroutine</span>&#160; </em><code class="sig-name descname"><span class="pre">cgio_error_abort_f</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">abort_flag</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_error_abort_f" title="Permalink to this definition">¶</a></dt>
+<dd class="field-even"><dl>
+<dt class="sig sig-object f" id="f/_/cgio_error_abort_f">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-name descname"><span class="pre">cgio_error_abort_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">abort_flag</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/_/cgio_error_abort_f" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd>
@@ -274,8 +275,8 @@ If <code class="code docutils literal notranslate"><span class="pre">abort_flag<
 These routines will not cause an abort on an error.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="error-messages">
+</section>
+<section id="error-messages">
 <h2>Error Messages<a class="headerlink" href="#error-messages" title="Permalink to this headline">¶</a></h2>
 <p>This is a list of the possible return codes from the CGIO routines along with the error messages.</p>
 <table class="docutils align-default">
@@ -676,8 +677,8 @@ These routines will not cause an abort on an error.</p>
 </dd>
 </dl>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>

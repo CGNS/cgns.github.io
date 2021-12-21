@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
@@ -15,16 +16,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>12. Miscellaneous Data Structures &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -120,10 +121,10 @@
           
           <div class="document clearer body">
             
-  <div class="section" id="miscellaneous-data-structures">
+  <section id="miscellaneous-data-structures">
 <span id="standardmiscdatastruct"></span><h1><span class="section-number">12. </span>Miscellaneous Data Structures<a class="headerlink" href="#miscellaneous-data-structures" title="Permalink to this headline">¶</a></h1>
 <p>This section contains miscellaneous structure types for describing reference states, convergence history, discrete field data, integral or global data, families, and user-defined data.</p>
-<div class="section" id="reference-state-structure-definition-referencestate-t">
+<section id="reference-state-structure-definition-referencestate-t">
 <h2><span class="section-number">12.1. </span>Reference State Structure Definition: <code class="docutils literal notranslate"><span class="pre">ReferenceState_t</span></code><a class="headerlink" href="#reference-state-structure-definition-referencestate-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState_t</span></code> describes a reference state, which is a list of geometric or flow-state quantities defined at a common location or condition. Examples of typical reference states associated with CFD calculations are freestream, plenum, stagnation, inlet and exit. Note that providing a <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code> description is particularly important if items elsewhere in the CGNS database are <span class="xref std std-ref">NormalizedByUnknownDimensional</span>.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ReferenceState_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
@@ -207,11 +208,11 @@ If any reference state quantities are dimensional, <code class="code sidskey doc
 If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <p>We recommend using the <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceStateDescription</span></code> entity to document the flow conditions. The format of the documentation is currently unregulated.</p>
-</div>
-<div class="section" id="reference-state-example">
+</section>
+<section id="reference-state-example">
 <h2><span class="section-number">12.2. </span>Reference State Example<a class="headerlink" href="#reference-state-example" title="Permalink to this headline">¶</a></h2>
 <p>An example is presented in this section of a reference state entity that contains dimensional data. An additional example of a nondimensional reference state is provided in the <span class="xref std std-ref">Structured Two-Zone Flat Plate Example</span>.</p>
-<div class="section" id="example-reference-state-with-dimensional-data">
+<section id="example-reference-state-with-dimensional-data">
 <h3><span class="section-number">12.2.1. </span>Example - Reference State with Dimensional Data<a class="headerlink" href="#example-reference-state-with-dimensional-data" title="Permalink to this headline">¶</a></h3>
 <p>A freestream reference state where all data quantities are dimensional. Standard atmospheric conditions at sea level are assumed for static quantities, and all stagnation variables are obtained using the isentropic relations.
 The flow velocity is 200 m/s aligned with the <em>x</em>-axis. Dimensional units of kilograms, meters, and seconds are used. The data class and system of units are specified at the <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState_t</span></code> level rather than attaching this information directly to the <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities for each reference quantity.
@@ -257,9 +258,9 @@ Data-name identifiers are provided in the section <a class="reference internal" 
 </pre></div>
 </div>
 <p>Note that all <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities except <code class="code sidskey docutils literal notranslate"><span class="pre">VelocityX</span></code> have been abbreviated.</p>
-</div>
-</div>
-<div class="section" id="convergence-history-structure-definition-convergencehistory-t">
+</section>
+</section>
+<section id="convergence-history-structure-definition-convergencehistory-t">
 <h2><span class="section-number">12.3. </span>Convergence History Structure Definition: <code class="docutils literal notranslate"><span class="pre">ConvergenceHistory_t</span></code><a class="headerlink" href="#convergence-history-structure-definition-convergencehistory-t" title="Permalink to this headline">¶</a></h2>
 <p>Flow solver convergence history information is described by the <code class="code sidskey docutils literal notranslate"><span class="pre">ConvergenceHistory_t</span></code> structure.
 This structure contains the number of iterations and a list of data arrays containing convergence information at each iteration.</p>
@@ -302,8 +303,8 @@ For equations residuals and solution changes, no such standard list exists. It i
 For example, <code class="code sidskey docutils literal notranslate"><span class="pre">RSDMassRMS</span></code> could be used for the <span class="math notranslate nohighlight">\(L_2\)</span>-norm (RMS) of mass conservation residuals.
 It is also strongly recommended that <code class="code sidskey docutils literal notranslate"><span class="pre">NormDefinitions</span></code> be utilized to describe the convergence information recorded in the data arrays.
 The format used to describe the convergence norms in <code class="code sidskey docutils literal notranslate"><span class="pre">NormDefinitions</span></code> is currently unregulated.</p>
-</div>
-<div class="section" id="discrete-data-structure-definition-discretedata-t">
+</section>
+<section id="discrete-data-structure-definition-discretedata-t">
 <h2><span class="section-number">12.4. </span>Discrete Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">DiscreteData_t</span></code><a class="headerlink" href="#discrete-data-structure-definition-discretedata-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DiscreteData_t</span></code> provides a description of generic discrete data (i.e., data defined on a computational grid); it is identical to <code class="code sidsref docutils literal notranslate"><span class="pre">FlowSolution_t</span></code> except for its type name.
 This structure can be used to store field data, such as fluxes or equation residuals, that is not typically considered part of the flow solution.
@@ -401,8 +402,8 @@ For dimensional data, <code class="code sidskey docutils literal notranslate"><s
 If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard precedence rules.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <dl class="c function">
-<dt id="c.ListLength">
-<span class="pre">FUNCTION</span> <code class="sig-name descname"><span class="pre">ListLength</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dt class="sig sig-object c" id="c.ListLength">
+<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ListLength</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return value</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
@@ -417,8 +418,8 @@ By user we mean the application code that is generating the CGNS database.</p>
 </dd></dl>
 
 <dl class="c function">
-<dt id="c.DataSize">
-<span class="pre">FUNCTION</span> <code class="sig-name descname"><span class="pre">DataSize</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dt class="sig sig-object c" id="c.DataSize">
+<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DataSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return value</dt>
 <dd class="field-odd"><p>one-dimensional <code class="docutils literal notranslate"><span class="pre">int</span></code> array of length <code class="code sidskey docutils literal notranslate"><span class="pre">IndexDimension</span></code></p>
@@ -430,8 +431,8 @@ By user we mean the application code that is generating the CGNS database.</p>
 <p>The function <code class="code sidskey docutils literal notranslate"><span class="pre">DataSize[]</span></code> is the size of discrete-data arrays. It is identical to the function <code class="code sidskey docutils literal notranslate"><span class="pre">DataSize[]</span></code> defined for <code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolution_t</span></code>.</p>
 </dd></dl>
 
-</div>
-<div class="section" id="integral-data-structure-definition-integraldata-t">
+</section>
+<section id="integral-data-structure-definition-integraldata-t">
 <h2><span class="section-number">12.5. </span>Integral Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">IntegralData_t</span></code><a class="headerlink" href="#integral-data-structure-definition-integraldata-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">IntegralData_t</span></code> provides a description of generic global or integral data that may be associated with a particular zone or an entire database. In contrast to <code class="code sidskey docutils literal notranslate"><span class="pre">DiscreteData_t</span></code>, integral data is not associated with any specific field location.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">IntegralData_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
@@ -458,8 +459,8 @@ By user we mean the application code that is generating the CGNS database.</p>
 </div>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default class for data contained in the <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities. For dimensional data, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard precedence rules.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="family-data-structure-definition-family-t">
+</section>
+<section id="family-data-structure-definition-family-t">
 <h2><span class="section-number">12.6. </span>Family Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">Family_t</span></code><a class="headerlink" href="#family-data-structure-definition-family-t" title="Permalink to this headline">¶</a></h2>
 <p>Geometric associations need to be set through one layer of indirection. That is, rather than setting the geometry data for each mesh entity (nodes, edges, and faces), they are associated to intermediate objects.
 The intermediate objects are in turn linked to nodal regions of the computational mesh. We define a CFD family as this intermediate object. This layer of indirection is necessary since there is rarely a 1-to-1 connection between mesh regions and geometric entities.</p>
@@ -505,8 +506,8 @@ A <code class="code sidskey docutils literal notranslate"><span class="pre">Fami
 </div>
 <p>Rotation of the CFD family may be defined using the <code class="code sidskey docutils literal notranslate"><span class="pre">RotatingCoordinates_t</span></code> data structure.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="geometry-reference-structure-definition-geometryreference-t">
+</section>
+<section id="geometry-reference-structure-definition-geometryreference-t">
 <h2><span class="section-number">12.7. </span>Geometry Reference Structure Definition: <code class="docutils literal notranslate"><span class="pre">GeometryReference_t</span></code><a class="headerlink" href="#geometry-reference-structure-definition-geometryreference-t" title="Permalink to this headline">¶</a></h2>
 <p>The standard interface data structure identifies the CAD systems used to generate the geometry, the CAD files where the geometry is stored, and the geometric entities corresponding to the family.
 The <code class="code sidskey docutils literal notranslate"><span class="pre">GeometryReference_t</span></code> structures contain all the information necessary to associate a CFD family to the CAD databases.
@@ -548,8 +549,8 @@ The geometry entity or entities within this CAD file that correspond to the fami
 <li><p>Other CAD geometry formats may be added to this list as needed.</p></li>
 </ol>
 </div>
-</div>
-<div class="section" id="family-boundary-condition-structure-definition-familybc-t">
+</section>
+<section id="family-boundary-condition-structure-definition-familybc-t">
 <h2><span class="section-number">12.8. </span>Family Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">FamilyBC_t</span></code><a class="headerlink" href="#family-boundary-condition-structure-definition-familybc-t" title="Permalink to this headline">¶</a></h2>
 <p>One of the main advantages of the concept of a layer of indirection (called a family here) is that the mesh density and the geometric entities may be modified without altering the association between nodes and intermediate objects, or between intermediate objects and geometric entities. This is very beneficial when handling boundary conditions and properties. Instead of setting boundary conditions directly on mesh entities, or on CAD entities, they may be associated to the intermediate objects. Since these intermediate objects are stable in the sense that they are not subject to mesh or geometric variations, the boundary conditions do not need to be redefined each time the model is modified. Using the concept of indirection, the boundary conditions and property settings are made independent of operations such as geometric changes, modification of mesh topology (i.e., splitting into zones), mesh refinement and coarsening, etc.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBC_t</span></code> data structure contains the boundary condition type. It is envisioned that it will be extended to hold both material and volume properties as well.</p>
@@ -575,8 +576,8 @@ The mechanics of determining the proper data set to impose is described in the s
 <p>For a few boundary conditions, such as a symmetry plane or polar singularity, the value of <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> completely describes the equations to impose, and no instances of <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> are needed.
 For “simple” boundary conditions, where a single set of Dirichlet and/or Neumann data is applied, a single <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> will likely appear (although this is not a requirement).
 For “compound” boundary conditions, where the equations to impose are dependent on local flow conditions, several instances of <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> will likely appear; the procedure for choosing the proper data set is more complex as described in the section <span class="xref std std-ref">Matching Boundary Condition Data Sets</span>.</p>
-</div>
-<div class="section" id="family-boundary-condition-data-set-structure-definition-familybcdataset-t">
+</section>
+<section id="family-boundary-condition-data-set-structure-definition-familybcdataset-t">
 <h2><span class="section-number">12.9. </span>Family Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code><a class="headerlink" href="#family-boundary-condition-data-set-structure-definition-familybcdataset-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> contains Dirichlet and Neumann data for a single set of boundary-condition equations. Its intended use is for simple boundary-condition types, where the equations imposed do not depend on local flow conditions.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">FamilyBCDataSet_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
@@ -616,8 +617,8 @@ If present, these three entities take precedence over all corresponding entities
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <p>Note that <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> is similar to the data structure <code class="code sidsref docutils literal notranslate"><span class="pre">BCDataSet_t</span></code>.
 The primary difference is that <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> only allows for globally constant Dirichlet and Neumann data.</p>
-</div>
-<div class="section" id="user-defined-data-structure-definition-userdefineddata-t">
+</section>
+<section id="user-defined-data-structure-definition-userdefineddata-t">
 <h2><span class="section-number">12.10. </span>User-Defined Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code><a class="headerlink" href="#user-defined-data-structure-definition-userdefineddata-t" title="Permalink to this headline">¶</a></h2>
 <p>Since the needs of all CGNS users cannot be anticipated, <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> provides a means of storing arbitrary user-defined data in <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
@@ -655,8 +656,8 @@ The primary difference is that <code class="code sidskey docutils literal notran
 <li><p>Both <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">AdditionalFamilyName</span></code> should refer to a <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> level <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code>, in the parent base or in another sibling base (see <span class="xref std std-ref">Base Level Families</span>).</p></li>
 </ol>
 </div>
-</div>
-<div class="section" id="gravity-data-structure-definition-gravity-t">
+</section>
+<section id="gravity-data-structure-definition-gravity-t">
 <h2><span class="section-number">12.11. </span>Gravity Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">Gravity_t</span></code><a class="headerlink" href="#gravity-data-structure-definition-gravity-t" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">Gravity_t</span></code> data structure may be used to define the gravitational vector.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Gravity_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
@@ -682,8 +683,8 @@ The primary difference is that <code class="code sidskey docutils literal notran
 For dimensional data, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of units employed.
 If present, these two entities take precedence over the corresponding entities at higher levels of the CGNS hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>

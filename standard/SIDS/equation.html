@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
@@ -15,16 +16,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>10. Governing Flow Equations &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -131,11 +132,11 @@
           
           <div class="document clearer body">
             
-  <div class="section" id="governing-flow-equations">
+  <section id="governing-flow-equations">
 <h1><span class="section-number">10. </span>Governing Flow Equations<a class="headerlink" href="#governing-flow-equations" title="Permalink to this headline">¶</a></h1>
 <p>This section provides structure type definitions for describing the governing flow-equation set associated with the database. The description includes the general class of governing equations, the turbulent closure equations, the gas and chemistry models, the viscosity and thermal-conductivity models, and the electromagnetics models. Included with each equation description are associated constants. The structure definitions attempt to balance the opposing requirements for future growth and extensibility with initial ease of implementation. Included in the final section are examples of flow-equation sets.</p>
 <p>The intended use of these structures initially is primarily for archival purposes and to provide additional documentation of the flow solution. If successful in this role, it is foreseeable that these flow-equation structures may eventually be also used as inputs for grid generators, flow solvers, and post-processors.</p>
-<div class="section" id="flow-equation-set-structure-definition-flowequationset-t">
+<section id="flow-equation-set-structure-definition-flowequationset-t">
 <h2><span class="section-number">10.1. </span>Flow Equation Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code><a class="headerlink" href="#flow-equation-set-structure-definition-flowequationset-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code> is a general description of the governing flow equations. It includes the dimensionality of the governing equations, and the collection of specific equation-set descriptions covered in subsequent sections. It can be a child node of either <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> or <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code> (or both).</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">FlowEquationSet_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
@@ -185,8 +186,8 @@
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">EquationDimension</span></code> is the dimensionality of the governing equations; it is the number of spatial variables describing the flow. <code class="code sidsref docutils literal notranslate"><span class="pre">GoverningEquations</span></code> describes the general class of flow equations. <code class="code sidsref docutils literal notranslate"><span class="pre">GasModel</span></code> describes the equation of state, and <code class="code sidsref docutils literal notranslate"><span class="pre">ViscosityModel</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">ThermalConductivityModel</span></code> describe the auxiliary relations for molecular viscosity and the thermal conductivity coefficient. <code class="code sidsref docutils literal notranslate"><span class="pre">TurbulenceClosure</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">TurbulenceModel</span></code> describe the turbulent closure for the Reynolds-averaged Navier-Stokes equations. <code class="code sidsref docutils literal notranslate"><span class="pre">ThermalRelaxationModel</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">ChemicalKineticsModel</span></code> describe the equations used to model thermal relaxation and chemical kinetics. <code class="code sidskey docutils literal notranslate"><span class="pre">EMElectricFieldModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">EMMagneticFieldModel</span></code>, and <code class="code sidskey docutils literal notranslate"><span class="pre">EMConductivityModel</span></code> describe the equations used to model electromagnetics.</p>
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the flow-equation set. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="governing-equations-structure-definition-governingequations-t">
+</section>
+<section id="governing-equations-structure-definition-governingequations-t">
 <h2><span class="section-number">10.2. </span>Governing Equations Structure Definition: <code class="docutils literal notranslate"><span class="pre">GoverningEquations_t</span></code><a class="headerlink" href="#governing-equations-structure-definition-governingequations-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">GoverningEquations_t</span></code> describes the class of governing flow equations associated with the solution.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">GoverningEquationsType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -255,8 +256,8 @@
 <p>where derivatives in the <em>i</em>, <em>j</em> and <em>k</em> computational-coordinates are <span class="math notranslate nohighlight">\(\xi\)</span>, <span class="math notranslate nohighlight">\(eta\)</span> and <span class="math notranslate nohighlight">\(zeta\)</span>, respectively.
 The full Navier-Stokes equations in 3-D are indicated by <code class="code sidskey docutils literal notranslate"><span class="pre">DiffusionModel</span> <span class="pre">=</span> <span class="pre">[1,1,1,1,1,1]</span></code>, and the thin-layer equations including only diffusion in the <em>j</em>-direction are <code class="code docutils literal notranslate"><span class="pre">[0,1,0,0,0,0]</span></code>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="model-type-structure-definition-modeltype-t">
+</section>
+<section id="model-type-structure-definition-modeltype-t">
 <h2><span class="section-number">10.3. </span>Model Type Structure Definition: <code class="docutils literal notranslate"><span class="pre">ModelType_t</span></code><a class="headerlink" href="#model-type-structure-definition-modeltype-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> is a complete list of all models covered in subsequent sections. A specific model will contain a subset of this enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -276,8 +277,8 @@ The full Navier-Stokes equations in 3-D are indicated by <code class="code sidsk
 <span class="w">  </span><span class="n">Equilibrium_LinRessler</span><span class="p">,</span><span class="w"> </span><span class="n">Chemistry_LinRessler</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="thermodynamic-gas-model-structure-definition-gasmodel-t">
+</section>
+<section id="thermodynamic-gas-model-structure-definition-gasmodel-t">
 <h2><span class="section-number">10.4. </span>Thermodynamic Gas Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">GasModel_t</span></code><a class="headerlink" href="#thermodynamic-gas-model-structure-definition-gasmodel-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">GasModel_t</span></code> describes the equation of state model used in the governing equations to relate pressure, temperature and density. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">GasModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">GasModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -357,8 +358,8 @@ These are further described in the section on <a class="reference internal" href
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the thermodynamic gas model. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
 If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="molecular-viscosity-model-structure-definition-viscositymodel-t">
+</section>
+<section id="molecular-viscosity-model-structure-definition-viscositymodel-t">
 <h2><span class="section-number">10.5. </span>Molecular Viscosity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ViscosityModel_t</span></code><a class="headerlink" href="#molecular-viscosity-model-structure-definition-viscositymodel-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityModel_t</span></code> describes the model for relating molecular viscosity (<span class="math notranslate nohighlight">\(\mu\)</span>) to temperature. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ViscosityModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -441,8 +442,8 @@ The data-name identifiers for molecular viscosity models are defined below.</p>
 <p>If it is desired to specify any of these identifiers in a CGNS database, they should be defined as <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray</span></code> under <code class="code sidskey docutils literal notranslate"><span class="pre">ViscosityModel_t</span></code>.</p>
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the molecular viscosity model. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="thermal-conductivity-model-structure-definition-thermalconductivitymodel-t">
+</section>
+<section id="thermal-conductivity-model-structure-definition-thermalconductivitymodel-t">
 <h2><span class="section-number">10.6. </span>Thermal Conductivity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ThermalConductivityModel_t</span></code><a class="headerlink" href="#thermal-conductivity-model-structure-definition-thermalconductivitymodel-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivityModel_t</span></code> describes the model for relating the thermal-conductivity coefficient (<span class="math notranslate nohighlight">\(k\)</span>) to temperature. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ThermalConductivityModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ThermalConductivityModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -532,11 +533,11 @@ Data-name identifiers for thermal conductivity models are listed below.</p>
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the thermal conductivity model. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
 If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="turbulence-structure-definitions">
+</section>
+<section id="turbulence-structure-definitions">
 <h2><span class="section-number">10.7. </span>Turbulence Structure Definitions<a class="headerlink" href="#turbulence-structure-definitions" title="Permalink to this headline">¶</a></h2>
 <p>This section presents structure definitions for describing the form of closure used in the Reynolds-averaged (or Favre-averaged) Navier-Stokes equations for determining the Reynolds stress terms. Here “turbulence closure” refers to eddy viscosity or other approximations for the Reynolds stress terms, and “turbulence model” refers to the actual algebraic or turbulence-transport equation models used. To an extent these are independent choices (e.g., using either an eddy viscosity closure or an algebraic Reynolds-stress closure with a two-equation model).</p>
-<div class="section" id="turbulence-closure-structure-definition-turbulenceclosure-t">
+<section id="turbulence-closure-structure-definition-turbulenceclosure-t">
 <h3><span class="section-number">10.7.1. </span>Turbulence Closure Structure Definition: <code class="docutils literal notranslate"><span class="pre">TurbulenceClosure_t</span></code><a class="headerlink" href="#turbulence-closure-structure-definition-turbulenceclosure-t" title="Permalink to this headline">¶</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceClosure_t</span></code> describes the turbulence closure for the Reynolds stress terms of the Navier-Stokes equations. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceClosureType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">TurbulenceClosureType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -600,8 +601,8 @@ If present, these two entities take precedence over all corresponding entities a
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the turbulence closure. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
 If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="turbulence-model-structure-definition-turbulencemodel-t">
+</section>
+<section id="turbulence-model-structure-definition-turbulencemodel-t">
 <h3><span class="section-number">10.7.2. </span>Turbulence Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">TurbulenceModel_t</span></code><a class="headerlink" href="#turbulence-model-structure-definition-turbulencemodel-t" title="Permalink to this headline">¶</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceModel_t</span></code> describes the equation set used to model the turbulence quantities. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">TurbulenceModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">TurbulenceModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -687,8 +688,8 @@ However, no attempt is made here to formalize the names for all possible turbule
 For any data that is dimensional, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
 If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="example-spalart-allmaras-turbulence-model">
+</section>
+<section id="example-spalart-allmaras-turbulence-model">
 <h3><span class="section-number">10.7.3. </span>Example - Spalart-Allmaras Turbulence Model<a class="headerlink" href="#example-spalart-allmaras-turbulence-model" title="Permalink to this headline">¶</a></h3>
 <p>Description for the eddy-viscosity closure and Spalart-Allmaras turbulence model, including associated constants.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">TurbulenceClosure_t</span><span class="w"> </span><span class="n">TurbulenceClosure</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
@@ -718,9 +719,9 @@ If present, these two entities take precedence over all corresponding entities a
 </pre></div>
 </div>
 <p>Note that each <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entity is abbreviated.</p>
-</div>
-</div>
-<div class="section" id="thermal-relaxation-model-structure-definition-thermalrelaxationmodel-t">
+</section>
+</section>
+<section id="thermal-relaxation-model-structure-definition-thermalrelaxationmodel-t">
 <h2><span class="section-number">10.8. </span>Thermal Relaxation Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ThermalRelaxationModel_t</span></code><a class="headerlink" href="#thermal-relaxation-model-structure-definition-thermalrelaxationmodel-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ThermalRelaxationModel_t</span></code> describes the equation set used to model thermal relaxation quantities. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ThermalRelaxationModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ThermalRelaxationModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -757,8 +758,8 @@ If present, these two entities take precedence over all corresponding entities a
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> data structures may be used to store data associated with the thermal relaxation model. <code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data being used. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>Additional information, if needed, may be stored using <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> data structures.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="chemical-kinetics-model-structure-definition-chemicalkineticsmodel-t">
+</section>
+<section id="chemical-kinetics-model-structure-definition-chemicalkineticsmodel-t">
 <h2><span class="section-number">10.9. </span>Chemical Kinetics Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">ChemicalKineticsModel_t</span></code><a class="headerlink" href="#chemical-kinetics-model-structure-definition-chemicalkineticsmodel-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ChemicalKineticsModel_t</span></code> describes the equation set used to model chemical kinetics quantities. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ChemicalKineticsModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ChemicalKineticsModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -882,11 +883,11 @@ If present, these two entities take precedence over all corresponding entities a
 For example, if CHEMKIN is used, it is recommended that a <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> data structure be used to indicate this.
 Reaction equations could also be specified using <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> data structures.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="electromagnetics-structure-definitions">
+</section>
+<section id="electromagnetics-structure-definitions">
 <h2><span class="section-number">10.10. </span>Electromagnetics Structure Definitions<a class="headerlink" href="#electromagnetics-structure-definitions" title="Permalink to this headline">¶</a></h2>
 <p>This section presents structure definitions for describing the electric field, magnetic field, and conductivity models used for electromagnetic flows.</p>
-<div class="section" id="electromagnetics-electric-field-model-structure-definition-emelectricfieldmodel-t">
+<section id="electromagnetics-electric-field-model-structure-definition-emelectricfieldmodel-t">
 <h3><span class="section-number">10.10.1. </span>Electromagnetics Electric Field Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMElectricFieldModel_t</span></code><a class="headerlink" href="#electromagnetics-electric-field-model-structure-definition-emelectricfieldmodel-t" title="Permalink to this headline">¶</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">EMElectricFieldModel_t</span></code> describes the electric field model used for electromagnetic flows. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">EMElectricFieldModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">EMElectricFieldModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -921,11 +922,11 @@ Reaction equations could also be specified using <code class="code sidskey docut
 </ol>
 </div>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">EMElectricFieldModelType_t</span></code> is an enumeration type describing the type of electric field model.</p>
-<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> data structures may be used to store data associated with the electric field model. Recommended data-name identifiers are listed in the section describing the <a class="reference internal" href="../FMM/save_nodes.html#emconductivitymodel"><span class="std std-ref">electromagnetics conductivity model</span></a>.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> data structures may be used to store data associated with the electric field model. Recommended data-name identifiers are listed in the section describing the <a class="reference internal" href="../FMM/nodes.html#emconductivitymodel"><span class="std std-ref">electromagnetics conductivity model</span></a>.</p>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the electric field model. For any data that is dimensional, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="electromagnetics-magnetic-field-model-structure-definition-emmagneticfieldmodel-t">
+</section>
+<section id="electromagnetics-magnetic-field-model-structure-definition-emmagneticfieldmodel-t">
 <h3><span class="section-number">10.10.2. </span>Electromagnetics Magnetic Field Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMMagneticFieldModel_t</span></code><a class="headerlink" href="#electromagnetics-magnetic-field-model-structure-definition-emmagneticfieldmodel-t" title="Permalink to this headline">¶</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">EMMagneticFieldModel_t</span></code> describes the magnetic field model used for electromagnetic flows. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">EMMagneticFieldModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">EMMagneticFieldModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -959,13 +960,13 @@ Reaction equations could also be specified using <code class="code sidskey docut
 </ol>
 </div>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">EMMagneticFieldModelType_t</span></code> is an enumeration type describing the type of magnetic field model.</p>
-<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> data structures may be used to store data associated with the magnetic field model. Recommended data-name identifiers are listed in the section describing the <a class="reference internal" href="../FMM/save_nodes.html#emconductivitymodel"><span class="std std-ref">electromagnetics conductivity model</span></a>.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> data structures may be used to store data associated with the magnetic field model. Recommended data-name identifiers are listed in the section describing the <a class="reference internal" href="../FMM/nodes.html#emconductivitymodel"><span class="std std-ref">electromagnetics conductivity model</span></a>.</p>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the magnetic field model.
 For any data that is dimensional, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
 If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in Descriptor_t and DataArray_t children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-<div class="section" id="electromagnetics-conductivity-model-structure-definition-emconductivitymodel-t">
+</section>
+<section id="electromagnetics-conductivity-model-structure-definition-emconductivitymodel-t">
 <h3><span class="section-number">10.10.3. </span>Electromagnetics Conductivity Model Structure Definition: <code class="docutils literal notranslate"><span class="pre">EMConductivityModel_t</span></code><a class="headerlink" href="#electromagnetics-conductivity-model-structure-definition-emconductivitymodel-t" title="Permalink to this headline">¶</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">EMConductivityModel_t</span></code> describes the conductivity model used for electromagnetic flows. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">EMConductivityModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">EMConductivityModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -1082,12 +1083,12 @@ These are further described in the section on <a class="reference internal" href
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the conductivity model. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
 If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-</div>
-<div class="section" id="flow-equation-examples">
+</section>
+</section>
+<section id="flow-equation-examples">
 <h2><span class="section-number">10.11. </span>Flow Equation Examples<a class="headerlink" href="#flow-equation-examples" title="Permalink to this headline">¶</a></h2>
 <p>This section presents two examples of flow-equation sets. The first is an inviscid case and the second is a turbulent case with a one-equation turbulence model.</p>
-<div class="section" id="example-3-d-compressible-euler">
+<section id="example-3-d-compressible-euler">
 <h3><span class="section-number">10.11.1. </span>Example - 3-D Compressible Euler<a class="headerlink" href="#example-3-d-compressible-euler" title="Permalink to this headline">¶</a></h3>
 <p>3-D compressible Euler with a perfect gas assumption for a monatomic gas:</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">FlowEquationSet_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">EulerEquations</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
@@ -1113,8 +1114,8 @@ If present, these two entities take precedence over all corresponding entities a
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="example-3-d-compressible-navier-stokes">
+</section>
+<section id="example-3-d-compressible-navier-stokes">
 <h3><span class="section-number">10.11.2. </span>Example - 3-D Compressible Navier-Stokes<a class="headerlink" href="#example-3-d-compressible-navier-stokes" title="Permalink to this headline">¶</a></h3>
 <p>3-D compressible Navier-Stokes for a structured grid, with the S-A turbulence model, a perfect gas assumption, Sutherland’s law for the molecular viscosity, a constant Prandtl-number assumption, and inclusion of the full Navier-Stokes diffusion terms; all models assume air:</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">FlowEquationSet_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">NSEquations</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
@@ -1173,9 +1174,9 @@ If present, these two entities take precedence over all corresponding entities a
 </pre></div>
 </div>
 <p>Note that all <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities are abbreviated except <code class="code sidskey docutils literal notranslate"><span class="pre">SutherlandLawConstant</span></code>.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>

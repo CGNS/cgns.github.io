@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
@@ -15,16 +16,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>11. Time-Dependent Flow &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -121,13 +122,13 @@
           
           <div class="document clearer body">
             
-  <div class="section" id="time-dependent-flow">
+  <section id="time-dependent-flow">
 <h1><span class="section-number">11. </span>Time-Dependent Flow<a class="headerlink" href="#time-dependent-flow" title="Permalink to this headline">¶</a></h1>
 <p>This section describes structure types intended primarily for time-dependent flows. Data structures are presented for storing time-dependent or iterative data, and for recording rigid and arbitary grid motion. The section concludes with several examples.</p>
-<div class="section" id="iterative-data-structure-definitions">
+<section id="iterative-data-structure-definitions">
 <h2><span class="section-number">11.1. </span>Iterative Data Structure Definitions<a class="headerlink" href="#iterative-data-structure-definitions" title="Permalink to this headline">¶</a></h2>
 <p>In order to keep a record of time dependent or iterative data, the data structures BaseIterativeData_t and ZoneIterativeData_t are used.</p>
-<div class="section" id="base-iterative-data-structure-definition-baseiterativedata-t">
+<section id="base-iterative-data-structure-definition-baseiterativedata-t">
 <h3><span class="section-number">11.1.1. </span>Base Iterative Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">BaseIterativeData_t</span></code><a class="headerlink" href="#base-iterative-data-structure-definition-baseiterativedata-t" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">BaseIterativeData_t</span></code> data structure is located directly under the <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> node.
 It contains information about the number of time steps or iterations being recorded, and the time and/or iteration values at each step.
@@ -173,8 +174,8 @@ In addition, it may include the list of zones and families for each step of the 
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> nodes for <code class="code sidskey docutils literal notranslate"><span class="pre">ZonePointers</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyPointers</span></code> are defined as three-dimensional arrays. For each recorded step, the names of all zones and families being used for the step may be recorded. Note that the names are limited to 65 characters; this is the maximum size of a name of a zone from another base: 32 chars + ‘/’ + 32 chars. Only one ‘/’ character is allowed, then the first token before the ‘/’ is the CGNSBase name and the second token is the Zone or Family name. If no ‘/’ is found, the name is a Zone or a Family name of the current CGNS Base. The variables <code class="code sidskey docutils literal notranslate"><span class="pre">MaxNumberOfZones</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">MaxNumberOfFamilies</span></code> represent the maximum number of zones and families that apply to one step. So if <code class="code sidskey docutils literal notranslate"><span class="pre">NumberOfSteps</span></code> = 5 and <code class="code sidskey docutils literal notranslate"><span class="pre">NumberOfZones</span></code> = {2,2,3,4,3}, then <code class="code sidskey docutils literal notranslate"><span class="pre">MaxNumberOfZones</span></code> equals 4.</p>
 <p>When <code class="code sidskey docutils literal notranslate"><span class="pre">NumberOfZones</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">NumberOfFamilies</span></code> vary for different stored time steps, the name <code class="code sidskey docutils literal notranslate"><span class="pre">Null</span></code> is used in <code class="code sidskey docutils literal notranslate"><span class="pre">ZonePointers</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyPointers</span></code> as appropriate for steps in which the <code class="code sidskey docutils literal notranslate"><span class="pre">NumberOfZones</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">NumberOfFamilies</span></code> is less than the <code class="code sidskey docutils literal notranslate"><span class="pre">MaxNumberOfZones</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">MaxNumberOfFamilies</span></code>.</p>
 <p>Any number of extra <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> nodes are allowed. These should be used to record data not covered by this specification.</p>
-</div>
-<div class="section" id="zone-iterative-data-structure-definition-zoneiterativedata-t">
+</section>
+<section id="zone-iterative-data-structure-definition-zoneiterativedata-t">
 <h3><span class="section-number">11.1.2. </span>Zone Iterative Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneIterativeData_t</span></code><a class="headerlink" href="#zone-iterative-data-structure-definition-zoneiterativedata-t" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ZoneIterativeData_t</span></code> data structure is located under the <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code> node. It may be used to record pointers to zonal data for each recorded step of the simulation, and is defined as follows:</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ZoneIterativeData_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">NumberOfSteps</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
@@ -211,9 +212,9 @@ In addition, it may include the list of zones and families for each step of the 
 <p>The data arrays with data-name identifiers <code class="code sidskey docutils literal notranslate"><span class="pre">xxxPointers</span></code> contain lists of associated data structures for each recorded time value or iteration. These data structures contain data at the associated time value, or at the end of the associated iteration. There is an implied one-to-one correspondence between each pointer (from 1, 2, …, <code class="code sidskey docutils literal notranslate"><span class="pre">NumberOfSteps</span></code>) and the associated <code class="code sidskey docutils literal notranslate"><span class="pre">TimeValues</span></code> and/or <code class="code sidskey docutils literal notranslate"><span class="pre">IterationValues</span></code> under <code class="code sidskey docutils literal notranslate"><span class="pre">BaseIterativeData_t</span></code>. They refer by name to data structures within the current zone. The name <code class="code sidskey docutils literal notranslate"><span class="pre">Null</span></code> is used when a particular time or iteration does not have a corresponding data structure to point to.</p>
 <p>Any number of extra <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> nodes are allowed. These should be used to record data not covered by this specification.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ZoneIterativeData_t</span></code> data structure may not exist without the <code class="code sidskey docutils literal notranslate"><span class="pre">BaseIterativeData_t</span></code> under the <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> node. However <code class="code sidskey docutils literal notranslate"><span class="pre">BaseIterativeData_t</span></code> may exist without <code class="code sidskey docutils literal notranslate"><span class="pre">ZoneIterativeData_t</span></code>.</p>
-</div>
-</div>
-<div class="section" id="rigid-grid-motion-structure-definition-rigidgridmotion-t">
+</section>
+</section>
+<section id="rigid-grid-motion-structure-definition-rigidgridmotion-t">
 <h2><span class="section-number">11.2. </span>Rigid Grid Motion Structure Definition: <code class="docutils literal notranslate"><span class="pre">RigidGridMotion_t</span></code><a class="headerlink" href="#rigid-grid-motion-structure-definition-rigidgridmotion-t" title="Permalink to this headline">¶</a></h2>
 <p>Adding rigid grid motion information to the CGNS file enables an application code to determine the mesh location without the need to alter the original mesh definition recorded under <code class="code sidsref docutils literal notranslate"><span class="pre">GridCoordinates_t</span></code>. A data structure named <code class="code sidskey docutils literal notranslate"><span class="pre">RigidGridMotion_t</span></code> is used to record the necessary data defining a rigid translation and/or rotation of the grid coordinates.</p>
 <p>The rigid grid motion is recorded independently for each zone of the CGNS base. Therefore the <code class="code sidskey docutils literal notranslate"><span class="pre">RigidGridMotion_t</span></code> data structure is located under the zone data structure (<code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code>). There may be zero to several <code class="code sidskey docutils literal notranslate"><span class="pre">RigidGridMotion_t</span></code> nodes under a <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code> node. The multiple rigid grid motion definitions may be associated with different iterations or time steps in the computation. This association is recorded under the <code class="code sidsref docutils literal notranslate"><span class="pre">ZoneIterativeData_t</span></code> data structure.</p>
@@ -292,8 +293,8 @@ is set to zero.</p></td>
 <p>Any number of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> nodes are allowed. These may be used to record data not covered by this specification.</p>
 <p>“Rigid grid motion” implies relative motion of grid zones. However, no attempt is made in the <code class="code sidskey docutils literal notranslate"><span class="pre">RigidGridMotion_t</span></code> data structure to require that the <code class="code sidskey docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code> information be updated to be consistent with the new grid locations.
 Whether the <code class="code sidskey docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code> information refers to the original connectivity (of <code class="code sidskey docutils literal notranslate"><span class="pre">GridCoordinates</span></code>) or the latest connectivity (of the moved or deformed grid) is currently left up to the user.</p>
-</div>
-<div class="section" id="arbitrary-grid-motion-structure-definition-arbitrarygridmotion-t">
+</section>
+<section id="arbitrary-grid-motion-structure-definition-arbitrarygridmotion-t">
 <h2><span class="section-number">11.3. </span>Arbitrary Grid Motion Structure Definition: <code class="docutils literal notranslate"><span class="pre">ArbitraryGridMotion_t</span></code><a class="headerlink" href="#arbitrary-grid-motion-structure-definition-arbitrarygridmotion-t" title="Permalink to this headline">¶</a></h2>
 <p>When a grid is in motion, it is often necessary to account for the position of each grid point as the grid deforms.
 When all grid points move at the same velocity, the grid keeps its original shape. This particular case of grid motion may be recorded under the <code class="code sidsref docutils literal notranslate"><span class="pre">RigidGridMotion_t</span></code> data structure.
@@ -414,8 +415,8 @@ If present, these two entities take precedence over all corresponding entities a
 However, no attempt is made here to require that the <code class="code sidsref docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code> information be updated to be consistent with the new grid locations.
 Whether the <code class="code sidskey docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code> information refers to the original connectivity (of <code class="code sidsref docutils literal notranslate"><span class="pre">GridCoordinates</span></code>) or the latest connectivity (of the moved or deformed grid) is currently left up to the user.</p>
 <dl class="c function">
-<dt id="c.DataSize">
-<span class="pre">FUNCTION</span> <code class="sig-name descname"><span class="pre">DataSize</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dt class="sig sig-object c" id="c.DataSize">
+<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DataSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return value</dt>
 <dd class="field-odd"><p>one-dimensional <code class="docutils literal notranslate"><span class="pre">int</span></code> array of length <code class="code sidskey docutils literal notranslate"><span class="pre">IndexDimension</span></code></p>
@@ -427,15 +428,15 @@ Whether the <code class="code sidskey docutils literal notranslate"><span class=
 <p>The function <code class="code sidskey docutils literal notranslate"><span class="pre">DataSize[]</span></code> is the size of the DataArrays containing the grid velocity components. It is identical to the function <code class="code sidskey docutils literal notranslate"><span class="pre">DataSize[]</span></code> defined for <code class="code sidsref docutils literal notranslate"><span class="pre">FlowSolution_t</span></code>.</p>
 </dd></dl>
 
-</div>
-<div class="section" id="zone-grid-connectivities">
+</section>
+<section id="zone-grid-connectivities">
 <h2><span class="section-number">11.4. </span>Zone Grid Connectivities<a class="headerlink" href="#zone-grid-connectivities" title="Permalink to this headline">¶</a></h2>
 <p>Multiple <code class="code sidsref docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code> nodes may be used to specify time-dependent changes in the connectivity information associated with the zone.
 The time variation is the recorded in the <code class="code sidsref docutils literal notranslate"><span class="pre">ZoneIterativeData_t</span></code> node as <code class="code sidskey docutils literal notranslate"><span class="pre">ZoneGridConnectivityPointers</span></code>.</p>
-</div>
-<div class="section" id="examples-for-time-dependent-flow">
+</section>
+<section id="examples-for-time-dependent-flow">
 <h2><span class="section-number">11.5. </span>Examples for Time-Dependent Flow<a class="headerlink" href="#examples-for-time-dependent-flow" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="example-rigid-grid-motion">
+<section id="example-rigid-grid-motion">
 <h3><span class="section-number">11.5.1. </span>Example - Rigid Grid Motion<a class="headerlink" href="#example-rigid-grid-motion" title="Permalink to this headline">¶</a></h3>
 <p>In this example, the whole mesh moves rigidly, so the only time-dependent data are the grid coordinates and flow solutions.
 However, since the mesh moves rigidly, the grid coordinates need not be recorded at each time step.
@@ -478,8 +479,8 @@ Instead, a <code class="code sidsref docutils literal notranslate"><span class="
 </pre></div>
 </div>
 <p>Note that there may be more solutions under a zone than those pointed to by <code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolutionPointers</span></code>. In this example, <code class="code sidskey docutils literal notranslate"><span class="pre">Solution#0</span></code> could correspond to a restart solution.</p>
-</div>
-<div class="section" id="example-deforming-grid-motion">
+</section>
+<section id="example-deforming-grid-motion">
 <h3><span class="section-number">11.5.2. </span>Example - Deforming Grid Motion<a class="headerlink" href="#example-deforming-grid-motion" title="Permalink to this headline">¶</a></h3>
 <p>In this example, velocity vectors are node dependent allowing for mesh deformation. In such a case, it is difficult or even impossible to recompute the mesh at each time step.
 Therefore the grid coordinates are recorded for each step.</p>
@@ -508,8 +509,8 @@ In addition, the data structure <code class="code sidsref docutils literal notra
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="example-adapted-unstructured-mesh">
+</section>
+<section id="example-adapted-unstructured-mesh">
 <h3><span class="section-number">11.5.3. </span>Example - Adapted Unstructured Mesh<a class="headerlink" href="#example-adapted-unstructured-mesh" title="Permalink to this headline">¶</a></h3>
 <p>In this example, the mesh size varies at each remeshing, therefore new zones must be created. <code class="code sidskey docutils literal notranslate"><span class="pre">ZonePointers</span></code> is used to keep a record of the zone definition corresponding to each recorded step.
 Let’s assume that the solution is recorded every 50 iterations, and the grid is adapted every 100 iterations.</p>
@@ -561,8 +562,8 @@ Let’s assume that the solution is recorded every 50 iterations, and the grid i
 <li><p>Note that <code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolutionPointers</span></code> is always an array of size <code class="code sidskey docutils literal notranslate"><span class="pre">NumberOfSteps</span></code> even if some of the steps are defined in another zone.</p></li>
 </ol>
 </div>
-</div>
-<div class="section" id="example-combination-of-grid-motion-and-time-accuracy">
+</section>
+<section id="example-combination-of-grid-motion-and-time-accuracy">
 <h3><span class="section-number">11.5.4. </span>Example - Combination of Grid Motion and Time-Accuracy<a class="headerlink" href="#example-combination-of-grid-motion-and-time-accuracy" title="Permalink to this headline">¶</a></h3>
 <p>The following is an example demonstrating the use of the rigid grid motion, arbitrary grid motion, and time-accurate data nodes in CGNS. The example is a 3-zone case. Zone 1 is rigidly rotating about the x-axis at a constant rate, with no translation. Zone 2 is a deforming zone. Zone 3 is a fixed zone. This is a time-accurate simulation with two solutions saved at times 15.5 and 31.0, corresponding to iteration numbers 1000 and 2000.</p>
 <p>No units are given in this example, but a real case would establish them. Also, a real case would include connectivity, boundary conditions, and possibly other information as well. Each indentation represents a level down (a child) from the parent node.</p>
@@ -648,9 +649,9 @@ Let’s assume that the solution is recorded every 50 iterations, and the grid i
 </li>
 </ol>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>

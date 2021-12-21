@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
@@ -15,12 +16,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>General Remarks &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
@@ -114,17 +115,17 @@
           
           <div class="document clearer body">
             
-  <div class="section" id="general-remarks">
+  <section id="general-remarks">
 <span id="mllgeneral"></span><h1>General Remarks<a class="headerlink" href="#general-remarks" title="Permalink to this headline">¶</a></h1>
 <p>The CGNS Mid-Level Library may be downloaded from the <a class="reference external" href="https://github.com/CGNS/CGNS">CGNS site</a>.</p>
-<div class="section" id="organization-of-the-mll-documentation">
+<section id="organization-of-the-mll-documentation">
 <h2>Organization of the MLL documentation<a class="headerlink" href="#organization-of-the-mll-documentation" title="Permalink to this headline">¶</a></h2>
 <p>The sections that follow describe the Mid-Level Library functions in detail.
 The first three sections cover some basic file operations (i.e., opening and closing a CGNS file, and some configuration options), accessing a specific node in a CGNS database, and error handling.
 The remaining sections describe the functions used to read, write, and modify nodes and data in a CGNS database. These sections basically follow the organization used in the “Detailed CGNS Node Descriptions” section of the SIDS File Mapping manual.</p>
 <p>At the start of each sub-section is a Node line, listing the the applicable CGNS node label, with links to that node’s description in the <a class="reference internal" href="../SIDS/CGNS_SIDS.html#cgns-sids"><span class="std std-ref">SIDS</span></a> and <a class="reference internal" href="../CGNS_FMM.html#standardfmm"><span class="std std-ref">SIDS File Mapping</span></a> manuals.</p>
-</div>
-<div class="section" id="syntax">
+</section>
+<section id="syntax">
 <h2>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
 <p>Next is a table illustrating the syntax for the Mid-Level Library functions.
 The C functions are shown in the top half of the table, followed by the corresponding Fortran routines in the bottom half of the table.
@@ -132,28 +133,28 @@ Fortran subroutines identified in green indicates APIs which do not have explici
 Input variables are shown in an <span class="in">upright blue</span> font, and output variables are shown in a <span class="out">slanted red</span> font.
 For each function, the right-hand column lists the modes (read, write, and/or modify) applicable to that function.</p>
 <p>The input and output variables are then listed and defined.</p>
-</div>
-<div class="section" id="language">
+</section>
+<section id="language">
 <h2>Language<a class="headerlink" href="#language" title="Permalink to this headline">¶</a></h2>
 <p>The CGNS Mid-Level Library is written in C, but each function has a Fortran counterpart.
 All function names start with <code class="docutils literal notranslate"><span class="pre">&quot;cg_&quot;</span></code>.
 The Fortran functions have the same name as their C counterpart with the addition of the suffix <code class="docutils literal notranslate"><span class="pre">&quot;_f&quot;</span></code>.</p>
-</div>
-<div class="section" id="character-strings">
+</section>
+<section id="character-strings">
 <h2>Character Strings<a class="headerlink" href="#character-strings" title="Permalink to this headline">¶</a></h2>
 <p>All data structure names and labels in CGNS are limited to 32 characters.
 When reading a file, it is advised to pre-allocate the character string variables to 32 characters in Fortran, and 33 in C (to include the string terminator).
 Other character strings, such as the CGNS file name or descriptor text, are unlimited in length.
 The space for unlimited length character strings will be created by the Mid-Level Library; it is then the responsibility of the application to release this space by a call to <code class="xref c c-func docutils literal notranslate"><span class="pre">cg_free()</span></code>.</p>
-</div>
-<div class="section" id="error-status">
+</section>
+<section id="error-status">
 <h2>Error Status<a class="headerlink" href="#error-status" title="Permalink to this headline">¶</a></h2>
 <p>All C functions return an integer value representing the error status.
 All Fortran functions have an additional parameter, <code class="code docutils literal notranslate"><span class="pre">ier</span></code>, which contains the value of the error status.
 An error status different from zero implies that an error occured. The error message can be printed using the error handling functions of the CGNS library.
 The error codes are coded in the C and Fortran include files <em>cgnslib.h</em> and <em>cgnslib_f.h</em>.</p>
-</div>
-<div class="section" id="typedefs">
+</section>
+<section id="typedefs">
 <h2>Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
 <p>Several types of variables are defined using typedefs in the <em>cgnslib.h</em> file.
 These are intended to facilitate the implementation of CGNS in C.
@@ -257,8 +258,8 @@ In Fortran, these values are replaced by the numerically equivalent <code class=
 These values are also defined in the C interface, thus either form may be used.
 The function prototypes for the MLL use <code class="code docutils literal notranslate"><span class="pre">CG_Null</span></code> and <code class="code docutils literal notranslate"><span class="pre">CG_UserDefined</span></code>, rather than the more specific values.</p>
 </div>
-</div>
-<div class="section" id="character-name-of-typedefs">
+</section>
+<section id="character-name-of-typedefs">
 <h2>Character Name of Typedefs<a class="headerlink" href="#character-name-of-typedefs" title="Permalink to this headline">¶</a></h2>
 <p>The CGNS library defines character arrays which map the typedefs above to character strings.
 These are global arrays dimensioned to the size of each list of typedefs.
@@ -308,12 +309,12 @@ For the example above, use <code class="docutils literal notranslate"><span clas
 </tbody>
 </table>
 </div></blockquote>
-</div>
-<div class="section" id="bit-portability-and-issues">
+</section>
+<section id="bit-portability-and-issues">
 <h2>64-bit Portability and Issues<a class="headerlink" href="#bit-portability-and-issues" title="Permalink to this headline">¶</a></h2>
 <p>It is recommended to use <code class="code docutils literal notranslate"><span class="pre">cgsize_t</span></code> data type with MLL API as it will work in both 32 and 64-bit compilation modes.</p>
-</div>
-<div class="section" id="cgns-and-fortran">
+</section>
+<section id="cgns-and-fortran">
 <h2>CGNS and Fortran<a class="headerlink" href="#cgns-and-fortran" title="Permalink to this headline">¶</a></h2>
 <p>Starting with CGNS-3.3.0, a new CGNS module was added to the library.
 Fortran programs can use the new module by adding <code class="code docutils literal notranslate"><span class="pre">USE</span> <span class="pre">CGNS</span></code>.
@@ -356,8 +357,8 @@ You may use this parameter to check at run time if the CGNS library has been com
 <span class="n">endif</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>

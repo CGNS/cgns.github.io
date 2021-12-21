@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
@@ -15,16 +16,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>6. Hierarchical Structures &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -117,16 +118,16 @@
           
           <div class="document clearer body">
             
-  <div class="section" id="hierarchical-structures">
+  <section id="hierarchical-structures">
 <h1><span class="section-number">6. </span>Hierarchical Structures<a class="headerlink" href="#hierarchical-structures" title="Permalink to this headline">¶</a></h1>
 <p>This section presents the structure-type definitions for the top levels of the CGNS hierarchy. As stated in the <span class="xref std std-ref">SIDS design philosophy</span>, the hierarchy is <span class="xref std std-ref">topologically based</span>, where the overall organization is by zones. All information pertaining to a given zone, including grid coordinates, flow solution, and other related data, is contained within that zone’s structure entity. This section describes the <span class="xref std std-ref">CGNS version number</span>, defines the <span class="xref std std-ref">CGNS database entry level structure</span> and the <span class="xref std std-ref">zone structure</span>, and concludes with a discussion of <a class="reference internal" href="#precedence"><span class="std std-ref">globally applicable data</span></a>.</p>
-<div class="section" id="cgns-version">
+<section id="cgns-version">
 <h2><span class="section-number">6.1. </span>CGNS Version<a class="headerlink" href="#cgns-version" title="Permalink to this headline">¶</a></h2>
 <p>CGNS is an evolving standard. Although great care is taken to make CGNS databases backward-compatible with previous versions whenever possible, new nodes and new features are still being added that make them non-forward-compatible. To address this issue, each new version of the standard is labeled with a version number that should be written in the file. This version number corresponds to the version of the SIDS and is an essential part of the file containing the CGNS database. The file can not be interpreted properly without knowledge of this version number.</p>
 <p>Physically, this version number is located directly under the root node of the file. The <span class="xref std std-ref">SIDS File Mapping Manual</span> defines this location more precisely.</p>
 <p>Historically, the version number was used to describe the version of the <span class="xref std std-ref">Mid-Level Library</span> used to write or modify the file. The corresponding node was thus named <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSLibraryVersion_t</span></code>. With the advent of new libraries that can read and write CGNS databases, the node is now defined as the version of the CGNS standard. The Mid-Level Library modifies its interpretation of node data according to the CGNS version number, and other libraries should also.</p>
-</div>
-<div class="section" id="cgns-entry-level-structure-definition-cgnsbase-t">
+</section>
+<section id="cgns-entry-level-structure-definition-cgnsbase-t">
 <h2><span class="section-number">6.2. </span>CGNS Entry Level Structure Definition: <code class="docutils literal notranslate"><span class="pre">CGNSBase_t</span></code><a class="headerlink" href="#cgns-entry-level-structure-definition-cgnsbase-t" title="Permalink to this headline">¶</a></h2>
 <p>The highest level structure in a CGNS database is <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code>. This top level entity is designed to be self-contained, a complete CFD computation can be archived and reproduced using the data defined in the CGNSBase. However a CGNS tree can contain more than one base, these can be related to the same CFD case or not. The behavior of a multi-base CGNS tree is application dependant, even if inter-base relationships are authorized in three cases:</p>
 <blockquote>
@@ -233,7 +234,7 @@ users may choose other legitimate names. Legitimate names must be unique at this
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">ReferenceState</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">FlowEquationSet</span></code> have special function in the CGNS hierarchy. They are globally applicable throughout the database, but their precedence may be superseded by local entities (e.g., within a given zone). The scope of these entities and the rules for determining precedence are treated in the section on <a class="reference internal" href="#precedence"><span class="std std-ref">Precedence Rules and Scope Within the Hierarchy</span></a>.</p>
 <p>Globally relevant convergence history information is contained in <code class="code sidsref docutils literal notranslate"><span class="pre">GlobalConvergenceHistory</span></code>. This convergence information includes total configuration forces, moments, and global residual and solution-change norms taken over all the zones.</p>
 <p>Miscellaneous global data may be contained in the <code class="code sidsref docutils literal notranslate"><span class="pre">IntegralData_t</span></code> list. Candidates for inclusion here are global forces and moments.</p>
-<div class="section" id="base-level-families">
+<section id="base-level-families">
 <h3><span class="section-number">6.2.1. </span>Base Level Families<a class="headerlink" href="#base-level-families" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">Family_t</span></code> data structure is used to record geometry reference data.
 It may also include boundary conditions linked to geometry patches. For the purpose of defining material properties, families may also be defined for groups of elements.
@@ -243,9 +244,9 @@ The pattern is then <code class="docutils literal notranslate"><span class="pre"
 The actual family name has the pattern <code class="docutils literal notranslate"><span class="pre">/&lt;CGNSBase_t&gt;/&lt;FamilyName1&gt;/&lt;FamilyName2&gt;/.../&lt;FamilyNameN&gt;</span></code>.
 The family-mesh association is defined under the <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">ZoneSubRegion_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code> data structures by specifying the family name corresponding to a zone, a zone sub-region or a boundary patch in a <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName_t</span></code> node. If the value of the <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName_t</span></code> node does not have a <code class="docutils literal notranslate"><span class="pre">/</span></code> character in it, then the name refers to a family being a direct child of its CGNS base. Otherwise, if this value has at least one <code class="docutils literal notranslate"><span class="pre">/</span></code> in it, the pattern <code class="docutils literal notranslate"><span class="pre">/&lt;CGNSBase_t&gt;/&lt;FamilyName1&gt;/&lt;FamilyName2&gt;/.../&lt;FamilyNameN&gt;</span></code> is mandatory.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-</div>
-</div>
-<div class="section" id="zone-structure-definition-zone-t">
+</section>
+</section>
+<section id="zone-structure-definition-zone-t">
 <h2><span class="section-number">6.3. </span>Zone Structure Definition: <code class="docutils literal notranslate"><span class="pre">Zone_t</span></code><a class="headerlink" href="#zone-structure-definition-zone-t" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code> structure contains all information pertinent to an individual zone. This information includes the zone type, the number of cells and vertices making up the grid in that zone, the physical coordinates of the grid vertices, grid motion information, the family, the flow solution, zone interface connectivity, boundary conditions, and zonal convergence history data. Zonal data may be recorded at multiple time steps or iterations. In addition, this structure contains a reference state, a set of flow equations and dimensional units that are all unique to the zone. For unstructured zones, the element connectivity may also be recorded.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ZoneType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
@@ -347,10 +348,10 @@ For element-based data (<code class="code sidskey docutils literal notranslate">
 <p>Convergence history information applicable to the zone is contained in <code class="code sidsref docutils literal notranslate"><span class="pre">ZoneConvergenceHistory</span></code>; this includes residual and solution-change norms.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">Ordinal</span></code> is user-defined and has no restrictions on the values that it can contain. It is included for backward compatibility to assist implementation of the CGNS system into applications whose I/O depends heavily on the numbering of zones. Since there are no restrictions on the values contained in <code class="code sidskey docutils literal notranslate"><span class="pre">Ordinal</span></code> (or that <code class="code sidskey docutils literal notranslate"><span class="pre">Ordinal</span></code> is even provided), there is no guarantee that the zones in an existing CGNS database will have sequential values from 1 to <em>N</em> without holes or repetitions. Use of <code class="code sidskey docutils literal notranslate"><span class="pre">Ordinal</span></code> is discouraged and is on a user-beware basis.</p>
-</div>
-<div class="section" id="precedence-rules-and-scope-within-the-hierarchy">
+</section>
+<section id="precedence-rules-and-scope-within-the-hierarchy">
 <span id="precedence"></span><h2><span class="section-number">6.4. </span>Precedence Rules and Scope Within the Hierarchy<a class="headerlink" href="#precedence-rules-and-scope-within-the-hierarchy" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="single-base">
+<section id="single-base">
 <h3><span class="section-number">6.4.1. </span>Single Base<a class="headerlink" href="#single-base" title="Permalink to this headline">¶</a></h3>
 <p>The dependence of a structure entity’s information on data contained at higher levels of the hierarchy is typically explicitly expressed through structure parameters. For example, all arrays within <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code> depend on the dimensionality of the computational grid. This dimensionality is passed down to a <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code> entity through a structure parameter in the definition of <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code>.</p>
 <p>We have established an alternate dependency for a limited number of entities that is not explicitly stated in the structure type definitions. These special situations include entities for describing data class, system of dimensional units, reference states and flow equation sets. At each level of the hierarchy (where appropriate), entities for describing this information are defined, and if present they take precedence over all corresponding information existing at higher levels of the CGNS hierarchy. Essentially, we have established globally applicable data with provisions for recursively overriding it with local data.</p>
@@ -369,11 +370,11 @@ For element-based data (<code class="code sidskey docutils literal notranslate">
 and <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> specifies the system of units used for dimensional data.</p>
 <p>All of these entities may be defined within the highest level <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> structure, and if present in a given database, establish globally applicable information; these may also be considered to be global defaults. Each of these four entities may also be defined within the <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code> structure. If present in a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code>, they supersede the global data and establish new defaults that apply only within that zone.</p>
 <p>For example, if a different set of flow equations is solved within a given zone than is solved in the rest of the flowfield, then this can be conveyed through <code class="code sidsref docutils literal notranslate"><span class="pre">FlowEquationSet</span></code>. In this case, one <code class="code sidskey docutils literal notranslate"><span class="pre">FlowEquationSet</span></code> entity would be placed within <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> to state the globally applicable flow equations, and a second <code class="code sidskey docutils literal notranslate"><span class="pre">FlowEquationSet</span></code> entity would be placed within the given zone (within its instance of <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code>); this second <code class="code sidskey docutils literal notranslate"><span class="pre">FlowEquationSet</span></code> entity supersedes the first only within the given zone.</p>
-<p>In addition to its presence in <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">ReferenceState</span></code> may also be defined within the boundary-condition structure types to establish reference states applicable to one or more boundary-condition patches. Actually, <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code> entities can be defined at several levels of the <a class="reference internal" href="../FMM/save_nodes.html#bc"><span class="std std-ref">boundary-condition hierarchy</span></a> to allow flexibility in setting the appropriate reference state conditions.</p>
+<p>In addition to its presence in <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">ReferenceState</span></code> may also be defined within the boundary-condition structure types to establish reference states applicable to one or more boundary-condition patches. Actually, <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code> entities can be defined at several levels of the <a class="reference internal" href="../FMM/nodes.html#bc"><span class="std std-ref">boundary-condition hierarchy</span></a> to allow flexibility in setting the appropriate reference state conditions.</p>
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> are used within entities describing data arrays. They classify the data and specify its system of units if dimensional. If these entities are absent from a particular instance of <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, the information is derived from appropriate global data. <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> are also declared in all intermediate structure types that directly or indirectly contain <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities. Examples include <code class="code sidsref docutils literal notranslate"><span class="pre">GridCoordinates_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">FlowSolution_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">ReferenceState_t</span></code>. The same precedence rules apply - lower-level entities supersede higher-level entities.</p>
 <p>It is envisioned that in practice, the use of globally applicable data will be the norm rather than the exception. It provides a measure of economy throughout the CGNS database in many situations. For example, when creating a database where the vast majority of data arrays are dimensional and use a consistent set of units, <code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> can be set appropriately at the <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> level and thereafter omitted when outputting data.</p>
-</div>
-<div class="section" id="multiple-bases">
+</section>
+<section id="multiple-bases">
 <h3><span class="section-number">6.4.2. </span>Multiple Bases<a class="headerlink" href="#multiple-bases" title="Permalink to this headline">¶</a></h3>
 <p>With a multiple-bases CGNS tree, some nodes defined at the base level may lead to an inconsistent CGNS set of data. In that case it is up to the application using the CGNS tree to define its own understanding of the data. In particular, the following nodes are not required to be the same in all bases of a CGNS tree, thus inter-base references may lead to inconsistency:</p>
 <blockquote>
@@ -391,9 +392,9 @@ and <code class="code sidsref docutils literal notranslate"><span class="pre">Di
 </ul>
 </div></blockquote>
 <p>The application has to take into account the corresponding base definition for the referred-to node.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>

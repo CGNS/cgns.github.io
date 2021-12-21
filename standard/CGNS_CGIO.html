@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../_static/fonts/open-sans/stylesheet.css" />
@@ -15,12 +16,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>CGNS/CGIO - Basic node implementation &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../_static/css/math_override.css" />
     <link rel="stylesheet" type="text/css" href="../_static/css/midlevel.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -108,14 +109,14 @@
           
           <div class="document clearer body">
             
-  <div class="section" id="cgns-cgio-basic-node-implementation">
+  <section id="cgns-cgio-basic-node-implementation">
 <span id="standardcgio"></span><h1>CGNS/CGIO - Basic node implementation<a class="headerlink" href="#cgns-cgio-basic-node-implementation" title="Permalink to this headline">¶</a></h1>
 <p>The CGIO interface provides low-level access to the database manager which underlies CGNS.
 The CGIO interface supports both ADF and HDF5 database managers simultaneously, and in a fashion transparent to the application code.</p>
 <p>This document defines the general structure of a database file, but not the specific implementation details.
 See the ADF and HDF5 Implementations for the details.
 The CGIO core routines used to store and retrieve data from the database manager are also described.</p>
-<div class="section" id="node-the-building-block">
+<section id="node-the-building-block">
 <h2>Node - The Building Block<a class="headerlink" href="#node-the-building-block" title="Permalink to this headline">¶</a></h2>
 <p>A database is a hierarchical system that is built around the concept of a “node”. Each node contains information about itself and its ancestors and possibly data (e.g., arrays, vectors, character strings, etc.). Each of these nodes, in turn, may be connected to an arbitrary number of children, each of which is itself a node. In this system, a node contains user-accessible information related to identification, name, type, and amount of data associated with it, and pointers to child nodes. Basic nodal information includes:</p>
 <blockquote>
@@ -132,14 +133,16 @@ The CGIO core routines used to store and retrieve data from the database manager
 This structure allows the construction of a hierarchical system as shown in the figure below.
 As illustrated in the figure, it is possible to reference nodes in a second file (<em>File_Two</em>) from the original file (<em>File_One</em>).
 This is the concept of “linking.”</p>
-<div class="figure align-center" id="id1">
+<figure class="align-center" id="id1">
 <span id="examplenodedatabase"></span><a class="reference internal image-reference" href="../_images/database.gif"><img alt="Example database showing node connections and links." src="../_images/database.gif" style="width: 600px;" /></a>
-<p class="caption"><span class="caption-text"><em>Example Database Hierarchy of Nodes</em></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><em>Example Database Hierarchy of Nodes</em></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>A node knows about itself and its children, but it does not know anything about its parent. This means that it is possible to traverse “down” the tree by making queries about what lies below the current node, but it is not possible to traverse “up” the tree by making queries about nodes above a given node. If it is desired to move back up the tree, the user must keep track of that information.</p>
 <p>All database files start with a root node, which is created automatically when a new file is opened. There is only one root node in a database file, and may be referenced by the database Root ID or by name as “/”.</p>
-</div>
-<div class="section" id="node-attributes">
+</section>
+<section id="node-attributes">
 <h2>Node Attributes<a class="headerlink" href="#node-attributes" title="Permalink to this headline">¶</a></h2>
 <p>Each node in the database may have zero to many subnodes that are associated with it, as well as its own data. The following are a list of attributes accessible by the user for a node in the hierarchical database system.</p>
 <dl class="field-list">
@@ -258,8 +261,8 @@ Names returned through the C interface will have the null character appended to 
 </table>
 <p>The “MT” node contains no data, and is typically used as a container for subnodes (children).</p>
 <p>A link is denoted by “LK”, and defines the linkage between nodes and subnodes. A link provides a mechanism for referring to a node that physically resides in a different part of the hierarchy or a different database file. The link parallels a soft link in the UNIX operating system in that it does not guarantee that the referenced node exists. The database manager will “resolve” the link only when information is requested about the linked node or it’s children.</p>
-</div>
-<div class="section" id="glossary-of-terms">
+</section>
+<section id="glossary-of-terms">
 <h2>Glossary of Terms<a class="headerlink" href="#glossary-of-terms" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Child</dt>
@@ -297,13 +300,13 @@ Links provide a mechanism for referring to a node that physically resides in a d
 </ul>
 </dd>
 </dl>
-</div>
-<div class="section" id="conventions-and-implementations">
+</section>
+<section id="conventions-and-implementations">
 <h2>Conventions and Implementations<a class="headerlink" href="#conventions-and-implementations" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list">
 <dt class="field-odd">C</dt>
 <dd class="field-odd"><p>All input strings are to be null terminated. All returned strings will have the trailing blanks removed and will be null terminated. Variables declared to hold Names, Labels, and Data-Types should be at least 33 characters long. <em>cgns_io.h</em> has a number of variables defined. An example declaration would be:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="n">CGIO_MAX_NAME_LENGTH</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">char</span><span class="w"> </span><span class="n">name</span><span class="p">[</span><span class="n">CGIO_MAX_NAME_LENGTH</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
 </pre></div>
 </div>
 </dd>
@@ -330,8 +333,8 @@ As long as users are aware of how their data structure maps onto the database, t
 <dd class="field-odd"><p>The CGIO routines return an integer code indicating whether they were successfull or not. On success, <code class="code docutils literal notranslate"><span class="pre">0</span></code> (<code class="code docutils literal notranslate"><span class="pre">CGIO_ERR_NONE</span></code>) is returned. A non-zero return indicates an error. Return codes &lt; 0 indicate an error at the CGIO level; codes &gt; 0 indicate an error in the database manager. See Error Messages for a list of error codes and mesages.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="limits-and-sizes">
+</section>
+<section id="limits-and-sizes">
 <h2>Limits and Sizes<a class="headerlink" href="#limits-and-sizes" title="Permalink to this headline">¶</a></h2>
 <p>The following default values, sizes, and limits are defined in the header file <em>cgns_io.h</em>.</p>
 <table class="docutils align-default">
@@ -389,8 +392,8 @@ As long as users are aware of how their data structure maps onto the database, t
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="cgio-core-routines">
+</section>
+<section id="cgio-core-routines">
 <span id="cgiocoreroutines"></span><h2>CGIO core routines<a class="headerlink" href="#cgio-core-routines" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
@@ -463,8 +466,8 @@ As long as users are aware of how their data structure maps onto the database, t
 </li>
 </ul>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>

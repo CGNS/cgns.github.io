@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
@@ -15,16 +16,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>5. Data-Array Structure Definitions &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -126,7 +127,7 @@
           
           <div class="document clearer body">
             
-  <div class="section" id="data-array-structure-definitions">
+  <section id="data-array-structure-definitions">
 <span id="standarddataarraystruct"></span><h1><span class="section-number">5. </span>Data-Array Structure Definitions<a class="headerlink" href="#data-array-structure-definitions" title="Permalink to this headline">¶</a></h1>
 <p>This section defines the structure type <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> for describing data arrays.
 This general-purpose structure is used to declare data arrays and scalars throughout the CGNS hierarchy.
@@ -149,7 +150,7 @@ The individual components of nondimensional parameters may be data from any of t
 These requirements are reflected in the structure definition for <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code>.</p>
 <p>The remainder of this section is as follows: The structure type <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is first defined.
 Then the class identification and data manipulation is discussed for each of the five data classes. Finally, examples of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities are presented.</p>
-<div class="section" id="definition-dataarray-t">
+<section id="definition-dataarray-t">
 <h2><span class="section-number">5.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataArray_t</span></code><a class="headerlink" href="#definition-dataarray-t" title="Permalink to this headline">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> describes a multi-dimensional data array of given type, dimensionality and size in each dimension. The data may be dimensional, nondimensional or pure constants. Qualifiers are provided to describe dimensional units or normalization information associated with the data.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Dimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">Dimension</span><span class="p">]</span><span class="w"> </span><span class="n">DimensionValues</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
@@ -180,7 +181,7 @@ Then the class identification and data manipulation is discussed for each of the
 <p>This structure type is formulated to describe an array of scalars.
 Therefore, for vector quantities (e.g., the position vector or the velocity vector), separate structure entities are required for each component of the vector.
 For example, the Cartesian coordinates of a 3-D grid are described by three separate <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities: one for x, one for y and one for z (see the example for <span class="xref std std-ref">Cartesian Coordinates for a 2-D Structured Grid</span>).</p>
-<div class="section" id="definition-dataconversion-t">
+<section id="definition-dataconversion-t">
 <h3><span class="section-number">5.1.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataConversion_t</span></code><a class="headerlink" href="#definition-dataconversion-t" title="Permalink to this headline">¶</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion_t</span></code> contains conversion factors for recovering raw dimensional data from given nondimensional data. These conversion factors are typically associated with nondimensional data that is normalized by dimensional reference quantities.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">DataConversion_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
@@ -196,9 +197,9 @@ For example, the Cartesian coordinates of a 3-D grid are described by three sepa
 </pre></div>
 </div>
 <p>These conversion factors are further described in the section <a class="reference internal" href="#normbydim"><span class="std std-ref">Nondimensional Data Normalized by Dimensional Quantities</span></a>.</p>
-</div>
-</div>
-<div class="section" id="data-manipulation">
+</section>
+</section>
+<section id="data-manipulation">
 <h2><span class="section-number">5.2. </span>Data Manipulation<a class="headerlink" href="#data-manipulation" title="Permalink to this headline">¶</a></h2>
 <p>The optional entities of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> provide information for manipulating the data, including changing units or normalization.
 This section describes the rules under which these optional entities operate and the specific manipulations that can be performed on the data.</p>
@@ -213,7 +214,7 @@ The rules for determining the appropriate set of global data to apply is further
 <p>This alternate functionality provides a measure of economy in describing dimensional units or normalization within the hierarchy.
 Examples that make use of global data are available for both <a class="reference internal" href="grid.html#grid-example"><span class="std std-ref">grid coordinates</span></a> and <span class="xref std std-ref">flow solutions</span>.
 A complete <span class="xref std std-ref">two-zone example</span> case also depicts this alternate functionality.</p>
-<div class="section" id="dimensional-data">
+<section id="dimensional-data">
 <span id="dimensional"></span><h3><span class="section-number">5.2.1. </span>Dimensional Data<a class="headerlink" href="#dimensional-data" title="Permalink to this headline">¶</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">Dimensional</span></code>, the data is dimensional.
 The optional qualifiers <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> describe dimensional units associated with the data.
@@ -224,8 +225,8 @@ Combining the information gives the units m/s. Examples showing the use of these
 The rules for determining this appropriate set of global dimensional units are presented in the section <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">Precedence Rules and Scope Within the Hierarchy</span></a>.</p>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> is absent, then the appropriate dimensional exponents can be determined by convention if the specific instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> corresponds to one of the <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">standardized data-name identifiers</span></a>.
 Otherwise, the exponents are unspecified. We strongly recommend inclusion of the <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> qualifier whenever the data is dimensional and the instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is not among the list of standardized identifiers.</p>
-</div>
-<div class="section" id="nondimensional-data-normalized-by-dimensional-quantities">
+</section>
+<section id="nondimensional-data-normalized-by-dimensional-quantities">
 <span id="normbydim"></span><h3><span class="section-number">5.2.2. </span>Nondimensional Data Normalized by Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-dimensional-quantities" title="Permalink to this headline">¶</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByDimensional</span></code>, the data is nondimensional and is normalized by dimensional reference quantities.
 All optional entities in <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> are used. <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> contains factors to convert the nondimensional data to “raw” dimensional data; these factors are <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionScale</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionOffset</span></code>.
@@ -241,8 +242,8 @@ If either <code class="code sidskey docutils literal notranslate"><span class="p
 <p>Note that functionally there is little difference between these first two data classes (<code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <a class="reference internal" href="#dimensional"><span class="std std-ref">Dimensional</span></a> and <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByDimensional</span></code>).
 In the first case the data is dimensional, and in the second, the converted raw data is dimensional.
 Also, the equivalent defaults for <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> produce no changes in the data; hence, it is almost the same as stating the original data is dimensional.</p>
-</div>
-<div class="section" id="nondimensional-data-normalized-by-unknown-dimensional-quantities">
+</section>
+<section id="nondimensional-data-normalized-by-unknown-dimensional-quantities">
 <h3><span class="section-number">5.2.3. </span>Nondimensional Data Normalized by Unknown Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-unknown-dimensional-quantities" title="Permalink to this headline">¶</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByUnknownDimensional</span></code>, the data is nondimensional and is normalized by some unspecified dimensional quantities.
 This type of data is typical of a completely nondimensional test case, where all field data and all reference quantities are nondimensional.</p>
@@ -305,12 +306,12 @@ However, the desired manipulation is possible using only nondimensional data pro
 \[\begin{split}p''_{ijk} &amp;\equiv p_{ijk} / (\rho_{ref} c_{ref}^{2}) \\
           &amp;= [p_{ijk} / (M/(LT^{2})] [(M/L^{3}) / \rho_{ref}] [(L/T) / c_{ref}]^{2} \\
           &amp;= p'_{ijk} / (\rho'_{ref} (c'_{ref})^{2})\end{split}\]</div>
-<p>Thus, the desired renormalization is possible using the database’s nondimensional data as if it were actually dimensional. There is, in fact, a high degree of equivalence between dimensional data and consistently normalized nondimensional data. The procedure shown in this example should extend to any desired renormalization, provided the needed <a class="reference internal" href="../FMM/save_nodes.html#referencestate"><span class="std std-ref">reference-state quantities</span></a> are included in the database.</p>
+<p>Thus, the desired renormalization is possible using the database’s nondimensional data as if it were actually dimensional. There is, in fact, a high degree of equivalence between dimensional data and consistently normalized nondimensional data. The procedure shown in this example should extend to any desired renormalization, provided the needed <a class="reference internal" href="../FMM/nodes.html#referencestate"><span class="std std-ref">reference-state quantities</span></a> are included in the database.</p>
 <p>This example points out two stipulations that we now dictate for data in the class <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByUnknownDimensional</span></code>,</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li><p>All nondimensional data within a given database that has <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">NormalizedByUnknownDimensional</span></code> shall be consistently normalized.</p></li>
-<li><p>Any nondimensional <a class="reference internal" href="../FMM/save_nodes.html#referencestate"><span class="std std-ref">reference state</span></a> appearing in a database should be sufficiently populated with reference quantities to allow for renormalization procedures.</p></li>
+<li><p>Any nondimensional <a class="reference internal" href="../FMM/nodes.html#referencestate"><span class="std std-ref">reference state</span></a> appearing in a database should be sufficiently populated with reference quantities to allow for renormalization procedures.</p></li>
 </ol>
 </div></blockquote>
 <p>The second of these stipulations is somewhat ambiguous, but good practice would suggest that a flow solver, for example, should output to the database enough static and/or stagnation reference quantities to sufficiently define the state.</p>
@@ -371,8 +372,8 @@ The code could then output all field data as,</p>
 </table>
 <p>where <span class="math notranslate nohighlight">\(\gamma\)</span> is the specific heat ratio (assumes a perfect gas) and <span class="math notranslate nohighlight">\(Re\)</span> is the Reynolds number.</p>
 <p>On input, the flow solver should be able to recover its internal normalizations from the data in a nondimensional CGNS database by treating the data as if it were dimensional.</p>
-</div>
-<div class="section" id="nondimensional-parameters">
+</section>
+<section id="nondimensional-parameters">
 <h3><span class="section-number">5.2.4. </span>Nondimensional Parameters<a class="headerlink" href="#nondimensional-parameters" title="Permalink to this headline">¶</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">NondimensionalParameter</span></code>, the data is a nondimensional parameter (or array of nondimensional parameters). Examples include Mach number, Reynolds number and pressure coefficient. These parameters are prevalent in CFD, although their definitions tend to vary between different application codes. A list of <span class="xref std std-ref">standardized data-name identifiers for nondimensional parameters</span> is provided.</p>
 <p>We distinguish nondimensional parameters from other data classes by the fact that they are <em>always</em> dimensionless. In a completely nondimensional database, they are distinct in that their normalization is not necessarily consistent with other data.</p>
@@ -388,15 +389,15 @@ These situations must satisfy two requirements: First, the defining scales are d
 Examples that satisfy this second constraint are pressure coefficient, where the raw data is static pressure, and lift coefficient, where the raw data is the lift force.
 Conversely, Reynolds number is a parameter that violates the second requirement - there are three pieces of raw data rather than one that make up <em>Re</em>.
 For nondimensional parameters that satisfy these two requirements, the qualifiers <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> may be used as in the section <a class="reference internal" href="#normbydim"><span class="std std-ref">Nondimensional Data Normalized by Dimensional Quantities</span></a> to recover the raw dimensional data.</p>
-</div>
-<div class="section" id="dimensionless-constants">
+</section>
+<section id="dimensionless-constants">
 <h3><span class="section-number">5.2.5. </span>Dimensionless Constants<a class="headerlink" href="#dimensionless-constants" title="Permalink to this headline">¶</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">DimensionlessConstant</span></code>, the data is a constant (or array of constants) with no associated dimensional units. The <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> qualifiers are not used.</p>
-</div>
-<div class="section" id="data-array-examples">
+</section>
+<section id="data-array-examples">
 <h3><span class="section-number">5.2.6. </span>Data-Array Examples<a class="headerlink" href="#data-array-examples" title="Permalink to this headline">¶</a></h3>
 <p>This section presents five examples of data-array entities and illustrates the use of optional information for describing dimensional and nondimensional data.</p>
-<div class="section" id="example-one-dimensional-data-array-constants">
+<section id="example-one-dimensional-data-array-constants">
 <h4><span class="section-number">5.2.6.1. </span>Example - One-Dimensional Data Array, Constants<a class="headerlink" href="#example-one-dimensional-data-array-constants" title="Permalink to this headline">¶</a></h4>
 <p>A one-dimensional array of integers; the array is the integers from 1 to 10. The data is pure constants.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = int</span>
@@ -411,8 +412,8 @@ For nondimensional parameters that satisfy these two requirements, the qualifier
 </pre></div>
 </div>
 <p>The structure parameters for <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> state the data is an one-dimensional integer array of length ten. The value of <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> indicates the data is <span class="xref std std-ref">unitless constants</span>.</p>
-</div>
-<div class="section" id="example-two-dimensional-data-array-pressures">
+</section>
+<section id="example-two-dimensional-data-array-pressures">
 <span id="ex-data2"></span><h4><span class="section-number">5.2.6.2. </span>Example - Two-Dimensional Data Array, Pressures<a class="headerlink" href="#example-two-dimensional-data-array-pressures" title="Permalink to this headline">¶</a></h4>
 <p>A two-dimensional array of pressures with size <span class="math notranslate nohighlight">\(11 \times 9\)</span> given by the array <span class="math notranslate nohighlight">\(P(i,j)\)</span>.
 The data is dimensional with units of <span class="math notranslate nohighlight">\(N/m^{2}\)</span> (i.e., <span class="math notranslate nohighlight">\(kg/(m s^{2})\)</span>).
@@ -452,8 +453,8 @@ Note that Pressure is the data-name identifier for static pressure.</p>
 Combining the information gives pressure as <span class="math notranslate nohighlight">\(kg/(m s^{2})\)</span>.
 <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> could have been defaulted, since the dimensional exponents are part of the <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">standardized data-name identifier</span></a> for <code class="code sidskey docutils literal notranslate"><span class="pre">Pressure</span></code>.</p>
 <p>Note that FORTRAN multidimensional array indexing is used to store the data; this is reflected in the FORTRAN-like implied do-loops for <span class="math notranslate nohighlight">\(P(i,j)\)</span>.</p>
-</div>
-<div class="section" id="example-three-dimensional-data-array-nondimensional-static-enthalpy">
+</section>
+<section id="example-three-dimensional-data-array-nondimensional-static-enthalpy">
 <h4><span class="section-number">5.2.6.3. </span>Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-static-enthalpy" title="Permalink to this headline">¶</a></h4>
 <p>A 3-D array of size <span class="math notranslate nohighlight">\(33 \times 9 \times 17\)</span> containing nondimensional static enthalpy.
 The data is normalized by freestream velocity as follows:</p>
@@ -500,8 +501,8 @@ The freestream velocity is dimensional with a value of 10 m/s.</p>
 <p>The value of <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> indicates that the data is <a class="reference internal" href="#normbydim"><span class="std std-ref">nondimensional and normalized by a dimensional reference quantity</span></a>.
 <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> provides the conversion factors for recovering the raw static enthalpy, which has units of <span class="math notranslate nohighlight">\(m^{2}/s^{2}\)</span> as indicated by <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code>.
 Note that <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> could have been defaulted using the conventions for the data-name identifier <code class="code sidskey docutils literal notranslate"><span class="pre">Enthalpy</span></code>.</p>
-</div>
-<div class="section" id="example-three-dimensional-data-array-nondimensional-database">
+</section>
+<section id="example-three-dimensional-data-array-nondimensional-database">
 <h4><span class="section-number">5.2.6.4. </span>Example - Three-Dimensional Data Array, Nondimensional Database<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-database" title="Permalink to this headline">¶</a></h4>
 <p>The previous example for nondimensional enthalpy is repeated for a completely nondimensional database.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = real</span>
@@ -516,8 +517,8 @@ Note that <code class="code sidskey docutils literal notranslate"><span class="p
 </pre></div>
 </div>
 <p>The value of <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> indicates the appropriate class.</p>
-</div>
-<div class="section" id="example-data-arrays-for-reynolds-number">
+</section>
+<section id="example-data-arrays-for-reynolds-number">
 <h4><span class="section-number">5.2.6.5. </span>Example - Data Arrays for Reynolds Number<a class="headerlink" href="#example-data-arrays-for-reynolds-number" title="Permalink to this headline">¶</a></h4>
 <p>Reynolds number of <span class="math notranslate nohighlight">\(1.554 \times 10^{6}\)</span> based on a velocity scale of <span class="math notranslate nohighlight">\(10\ m/s\)</span>, a length scale of <span class="math notranslate nohighlight">\(2.3\ m\)</span> and a kinematic viscosity scale of <span class="math notranslate nohighlight">\(1.48 \times 10^{−5}\ m^{2}/s\)</span>.
 Assume the database has globally set the dimensional units to kilograms, meters, and seconds, and the global default data class to dimensional (<code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">Dimensional</span></code>).</p>
@@ -551,10 +552,10 @@ Assume the database has globally set the dimensional units to kilograms, meters,
 Since each of these entities contain no qualifiers, global information is used to decipher that they are all dimensional with mass, length, and time units of kilograms, meters, and seconds.
 The structure parameters for each <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entity state that they contain a real scalar.</p>
 <p>If a user wanted to convey the dimensional units of the defining scales using optional qualifiers of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code>, then the last three entities in this example would have a form similar to that in the <a class="reference internal" href="#ex-data2"><span class="std std-ref">Two-Dimensional Data Array example</span></a>.</p>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
 
           </div>

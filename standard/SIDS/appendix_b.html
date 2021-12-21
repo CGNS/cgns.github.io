@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
@@ -15,16 +16,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>Appendix B: Structured Two-Zone Flat Plate Example &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -113,13 +114,15 @@
           
           <div class="document clearer body">
             
-  <div class="section" id="appendix-b-structured-two-zone-flat-plate-example">
+  <section id="appendix-b-structured-two-zone-flat-plate-example">
 <h1>Appendix B: Structured Two-Zone Flat Plate Example<a class="headerlink" href="#appendix-b-structured-two-zone-flat-plate-example" title="Permalink to this headline">¶</a></h1>
 <p>This section describes a complete database for a sample test case. The test case is compressible turbulent flow past a flat plat at zero incidence. The domain is divided into two zones as shown in the figure below. The interface between the two zones is 1-to-1.</p>
-<div class="figure align-center" id="id1">
+<figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="../../_images/plate.gif"><img alt="Diagram showing zone sizes, coordinates, and boundary conditions" src="../../_images/plate.gif" style="width: 487px;" /></a>
-<p class="caption"><span class="caption-text"><em>Two-Zone Flat Plate Test Case</em></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text"><em>Two-Zone Flat Plate Test Case</em></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>The database description includes the following:</p>
 <ul class="simple">
 <li><p>range of indices within each zone</p></li>
@@ -133,7 +136,7 @@
 <p>Each of these items is described in separate sections to make the information more readable. The same database is presented in each section, but only that information needed for the particular focus is included. The overall layout of the database is presented in the following section.</p>
 <p>All data for this test case is nondimensional and is normalized consistently by the following (dimensional) quantities: plate length <span class="math notranslate nohighlight">\(L\)</span>, freestream static density <span class="math notranslate nohighlight">\(\rho_\infty\)</span>, freestream static speed of sound <span class="math notranslate nohighlight">\(c_\infty\)</span>, and freestream static temperature <span class="math notranslate nohighlight">\(T_\infty\)</span>.
 The fact that the database is completely nondimensional is reflected in the value of the globally set data class.</p>
-<div class="section" id="b-1-overall-layout">
+<section id="b-1-overall-layout">
 <h2>B.1 Overall Layout<a class="headerlink" href="#b-1-overall-layout" title="Permalink to this headline">¶</a></h2>
 <p>This section describes the overall layout of the database. Included are the cell dimension and physical dimension of the grid, the globally set data class, the global reference state and flow-equations description, and data pertaining to each zone.
 Each zone contains the grid size, grid coordinates, flow solution, multizone interfaces and boundary conditions. All entities given by <code class="code sidskey docutils literal notranslate"><span class="pre">{{*}}</span></code> are expanded in subsequent sections. Note that because this example contains structured zones, <code class="code sidskey docutils literal notranslate"><span class="pre">IndexDimension</span> <span class="pre">=</span> <span class="pre">CellDimension</span> <span class="pre">=</span> <span class="pre">3</span></code> in each zone.</p>
@@ -188,8 +191,8 @@ Each zone contains the grid size, grid coordinates, flow solution, multizone int
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="c1">! end TwoZoneCase</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="b-2-grid-coordinates">
+</section>
+<section id="b-2-grid-coordinates">
 <h2>B.2 Grid Coordinates<a class="headerlink" href="#b-2-grid-coordinates" title="Permalink to this headline">¶</a></h2>
 <p>This section describes the grid-coordinate entities for each zone.
 Since the coordinates are all nondimensional, the individual <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities do not include a data-class qualifier; instead, this information is derived from the globally set data class. The grid-coordinate entities for zone 2 are abbreviated.</p>
@@ -251,8 +254,8 @@ Since the coordinates are all nondimensional, the individual <code class="code s
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="c1">! end TwoZoneCase</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="b-3-flowfield-solution">
+</section>
+<section id="b-3-flowfield-solution">
 <h2>B.3 Flowfield Solution<a class="headerlink" href="#b-3-flowfield-solution" title="Permalink to this headline">¶</a></h2>
 <p>This section provides a description of the flowfield solution including the conservation variables and the Spalart-Allmaras turbulent-transport quantity (<span class="math notranslate nohighlight">\(\nu_{SA}\)</span>).
 The flowfield solution is given at cell centers with a single row of ghost-cell values along each boundary.</p>
@@ -309,8 +312,8 @@ The flowfield solution is given at cell centers with a single row of ghost-cell 
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="c1">! end TwoZoneCase</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="b-4-interface-connectivity">
+</section>
+<section id="b-4-interface-connectivity">
 <h2>B.4 Interface Connectivity<a class="headerlink" href="#b-4-interface-connectivity" title="Permalink to this headline">¶</a></h2>
 <p>This section describes the interface connectivity between zones 1 and 2; it also includes the <em>k</em>-plane periodicity for each zone (which is essentially an interface connectivity of a zone onto itself).
 Each interface entity is repeated with the receiver and donor-zone roles reversed; this includes the periodic <em>k</em>-plane interfaces.
@@ -458,8 +461,8 @@ This means that each matrix is its own inverse, and the value of <code class="co
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="c1">! end TwoZoneCase</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="b-5-boundary-conditions">
+</section>
+<section id="b-5-boundary-conditions">
 <h2>B.5 Boundary Conditions<a class="headerlink" href="#b-5-boundary-conditions" title="Permalink to this headline">¶</a></h2>
 <p>Boundary conditions for the flat plate case are described in this section.
 The minimal information necessary is included in each boundary condition; this includes the boundary-condition type and BC-patch specification.
@@ -591,8 +594,8 @@ All relevant information is provided for these interfaces in the <code class="co
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="c1">! end TwoZoneCase</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="b-6-global-reference-state">
+</section>
+<section id="b-6-global-reference-state">
 <h2>B.6 Global Reference State<a class="headerlink" href="#b-6-global-reference-state" title="Permalink to this headline">¶</a></h2>
 <p>This section provides a description of the freestream reference state. As previously stated, all data is nondimensional including all reference state quantities.
 The dimensional plate length <span class="math notranslate nohighlight">\(L\)</span> and freestream scales <span class="math notranslate nohighlight">\(\rho_\infty\)</span>, <span class="math notranslate nohighlight">\(c_\infty\)</span> and <span class="math notranslate nohighlight">\(T_\infty\)</span> are used for normalization.</p>
@@ -663,8 +666,8 @@ h′_\infty &amp;= 1 / (\gamma−1)           &amp; (h_0)′_\infty &amp;= h′_
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="c1">! end TwoZoneCase</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="b-7-equation-description">
+</section>
+<section id="b-7-equation-description">
 <h2>B.7 Equation Description<a class="headerlink" href="#b-7-equation-description" title="Permalink to this headline">¶</a></h2>
 <p>This section provides a description of the flow equations used to solve the problem. The flow equation set is turbulent, compressible 3-D Navier-Stokes with the Spalart-Allmaras (S-A) one-equation turbulence model.
 The thin-layer Navier-Stokes diffusion terms are modeled; only diffusion in the <em>j</em>-coordinate direction is included.</p>
@@ -750,8 +753,8 @@ A turbulent Prandtl number of <span class="math notranslate nohighlight">\(Pr_{t
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="c1">! TwoZoneCase</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>

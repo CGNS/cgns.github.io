@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   
   <!-- Licensed under the Apache 2.0 License -->
   <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
@@ -15,12 +16,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>Equation Specification &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
@@ -92,7 +93,7 @@
           
           <div class="document clearer body">
             
-  <div class="section" id="equation-specification">
+  <section id="equation-specification">
 <span id="mllequation"></span><h1>Equation Specification<a class="headerlink" href="#equation-specification" title="Permalink to this headline">¶</a></h1>
 <!-- CGNS Mid-Level Library - Equation Specification -->
 
@@ -106,29 +107,29 @@
 <ul>
 <li> <a href="#flowequationset">Flow Equation Set</a>
      <ul>
-     <li> <tt><b>cg_equationset_write</b></tt> - Write dimensionality of flow equations
-     <li> <tt><b>cg_equationset_read</b></tt> - Read flow equation set info
-     <li> <tt><b>cg_equationset_chemistry_read</b></tt> - Read chemistry equation set info
-     <li> <tt><b>cg_equationset_elecmagn_read</b></tt> - Read electromagnetic equation set info
+     <li> <code><b>cg_equationset_write</b></code> - Write dimensionality of flow equations
+     <li> <code><b>cg_equationset_read</b></code> - Read flow equation set info
+     <li> <code><b>cg_equationset_chemistry_read</b></code> - Read chemistry equation set info
+     <li> <code><b>cg_equationset_elecmagn_read</b></code> - Read electromagnetic equation set info
      </ul>
 <li> <a href="#governingequations">Governing Equations</a>
      <ul>
-     <li> <tt><b>cg_governing_write</b></tt> - Write type of governing equation
-     <li> <tt><b>cg_governing_read</b></tt> - Read type of governing equation
-     <li> <tt><b>cg_diffusion_write</b></tt> - Write flags for diffusion terms
-     <li> <tt><b>cg_diffusion_read</b></tt> - Read flags for diffusion terms
+     <li> <code><b>cg_governing_write</b></code> - Write type of governing equation
+     <li> <code><b>cg_governing_read</b></code> - Read type of governing equation
+     <li> <code><b>cg_diffusion_write</b></code> - Write flags for diffusion terms
+     <li> <code><b>cg_diffusion_read</b></code> - Read flags for diffusion terms
      </ul>
 <li> <a href="#auxiliary">Auxiliary Models</a>
      <ul>
-     <li> <tt><b>cg_model_write</b></tt> - Write auxiliary model types
-     <li> <tt><b>cg_model_read</b></tt> - Read auxiliary model types
+     <li> <code><b>cg_model_write</b></code> - Write auxiliary model types
+     <li> <code><b>cg_model_read</b></code> - Read auxiliary model types
      </ul>
 </ul>
 
 <a name="flowequationset"></a>
 <h3>Flow Equation Set</h3>
 
-<i>Node</i>: <tt>FlowEquationSet_t</tt>
+<i>Node</i>: <code>FlowEquationSet_t</code>
              (<a href="../sids/floweqn.html#FlowEquationSet">SIDS</a>,
               <a href="../filemap/nodes.html#FlowEquationSet">File Mapping</a>)
 
@@ -142,48 +143,48 @@
     <th scope=col>Modes
 <tbody>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_equationset_write(<span class=in>int EquationDimension</span>);</b></tt>
+        <code><b><span class=out><i>ier</i></span> = cg_equationset_write(<span class=in>int EquationDimension</span>);</b></code>
     <td align=center valign=baseline>
-        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_equationset_read(<span class=out><i>int *EquationDimension</i></span>,<br>
+        <code><b><span class=out><i>ier</i></span> = cg_equationset_read(<span class=out><i>int *EquationDimension</i></span>,<br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *GoverningEquationsFlag</i></span>, <span class=out><i>int *GasModelFlag</i></span>,<br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *ViscosityModelFlag</i></span>, <span class=out><i>int *ThermalConductModelFlag</i></span>,<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *TurbulenceClosureFlag</i></span>, <span class=out><i>int *TurbulenceModelFlag</i></span>);</b></tt>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *TurbulenceClosureFlag</i></span>, <span class=out><i>int *TurbulenceModelFlag</i></span>);</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_equationset_chemistry_read(<span class=out><i>int *ThermalRelaxationFlag</i></span>,<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *ChemicalKineticsFlag</i></span>);</b></tt>
+        <code><b><span class=out><i>ier</i></span> = cg_equationset_chemistry_read(<span class=out><i>int *ThermalRelaxationFlag</i></span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *ChemicalKineticsFlag</i></span>);</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_equationset_elecmagn_read(<span class=out><i>int *ElecFldModelFlag</i></span>,<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *MagnFldModelFlag</i></span>, <span class=out><i>int *ConductivityModelFlag</i></span>);</b></tt>
+        <code><b><span class=out><i>ier</i></span> = cg_equationset_elecmagn_read(<span class=out><i>int *ElecFldModelFlag</i></span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *MagnFldModelFlag</i></span>, <span class=out><i>int *ConductivityModelFlag</i></span>);</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 <tbody>
 <tr><td nowrap>
-        <tt><b>call cg_equationset_write_f(<span class=in>EquationDimension</span>, <span class=out><i>ier</i></span>)</b></tt>
+        <code><b>call cg_equationset_write_f(<span class=in>EquationDimension</span>, <span class=out><i>ier</i></span>)</b></code>
     <td align=center valign=baseline>
-        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b>call cg_equationset_read_f(<span class=out><i>EquationDimension</i></span>,<br>
+        <code><b>call cg_equationset_read_f(<span class=out><i>EquationDimension</i></span>,<br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>GoverningEquationsFlag</i></span>, <span class=out><i>GasModelFlag</i></span>, <span class=out><i>ViscosityModelFlag</i></span>,<br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ThermalConductModelFlag</i></span>, <span class=out><i>TurbulenceClosureFlag</i></span>,<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>TurbulenceModelFlag</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>TurbulenceModelFlag</i></span>, <span class=out><i>ier</i></span>)</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b>call cg_equationset_chemistry_read_f(<span class=out><i>ThermalRelaxationFlag</i></span>,<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ChemicalKineticsFlag</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+        <code><b>call cg_equationset_chemistry_read_f(<span class=out><i>ThermalRelaxationFlag</i></span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ChemicalKineticsFlag</i></span>, <span class=out><i>ier</i></span>)</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b>call cg_equationset_elecmagn_read_f(<span class=out><i>ElecFldModelFlag</i></span>,<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>MagnFldModelFlag</i></span>, <span class=out><i>ConductivityModelFlag</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+        <code><b>call cg_equationset_elecmagn_read_f(<span class=out><i>ElecFldModelFlag</i></span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>MagnFldModelFlag</i></span>, <span class=out><i>ConductivityModelFlag</i></span>, <span class=out><i>ier</i></span>)</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 </table>
 
 <br>
@@ -191,77 +192,77 @@
 
 <br><br>
 <table cellspacing=0 cellpadding=0 noborder>
-<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
-   <td><tt>EquationDimension</tt><td><tt>&nbsp;&nbsp;</tt>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>EquationDimension</code><td><code>&nbsp;&nbsp;</code>
    <td>Dimensionality of the governing equations; it is the number of
        spatial variables describing the flow.
 <tr valign=baseline><td>
-   <td><tt>GoverningEquationsFlag</tt><td>
-   <td>Flag indicating whether or not this <tt>FlowEquationSet_t</tt>
+   <td><code>GoverningEquationsFlag</code><td>
+   <td>Flag indicating whether or not this <code>FlowEquationSet_t</code>
        node includes the definition of the governing equations;
        0 if it doesn't, 1 if it does.
 <tr valign=baseline><td>
-   <td><tt>GasModelFlag</tt><td>
-   <td>Flag indicating whether or not this <tt>FlowEquationSet_t</tt>
+   <td><code>GasModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>FlowEquationSet_t</code>
        node includes the definition of a gas model;
        0 if it doesn't, 1 if it does.
 <tr valign=baseline><td>
-   <td><tt>ViscosityModelFlag</tt><td>
-   <td>Flag indicating whether or not this <tt>FlowEquationSet_t</tt>
+   <td><code>ViscosityModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>FlowEquationSet_t</code>
        node includes the definition of a viscosity model;
        0 if it doesn't, 1 if it does.
 <tr valign=baseline><td>
-   <td><tt>ThermalConductModelFlag</tt><td>
-   <td>Flag indicating whether or not this <tt>FlowEquationSet_t</tt>
+   <td><code>ThermalConductModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>FlowEquationSet_t</code>
        node includes the definition of a thermal conductivity model;
        0 if it doesn't, 1 if it does.
 <tr valign=baseline><td>
-   <td><tt>TurbulenceClosureFlag</tt><td>
-   <td>Flag indicating whether or not this <tt>FlowEquationSet_t</tt>
+   <td><code>TurbulenceClosureFlag</code><td>
+   <td>Flag indicating whether or not this <code>FlowEquationSet_t</code>
        node includes the definition of the turbulence closure;
        0 if it doesn't, 1 if it does.
 <tr valign=baseline><td>
-   <td><tt>TurbulenceModelFlag</tt><td>
-   <td>Flag indicating whether or not this <tt>FlowEquationSet_t</tt>
+   <td><code>TurbulenceModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>FlowEquationSet_t</code>
        node includes the definition of a turbulence model;
        0 if it doesn't, 1 if it does.
 <tr valign=baseline><td>
-   <td><tt>ThermalRelaxationFlag</tt><td>
-   <td>Flag indicating whether or not this <tt>FlowEquationSet_t</tt>
+   <td><code>ThermalRelaxationFlag</code><td>
+   <td>Flag indicating whether or not this <code>FlowEquationSet_t</code>
        node includes the definition of a thermal relaxation model;
        0 if it doesn't, 1 if it does.
 <tr valign=baseline><td>
-   <td><tt>ChemicalKineticsFlag</tt><td>
-   <td>Flag indicating whether or not this <tt>FlowEquationSet_t</tt>
+   <td><code>ChemicalKineticsFlag</code><td>
+   <td>Flag indicating whether or not this <code>FlowEquationSet_t</code>
        node includes the definition of a chemical kinetics model;
        0 if it doesn't, 1 if it does.
 <tr valign=baseline><td>
-   <td><tt>ElecFldModelFlag</tt><td>
-   <td>Flag indicating whether or not this <tt>FlowEquationSet_t</tt>
+   <td><code>ElecFldModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>FlowEquationSet_t</code>
        node includes the definition of an electric field model for
        electromagnetic flows;;
        0 if it doesn't, 1 if it does.
 <tr valign=baseline><td>
-   <td><tt>MagnFldModelFlag</tt><td>
-   <td>Flag indicating whether or not this <tt>FlowEquationSet_t</tt>
+   <td><code>MagnFldModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>FlowEquationSet_t</code>
        node includes the definition of a magnetic field model for
        electromagnetic flows;;
        0 if it doesn't, 1 if it does.
 <tr valign=baseline><td>
-   <td><tt>ConductivityModelFlag</tt><td>
-   <td>Flag indicating whether or not this <tt>FlowEquationSet_t</tt>
+   <td><code>ConductivityModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>FlowEquationSet_t</code>
        node includes the definition of a conductivity model for
        electromagnetic flows;
        0 if it doesn't, 1 if it does.
 <tr valign=baseline><td>
-   <td><tt>ier</tt><td>
+   <td><code>ier</code><td>
    <td>Error status.
 </table>
 
 <a name="governingequations"></a>
 <h3>Governing Equations</h3>
 
-<i>Node</i>: <tt>GoverningEquations_t</tt>
+<i>Node</i>: <code>GoverningEquations_t</code>
              (<a href="../sids/floweqn.html#GoverningEquations">SIDS</a>,
               <a href="../filemap/nodes.html#GoverningEquations">File Mapping</a>)
 
@@ -275,38 +276,38 @@
     <th scope=col>Modes
 <tbody>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_governing_write(<span class=in>GoverningEquationsType_t Equationstype</span>);</b></tt>
+        <code><b><span class=out><i>ier</i></span> = cg_governing_write(<span class=in>GoverningEquationsType_t Equationstype</span>);</b></code>
     <td align=center valign=baseline>
-        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_governing_read(<span class=out><i>GoverningEquationsType_t *EquationsType</i></span>);</b></tt>
+        <code><b><span class=out><i>ier</i></span> = cg_governing_read(<span class=out><i>GoverningEquationsType_t *EquationsType</i></span>);</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_diffusion_write(<span class=in>int *diffusion_model</span>);</b></tt>
+        <code><b><span class=out><i>ier</i></span> = cg_diffusion_write(<span class=in>int *diffusion_model</span>);</b></code>
     <td align=center valign=baseline>
-        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_diffusion_read(<span class=out><i>int *diffusion_model</i></span>);</b></tt>
+        <code><b><span class=out><i>ier</i></span> = cg_diffusion_read(<span class=out><i>int *diffusion_model</i></span>);</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 <tbody>
 <tr><td nowrap>
-        <tt><b>call cg_governing_write_f(<span class=in>EquationsType</span>, <span class=out><i>ier</i></span>)</b></tt>
+        <code><b>call cg_governing_write_f(<span class=in>EquationsType</span>, <span class=out><i>ier</i></span>)</b></code>
     <td align=center valign=baseline>
-        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b>call cg_governing_read_f(<span class=out><i>EquationsType</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+        <code><b>call cg_governing_read_f(<span class=out><i>EquationsType</i></span>, <span class=out><i>ier</i></span>)</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b>call cg_diffusion_write_f(<span class=in>diffusion_model</span>, <span class=out><i>ier</i></span>)</b></tt>
+        <code><b>call cg_diffusion_write_f(<span class=in>diffusion_model</span>, <span class=out><i>ier</i></span>)</b></code>
     <td align=center valign=baseline>
-        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b>call cg_diffusion_read_f(<span class=out><i>diffusion_model</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+        <code><b>call cg_diffusion_read_f(<span class=out><i>diffusion_model</i></span>, <span class=out><i>ier</i></span>)</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 </table>
 
 <br>
@@ -314,15 +315,15 @@
 
 <br><br>
 <table cellspacing=0 cellpadding=0 noborder>
-<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
-   <td><tt>EquationsType</tt><td><tt>&nbsp;&nbsp;</tt>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>EquationsType</code><td><code>&nbsp;&nbsp;</code>
    <td>Type of governing equations.
-       The admissible types are <tt>CG_Null</tt>, <tt>CG_UserDefined</tt>,
-       <tt>FullPotential</tt>, <tt>Euler</tt>, <tt>NSLaminar</tt>,
-       <tt>NSTurbulent</tt>, <tt>NSLaminarIncompressible</tt>, and
-       <tt>NSTurbulentIncompressible</tt>.
+       The admissible types are <code>CG_Null</code>, <code>CG_UserDefined</code>,
+       <code>FullPotential</code>, <code>Euler</code>, <code>NSLaminar</code>,
+       <code>NSTurbulent</code>, <code>NSLaminarIncompressible</code>, and
+       <code>NSTurbulentIncompressible</code>.
 <tr valign=baseline><td>
-   <td><tt>diffusion_model</tt><td>
+   <td><code>diffusion_model</code><td>
    <td>Flags defining which diffusion terms are included in the governing
        equations.
        This is only applicable to the Navier-Stokes equations with
@@ -330,7 +331,7 @@
        See the <a href="../sids/floweqn.html#DiffusionModel">discussion
        in the SIDS manual</a> for details.
 <tr valign=baseline><td>
-   <td><tt>ier</tt><td>
+   <td><code>ier</code><td>
    <td>Error status.
 </table>
 
@@ -340,34 +341,34 @@
 <table cellspacing=0 cellpadding=0 noborder>
 <tr valign=baseline>
    <td><i>Nodes</i>:
-   <td><tt>GasModel_t</tt>
+   <td><code>GasModel_t</code>
            (<a href="../sids/floweqn.html#GasModel">SIDS</a>,
             <a href="../filemap/nodes.html#GasModel">File Mapping</a>)
-   <br><tt>ViscosityModel_t</tt>
+   <br><code>ViscosityModel_t</code>
            (<a href="../sids/floweqn.html#ViscosityModel">SIDS</a>,
             <a href="../filemap/nodes.html#ViscosityModel">File Mapping</a>)
-   <br><tt>ThermalConductivityModel_t</tt>
+   <br><code>ThermalConductivityModel_t</code>
            (<a href="../sids/floweqn.html#ThermalConductivityModel">SIDS</a>,
             <a href="../filemap/nodes.html#ThermalConductivityModel">File Mapping</a>)
-   <br><tt>TurbulenceClosure_t</tt>
+   <br><code>TurbulenceClosure_t</code>
            (<a href="../sids/floweqn.html#TurbulenceClosure">SIDS</a>,
             <a href="../filemap/nodes.html#TurbulenceClosure">File Mapping</a>)
-   <br><tt>TurbulenceModel_t</tt>
+   <br><code>TurbulenceModel_t</code>
            (<a href="../sids/floweqn.html#TurbulenceModel">SIDS</a>,
             <a href="../filemap/nodes.html#TurbulenceModel">File Mapping</a>)
-   <br><tt>ThermalRelaxationModel_t</tt>
+   <br><code>ThermalRelaxationModel_t</code>
            (<a href="../sids/floweqn.html#ThermalRelaxationModel">SIDS</a>,
             <a href="../filemap/nodes.html#ThermalRelaxationModel">File Mapping</a>)
-   <br><tt>ChemicalKineticsModel_t</tt>
+   <br><code>ChemicalKineticsModel_t</code>
            (<a href="../sids/floweqn.html#ChemicalKineticsModel">SIDS</a>,
             <a href="../filemap/nodes.html#ChemicalKineticsModel">File Mapping</a>)
-   <br><tt>EMElectricFieldModel_t</tt>
+   <br><code>EMElectricFieldModel_t</code>
            (<a href="../sids/floweqn.html#EMElectricFieldModel">SIDS</a>,
             <a href="../filemap/nodes.html#EMElectricFieldModel">File Mapping</a>)
-   <br><tt>EMMagneticFieldModel_t</tt>
+   <br><code>EMMagneticFieldModel_t</code>
            (<a href="../sids/floweqn.html#EMMagneticFieldModel">SIDS</a>,
             <a href="../filemap/nodes.html#EMMagneticFieldModel">File Mapping</a>)
-   <br><tt>EMConductivityModel_t</tt>
+   <br><code>EMConductivityModel_t</code>
            (<a href="../sids/floweqn.html#EMConductivityModel">SIDS</a>,
             <a href="../filemap/nodes.html#EMConductivityModel">File Mapping</a>)
 </table>
@@ -382,22 +383,22 @@
     <th scope=col>Modes
 <tbody>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_model_write(<span class=in>char *ModelLabel</span>, <span class=in>ModelType_t ModelType</span>);</b></tt>
+        <code><b><span class=out><i>ier</i></span> = cg_model_write(<span class=in>char *ModelLabel</span>, <span class=in>ModelType_t ModelType</span>);</b></code>
     <td align=center valign=baseline>
-        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b><span class=out><i>ier</i></span> = cg_model_read(<span class=in>char *ModelLabel</span>, <span class=out><i>ModelType_t *ModelType</i></span>);</b></tt>
+        <code><b><span class=out><i>ier</i></span> = cg_model_read(<span class=in>char *ModelLabel</span>, <span class=out><i>ModelType_t *ModelType</i></span>);</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 <tbody>
 <tr><td nowrap>
-        <tt><b>call cg_model_write_f(<span class=in>ModelLabel</span>, <span class=in>ModelType</span>, <span class=out><i>ier</i></span>)</b></tt>
+        <code><b>call cg_model_write_f(<span class=in>ModelLabel</span>, <span class=in>ModelType</span>, <span class=out><i>ier</i></span>)</b></code>
     <td align=center valign=baseline>
-        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
 <tr><td nowrap>
-        <tt><b>call cg_model_read_f(<span class=in>ModelLabel</span>, <span class=out><i>ModelType</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+        <code><b>call cg_model_read_f(<span class=in>ModelLabel</span>, <span class=out><i>ModelType</i></span>, <span class=out><i>ier</i></span>)</b></code>
     <td align=center valign=baseline>
-        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
 </table>
 
 <br>
@@ -405,29 +406,29 @@
 
 <br><br>
 <table cellspacing=0 cellpadding=0 noborder>
-<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
-   <td><tt>ModelLabel</tt><td><tt>&nbsp;&nbsp;</tt>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>ModelLabel</code><td><code>&nbsp;&nbsp;</code>
    <td>The CGNS label for the model being defined.
        The models supported by CGNS are:
        <ul>
-       <li><tt>GasModel_t</tt>
-       <li><tt>ViscosityModel_t</tt>
-       <li><tt>ThermalConductivityModel_t</tt>
-       <li><tt>TurbulenceClosure_t</tt>
-       <li><tt>TurbulenceModel_t</tt>
-       <li><tt>ThermalRelaxationModel_t</tt>
-       <li><tt>ChemicalKineticsModel_t</tt>
-       <li><tt>EMElectricFieldModel_t</tt>
-       <li><tt>EMMagneticFieldModel_t</tt>
-       <li><tt>EMConductivityModel_t</tt>
+       <li><code>GasModel_t</code>
+       <li><code>ViscosityModel_t</code>
+       <li><code>ThermalConductivityModel_t</code>
+       <li><code>TurbulenceClosure_t</code>
+       <li><code>TurbulenceModel_t</code>
+       <li><code>ThermalRelaxationModel_t</code>
+       <li><code>ChemicalKineticsModel_t</code>
+       <li><code>EMElectricFieldModel_t</code>
+       <li><code>EMMagneticFieldModel_t</code>
+       <li><code>EMConductivityModel_t</code>
        </ul>
 <tr valign=baseline><td>&nbsp;
 <tr valign=baseline><td>
-   <td><tt>ModelType</tt><td>
+   <td><code>ModelType</code><td>
    <td>One of the model types (listed below) allowed for the
-       <tt>ModelLabel</tt> selected.
+       <code>ModelLabel</code> selected.
 <tr valign=baseline><td>
-   <td><tt>ier</tt><td>
+   <td><code>ier</code><td>
    <td>Error status.
 </table>
 
@@ -436,54 +437,54 @@ The types allowed for the various models are:
 
 <br><br>
 <table cellspacing=0 cellpadding=0 noborder>
-<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
-   <td><tt>GasModel_t</tt><td><tt>&nbsp;&nbsp;</tt>
-   <td><tt>CG_Null, CG_UserDefined, Ideal, VanderWaals, CaloricallyPerfect,
-       ThermallyPerfect, ConstantDensity, RedlichKwong</tt>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>GasModel_t</code><td><code>&nbsp;&nbsp;</code>
+   <td><code>CG_Null, CG_UserDefined, Ideal, VanderWaals, CaloricallyPerfect,
+       ThermallyPerfect, ConstantDensity, RedlichKwong</code>
 <tr valign=baseline><td>
-   <td><tt>ViscosityModel_t</tt><td>
-   <td><tt>CG_Null, CG_UserDefined, Constant, PowerLaw, SutherlandLaw</tt>
+   <td><code>ViscosityModel_t</code><td>
+   <td><code>CG_Null, CG_UserDefined, Constant, PowerLaw, SutherlandLaw</code>
 <tr valign=baseline><td>
-   <td><tt>ThermalConductivityModel_t</tt><td>
-   <td><tt>CG_Null, CG_UserDefined, PowerLaw, SutherlandLaw, ConstantPrandtl</tt>
+   <td><code>ThermalConductivityModel_t</code><td>
+   <td><code>CG_Null, CG_UserDefined, PowerLaw, SutherlandLaw, ConstantPrandtl</code>
 <tr valign=baseline><td>
-   <td><tt>TurbulenceModel_t</tt><td>
-   <td><tt>CG_Null, CG_UserDefined, Algebraic_BaldwinLomax,
+   <td><code>TurbulenceModel_t</code><td>
+   <td><code>CG_Null, CG_UserDefined, Algebraic_BaldwinLomax,
        Algebraic_CebeciSmith, HalfEquation_JohnsonKing,
        OneEquation_BaldwinBarth, OneEquation_SpalartAllmaras,
        TwoEquation_JonesLaunder, TwoEquation_MenterSST,
-       TwoEquation_Wilcox</tt>
+       TwoEquation_Wilcox</code>
 <tr valign=baseline><td>
-   <td><tt>TurbulenceClosure_t</tt><td>
-   <td><tt>CG_Null, CG_UserDefined, EddyViscosity, ReynoldsStress,
-       ReynoldsStressAlgebraic</tt>
+   <td><code>TurbulenceClosure_t</code><td>
+   <td><code>CG_Null, CG_UserDefined, EddyViscosity, ReynoldsStress,
+       ReynoldsStressAlgebraic</code>
 <tr valign=baseline><td>
-   <td><tt>ThermalRelaxationModel_t</tt><td>
-   <td><tt>CG_Null, CG_UserDefined, Frozen, ThermalEquilib,
-       ThermalNonequilib</tt>
+   <td><code>ThermalRelaxationModel_t</code><td>
+   <td><code>CG_Null, CG_UserDefined, Frozen, ThermalEquilib,
+       ThermalNonequilib</code>
 <tr valign=baseline><td>
-   <td><tt>ChemicalKineticsModel_t</tt><td>
-   <td><tt>CG_Null, CG_UserDefined, Frozen,
+   <td><code>ChemicalKineticsModel_t</code><td>
+   <td><code>CG_Null, CG_UserDefined, Frozen,
        ChemicalEquilibCurveFit, ChemicalEquilibMinimization,
-       ChemicalNonequilib</tt>
+       ChemicalNonequilib</code>
 <tr valign=baseline><td>
-   <td><tt>EMElectricFieldModel_t</tt><td>
-   <td><tt>CG_Null, CG_UserDefined, Constant, Frozen, Interpolated,
-       Voltage</tt>
+   <td><code>EMElectricFieldModel_t</code><td>
+   <td><code>CG_Null, CG_UserDefined, Constant, Frozen, Interpolated,
+       Voltage</code>
 <tr valign=baseline><td>
-   <td><tt>EMMagneticFieldModel_t</tt><td>
-   <td><tt>CG_Null, CG_UserDefined, Constant, Frozen, Interpolated</tt>
+   <td><code>EMMagneticFieldModel_t</code><td>
+   <td><code>CG_Null, CG_UserDefined, Constant, Frozen, Interpolated</code>
 <tr valign=baseline><td>
-   <td><tt>EMConductivityModel_t</tt><td>
-   <td><tt>CG_Null, CG_UserDefined, Constant, Frozen, Equilibrium_LinRessler,
-       Chemistry_LinRessler</tt>
+   <td><code>EMConductivityModel_t</code><td>
+   <td><code>CG_Null, CG_UserDefined, Constant, Frozen, Equilibrium_LinRessler,
+       Chemistry_LinRessler</code>
 </table>
 
 <p>
 
 </body>
 </html>
-</div>
+</section>
 
 
           </div>

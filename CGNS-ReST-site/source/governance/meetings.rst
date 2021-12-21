@@ -72,7 +72,7 @@ Minutes
     - (:download:`PDF<../../minutes/CGNS_Minutes_2019_05_21.pdf>`)
   * - 26 Mar
     - Telecon
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2019_04_26.pdf>`)
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2019_03_26.pdf>`)
   * - 22 Jan
     - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2019_01_22.pdf>`)
@@ -165,7 +165,7 @@ Minutes
     - (:download:`PDF<../../minutes/CGNS_Minutes_2015_05_19.pdf>`)
   * - 03 Mar	  
     - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2015_04_03.pdf>`) 	   
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2015_03_03.pdf>`) 	   
 
 **2014**
 --------
@@ -178,7 +178,7 @@ Minutes
     - (:download:`PDF<../../minutes/CGNS_Minutes_2014_12_02.pdf>`)
   * - 02 Oct	  
     - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2014_10_20.pdf>`)
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2014_10_02.pdf>`)
   * - 03 Sep	  
     - Telecon	  
     - (:download:`PDF<../../minutes/CGNS_Minutes_2014_09_03.pdf>`) 	   

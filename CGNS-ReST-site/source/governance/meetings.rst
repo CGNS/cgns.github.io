@@ -14,6 +14,25 @@ Minutes are available for the following CGNS Steering Committee meetings and tel
 Minutes
 ^^^^^^^
 
+**2021**
+--------
+
+.. list-table:: 
+  :width: 40 %
+
+  * - 2 Mar
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2021_3_2.pdf>`)
+  * - 15 Jun
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2021_6_15.pdf>`)
+  * - 7 Sep
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2021_9_7.pdf>`)
+  * - 14 Dec
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2021_12_14.pdf>`)
+
 **2020**
 --------
 

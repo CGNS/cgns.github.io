@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>General Remarks &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CGNS/PMLL documentation" href="CGNS_PMLL_library.html" />
+    <link rel="prev" title="Links" href="CGNS_MLL_links.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGNS_PMLL_library.html" title="CGNS/PMLL documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_links.html" title="Links"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" accesskey="U">CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">General Remarks</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_MLL.html">CGNS/MLL - An API for C and Fortran applications</a></li>
+              
+              <li>General Remarks</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <section id="general-remarks">
+<span id="pmllgeneral"></span><h1>General Remarks<a class="headerlink" href="#general-remarks" title="Permalink to this headline">¶</a></h1>
+<p>The Parallel CGNS mid-level library, or PMLL, is built on top of the collective
+I/O support in HDF5 using MPI-IO. PMLL provides specialized routines
+to open and close a file for parallel I/O and read and write grid
+coordinates, element data, solution data, and general arrays in a
+collective fashion. The PMLL functions
+are prefixed with <em>cgp_</em>, and documented in <a class="reference internal" href="CGNS_PMLL_library.html#pmlldocumentation"><span class="std std-ref">The CGNS/PMLL Software Library</span></a>.</p>
+<p>All additional accesses to the data use the standard serial Mid-Level Library (MLL)
+functions. A typical use of the PMLL routines in a parallel I/O program
+would be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cgp_open</span>              <span class="o">---</span> <span class="nb">open</span> <span class="n">file</span> <span class="k">for</span> <span class="n">parallel</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span>
+<span class="n">cg_base_write</span>         <span class="o">---</span> <span class="n">create</span> <span class="n">base</span> <span class="ow">and</span> <span class="n">zone</span> <span class="n">using</span> <span class="n">MLL</span>
+<span class="n">cg_zone_write</span>
+<span class="n">cgp_coord_write</span>       <span class="o">---</span> <span class="n">create</span> <span class="n">coordinate</span> <span class="n">dataset</span> <span class="k">for</span> <span class="n">parallel</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span>
+<span class="n">cgp_coord_write_data</span>  <span class="o">---</span> <span class="n">write</span> <span class="n">the</span> <span class="n">coordinates</span> <span class="n">collectively</span>
+<span class="n">cgp_close</span>             <span class="o">---</span> <span class="n">close</span> <span class="n">the</span> <span class="n">file</span>
+</pre></div>
+</div>
+<p>An example Fortran and C program are given in <a class="reference internal" href="CGNS_PMLL_example.html#pmllexample"><span class="std std-ref">Example Program</span></a>.</p>
+<p>A detailed discussion on the implementation may be found in the PDF paper
+<strong>An Efficient and Flexible Parallel I/O implementation for the CFD General
+Notation System</strong> by Horne, Bensen, and Hauser.</p>
+</section>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="CGNS_MLL_links.html" title="previous chapter (use the left arrow)">Links</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGNS_PMLL_library.html" title="next chapter (use the right arrow)">CGNS/PMLL documentation</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGNS_PMLL_library.html" title="CGNS/PMLL documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_MLL_links.html" title="Links"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" >CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">General Remarks</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

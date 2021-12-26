@@ -1,0 +1,931 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>CGNS/PMLL documentation &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CGNS/PMLL examples" href="CGNS_PMLL_example.html" />
+    <link rel="prev" title="General Remarks" href="CGNS_PMLL_general.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CGNS_PMLL_example.html" title="CGNS/PMLL examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_PMLL_general.html" title="General Remarks"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" accesskey="U">CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CGNS/PMLL documentation</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_MLL.html">CGNS/MLL - An API for C and Fortran applications</a></li>
+              
+              <li>CGNS/PMLL documentation</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <section id="cgns-pmll-documentation">
+<span id="pmlldocumentation"></span><h1>CGNS/PMLL documentation<a class="headerlink" href="#cgns-pmll-documentation" title="Permalink to this headline">¶</a></h1>
+<!-- PCGNS Manual - Library Of Subroutines -->
+
+<html>
+<head>
+<title> Parallel CGNS User's Guide - Routines </title>
+</head>
+
+<h2>Parallel CGNS Routines</h2>
+
+<ul>
+<li> <a href="#misc">Miscellaneous Routines</a>
+     <ul>
+     <li> <code><b>cgp_mpi_comm</b></code> - Set the MPI communicator
+     <li> <code><b>cgp_mpi_info</b></code> - Set the MPI info object
+     <li> <code><b>cgp_pio_mode</b></code> - Set the parallel IO mode
+     <li> <code><b><font color="red">BINDING DEPRECATED, Deprecated since CGNS-3.3.0 </font></b></code><strike><code><b> cgp_queue_set</b></code> - Enable/Disable queued output </strike>
+     <li> <code><b><font color="red">BINDING DEPRECATED, Deprecated since CGNS-3.3.0 </font></b></code><strike><code><b> cgp_queue_flush</b></code> - Flush the output queue </strike>
+     <li> <code><b>cgp_error_exit</b></code> - Exit with error message
+     </ul>
+<li> <a href="#file">File Operations</a>
+     <ul>
+     <li> <code><b>cgp_open</b></code> - Open a file for parallel IO
+     <li> <code><b>cgp_close</b></code> - Close a file
+     </ul>
+<li> <a href="#coord">Grid Coordinate Data</a>
+     <ul>
+     <li> <code><b>cgp_coord_write</b></code> - Create a coordinate data node
+     <li> <code><b>cgp_coord_write_data</b></code> - Write coordinate data in parallel
+     <li> <code><b>cgp_coord_general_write_data</b></code> - Write shaped array to a subset of grid coordinates in parallel
+     <li> <code><b>cgp_coord_read_data</b></code> - Read coordinate data in parallel
+     <li> <code><b>cgp_coord_general_read_data</b></code> - Read subset of grid coordinates to a shaped array in parallel
+     </ul>
+<li> <a href="#element">Element Connectivity Data</a>
+     <ul>
+     <li> <code><b>cgp_section_write</b></code> - Create a section data node
+     <li> <code><b>cgp_poly_section_write</b></code> - Create a section data node
+     <li> <code><b>cgp_elements_write_data</b></code> - Write element data in parallel
+     <li> <code><b>cgp_poly_elements_write_data</b></code> - Write element data in parallel
+     <li> <code><b>cgp_elements_read_data</b></code> - Read element data in parallel
+     </ul>
+<li> <a href="#solution">Solution Data</a>
+     <ul>
+     <li> <code><b>cgp_field_write</b></code> - Create a solution field data node
+     <li> <code><b>cgp_field_write_data</b></code> - Write field data in parallel
+     <li> <code><b>cgp_field_general_write_data</b></code> - Write shaped array to a subset of flow solution field in parallel
+     <li> <code><b>cgp_field_read_data</b></code> - Read field data in parallel
+     <li> <code><b>cgp_field_general_read_data</b></code> - Read subset of flow solution field to a shaped array in parallel
+     </ul>
+<li> <a href="#array">Array Data</a>
+     <ul>
+     <li> <code><b>cgp_array_write</b></code> - Create an array data node
+     <li> <code><b>cgp_array_write_data</b></code> - Write array data in parallel
+     <li> <code><b>cgp_array_general_write_data</b></code> - Write shaped array to a subset of data array in parallel
+     <li> <code><b>cgp_array_read_data</b></code> - Read array data in parallel
+     <li> <code><b>cgp_array_general_read_data</b></code> - Read subset of data array to a shaped array in parallel
+     </ul>
+</ul>
+
+<a name="misc"></a>
+<h3>Miscellaneous Routines</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_mpi_comm(<span class=in>int mpicomm</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code><tr>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_mpi_info(<span class=in>MPI_Info info</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_pio_mode(<span class=in>PIOmode_t mode</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><font color="red">BINDING DEPRECATED, Deprecated since CGNS-3.3.0 </font></b></code><strike><code><b><span class=out><i>ier</i></span> = cgp_queue_set(<span class=in>int use_queue</span>);</b></code></strike>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><font color="red">BINDING DEPRECATED, Deprecated since CGNS-3.3.0 </font></b></code><strike><code><b><span class=out><i>ier</i></span> = cgp_queue_flush();</b></code></strike>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>void cgp_error_exit();</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
+<tbody>
+<tr><td nowrap>
+        <code><b>call cgp_mpi_comm_f(<span class=in>mpicomm</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cgp_mpi_info_f(<span class=in>info</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cgp_pio_mode_f(<span class=in>mode</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><font color="red">BINDING DEPRECATED, Deprecated since CGNS-3.3.0 </font></b></code><strike><code><b>call cgp_queue_set_f(<span class=in>use_queue</span>, <span class=out><i>ier</i></span>)</b></code></strike>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><font color="red">BINDING DEPRECATED, Deprecated since CGNS-3.3.0 </font></b></code><strike><code><b>call cgp_queue_flush_f(<span class=out><i>ier</i></span>)</b></code></strike>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cgp_error_exit_f()</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="../midlevel/general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>mpicomm</code><td><code>&nbsp;&nbsp;</code>
+   <td>The MPI communicator to be used by the CGNS library.
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>mode</code><td><code>&nbsp;&nbsp;</code>
+   <td>Parallel input/ouput mode.
+<tr valign=baseline><td>
+   <td><code><strike>use_queue</strike></code><td>
+   <td><strike>enable or disables queued output.</strike>
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<p>
+The routine <code>cgp_mpi_comm</code> sets the MPI communicator for parallel
+operations by the CGNS library. The default value is <code>MPI_COMM_WORLD</code>.
+
+<p>
+The routine <code>cgp_mpi_info</code> passes the MPI info object for parallel
+operations to the CGNS library. Notes for Fortran: the data type for <code>info</code>
+is an INTEGER.
+
+<p>
+The routine <code>cgp_pio_mode</code> sets the mode for parallel
+data reads and writes. The default value is <code>CGP_COLLECTIVE</code>,
+which allows any number of processes to access the data. When set
+to <code>CGP_COLLECTIVE</code>, all processes must access the data.
+
+<p>
+<strike>If <code>cgp_queue_set</code> is called with a non-zero argument, then
+output data will not be written to the file, but rather stored in
+a queue. The queued data will then be written out when
+<code>cgp_queue_flush</code> is called.
+
+<p>
+<b>Note:</b> The data array to
+be written is NOT duplicated in the queue. Rather a pointer to
+the data is stored. Thus, the data must be persistent within
+the user's program until <code>cgp_queue_flush</code> is called.</strike>
+
+<p>
+The routine <code>cgp_error_exit</code> is similar to
+<a href="../midlevel/error.html"><code>cg_error_exit</code></a> in that
+the process will exit with an error message. However, it will also
+print the process rank, and call MPI_Abort with an exit code of 1.
+
+<a name="file"></a>
+<h3>File Operations</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_open(<span class=in>char *filename</span>, <span class=in>int mode</span>, <span class=out><i>int *fn</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_close(<span class=in>int fn</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
+<tbody>
+<tr><td nowrap>
+        <code><b>call cgp_open_f(<span class=in>filename</span>, <span class=in>mode</span>, <span class=out><i>fn</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cgp_close_f(<span class=in>fn</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;w&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="../midlevel/general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>filename</code><td><code>&nbsp;&nbsp;</code>
+   <td>Name of the CGNS file, including path name if necessary.
+       There is no limit on the length of this character variable.
+<tr valign=baseline><td>
+   <td><code>mode</code><td>
+   <td>Mode used for opening the file.
+       The modes currently supported are <code>CG_MODE_READ</code>,
+       <code>CG_MODE_WRITE</code>, and <code>CG_MODE_MODIFY</code>.
+<tr valign=baseline><td>
+   <td><code>fn</code><td>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<p>
+The routines <code>cgp_open</code> and <code>cgp_close</code> are similar
+to <a href="../midlevel/fileops.html#openclose"><code>cg_open</code></a>
+and <a href="../midlevel/fileops.html#openclose"><code>cg_close</code></a>,
+and call those routines. The differences are that <code>cgp_open</code>
+explicitly sets an internal CGNS flag to indicate parallel access.
+
+<a name="coord"></a>
+<h3>Grid Coordinate Data</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_coord_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>DataType_t datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *coordname</span>, <span class=out><i>int *C</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_coord_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int C</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=in>void *coord_array</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_coord_general_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int C</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *coord_array</span>);</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_coord_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int C</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=out><i>void *coord_array</i></span>);</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_coord_general_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int C</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *coord_array</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tbody>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_coord_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>datatype</span>, <span class=in>coordname</span>, <span class=out><i>C</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_coord_write_data_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>C</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>coord_array</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_coord_read_data_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>C</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=out><i>coord_array</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="../midlevel/general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>fn</code><td><code>&nbsp;&nbsp;</code>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><code>B</code><td>
+   <td>Base index number, where 1 &le; <code>B</code> &le; <code>nbases</code>.
+<tr valign=baseline><td>
+   <td><code>Z</code><td>
+   <td>Zone index number, where 1 &le; <code>Z</code> &le; <code>nzones</code>.
+<tr valign=baseline><td>
+   <td><code>C</code><td>
+   <td>Coordinate array index number, where
+       1 &le; <code>C</code> &le; <code>ncoords</code>.
+<tr valign=baseline><td>
+   <td><code>datatype</code><td>
+   <td>Data type of the coordinate array written to the file.
+       Admissible data types for a coordinate array are <code>RealSingle</code>
+       and <code>RealDouble</code>.
+<tr valign=baseline><td>
+   <td><code>coordname</code><td>
+   <td>Name of the coordinate array.
+       It is strongly advised to use the
+       <a href="../sids/dataname.html#dataname_grid">SIDS nomenclature
+       conventions</a> when naming the coordinate arrays to insure file
+       compatibility.
+<tr valign=baseline><td>
+   <td><code>range_min</code><td>
+   <td>Lower range index in file (eg., <code>imin, jmin, kmin</code>).
+<tr valign=baseline><td>
+   <td><code>range_max</code><td>
+   <td>Upper range index in file (eg., <code>imax, jmax, kmax</code>).
+<tr valign=baseline><td>
+   <td><code>mem_datatype</code><td>
+   <td>Data type of an array in memory.
+       Admissible data types for a coordinate array are <code>RealSingle</code>
+       and <code>RealDouble</code>..
+<tr valign=baseline><td>
+   <td><code>mem_rank</code><td>
+   <td>Number of dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><code>mem_dimensions</code><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><code>mem_range_min</code><td>
+   <td>Lower range index in memory (eg., <code>imin, jmin, kmin</code>).
+<tr valign=baseline><td>
+   <td><code>mem_range_max</code><td>
+   <td>Upper range index in memory (eg., <code>imax, jmax, kmax</code>).
+<tr valign=baseline><td>
+   <td><code>coord_array</code><td>
+   <td>Array of coordinate values for the range prescribed.
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<p>
+The above functions are used to read and write grid coordinate data
+by multiple processes in a parallel fashion. To write the data in
+parallel, first call <code>cgp_coord_write</code> to create an empty
+data node. This call is indentical to
+<a href="../midlevel/grid.html#gridcoordinates"><code>cg_coord_write</code></a>
+with <code>coord_array</code> set to <code>NULL</code> (no data written). The
+actual data is then written to the node in parallel using either
+<code>cgp_coord_write_data</code> or <code>cgp_coord_general_write_data</code>
+where <code>range_min</code> and <code>range_max</code> specify the subset of
+coordinate data to be written by a given process.
+The routines <code>cgp_coord_read_data</code> and
+<code>cgp_coord_general_read_data</code> perform
+the same function for reading the coordinate data in parallel.
+
+<p>
+<b>Note:</b> The routines <code>cgp_coord_general_write_data</code> and
+<code>cgp_coord_general_read_data</code> perform data conversions if
+<code>datatype</code> is different from <code>mem_datatype</code>.  For other routines,
+it is the responsibility of the application to ensure that the data type for the
+coordinate data matches that as defined in the file; no conversions are done.
+
+<a name="element"></a>
+<h3>Element Connectivity Data</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_section_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *ElementSectionName</span>, <span class=in>ElementType_t type</span>, <span class=cgin>cgsize_t start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t end</span>, <span class=in>int nbndry</span>, <span class=out><i>int *S</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_poly_section_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *ElementSectionName</span>, <span class=in>ElementType_t type</span>, <span class=cgin>cgsize_t start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t end</span>, <span class=cgin>cgsize_t MaxOffset</span>, <span class=in>int nbndry</span>, <span class=out><i>int *S</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_elements_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cgin">cgsize_t start</span>, <span class="cgin">cgsize_t end</span>, <span class="cgin">cgsize_t *Elements</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_poly_elements_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cgin">cgsize_t start</span>, <span class="cgin">cgsize_t end</span>, <span class="cgin">cgsize_t *Elements</span>, <span class="cgin">cgsize_t *Offsets</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_elements_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cgin">cgsize_t start</span>, <span class="cgin">cgsize_t end</span>, <span class="cgout"><i>cgsize_t *Elements</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tbody>
+<tr><td nowrap>
+        <code><b>call cgp_section_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>ElementSectionName</span>, <span class=in>type</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>start</span>, <span class=in>end</span>, <span class=in>nbndry</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)<br>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_elements_write_data_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class="in">start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=in>Elements</span>, <span class=out><i>ier</i></span>)<br>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_elements_read_data_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class="in">start</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>end</span>, <span class=out><i>Elements</i></span>, <span class=out><i>ier</i></span>)<br>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="../midlevel/general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>fn</code><td><code>&nbsp;&nbsp;</code>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><code>B</code><td>
+   <td>Base index number, where 1 &le; <code>B</code> &le; <code>nbases</code>.
+<tr valign=baseline><td>
+   <td><code>Z</code><td>
+   <td>Zone index number, where 1 &le; <code>Z</code> &le; <code>nzones</code>.
+<tr valign=baseline><td>
+   <td><code>ElementSectionName</code><td>
+   <td>Name of the <code>Elements_t</code> node.
+<tr valign=baseline><td>
+   <td><code>type</code><td>
+   <td>Type of element.
+       See the eligible types for <code>ElementType_t</code> in the
+       <a href="../midlevel/general.html#typedefs">Typedefs</a> section.
+<tr valign=baseline><td>
+   <td><code>start</code><td>
+   <td>Index of first element in the section.
+<tr valign=baseline><td>
+   <td><code>end</code><td>
+   <td>Index of last element in the section.
+<tr valign=baseline><td>
+   <td><code>nbndry</code><td>
+   <td>Index of last boundary element in the section.
+       Set to zero if the elements are unsorted.
+<tr valign=baseline><td>
+   <td><code>S</code><td>
+   <td>Element section index, where
+       1 &le; <code>S</code> &le; <code>nsections</code>.
+<tr valign=baseline><td>
+   <td><code>Elements</code><td>
+   <td>Element connectivity data.
+<tr valign=baseline><td>
+   <td><code>Offsets</code><td>
+   <td>Element connectivity offsets data.
+<tr valign=baseline><td>
+   <td><code>MaxOffset</code><td>
+   <td>Maximum data size that should be reserved for Element connectivity data.
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<p>
+<b>Note:</b> These routines only work for constant sized elements, since
+it is not possible to compute file offsets for variable sized elements
+without knowledge of the entire element connectivity data.
+
+<p>
+The above functions are used to read and write element connectivity data
+by multiple processes in a parallel fashion. To write the element data in
+parallel, first call <code>cgp_section_write</code> to create an empty
+data node. This call is indentical to
+<a href="../midlevel/grid.html#elements"><code>cg_section_write</code></a>
+with <code>Elements</code> set to <code>NULL</code> (no data written). The
+actual element data is then written to the node in parallel using
+<code>cgp_element_write_data</code> where <code>start</code> and
+<code>end</code> specify the range of the elements to be written
+by a given process. The routine <code>cgp_element_read_data</code> performs
+the same function for reading the solution data in parallel.
+
+<p>
+<b>Note:</b> It is the responsibility of the application to ensure
+that <code>cgsize_t</code> in the application is the same size as that
+defined in the file; no conversions are done.
+
+<a name="solution"></a>
+<h3>Solution Data</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_field_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>char *fieldname</span>, <span class=out><i>int *F</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_field_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=in>void *solution_array</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_field_general_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *solution_array</span>);</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_field_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=out><i>void *solution_array</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_field_general_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int Z</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *solution_array</i></span>);</b></code>
+<tbody>
+<tr><td nowrap>
+       <code><b>call cgp_field_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>datatype</span>, <span class=in>fieldname</span>, <span class=out><i>F</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_field_write_data_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>solution_array</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_field_read_data_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=in>F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=out><i>solution_array</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="../midlevel/general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>fn</code><td><code>&nbsp;&nbsp;</code>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><code>B</code><td>
+   <td>Base index number, where 1 &le; <code>B</code> &le; <code>nbases</code>.
+<tr valign=baseline><td>
+   <td><code>Z</code><td>
+   <td>Zone index number, where 1 &le; <code>Z</code> &le; <code>nzones</code>.
+<tr valign=baseline><td>
+   <td><code>S</code><td>
+   <td>Flow solution index number, where
+       1 &le; <code>S</code> &le; <code>nsols</code>.
+<tr valign=baseline><td>
+   <td><code>F</code><td>
+   <td>Solution array index number, where
+       1 &le; <code>F</code> &le; <code>nfields</code>.
+<tr valign=baseline><td>
+   <td><code>datatype</code><td>
+   <td>Data type of the solution array written to the file.
+       Admissible data types for a solution array are <code>Integer</code>,
+       <code>LongInteger</code>, <code>RealSingle</code>, and <code>RealDouble</code>.
+<tr valign=baseline><td>
+   <td><code>fieldname</code><td>
+   <td>Name of the solution array.
+       It is strongly advised to use the
+       <a href="../sids/dataname.html#dataname_flow">SIDS nomenclature
+       conventions</a> when naming the solution arrays to insure file
+       compatibility.
+<tr valign=baseline><td>
+   <td><code>range_min</code><td>
+   <td>Lower range index in file (eg., <code>imin, jmin, kmin</code>).
+<tr valign=baseline><td>
+   <td><code>range_max</code><td>
+   <td>Upper range index in file (eg., <code>imax, jmax, kmax</code>).
+<tr valign=baseline><td>
+   <td><code>mem_datatype</code><td>
+   <td>Data type of an array in memory.
+       Admissible data types for a solution array are <code>Integer</code>,
+       <code>LongInteger</code>, <code>RealSingle</code>, and <code>RealDouble</code>.
+<tr valign=baseline><td>
+   <td><code>mem_rank</code><td>
+   <td>Number of dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><code>mem_dimensions</code><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><code>mem_range_min</code><td>
+   <td>Lower range index in memory (eg., <code>imin, jmin, kmin</code>).
+<tr valign=baseline><td>
+   <td><code>mem_range_max</code><td>
+   <td>Upper range index in memory (eg., <code>imax, jmax, kmax</code>).
+<tr valign=baseline><td>
+   <td><code>solution_array</code><td>
+   <td>Array of solution values for the range prescribed.
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<p>
+The above functions are used to read and write solution arrays
+by multiple processes in a parallel fashion. To write the data in
+parallel, first call <code>cgp_field_write</code> to create an empty
+data node. This call is indentical to
+<a href="../midlevel/solution.html#flowsolution_array"><code>cg_field_write</code></a>
+with <code>solution_array</code> set to <code>NULL</code> (no data written). The
+actual data is then written to the node in parallel using either
+<code>cgp_field_write_data</code> or <code>cgp_field_general_write_data</code>
+where <code>range_min</code> and <code>range_max</code> specify the subset of
+the solution data to be written by a given process.
+The routines <code>cgp_field_read_data</code> and
+<code>cgp_field_general_read_data</code> perform
+the same function for reading the solution data in parallel.
+
+<p>
+<b>Note:</b> The routines <code>cgp_field_general_write_data</code> and
+<code>cgp_field_general_read_data</code> perform data conversions if
+<code>datatype</code> is different from <code>mem_datatype</code>.  For other routines,
+it is the responsibility of the application to ensure that the data type for the
+solution data matches that as defined in the file; no conversions are done.
+
+<a name="array"></a>
+<h3>Array Data</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_array_write(<span class=in>char *arrayname</span>, <span class=in>DataType_t datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>int rank</span>, <span class=cgin>cgsize_t *dimensions</span>, <span class=out><i>int *A</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_array_write_data(<span class=in>int A</span>, <span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=in>void *data</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_array_general_write_data(<span class=in>int A</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *data</span>);</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_array_read_data(<span class=in>int A</span>, <span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=out><i>void *data</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_array_general_read_data(<span class=in>int A</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *data</i></span>);</b></code>
+<tbody>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_array_write_f</span>(<span class=in>arrayname</span>, <span class=in>datatype</span>, <span class=in>rank</span>, <span class=in>dimensions</span>, <span class=out><i>A</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_array_write_data_f</span>(<span class=in>A</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>data</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_array_read_data_f</span>(<span class=in>A</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=out><i>data</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="../midlevel/general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>A</code><td><code>&nbsp;&nbsp;</code>
+   <td>Data array index, where 1 &le; <code>A</code> &le; <code>narrays</code>.
+<tr valign=baseline><td>
+   <td><code>arrayname</code><td>
+   <td>Name of the <code>DataArray_t</code> node.
+<tr valign=baseline><td>
+   <td><code>datatype</code><td>
+   <td>Type of data held in the <code>DataArray_t</code> node.
+       The admissible types are <code>Integer</code>, <code>LongInteger</code>,
+       <code>RealSingle</code>, <code>RealDouble</code>, and <code>Character</code>.
+<tr valign=baseline><td>
+   <td><code>rank</code><td>
+   <td>Number of dimensions of array in file.
+<tr valign=baseline><td>
+   <td><code>dimensions</code><td>
+   <td>Dimensions of array in file.
+<tr valign=baseline><td>
+   <td><code>range_min</code><td>
+   <td>Lower range index in file (eg., <code>imin, jmin, kmin</code>).
+<tr valign=baseline><td>
+   <td><code>range_max</code><td>
+   <td>Upper range index in file (eg., <code>imax, jmax, kmax</code>).
+<tr valign=baseline><td>
+   <td><code>mem_datatype</code><td>
+   <td>The type of data held in memory.
+       The admissible types are <code>Integer</code>, <code>LongInteger</code>,
+       <code>RealSingle</code>, <code>RealDouble</code>, and <code>Character</code>.
+<tr valign=baseline><td>
+   <td><code>mem_rank</code><td>
+   <td>Number of dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><code>mem_dimensions</code><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><code>mem_range_min</code><td>
+   <td>Lower range index in memory (eg., <code>imin, jmin, kmin</code>).
+<tr valign=baseline><td>
+   <td><code>mem_range_max</code><td>
+   <td>Upper range index in memory (eg., <code>imax, jmax, kmax</code>).
+<tr valign=baseline><td>
+   <td><code>data</code><td>
+   <td>The data array.
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<p>
+The above functions are used to read and write data arrays
+by multiple processes in a parallel fashion. To write the data in
+parallel, first call
+<a href="../midlevel/navigating.html#goto"><code>cg_goto</code></a>
+to set the position for the <code>DataArray_t</code> node, then call
+<code>cgp_array_write</code> to create an empty
+data node. This call is similar to
+<a href="../midlevel/physical.html#dataarray"><code>cg_array_write</code></a>
+with <code>Data</code> set to <code>NULL</code> (no data written). This
+function will return the array index, <code>A</code>, which is used to
+write the actual data to the node in parallel using either
+<code>cgp_array_write_data</code> or <code>cgp_array_general_write_data</code>
+where <code>range_min</code> and <code>range_max</code> specify the subset of
+the array data to be written by a given process.
+The routines <code>cgp_array_read_data</code> and
+<code>cgp_array_general_read_data</code> perform
+the same function for reading the array data in parallel.
+
+<p>
+<b>Note:</b>  The routines <code>cgp_array_general_write_data</code> and
+<code>cgp_array_general_read_data</code> perform data conversions if
+<code>datatype</code> is different from <code>mem_datatype</code>.  For other routines,
+it is the responsibility of the application to ensure
+that the data type for the array data matches that as
+defined in the file; no conversions are done.
+
+<p>
+
+</body>
+</html>
+</section>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="CGNS_PMLL_general.html" title="previous chapter (use the left arrow)">General Remarks</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="CGNS_PMLL_example.html" title="next chapter (use the right arrow)">CGNS/PMLL examples</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CGNS_PMLL_example.html" title="CGNS/PMLL examples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CGNS_PMLL_general.html" title="General Remarks"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_MLL.html" >CGNS/MLL - An API for C and Fortran applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CGNS/PMLL documentation</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

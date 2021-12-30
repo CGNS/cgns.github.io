@@ -15,7 +15,7 @@ Background
 ----------
 
 History
-+++++++
+^^^^^^^
 
 In the early 1980s, the PLOT3D data format gained acceptance as a de
 facto standard to enable the storage and exchange of CFD data within
@@ -148,7 +148,7 @@ early 1999. By May 1999, the extension to unstructured grids was
 released.
 
 Management
-++++++++++
+^^^^^^^^^^
 
 Up to this time, all activities related to the development of the
 standard, the implementing software, and the related documentation had
@@ -445,5 +445,56 @@ functions, provided that they adhere to the conventions and standards
 as defined in the SIDS.
 
 Please read the :ref:`CGNS License terms <CGNSLicense>`.
+
+Membership
+----------
+
+The CGNS Steering Committee has had the following chairs:
+
+-  Oct 1999 - Jan 2003 : Bob Bush (Pratt & Whitney)
+-  Jan 2003 - Jan 2008 : Chris Rumsey (NASA Langley)
+-  Jan 2008 - Sep 2014 : Thomas Hauser (U. Colorado)
+-  Sep 2014 - Sep 2019 : Bob Bush (Pratt & Whitney), Chris Rumsey (NASA Langley), ZJ Wang (U. Kansas)
+-  Sep 2019 - present: Scot Breitenfeld (HDF Group) and Koen Hillewaert (Cenaero).
+
+The current members of the committee are:
+
+- Airbus
+- ANSYS
+- BETA CAE Systems
+- Boeing Commercial
+- Colorado State University
+- DLR
+- HDF Group
+- Intelligent Light
+- NASA Langley
+- Numeca (Cadence)
+- nVariate, Inc.
+- ONERA
+- Pointwise, Inc. (Cadence)
+- SAFRAN
+- Sandia National Laboratories
+- Tecplot, Inc.
+- TTC Technologies
+- TU Delft
+- University of Colorado
+- University of Kansas
+
+.. note::
+  The general responsibility of the CGNS Steering Committee as a whole is to actively participate in the development, maintenance, distribution and use of the CGNS Standard, through:
+
+    -  maintaining and upgrading the software
+    -  ensuring free distribution
+    -  promoting acceptance
+
+.. note::
+  To help satisfy the duties of the Steering Committee as a whole, the minimal responsibilities of each individual Steering Committee member are to:
+
+    - attend as many telecons/meetings as possible, but not less than 1 per year
+    - read and send comments on proposals or other issues when asked to do so
+    - vote when asked to do so
+
+.. warning::
+  Membership size is limited, as detailed in the Charter. Interested new potential members should contact the Committee Chairman.
 
 .. last line

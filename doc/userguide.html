@@ -1233,66 +1233,66 @@ The FORTRAN code segment used to read the CGNS file grid.cgns that we just creat
 <h3>Dimensional Data<a class="headerlink" href="#dimensional-data" title="Permalink to this headline">¶</a></h3>
 <p>The node DataClass_t denotes the class of the data. When data is dimensional, then DataClass_t = Dimensional. The DataClass_t node can appear at many levels in the CGNS hierarchy; precedence rules dictate that a DataClass_t lower in the hierarchy supersedes any higher up.</p>
 <p>For dimensional data, one generally is expected to indicate the dimensionality of each particular variable through the use of DataClass_t, DimensionalUnits_t, and DimensionalExponents_t. An example of this is shown in the following code segment in which units are added to the structured grid and cell center flow solution used previously.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!   WRITE DIMENSIONAL INFO FOR GRID AND FLOW SOLN
-      use cgns
-!   open CGNS file for modify
-     call cg_open_f(&#39;grid.cgns&#39;,CG_MODE_MODIFY,index_file,ier)
-     if (ier .ne. CG_OK) call cg_error_exit_f
-!   we know there is only one base (real working code would check!)
-     index_base=1
-!   we know there is only one zone (real working code would check!)
-     index_zone=1
-!   we know there is only one FlowSolution_t (real working code would check!)
-     index_flow=1
-!   we know there is only one GridCoordinates_t (real working code would check!)
-     index_grid=1
-!   put DataClass and DimensionalUnits under Base
-     call cg_goto_f(index_file,index_base,ier,&#39;end&#39;)
-     call cg_dataclass_write_f(Dimensional,ier)
-     call cg_units_write_f(Kilogram,Meter,Second,Kelvin,Degree,ier)
-!   read fields
-     call cg_nfields_f(index_file,index_base,index_zone,index_flow,
-    +  nfields,ier)
-     do if=1,nfields
-       call cg_field_info_f(index_file,index_base,index_zone,
-    +    index_flow,if,idatatype,fieldname,ier)
-       if (fieldname .eq. &#39;Density&#39;) then
-         exponents(1)=1.
-         exponents(2)=-3.
-         exponents(3)=0.
-         exponents(4)=0.
-         exponents(5)=0.
-       else if (fieldname .eq. &#39;Pressure&#39;) then
-         exponents(1)=1.
-         exponents(2)=-1.
-         exponents(3)=-2.
-         exponents(4)=0.
-         exponents(5)=0.
-       else
-         write(6,&#39;(&#39;&#39; Error! this fieldname not expected: &#39;&#39;,a32)&#39;)
-    +      fieldname
-         stop
-       end if
-!   write DimensionalExponents
-       call cg_goto_f(index_file,index_base,ier,&#39;Zone_t&#39;,1,
-    +   &#39;FlowSolution_t&#39;,1,&#39;DataArray_t&#39;,if,&#39;end&#39;)
-       call cg_exponents_write_f(RealSingle,exponents,ier)
-     enddo
-!   read grid
-     call cg_ncoords_f(index_file,index_base,index_zone,ncoords,ier)
-     exponents(1)=0.
-     exponents(2)=1.
-     exponents(3)=0.
-     exponents(4)=0.
-     exponents(5)=0.
-     do ic=1,ncoords
-!   write DimensionalExponents
-       call cg_goto_f(index_file,index_base,ier,&#39;Zone_t&#39;,1,
-    +   &#39;GridCoordinates_t&#39;,1,&#39;DataArray_t&#39;,ic,&#39;end&#39;)
-       call cg_exponents_write_f(RealSingle,exponents,ier)
-     enddo
-!   close CGNS file
-     call cg_close_f(index_file,ier)
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">!   WRITE DIMENSIONAL INFO FOR GRID AND FLOW SOLN</span>
+<span class="w">      </span><span class="k">use </span><span class="n">cgns</span><span class="w"></span>
+<span class="c">!   open CGNS file for modify</span>
+<span class="w">     </span><span class="k">call </span><span class="n">cg_open_f</span><span class="p">(</span><span class="s1">&#39;grid.cgns&#39;</span><span class="p">,</span><span class="n">CG_MODE_MODIFY</span><span class="p">,</span><span class="n">index_file</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ier</span><span class="w"> </span><span class="p">.</span><span class="n">ne</span><span class="p">.</span><span class="w"> </span><span class="n">CG_OK</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">cg_error_exit_f</span><span class="w"></span>
+<span class="c">!   we know there is only one base (real working code would check!)</span>
+<span class="w">     </span><span class="n">index_base</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
+<span class="c">!   we know there is only one zone (real working code would check!)</span>
+<span class="w">     </span><span class="n">index_zone</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
+<span class="c">!   we know there is only one FlowSolution_t (real working code would check!)</span>
+<span class="w">     </span><span class="n">index_flow</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
+<span class="c">!   we know there is only one GridCoordinates_t (real working code would check!)</span>
+<span class="w">     </span><span class="n">index_grid</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
+<span class="c">!   put DataClass and DimensionalUnits under Base</span>
+<span class="w">     </span><span class="k">call </span><span class="n">cg_goto_f</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span><span class="n">index_base</span><span class="p">,</span><span class="n">ier</span><span class="p">,</span><span class="s1">&#39;end&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="k">call </span><span class="n">cg_dataclass_write_f</span><span class="p">(</span><span class="n">Dimensional</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="k">call </span><span class="n">cg_units_write_f</span><span class="p">(</span><span class="n">Kilogram</span><span class="p">,</span><span class="n">Meter</span><span class="p">,</span><span class="nb">Second</span><span class="p">,</span><span class="n">Kelvin</span><span class="p">,</span><span class="n">Degree</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span><span class="w"></span>
+<span class="c">!   read fields</span>
+<span class="w">     </span><span class="k">call </span><span class="n">cg_nfields_f</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span><span class="n">index_base</span><span class="p">,</span><span class="n">index_zone</span><span class="p">,</span><span class="n">index_flow</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="o">+</span><span class="w">  </span><span class="n">nfields</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="k">do if</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nfields</span><span class="w"></span>
+<span class="w">       </span><span class="k">call </span><span class="n">cg_field_info_f</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span><span class="n">index_base</span><span class="p">,</span><span class="n">index_zone</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="o">+</span><span class="w">    </span><span class="n">index_flow</span><span class="p">,</span><span class="k">if</span><span class="p">,</span><span class="n">idatatype</span><span class="p">,</span><span class="n">fieldname</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span><span class="w"></span>
+<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fieldname</span><span class="w"> </span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="w"> </span><span class="s1">&#39;Density&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">exponents</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mf">1.</span><span class="w"></span>
+<span class="w">         </span><span class="n">exponents</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">=-</span><span class="mf">3.</span><span class="w"></span>
+<span class="w">         </span><span class="n">exponents</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">=</span><span class="mf">0.</span><span class="w"></span>
+<span class="w">         </span><span class="n">exponents</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">=</span><span class="mf">0.</span><span class="w"></span>
+<span class="w">         </span><span class="n">exponents</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">=</span><span class="mf">0.</span><span class="w"></span>
+<span class="w">       </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">fieldname</span><span class="w"> </span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="w"> </span><span class="s1">&#39;Pressure&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">exponents</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mf">1.</span><span class="w"></span>
+<span class="w">         </span><span class="n">exponents</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">=-</span><span class="mf">1.</span><span class="w"></span>
+<span class="w">         </span><span class="n">exponents</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">=-</span><span class="mf">2.</span><span class="w"></span>
+<span class="w">         </span><span class="n">exponents</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">=</span><span class="mf">0.</span><span class="w"></span>
+<span class="w">         </span><span class="n">exponents</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">=</span><span class="mf">0.</span><span class="w"></span>
+<span class="w">       </span><span class="k">else</span>
+<span class="k">         write</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;(&#39;&#39; Error! this fieldname not expected: &#39;&#39;,a32)&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="o">+</span><span class="w">      </span><span class="n">fieldname</span><span class="w"></span>
+<span class="w">         </span><span class="k">stop</span>
+<span class="k">       end if</span><span class="w"></span>
+<span class="c">!   write DimensionalExponents</span>
+<span class="w">       </span><span class="k">call </span><span class="n">cg_goto_f</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span><span class="n">index_base</span><span class="p">,</span><span class="n">ier</span><span class="p">,</span><span class="s1">&#39;Zone_t&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="o">+</span><span class="w">   </span><span class="s1">&#39;FlowSolution_t&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;DataArray_t&#39;</span><span class="p">,</span><span class="k">if</span><span class="p">,</span><span class="s1">&#39;end&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">       </span><span class="k">call </span><span class="n">cg_exponents_write_f</span><span class="p">(</span><span class="n">RealSingle</span><span class="p">,</span><span class="n">exponents</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="k">enddo</span><span class="w"></span>
+<span class="c">!   read grid</span>
+<span class="w">     </span><span class="k">call </span><span class="n">cg_ncoords_f</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span><span class="n">index_base</span><span class="p">,</span><span class="n">index_zone</span><span class="p">,</span><span class="n">ncoords</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="n">exponents</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mf">0.</span><span class="w"></span>
+<span class="w">     </span><span class="n">exponents</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">=</span><span class="mf">1.</span><span class="w"></span>
+<span class="w">     </span><span class="n">exponents</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">=</span><span class="mf">0.</span><span class="w"></span>
+<span class="w">     </span><span class="n">exponents</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">=</span><span class="mf">0.</span><span class="w"></span>
+<span class="w">     </span><span class="n">exponents</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">=</span><span class="mf">0.</span><span class="w"></span>
+<span class="w">     </span><span class="k">do </span><span class="n">ic</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">ncoords</span><span class="w"></span>
+<span class="c">!   write DimensionalExponents</span>
+<span class="w">       </span><span class="k">call </span><span class="n">cg_goto_f</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span><span class="n">index_base</span><span class="p">,</span><span class="n">ier</span><span class="p">,</span><span class="s1">&#39;Zone_t&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="o">+</span><span class="w">   </span><span class="s1">&#39;GridCoordinates_t&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;DataArray_t&#39;</span><span class="p">,</span><span class="n">ic</span><span class="p">,</span><span class="s1">&#39;end&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">       </span><span class="k">call </span><span class="n">cg_exponents_write_f</span><span class="p">(</span><span class="n">RealSingle</span><span class="p">,</span><span class="n">exponents</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="k">enddo</span><span class="w"></span>
+<span class="c">!   close CGNS file</span>
+<span class="w">     </span><span class="k">call </span><span class="n">cg_close_f</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Notice in this example that a DataClass_t node and a DimensionalUnits_t node are placed near the top of the hierarchy, under CGNSBase_t. DataClass_t is specified as Dimensional, and DimensionalUnits_t are specified as (Kilogram, Meter, Second, Kelvin, Degree). These specify that, by and large, the entire database is dimensional with MKS units (anything that is not dimensional or not MKS units could be superseded at lower levels). Then, for each variable locally, one need only specify the DimensionalExponents, where one exponent is defined for each unit.</p>

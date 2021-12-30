@@ -71,7 +71,7 @@ The node DataClass_t denotes the class of the data. When data is dimensional, th
 
 For dimensional data, one generally is expected to indicate the dimensionality of each particular variable through the use of DataClass_t, DimensionalUnits_t, and DimensionalExponents_t. An example of this is shown in the following code segment in which units are added to the structured grid and cell center flow solution used previously.
 
-.. code-block::
+.. code-block:: fortran
 
    !   WRITE DIMENSIONAL INFO FOR GRID AND FLOW SOLN
          use cgns

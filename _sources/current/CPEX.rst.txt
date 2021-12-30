@@ -25,7 +25,7 @@ The CPEX should include the following information:
    - General description of extension
    - Reason or need for extension
    - Detailed description of extension using similar documentation style found in the SIDS
-   - File Mapping description of Node Attributes, following the prescription given in existing `Node Description Documentation <FMMNodeDescriptions>`
+   - File Mapping description of Node Attributes, following the prescription given in existing :ref:`Node Description Documentation <FMMNodeDescriptions>`
    - Specific example(s) of extension
 
 .. note::

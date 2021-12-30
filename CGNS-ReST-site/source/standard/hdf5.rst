@@ -210,7 +210,7 @@ The file is unmounted if there is no reference to itself.
 
 General HDF5 Mapping Concepts 
 -----------------------------
-This section describes the general philosophy underlying the use of the HDF5 tree structure by CGNS. The section :ref:`Detailed CGNS Node Descriptions <StandardFMMNodeDescription>` describes the exact conventions for each type of data.
+This section describes the general philosophy underlying the use of the HDF5 tree structure by CGNS. The section :ref:`Detailed CGNS Node Descriptions <FMMNodeDescriptions>` describes the exact conventions for each type of data.
 
 We first describe the :ref:`roles of the various HDF5 elements<HDFElements>` (i.e. groups or attributes) as they are specifically applied within CGNS, followed by a description of :ref:`the overall layout<internal>` of the tree structure itself.
 

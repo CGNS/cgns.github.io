@@ -38,6 +38,7 @@
 (<a href="grid.html"><b>Grid&nbsp;Specification</b></a>)
 (<a href="solution.html"><b>Solution&nbsp;Data</b></a>)
 (<a href="connectivity.html"><b>Grid&nbsp;Connectivity</b></a>)
+(<a href="particle.html"><b>Particle&nbsp;Data</b></a>)
 (<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
 (<a href="equation.html"><b>Equation&nbsp;Specification</b></a>)
 (<a href="families.html"><b>Families</b></a>)
@@ -59,6 +60,11 @@
      <ul>
      <li> <tt><b>cg_ziter_write</b></tt> - Create <tt>ZoneIterativeData_t</tt> node
      <li> <tt><b>cg_ziter_read</b></tt> - Read <tt>ZoneIterativeData_t</tt> node
+     </ul>
+<li> <a href="#piter">Particle Iterative Data</a>
+     <ul>
+     <li> <tt><b>cg_piter_write</b></tt> - Create <tt>ParticleIterativeData_t</tt> node
+     <li> <tt><b>cg_piter_read</b></tt> - Read <tt>ParticleIterativeData_t</tt> node
      </ul>
 <li> <a href="#rigid">Rigid Grid Motion</a>
      <ul>
@@ -193,6 +199,63 @@
 <tr valign=baseline><td>
    <td><tt>ZoneIterName</tt><td>
    <td>Name of the <tt>ZoneIterativeData_t</tt> node.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<a name="piter"></a>
+<h3>Particle Iterative Data</h3>
+
+<i>Node</i>: <tt>ParticleIterativeData_t</tt>
+             (<a href="../sids/timedep.html#ParticleIterativeData">SIDS</a>,
+              <a href="../filemap/nodes.html#ParticleIterativeData">File Mapping (TODO)</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_piter_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>char *PartIterName</span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_piter_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int p</span>, <span class=out><i>char *PartIterName</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_piter_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>p</span>, <span class=in>PartIterName</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_piter_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>p</span>, <span class=out><i>PartIterName</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>fn</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><tt>B</tt><td>
+   <td>Base index number, where 1 &le; <tt>B</tt> &le; <tt>nbases</tt>.
+<tr valign=baseline><td>
+   <td><tt>P</tt><td>
+   <td>Particle index number, where 1 &le; <tt>P</tt> &le; <tt>nparticles</tt>.
+<tr valign=baseline><td>
+   <td><tt>ParticleIterName</tt><td>
+   <td>Name of the <tt>ParticleIterativeData_t</tt> node.
 <tr valign=baseline><td>
    <td><tt>ier</tt><td>
    <td>Error status.

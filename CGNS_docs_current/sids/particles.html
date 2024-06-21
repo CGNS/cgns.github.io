@@ -1,0 +1,1207 @@
+<!-- CGNS SIDS document - Grid Coordinates, Elements, and Flow Solutions -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="sids.css" rel="stylesheet" type="text/css">
+<title> CGNS Standard Interface Data Structures - Grid Coordinates, Elements, and Flow Solutions </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<center>
+<small>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="../midlevel/index.html"><b>Mid-Level&nbsp;Library</b></a>)
+(<a href="index.html"><span class=nav><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></span></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="intro.html"><b>Introduction</b></a>)
+(<a href="design.html"><b>Design&nbsp;Philosophy&nbsp;of&nbsp;Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="conv.html"><b>Conventions</b></a>)
+(<a href="build.html"><b>Building-Block&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="data.html"><b>Data-Array&nbsp;Structure&nbsp;Definitions</b></a>)
+(<a href="cgnsbase.html"><b>Hierarchical&nbsp;Structures</b></a>)
+(<span class=nav><b>Grid&nbsp;Coordinates,&nbsp;Elements,&nbsp;and&nbsp;Flow&nbsp;Solution</b></span>)
+(<a href="cnct.html"><b>Multizone&nbsp;Interface&nbsp;Connectivity</b></a>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
+(<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="particles.html"><b>Particle&nbsp;Data&nbsp;</b></a>)
+(<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
+(<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
+</small>
+</center>
+<a name="endnav"></a>
+
+<h2>13 Particle Data</h2>
+
+<ul>
+<li> <a href="#ParticleZone">13.1 Particle Zone Structure Definition: <tt>ParticleZone_t</tt></a>
+<li> <a href="#ParticleCoordinates">13.2 Particle Coordinates Structure Definition: <tt>ParticleCoordinates_t</tt></a>
+<li> <a href="#ParticleSolution">13.3 Particle Solution Structure Definition: <tt>ParticleSolution_t</tt></a>
+<li> <a href="#ParticleEquationSet">13.4 Particle Equation Set Structure Definition: <tt>ParticleEquationSet_t</tt></a>
+</ul>
+
+<p>
+This section defines structure types for describing the particle data.
+<a name="ParticleZone"></a>
+<h3>13.1 Particle Zone Structure Definition: <tt>ParticleZone_t</tt></h3>
+
+<p>
+The <tt>ParticleZone_t</tt> structure contains all information pertinent to an
+individual set of particles.
+<pre>
+  ParticleZone_t&lt; ParticleSize &gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    List( ParticleCoordinates_t&lt;ParticleSize&gt;
+          ParticleCoordinates MovedParticles1 ... MovedParticlesN ) ;  (o)
+
+    FamilyName_t FamilyName ;                                          (o)
+
+    List( AdditionalFamilyName_t AddFamilyName1 ... AddFamilyNameN ) ; (o)
+
+    List( ParticleSolution_t&lt; ParticleSize&gt;
+          ParticleSolution1 ... ParticleSolutionN ) ;                  (o)
+
+    List( IntegralData_t IntegralData1 ... IntegralDataN ) ;           (o)
+
+    ParticleIterativeData_t&lt;NumberOfSteps&gt; ParticleIterativeData ;     (o)
+
+    ReferenceState_t ReferenceState ;                                  (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    ParticleEquationSet_t ParticleEquationSet ;                        (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="particles.html#ParticleCoordinates"><tt>ParticleCoordinates_t</tt></a>,
+     <a href="particles.html#ParticleSolution"><tt>ParticleSolution_t</tt></a>,
+     <a href="misc.html#IntegralData"><tt>IntegralData_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given
+     instance of <tt>ParticleZone_t</tt> and shall not include the
+     names <tt>DataClass</tt>, <tt>DimensionalUnits</tt>,
+     <tt>FamilyName</tt>, <tt>FlowEquationSet</tt>,
+     <tt>ParticleCoordinates</tt>, <tt>ParticleSolution</tt>,
+     <tt>ParticleIterativeData</tt>, and <tt>ReferenceState</tt>.
+<li> The original particle coordinates should have the name
+     <tt>ParticleCoordinates</tt>.
+     Default names for the remaining entities in the
+     <a href="particles.html#ParticleCoordinates"><tt>ParticleCoordinates_t</tt></a>
+     list are as shown; users may choose other legitimate names, subject to
+     the restrictions listed in the previous note.
+<li> There may be multiple <tt>ParticleZone_t</tt> per base.
+     This allows users to create different groups of particles.
+     <tt>FamilyName_t</tt>
+     and <tt>AdditionalFamilyName_t</tt> nodes can be used to
+     discern each <tt>ParticleZone_t</tt> node.
+
+</ol>
+
+<p>
+<tt>ParticleZone_t</tt> requires the parameters <tt>ParticleSize</tt>, which
+corresponds to the number of particles in the <tt>ParticleZone_t</tt>.
+<tt>ParticleSize</tt> identifies the size of the
+particle-size arrays and is passed on to the particle coordinates and
+particle solution.
+
+<p>
+The <a href="particles.html#ParticleCoordinates"><tt>ParticleCoordinates_t</tt></a>
+structure contains the physical coordinates of the center of each particle in the
+<tt>ParticleZone_t</tt>.
+The original particle coordinates are contained in <tt>ParticleCoordinates</tt>.
+Additional <tt>ParticleCoordinates_t</tt> data structures are allowed, to
+store particles at multiple time steps or iterations.
+
+<a name="FamilyName"></a>
+<p>
+<tt>FamilyName</tt> identifies to which family particles belongs.
+Where multiple
+families are desired, <tt>AdditionalFamilyName</tt> nodes may be used
+to specify them.
+Both <tt>FamilyName</tt> and <tt>AdditionalFamilyName</tt> should refer to
+a <tt>CGNSBase_t</tt> level <tt>Family_t</tt>, in the parent base of the <tt>ParticleZone_t</tt>
+or in another sibling base (see <a href="cgnsbase.html#BaseLevelFamilies">Base Level Families</a>).
+
+<p>
+Particle-solution quantities are contained in the list of
+<a href="particles.html#ParticleSolution"><tt>ParticleSolution_t</tt></a> structures.
+Multiple <tt>ParticleSolution_t</tt> structures can be provided to store
+particle-solution data at multiple time steps or iterations.
+
+<p>
+Miscellaneous <tt>ParticleZone_t</tt>-specific global data is contained
+in the list of <a href="misc.html#IntegralData"><tt>IntegralData_t</tt></a>
+structures.
+
+<p>
+The particle-based <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+vectors in <a href="particles.html#ParticleSolution"><tt>ParticleSolution_t</tt></a> can correspond
+to a subset of particles defined in
+<a href="particles.html#ParticleCoordinates"><tt>ParticleCoordinates_t</tt></a> through the use of a
+<tt>PointRange</tt> or <tt>PointList</tt>. Unless a <tt>PointList</tt> is defined,
+particle-based <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+vectors in <a href="particles.html#ParticleSolution"><tt>ParticleSolution_t</tt></a> must use the same ordering
+as those defined in
+<a href="particles.html#ParticleCoordinates"><tt>ParticleCoordinates_t</tt></a>.
+
+
+<p>
+The <a href="timedep.html#ParticleIterativeData"><tt>ParticleIterativeData_t</tt></a>
+data structure may be used to record pointers to particle data at multiple
+time steps or iterations.
+
+<p>
+Reference-state data specific to an individual zone is contained in the
+<a href="misc.html#ReferenceState"><tt>ReferenceState</tt></a> structure.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the particle
+default for the class of data contained in the <tt>ParticleZone_t</tt> and its substructures.
+If a <tt>ParticleZone_t</tt> contains dimensional data,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> may be
+used to describe the system of dimensional units employed.
+<a href="misc.html#ReferenceState"><tt>ReferenceState</tt></a>,
+and <a href="#ParticleEquationSet"><tt>ParticleEquationSet</tt></a>
+have special function in the hierarchy.
+They are applicable throughout a given particle zone, but their precedence may be
+superseded by local entities contained in the particle zone's substructures.
+If any of these entities are present within a given instance of
+<tt>ParticleZone_t</tt>, they take precedence over the corresponding global
+entities contained in database's
+<a href="#CGNSBase"><tt>CGNSBase_t</tt></a> entity.
+These precedence rules are further discussed in the section on
+<a href="#precedence">Precedence Rules and Scope Within the Hierarchy</a>
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> and
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+have special function in the hierarchy.
+They are applicable throughout a given <tt>ParticleZone_t</tt>, but their precedence may be
+superseded by local entities contained in the <tt>ParticleZone_t</tt>'s substructures.
+If any of these entities are present within a given instance of
+<tt>ParticleZone_t</tt>, they take precedence over the corresponding global
+entities contained in the database's <tt>ParticleZone_t</tt>
+<a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> entity.
+These precedence rules are further discussed in the section on
+<a href="cgnsbase.html#precedence">Precedence Rules and Scope Within the Hierarchy</a>
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="ParticleCoordinates"></a>
+<h3>13.2 Particle Coordinates Structure Definition: <tt>ParticleCoordinates_t</tt></h3>
+
+<p>
+The physical coordinates of the particle centers are described by the
+<tt>ParticleCoordinates_t</tt> structure.
+This structure contains a list for the data arrays of the individual
+components of the position vector.
+<pre>
+  ParticleCoordinates_t&lt; int ParticleSize, int PhysicalDimension&gt; :=
+    {
+    DataArray_t&lt;DataType,PhysicalDimension, 2&gt; BoundingBox ;           (o)
+
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    List( DataArray_t&lt;DataType, ParticleSize&gt;
+          DataArray1 ... DataArrayN ) ;                                (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are
+     as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>ParticleCoordinates_t</tt> and shall not include the names
+     <tt>DataClass</tt>, or <tt>DimensionalUnits</tt>.
+<li> There are no required fields for <tt>ParticleCoordinates_t</tt>.
+<li> The structure parameter <tt>DataType</tt> must be consistent
+     with the data stored in the
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a> substructures.
+</ol>
+
+<p>
+<tt>ParticleCoordinates_t</tt> requires one structure parameters:
+<tt>ParticleSize</tt>, which is the number of particles in the
+<a href="#ParticleZone"><tt>ParticleZone_t</tt></a> node.
+
+<p>
+The particle coordinates data is stored in the list of
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+entities; each <tt>DataArray_t</tt> structure entity may contain
+a single component of the position vector (e.g., three separate
+<tt>DataArray_t</tt> entities are used for <i>x</i>, <i>y</i>, and
+<i>z</i>).
+
+<p>
+Standardized data-name identifiers for the particle coordinates are
+described in <a href="dataname.html#dataname_grid">Conventions for
+Data-Name Identifiers</a>.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default class for data contained in the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+For dimensional grid coordinates,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of units employed.
+If present, these two entities take precedence over the corresponding
+entities at higher levels of the CGNS hierarchy, following the
+standard <a href="cgnsbase.html#precedence">precedence rules</a>.
+An example that uses these particle-coordinate defaults is shown under
+<a href="#ParticleCoordonateExample">Particle Coordinates Examples</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+The <tt>BoundingBox</tt> array is optional and provides a measure within which
+all the particles lie. It stores minima and maxima of Coordinates values
+sorted by alphabetical order for Cartesian and Cylindrical coordinate systems,
+while Spherical and Auxiliary coordinate systems retain a specific order
+to be coherent with the existing SIDS notation, as detailed for
+<a href="gridflow.html#GridCoordinates"><tt>GridCoordinates_t</tt></a>.
+
+<a name="ParticleCoordonateExample"></a>
+<h4>Example - Particle Coordinates for a 3-D Case</h4>
+
+<p>
+This example show how to set the particle coordinate in the case where <tt>ParticleSize</tt> is 15.
+<pre>
+  !  ParticleSize = 15
+  ParticleCoordinates_t&lt;15&gt; ParticleCoordinates =
+    {{
+
+    ! DataType = real
+    ! ParticleSize = 15
+    DataArray_t&lt;real, 1, 15&gt; CoordinateX =
+      {{
+      Data(real, 1, 15) = (x(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; CoordinateY =
+      {{
+      Data(real, 1, 15) = (y(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; CoordinateZ =
+      {{
+      Data(real, 1, 15) = (z(i), i=1,15) ;
+      }} ;
+    }} ;
+</pre>
+
+
+<a name="ParticleSolution"></a>
+<h3>13.3 Particle Solution Structure Definition: <tt>ParticleSolution_t</tt></h3>
+
+<p>
+The solution on each particle within a given <tt>ParticleZone_t</tt> is described by the
+<tt>ParticleSolution_t</tt> structure.
+This structure contains a list for the data arrays of the individual
+solution variables. Particle solutions are implicitly defined at particle centers,
+and correspond to the solution for the entire particle.
+
+<pre>
+  ParticleSolution_t&lt; int ParticleSize&gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    IndexRange PointRange ;                                            (o)
+    IndexArray&lt;DataSize[], int&gt; PointList ;                            (o)
+
+    List( DataArray_t&lt;DataType, DataSize[]&gt;
+          DataArray1 ... DataArrayN ) ;                                (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>ParticleSolution_t</tt> and shall not include the
+     names <tt>DataClass</tt>, <tt>DimensionalUnits</tt>,
+     <tt>PointList</tt> or <tt>PointRange</tt>.
+<li> There are no required fields for <tt>ParticleSolution_t</tt>.
+<li> Both of the fields <tt>PointList</tt> and <tt>PointRange</tt> are
+     optional. Only one of these two fields may be specified.
+<li> The structure parameter <tt>DataType</tt> must be consistent with
+     the data stored in the
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>
+     structure entities; <tt>DataType</tt> is
+     <tt>real</tt> for all particle-solution identifiers defined in
+     the section <a href="dataname.html">Conventions for Data-Name
+     Identifiers</a>.
+<li> Indexing of data within the
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a> structure
+     must be consistent with coordonates defined in the <a href="#ParticleCoordinates"><tt>ParticleCoordinates_t</tt></a>.
+</ol>
+
+<p>
+The particle solution data is stored in the list of
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities; each
+<tt>DataArray_t</tt> structure entity may contain a single component of
+the solution vector.
+Standardized data-name identifiers for the particle-solution quantities are
+described in the section <a href="dataname.html">Conventions for Data-Name
+Identifiers</a>.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the default
+class for data contained in the
+<a href="data.html#DataArray"><tt>DataArray_t</tt></a> entities.
+For dimensional particle solution data,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a> may be
+used to describe the system of units employed.
+If present, these two entities take precedence over the corresponding
+entities at higher levels of the CGNS hierarchy, following the
+standard <a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="DataSize_particle"></a>
+<h4>FUNCTION <tt>DataSize[]</tt>:</h4>
+
+return value: <tt>int</tt>
+<br>
+dependencies: <tt>PointRange</tt>, <tt>PointList</tt>
+
+<p>
+<tt>ParticleSolution_t</tt> requires the structure function <tt>DataSize</tt>,
+which is used to specify the number of entities corresponding
+to a given <tt>PointRange</tt> or <tt>PointList</tt>. This will therefore be the
+size of the ParticleSolution data arrays. If <tt>PointRange</tt> is
+specified, then <tt>DataSize</tt> is obtained from the number of points
+(inclusive) between the beginning and ending indices of <tt>PointRange</tt>.
+If <tt>PointList</tt> is specified, then <tt>DataSize</tt> is the number of
+indices in the list of points. In this situation, <tt>DataSize</tt> becomes
+a user input along with the indices of the list <tt>PointList</tt>. By <i>user</i>
+we mean the application code that is generating the CGNS database.
+
+<a name="ParticleSolutionExample"></a>
+<h4>Example - Particle Solution</h4>
+<pre>
+  ParticleSolution_t&lt;15&gt; ParticleSolution =
+    {{
+
+    ! DataType = real
+    ! ParticleSize = 15
+
+    DataArray_t&lt;real, 1, 15&gt; Radius =
+      {{
+      Data(real, 1, 15) = (r(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; Temperature =
+      {{
+      Data(real, 1, 15) = (T(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; VelocityX =
+      {{
+      Data(real, 1, 15) = (u(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; VelocityY =
+      {{
+      Data(real, 1, 15) = (v(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; VelocityZ =
+      {{
+      Data(real, 1, 15) = (z(i), i=1,15) ;
+      }} ;
+    }} ;
+</pre>
+
+<a name="ParticleEquationSet"></a>
+<h3>13.4 Particle Equation Set Structure Definition: <tt>ParticleEquationSet_t</tt></h3>
+
+<p>
+<tt>ParticleEquationSet_t</tt> is a general description of the governing
+particle equations.
+It includes the dimensionality of the governing equations, and the
+collection of specific equation-set descriptions covered in subsequent
+sections.
+It can be a child node of
+<a href="cgnsbase.html#CGNSBase"><tt>CGNSBase_t</tt></a> or
+<a href="particles.html#ParticleZone"><tt>ParticleZone_t</tt></a> (or both).
+
+<pre>
+  ParticleEquationSet_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    int EquationDimension ;                                            (o)
+
+    ParticleGoverningEquations_t; ParticleGoverningEquations ;         (o)
+
+    ParticleCollisionModel_t ParticleCollisionModel ;                  (o)
+
+    ParticleBreakupModel_t ParticleBreakupModel ;                      (o)
+
+    ParticleForceModel_t ParticleForceModel ;                          (o)
+
+    ParticleWallInteractionModel_t ParticleWallInteractionModel ;      (o)
+
+    ParticlePhaseChangeModel_t ParticlePhaseChangeModel ;              (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>ParticleEquationSet_t</tt> and shall not include the names
+     <tt>ParticleGoverningEquations</tt>, <tt>ParticleCollisionModel</tt>,
+     <tt>ParticleBreakupModel</tt>, <tt>ParticleForceModel</tt>,
+     <tt>ParticleWallInteractionModel_t</tt>,
+     <tt>ParticlePhaseChangeModel</tt>,
+     <tt>DataClass</tt>, or <tt>DimensionalUnits</tt>.
+<li> There are no required elements for <tt>ParticleEquationSet_t</tt>.
+</ol>
+
+<p>
+<tt>EquationDimension</tt> is the dimensionality of the governing
+equations; it is the number of spatial variables describing the flow.
+
+<p>
+<a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
+default for the class of data contained in the flow-equation set.
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="ParticleGoverningEquations"></a>
+<h4>14.4.1 Governing Equations Structure Definition: <tt>ParticleGoverningEquations_t</tt></h4>
+
+<p>
+<tt>ParticleGoverningEquations_t</tt> describes the class of governing
+equations associated with particles.
+<pre>
+  ParticleGoverningEquationsType_t := Enumeration(
+    ParticleGovEqTypeNull,
+    ParticleGovEqTypeUserDefined,
+    DEM,
+    DSMC,
+    SPH) ;
+
+  ParticleGoverningEquations_t; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    ParticleGoverningEquationsType_t ParticleGoverningEquationsType ;  (r)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a> and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance of
+     <tt>ParticleGoverningEquations_t</tt>.
+<li> <tt>ParticleGoverningEquationsType</tt> is the only required element.
+</ol>
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="ParticleModelType"></a>
+<h4>14.4.2 Particle Model Type Structure Definition: <tt>ParticleModelType_t</tt></h4>
+
+<p>
+<tt>ParticleModelType_t</tt> is a complete list of all models covered in subsequent
+sections. A specific model will contain a subset of this enumeration.
+<pre>
+  ParticleModelType_t := Enumeration(
+    Linear, NonLinear, HardSphere, SoftSphere, LinearSpringDashpot,
+    Pair, BaiGosman, HertzMindlin, HertzKuwabaraKono, Kuhnke, ORourke, Wruck,
+    Stochastic, NonStochastic, NTC, KelvinHelmholtz,
+    KelvinHelmholtzACT, RayleighTaylor,
+    KelvinHelmholtzRayleighTaylor,
+    ReitzKHRT,
+    TAB, ETAB, LISA, SHF, PilchErdman, ReitzDiwakar,
+    Sphere, NonShpere, Tracer, BeetstraVanDerHoefKuipers,
+    Ergun, CliftGrace, Gidaspow, HaiderLevenspiel, PlessisMasliyah,
+    SyamlalOBrien, SaffmanMei, TennetiGargSubramaniam,
+    Tomiyama, Stokes, StokesCunningham, WenYu,
+    Boil, Condense, Flash, Nucleate, Chiang, Frossling, FuchsKnudsen) ;
+</pre>
+
+<a name="ParticleCollisionModel"></a>
+<h4>13.4.3 Particle Collision Model Structure Definition: <tt>ParticleCollisionModel_t</tt></h4>
+
+<p>
+<tt>ParticleCollisionModel_t</tt> describes the collision model used for
+particle-particle interactions.
+The enumerated values for <tt>ParticleCollisionModelType_t</tt> are a subset of the
+<tt>ParticleModelType_t</tt> enumeration.
+<pre>
+  ParticleCollisionModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Linear,
+    NonLinear,
+    HardSphere,
+    SoftSphere,
+    LinearSpringDashpot,
+    Pair,
+    HertzMindlin,
+    HertzKuwabaraKono,
+    ORourke,
+    Stochastic,
+    NonStochastic,
+    NTC) ;
+
+  ParticleCollisionModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    ParticleCollisionModelType_t ParticleCollisionModelType ;          (r)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>ParticleCollisionModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>ParticleCollisionModelType</tt> is the only required element.
+</ol>
+
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+<p>
+The <tt>ParticleCollisionModelType</tt> names currently listed correspond to the following particular references.
+
+<p>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>ORourke</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>O’Rourke, P. J ., "Collective Drop Effects on Vaporizing Liquid Sprays," Ph.D. Thesis,
+Princeton University, Princeton, N J , United States, 1981.
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>NTC</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Schmidt, D.P. and Rutland, C. J ., "A New Droplet Collision Algorithm," Journal of
+Computational Physics , 164 ( 1 ), 62 - 80 , 2000. DOI: 10.1006/jcph.2000.6568
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>HertzKuwabaraKono</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Goro Kuwabara and Kimitoshi Kono 1987 Jpn. J. Appl. Phys. 26 1230
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>HertzMindlin</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Tsuji Y.  et al. (1992) Lagrangian numerical simulation of plug flow of cohesionless particles in a horizontal pipe.
+Powder Technology, 71(3): p. 239-250. http://dx.doi.org/10.1016/0032-5910(92)88030-L
+<br><br>
+</table>
+
+<a name="ParticleBreakupModel"></a>
+<h4>13.4.4 Particle Breakup Model Structure Definition: <tt>ParticleBreakupModel_t</tt></h4>
+
+<p>
+<tt>ParticleBreakupModel_t</tt> describes the model used for
+particle breakup.
+The enumerated values for <tt>ParticleBreakupModelType_t</tt> are a subset of the
+<tt>ParticleModelType_t</tt> enumeration.
+<pre>
+  ParticleBreakupModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    KelvinHelmholtz,
+    KelvinHelmholtzACT,
+    RayleighTaylor,
+    KelvinHelmholtzRayleighTaylor,
+    ReitzKHRT,
+    TAB,
+    ETAB,
+    LISA,
+    SHF,
+    PilchErdman,
+    ReitzDiwakar) ;
+
+  ParticleBreakupModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    ParticleBreakupModelType_t ParticleBreakupModelType ;              (r)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>ParticleBreakupModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>ParticleBreakupModelType</tt> is the only required element.
+</ol>
+
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+The <tt>ParticleBreakupModelType</tt> names currently listed correspond to the following particular references.
+
+<p>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>KelvinHelmholtz</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Reitz, R.D. and Bracco, F.V., "Mechanisms of Breakup of Round Liquid Jets," Encyclopedia of
+     Fluid Mechanics, Gulf Publishing Company, 1986.
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>KelvinHelmholtzACT</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Som, S. and Aggarwal, S.K., "Effects of Primary Breakup Modeling on Spray and
+Combustion Characteristics of Compression Ignition Engines," Comb
+ustion and F
+lame, 157(6),
+1179-1193, 2010. DOI: 10.1016/j.combustflame.2010.02.018
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>RayleighTaylor</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Senecal, P.K., Richards, K.J., Pomraning, E., Yang, T., Dai, M.Z., McDavid, R.M., Patterson,
+M.A., Hou, S., and Shethaji, T., "A New Parallel Cut-Cell Cartesian CFD Code for Rapid Grid
+Generation Applied to In-Cylinder Diesel Engine Simulations," SAE Paper 2007-01-0159,
+2007. DOI: 10.4271/2007-01-0159
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>TAB</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+O’Rourke, P.J. and Amsden, A.A., "The TAB Method for Numerical Calculation of Spray
+Droplet Breakup," SAE Paper 872089, 1987. DOI: 10.4271/872089.
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>ETAB</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+F.X. Tanner
+    "Liquid Jet Atomization and Droplet Breakup Modeling of
+    Non-Evaporating Diesel Fuel Sprays"
+    SAE 970050,
+    SAE Transactions: Journal of Engines, Vol 106, Sec 3 pp 127-140
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>LISA</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Senecal, P.K., Schmidt, D.P., Nouar, I., Rutland, C.J., Reitz, R.D., and Corradini, M.L.,
+"Modeling High-Speed Viscous Liquid Sheet Atomization," International Journal of Multiphase
+Flow, 25(6-7), 1073-1097, 1999. DOI: 10.1016/S0301-9322(99)00057-9
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>SHF</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+R. Schmehl, G. Maier, S. Witting
+"CFD Analysis of Fuel Atomization, Secondary Droplet Breakup and Spray
+Dispersion in the Premix Duct of a LPP Combustor".
+Eight International Conference on Liquid Atomization and Spray Systems, 2000
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>PilchErdman</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Pilch, M., & Erdman, C. A. (1987).
+    Use of breakup time data and velocity history data
+    to predict the maximum size of stable fragments for
+    acceleration-induced breakup of a liquid drop.
+    International journal of multiphase flow, 13(6), 741-757.
+    DOI:10.1016/0301-9322(87)90063-2
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+    <td><tt>ReitzDiwakar</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Reitz, R.D. and Diwakar, R.
+"Effect of drop breakup on fuel sprays"
+SAE Tech. paper series, 860469 (1986)
+<br><br>
+</table>
+
+<a name="ParticleForceModel"></a>
+<h4>13.4.5 Particle Force Model Structure Definition: <tt>ParticleForceModel_t</tt></h4>
+
+<p>
+<tt>ParticleForceModel_t</tt> describes the model used for
+for forces, typically lift and drag, applied on particle.
+The enumerated values for <tt>ParticleForceModelType_t</tt> are a subset of the
+<tt>ParticleModelType_t</tt> enumeration.
+<pre>
+  ParticleForceModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Sphere,
+    NonSphere,
+    Tracer,
+    BeetstraVanDerHoefKuipers,
+    Ergun,
+    CliftGrace,
+    Gidaspow,
+    HaiderLevenspiel,
+    PlessisMasliyah,
+    SyamlalOBrien,
+    SaffmanMei,
+    TennetiGargSubramaniam,
+    Tomiyama,
+    Stokes,
+    StokesCunningham,
+    WenYu) ;
+
+  ParticleForceModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    ParticleForceModelType_t ParticleForceModelType ;          (r)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>ParticleForceModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>ParticleForceModelType</tt> is the only required element.
+</ol>
+
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+The <tt>ParticleForceModelType</tt> names currently listed correspond to the following particular references.
+
+<p>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>Ergun</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>            Gidaspow, D. (1994).
+            Multiphase flow and fluidization:
+            continuum and kinetic theory descriptions.
+            Academic press.
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>PlessisMasliyah</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>            Du Plessis, J. P. (1994).
+            Analytical quantification of coefficients in the
+            Ergun equation for fluid friction in a packed bed.
+            Transport in porous media, 16(2), 189-207.
+            DOI:10.1007/BF00617551
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>WenYu</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>            Wen, C. Y., & Yu, Y. H., (1966).
+            Mechanics of fluidization.
+            Chem. Eng. Prog. Symp. Ser. 62, 100-111.
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>CliftGrace</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Clift, R., Grace, J.R., and Weber, M.E., Bubbles,
+ Drops,  and Particles, Academic Press, NewYork, 1978.
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>HaiderLevenspiel</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Haider, A. and Levenspiel, O., "Drag Coefficient and Terminal Velocity of Spherical and
+Non-Spherical Particles," Powder Technology 58(1), 63-70, 1989.
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>SaffmanMei</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Koohandaz, A., Khavasi, E., Eyvazian, A., and Yousefi, H., "Prediction of particles
+deposition in a dilute quasi-steady gravity current by Lagrangian markers: Effect of shear-
+induced lift force," Scientific Reports, 10, 16673, 2020.
+<br><br>
+</table>
+
+<a name="ParticleWallInteractionModel"></a>
+<h4>13.4.6 Particle Wall Interaction Model Structure Definition: <tt>ParticleWallInteractionModel_t</tt></h4>
+
+<p>
+<tt>ParticleWallInteractionModel_t</tt> describes the model used for
+particle-wall interactions, including splash models.
+The enumerated values for <tt>ParticleWallInteractionModelType_t</tt> are a subset of the
+<tt>ParticleModelType_t</tt> enumeration.
+<pre>
+  ParticleWallInteractionModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Linear,
+    NonLinear,
+    HardSphere,
+    SoftSphere,
+    LinearSpringDashpot,
+    BaiGosman,
+    HertzMindlin,
+    HertzKuwabaraKono,
+    Kuhnke,
+    ORourke,
+    Wruck,
+    NTC) ;
+
+  ParticleWallInteractionModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                    (o)
+
+    ParticleWallInteractionModelType_t ParticleWallInteractionModelType ; (r)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;       (o)
+
+    DataClass_t DataClass ;                                               (o)
+
+    DimensionalUnits_t DimensionalUnits ;                                 (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;     (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>ParticleWallInteractionModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>ParticleWallInteractionModelType</tt> is the only required element.
+</ol>
+
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+The <tt>ParticleWallInteractionModelType</tt> names currently listed correspond to the following particular references.
+
+<p>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>ORourke</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>O’Rourke, P. J ., "Collective Drop Effects on Vaporizing Liquid Sprays," Ph.D. Thesis,
+Princeton University, Princeton, N J , United States, 1981.
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>Kuhnke</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Kuhnke, D., "Spray/Wall-interaction Modelling by Dimensionless Data Analysis," Ph.D.
+Thesis, Shaker Verlag, 2004, ISBN 3-8322-3539.
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>NTC</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Schmidt, D.P. and Rutland, C. J ., "A New Droplet Collision Algorithm," Journal of
+Computational Physics , 164 ( 1 ), 62 - 80 , 2000. DOI: 10.1006/jcph.2000.6568
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>BaiGosman</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Bai, C. and Gosman, A. "Development of Methodology for Spray Impingement Simulation,"
+SAE Paper 950283, 1995. DOI: 10.4271/950283
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>HertzKuwabaraKono</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>Goro Kuwabara and Kimitoshi Kono 1987 Jpn. J. Appl. Phys. 26 1230
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>HertzMindlin</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Tsuji Y.  et al. (1992) Lagrangian numerical simulation of plug flow of cohesionless particles in a horizontal pipe.
+Powder Technology, 71(3): p. 239-250. http://dx.doi.org/10.1016/0032-5910(92)88030-L
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>Wruck</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Wruck, N.M. and Renz, U., "Transient Phase-Change of Droplets Impacting on a Hot Wall,"
+Wiley-VCH Verlag GmbH, ISBN 978-3-527-27149-8.
+<br><br>
+</table>
+
+<a name="ParticlePhaseChangeModel"></a>
+<h4>13.4.7 Particle Phase Change Model Structure Definition: <tt>ParticlePhaseChangeModel_t</tt></h4>
+
+<p>
+<tt>ParticlePhaseChangeModel_t</tt> describes the model used for
+particle phase change, typically evaporation and condensation.
+The enumerated values for <tt>ParticlePhaseChangeModelType_t</tt> are a subset of the
+<tt>ParticleModelType_t</tt> enumeration.
+<pre>
+  ParticlePhaseChangeModelType_t := Enumeration(
+    ModelTypeNull,
+    ModelTypeUserDefined,
+    Boil,
+    Condense,
+    Flash,
+    Nucleate,
+    Chiang,
+    Frossling,
+    FuchsKnudsen) ;
+
+  ParticlePhaseChangeModel_t :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    ParticlePhaseChangeModelType_t ParticlePhaseChangeModelType ;      (r)
+
+    List( DataArray_t&lt;DataType, 1, 1&gt; DataArray1 ... DataArrayN ) ;    (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
+     <a href="data.html#DataArray"><tt>DataArray_t</tt></a>, and
+     <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of <tt>ParticlePhaseChangeModel_t</tt> and shall not include the names
+     <tt>DataClass</tt> or <tt>DimensionalUnits</tt>.
+<li> <tt>ParticlePhaseChangeModelType</tt> is the only required element.
+</ol>
+
+For any data that is dimensional,
+<a href="build.html#DimensionalUnits"><tt>DimensionalUnits</tt></a>
+may be used to describe the system of dimensional units employed.
+If present, these two entities take precedence over all corresponding
+entities at higher levels of the hierarchy, following the standard
+<a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
+data structure allows arbitrary user-defined data to be stored in
+<tt>Descriptor_t</tt> and <tt>DataArray_t</tt> children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<p>
+The <tt>ParticlePhaseChangeModelType</tt> names currently listed correspond to the following particular references.
+
+<p>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>Frossling</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Amsden, A.A., O’Rourke, P.J ., and Butler, T.D., "KIVA-II: A Computer Program for
+Chemically Reactive Flows with Sprays," Los Alamos National Laboratory Technical Report
+LA-11560-MS, 1989.
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>Chiang</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Chiang, C.H., Raju, M.S., and Sirignano, W.A., "Numerical Analysis of a Convecting,
+Vaporizing Fuel Droplet with Variable Properties," International Journal of Heat and Mass
+Transfer, 35( 5), 1307-1324, 1992. DOI: 10.1016/0017-9310(92)90186-V
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>Flash</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Price, C., Hamzehloo, A., Aleiferis, P., and Richardson, R., "An Approach to Modeling Flash-
+Boiling Fuel Sprays for Direct-Injection Spark-Ignition Engines," Atomization and Sprays,
+26(12), 1197-1239, 2016. DOI: 10.1615/AtomizSpr.2016015807
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>Condense</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Kryukov, A.P., Levashov, V.Yu., and Sazhin, S.S., "Evaporation of diesel fuel droplets:
+kinetic versus hydrodynamic models," International Journal of Heat and Mass Transfer
+47, 2541-2549, 2004.
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>Nucleate</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>
+Liu, X. and Cheng, P., "Dropwise condensation theory revisited Part II: Droplet nucleation
+density and condensation heat flux," International Journal of Heat and Mass Transfer,
+83, 842-849, 2015.
+<br><br>
+</table>
+
+
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+Last updated 1 May 2024
+</div>
+
+</body>
+</html>

@@ -38,6 +38,7 @@
 (<a href="floweqn.html"><b>Governing&nbsp;Flow&nbsp;Equations</b></a>)
 (<a href="timedep.html"><b>Time-Dependent&nbsp;Flow</b></a>)
 (<a href="misc.html"><b>Miscellaneous&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="particles.html"><b>Particle&nbsp;Data&nbsp;</b></a>)
 (<a href="dataname.html"><b>Conventions&nbsp;for&nbsp;Data-Name&nbsp;Identifiers</b></a>)
 (<a href="twozone.html"><b>Structured&nbsp;Two-Zone&nbsp;Flat&nbsp;Plate&nbsp;Example</b></a>)
 </center>
@@ -146,6 +147,8 @@ structures at all levels of the hierarchy.
 
     List( Zone_t&lt;CellDimension, PhysicalDimension&gt; Zone1 ... ZoneN ) ; (o)
 
+    List( ParticleZone_t&lt;ParticleSize&gt; Particles1 ... ParticlesN ) ;      (o)
+
     ReferenceState_t ReferenceState ;                                  (o)
 
     Axisymmetry_t Axisymmetry ;                                        (o)
@@ -178,6 +181,7 @@ structures at all levels of the hierarchy.
 <li> Default names for the
      <a href="build.html#Descriptor"><tt>Descriptor_t</tt></a>,
      <a href="#Zone"><tt>Zone_t</tt></a>,
+     <a href="particles.html#Particles"><tt>ParticleZone_t</tt></a>,
      <a href="misc.html#IntegralData"><tt>IntegralData_t</tt></a>, 
      <a href="misc.html#Family"><tt>Family_t</tt></a>, and
      <a href="misc.html#UserDefinedData"><tt>UserDefinedData_t</tt></a>
@@ -247,6 +251,10 @@ On the other hand we assume that all zones of the base have the same
 must be composed of 3D cells within the <tt>CGNSBase_t</tt>.
 
 <p>
+If the base contains only particles (no mesh), then <tt>CellDimension</tt> carries no meaning.
+It remains required for compatability purposes.
+
+<p>
 We need <tt>IndexDimension</tt> for both structured and unstructured
 zones in order to use original data structures such as
 <a href="gridflow.html#GridCoordinates"><tt>GridCoordinates_t</tt></a>,
@@ -275,6 +283,10 @@ structure.
 <p>
 Data specific to each zone in a multizone case is contained in the list
 of <a href="#Zone"><tt>Zone_t</tt></a> structure entities.
+
+<p>
+The <a href="particles.html#Particles"><tt>ParticleZone_t</tt></a> node
+allows to store sets of particles.
 
 <p>
 Reference data applicable to the entire CGNS database is contained in
@@ -728,7 +740,8 @@ We have established an alternate dependency for a limited number
 of entities that is not explicitly stated in the structure type
 definitions.
 These special situations include entities for describing data class,
-system of dimensional units, reference states and flow equation sets.
+system of dimensional units, reference states, flow equation sets, and
+particle equation sets.
 At each level of the hierarchy (where appropriate), entities for
 describing this information are defined, and if present they take
 precedence over all corresponding information existing at higher levels
@@ -740,12 +753,15 @@ provisions for recursively overriding it with local data.
 Specifically, the entities that follow this alternate dependency are:
 <ul>
 <li> <tt>FlowEquationSet_t FlowEquationSet</tt>,
+<li> <tt>ParticleEquationSet_t ParticleEquationSet</tt>,
 <li> <tt>ReferenceState_t ReferenceState</tt>,
 <li> <tt>DataClass_t DataClass</tt>,
 <li> <tt>DimensionalUnits_t DimensionalUnits</tt>.
 </ul>
 <a href="floweqn.html#FlowEquationSet"><tt>FlowEquationSet</tt></a>
 contains a description of the governing flow equations;
+<a href="particles.html#ParticleEquationSet"><tt>ParticleEquationSet</tt></a>
+contains a description of the governing particle equations;
 <a href="misc.html#ReferenceState"><tt>ReferenceState</tt></a> describes
 a set of reference state flow conditions;
 <a href="build.html#DataClass"><tt>DataClass</tt></a> defines the
@@ -759,11 +775,13 @@ All of these entities may be defined within the highest level
 <a href="#CGNSBase"><tt>CGNSBase_t</tt></a> structure, and if present
 in a given database, establish globally applicable information;
 these may also be considered to be global defaults.
-Each of these four entities may also be defined within the
-<a href="#Zone"><tt>Zone_t</tt></a> structure.
-If present in a given instance of <tt>Zone_t</tt>, they supersede the
-global data and establish new defaults that apply only within that
-zone.
+Each of these entities may also be defined within the
+<a href="#Zone"><tt>Zone_t</tt></a> or <a href="particles.html#ParticleZone"><tt>ParticleZone_t</tt></a> structure
+(<tt>FlowEquationSet</tt> may not be defined in <tt>ParticleZone_t</tt> and
+<tt>ParticleEquationSet</tt> may not be defined in <tt>Zone_t</tt>).
+If present in a given instance of <tt>Zone_t</tt> or <tt>ParticleZone_t</tt>,
+they supersede the global data and establish new defaults that apply only within that
+zone or particle zone.
 
 <p>
 For example, if a different set of flow equations is solved within a
@@ -840,6 +858,7 @@ references may lead to inconsistency:
   <li><tt>DataClass</tt>
   <li><tt>DimensionalUnits</tt>
   <li><tt>FlowEquationSet</tt>
+  <li><tt>ParticleEquationSet</tt>
   <li><tt>Family_t</tt>
 </ul>
 

@@ -1,4 +1,3 @@
-<!-- CGNS File Mapping Manual - Detailed CGNS Node Descriptions -->
 
 <html>
 <head>
@@ -50,6 +49,7 @@
      <ul>
      <li> <a href="#gridspecification">Grid Specification</a>
      <li> <a href="#fieldspecification">Field Specification</a>
+     <li> <a href="#particledata">Particle Data</a>
      <li> <a href="#connectivitygroup">Connectivity Group</a>
      <li> <a href="#bcgroup">Boundary Condition Group</a>
      <li> <a href="#equationspecification">Equation Specification Group</a>
@@ -1464,6 +1464,414 @@ of the entire field.
    <th align=left>Functions:<td>
    <td><a href="../sids/gridflow.html#DataSize_flow"><tt>DataSize</tt></a>
 </table>
+
+<a name="particledata"></a>
+<h4>Particle Data</h4>
+
+<a name="Particle Zone"></a>
+<h4><tt>ParticleZone_t</tt></h4>
+
+<p>
+Sets of particles are held in <tt>ParticleZone_t</tt> nodes.
+<tt>ParticleZone_t</tt> are children of the <tt>CGNSBase_t</tt>.
+There can be multiple <tt>ParticleZone_t</tt> should the user want to
+distinguish between sets of particles.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td>User defined
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/particles.html#ParticleZone"><tt>ParticleZone_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt><span class=cgsize>cgsize_t</span></tt>
+<tr valign=baseline><td>
+   <th align=left>Dimension:<td>
+   <td>1
+<tr valign=baseline><td>
+   <th align=left>Dimension&nbsp;Values:<td>
+   <td>1
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/ParticleZone.html"><tt>ParticleZone_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,<i>N</i>
+<tr valign=baseline><td>
+   <th align=left>Parameters:<td>
+   <td><tt>PhysicalDimension</tt>
+</table>
+
+<a name="ParticleCoordinate"></a>
+<h4><tt>ParticleCoordinate_t</tt></h4>
+
+<p>
+A <tt>ParticleCoordinates_t</tt> node describes the location of
+each particle associated with a single particle zone.
+The values of the physical coordinates of the particle centers are stored
+in <tt>DataArray_t</tt> children of <tt>ParticleCoordinates_t</tt>. The
+names of the coordinates are stored in the Name field of the
+corresponding <tt>DataArray_t</tt> node. For common coordinate systems,
+i.e., Cartesian, polar, cylindrical, and spherical, the names are
+specified by the SIDS.
+
+<p>
+Under each node of type <tt>ParticleZone_t</tt>, the original
+particle coordinate is contained in a node named <tt>ParticleCoordinates</tt>.
+Additional <tt>ParticleCoordinates_t</tt> data structures are allowed,
+with user-defined names, to store particles at multiple time steps or iterations.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>ParticleCoordinates</tt> or user defined
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/particles.html#ParticleCoordinates"><tt>ParticleCoordinates_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt>MT</tt> or <tt>R4</tt> or <tt>R8</tt>
+<tr valign=baseline><td>
+   <th align=left>Dimension:<td>
+   <td>2
+<tr valign=baseline><td>
+   <th align=left>Dimension&nbsp;Values:<td>
+   <td><tt>PhysicalDimension</tt>, 2
+<tr valign=baseline><td>
+   <th align=left>Data:<td>
+   <td><tt>BoundingBox</tt> values
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/ParticleCoordinates.html"><tt>ParticleCoordinates_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,<i>N</i>
+<tr valign=baseline><td>
+   <th align=left>Parameters:<td>
+   <td><tt>ParticleSize</tt>, <tt>PhysicalDimension</tt>
+<tr valign=baseline><td>
+   <th align=left>Functions:<td>
+   <td><a href="../sids/gridflow.html#DataSize_grid"><tt>DataSize</tt></a>
+</table>
+
+<a name="ParticleSolution"></a>
+<h4><tt>ParticleSolution_t</tt></h4>
+
+<p>
+A <tt>ParticleSolution_t</tt> node describes a set of physical data
+associated with particles for a single particle zone. It is intended for
+the storage of computed discrete data such as temperatures and
+velocities of particles. There is no convention as to how many or what kind
+of quantities must or may be stored. In particular, it is not
+specified that the quantities need in any sense be either complete or
+non-redundant.
+
+<p>
+The data are stored in <tt>DataArray_t</tt> children of
+<tt>ParticleSolution_t</tt>. These <tt>DataArray_t</tt> nodes are dimension
+<tt>ParticleSize</tt>, as set by the particle zone, and
+the order of storage within the <tt>DataArray_t</tt> nodes is presumed
+the same as it is for the associated <tt>ParticleCoordinates_t</tt>.
+The names of the physical quantities are
+stored in the Name field of the corresponding <tt>DataArray_t</tt>
+node.
+For common fluid dynamic quantities the
+<a href="../sids/dataname.html">names are specified by the SIDS</a>.
+
+<p>
+The meaning of the field arrays is modified in the usual way by any
+<tt>DataClass_t</tt> or <tt>DimensionalUnits_t</tt> children of the
+<tt>ParticleSolution_t</tt> node.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td>User defined
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/particles.html#ParticleSolution"><tt>ParticleSolution_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt>MT</tt>
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/ParticleSolution.html"><tt>ParticleSolution_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,<i>N</i>
+<tr valign=baseline><td>
+   <th align=left>Parameters:<td>
+   <td><tt>ParticleSize</tt>
+<tr valign=baseline><td>
+   <th align=left>Functions:<td>
+           <td><a href="../sids/gridflow.html#DataSize_flow"><tt>DataSize</tt></a> <!-- TODO: check whether this was implemented -->
+</table>
+
+<a name="ParticleEquationSet"></a>
+<h4><tt>ParticleEquationSet_t</tt></h4>
+
+<p>
+A node of type <tt>ParticleEquationSet_t</tt> appears either at the highest
+level of the tree (under <tt>CGNSBase_t</tt>), to indicate the equation
+set whose solution is recorded throughout the database, or below a
+<tt>ParticleZone_t</tt> node, to indicate the set of equations solved in that
+particle zone. The usual convention applies, i.e., specifications at the local
+(particle zone) level override global specifications.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>ParticleEquationSet</tt>
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/particles.html#ParticleEquationSet"><tt>ParticleEquationSet_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt>MT</tt>
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/ParticleEquationSet.html"><tt>ParticleEquationSet_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,1
+</table>
+
+<a name="ParticleGoverningEquations"></a>
+<h4><tt>ParticleGoverningEquations_t</tt></h4>
+
+<p>
+This node names the equation set being solved, for example,
+<tt>DEM</tt>, <tt>DSMC</tt>, or <tt>SPH</tt>.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>ParticleGoverningEquations</tt>
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/particles.html#ParticleGoverningEquations"><tt>ParticleGoverningEquations_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt>C1</tt>
+<tr valign=baseline><td>
+   <th align=left>Dimension:<td>
+   <td>1
+<tr valign=baseline><td>
+   <th align=left>Dimension&nbsp;Values:<td>
+   <td>Length of string
+<tr valign=baseline><td>
+   <th align=left>Data:<td>
+   <td><tt>ParticleGoverningEquationsType</tt> value
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/ParticleGoverningEquations.html"><tt>ParticleGoverningEquations_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,1
+</table>
+
+<a name="ParticleCollisionModel"></a>
+<h4><tt>ParticleCollisionModel_t</tt></h4>
+
+<p>
+A node of type <tt>ParticleCollisionModel_t</tt> names the particle collision model used, for example,
+<tt>HardShpere</tt> or <tt>HertzKuwabaraKono</tt>.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>ParticleCollisionModel</tt>
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/particles.html#ParticleCollisionModel"><tt>ParticleCollisionModel_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt>C1</tt>
+<tr valign=baseline><td>
+   <th align=left>Dimension:<td>
+   <td>1
+<tr valign=baseline><td>
+   <th align=left>Dimension&nbsp;Values:<td>
+   <td>Length of string
+<tr valign=baseline><td>
+   <th align=left>Data:<td>
+   <td><tt>ParticleCollisionModelType</tt> value
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/ParticleCollisionModel.html"><tt>ParticleCollisionModel_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,1
+</table>
+
+<a name="ParticleBreakupModel"></a>
+<h4><tt>ParticleBreakupModel_t</tt></h4>
+
+<p>
+A node of type <tt>ParticleBreakupModel_t</tt> names the particle breakup model used, for example,
+<tt>KelvinHelmholtz</tt> or <tt>TAB</tt>.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>ParticleBreakupModel</tt>
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/particles.html#ParticleBreakupModel"><tt>ParticleBreakupModel_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt>C1</tt>
+<tr valign=baseline><td>
+   <th align=left>Dimension:<td>
+   <td>1
+<tr valign=baseline><td>
+   <th align=left>Dimension&nbsp;Values:<td>
+   <td>Length of string
+<tr valign=baseline><td>
+   <th align=left>Data:<td>
+   <td><tt>ParticleBreakupModelType</tt> value
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/ParticleBreakupModel.html"><tt>ParticleBreakupModel_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,1
+</table>
+
+<a name="ParticleForceModel"></a>
+<h4><tt>ParticleForceModel_t</tt></h4>
+
+<p>
+A node of type <tt>ParticleForceModel_t</tt> names the particle force model used, for example,
+<tt>Shpere</tt> or <tt>WenYu</tt>.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>ParticleForceModel</tt>
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/particles.html#ParticleForceModel"><tt>ParticleForceModel_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt>C1</tt>
+<tr valign=baseline><td>
+   <th align=left>Dimension:<td>
+   <td>1
+<tr valign=baseline><td>
+   <th align=left>Dimension&nbsp;Values:<td>
+   <td>Length of string
+<tr valign=baseline><td>
+   <th align=left>Data:<td>
+   <td><tt>ParticleForceModelType</tt> value
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/ParticleForceModel.html"><tt>ParticleForceModel_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,1
+</table>
+
+<a name="ParticleWallInteractionModel"></a>
+<h4><tt>ParticleWallInteractionModel_t</tt></h4>
+
+<p>
+A node of type <tt>ParticleWallInteractionModel_t</tt> names the particle-wall interaction model used, for example,
+<tt>HardShpere</tt> or <tt>HertzKuwabaraKono</tt>.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>ParticleWallInteractionModel</tt>
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/particles.html#ParticleWallInteractionModel"><tt>ParticleWallInteractionModel_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt>C1</tt>
+<tr valign=baseline><td>
+   <th align=left>Dimension:<td>
+   <td>1
+<tr valign=baseline><td>
+   <th align=left>Dimension&nbsp;Values:<td>
+   <td>Length of string
+<tr valign=baseline><td>
+   <th align=left>Data:<td>
+   <td><tt>ParticleWallInteractionModelType</tt> value
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/ParticleWallInteractionModel.html"><tt>ParticleWallInteractionModel_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,1
+</table>
+
+<a name="ParticlePhaseChangeModel"></a>
+<h4><tt>ParticlePhaseChangeModel_t</tt></h4>
+
+<p>
+A node of type <tt>ParticlePhaseChangeModel_t</tt> names the particle phase change model used, for example,
+<tt>Frossling</tt> or <tt>FuchsKnudsen</tt>.
+
+<br><br>
+<table cellspacing=0 cellpadding=0 border=0>
+<caption class=node>Node Attributes
+<br><br>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <th align=left>Name:<td><tt>&nbsp;&nbsp;</tt>
+   <td><tt>ParticlePhaseChangeModel</tt>
+<tr valign=baseline><td>
+   <th align=left>Label:<td>
+   <td><a href="../sids/particles.html#ParticlePhaseChangeModel"><tt>ParticlePhaseChangeModel_t</tt></a>
+<tr valign=baseline><td>
+   <th align=left>DataType:<td>
+   <td><tt>C1</tt>
+<tr valign=baseline><td>
+   <th align=left>Dimension:<td>
+   <td>1
+<tr valign=baseline><td>
+   <th align=left>Dimension&nbsp;Values:<td>
+   <td>Length of string
+<tr valign=baseline><td>
+   <th align=left>Data:<td>
+   <td><tt>ParticlePhaseChangeModelType</tt> value
+<tr valign=baseline><td>
+   <th align=left>Children:<td>
+   <td>See <a href="figures/ParticlePhaseChangeModel.html"><tt>ParticlePhaseChangeModel_t</tt> figure</a>
+<tr valign=baseline><td>
+   <th align=left>Cardinality:<td>
+   <td>0,1
+</table>
+
 
 <a name="connectivitygroup"></a>
 <h4>Connectivity Group</h4>

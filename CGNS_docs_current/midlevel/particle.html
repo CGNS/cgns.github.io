@@ -1,0 +1,426 @@
+<!-- CGNS Mid-Level Library - Particle Specification -->
+
+<html>
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="midlevel.css" rel="stylesheet" type="text/css">
+<title> CGNS Mid-Level Library - Particle Specification </title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<a href="#endnav"><img src="../blank.gif" border=0 alt="Skip navigation links"></a>
+<small>
+<center>
+(<a href="../index.html"><b>CGNS&nbsp;Documentation&nbsp;Home&nbsp;Page</b></a>)
+(<a href="../charter/index.html"><b>Steering&nbsp;Committee&nbsp;Charter</b></a>)
+(<a href="../overview/index.html"><b>Overview&nbsp;and&nbsp;Entry-Level&nbsp;Document</b></a>)
+(<a href="../user/index.html"><b>A&nbsp;User's&nbsp;Guide&nbsp;to&nbsp;CGNS</b></a>)
+(<a href="index.html"><span class=nav><b>Mid-Level&nbsp;Library</b></span></a>)
+(<a href="../sids/index.html"><b>Standard&nbsp;Interface&nbsp;Data&nbsp;Structures</b></a>)
+(<a href="../filemap/index.html"><b>SIDS&nbsp;File&nbsp;Mapping&nbsp;Manual</b></a>)
+(<a href="../cgio/index.html"><b>CGIO&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../pcgns/index.html"><b>Parallel&nbsp;CGNS&nbsp;User's&nbsp;Guide</b></a>)
+(<a href="../adf/index.html"><b>ADF&nbsp;Implementation</b></a>)
+(<a href="../hdf5/index.html"><b>HDF5&nbsp;Implementation</b></a>)
+(<a href="../python/index.html"><b>Python&nbsp;Implementation</b></a>)
+(<a href="../cgnstools/index.html"><b>CGNS&nbsp;Tools&nbsp;and&nbsp;Utilities</b></a>)
+<br><br>
+(<a href="general.html"><b>General&nbsp;Remarks</b></a>)
+(<a href="fileops.html"><b>File&nbsp;Operations</b></a>)
+(<a href="navigating.html"><b>Navigating&nbsp;a&nbsp;CGNS&nbsp;File</b></a>)
+(<a href="error.html"><b>Error&nbsp;Handling</b></a>)
+(<a href="structural.html"><b>Structural&nbsp;Nodes</b></a>)
+(<a href="descriptor.html"><b>Descriptors</b></a>)
+(<a href="physical.html"><b>Physical&nbsp;Data</b></a>)
+(<a href="location.html"><b>Location&nbsp;and&nbsp;Position</b></a>)
+(<a href="auxiliary.html"><b>Auxiliary&nbsp;Data</b></a>)
+(<a href="grid.html"><b>Grid&nbsp;Specification</b></span></a>)
+(<a href="solution.html"><b>Solution&nbsp;Data</b></a>)
+(<a href="connectivity.html"><b>Grid&nbsp;Connectivity</b></a>)
+(<span class=nav><b>Particle&nbsp;Data</b></nav>)
+(<a href="bc.html"><b>Boundary&nbsp;Conditions</b></a>)
+(<a href="equation.html"><b>Equation&nbsp;Specification</b></a>)
+(<a href="families.html"><b>Families</b></a>)
+(<a href="timedep.html"><b>Time-Dependent&nbsp;Data</b></a>)
+(<a href="links.html"><b>Links</b></a>)
+</center>
+</small>
+<a name="endnav"></a>
+
+<h2>Particle Specification</h2>
+
+<ul>
+<li> <a href="#Particle">Particle Information</a>
+     <ul>
+     <li> <tt><b>cg_particle_write</b></tt> - Create and/or write to a particle node
+     <li> <tt><b>cg_nparticles</b></tt> - Get number of particle nodes in base
+     <li> <tt><b>cg_particle_read</b></tt> - Read particle information
+     </ul>
+<li> <a href="#ParticleCoordinates">Particle Coordinates</a>
+     <ul>
+     <li> <tt><b>cg_particle_location_write</b></tt> - Write a <tt>ParticleCoordinates_t</tt> node
+     <li> <tt><b>cg_particle_nlocs</b></tt> - Get number of <tt>ParticleCoordinates_t</tt> nodes
+     <li> <tt><b>cg_particle_location_read</b></tt> - Get name of a <tt>ParticleCoordinates_t</tt> node
+     <li> <tt><b>cg_particle_coord_write</b></tt> - Write particle coordinates
+     <li> <tt><b>cg_particle_coord_partial_write</b></tt> - Write subset of particle coordinates
+     <li> <tt><b>cg_particle_coord_general_write</b></tt> - Write shaped array to a subset of particle coordinates
+     <li> <tt><b>cg_particle_ncoords</b></tt> - Get number of particle coordinate arrays
+     <li> <tt><b>cg_particle_coord_info</b></tt> - Get info about a particle coordinate array
+     <li> <tt><b>cg_particle_coord_read</b></tt> - Read particle coordinates
+     <li> <tt><b>cg_particle_coord_general_read</b></tt> - Read subset of particle coordinates to a shaped array
+     </ul>
+</ul>
+
+<a name="Particle"></a>
+<h3>Particle</h3>
+
+<i>Node</i>: <tt>Particles_t</tt>
+             (<a href="../sids/particles.html#Particles">SIDS</a>,
+              <a href="../filemap/nodes.html#ParticleCoordinates">File Mapping (TODO)</a>)
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_particle_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>char *particlename</span>, <span class=out><i>int *P</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_nparticles(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=out><i>int *nparticles</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_particle_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=out><i>char *particlename</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_particle_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>particlename</span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_nparticles_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=out><i>nparticles</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_particle_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=out><i>particlename</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>fn</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><tt>B</tt><td>
+   <td>Base index number, where 1 &le; <tt>B</tt> &le; <tt>nbases</tt>.
+<tr valign=baseline><td>
+   <td><tt>P</tt><td>
+   <td>Particle index number, where 1 &le; <tt>P</tt> &le; <tt>nparticles</tt>.
+<tr valign=baseline><td>
+   <td><tt>particlename</tt><td>
+   <td>Name of the <tt>Particles_t</tt> node.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+Note: When a CGNS file is opened via the cg_open() MLL function, the particles are sorted alphanumerically by name (the creation order is ignored/discarded). This mechanism is provided to enable ordinal particle indexing. Therefore, if ordinal particle indexing is desired, it is considered good standard practice to always choose particle names to be alphabetically increasing. For example, Particle0001, Particle0002, etc. is appropriate for up to 9999 particles.
+
+<a name="particlecoordinates"></a>
+<h3>Particle Coordinates</h3>
+<i>Node</i>: <tt>ParticleCoordinates_t</tt>
+             (<a href="../sids/particles.html#Particles">SIDS</a>,
+              <a href="../filemap/nodes.html#ParticleCoordinates">File Mapping (TODO)</a>)
+
+<p>
+<tt>ParticleCoordinates_t</tt> nodes are used to describe particle locations associated
+with a particular Particle.
+The original locations must be described by a <tt>ParticleCoordinates_t</tt> node
+named <tt>ParticleCoordinates</tt>.
+Additional <tt>ParticleCoordinates_t</tt> nodes may be used, with user-defined
+names, to store locations at multiple time steps or iterations.
+In addition to the discussion of the <tt>ParticleCoordinates_t</tt> node
+in the <a href="../sids/particles.html#ParticleCoordinates">SIDS</a> and
+<a href="../filemap/nodes.html#GridCoordinates">File Mapping</a> manuals,
+see the discussion of the
+<a href="../sids/timedep.html#ParticleIterativeData"><tt>ParticleIterativeData_t</tt></a>
+nodes in the SIDS manual.
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_particle_location_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>char *pcoordname</span>, <span class=out><i>int *L</i></span>);</b></tt>
+    <td align=center valign=baseline>
+    <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_particle_nlocs(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=out><i>int *nlocs</i></span>);</b></tt>
+    <td align=center valign=baseline>
+    <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_particle_location_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int L</span>, <span class=out><i>char *pcoordname</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call cg_particle_location_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>pcoodname</span>, <span class=out><i>L</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_particle_nlocs_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=out><i>nlocs</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_particle_location_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>L</span>, <span class=out><i>pcoordname</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>fn</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><tt>B</tt><td>
+   <td>Base index number, where 1 &le; <tt>B</tt> &le; <tt>nbases</tt>.
+<tr valign=baseline><td>
+   <td><tt>P</tt><td>
+   <td>Particle index number, where 1 &le; <tt>P</tt> &le; <tt>nparticles</tt>.
+<tr valign=baseline><td>
+   <td><tt>L</tt><td>
+   <td>Location index number, where
+       1 &le; <tt>L</tt> &le; <tt>nlocs</tt>.
+<tr valign=baseline><td>
+   <td><tt>nlocs</tt><td>
+   <td>Number of <tt>ParticleCoordinates_t</tt> nodes for particle <tt>P</tt>.
+<tr valign=baseline><td>
+   <td><tt>pcoordname</tt><td>
+   <td>Name of the <tt>ParticleCoordinates_t</tt> node.
+       Note that the name "<tt>ParticleCoordinates</tt>" is reserved for the
+       original particle location and must be the first <tt>ParticleCoordinates_t</tt>
+       node to be defined.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+The above functions are applicable to any <tt>ParticleCoordinates_t</tt> node.
+<br><br>
+<a name="particlecoordinates_original"></a>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_particle_coord_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>DataType_t datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *coordname</span>, <span class=in>void *coord_array</span>, <span class=out><i>int *C</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_particle_coord_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>char *coordname</span>, <span class=in>cgsize_t *range_min</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_max</span>, <span class=in>void *coord_array</span>, <span class=out><i>int *C</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_particle_coord_general_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>char *coordname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *coord_array</span>, <span class=out><i>int *C</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_ncoords(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=out><i>int *ncoords</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_particle_coord_info(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int C</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>DataType_t *datatype</i></span>, <span class=out><i>char *coordname</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_particle_coord_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>char *coordname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *coord_array</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b><span class=out><i>ier</i></span> = cg_particle_coord_general_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>char *coordname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>, <span class=out><i>void *coord_array</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tbody>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_particle_coord_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>datatype</span>, <span class=in>coordname</span>, <span class=in>coord_array</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>C</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_particle_coord_partial_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>datatype</span>, <span class=in>coordname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>coord_array</span>, <span class=out><i>C</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_particle_coord_general_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>coordname</span>, <span class=in>datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>mem_datatype</span>, <span class=in>mem_rank</span>, <span class=in>mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_range_min</span>, <span class=in>mem_range_max</span>, <span class=in>coord_array</span>, <span class=out><i>C</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>-&nbsp;w&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_ncoords_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=out><i>ncoords</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call cg_particle_coord_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>C</span>, <span class=out><i>datatype</i></span>, <span class=out><i>coordname</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_particle_coord_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>coordname</span>, <span class=in>mem_datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=out><i>coord_array</i></span>, <span class=out><i>ier</i></span>)</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+<tr><td nowrap>
+        <tt><b>call <span class=cgf>cg_particle_coord_general_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>coordname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>mem_datatype</span>, <span class=in>mem_rank</span>, <span class=in>mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_range_min</span>, <span class=in>mem_range_max</span>, <span class=out><i>coord_array</i></span>, <span class=out><i>ier</i></span>);</b></tt>
+    <td align=center valign=baseline>
+        <tt><b>r&nbsp;-&nbsp;m</b></tt>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><tt>&nbsp;&nbsp;&nbsp;</tt>
+   <td><tt>fn</tt><td><tt>&nbsp;&nbsp;</tt>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><tt>B</tt><td>
+   <td>Base index number, where 1 &le; <tt>B</tt> &le; <tt>nbases</tt>.
+<tr valign=baseline><td>
+   <td><tt>P</tt><td>
+   <td>Particle index number, where 1 &le; <tt>P</tt> &le; <tt>nparticles</tt>.
+<tr valign=baseline><td>
+   <td><tt>C</tt><td>
+   <td>Coordinate array index number, where
+       1 &le; <tt>C</tt> &le; <tt>ncoords</tt>.
+<tr valign=baseline><td>
+   <td><tt>ncoords</tt><td>
+   <td>Number of coordinate arrays for particle <tt>P</tt>.
+<tr valign=baseline><td>
+   <td><tt>datatype</tt><td>
+   <td>Data type of the coordinate array written to the file.
+       Admissible data types for a coordinate array are <tt>RealSingle</tt>
+       and <tt>RealDouble</tt>.
+<tr valign=baseline><td>
+   <td><tt>coordname</tt><td>
+   <td>Name of the coordinate array.
+       It is strongly advised to use the
+       <a href="../sids/dataname.html#dataname_grid">SIDS nomenclature
+       conventions</a> when naming the coordinate arrays to insure file
+       compatibility.
+<tr valign=baseline><td>
+   <td><tt>range_min</tt><td>
+   <td>Lower range index in file (eg., <tt>imin, jmin, kmin</tt>).
+<tr valign=baseline><td>
+   <td><tt>range_max</tt><td>
+   <td>Upper range index in file (eg., <tt>imax, jmax, kmax</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_datatype</tt><td>
+   <td>Data type of an array in memory.
+       Admissible data types for a coordinate array are <tt>RealSingle</tt>
+       and <tt>RealDouble</tt>..
+<tr valign=baseline><td>
+   <td><tt>mem_rank</tt><td>
+   <td>Number of dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_dimensions</tt><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><tt>mem_range_min</tt><td>
+   <td>Lower range index in memory (eg., <tt>imin, jmin, kmin</tt>).
+<tr valign=baseline><td>
+   <td><tt>mem_range_max</tt><td>
+   <td>Upper range index in memory (eg., <tt>imax, jmax, kmax</tt>).
+<tr valign=baseline><td>
+   <td><tt>coord_array</tt><td>
+   <td>Array of coordinate values.
+<tr valign=baseline><td>
+   <td><tt>ier</tt><td>
+   <td>Error status.
+</table>
+
+<p>
+The above functions are applicable <em>only</em> to the
+<tt>ParticleCoordinates_t</tt> node named <tt>ParticleCoordinates</tt>, used
+for the original particle positions in a <tt>Particles_t</tt> node.
+Coordinates for additional <tt>ParticleCoordinates_t</tt> nodes in a <tt>Particles_t</tt> node
+must be read and written using the
+<a href="physical.html#dataarray"><tt>cg_array_<i>xxx</i></tt> functions</a>.
+
+<p>
+When writing, the function <tt>cg_particle_coord_write</tt> will
+automatically write the full range of coordinates (i.e., the entire
+<tt>coord_array</tt>).
+The functions <tt>cg_particle_coord_partial_write</tt> and <tt>cg_particle_coord_general_write</tt> may be used to write
+only a subset of <tt>coord_array</tt>.
+When using the partial write, any existing data as defined by
+<tt>range_min</tt> and <tt>range_max</tt> will be overwritten by the new
+values.
+All other values will not be affected.
+
+<p>
+The function <tt>cg_particle_coord_read</tt> returns the coordinate array
+<tt>coord_array</tt>, for the range prescribed by <tt>range_min</tt> and
+<tt>range_max</tt>.
+The array is returned to the application in the data type requested in
+<tt>mem_datatype</tt>.
+This data type does not need to be the same as the one in which the
+coordinates are stored in the file.
+A coordinate array stored as double precision in the CGNS file can be
+returned to the application as single precision, or vice versa.
+The functions <tt>cg_particle_coord_general_read</tt> and <tt>cg_particle_coord_general_write</tt>
+allow for type conversion when both reading from and writing to the file.
+
+<p>
+<hr size=4 width=75%>
+<div class=footer>
+<!--#include virtual="../include/footer_small.html" -->
+<script src="lastupdated.js"></script>
+
+</body>
+</html>

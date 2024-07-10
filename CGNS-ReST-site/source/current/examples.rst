@@ -361,4 +361,24 @@ Obstructed Elbow
   :Data File: :download:`tut21.cgns.gz<../../example_cgns_files/AdapcoTut21/tut21.cgns.gz>` (61Kb)
 
 
+Box with Particles
+^^^^^^^^^^^^^^^^^^
+
+  .. list-table::
+    :header-rows: 1
+
+    * - Contact
+      - Posted Date
+      - Revision Date
+    * - `Alexandre Minot <alexandre.minot@convergecfd.com>`_
+      - Jul.10.24
+      - Jul.10.24
+
+  .. image:: ../../example_cgns_files/Particles/particle_box.png
+     :width: 200px
+
+  :Description: Spray in a 3D box of Air:  Unstructured mesh with particles in two ParticleZones.
+  :Data File: :download:`particles_example.cgns.gz<../../example_cgns_files/Particles/particles_example.cgns.gz>` (295Kb)
+
+
 .. last line

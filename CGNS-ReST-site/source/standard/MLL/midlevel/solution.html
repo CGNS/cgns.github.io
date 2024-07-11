@@ -29,6 +29,26 @@
      <li> <code><b>cg_field_read</b></code> - Read flow solution
      <li> <code><b>cg_field_general_read</b></code> - Read subset of flow solution to a shaped array
      </ul>
+<li> <a href="#particlesolution">Particle Solution</a>
+     <ul>
+     <li> <code><b>cg_particle_sol_write</b></code> - Create and/or write to a <code>ParticleSolution_t</code> node
+     <li> <code><b>cg_particle_nsols</b></code> - Get number of <code>ParticleSolution_t</code> nodes
+     <li> <code><b>cg_particle_sol_info</b></code> - Get info about a <code>ParticleSolution_t</code> node
+     <li> <code><b>cg_particle_sol_ptset_write</b></code> - Create a point set <code>ParticleSolution_t</code> node
+     <li> <code><b>cg_particle_sol_ptset_info</b></code> - Get info about a point set <code>ParticleSolution_t</code> node
+     <li> <code><b>cg_particle_sol_ptset_read</b></code> - Read a point set <code>ParticleSolution_t</code> node
+     <li> <code><b>cg_particle_sol_size</b></code> - Get the dimensions of a <code>ParticleSolution_t</code> node
+     </ul>
+<li> <a href="#particlesolution_array">Particle Solution Data</a>
+     <ul>
+     <li> <code><b>cg_particle_field_write</b></code> - Write particle solution
+     <li> <code><b>cg_particle_field_partial_write</b></code> - Write subset of particle solution
+     <li> <code><b>cg_particle_field_general_write</b></code> - Write shaped array to a subset of particle solution
+     <li> <code><b>cg_particle_nfields</b></code> - Get number of particle solution arrays
+     <li> <code><b>cg_particle_field_info</b></code> - Get info about a particle solution array
+     <li> <code><b>cg_particle_field_read</b></code> - Read particle solution
+     <li> <code><b>cg_particle_field_general_read</b></code> - Read subset of particle solution to a shaped array
+     </ul>   
 <li> <a href="#discretedata">Discrete Data</a>
      <ul>
      <li> <code><b>cg_discrete_write</b></code> - Create a <code>DiscreteData_t</code> node
@@ -445,6 +465,351 @@ rind plane on each side in the file to an 8 &times 8 array in memory
 (<code>mem_rank</code> = 2 and <code>mem_dimensions</code> = (8,8)), set
 <code>range_min</code> and <code>range_max</code> to (0,0) and (7,7), and set
 <code>mem_range_min</code> and <code>mem_range_max</code> to (1,1) and (8,8).
+
+<a name="particlesolution"></a>
+<h3>Particle Solution</h3>
+
+<i>Node</i>: <code>ParticleSolution_t</code>
+             (<a href="../sids/particles.html#ParticleSolution">SIDS</a>,
+              <a href="../filemap/nodes.html#ParticleSolution">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_sol_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>char *solname</span>, <span class=out><i>int *S</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_nsols(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=out><i>int *nsols</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_sol_info(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=out><i>char *solname</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_sol_ptset_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>const char *solname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>PointSetType_t ptset_type</span>, <span class=in>cgsize_t npnts</span>, <span class=in>const cgsize_t *pnts</span>, <span class=out><i>int *S</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_sol_ptset_info(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>PointSetType_t *ptset_type</i></span>, <span class=out><i>cgsize_t *npnts</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_sol_ptset_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=out><i>cgsize_t *pnts</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_sol_size(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=out><i>cgsize_t *size</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tbody>
+<tr><td nowrap>
+       <code><b>call cg_particle_sol_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>solname</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cg_particle_nsols_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=out><i>nsols</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cg_particle_sol_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=out><i>solname</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cg_particle_sol_ptset_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>solname</span>, <span class=in>ptset_type</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>npnts</span>, <span class=in>pnts</span>, <span class=out><i>S</i></span>, <span class=out><i>ier</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cg_particle_sol_ptset_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=out><i>ptset_type</i></span>, <span class=out><i>npnts</i></span>, <span class=out><i>ier</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cg_particle_sol_ptset_read_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=out><i>pnts</i></span>, <span class=out><i>ier</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cg_particle_sol_size_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>Z</span>, <span class=in>S</span>, <span class=out><i>size</i></span>, <span class=out><i>ier</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>fn</code><td><code>&nbsp;&nbsp;</code>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><code>B</code><td>
+   <td>Base index number, where 1 &le; <code>B</code> &le; <code>nbases</code>.
+<tr valign=baseline><td>
+   <td><code>P</code><td>
+   <td>Particle index number, where 1 &le; <code>P</code> &le; <code>nparticlezones</code>.
+<tr valign=baseline><td>
+   <td><code>S</code><td>
+   <td>Particle solution index number, where
+       1 &le; <code>S</code> &le; <code>nsols</code>.
+<tr valign=baseline><td>
+   <td><code>nsols</code><td>
+   <td>Number of particle solutions for particle <code>P</code>.
+<tr valign=baseline><td>
+   <td><code>solname</code><td>
+   <td>Name of the particle solution.
+<tr valign=baseline><td>
+   <td><code>ptset_type</code><td>
+   <td>Type of point set defining the interface in the current solution;
+       either <code>PointRange</code> or <code>PointList</code>.
+<tr valign=baseline><td>
+   <td><code>npnts</code><td>
+   <td>Number of points defining the interface in the current solution.
+       For a <code>ptset_type</code> of <code>PointRange</code>, <code>npnts</code>
+       is always two.
+       For a <code>ptset_type</code> of <code>PointList</code>, <code>npnts</code> is
+       the number of points in the <code>PointList</code>.
+<tr valign=baseline><td>
+   <td><code>pnts</code><td>
+   <td>Array of points defining the interface in the current solution.
+<tr valign=baseline><td>
+   <td><code>size</code><td>
+   <td>The size of the solution data.</td>
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<p>
+The above functions are used to create, and get information about,
+<code>ParticleSolution_t</code> nodes.
+        
+<p>
+Solution data may be specified over the all particles using <code>cg_particle_sol_write</code>
+or over a subset of particles using <code>cg_particle_sol_ptset_write</code>.
+The two are mutually exclusive. In the first case, the size of
+the solution data is determined by the size of the <code>ParticleZone_t</code> node.
+In the second case, the solution data size is entirely determined
+by the <code>PointList/PointRange</code> patch. In order to determine which of
+the two forms in which the solution data was written, use
+<code>cg_particle_sol_ptset_info</code>. If the solution is over all particles,
+<code>ptset_type</code> will be returned as <code>CG_Null</code>
+and <code>npnts</code> as 0. Otherwise, <code>ptset_type</code> will
+be either <code>PointList</code> or <code>PointRange</code>, and the
+number of points will be returned in <code>npnts</code>.
+
+<p>
+To assist in determining the size of the solution data,
+the function <code>cg_particle_sol_size</code> has been added.
+The solution is implicitly assumed to be <code>Vertex</code> based wherein the vertex locations correspond to
+the coordinates stored in the <code>ParcelCoordinates_t</code> node.
+
+<a name="particlesolution_array"></a>
+<h3>Particle Solution Data</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_field_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>char *fieldname</span>, <span class=in>void *solution_array</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *F</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_field_partial_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>char *fieldname</span>, <span class=in>cgsize_t *range_min</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_max</span>, <span class=in>void *solution_array</span>, <span class=out><i>int *F</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_field_general_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=in>char *fieldname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *solution_array</span>, <span class=out><i>int *F</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_nfields(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=out><i>int *nfields</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_field_info(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>DataType_t *datatype</i></span>, <span class=out><i>char *fieldname</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_field_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=in>char *fieldname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *solution_array</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_field_general_read(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=in>char *fieldname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *solution_array</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tbody>
+<tr><td nowrap>
+       <code><b>call <span class=cgf>cg_particle_field_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=in>datatype</span>, <span class=in>fieldname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>solution_array</span>, <span class=out><i>F</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+       <code><b>call <span class=cgf>cg_particle_field_partial_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=in>datatype</span>, <span class=in>fieldname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>solution_array</span>, <span class=out><i>F</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cg_particle_field_general_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=in>fieldname</span>, <span class=in>datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>mem_datatype</span>, <span class=in>mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_range_min</span>, <span class=in>mem_range_max</span>, <span class=in>solution_array</span>, <span class=out><i>F</i></span>, <span class=out><i>ier</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cg_particle_nfields_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=out><i>nfields</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cg_particle_field_info_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=in>F</span>, <span class=out><i>datatype</i></span>, <span class=out><i>fieldname</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cg_particle_field_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=in>fieldname</span>, <span class=in>mem_datatype</span>, <span class=in>range_min</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_max</span>, <span class=out><i>solution_array</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cg_particle_field_general_read_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=in>fieldname</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>mem_datatype</span>, <span class=in>mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>mem_range_min</span>, <span class=in>mem_range_max</span>, <span class=out><i>solution_array</i></span>, <span class=out><i>ier</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>fn</code><td><code>&nbsp;&nbsp;</code>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><code>B</code><td>
+   <td>Base index number, where 1 &le; <code>B</code> &le; <code>nbases</code>.
+<tr valign=baseline><td>
+   <td><code>P</code><td>
+   <td>Particle index number, where 1 &le; <code>P</code> &le; <code>nparticlezones</code>.
+<tr valign=baseline><td>
+   <td><code>S</code><td>
+   <td>Particle solution index number, where
+       1 &le; <code>S</code> &le; <code>nsols</code>.
+<tr valign=baseline><td>
+   <td><code>F</code><td>
+   <td>Solution array index number, where
+       1 &le; <code>F</code> &le; <code>nfields</code>.
+<tr valign=baseline><td>
+   <td><code>nfields</code><td>
+   <td>Number of data arrays in particle solution <code>S</code>.
+<tr valign=baseline><td>
+   <td><code>datatype</code><td>
+   <td>Data type of the solution array written to the file.
+       Admissible data types for a solution array are <code>Integer</code>,
+       <code>LongInteger</code>, <code>RealSingle</code>, and <code>RealDouble</code>.
+<tr valign=baseline><td>
+   <td><code>fieldname</code><td>
+   <td>Name of the solution array.
+       It is strongly advised to use the
+       <a href="../sids/dataname.html#dataname_flow"> SIDS nomenclature
+       conventions</a> when naming the solution arrays to ensure file
+       compatibility. Additionally, <a href="../sids/dataname.html#dataname_particles">particle specific SIDS nomenclature</a>
+       can also be used
+<tr valign=baseline><td>
+   <td><code>range_min</code><td>
+   <td>Lower range index in file.
+<tr valign=baseline><td>
+   <td><code>range_max</code><td>
+   <td>Upper range index in file.
+<tr valign=baseline><td>
+   <td><code>mem_datatype</code><td>
+   <td>Data type of an array in memory.
+       Admissible data types for a solution array are <code>Integer</code>,
+       <code>LongInteger</code>, <code>RealSingle</code>, and <code>RealDouble</code>.
+<tr valign=baseline><td>
+   <td><code>mem_dimensions</code><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><code>mem_range_min</code><td>
+   <td>Lower range index in memory.
+<tr valign=baseline><td>
+   <td><code>mem_range_max</code><td>
+   <td>Upper range index in memory.
+<tr valign=baseline><td>
+   <td><code>solution_array</code><td>
+   <td>Array of solution values.
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<p>
+The above functions are used to read and write solution arrays stored
+below a <code>ParticleSolution_t</code> node.
+
+<p>
+When writing, the function <code>cg_particle_field_write</code> will
+automatically write the full range of the solution (i.e., the entire
+<code>solution_array</code>).
+The functions <code>cg_particle_field_partial_write</code> and <code>cg_particle_field_general_write</code> may be used
+to write
+only a subset of <code>solution_array</code>.
+When using the partial write, any existing data from <code>range_min</code>
+to <code>range_max</code> will be overwritten by the new values.
+All other values will not be affected.
+
+<p>
+The function <code>cg_particle_field_read</code> returns the solution array
+<code>fieldname</code>, for the range prescribed by <code>range_min</code> and
+<code>range_max</code>.
+The array is returned to the application in the data type requested in
+<code>mem_datatype</code>.
+This data type does not need to be the same as the one in which the data is
+stored in the file.
+A solution array stored as double precision in the CGNS file can be
+returned to the application as single precision, or vice versa.
+The functions <code>cg_particle_field_general_read</code> and <code>cg_particle_field_general_write</code>
+allow for type conversion when both reading from and writing to the file.
+
+<p>
+When using <code>cg_particle_field_general_write</code> and
+<code>cg_particle_field_general_read</code>, the lower <em>core</em> locations in the file
+have index 1 for defining <code>range_min</code> and <code>range_max</code>; whereas
+for the array in memory, the lower <em>array</em> locations in memory have
+index 1 for defining <code>mem_range_min</code> and <code>mem_range_max</code>.
+The actual lower and upper bounds of the array in memory can be anything.
+        
 
 <a name="discretedata"></a>
 <h3>Discrete Data</h3>

@@ -48,7 +48,7 @@ Comments on proposals should be sent to cgnstalk@lists.nasa.gov and/or written d
 
 
 ..
-  _Comment: Bellow should be listed all CPEX implemented or waiting for review
+  _Comment: Below should be listed all CPEX implemented or waiting for review
 
 
 .. _CPEX0046:

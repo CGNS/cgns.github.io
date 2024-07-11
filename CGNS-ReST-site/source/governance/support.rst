@@ -246,7 +246,7 @@ header
    Fourth level
    ~~~~~~~~~~~~
 
-   Fith level
+   Fifth level
    ++++++++++
 
 The index is generated, you just have to mention an index entry in the text.
@@ -278,7 +278,7 @@ Internal link
 ~~~~~~~~~~~~~
 
 An internal link is composed of its *anchor* (the place in the web site
-where you want to go to) and a *reference* (the words wich triggers
+where you want to go to) and a *reference* (the words which triggers
 the jump to the anchor).
 
 An *anchor* is defined with:

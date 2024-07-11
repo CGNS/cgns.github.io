@@ -145,14 +145,14 @@ Several calls were added for the parallel implementation. The most
 important change is the breakup of the writing of data arrays into two
 steps. In the serial implementation "GridCoordinates" are written in
 one function all "cg_coord_write". Since creating structural nodes in
-HDF5 and therefor CGNS require collective operations, an additional
+HDF5 and therefore CGNS require collective operations, an additional
 step "cgp_coord_create" which has the same syntax as the serial write
 but does not write any data and returns a coordinate index number. The
 only difference is that an empty data set is created collectively. This
 data set is then filled with the actual data using another call
 "cgp_coord_write" using the coordinate index number from the creation
 subroutine call. This write is done independently for each processor and
-therefor allows for independent parallel I/O.
+therefore allows for independent parallel I/O.
 
 <h2>III. Performance Benchmarks</h2>
 

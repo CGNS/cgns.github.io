@@ -153,7 +153,7 @@ Conventions and Implementations
             The implications of the assumed array structure convention can be quite subtle. The subroutines :code:`cgio_write_data` and :code:`cgio_read_data_type` assume the Fortran array structure in order to index the data. Again, unless the user is aware of the implications of this, it is possible to write an array on disk and later try to change a portion of the data and not change the correct numbers.
             As long as users are aware of how their data structure maps onto the database, there will not be any problems.
  
-:return codes:  The CGIO routines return an integer code indicating whether they were successfull or not. On success, :code:`0` (:code:`CGIO_ERR_NONE`) is returned. A non-zero return indicates an error. Return codes < 0 indicate an error at the CGIO level; codes > 0 indicate an error in the database manager. See Error Messages for a list of error codes and mesages.
+:return codes:  The CGIO routines return an integer code indicating whether they were successful or not. On success, :code:`0` (:code:`CGIO_ERR_NONE`) is returned. A non-zero return indicates an error. Return codes < 0 indicate an error at the CGIO level; codes > 0 indicate an error in the database manager. See Error Messages for a list of error codes and messages.
 
 
 Limits and Sizes

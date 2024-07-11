@@ -180,7 +180,7 @@ Structure of a CGNS Database In this section, the conceptual structure
 of a CGNS database, and the nodes from which it is built, are
 discussed. This describes the way in which the CGNS software "sees"
 the database, not necessarily the way in which it is
-implementated. The details of the implementation are left to the
+implemented. The details of the implementation are left to the
 underlying database manager.
 
 A CGNS database consists of a collection of elements called
@@ -244,7 +244,7 @@ By definition, the root node of a CGNS database has the Label
 CGNSBase_t. The name of the CGNS database can be specified by the user
 and is stored in the "Name" field of the CGNSBase_t node. Current CGNS
 conventions require that the CGNSBase_t node be located directly below
-a "root node" in the database file indentified by the name "/".
+a "root node" in the database file identified by the name "/".
 
 A database file may contain multiple CGNS databases, and thus multiple
 CGNSBase_t nodes. However, each node labeled CGNSBase_t in a single

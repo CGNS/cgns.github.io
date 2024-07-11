@@ -30,6 +30,7 @@ CGNS/SIDS - Standard Interface Data Structures
    equation
    time
    misc
+   particles
 
 .. toctree::
 

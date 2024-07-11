@@ -146,7 +146,7 @@ CPEX0043
   * - Scope
     - Family Hierarchy as a Tree
   * - Contacts
-    - marc.poinot@safrangroup.com; yoan.collet@numeca.com
+    - marc.poinot@safrangroup.com; yoan.collect@numeca.com
   * - Documentation
     - :download:`CPEX-0043-familytrees-v2.pdf <../../proposed_extensions/CPEX-0043-familytrees-v2.pdf>`
   * - Date First Posted

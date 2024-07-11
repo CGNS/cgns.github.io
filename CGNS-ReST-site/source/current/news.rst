@@ -406,7 +406,7 @@ the documentation news and fixes and end of this page.
      than a "Windows" type color scheme. Fixes some minor bugs and adds some
      improvement to the cgnscheck program. Allows reading of both HDF5 and
      ADF - based CGNS files (requires the adf2hdf and hdf2adf
-     convertor programs).
+     converter programs).
 
 .. topic:: Spring, 2006:
 

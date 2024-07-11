@@ -15,7 +15,7 @@ Implementation Summary
 
 The purpose of the current document is to describe the way in which CFD data is to be represented in an HDF5 data tree. To do this, it is necessary to first describe the HDF5 data structure itself in some detail. Therefore, a conceptual summary of HDF5 is given here in order to make the current document relatively independent, and to allow the reader to focus on those aspects of HDF5 which are essential to understanding the file mapping.
 
-Any HDF5 file with a conformant mapping is *CGNS/HDF5* compliant. The mapping has been made using a per-node basis. Instead of having a new mapping dedicated to HDF5, we have made a mapping from the ADF nodes to a set of HDF5 groups. While this is not an optimal mapping, the use of such an HDF5 node allows us to re-use the ADF API without change.
+Any HDF5 file with a conformant mapping is *CGNS/HDF5* compliant. The mapping has been made using a per-node basis. Instead of having a new mapping dedicated to HDF5, we have made a mapping from the ADF nodes to a set of HDF5 groups. While this is not an optimal mapping, the use of such an HDF5 node allows us to reuse the ADF API without change.
 
 The `HDF5 documentation <https://portal.hdfgroup.org/display/HDF5/HDF5>`_ should be used as the authoritative references to resolve any issues not covered by this summary.
 
@@ -32,11 +32,11 @@ Refer to the `HDF5 web site <https://www.hdfgroup.org/solutions/hdf5/>`_ for fur
 
 Dedicated HDF5 Structures
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-The *CGNS node* is an HDF5 group. It contains attributes, an optional dataset and optional child groups. This structure is required and can be extended by other implementors as long as the following requirements are fulfilled.
+The *CGNS node* is an HDF5 group. It contains attributes, an optional dataset and optional child groups. This structure is required and can be extended by other implementers as long as the following requirements are fulfilled.
 
 In a CGNS tree, most of the nodes are *normal* nodes. These nodes can optionally contain data and have other nodes as children.
 
-There are special nodes, such as the root node and the nodes managing the links. These special link structures use the HDF5 mount system. It is not necessary for either the MLL or SLL users to understand the HDF5 mount system, but it should be understood by SLL implementors.
+There are special nodes, such as the root node and the nodes managing the links. These special link structures use the HDF5 mount system. It is not necessary for either the MLL or SLL users to understand the HDF5 mount system, but it should be understood by SLL implementers.
 
 The CGNS Node Mapping
 ~~~~~~~~~~~~~~~~~~~~~

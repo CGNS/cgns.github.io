@@ -352,7 +352,7 @@ the documentation news and fixes and end of this page.
 
 .. topic:: March 11, 2007: Version 2.5.3 released.
 
-   - This version changes the misspelled Celsius to Celsius, fixes handling of
+   - This version changes the misspelled Celcius to Celsius, fixes handling of
      soft links when rewriting the CGNS file, and fixes a number of gcc
      compiler warnings.
 

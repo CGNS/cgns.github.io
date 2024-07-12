@@ -21,6 +21,6 @@ subject to the following restrictions:
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 
-This license is borrowed from the zlib/libpng License, and supercedes the GNU Lesser General Public License (LGPL) which previously governed the use and distribution of the software.
+This license is borrowed from the zlib/libpng License, and supersedes the GNU Lesser General Public License (LGPL) which previously governed the use and distribution of the software.
 
 .. last line 

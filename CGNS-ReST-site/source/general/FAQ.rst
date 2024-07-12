@@ -56,7 +56,7 @@ What do I do if CGNS is not capable of handling my particular application?
 
 CGNS has been designed to be very flexible, for handling a wide range of physics applications.
 However, if you find an application that is not covered, you are encouraged to utilize the "``UserDefined``" construct as needed.
-In fact, the ``UserDefined`` node can be used to create an entire tree consisting of multilpe levels of ``UserDefined`` children nodes, so you can create an entire "pattern" for storing particular information.
+In fact, the ``UserDefined`` node can be used to create an entire tree consisting of multiple levels of ``UserDefined`` children nodes, so you can create an entire "pattern" for storing particular information.
 Furthermore, if you feel that a change or addition is needed to the SIDS, or if you feel that a particular "pattern" you have created might be useful to others, please consider submitting a proposal for extension (see :ref:`CPEX guidelines <CPEXguidelines>` and :ref:`Proposed Extensions page <CPEX>`).
  
 

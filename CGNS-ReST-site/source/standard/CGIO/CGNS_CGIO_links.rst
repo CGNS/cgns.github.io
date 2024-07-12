@@ -30,7 +30,7 @@ cgio_is_link
 :Modes:  `r w m`
 
 :Description:
-  Determines if the node indentified by :code:`id` in the database given by :code:`cgio_num` is a link or not. The function returns 0 if successfull, else an error code. If this node is a link, then the total length of the linked-to file and node information is returned in :code:`link_len`. If the node is not a link, :code:`link_len` will be 0. 
+  Determines if the node identified by :code:`id` in the database given by :code:`cgio_num` is a link or not. The function returns 0 if successful, else an error code. If this node is a link, then the total length of the linked-to file and node information is returned in :code:`link_len`. If the node is not a link, :code:`link_len` will be 0. 
 
 
 cgio_link_size
@@ -92,7 +92,7 @@ cgio_create_link
 :Modes:  `- w m`
 
 :Description:
-  Creates a link node as a child of the parent node identified by pid in the database given by cgio_num. The name of the node is given by name, the name of the linked-to file by filename, and the pathname to the linked-to node by name_in_file. If this is an internal link (link to a node in the same database), then filename should be defined as NULL or an empty string. The function returns 0 and the indentifier of the new node in id on success, otherwise an error code is returned.
+  Creates a link node as a child of the parent node identified by pid in the database given by cgio_num. The name of the node is given by name, the name of the linked-to file by filename, and the pathname to the linked-to node by name_in_file. If this is an internal link (link to a node in the same database), then filename should be defined as NULL or an empty string. The function returns 0 and the identifier of the new node in id on success, otherwise an error code is returned.
 
 
 cgio_get_link
@@ -122,7 +122,7 @@ cgio_get_link
 :Modes:  `r w m`
 
 :Description:
-  Gets the link information for the node identified by id in the database given by cgio_num. If successfull, the function returns 0 and the linked-to file name in filename and the node pathname in name_in_file. These strings are '0'-terminated, and thus should be dimensioned at least (file_len + 1) and (name_len + 1), respectively If this is an internal link (link to a node in the same database), then filename will be an empty string. The maximum length for a file name is given by CGIO_MAX_FILE_LENGTH (1024) and for a link pathname by CGIO_MAX_LINK_LENGTH (4096).
+  Gets the link information for the node identified by id in the database given by cgio_num. If successful, the function returns 0 and the linked-to file name in filename and the node pathname in name_in_file. These strings are '0'-terminated, and thus should be dimensioned at least (file_len + 1) and (name_len + 1), respectively If this is an internal link (link to a node in the same database), then filename will be an empty string. The maximum length for a file name is given by CGIO_MAX_FILE_LENGTH (1024) and for a link pathname by CGIO_MAX_LINK_LENGTH (4096).
 
 
 

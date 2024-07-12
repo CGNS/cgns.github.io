@@ -64,18 +64,18 @@ cgio_open_file
      - :code:`int file_mode`
         IN: Mode used for opening the file. The supported modes are. CGIO_MODE_READ, CGIO_MODE_WRITE, and CGIO_MODE_MODIFY.
      - :code:`int* cgio_num`
-        OUT: Indentifier for the open database file.
+        OUT: Identifier for the open database file.
 
   :Returns:         ier - Error status
   
   :Modes:  `r w m`
 
   :Description:
-    Opens a database file of the specified type and mode. If successfull, returns 0, and the database identifier in cgio_num, otherwise returns an error code. The database identifier is used to access the database in subsequent function calls.
+    Opens a database file of the specified type and mode. If successful, returns 0, and the database identifier in cgio_num, otherwise returns an error code. The database identifier is used to access the database in subsequent function calls.
 
     The mode in which the database is opened is given by file_mode, which may take the value CGIO_MODE_READ, CGIO_MODE_WRITE, or CGIO_MODE_MODIFY. New databases should be opened with CGIO_MODE_WRITE, while existing databases are opened with either CGIO_MODE_READ (for read-only access) or CGIO_MODE_MODIFY (for read/write access).
 
-    A specific database type may be specified by file_type, which may be one of CGIO_FILE_NONE, CGIO_FILE_ADF, CGIO_FILE_HDF5, or CGIO_FILE_ADF2. When opening a database in write mode, CGIO_FILE_NONE indicates that the default database type should be used, otherwise the specified database type will be opened. When opening in read or modify mode, CGIO_FILE_NONE indicates that any database type is acceptable, otherwise if the database type does not match that given by file_type an error will be retuned.
+    A specific database type may be specified by file_type, which may be one of CGIO_FILE_NONE, CGIO_FILE_ADF, CGIO_FILE_HDF5, or CGIO_FILE_ADF2. When opening a database in write mode, CGIO_FILE_NONE indicates that the default database type should be used, otherwise the specified database type will be opened. When opening in read or modify mode, CGIO_FILE_NONE indicates that any database type is acceptable, otherwise if the database type does not match that given by file_type an error will be returned.
 
 
 cgio_close_file
@@ -88,7 +88,7 @@ cgio_close_file
   
   :Parameters:
      - :code:`int cgio_num`
-        OUT: Indentifier for the open database file. 
+        OUT: Identifier for the open database file. 
 
   :Returns:         ier - Error status
   
@@ -107,7 +107,7 @@ cgio_get_file_type
   
   :Parameters:
      - :code:`int cgio_num`
-        IN: Indentifier for the open database file.
+        IN: Identifier for the open database file.
      - :code:`int *file_type`
         OUT: Type of database file. acceptable values are :code:`CGIO_FILE_NONE`, :code:`CGIO_FILE_ADF`, :code:`CGIO_FILE_HDF5` and :code:`CGIO_FILE_ADF2`.
 
@@ -116,7 +116,7 @@ cgio_get_file_type
   :Modes:  `r w m`
 
   :Description:
-    Gets the type of the database given by cgio_num. Returns 0 and the type in file_type if successfull, else an error code. 
+    Gets the type of the database given by cgio_num. Returns 0 and the type in file_type if successful, else an error code. 
 
 
 cgio_get_root_id
@@ -129,7 +129,7 @@ cgio_get_root_id
   
   :Parameters:
      - :code:`int cgio_num`
-        IN: Indentifier for the open database file.
+        IN: Identifier for the open database file.
      - :code:`double *rootid`
         OUT: Node identifier for the root node of the database.
 
@@ -138,7 +138,7 @@ cgio_get_root_id
   :Modes:  `r w m`
 
   :Description:
-    Gets the unique node identifier for the root node in the database given by :code:`cgio_num`. Returns 0 and the identifier in :code:`rootid` if successfull, else an error code.
+    Gets the unique node identifier for the root node in the database given by :code:`cgio_num`. Returns 0 and the identifier in :code:`rootid` if successful, else an error code.
 
 
 

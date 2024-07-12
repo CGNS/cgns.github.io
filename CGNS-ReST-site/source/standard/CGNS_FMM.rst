@@ -171,7 +171,7 @@ The Child Table
 
 The database manager maintains a table recording the children of each node, which is adjusted when children are added or deleted
 
-Children may be identified by their names and labels, and, thence, by their node IDs once these have been determined. There is no provision for the notion of order among children. In particular, the order of a list of children returned by the database manager may or may not have anything to do with the order in which they were inserted in the file. However, the order returned is consistent from call to call provided the file has not been closed and the node structure has not been modifed.
+Children may be identified by their names and labels, and, thence, by their node IDs once these have been determined. There is no provision for the notion of order among children. In particular, the order of a list of children returned by the database manager may or may not have anything to do with the order in which they were inserted in the file. However, the order returned is consistent from call to call provided the file has not been closed and the node structure has not been modified.
 
 Note that there is no *parent* table; that is, a node has no direct knowledge of its parent. Since calling software must open the file from the root, it presumably cannot access a child without having first accessed the parent. It is the responsibility of the calling software to record the node ID of the parent if this information will be required.
 

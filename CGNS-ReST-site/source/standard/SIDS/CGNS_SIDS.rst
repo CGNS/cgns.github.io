@@ -10,7 +10,7 @@
 CGNS/SIDS - Standard Interface Data Structures
 ==============================================
 
-.. SIDS SECTION NUMERING
+.. SIDS SECTION NUMBERING
     - numbering is not usual in HTML, so we have to force ReST to store
       sections numbers. You SHOULD NOT change order, or obviously numbers
       will change :|

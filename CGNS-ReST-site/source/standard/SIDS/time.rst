@@ -4,7 +4,7 @@
 Time-Dependent Flow
 ===================
 
-This section describes structure types intended primarily for time-dependent flows. Data structures are presented for storing time-dependent or iterative data, and for recording rigid and arbitary grid motion. The section concludes with several examples. 
+This section describes structure types intended primarily for time-dependent flows. Data structures are presented for storing time-dependent or iterative data, and for recording rigid and arbitrary grid motion. The section concludes with several examples. 
 
 Iterative Data Structure Definitions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

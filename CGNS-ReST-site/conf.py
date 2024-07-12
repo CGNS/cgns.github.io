@@ -16,8 +16,8 @@ extensions = [
 # Prefix to add to ticket numbers to get the full URL to JIRA
 # see use in the News page
 extlinks = {
-    'issue': ('https://cgnsorg.atlassian.net/projects/CGNS/issues/%s', '#'),
-    'version': ('https://github.com/CGNS/CGNS/releases/tag/%s', 'version ')}
+    'issue': ('https://cgnsorg.atlassian.net/projects/CGNS/issues/%s', '#%s'),
+    'version': ('https://github.com/CGNS/CGNS/releases/tag/%s', 'version%s')}
 
 suppress_warnings = [ 'image.not_readable' ]
 

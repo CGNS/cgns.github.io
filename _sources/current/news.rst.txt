@@ -58,12 +58,12 @@ the documentation news and fixes and end of this page.
    - Added :ref:`CPEX0042` Storing bounding box of a grid (:issue:`CGNS-149`).
    - Added :ref:`CPEX0043` Family hierarchy as a tree (:issue:`CGNS-180`).
 
-.. topic:: Febuary 17, 2020
+.. topic:: February 17, 2020
            
    - :version:`v4.0.0` of the CGNS Software is released.
    - Added :ref:`CPEX0041` NGON modification proposal (:issue:`CGNS-121`).
 
-.. topic:: Febuary 17, 2020
+.. topic:: February 17, 2020
 
    - :version:`v3.4.1` (patch) of the CGNS Software is released.
    - Removed :ref:`CPEX0041` NGON modification proposal (:issue:`CGNS-121`).
@@ -97,7 +97,7 @@ the documentation news and fixes and end of this page.
      are set then FCFLAGS is ignored.
    - Replaced the hid_t to double (and vice-versa) utilities to_HDF_ID and
      to_ADF_ID from a type cast to a function which uses memcpy for the
-     conversion. This is needed for the upcomming release of HDF5 1.10 where
+     conversion. This is needed for the upcoming release of HDF5 1.10 where
      hid_t was changed from a 32 bit integer to a 64 bit integer.
      Should be transparent to user.
    - Implemented :ref:`CPEX0039` : To enable with CGNS_ENABLE_BASE_SCOPE
@@ -229,7 +229,7 @@ the documentation news and fixes and end of this page.
      a file number (suggestion from Marc Poinet), adds HTMLHelp interface
      to cmake scripts, fixes a compiler complaint about comparison between
      int and enum, and fixes Fortran detection and MPI path problems
-     in the CMake scripts. Compatability with version 2.5
+     in the CMake scripts. Compatibility with version 2.5
      (file type CG_FILE_ADF2) is also fixed for both CG_MODE_WRITE
      and CG_MODE_MODIFY. The CGNStools documentation has been removed
      from the source distribution, and is now accessed from
@@ -249,7 +249,7 @@ the documentation news and fixes and end of this page.
      with MPI. It also implements the Hierarchy of families (CPEX 0033),
      Multiple families (CPEX 0034), and Cubic elements (CPEX 0036).
      Compression (rewriting) of modified CGNS files is no longer automatically
-     done, since this may interfere with parallel I/O. This may be reenabled
+     done, since this may interfere with parallel I/O. This may be re-enabled
      within an application with the cg_set_compress function, or done later
      through the CGNSview GUI or with the cgnscompress program in the tools
      subdirectory. Conversion programs to and from AFLR3, FAST, and TetGen
@@ -352,7 +352,7 @@ the documentation news and fixes and end of this page.
 
 .. topic:: March 11, 2007: Version 2.5.3 released.
 
-   - This version changes the mispelled Celcius to Celsius, fixes handling of
+   - This version changes the misspelled Celcius to Celsius, fixes handling of
      soft links when rewriting the CGNS file, and fixes a number of gcc
      compiler warnings.
 
@@ -406,7 +406,7 @@ the documentation news and fixes and end of this page.
      than a "Windows" type color scheme. Fixes some minor bugs and adds some
      improvement to the cgnscheck program. Allows reading of both HDF5 and
      ADF - based CGNS files (requires the adf2hdf and hdf2adf
-     convertor programs).
+     converter programs).
 
 .. topic:: Spring, 2006:
 
@@ -416,7 +416,7 @@ the documentation news and fixes and end of this page.
      The first is a Panel discussion, tentatively
      titled "CGNS Practical Applications in CFD". This will occur during
      the regular AIAA sessions at the conference.
-     The second is a "CGNS Tutorial Session", currently scheduled for Wednsday,
+     The second is a "CGNS Tutorial Session", currently scheduled for Wednesday,
      7 June 2006 in the evening. This session will be conducted in two parts:
      
      (1) Basic usage of CGNS (including examples for structured
@@ -1357,7 +1357,7 @@ Documentation news
     Corrected an error in the SIDS document, in the Elements_t data structure examples. The examples included DataArray_t data structures defining ParentData for 3-D elements, where it doesn't apply.
 
     ## topic:: In the list of :issue:`CGNS-related` conference papers, added R. Magn
-       - an as an author for AIAA Paper 2005-0334. Apologies for inadvertantly omitting him in the original update.
+       - an as an author for AIAA Paper 2005-0334. Apologies for inadvertently omitting him in the original update.
          
     ## topic:: 19 Jan 2005	
 
@@ -1402,7 +1402,7 @@ Documentation news
          
     ## topic:: 2 Jun 2004	
 
-       - Removed the wording "in the same manner as grid connectivity" in the description of the BC_t node in the SIDS-to-ADF File Mapping Manual, that was inadvertantly left in when the documentation was updated with the release of CGNS Version 2.3.
+       - Removed the wording "in the same manner as grid connectivity" in the description of the BC_t node in the SIDS-to-ADF File Mapping Manual, that was inadvertently left in when the documentation was updated with the release of CGNS Version 2.3.
          
     ## topic:: 18 May 2004	
 

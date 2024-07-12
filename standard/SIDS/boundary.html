@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   
   <!-- Licensed under the Apache 2.0 License -->
@@ -16,17 +15,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>9. Boundary Conditions &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css?v=ee5bbeb1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css?v=2c72f61b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css?v=97141bf4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css?v=593b94c8" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=117e2fac"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="icon" href="../../_static/CGNS_empty.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="10. Governing Flow Equations" href="equation.html" />
@@ -130,7 +128,7 @@
           <div class="document clearer body">
             
   <section id="boundary-conditions">
-<h1><span class="section-number">9. </span>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">9. </span>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this heading">¶</a></h1>
 <p>This section is an attempt to unify boundary-condition specifications within Navier-Stokes codes. The structures and conventions developed are a compromise between simplicity and generality. It is imperative that they be easy to use initially, but that they are general enough to provide future flexibility and extensibility.</p>
 <p>This section may be somewhat daunting initially. It is suggested that the reader refer to the <span class="xref std std-ref">Boundary Condition Examples</span> during study of the following sections to help resolve any questions and confusions that might arise.</p>
 <p>The difficulty with boundary conditions is that there is such a wide variety used, and even a single boundary-condition equation is often implemented differently in different codes. Some boundary conditions, such as a symmetry plane, are fairly well defined. Other boundary conditions are much looser in their definition and implementation. An inflow boundary is a good example. It is generally accepted how many solution quantities should be specified at an inflow boundary (from mathematical well-posedness arguments), but what those quantities are will change with the class of flow problems (e.g., internal flows vs. external flows), and they will also change from code to code.</p>
@@ -144,7 +142,7 @@
 Details of <span class="xref std std-ref">specifying data to be imposed in boundary-condition equations</span> are provided next.
 Finally, several <span class="xref std std-ref">examples of boundary conditions</span> are presented.</p>
 <section id="boundary-condition-structures-overview">
-<h2><span class="section-number">9.1. </span>Boundary Condition Structures Overview<a class="headerlink" href="#boundary-condition-structures-overview" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.1. </span>Boundary Condition Structures Overview<a class="headerlink" href="#boundary-condition-structures-overview" title="Permalink to this heading">¶</a></h2>
 <p>Prior to presenting the detailed boundary condition structures, we give a brief overview of the hierarchy used to describe boundary conditions.</p>
 <p>Boundary conditions are classified as either fixed or flow-dependent. Fixed boundary conditions enforce a given set of boundary-condition equations regardless of flow conditions; whereas, flow-dependent boundary conditions enforce different sets of boundary-condition equations depending on local flow conditions. We incorporate both fixed and flow-dependent boundary conditions into a uniform framework. This allows all boundary conditions to be described in a similar manner. We consider this functionally superior to separately treating fixed and flow-dependent boundary conditions, even though the latter allows a simpler description mechanism for fixed boundary conditions. The current organization also makes sense considering the fact that flow-dependent boundary conditions are composed of multiple sets of fixed boundary conditions.</p>
 <figure class="align-center" id="id1">
@@ -169,23 +167,23 @@ The lower leaves of the above figure show data for generic flow-solution quantit
 Although not pictured in the above figure, it is also possible to specify the reference state from which the flow solver should extract the boundary-condition data.</p>
 </section>
 <section id="zonal-boundary-condition-structure-definition-zonebc-t">
-<h2><span class="section-number">9.2. </span>Zonal Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneBC_t</span></code><a class="headerlink" href="#zonal-boundary-condition-structure-definition-zonebc-t" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2. </span>Zonal Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneBC_t</span></code><a class="headerlink" href="#zonal-boundary-condition-structure-definition-zonebc-t" title="Permalink to this heading">¶</a></h2>
 <p>All boundary-condition information pertaining to a given zone is contained in the <code class="code sidskey docutils literal notranslate"><span class="pre">ZoneBC_t</span></code> structure.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ZoneBC_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PhysicalDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ZoneBC_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PhysicalDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">BC_t</span><span class="o">&lt;</span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PhysicalDimension</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="n">BC1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">BCN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                                              </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">BC_t</span><span class="o">&lt;</span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PhysicalDimension</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="n">BC1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">BCN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                                              </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">ReferenceState_t</span><span class="w"> </span><span class="n">ReferenceState</span><span class="w"> </span><span class="p">;</span><span class="w">                                  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">ReferenceState_t</span><span class="w"> </span><span class="n">ReferenceState</span><span class="w"> </span><span class="p">;</span><span class="w">                                  </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -204,52 +202,52 @@ That is, each boundary-condition patch must be represented by a single <code cla
 If the boundary conditions contain dimensional data, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
 If present, these three entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>Reference-state data is useful for situations where boundary-condition data is not provided, and flow solvers are free to enforce any appropriate boundary condition equations.
-The presense of <code class="code sidsref docutils literal notranslate"><span class="pre">ReferenceState</span></code> at this level or below specifies the appropriate flow conditions from which the flow solver should extract its boundary-condition data.
+The presence of <code class="code sidsref docutils literal notranslate"><span class="pre">ReferenceState</span></code> at this level or below specifies the appropriate flow conditions from which the flow solver should extract its boundary-condition data.
 For example, when computing an external flowfield around an airplane, an engine nozzle exit is often simulated by imposing a stagnation pressure boundary condition (or some other stagnation quantity) different from freestream.
 The nozzle-exit stagnation quantities could be specified in an instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code> at this level or below in lieu of providing explicit Dirichlet or Neumann data. (See <span class="xref std std-ref">Boundary Condition Specification Data.</span>)</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 </section>
 <section id="boundary-condition-structure-definition-bc-t">
-<h2><span class="section-number">9.3. </span>Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">BC_t</span></code><a class="headerlink" href="#boundary-condition-structure-definition-bc-t" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.3. </span>Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">BC_t</span></code><a class="headerlink" href="#boundary-condition-structure-definition-bc-t" title="Permalink to this heading">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code> contains boundary-condition information for a single BC surface patch of a zone.
 A BC patch is the subrange of the face of a zone where a given boundary condition is applied.</p>
 <p>The structure contains a boundary-condition type, as well as one or more sets of boundary-condition data that are used to define the boundary-condition equations to be enforced on the BC patch.
 For most boundary conditions, a single data set is all that is needed. The structure also contains information describing the normal vector to the BC surface patch.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BC_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PhysicalDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BC_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PhysicalDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="p">;</span><span class="w">                                                  </span><span class="kr">(r)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="p">;</span><span class="w">                                                  </span><span class="kr">(r)</span>
 
-<span class="w">  </span><span class="kt">GridLocation_t</span><span class="w"> </span><span class="n">GridLocation</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span><span class="kr">(o/d)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">GridLocation_t</span><span class="w"> </span><span class="n">GridLocation</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span><span class="kr">(o/d)</span>
 
-<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="n">IndexDimension</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="p">;</span><span class="w">                          </span><span class="kr">(r:o)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">IndexArray_t</span><span class="o">&lt;</span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="n">ListLength</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointList</span><span class="w"> </span><span class="p">;</span><span class="w">        </span><span class="kr">(o:r)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="n">IndexDimension</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="p">;</span><span class="w">                          </span><span class="kr">(r:o)</span>
+<span class="w">  </span><span class="kt">IndexArray_t</span><span class="o">&lt;</span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="n">ListLength</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointList</span><span class="w"> </span><span class="p">;</span><span class="w">        </span><span class="kr">(o:r)</span>
 
-<span class="w">  </span><span class="kt">int</span><span class="p">[</span><span class="n">IndexDimension</span><span class="p">]</span><span class="w"> </span><span class="n">InwardNormalIndex</span><span class="w"> </span><span class="p">;</span><span class="w">                            </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="p">[</span><span class="n">IndexDimension</span><span class="p">]</span><span class="w"> </span><span class="n">InwardNormalIndex</span><span class="w"> </span><span class="p">;</span><span class="w">                            </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">IndexArray_t</span><span class="o">&lt;</span><span class="n">PhysicalDimension</span><span class="p">,</span><span class="w"> </span><span class="n">ListLength</span><span class="p">[],</span><span class="w"> </span><span class="kt">real</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">     </span><span class="n">InwardNormalList</span><span class="w"> </span><span class="p">;</span><span class="w">                                              </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">IndexArray_t</span><span class="o">&lt;</span><span class="n">PhysicalDimension</span><span class="p">,</span><span class="w"> </span><span class="n">ListLength</span><span class="p">[],</span><span class="w"> </span><span class="kt">real</span><span class="o">&gt;</span>
+<span class="w">     </span><span class="n">InwardNormalList</span><span class="w"> </span><span class="p">;</span><span class="w">                                              </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">BCDataSet_t</span><span class="o">&lt;</span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="n">ListLength</span><span class="p">[],</span><span class="w"> </span><span class="n">GridLocation</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="n">BCDataSet1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">BCDataSetN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                                </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">BCDataSet_t</span><span class="o">&lt;</span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="n">ListLength</span><span class="p">[],</span><span class="w"> </span><span class="n">GridLocation</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="n">BCDataSet1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">BCDataSetN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                                </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">BCProperty_t</span><span class="w"> </span><span class="n">BCProperty</span><span class="w"> </span><span class="p">;</span><span class="w">                                          </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCProperty_t</span><span class="w"> </span><span class="n">BCProperty</span><span class="w"> </span><span class="p">;</span><span class="w">                                          </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">FamilyName_t</span><span class="w"> </span><span class="n">FamilyName</span><span class="w"> </span><span class="p">;</span><span class="w">                                          </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">FamilyName_t</span><span class="w"> </span><span class="n">FamilyName</span><span class="w"> </span><span class="p">;</span><span class="w">                                          </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">AdditionalFamilyName_t</span><span class="w"> </span><span class="n">AddFamilyName1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">AddFamilyNameN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">AdditionalFamilyName_t</span><span class="w"> </span><span class="n">AddFamilyName1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">AddFamilyNameN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">ReferenceState_t</span><span class="w"> </span><span class="n">ReferenceState</span><span class="w"> </span><span class="p">;</span><span class="w">                                  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">ReferenceState_t</span><span class="w"> </span><span class="n">ReferenceState</span><span class="w"> </span><span class="p">;</span><span class="w">                                  </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">Ordinal</span><span class="w"> </span><span class="p">;</span><span class="w">                                                      </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">Ordinal</span><span class="w"> </span><span class="p">;</span><span class="w">                                                      </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -271,13 +269,6 @@ When <code class="code sidskey docutils literal notranslate"><span class="pre">G
 For 3-D grids, when <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> is set to <code class="code sidskey docutils literal notranslate"><span class="pre">FaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">IFaceCenter</span></code>, etc., then <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange/List</span></code> refer to face elements.
 The interpretation of <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange/List</span></code> is summarized in the table below:</p>
 <table class="docutils align-center">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 18%" />
-<col style="width: 21%" />
-<col style="width: 21%" />
-<col style="width: 23%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" rowspan="2"><p><strong>CellDimension</strong></p></th>
 <th class="head" colspan="4"><p><strong>GridLocation</strong></p></th>
@@ -323,12 +314,6 @@ Alternatively, for structured zones this information can be provided directly by
 From Note 4, this vector points into the zone and can have only one non-zero element.
 For exterior faces of a zone in 3-D, <code class="code sidskey docutils literal notranslate"><span class="pre">InwardNormalIndex</span></code> should take the following values:</p>
 <table class="docutils align-center">
-<colgroup>
-<col style="width: 13%" />
-<col style="width: 38%" />
-<col style="width: 12%" />
-<col style="width: 37%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Face</p></th>
 <th class="head"><p><code class="code sidskey docutils literal notranslate"><span class="pre">InwardNormalIndex</span></code></p></th>
@@ -380,10 +365,10 @@ Use of <code class="code sidskey docutils literal notranslate"><span class="pre"
 <dt class="sig sig-object c" id="c.ListLength">
 <span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ListLength</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.ListLength" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return value</dt>
+<dt class="field-odd">Return value<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
 </dd>
-<dt class="field-even">Dependencies</dt>
+<dt class="field-even">Dependencies<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code></p>
 </dd>
 </dl>
@@ -398,32 +383,32 @@ Note that syntactically <code class="code sidskey docutils literal notranslate">
 
 </section>
 <section id="boundary-condition-data-set-structure-definition-bcdataset-t">
-<h2><span class="section-number">9.4. </span>Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCDataSet_t</span></code><a class="headerlink" href="#boundary-condition-data-set-structure-definition-bcdataset-t" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.4. </span>Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCDataSet_t</span></code><a class="headerlink" href="#boundary-condition-data-set-structure-definition-bcdataset-t" title="Permalink to this heading">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> contains Dirichlet and Neumann data for a single set of boundary-condition equations.
 Its intended use is for simple boundary-condition types, where the equations imposed do not depend on local flow conditions.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCDataSet_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">ListLengthParameter</span><span class="p">,</span><span class="w"> </span><span class="kt">GridLocation_t</span><span class="w"> </span><span class="n">GridLocationParameter</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCDataSet_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">ListLengthParameter</span><span class="p">,</span><span class="w"> </span><span class="kt">GridLocation_t</span><span class="w"> </span><span class="n">GridLocationParameter</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span><span class="kr">(r)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span><span class="kr">(r)</span>
 
-<span class="w">  </span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="n">ListLengthBCData</span><span class="p">[]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="p">;</span><span class="w">                       </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="n">ListLengthBCData</span><span class="p">[]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">NeumannData</span><span class="w"> </span><span class="p">;</span><span class="w">                         </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="n">ListLengthBCData</span><span class="p">[]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="p">;</span><span class="w">                       </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="n">ListLengthBCData</span><span class="p">[]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">NeumannData</span><span class="w"> </span><span class="p">;</span><span class="w">                         </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">GridLocation_t</span><span class="w"> </span><span class="n">GridLocation</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span><span class="kr">(o/d)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">GridLocation_t</span><span class="w"> </span><span class="n">GridLocation</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span><span class="kr">(o/d)</span>
 
-<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="n">IndexDimension</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="p">;</span><span class="w">                          </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">IndexArray_t</span><span class="o">&lt;</span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="n">ListLength</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointList</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="n">IndexDimension</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="p">;</span><span class="w">                          </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="kt">IndexArray_t</span><span class="o">&lt;</span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="n">ListLength</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointList</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">ReferenceState_t</span><span class="w"> </span><span class="n">ReferenceState</span><span class="w"> </span><span class="p">;</span><span class="w">                                  </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">ReferenceState_t</span><span class="w"> </span><span class="n">ReferenceState</span><span class="w"> </span><span class="p">;</span><span class="w">                                  </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -453,10 +438,10 @@ If present, these three entities take precedence over all corresponding entities
 <dt class="sig sig-object c">
 <span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ListLength</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return value</dt>
+<dt class="field-odd">Return value<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
 </dd>
-<dt class="field-even">Dependencies</dt>
+<dt class="field-even">Dependencies<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code></p>
 </dd>
 </dl>
@@ -468,10 +453,10 @@ If present, these three entities take precedence over all corresponding entities
 <dt class="sig sig-object c" id="c.ListLengthBCData">
 <span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ListLengthBCData</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.ListLengthBCData" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return value</dt>
+<dt class="field-odd">Return value<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
 </dd>
-<dt class="field-even">Dependencies</dt>
+<dt class="field-even">Dependencies<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="code sidskey docutils literal notranslate"><span class="pre">ListLengthParameter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code></p>
 </dd>
 </dl>
@@ -480,27 +465,27 @@ If present, these three entities take precedence over all corresponding entities
 
 </section>
 <section id="boundary-condition-data-structure-definition-bcdata-t">
-<h2><span class="section-number">9.5. </span>Boundary Condition Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCData_t</span></code><a class="headerlink" href="#boundary-condition-data-structure-definition-bcdata-t" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.5. </span>Boundary Condition Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCData_t</span></code><a class="headerlink" href="#boundary-condition-data-structure-definition-bcdata-t" title="Permalink to this heading">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCData_t</span></code> contains a list of variables and associated data for boundary-condition specification.
 Each variable may be given as global data (i.e., a scalar) or local data defined at each grid point or cell face of the BC patch.
 By convention all data specified in a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">BCData_t</span></code> is to be used in the same <em>type</em> of boundary-condition equation.
 For example, the use of separate <code class="code sidskey docutils literal notranslate"><span class="pre">BCData_t</span></code> substructures for Dirichlet and Neumann equations in the <code class="code sidsref docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> structure of the previous section.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ListLength</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w">  </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                </span><span class="kr">(o)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ListLength</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w">  </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="n">DataGlobal1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataGlobalN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="n">DataGlobal1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataGlobalN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ListLength</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="n">DataLocal1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataLocalN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                                </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ListLength</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="n">DataLocal1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataLocalN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                                </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -526,19 +511,19 @@ If present, these two entities take precedence over all corresponding entities a
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 </section>
 <section id="boundary-condition-property-structure-definition-bcproperty-t">
-<h2><span class="section-number">9.6. </span>Boundary Condition Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCProperty_t</span></code><a class="headerlink" href="#boundary-condition-property-structure-definition-bcproperty-t" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.6. </span>Boundary Condition Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCProperty_t</span></code><a class="headerlink" href="#boundary-condition-property-structure-definition-bcproperty-t" title="Permalink to this heading">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCProperty_t</span></code> allows the recording of special properties associated with particular boundary condition patches.
 At the current time, only two properties (<code class="code sidskey docutils literal notranslate"><span class="pre">WallFunction_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">Area_t</span></code>) are included, but extensions involving boundary conditions may be implemented as additional nodes under <code class="code sidskey docutils literal notranslate"><span class="pre">BCProperty_t</span></code> in the future.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCProperty_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w">  </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                </span><span class="kr">(o)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCProperty_t</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w">  </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">WallFunction_t</span><span class="w"> </span><span class="n">WallFunction</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">WallFunction_t</span><span class="w"> </span><span class="n">WallFunction</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">Area_t</span><span class="w"> </span><span class="n">Area</span><span class="w"> </span><span class="p">;</span><span class="w">                                                      </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">Area_t</span><span class="w"> </span><span class="n">Area</span><span class="w"> </span><span class="p">;</span><span class="w">                                                      </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -548,16 +533,16 @@ At the current time, only two properties (<code class="code sidskey docutils lit
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">WallFunction_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">Area_t</span></code> data structures may be used to record properties associated with the use of wall functions, or area-related boundary conditions such as bleed, respectively.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <section id="wall-function-structure-definition-wallfunction-t">
-<h3><span class="section-number">9.6.1. </span>Wall Function Structure Definition: <code class="docutils literal notranslate"><span class="pre">WallFunction_t</span></code><a class="headerlink" href="#wall-function-structure-definition-wallfunction-t" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">9.6.1. </span>Wall Function Structure Definition: <code class="docutils literal notranslate"><span class="pre">WallFunction_t</span></code><a class="headerlink" href="#wall-function-structure-definition-wallfunction-t" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">WallFunction_t</span></code> data structure allows data associated with the use of wall function boundary conditions to be recorded.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">WallFunction_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w">  </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                </span><span class="kr">(o)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">WallFunction_t</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w">  </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">WallFunctionType_t</span><span class="w"> </span><span class="n">WallFunctionType</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(r)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">WallFunctionType_t</span><span class="w"> </span><span class="n">WallFunctionType</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(r)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -574,18 +559,18 @@ At the current time, only two properties (<code class="code sidskey docutils lit
 <p>Because there is such a wide array of methods for employing wall functions (few of which are well-documented), the type <code class="code sidskey docutils literal notranslate"><span class="pre">Generic</span></code> is used to simply indicate that a wall function is employed, without specifying details.</p>
 </section>
 <section id="area-structure-definition-area-t">
-<h3><span class="section-number">9.6.2. </span>Area Structure Definition: <code class="docutils literal notranslate"><span class="pre">Area_t</span></code><a class="headerlink" href="#area-structure-definition-area-t" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">9.6.2. </span>Area Structure Definition: <code class="docutils literal notranslate"><span class="pre">Area_t</span></code><a class="headerlink" href="#area-structure-definition-area-t" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">Area_t</span></code> data structure allows data associated with area-related boundary conditions such as bleed to be recorded.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Area_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w">  </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                </span><span class="kr">(o)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Area_t</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w">  </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">AreaType_t</span><span class="w"> </span><span class="n">AreaType</span><span class="w"> </span><span class="p">;</span><span class="w">                                              </span><span class="kr">(r)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w">  </span><span class="n">SurfaceArea</span><span class="w"> </span><span class="p">;</span><span class="w">                             </span><span class="kr">(r)</span><span class="w"></span>
-<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RegionName</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(r)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">AreaType_t</span><span class="w"> </span><span class="n">AreaType</span><span class="w"> </span><span class="p">;</span><span class="w">                                              </span><span class="kr">(r)</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w">  </span><span class="n">SurfaceArea</span><span class="w"> </span><span class="p">;</span><span class="w">                             </span><span class="kr">(r)</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RegionName</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(r)</span>
 
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -593,11 +578,11 @@ At the current time, only two properties (<code class="code sidskey docutils lit
 <p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">Area_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">AreaType</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">RegionName</span></code>, or <code class="code sidskey docutils literal notranslate"><span class="pre">SurfaceArea</span></code>.</p>
 </div>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">AreaType_t</span></code> is a required enumeration data structure that is used to define the type of area being defined.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">AreaType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
-<span class="w">  </span><span class="n">AreaTypeNull</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">AreaTypeUserDefined</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BleedArea</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">CaptureArea</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">AreaType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
+<span class="w">  </span><span class="n">AreaTypeNull</span><span class="p">,</span>
+<span class="w">  </span><span class="n">AreaTypeUserDefined</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BleedArea</span><span class="p">,</span>
+<span class="w">  </span><span class="n">CaptureArea</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">AreaType</span></code> is set to <code class="code sidskey docutils literal notranslate"><span class="pre">BleedArea</span></code>, the value of <code class="code sidskey docutils literal notranslate"><span class="pre">SurfaceArea</span></code> is the size of the current bleed surface.
@@ -614,31 +599,31 @@ Note that the capture area is usually defined with an outflow boundary condition
 </section>
 </section>
 <section id="boundary-condition-type-structure-definition-bctype-t">
-<h2><span class="section-number">9.7. </span>Boundary Condition Type Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCType_t</span></code><a class="headerlink" href="#boundary-condition-type-structure-definition-bctype-t" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.7. </span>Boundary Condition Type Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCType_t</span></code><a class="headerlink" href="#boundary-condition-type-structure-definition-bctype-t" title="Permalink to this heading">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> is an enumeration type that identifies the boundary-condition equations to be enforced at a given boundary location.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCTypeNull</span><span class="p">,</span><span class="w"> </span><span class="n">BCTypeUserDefined</span><span class="p">,</span><span class="w"> </span><span class="n">BCAxisymmetricWedge</span><span class="p">,</span><span class="w"> </span><span class="n">BCDegenerateLine</span><span class="p">.</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCDegeneratePoint</span><span class="p">,</span><span class="w"> </span><span class="n">BCDirichlet</span><span class="p">,</span><span class="w"> </span><span class="n">BCExtrapolate</span><span class="p">,</span><span class="w"> </span><span class="n">BCFarfield</span><span class="p">,</span><span class="w"> </span><span class="n">BCGeneral</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCInflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCInflowSubsonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCInflowSupersonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCNeumann</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCOutflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCOutflowSubsonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCOutflowSupersonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCSymmetryPlane</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCSymmetryPolar</span><span class="p">,</span><span class="w"> </span><span class="n">BCTunnelInflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCTunnelOutflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCWall</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCWallInviscid</span><span class="p">,</span><span class="w"> </span><span class="n">BCWallViscous</span><span class="p">,</span><span class="w"> </span><span class="n">BCWallViscousHeatFlux</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCWallViscousIsothermal</span><span class="p">,</span><span class="w"> </span><span class="n">FamilySpecified</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
+<span class="w">  </span><span class="n">BCTypeNull</span><span class="p">,</span><span class="w"> </span><span class="n">BCTypeUserDefined</span><span class="p">,</span><span class="w"> </span><span class="n">BCAxisymmetricWedge</span><span class="p">,</span><span class="w"> </span><span class="n">BCDegenerateLine</span><span class="p">.</span>
+<span class="w">  </span><span class="n">BCDegeneratePoint</span><span class="p">,</span><span class="w"> </span><span class="n">BCDirichlet</span><span class="p">,</span><span class="w"> </span><span class="n">BCExtrapolate</span><span class="p">,</span><span class="w"> </span><span class="n">BCFarfield</span><span class="p">,</span><span class="w"> </span><span class="n">BCGeneral</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BCInflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCInflowSubsonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCInflowSupersonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCNeumann</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BCOutflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCOutflowSubsonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCOutflowSupersonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCSymmetryPlane</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BCSymmetryPolar</span><span class="p">,</span><span class="w"> </span><span class="n">BCTunnelInflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCTunnelOutflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCWall</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BCWallInviscid</span><span class="p">,</span><span class="w"> </span><span class="n">BCWallViscous</span><span class="p">,</span><span class="w"> </span><span class="n">BCWallViscousHeatFlux</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BCWallViscousIsothermal</span><span class="p">,</span><span class="w"> </span><span class="n">FamilySpecified</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The boundary-condition type is further defined as simple, <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code>, or compound, <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code>, which are subsets of the enumeration type <code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code>.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCTypeNull</span><span class="p">,</span><span class="w"> </span><span class="n">BCTypeUserDefined</span><span class="p">,</span><span class="w"> </span><span class="n">BCAxisymmetricWedge</span><span class="p">,</span><span class="w"> </span><span class="n">BCDegenerateLine</span><span class="p">.</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCDegeneratePoint</span><span class="p">,</span><span class="w"> </span><span class="n">BCDirichlet</span><span class="p">,</span><span class="w"> </span><span class="n">BCExtrapolate</span><span class="p">,</span><span class="w"> </span><span class="n">BCGeneral</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCInflowSubsonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCInflowSupersonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCNeumann</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCOutflowSubsonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCOutflowSupersonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCSymmetryPlane</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCSymmetryPolar</span><span class="p">,</span><span class="w"> </span><span class="n">BCTunnelInflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCTunnelOutflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCWall</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCWallInviscid</span><span class="p">,</span><span class="w"> </span><span class="n">BCWallViscous</span><span class="p">,</span><span class="w"> </span><span class="n">BCWallViscousHeatFlux</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCWallViscousIsothermal</span><span class="p">,</span><span class="w"> </span><span class="n">FamilySpecified</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
+<span class="w">  </span><span class="n">BCTypeNull</span><span class="p">,</span><span class="w"> </span><span class="n">BCTypeUserDefined</span><span class="p">,</span><span class="w"> </span><span class="n">BCAxisymmetricWedge</span><span class="p">,</span><span class="w"> </span><span class="n">BCDegenerateLine</span><span class="p">.</span>
+<span class="w">  </span><span class="n">BCDegeneratePoint</span><span class="p">,</span><span class="w"> </span><span class="n">BCDirichlet</span><span class="p">,</span><span class="w"> </span><span class="n">BCExtrapolate</span><span class="p">,</span><span class="w"> </span><span class="n">BCGeneral</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BCInflowSubsonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCInflowSupersonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCNeumann</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BCOutflowSubsonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCOutflowSupersonic</span><span class="p">,</span><span class="w"> </span><span class="n">BCSymmetryPlane</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BCSymmetryPolar</span><span class="p">,</span><span class="w"> </span><span class="n">BCTunnelInflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCTunnelOutflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCWall</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BCWallInviscid</span><span class="p">,</span><span class="w"> </span><span class="n">BCWallViscous</span><span class="p">,</span><span class="w"> </span><span class="n">BCWallViscousHeatFlux</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BCWallViscousIsothermal</span><span class="p">,</span><span class="w"> </span><span class="n">FamilySpecified</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 
-<span class="kt">BCTypeCompound_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCTypeNull</span><span class="p">,</span><span class="w"> </span><span class="n">BCTypeUserDefined</span><span class="p">,</span><span class="w"> </span><span class="n">BCInflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCOutflow</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">BCFarfield</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">BCTypeCompound_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
+<span class="w">  </span><span class="n">BCTypeNull</span><span class="p">,</span><span class="w"> </span><span class="n">BCTypeUserDefined</span><span class="p">,</span><span class="w"> </span><span class="n">BCInflow</span><span class="p">,</span><span class="w"> </span><span class="n">BCOutflow</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BCFarfield</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The members of <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> completely identify the equations to impose, while those of <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code> give a general description of the class of boundary-condition equations to impose.
@@ -648,10 +633,6 @@ The specific boundary-condition equations to enforce for each value of <code cla
 <p>In the following tables, <span class="math notranslate nohighlight">\(Q\)</span> is the solution vector, <span class="math notranslate nohighlight">\(\mathbf{q}\)</span> is the velocity vector whose magnitude is <span class="math notranslate nohighlight">\(q\)</span>, the unit normal to the boundary is <span class="math notranslate nohighlight">\(\mathbf{n}\)</span>, and <span class="math notranslate nohighlight">\(\partial () / \partial n =\mathbf{n} \cdot \nabla\)</span> is differentiation normal to the boundary.</p>
 <table class="docutils align-default" id="id2">
 <caption><span class="caption-text"><strong>Simple Boundary Condition Types</strong></span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 28%" />
-<col style="width: 72%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> Identifier</p></th>
 <th class="head"><p>Boundary Condition Description</p></th>
@@ -788,10 +769,6 @@ Under the <code class="code sidskey docutils literal notranslate"><span class="p
 </table>
 <table class="docutils align-default" id="id3">
 <caption><span class="caption-text"><strong>Compound Boundary Condition Types</strong></span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 31%" />
-<col style="width: 69%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code> Identifier</p></th>
 <th class="head"><p>Boundary Condition Description</p></th>
@@ -812,7 +789,7 @@ Under the <code class="code sidskey docutils literal notranslate"><span class="p
 </table>
 </section>
 <section id="matching-boundary-condition-data-sets">
-<h2><span class="section-number">9.8. </span>Matching Boundary Condition Data Sets<a class="headerlink" href="#matching-boundary-condition-data-sets" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.8. </span>Matching Boundary Condition Data Sets<a class="headerlink" href="#matching-boundary-condition-data-sets" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code> structure allows for a arbitrary list of boundary-condition data sets, described by the <code class="code sidsref docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> structure.
 For simple boundary conditions, a single data set must be chosen from a list that may contain more than one element.
 Likewise, for a compound boundary condition, a limited number of data sets must be chosen and applied appropriately.
@@ -832,10 +809,6 @@ For a given <code class="code sidskey docutils literal notranslate"><span class=
 Apply the matching data set or sets as prescribed by the appropriate usage rule.</p>
 <table class="docutils align-default" id="id4">
 <caption><span class="caption-text"><strong>Associated Boundary Condition Types and Usage Rules</strong></span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 28%" />
-<col style="width: 72%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> Identifier</p></th>
 <th class="head"><p>Associated <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> Identifiers and Usage Rules</p></th>
@@ -923,16 +896,16 @@ One option is to define a new <code class="code sidskey docutils literal notrans
 Another option may be to allow some identifiers to be both <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code> and let their appropriate use be based on context. This is still undetermined.</p>
 </section>
 <section id="boundary-condition-specification-data">
-<h2><span class="section-number">9.9. </span>Boundary Condition Specification Data<a class="headerlink" href="#boundary-condition-specification-data" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.9. </span>Boundary Condition Specification Data<a class="headerlink" href="#boundary-condition-specification-data" title="Permalink to this heading">¶</a></h2>
 <p>For a given simple boundary condition (i.e., one that is not dependent on local flow conditions), the database provides a set of boundary-condition equations to be enforced through the structure definitions for <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCData_t</span></code>.
 Apart from the boundary-condition type, the precise equations to be enforced are described by boundary-condition solution data.
 These specified solution data are arranged by “equation type”:</p>
 <blockquote>
 <div><dl class="field-list simple">
-<dt class="field-odd">Dirichlet</dt>
+<dt class="field-odd">Dirichlet<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="math notranslate nohighlight">\(Q = Q_{specified}\)</span></p>
 </dd>
-<dt class="field-even">Neumann</dt>
+<dt class="field-even">Neumann<span class="colon">:</span></dt>
 <dd class="field-even"><p><span class="math notranslate nohighlight">\(\partial Q / \partial n = (\partial Q / \partial n)_{specified}\)</span></p>
 </dd>
 </dl>
@@ -941,10 +914,10 @@ These specified solution data are arranged by “equation type”:</p>
 <p>Two issues need to be addressed for specifying Dirichlet or Neumann boundary-condition data. The first is whether the data is global or local:</p>
 <blockquote>
 <div><dl class="field-list simple">
-<dt class="field-odd">Global BC data</dt>
+<dt class="field-odd">Global BC data<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Data applied globally to the BC patch; for example, specifying a uniform total pressure at an inflow boundary</p>
 </dd>
-<dt class="field-even">Local BC data</dt>
+<dt class="field-even">Local BC data<span class="colon">:</span></dt>
 <dd class="field-even"><p>Data applied locally at each vertex or cell face of the BC patch; an example of this is varying total pressure specified at each grid point at an inflow boundary</p>
 </dd>
 </dl>
@@ -956,13 +929,13 @@ We propose the convention that the actual data being specified for any <code cla
 This frees us from having to define <em>many</em> versions of a given <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> (e.g., <code class="code sidskey docutils literal notranslate"><span class="pre">BCInflowSubsonic1</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">BCInflowSubsonic2</span></code>, etc.), where each has a precisely defined set of Dirichlet data.
 We are left with the easier task of defining <em>how many</em> Dirichlet or Neumann quantities must be provided for each <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code>.</p>
 <p>An example of using <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>-<a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">identifier conventions</span></a> to describe BC specification data is the following: subsonic inflow with uniform stagnation pressure, mass flow and cross-flow angle specified; the Dirichlet data are stagnation pressure = 2.56, mass flow = 1.34, and cross-flow angle has a y-component of 0.043 and a z-component of 0.02 (ignore dimensional-units or normalization for the present). The specified solution variables and associated data are described as shown:</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="n">ListLength</span><span class="o">=?&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PressureStagnation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.56</span><span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">MassFlow</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.34</span><span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityAngleY</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.043</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityAngleZ</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.02</span><span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="n">ListLength</span><span class="o">=?&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PressureStagnation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.56</span><span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">MassFlow</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.34</span><span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityAngleY</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.043</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityAngleZ</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.02</span><span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Basically, this states that <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code> contains four instances of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> with identifiers or names <code class="code sidskey docutils literal notranslate"><span class="pre">PressureStagnation</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">MassFlow</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">VelocityAngleY</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">VelocityAngleZ</span></code>.
@@ -970,14 +943,14 @@ Each <code class="code sidskey docutils literal notranslate"><span class="pre">D
 <p>The <span class="xref std std-ref">global verses local</span> data issue can be easily handled by storing either a scalar, as shown above, for the global BC data case; or storing an array for the local BC data case.
 Storing an array of local BC data allows the capability for specifying non-constant solution profiles, such as “analytic” boundary-layer profiles or profiles derived from experimental data.
 For the above example, if the stagnation pressure is instead specified at every vertex of the boundary-condition patch the following results:</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="n">ListLength</span><span class="o">=</span><span class="mi">99</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">99</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PressureStagnation</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">99</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">PTOT</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">99</span><span class="p">)</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">MassFlow</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.34</span><span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityAngleY</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.043</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityAngleZ</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.02</span><span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="n">ListLength</span><span class="o">=</span><span class="mi">99</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">99</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PressureStagnation</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">99</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">PTOT</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">99</span><span class="p">)</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">MassFlow</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.34</span><span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityAngleY</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.043</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityAngleZ</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.02</span><span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>where, say, the boundary face is logically rectangular and contains <span class="math notranslate nohighlight">\(11 \times 9\)</span> vertices and the stagnation pressure at the vertices is given by the array <code class="code sidskey docutils literal notranslate"><span class="pre">PTOT()</span></code>.</p>
@@ -988,10 +961,6 @@ Furthermore, if the entities <code class="code sidskey docutils literal notransl
 <p>The various levels of BC implementation allowed are shown in the following figure, from the lowest level in which the application codes interpret the <code class="code sidsref docutils literal notranslate"><span class="pre">BCType</span></code>, to the fully SIDS-compliant BC implementation that completely defines the BC within the CGNS file.</p>
 <table class="docutils align-default" id="id5">
 <caption><span class="caption-text"><strong>Boundary Condition Implementation Levels</strong></span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><figure class="align-center" id="id6">
 <a class="reference internal image-reference" href="../../_images/bcimpl_low.gif"><img alt="CGNS dataset nodes for lowest boundary condition implementation level allowed" src="../../_images/bcimpl_low.gif" style="width: 170px;" /></a>
@@ -1014,68 +983,68 @@ Furthermore, if the entities <code class="code sidskey docutils literal notransl
 We have not taken this approach. We think grouping boundary-condition data by “equation type” as we have done better allows for future extension to other types of boundary conditions (e.g., 2nd-order non-reflecting BC’s that result in partial differential equations to be solved at the boundary).</p>
 </section>
 <section id="boundary-condition-examples">
-<h2><span class="section-number">9.10. </span>Boundary Condition Examples<a class="headerlink" href="#boundary-condition-examples" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.10. </span>Boundary Condition Examples<a class="headerlink" href="#boundary-condition-examples" title="Permalink to this heading">¶</a></h2>
 <p>This section contains boundary-condition examples with increasing complexity. Included is the most simple <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code> entity and one of the most complex.
 The examples show situations of <span class="xref std std-ref">local and global</span> boundary-condition data, <span class="xref std std-ref">simple</span> and <span class="xref std std-ref">compound</span> boundary-condition types, and multiple boundary-condition data sets that must be matched with the appropriate boundary-condition type.</p>
 <section id="example-symmetry-plane">
-<h3><span class="section-number">9.10.1. </span>Example - Symmetry Plane<a class="headerlink" href="#example-symmetry-plane" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">9.10.1. </span>Example - Symmetry Plane<a class="headerlink" href="#example-symmetry-plane" title="Permalink to this heading">¶</a></h3>
 <p>Symmetry plane for a patch on the <em>i</em>-min face of a 3-D structured zone.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 3, IndexDimension = 3</span>
-<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC1</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCSymmetryPlane</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC1</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCSymmetryPlane</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">Begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">End</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">Begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">End</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Since the boundary-condition equations to be enforced are completely defined by the boundary-condition type <code class="code sidskey docutils literal notranslate"><span class="pre">BCSymmetryPlane</span></code>, no other information needs to be provided, except for the extent of the BC patch.
 The BC patch is specified by <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> with a beginning index of (1,1,1) and an ending index of (1,9,17). By default, these refer to vertices.</p>
 </section>
 <section id="example-viscous-solid-wall-i">
-<h3><span class="section-number">9.10.2. </span>Example - Viscous Solid Wall I<a class="headerlink" href="#example-viscous-solid-wall-i" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">9.10.2. </span>Example - Viscous Solid Wall I<a class="headerlink" href="#example-viscous-solid-wall-i" title="Permalink to this heading">¶</a></h3>
 <p>A viscous solid wall for a 3-D structured zone, where a Dirichlet condition is enforced for temperature; the wall temperature for the entire wall is specified to be 273 K. The BC patch is on the <em>j</em>-min face and is bounded by the indices (1,1,1) and (33,1,9).</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 3, IndexDimension = 3</span>
-<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC2</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCWallViscousIsothermal</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC2</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCWallViscousIsothermal</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">Begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">End</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">Begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">End</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">!  ListLength = 33*9 = 297</span>
-<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;</span><span class="mi">297</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BCDataSet1</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCWallViscousIsothermal</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;</span><span class="mi">297</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BCDataSet1</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCWallViscousIsothermal</span><span class="w"> </span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">!  Data array length = ListLength = 297</span>
-<span class="w">    </span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="mi">297</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">      </span><span class="p">{{</span><span class="w"></span>
-<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Temperature</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">        </span><span class="p">{{</span><span class="w"></span>
-<span class="w">        </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">273.</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="mi">297</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="p">{{</span>
+<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Temperature</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="p">{{</span>
+<span class="w">        </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">273.</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">        </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dimensional</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dimensional</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">        </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">          </span><span class="p">{{</span><span class="w"></span>
-<span class="w">          </span><span class="n">MassUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">MassUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="n">LengthUnits</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">LengthUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="n">TimeUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">TimeUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="n">TemperatureUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kelvin</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="n">AngleUnits</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">AngleUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="o">=</span>
+<span class="w">          </span><span class="p">{{</span>
+<span class="w">          </span><span class="n">MassUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">MassUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">          </span><span class="n">LengthUnits</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">LengthUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">          </span><span class="n">TimeUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">TimeUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">          </span><span class="n">TemperatureUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kelvin</span><span class="w"> </span><span class="p">;</span>
+<span class="w">          </span><span class="n">AngleUnits</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">AngleUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">          </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">        </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>This is an example of a <span class="xref std std-ref">simple boundary-condition type</span>, <code class="code sidskey docutils literal notranslate"><span class="pre">BCWallViscousIsothermal</span></code>.
@@ -1100,50 +1069,50 @@ When this need is not present in a given instance of a structure entity, the str
 In some of the following examples, structure parameters that are superfluous or otherwise not needed are denoted by “<code class="code sidskey docutils literal notranslate"><span class="pre">?</span></code>”.</p>
 </section>
 <section id="example-subsonic-inflow">
-<h3><span class="section-number">9.10.3. </span>Example - Subsonic Inflow<a class="headerlink" href="#example-subsonic-inflow" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">9.10.3. </span>Example - Subsonic Inflow<a class="headerlink" href="#example-subsonic-inflow" title="Permalink to this heading">¶</a></h3>
 <p>Subsonic inflow for a 2-D structured zone: The BC patch is on the <em>i</em>-min face and includes <span class="math notranslate nohighlight">\(j \in [2, 7]\)</span>.
 As prescribed by the boundary-condition type, three quantities must be specified.
 Uniform entropy and stagnation enthalpy are specified with values of 0.94 and 2.85, respectively.
 A velocity profile is specified at face midpoints, given by the array <code class="code docutils literal notranslate"><span class="pre">v_inflow(j)</span></code>.
 No dimensional or nondimensional information is provided.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 2, IndexDimension = 2</span>
-<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">?&gt;</span><span class="w"> </span><span class="n">BC3</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCInflowSubsonic</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">?&gt;</span><span class="w"> </span><span class="n">BC3</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCInflowSubsonic</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">GridLocation_t</span><span class="w"> </span><span class="n">GridLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FaceCenter</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">GridLocation_t</span><span class="w"> </span><span class="n">GridLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FaceCenter</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="n">Begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="n">End</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="n">Begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="n">End</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">!  ListLength = 5</span>
-<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;</span><span class="mi">5</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BCDataSet1</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCInflowSubsonic</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;</span><span class="mi">5</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BCDataSet1</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCInflowSubsonic</span><span class="w"> </span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">!  Data array length = ListLength = 5</span>
-<span class="w">    </span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="mi">5</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">      </span><span class="p">{{</span><span class="w"></span>
-<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">EntropyApprox</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">        </span><span class="p">{{</span><span class="w"></span>
-<span class="w">        </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.94</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="mi">5</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="p">{{</span>
+<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">EntropyApprox</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="p">{{</span>
+<span class="w">        </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.94</span><span class="w"> </span><span class="p">;</span>
+<span class="w">        </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">EnthalpyStagnation</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">        </span><span class="p">{{</span><span class="w"></span>
-<span class="w">        </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.85</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">EnthalpyStagnation</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="p">{{</span>
+<span class="w">        </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.85</span><span class="w"> </span><span class="p">;</span>
+<span class="w">        </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityY</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">        </span><span class="p">{{</span><span class="w"></span>
-<span class="w">        </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">v_inflow</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityY</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="p">{{</span>
+<span class="w">        </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">v_inflow</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="w">        </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>This is another example of a <span class="xref std std-ref">simple boundary-condition type</span>.
@@ -1156,30 +1125,30 @@ The length of the array is given by <code class="code sidskey docutils literal n
 Note that the beginning and ending indices on the array <code class="code docutils literal notranslate"><span class="pre">v_inflow()</span></code> are unimportant (they are user inputs); there just needs to be five values provided.</p>
 </section>
 <section id="example-outflow">
-<h3><span class="section-number">9.10.4. </span>Example - Outflow<a class="headerlink" href="#example-outflow" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">9.10.4. </span>Example - Outflow<a class="headerlink" href="#example-outflow" title="Permalink to this heading">¶</a></h3>
 <p>Outflow boundary condition with unspecified normal Mach number for an <em>i</em>-max face of a 3-D structured zone: For subsonic outflow, a uniform pressure is specified; for supersonic outflow, no boundary-condition equations are specified.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 3, IndexDimension = 3</span>
-<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC4</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCOutflow</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC4</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCOutflow</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetSubsonic</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCOutflowSubsonic</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetSubsonic</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCOutflowSubsonic</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">    </span><span class="kt">BCData_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">      </span><span class="p">{{</span><span class="w"></span>
-<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pressure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">BCData_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="p">{{</span>
+<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pressure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetSupersonic</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCOutflowSupersonic</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetSupersonic</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCOutflowSupersonic</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>This is an example of a <span class="xref std std-ref">complex boundary-condition type</span>; the equation set to be enforced depends on the local flow conditions, namely the Mach number normal to the boundary.
@@ -1195,50 +1164,50 @@ Another caveat is that providing two data sets with the same simple boundary-con
 This example also uses the “<code class="code sidskey docutils literal notranslate"><span class="pre">?</span></code>” notation for unused data-array-length structure parameters.</p>
 </section>
 <section id="example-farfield">
-<h3><span class="section-number">9.10.5. </span>Example - Farfield<a class="headerlink" href="#example-farfield" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">9.10.5. </span>Example - Farfield<a class="headerlink" href="#example-farfield" title="Permalink to this heading">¶</a></h3>
 <p>Farfield boundary condition with arbitrary flow conditions for a <em>j</em>-max face of a 2-D structured zone: If subsonic inflow, specify entropy, vorticity and incoming acoustic characteristics; if supersonic inflow specify entire flow state; if subsonic outflow, specify incoming acoustic characteristic; and if supersonic outflow, extrapolate all flow quantities.
 None of the extrapolated quantities for the different boundary condition possibilities need be stated.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 2, IndexDimension = 2</span>
-<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC5</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCFarfield</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC5</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCFarfield</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">int</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="n">InwardNormalIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">-1</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="n">InwardNormalIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">-1</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetInflowSupersonic</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCInflowSupersonic</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetInflowSupersonic</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCInflowSupersonic</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetInflowSubsonic</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCInflowSubsonic</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetInflowSubsonic</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCInflowSubsonic</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">    </span><span class="n">BCData</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">      </span><span class="p">{{</span><span class="w"></span>
-<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CharacteristicEntropy</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CharacteristicVorticity1</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CharacteristicAcousticPlus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">BCData</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="p">{{</span>
+<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CharacteristicEntropy</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CharacteristicVorticity1</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CharacteristicAcousticPlus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetOutflowSupersonic</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCOutflowSupersonic</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetOutflowSupersonic</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCOutflowSupersonic</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetOutflowSubsonic</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCOutflowSubsonic</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">BCDataSetOutflowSubsonic</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCOutflowSubsonic</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">    </span><span class="n">BCData</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">      </span><span class="p">{{</span><span class="w"></span>
-<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CharacteristicAcousticMinus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">BCData</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="p">{{</span>
+<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CharacteristicAcousticMinus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The farfield boundary-condition type is the most complex of the <span class="xref std std-ref">compound boundary-condition types</span>.
@@ -1254,56 +1223,56 @@ This information could also be obtained from the BC patch description given in <
 <code class="code sidskey docutils literal notranslate"><span class="pre">IndexRange</span></code> and all <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities are abbreviated, and all unused structure functions are not evaluated.</p>
 </section>
 <section id="example-viscous-solid-wall-ii">
-<h3><span class="section-number">9.10.6. </span>Example - Viscous Solid Wall II<a class="headerlink" href="#example-viscous-solid-wall-ii" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">9.10.6. </span>Example - Viscous Solid Wall II<a class="headerlink" href="#example-viscous-solid-wall-ii" title="Permalink to this heading">¶</a></h3>
 <p>There are circumstances when a user may wish to define a BC patch using vertices (under <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code>), but store the BC data at face centers (under <code class="code sidsref docutils literal notranslate"><span class="pre">BCDataSet_t</span></code>).
 The following example is similar to the <span class="xref std std-ref">Viscous Solid Wall</span> example given previously, with the exception that the Dirichlet data for temperature is stored at face centers rather than at vertices.</p>
 <p>As before, the example is a viscous solid wall in a 3-D structured zone, where a Dirichlet condition is enforced for temperature; the wall temperature for the entire wall is specified to be 273 K.
 The BC patch is on the <em>j</em>-min face and is bounded by the indices (1,1,1) and (33,1,9).</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 3, IndexDimension = 3</span>
-<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC2</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCWallViscousIsothermal</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC2</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="kt">BCType_t</span><span class="w"> </span><span class="n">BCType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCWallViscousIsothermal</span><span class="w"> </span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">!  Grid location is Vertex by default</span>
-<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">Begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">End</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">Begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">End</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">!  ListLength = 33*9 = 297</span>
-<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;</span><span class="mi">297</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BCDataSet1</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCWallViscousIsothermal</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">BCDataSet_t</span><span class="o">&lt;</span><span class="mi">297</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BCDataSet1</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">BCTypeSimple_t</span><span class="w"> </span><span class="n">BCTypeSimple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BCWallViscousIsothermal</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">    </span><span class="kt">GridLocation_t</span><span class="w"> </span><span class="n">GridLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FaceCenter</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">      </span><span class="p">{{</span><span class="w"></span>
-<span class="w">      </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">Begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">End</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">GridLocation_t</span><span class="w"> </span><span class="n">GridLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FaceCenter</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="kt">IndexRange_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="p">{{</span>
+<span class="w">      </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">Begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
+<span class="w">      </span><span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="n">End</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">32</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
+<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">!  ListLength = 32*8 = 256</span>
-<span class="w">    </span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="mi">256</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">      </span><span class="p">{{</span><span class="w"></span>
-<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Temperature</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">        </span><span class="p">{{</span><span class="w"></span>
-<span class="w">        </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">273.</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="mi">256</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="p">{{</span>
+<span class="w">      </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Temperature</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="p">{{</span>
+<span class="w">        </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">273.</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">        </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dimensional</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dimensional</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">        </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">          </span><span class="p">{{</span><span class="w"></span>
-<span class="w">          </span><span class="n">MassUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">MassUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="n">LengthUnits</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">LengthUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="n">TimeUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">TimeUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="n">TemperatureUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kelvin</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="n">AngleUnits</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">AngleUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="o">=</span>
+<span class="w">          </span><span class="p">{{</span>
+<span class="w">          </span><span class="n">MassUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">MassUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">          </span><span class="n">LengthUnits</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">LengthUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">          </span><span class="n">TimeUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">TimeUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">          </span><span class="n">TemperatureUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kelvin</span><span class="w"> </span><span class="p">;</span>
+<span class="w">          </span><span class="n">AngleUnits</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">AngleUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">          </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">        </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">      </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>As in the previous <span class="xref std std-ref">Viscous Solid Wall</span> example, although the boundary-condition data is global, we include in this example structure parameters that are the lengths of potential local-data arrays.

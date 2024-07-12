@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   
   <!-- Licensed under the Apache 2.0 License -->
@@ -16,17 +15,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>3. Conventions &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css?v=ee5bbeb1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css?v=2c72f61b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css?v=97141bf4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css?v=593b94c8" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=117e2fac"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="icon" href="../../_static/CGNS_empty.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="4. Building Block Structure Definition" href="block.html" />
@@ -166,19 +164,15 @@
           <div class="document clearer body">
             
   <section id="conventions">
-<h1><span class="section-number">3. </span>Conventions<a class="headerlink" href="#conventions" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">3. </span>Conventions<a class="headerlink" href="#conventions" title="Permalink to this heading">¶</a></h1>
 <section id="data-structure-notation-conventions">
-<h2><span class="section-number">3.1. </span>Data Structure Notation Conventions<a class="headerlink" href="#data-structure-notation-conventions" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.1. </span>Data Structure Notation Conventions<a class="headerlink" href="#data-structure-notation-conventions" title="Permalink to this heading">¶</a></h2>
 <p>The intellectual content of the CGNS database is defined in terms of C-like notation including typedefs and structures. The database is made up of entities, and each entity has a type associated with it. Entities include such things as the dimensionality of the grid, an array of grid coordinates, or a zone that contains all the data associated with a given region. Entities are defined in terms of types, where a type can be an integer or a collection of elements (a structure) or a hierarchy of structures or other similar constructs.</p>
 <p>The terminology “instance of an entity” is used to refer to an entity that has been assigned a value or whose elements have been assigned values. The terminology “specific instance of a structure” is also used in the following sections. It is short for an instance of an entity whose type is a structure.</p>
 <p>Names of entities and types are constructed using conventions typical of <a class="reference external" href="http://www.wri.com/products/mathematica">Mathematica</a> [<em>Mathematica 3.0</em>, <a class="reference external" href="http://www.wri.com">Wolfram Research, Inc.</a>, Champaign, IL (1996)]. Names or identifiers contain no spaces and capitalization is used to distinguish individual words making up a name; names are case-sensitive. The character “/” should be avoided in names, as well as the names “.” and “..”, as these have special meaning when referencing elements of a structure entity. An entity name cannot exceed 32 characters.</p>
 <p>The following notational conventions are employed:</p>
 <blockquote>
 <div><table class="docutils align-default">
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>!</p></td>
 <td><p>comment to end of line</p></td>
@@ -253,52 +247,52 @@
 </table>
 </div></blockquote>
 <p>An enumeration type is a set of values identified by names; names of values within a given enumeration declaration must be unique. An example of an enumeration type is the following:</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">Enumeration</span><span class="p">(</span><span class="w"> </span><span class="n">Dog</span><span class="p">,</span><span class="w"> </span><span class="n">Cat</span><span class="p">,</span><span class="w"> </span><span class="n">Bird</span><span class="p">,</span><span class="w"> </span><span class="n">Frog</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">Enumeration</span><span class="p">(</span><span class="w"> </span><span class="n">Dog</span><span class="p">,</span><span class="w"> </span><span class="n">Cat</span><span class="p">,</span><span class="w"> </span><span class="n">Bird</span><span class="p">,</span><span class="w"> </span><span class="n">Frog</span><span class="w"> </span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This defines an enumeration type which contains four values.</p>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">Data()</span></code> identifies an array of given dimensionality and size in each dimension, whose elements are all of a given data type. It is written as,</p>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">Dimension</span></code> is an integer, and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionValues[]</span></code> is an array of integers of size <code class="code sidskey docutils literal notranslate"><span class="pre">Dimension</span></code>. <code class="code sidskey docutils literal notranslate"><span class="pre">Dimension</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionValues[]</span></code> specify the dimensionality of the array and its size in each dimension. <code class="code sidskey docutils literal notranslate"><span class="pre">DataType</span></code> specifies the data type of the array’s elements; it may consist of one of the following: <code class="code sidskey docutils literal notranslate"><span class="pre">int</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">real</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">char</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">bit</span></code>. For multidimensional arrays, FORTRAN indexing conventions are used. <code class="code sidskey docutils literal notranslate"><span class="pre">Data()</span></code> is formulated to map directly onto the data section of an ADF node.</p>
 <p>A typedef establishes a new type and defines it in terms of previously defined types. Types are identified by the suffix “_t”, and the symbol “:=” is used to establish a type definition (or typedef). For example, the above enumeration example can be used in a typedef:</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Pet_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"> </span><span class="n">Dog</span><span class="p">,</span><span class="w"> </span><span class="n">Cat</span><span class="p">,</span><span class="w"> </span><span class="n">Bird</span><span class="p">,</span><span class="w"> </span><span class="n">Frog</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Pet_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span><span class="w"> </span><span class="n">Dog</span><span class="p">,</span><span class="w"> </span><span class="n">Cat</span><span class="p">,</span><span class="w"> </span><span class="n">Bird</span><span class="p">,</span><span class="w"> </span><span class="n">Frog</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>This defines a new type <code class="code sidskey docutils literal notranslate"><span class="pre">Pet_t</span></code>, which can then be used to declare a new entity, such as,</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Pet_t</span><span class="w"> </span><span class="n">MyFavoritePet</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Pet_t</span><span class="w"> </span><span class="n">MyFavoritePet</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>By the above typedef and declaration, <code class="code sidskey docutils literal notranslate"><span class="pre">MyFavoritePet</span></code> is an entity of type <code class="code sidskey docutils literal notranslate"><span class="pre">Pet_t</span></code> and can have the values <code class="code sidskey docutils literal notranslate"><span class="pre">Dog</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">Cat</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">Bird</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">Frog</span></code>. A specific instance of <code class="code sidskey docutils literal notranslate"><span class="pre">MyFavoritePet</span></code> is setting it equal to one of these values (e.g., <code class="code sidskey docutils literal notranslate"><span class="pre">MyFavoritePet</span> <span class="pre">=</span> <span class="pre">Bird</span></code>).</p>
 <p>A structure is a type that can contain any number of elements, including elements that are also structures. An example of a structure type definition is:</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Sample_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">Dimension</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span><span class="kr">(r)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Sample_t</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">Dimension</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span><span class="kr">(r)</span>
 
-<span class="w">  </span><span class="kt">real</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">;</span><span class="w">                                     </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">real</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">;</span><span class="w">                                     </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">Pet_t</span><span class="w"> </span><span class="n">ObnoxiousPet</span><span class="w"> </span><span class="p">;</span><span class="w">                                 </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">Pet_t</span><span class="w"> </span><span class="n">ObnoxiousPet</span><span class="w"> </span><span class="p">;</span><span class="w">                                 </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>where <code class="code sidskey docutils literal notranslate"><span class="pre">Sample_t</span></code> is the type of the structure.
 This structure contains three elements, <code class="code sidskey docutils literal notranslate"><span class="pre">Dimension</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">Vector</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">ObnoxiousPet</span></code>, whose types are <code class="code sidskey docutils literal notranslate"><span class="pre">int</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">real[4]</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">Pet_t</span></code>, respectively.
 The type <code class="code sidskey docutils literal notranslate"><span class="pre">int</span></code> specifies an integer, and <code class="code sidskey docutils literal notranslate"><span class="pre">real[4]</span></code> specifies an array of reals that is one-dimensional with a length of four. The “(r)” and “(o)” notation in the right margin is explained below.
 Given the definition of <code class="code sidskey docutils literal notranslate"><span class="pre">Sample_t</span></code>, entities of this type can then be declared (e.g., <code class="code sidskey docutils literal notranslate"><span class="pre">Sample_t</span> <span class="pre">Sample1;</span></code>). An example of an instance of a structure entity is given by,</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Sample_t</span><span class="w"> </span><span class="n">Sample1</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="n">Dimension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">Vector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.45</span><span class="p">,</span><span class="w"> </span><span class="mf">2.1</span><span class="p">,</span><span class="w"> </span><span class="mf">5.4</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">ObnoxiousPet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dog</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Sample_t</span><span class="w"> </span><span class="n">Sample1</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="n">Dimension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="n">Vector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.45</span><span class="p">,</span><span class="w"> </span><span class="mf">2.1</span><span class="p">,</span><span class="w"> </span><span class="mf">5.4</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="n">ObnoxiousPet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dog</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Note the different functions played by single braces “{” and double braces “{{”. The first is used to delimit the definition of a structure type; the second is used to delimit a specific instance of a structure entity.</p>
 <p>Some structure type definitions contain arbitrarily long lists of other structures or types. These lists will be identified by the notation,</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Sample_t</span><span class="w"> </span><span class="n">Sample1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">SampleN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Sample_t</span><span class="w"> </span><span class="n">Sample1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">SampleN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>where <code class="code sidskey docutils literal notranslate"><span class="pre">Sample1</span> <span class="pre">...</span> <span class="pre">SampleN</span></code> is the list of structure names or identifiers, each of which has the type <code class="code sidskey docutils literal notranslate"><span class="pre">Sample_t</span></code>. Within each list, the individual structure names are user-defined.</p>
 <p>In the CGNS database it is sometimes necessary to reference the name or identifier of a structure entity. References to entities are denoted by <code class="code sidskey docutils literal notranslate"><span class="pre">Identifier()</span></code>, whose single argument is a structure type. For example,</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">Identifier</span><span class="p">(</span><span class="kt">Sample_t</span><span class="p">)</span><span class="w"> </span><span class="n">SampleName</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">Identifier</span><span class="p">(</span><span class="kt">Sample_t</span><span class="p">)</span><span class="w"> </span><span class="n">SampleName</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>declares an entity, <code class="code sidskey docutils literal notranslate"><span class="pre">SampleName</span></code>, whose value is the identifier of a structure entity of type <code class="code sidskey docutils literal notranslate"><span class="pre">Sample_t</span></code>.
@@ -312,7 +306,7 @@ A UNIX-like logical link that specifies the sameness of two apparently different
 An example of a logical link is as follows: Suppose a specific instance of a structure entity contains two elements
 that are of type <code class="code sidskey docutils literal notranslate"><span class="pre">Sample_t</span></code>; call them <code class="code sidskey docutils literal notranslate"><span class="pre">SampleA</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">SampleB</span></code>.
 The statement that <code class="code sidskey docutils literal notranslate"><span class="pre">SampleB</span></code> is actually the same entity as <code class="code sidskey docutils literal notranslate"><span class="pre">SampleA</span></code> is,</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="n">SampleB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">LogicalLink</span><span class="p">(..</span><span class="o">/</span><span class="n">SampleA</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="n">SampleB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">LogicalLink</span><span class="p">(..</span><span class="o">/</span><span class="n">SampleA</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The argument of <code class="code sidskey docutils literal notranslate"><span class="pre">LogicalLink()</span></code> is the UNIX-like “path name” of the entity with which the link is made.
@@ -332,19 +326,19 @@ First, parameterized structures are introduced to formalize the notion that info
 A given structure type is defined in terms of a list of parameters that precisely specify what information must be obtained from the structure’s parent.
 These structure-defining parameters play a similar role to subroutine parameters in C or FORTRAN and are used to define fields within the structure; they are also passed onto substructures. Parameterized structures are also loosely tied to templates in C++.</p>
 <p>Parameterized structures are identified by the delimiters <code class="code docutils literal notranslate"><span class="pre">&lt;</span> <span class="pre">&gt;</span></code> enclosing the list of parameters. Each structure parameter in a structure-type definition consists of a type and an identifier. Examples of parameterized structure type definitions are:</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">NewSample_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Dimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Fred</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="p">[</span><span class="n">Dimension</span><span class="p">]</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">NewSample_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Dimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Fred</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="p">[</span><span class="n">Dimension</span><span class="p">]</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">Pet_t</span><span class="w"> </span><span class="n">ObnoxiousPet</span><span class="w"> </span><span class="p">;</span><span class="w">                                 </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">Pet_t</span><span class="w"> </span><span class="n">ObnoxiousPet</span><span class="w"> </span><span class="p">;</span><span class="w">                                 </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">Stuff_t</span><span class="o">&lt;</span><span class="n">Fred</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Thingy</span><span class="w"> </span><span class="p">;</span><span class="w">                               </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">Stuff_t</span><span class="o">&lt;</span><span class="n">Fred</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Thingy</span><span class="w"> </span><span class="p">;</span><span class="w">                               </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="kt">Stuff_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">George</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="p">[</span><span class="n">George</span><span class="p">]</span><span class="w"> </span><span class="n">IrrelevantStuff</span><span class="w"> </span><span class="p">;</span><span class="w">                       </span><span class="kr">(r)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">Stuff_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">George</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">[</span><span class="n">George</span><span class="p">]</span><span class="w"> </span><span class="n">IrrelevantStuff</span><span class="w"> </span><span class="p">;</span><span class="w">                       </span><span class="kr">(r)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">NewSample_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">Stuff_t</span></code> are parameterized structure types.
@@ -361,16 +355,16 @@ This mimics the use of parameters in function definitions in C.</p>
 Both elements <code class="code sidskey docutils literal notranslate"><span class="pre">Vector</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">ObnoxiousPet</span></code> are optional.
 This means that in any specific instance of the structure, only <code class="code sidskey docutils literal notranslate"><span class="pre">Dimension</span></code> must be present.
 An alternative instance of the entity <code class="code sidskey docutils literal notranslate"><span class="pre">Sample1</span></code> shown above is the following:</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Sample_t</span><span class="w"> </span><span class="n">Sample1</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="n">Dimension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Sample_t</span><span class="w"> </span><span class="n">Sample1</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="n">Dimension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>None of the entities and types defined in the above examples are actually used in the definition of the SIDS. As a final note, the reader should be aware that the SIDS is a conceptual description of the form of the data. The actual location of data in the file is determined by the file mapping, defined by the appropriate <span class="xref std std-ref">File Mapping Manual</span>.</p>
 </section>
 <section id="structured-grid-notation-and-indexing-conventions">
-<span id="structgrid"></span><h2><span class="section-number">3.2. </span>Structured Grid Notation and Indexing Conventions<a class="headerlink" href="#structured-grid-notation-and-indexing-conventions" title="Permalink to this headline">¶</a></h2>
+<span id="structgrid"></span><h2><span class="section-number">3.2. </span>Structured Grid Notation and Indexing Conventions<a class="headerlink" href="#structured-grid-notation-and-indexing-conventions" title="Permalink to this heading">¶</a></h2>
 <p>A <em>grid</em> is defined by its vertices. In a 3-D structured grid, the volume is the ensemble of cells, where each cell is the hexahedron region defined by eight nearest neighbor vertices. Each cell is bounded by six faces, where each face is the quadrilateral made up of four vertices. An edge links two nearest-neighbor vertices; a face is bounded by four edges.</p>
 <p>In a 2-D structured grid, the notation is more ambiguous. Typically, the quadrilateral area composed of four nearest-neighbor vertices is referred to as a cell. The sides of each cell, the line linking two vertices, is either a face or an edge. In a 1-D grid, the line connecting two vertices is a cell.</p>
 <p>A <em>structured multizone grid</em> is composed of multiple regions called <em>zones</em>, where each zone includes all the vertices, cells, faces, and edges that constitute the grid in that region.</p>
@@ -390,7 +384,7 @@ They are distinguished from the vertices and cells making up the grid within the
 <p>For a zone, the minimum faces in each coordinate direction are denoted i-min, j-min and k-min; the maximum faces are denoted i-max, j-max and k-max. These are the minimum and maximum core faces. For example, i-min is the face or grid plane whose core vertices have minimum i index (which if using default indexing is 1).</p>
 </section>
 <section id="unstructured-grid-element-numbering-conventions">
-<span id="unstructgrid"></span><h2><span class="section-number">3.3. </span>Unstructured Grid Element Numbering Conventions<a class="headerlink" href="#unstructured-grid-element-numbering-conventions" title="Permalink to this headline">¶</a></h2>
+<span id="unstructgrid"></span><h2><span class="section-number">3.3. </span>Unstructured Grid Element Numbering Conventions<a class="headerlink" href="#unstructured-grid-element-numbering-conventions" title="Permalink to this heading">¶</a></h2>
 <p>The major difference in the way structured and unstructured grids are recorded is the element definition. In a structured grid, the elements can always be recomputed easily using the computational coordinates, and therefore they are usually not written in the data file. For an unstructured grid, the element connectivity cannot be easily built, so this additional information is generally added to the data file. The element information typically includes the element type or shape, and the list of nodes for each element.</p>
 <p>In an unstructured zone, the nodes are ordered from 1 to N, where N is the number of nodes in the zone. An element is defined as a group of one or more nodes, where each node is represented by its index. The elements are indexed from 1 to M within a zone, where M is the total number of elements defined for the zone.</p>
 <p>CGNS supports eight element shapes - points, lines, triangles, quadrangles, tetrahedra, pentahedra, pyramids, and hexahedra. Elements describing a volume are referred to as 3-D elements. Those defining a surface are 2-D elements. Line and point elements are called 1-D and 0-D elements, respectively.</p>
@@ -398,14 +392,6 @@ They are distinguished from the vertices and cells making up the grid within the
 <p>Each element shape may have a different number of nodes, depending on whether linear, quadratic, or cubic interpolation is used. Therefore the name of each type of element is composed of two parts; the first part identifies the element shape, and the second part the number of nodes. The following table summarizes the element types supported in CGNS.</p>
 <table class="docutils align-default" id="id19">
 <caption><span class="caption-text"><strong>Element Types in CGNS</strong></span><a class="headerlink" href="#id19" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 12%" />
-<col style="width: 22%" />
-<col style="width: 11%" />
-<col style="width: 14%" />
-<col style="width: 20%" />
-<col style="width: 21%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Dimensionality</p></th>
 <th class="head"><p>Shape</p></th>
@@ -478,7 +464,7 @@ Interpolation</p></th>
 <p>The ordering of the nodes within an element is important. Since the nodes in each element type could be ordered in multiple ways, it is necessary to define numbering conventions. The following sections describe the element numbering conventions used in CGNS.</p>
 <p id="rind-unstruct">Like a structured zone, an unstructured zone may contain grid-coordinates or flow-solution data at points outside of the zone itself, through the use of ghost or “rind” points and elements. However, unlike for structured zones, rind data for unstructured zones cannot be defined implicitly (i.e., via indexing conventions alone). In other words, when using rind with unstructured zones, the rind grid points and their element connectivity information should always be given.</p>
 <section id="d-line-elements">
-<span id="unst-line"></span><h3><span class="section-number">3.3.1. </span>1-D (Line) Elements<a class="headerlink" href="#d-line-elements" title="Permalink to this headline">¶</a></h3>
+<span id="unst-line"></span><h3><span class="section-number">3.3.1. </span>1-D (Line) Elements<a class="headerlink" href="#d-line-elements" title="Permalink to this heading">¶</a></h3>
 <p>1-D elements represent geometrically a line (or bar).
 The linear form, <code class="docutils literal notranslate"><span class="pre">BAR_2</span></code>, is composed of two nodes at each extremity
 of the line.
@@ -489,9 +475,9 @@ interior to the endpoints.
 The quartic form of the line, <code class="docutils literal notranslate"><span class="pre">BAR_5</span></code>, contains three nodes
 interior to the endpoints.</p>
 <section id="line-or-bar">
-<h4><span class="section-number">3.3.1.1. </span>Line (or bar)<a class="headerlink" href="#line-or-bar" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">3.3.1.1. </span>Line (or bar)<a class="headerlink" href="#line-or-bar" title="Permalink to this heading">¶</a></h4>
 <section id="linear-and-quadratic-elements">
-<h5><span class="section-number">3.3.1.1.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#linear-and-quadratic-elements" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.1.1.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#linear-and-quadratic-elements" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id20">
 <a class="reference internal image-reference" href="../../_images/bar_2.png"><img alt="../../_images/bar_2.png" src="../../_images/bar_2.png" style="width: 400px;" /></a>
 <figcaption>
@@ -506,7 +492,7 @@ interior to the endpoints.</p>
 </figure>
 </section>
 <section id="cubic-elements">
-<h5><span class="section-number">3.3.1.1.2. </span>Cubic Elements<a class="headerlink" href="#cubic-elements" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.1.1.2. </span>Cubic Elements<a class="headerlink" href="#cubic-elements" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id22">
 <a class="reference internal image-reference" href="../../_images/bar_4.png"><img alt="../../_images/bar_4.png" src="../../_images/bar_4.png" style="width: 400px;" /></a>
 <figcaption>
@@ -515,7 +501,7 @@ interior to the endpoints.</p>
 </figure>
 </section>
 <section id="quartic-elements">
-<h5><span class="section-number">3.3.1.1.3. </span>Quartic Elements<a class="headerlink" href="#quartic-elements" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.1.1.3. </span>Quartic Elements<a class="headerlink" href="#quartic-elements" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id23">
 <a class="reference internal image-reference" href="../../_images/bar_5.png"><img alt="../../_images/bar_5.png" src="../../_images/bar_5.png" style="width: 400px;" /></a>
 <figcaption>
@@ -530,7 +516,7 @@ interior to the endpoints.</p>
 </section>
 </section>
 <section id="d-surface-elements">
-<h3><span class="section-number">3.3.2. </span>2D (Surface) Elements<a class="headerlink" href="#d-surface-elements" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.3.2. </span>2D (Surface) Elements<a class="headerlink" href="#d-surface-elements" title="Permalink to this heading">¶</a></h3>
 <p>2-D elements represent a surface in either 2-D or 3-D space.
 Note that in physical space, the surface need not be planar, but
 may be curved.
@@ -549,7 +535,7 @@ The direction of the normal is such that the three vectors
 <p>In a 2-D mesh, all elements must be oriented the same way; i.e., all
 normals must point toward the same side of the mesh.</p>
 <section id="triangular-elements">
-<span id="unst-tri"></span><h4><span class="section-number">3.3.2.1. </span>Triangular Elements<a class="headerlink" href="#triangular-elements" title="Permalink to this headline">¶</a></h4>
+<span id="unst-tri"></span><h4><span class="section-number">3.3.2.1. </span>Triangular Elements<a class="headerlink" href="#triangular-elements" title="Permalink to this heading">¶</a></h4>
 <p>Six types of triangular elements are supported in CGNS, <code class="docutils literal notranslate"><span class="pre">TRI_3</span></code>,
 <code class="docutils literal notranslate"><span class="pre">TRI_6</span></code>, <code class="docutils literal notranslate"><span class="pre">TRI_9</span></code>, <code class="docutils literal notranslate"><span class="pre">TRI_10</span></code>, <code class="docutils literal notranslate"><span class="pre">TRI_12</span></code>, and <code class="docutils literal notranslate"><span class="pre">TRI_15</span></code>.
 <code class="docutils literal notranslate"><span class="pre">TRI_3</span></code> elements are composed of three nodes located at the
@@ -563,23 +549,19 @@ The quartic forms of triangular elements, <code class="docutils literal notransl
 contain three interior nodes along each edge, and three interior face nodes
 in the case of <code class="docutils literal notranslate"><span class="pre">TRI_15</span></code>.</p>
 <section id="id1">
-<h5><span class="section-number">3.3.2.1.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.2.1.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/tri_3_6.png"><img alt="../../_images/tri_3_6.png" src="../../_images/tri_3_6.png" style="width: 800px;" /></a>
 </figure>
 </section>
 <section id="id2">
-<h5><span class="section-number">3.3.2.1.2. </span>Cubic Elements<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.2.1.2. </span>Cubic Elements<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/tri_9_10.png"><img alt="../../_images/tri_9_10.png" src="../../_images/tri_9_10.png" style="width: 800px;" /></a>
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 6%" />
-<col style="width: 94%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>N1,…,N10</p></td>
 <td><p>Grid point identification number. Integer ≥ 0 or blank, and no two values may be the same. Grid points N1, N2, and N3 are in consecutive order about the triangle.</p></td>
@@ -595,7 +577,7 @@ in the case of <code class="docutils literal notranslate"><span class="pre">TRI_
 </div>
 </section>
 <section id="id3">
-<h5><span class="section-number">3.3.2.1.3. </span>Quartic Elements<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.2.1.3. </span>Quartic Elements<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id24">
 <a class="reference internal image-reference" href="../../_images/tri_12.png"><img alt="../../_images/tri_12.png" src="../../_images/tri_12.png" style="width: 800px;" /></a>
 <figcaption>
@@ -615,12 +597,12 @@ in the case of <code class="docutils literal notranslate"><span class="pre">TRI_
 </section>
 </section>
 <section id="quadrilateral-elements">
-<span id="unst-quad"></span><h4><span class="section-number">3.3.2.2. </span>Quadrilateral Elements<a class="headerlink" href="#quadrilateral-elements" title="Permalink to this headline">¶</a></h4>
+<span id="unst-quad"></span><h4><span class="section-number">3.3.2.2. </span>Quadrilateral Elements<a class="headerlink" href="#quadrilateral-elements" title="Permalink to this heading">¶</a></h4>
 <p>CGNS supports seven types of quadrilateral elements, QUAD_4, QUAD_8, QUAD_9, QUAD_12, QUAD_16, QUAD_P4_16, and QUAD_25.
 QUAD_4 elements are composed of four nodes located at the four geometric corners of the quadrangle.
 In addition, QUAD_8 and QUAD_9 elements have four mid-edge nodes, and QUAD_9 adds a mid-face node. The cubic forms of quadrilateral elements, QUAD_12 and QUAD_16 contain two interior nodes along each edge, and four interior face nodes in the case of QUAD_16. The quartic forms of quadrilateral elements, QUAD_P4_16 and QUAD_25 contain three interior nodes along each edge, and nine interior face nodes in the case of QUAD_25.</p>
 <section id="id4">
-<h5><span class="section-number">3.3.2.2.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.2.2.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id26">
 <a class="reference internal image-reference" href="../../_images/quad_4_8.png"><img alt="../../_images/quad_4_8.png" src="../../_images/quad_4_8.png" style="width: 800px;" /></a>
 <figcaption>
@@ -635,7 +617,7 @@ In addition, QUAD_8 and QUAD_9 elements have four mid-edge nodes, and QUAD_9 add
 </figure>
 </section>
 <section id="id5">
-<h5><span class="section-number">3.3.2.2.2. </span>Cubic Elements<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.2.2.2. </span>Cubic Elements<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id28">
 <a class="reference internal image-reference" href="../../_images/quad_12.png"><img alt="../../_images/quad_12.png" src="../../_images/quad_12.png" style="width: 800px;" /></a>
 <figcaption>
@@ -651,10 +633,6 @@ In addition, QUAD_8 and QUAD_9 elements have four mid-edge nodes, and QUAD_9 add
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 6%" />
-<col style="width: 94%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>N1,…,N16</p></td>
 <td><p>Grid point identification number. Integer ≥ 0 or blank, and no two values may be the same. Grid points N1, …, N4 are in consecutive order about the quadrangle.</p></td>
@@ -670,7 +648,7 @@ In addition, QUAD_8 and QUAD_9 elements have four mid-edge nodes, and QUAD_9 add
 </div>
 </section>
 <section id="id6">
-<h5><span class="section-number">3.3.2.2.3. </span>Quartic Elements<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.2.2.3. </span>Quartic Elements<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id30">
 <a class="reference internal image-reference" href="../../_images/quad_p4_16.png"><img alt="../../_images/quad_p4_16.png" src="../../_images/quad_p4_16.png" style="width: 800px;" /></a>
 <figcaption>
@@ -687,13 +665,13 @@ In addition, QUAD_8 and QUAD_9 elements have four mid-edge nodes, and QUAD_9 add
 </section>
 </section>
 <section id="d-volume-elements">
-<h3><span class="section-number">3.3.3. </span>3D (Volume) Elements<a class="headerlink" href="#d-volume-elements" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.3.3. </span>3D (Volume) Elements<a class="headerlink" href="#d-volume-elements" title="Permalink to this heading">¶</a></h3>
 <p>3-D elements represent a volume in 3-D space, and constitute the cells of a 3-D mesh. CGNS supports four different shapes of 3-D elements - tetrahedra, pyramids, pentahedra, and hexahedra.</p>
 <section id="tetrahedral-elements">
-<span id="unst-tetra"></span><h4><span class="section-number">3.3.3.1. </span>Tetrahedral Elements<a class="headerlink" href="#tetrahedral-elements" title="Permalink to this headline">¶</a></h4>
+<span id="unst-tetra"></span><h4><span class="section-number">3.3.3.1. </span>Tetrahedral Elements<a class="headerlink" href="#tetrahedral-elements" title="Permalink to this heading">¶</a></h4>
 <p>CGNS supports seven types of tetrahedral elements, TETRA_4, TETRA_10, TETRA_16, TETRA_20, TETRA_22, TETRA_34, and TETRA_35. TETRA_4 elements are composed of four nodes located at the four geometric corners of the tetrahedron. TETRA_10 elements have six additional nodes, at the middle of each of the six edges. The cubic forms of tetrahedral elements, TETRA_16 and TETRA_20 contain two interior nodes along each edge, and four interior face nodes in the case of TETRA_20. The quartic forms of tetrahedral elements, TETRA_22, TETRA_34, and TETRA_35 contain three interior nodes along each edge, twelve interior face nodes in the case of TETRA_34, and twelve interior face nodes plus one interior volume node in the case of TETRA_35.</p>
 <section id="id7">
-<h5><span class="section-number">3.3.3.1.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.1.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id32">
 <a class="reference internal image-reference" href="../../_images/tetra_4.png"><img alt="../../_images/tetra_4.png" src="../../_images/tetra_4.png" style="width: 800px;" /></a>
 <figcaption>
@@ -708,7 +686,7 @@ In addition, QUAD_8 and QUAD_9 elements have four mid-edge nodes, and QUAD_9 add
 </figure>
 </section>
 <section id="id8">
-<h5><span class="section-number">3.3.3.1.2. </span>Cubic Elements<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.1.2. </span>Cubic Elements<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id34">
 <a class="reference internal image-reference" href="../../_images/tetra_16.png"><img alt="../../_images/tetra_16.png" src="../../_images/tetra_16.png" style="width: 800px;" /></a>
 <figcaption>
@@ -724,10 +702,6 @@ In addition, QUAD_8 and QUAD_9 elements have four mid-edge nodes, and QUAD_9 add
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 6%" />
-<col style="width: 94%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>N1,…,N20</p></td>
 <td><p>Grid point identification number. Integer ≥ 0 or blank, and no two values may be the same. Grid points N1 … N3 are in consecutive order about one trilateral face.
@@ -745,7 +719,7 @@ with a vector from its first to third node, is oriented outward.</p></td>
 </div>
 </section>
 <section id="id9">
-<h5><span class="section-number">3.3.3.1.3. </span>Quartic Elements<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.1.3. </span>Quartic Elements<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id36">
 <a class="reference internal image-reference" href="../../_images/tetra_22.png"><img alt="../../_images/tetra_22.png" src="../../_images/tetra_22.png" style="width: 800px;" /></a>
 <figcaption>
@@ -767,10 +741,6 @@ with a vector from its first to third node, is oriented outward.</p></td>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 8%" />
-<col style="width: 92%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>N23</p></td>
 <td><p>Is located at the centroid of sub-triangle N1-N12-N6.</p></td>
@@ -817,10 +787,10 @@ with a vector from its first to third node, is oriented outward.</p></td>
 </section>
 </section>
 <section id="pyramid-elements">
-<span id="unst-pyra"></span><h4><span class="section-number">3.3.3.2. </span>Pyramid Elements<a class="headerlink" href="#pyramid-elements" title="Permalink to this headline">¶</a></h4>
-<p>CGNS supports nine types of pyramid elements, PYRA_5, PYRA_13, PYRA_14, PYRA_21, PYRA_29, PYRA_30, PYRA_P4_29, PYRA_50, and PYRA_55. PYRA_5 elements are composed of five nodes located at the five geometric corners of the pyramid. In addition, PYRA_13 and PYRA_14 elements have a node at the middle of each of the eight edges; PYRA_14 adds a node at the middle of the quadrilateral face. The cubic forms of pyramid elements, PYRA_21, PYRA_29, and PYRA_30 contain two interior nodes along each edge, eight interior face nodes in the case of PYRA_29 and PYRA_30, and an additonal interior volume node for PYRA_30. The quartic forms of pyramid elements, PYRA_P4_29, PYRA_50, and PYRA_55 contain three interior nodes along each edge, 21 interior face nodes in the case of PYRA_50, and 21 interior face nodes and five additonal interior volume nodes for PYRA_55.</p>
+<span id="unst-pyra"></span><h4><span class="section-number">3.3.3.2. </span>Pyramid Elements<a class="headerlink" href="#pyramid-elements" title="Permalink to this heading">¶</a></h4>
+<p>CGNS supports nine types of pyramid elements, PYRA_5, PYRA_13, PYRA_14, PYRA_21, PYRA_29, PYRA_30, PYRA_P4_29, PYRA_50, and PYRA_55. PYRA_5 elements are composed of five nodes located at the five geometric corners of the pyramid. In addition, PYRA_13 and PYRA_14 elements have a node at the middle of each of the eight edges; PYRA_14 adds a node at the middle of the quadrilateral face. The cubic forms of pyramid elements, PYRA_21, PYRA_29, and PYRA_30 contain two interior nodes along each edge, eight interior face nodes in the case of PYRA_29 and PYRA_30, and an additional interior volume node for PYRA_30. The quartic forms of pyramid elements, PYRA_P4_29, PYRA_50, and PYRA_55 contain three interior nodes along each edge, 21 interior face nodes in the case of PYRA_50, and 21 interior face nodes and five additional interior volume nodes for PYRA_55.</p>
 <section id="id10">
-<h5><span class="section-number">3.3.3.2.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.2.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id39">
 <a class="reference internal image-reference" href="../../_images/pyra_5.png"><img alt="../../_images/pyra_5.png" src="../../_images/pyra_5.png" style="width: 800px;" /></a>
 <figcaption>
@@ -841,7 +811,7 @@ with a vector from its first to third node, is oriented outward.</p></td>
 </figure>
 </section>
 <section id="id11">
-<h5><span class="section-number">3.3.3.2.2. </span>Cubic Elements<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.2.2. </span>Cubic Elements<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id42">
 <a class="reference internal image-reference" href="../../_images/pyra_21.png"><img alt="../../_images/pyra_21.png" src="../../_images/pyra_21.png" style="width: 800px;" /></a>
 <figcaption>
@@ -863,10 +833,6 @@ with a vector from its first to third node, is oriented outward.</p></td>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 6%" />
-<col style="width: 94%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>N1,…,N30</p></td>
 <td><p>Grid point identification number. Integer ≥ 0 or blank, and no two values may be the same. Grid points N1 … N4 are in consecutive order about the quadrilateral face.
@@ -884,7 +850,7 @@ with a vector from its first to third node, is oriented outward.</p></td>
 </div>
 </section>
 <section id="id12">
-<h5><span class="section-number">3.3.3.2.3. </span>Quartic Elements<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.2.3. </span>Quartic Elements<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id45">
 <a class="reference internal image-reference" href="../../_images/pyra_p4_29.png"><img alt="../../_images/pyra_p4_29.png" src="../../_images/pyra_p4_29.png" style="width: 800px;" /></a>
 <figcaption>
@@ -906,10 +872,6 @@ with a vector from its first to third node, is oriented outward.</p></td>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 6%" />
-<col style="width: 94%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>N39</p></td>
 <td><p>Is located at the centroid of sub-triangle N1-N7-N19.</p></td>
@@ -972,10 +934,10 @@ with a vector from its first to third node, is oriented outward.</p></td>
 </section>
 </section>
 <section id="pentahedral-elements">
-<span id="unst-penta"></span><h4><span class="section-number">3.3.3.3. </span>Pentahedral Elements<a class="headerlink" href="#pentahedral-elements" title="Permalink to this headline">¶</a></h4>
-<p>CGNS supports nine types of pentahedral elements, PENTA_6, PENTA_15, PENTA_18, PENTA_24, PENTA_38, PENTA_40, PENTA_33, PENTA_66, and PENTA_75. PENTA_6 elements are composed of six nodes located at the six geometric corners of the pentahedron. In addition, PENTA_15 and PENTA_18 elements have a node at the middle of each of the nine edges; PENTA_18 adds a node at the middle of each of the three quadrilateral faces. The cubic forms of the pentahedral elements, PENTA_24, PENTA_38, and PENTA_40 contain two interior nodes along each edge, fourteen interior face nodes in the case of PENTA_38 and PENTA_40, and an additonal two interior volume nodes for PENTA_40. The quartic forms of the pentahedral elements, PENTA_33, PENTA_66, and PENTA_75 contain three interior nodes along each edge, 33 interior face nodes in the case of PENTA_66, and 33 interior face nodes and an additonal nine interior volume nodes for PENTA_75.</p>
+<span id="unst-penta"></span><h4><span class="section-number">3.3.3.3. </span>Pentahedral Elements<a class="headerlink" href="#pentahedral-elements" title="Permalink to this heading">¶</a></h4>
+<p>CGNS supports nine types of pentahedral elements, PENTA_6, PENTA_15, PENTA_18, PENTA_24, PENTA_38, PENTA_40, PENTA_33, PENTA_66, and PENTA_75. PENTA_6 elements are composed of six nodes located at the six geometric corners of the pentahedron. In addition, PENTA_15 and PENTA_18 elements have a node at the middle of each of the nine edges; PENTA_18 adds a node at the middle of each of the three quadrilateral faces. The cubic forms of the pentahedral elements, PENTA_24, PENTA_38, and PENTA_40 contain two interior nodes along each edge, fourteen interior face nodes in the case of PENTA_38 and PENTA_40, and an additional two interior volume nodes for PENTA_40. The quartic forms of the pentahedral elements, PENTA_33, PENTA_66, and PENTA_75 contain three interior nodes along each edge, 33 interior face nodes in the case of PENTA_66, and 33 interior face nodes and an additional nine interior volume nodes for PENTA_75.</p>
 <section id="id13">
-<h5><span class="section-number">3.3.3.3.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.3.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id48">
 <a class="reference internal image-reference" href="../../_images/penta_6.png"><img alt="../../_images/penta_6.png" src="../../_images/penta_6.png" style="width: 800px;" /></a>
 <figcaption>
@@ -996,7 +958,7 @@ with a vector from its first to third node, is oriented outward.</p></td>
 </figure>
 </section>
 <section id="id14">
-<h5><span class="section-number">3.3.3.3.2. </span>Cubic Elements<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.3.2. </span>Cubic Elements<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id51">
 <a class="reference internal image-reference" href="../../_images/penta_24.png"><img alt="../../_images/penta_24.png" src="../../_images/penta_24.png" style="width: 800px;" /></a>
 <figcaption>
@@ -1018,10 +980,6 @@ with a vector from its first to third node, is oriented outward.</p></td>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 6%" />
-<col style="width: 94%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>N1,…,N40</p></td>
 <td><p>Grid point identification number. Integer ≥ 0 or blank, and no two values may be the same. Grid points N1 … N3 are in consecutive order about one trilateral face.
@@ -1044,7 +1002,7 @@ Grid points N4 … N6 are in order in the same direction around the opposite tri
 </div>
 </section>
 <section id="id15">
-<h5><span class="section-number">3.3.3.3.3. </span>Quartic Elements<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.3.3. </span>Quartic Elements<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id54">
 <a class="reference internal image-reference" href="../../_images/penta_33.png"><img alt="../../_images/penta_33.png" src="../../_images/penta_33.png" style="width: 800px;" /></a>
 <figcaption>
@@ -1066,10 +1024,6 @@ Grid points N4 … N6 are in order in the same direction around the opposite tri
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 8%" />
-<col style="width: 92%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>N34</p></td>
 <td><p>Is located at the centroid of sub-triangle N1-N14-N8.</p></td>
@@ -1126,10 +1080,10 @@ Grid points N4 … N6 are in order in the same direction around the opposite tri
 </section>
 </section>
 <section id="hexahedral-elements">
-<span id="unst-hexa"></span><h4><span class="section-number">3.3.3.4. </span>Hexahedral Elements<a class="headerlink" href="#hexahedral-elements" title="Permalink to this headline">¶</a></h4>
-<p>CGNS supports nine types of hexahedral elements, HEXA_8, HEXA_20, HEXA_27, HEXA_32, HEXA_56, HEXA_64, HEXA_44, HEXA_98, and HEXA_125. HEXA_8 elements are composed of eight nodes located at the eight geometric corners of the hexahedron. In addition, HEXA_20 and HEXA_27 elements have a node at the middle of each of the twelve edges; HEXA_27 adds a node at the middle of each of the six faces, and one at the cell center. The cubic forms of the hexahedral elements, HEXA_32, HEXA_56, and HEXA_64 contain two interior nodes along each edge, 24 interior face nodes in the case of HEXA_56 and HEXA_64, and an additonal eight interior volume nodes for HEXA_64. The quartic forms of the hexahedral elements, HEXA_44, HEXA_98, and HEXA_125 contain three interior nodes along each edge, 54 interior face nodes in the case of HEXA_98, and 54 interior face nodes and an additonal 27 interior volume nodes for HEXA_125.</p>
+<span id="unst-hexa"></span><h4><span class="section-number">3.3.3.4. </span>Hexahedral Elements<a class="headerlink" href="#hexahedral-elements" title="Permalink to this heading">¶</a></h4>
+<p>CGNS supports nine types of hexahedral elements, HEXA_8, HEXA_20, HEXA_27, HEXA_32, HEXA_56, HEXA_64, HEXA_44, HEXA_98, and HEXA_125. HEXA_8 elements are composed of eight nodes located at the eight geometric corners of the hexahedron. In addition, HEXA_20 and HEXA_27 elements have a node at the middle of each of the twelve edges; HEXA_27 adds a node at the middle of each of the six faces, and one at the cell center. The cubic forms of the hexahedral elements, HEXA_32, HEXA_56, and HEXA_64 contain two interior nodes along each edge, 24 interior face nodes in the case of HEXA_56 and HEXA_64, and an additional eight interior volume nodes for HEXA_64. The quartic forms of the hexahedral elements, HEXA_44, HEXA_98, and HEXA_125 contain three interior nodes along each edge, 54 interior face nodes in the case of HEXA_98, and 54 interior face nodes and an additional 27 interior volume nodes for HEXA_125.</p>
 <section id="id16">
-<h5><span class="section-number">3.3.3.4.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.4.1. </span>Linear and Quadratic Elements<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id57">
 <a class="reference internal image-reference" href="../../_images/hexa_8.png"><img alt="../../_images/hexa_8.png" src="../../_images/hexa_8.png" style="width: 800px;" /></a>
 <figcaption>
@@ -1154,7 +1108,7 @@ Grid points N4 … N6 are in order in the same direction around the opposite tri
 </div>
 </section>
 <section id="id17">
-<h5><span class="section-number">3.3.3.4.2. </span>Cubic Elements<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.4.2. </span>Cubic Elements<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center" id="id60">
 <a class="reference internal image-reference" href="../../_images/hexa_32.png"><img alt="../../_images/hexa_32.png" src="../../_images/hexa_32.png" style="width: 800px;" /></a>
 <figcaption>
@@ -1183,10 +1137,6 @@ Grid points N4 … N6 are in order in the same direction around the opposite tri
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 6%" />
-<col style="width: 94%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>N1,…,N64</p></td>
 <td><p>Grid point identification number. Integer ≥ 0 or blank, and no two values may be the same. Grid points N1 … N4 are in consecutive order about one quadrilateral face.
@@ -1203,7 +1153,7 @@ Grid points N5 … N8 are in order in the same direction around the opposite qua
 </div>
 </section>
 <section id="id18">
-<h5><span class="section-number">3.3.3.4.3. </span>Quartic Elements<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h5>
+<h5><span class="section-number">3.3.3.4.3. </span>Quartic Elements<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h5>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/hexa_44.png"><img alt="../../_images/hexa_44.png" src="../../_images/hexa_44.png" style="width: 800px;" /></a>
 </figure>
@@ -1226,7 +1176,7 @@ Grid points N5 … N8 are in order in the same direction around the opposite qua
 </section>
 </section>
 <section id="unstructured-grid-example">
-<h3><span class="section-number">3.3.4. </span>Unstructured Grid Example<a class="headerlink" href="#unstructured-grid-example" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.3.4. </span>Unstructured Grid Example<a class="headerlink" href="#unstructured-grid-example" title="Permalink to this heading">¶</a></h3>
 <p>Consider an unstructured zone in the shape of a cube, with each edge of the zone having three nodes. The resulting unstructured grid has a total of 27 nodes, as illustrated in the exploded figure below.</p>
 <figure class="align-center" id="id64">
 <a class="reference internal image-reference" href="../../_images/unst_example.gif"><img alt="../../_images/unst_example.gif" src="../../_images/unst_example.gif" style="width: 411px;" /></a>
@@ -1235,10 +1185,10 @@ Grid points N5 … N8 are in order in the same direction around the opposite qua
 </figcaption>
 </figure>
 <p>This zone contains eight hexahedral cells, numbered 1 to 8, and the cell connectivity is:</p>
-<table class="colwidths-given docutils align-center">
+<table class="docutils align-center">
 <colgroup>
-<col style="width: 38%" />
-<col style="width: 62%" />
+<col style="width: 38.1%" />
+<col style="width: 61.9%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Element No.</p></th>
@@ -1268,13 +1218,13 @@ Grid points N5 … N8 are in order in the same direction around the opposite qua
 </tbody>
 </table>
 <p>In addition to the cells, the boundary faces could also be added to the element definition of this unstructured zone. There are 24 boundary faces in this zone, corresponding to element numbers 9 to 32. Each boundary face is of type QUAD_4. The table below shows the element connectivity of each boundary face, as well as the element number and face number of its parent cell.</p>
-<table class="colwidths-given docutils align-center">
+<table class="docutils align-center">
 <colgroup>
-<col style="width: 10%" />
-<col style="width: 18%" />
-<col style="width: 36%" />
-<col style="width: 18%" />
-<col style="width: 18%" />
+<col style="width: 10.0%" />
+<col style="width: 18.0%" />
+<col style="width: 36.0%" />
+<col style="width: 18.0%" />
+<col style="width: 18.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Face</p></th>
@@ -1480,7 +1430,7 @@ Grid points N5 … N8 are in order in the same direction around the opposite qua
 </table>
 </section>
 <section id="multizone-interfaces">
-<span id="interfaces"></span><h3><span class="section-number">3.3.5. </span>Multizone interfaces<a class="headerlink" href="#multizone-interfaces" title="Permalink to this headline">¶</a></h3>
+<span id="interfaces"></span><h3><span class="section-number">3.3.5. </span>Multizone interfaces<a class="headerlink" href="#multizone-interfaces" title="Permalink to this heading">¶</a></h3>
 <figure class="align-center" id="id65">
 <a class="reference internal image-reference" href="../../_images/interface1.gif"><img alt="../../_images/interface1.gif" src="../../_images/interface1.gif" style="width: 500px;" /></a>
 <figcaption>

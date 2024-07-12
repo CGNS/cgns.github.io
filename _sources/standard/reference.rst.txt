@@ -6,7 +6,7 @@ Standardization bodies
 
 .. _AIAAPractice:
 
-The AIAA recommanded practice
+The AIAA recommended practice
 -----------------------------
 
 As part of its role as a sub-committee of

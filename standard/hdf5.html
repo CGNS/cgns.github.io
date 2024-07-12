@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   
   <!-- Licensed under the Apache 2.0 License -->
@@ -16,16 +15,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>CGNS/HDF5 - An HPC implementation &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/guzzle.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/filemap.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/math_override.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/midlevel.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/CGNS_empty.ico"/>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/guzzle.css?v=ee5bbeb1" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/filemap.css?v=2c72f61b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/math_override.css?v=97141bf4" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/midlevel.css?v=593b94c8" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=117e2fac"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="icon" href="../_static/CGNS_empty.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="CGNS/Python - A Python implementation" href="python.html" />
@@ -151,17 +149,17 @@
           <div class="document clearer body">
             
   <section id="cgns-hdf5-an-hpc-implementation">
-<span id="hdf5implementation"></span><h1>CGNS/HDF5 - An HPC implementation<a class="headerlink" href="#cgns-hdf5-an-hpc-implementation" title="Permalink to this headline">¶</a></h1>
+<span id="hdf5implementation"></span><h1>CGNS/HDF5 - An HPC implementation<a class="headerlink" href="#cgns-hdf5-an-hpc-implementation" title="Permalink to this heading">¶</a></h1>
 <p>This section specifies the exact manner in which, under CGNS conventions,
 data structures (the SIDS) are to be stored in, i.e., mapped onto, the file structure provided by the HDF database manager.
 Adherence to the mapping conventions guarantees uniform meaning and location of CFD data within HDF files, and thereby allows the construction of universal software to read and write the data.</p>
 <section id="implementation-summary">
-<h2>Implementation Summary<a class="headerlink" href="#implementation-summary" title="Permalink to this headline">¶</a></h2>
+<h2>Implementation Summary<a class="headerlink" href="#implementation-summary" title="Permalink to this heading">¶</a></h2>
 <p>The purpose of the current document is to describe the way in which CFD data is to be represented in an HDF5 data tree. To do this, it is necessary to first describe the HDF5 data structure itself in some detail. Therefore, a conceptual summary of HDF5 is given here in order to make the current document relatively independent, and to allow the reader to focus on those aspects of HDF5 which are essential to understanding the file mapping.</p>
-<p>Any HDF5 file with a conformant mapping is <em>CGNS/HDF5</em> compliant. The mapping has been made using a per-node basis. Instead of having a new mapping dedicated to HDF5, we have made a mapping from the ADF nodes to a set of HDF5 groups. While this is not an optimal mapping, the use of such an HDF5 node allows us to re-use the ADF API without change.</p>
+<p>Any HDF5 file with a conformant mapping is <em>CGNS/HDF5</em> compliant. The mapping has been made using a per-node basis. Instead of having a new mapping dedicated to HDF5, we have made a mapping from the ADF nodes to a set of HDF5 groups. While this is not an optimal mapping, the use of such an HDF5 node allows us to reuse the ADF API without change.</p>
 <p>The <a class="reference external" href="https://portal.hdfgroup.org/display/HDF5/HDF5">HDF5 documentation</a> should be used as the authoritative references to resolve any issues not covered by this summary.</p>
 <section id="general-description-of-hdf5">
-<h3>General Description of HDF5<a class="headerlink" href="#general-description-of-hdf5" title="Permalink to this headline">¶</a></h3>
+<h3>General Description of HDF5<a class="headerlink" href="#general-description-of-hdf5" title="Permalink to this heading">¶</a></h3>
 <p>The HDF5 library provides CGNS with a low level storage system.
 This library is developed and maintained by the <a class="reference external" href="http://www.ncsa.illinois.edu/">National Center for Supercomputing Applications</a>  at the University of Illinois at Urbana-Champaign.
 It offers a free storage system, with support for a very large number of platforms used in the scientific world. This system is in charge of all physical features such as storage, compression, virtual access to data and many other services also useful for the CGNS users.</p>
@@ -169,23 +167,18 @@ It offers a free storage system, with support for a very large number of platfor
 <p>Refer to the <a class="reference external" href="https://www.hdfgroup.org/solutions/hdf5/">HDF5 web site</a> for further information about HDF5.</p>
 </section>
 <section id="dedicated-hdf5-structures">
-<h3>Dedicated HDF5 Structures<a class="headerlink" href="#dedicated-hdf5-structures" title="Permalink to this headline">¶</a></h3>
-<p>The <em>CGNS node</em> is an HDF5 group. It contains attributes, an optional dataset and optional child groups. This structure is required and can be extended by other implementors as long as the following requirements are fullfilled.</p>
+<h3>Dedicated HDF5 Structures<a class="headerlink" href="#dedicated-hdf5-structures" title="Permalink to this heading">¶</a></h3>
+<p>The <em>CGNS node</em> is an HDF5 group. It contains attributes, an optional dataset and optional child groups. This structure is required and can be extended by other implementers as long as the following requirements are fulfilled.</p>
 <p>In a CGNS tree, most of the nodes are <em>normal</em> nodes. These nodes can optionally contain data and have other nodes as children.</p>
-<p>There are special nodes, such as the root node and the nodes managing the links. These special link structures use the HDF5 mount system. It is not necessary for either the MLL or SLL users to understand the HDF5 mount system, but it should be understood by SLL implementors.</p>
+<p>There are special nodes, such as the root node and the nodes managing the links. These special link structures use the HDF5 mount system. It is not necessary for either the MLL or SLL users to understand the HDF5 mount system, but it should be understood by SLL implementers.</p>
 <section id="the-cgns-node-mapping">
-<h4>The CGNS Node Mapping<a class="headerlink" href="#the-cgns-node-mapping" title="Permalink to this headline">¶</a></h4>
+<h4>The CGNS Node Mapping<a class="headerlink" href="#the-cgns-node-mapping" title="Permalink to this heading">¶</a></h4>
 <p>The <em>CGNS node</em> uses <em>groups</em> and <em>attributes</em> elements of HDF5.
 A basic CGNS node is composed of elements listed in the following table.
 The attribute names have been enclosed in square brackets, because the SLL uses private attributes with a leading <em>space</em> character.
 These brackets are not part of the names.</p>
 <table class="docutils align-center" id="id12">
 <caption><span class="caption-text"><strong>Basic Node</strong></span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 43%" />
-<col style="width: 23%" />
-<col style="width: 34%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="3"><p>GROUP</p></th>
 </tr>
@@ -219,11 +212,6 @@ In the case of a node without data (i.e. <code class="code docutils literal notr
 The name of the root node is <code class="docutils literal notranslate"><span class="pre">[HDF5</span> <span class="pre">MotherNode]</span></code>, its label is <code class="docutils literal notranslate"><span class="pre">[Root</span> <span class="pre">Node</span> <span class="pre">of</span> <span class="pre">HDF5</span> <span class="pre">File]</span></code>, type is <code class="docutils literal notranslate"><span class="pre">MT</span></code>.</p>
 <table class="docutils align-center" id="id13">
 <caption><span class="caption-text"><strong>Root Node</strong></span><a class="headerlink" href="#id13" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 46%" />
-<col style="width: 26%" />
-<col style="width: 28%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>GROUP</p></th>
 <th class="head" colspan="2"><p>[/]</p></th>
@@ -242,17 +230,12 @@ The name of the root node is <code class="docutils literal notranslate"><span cl
 </table>
 <p>The node hosting the link entries is a special node named <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">mount]</span></code> without attributes nor data.
 This group should be a child of the root node, its absolute path is <code class="docutils literal notranslate"><span class="pre">[/</span> <span class="pre">mount]</span></code>.
-The group <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">mount]</span></code> contains one group for each mounted file refered to by a link.
+The group <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">mount]</span></code> contains one group for each mounted file referred to by a link.
 Each entry has the attributes described in the table below.
 The link node itself is a group with the special name <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">link]</span></code>.
 This implementation is discussed further in the section describing the <a class="reference internal" href="#link-mechanism"><span class="std std-ref">link mechanism</span></a>.</p>
 <table class="docutils align-center" id="id14">
 <caption><span class="caption-text"><strong>Link Node</strong></span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 42%" />
-<col style="width: 24%" />
-<col style="width: 34%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>GROUP</p></th>
 <th class="head" colspan="2"><p><strong>[/ mount/ *]</strong></p></th>
@@ -271,32 +254,27 @@ This implementation is discussed further in the section describing the <a class=
 </table>
 </section>
 <section id="the-node-id">
-<h4>The Node ID<a class="headerlink" href="#the-node-id" title="Permalink to this headline">¶</a></h4>
+<h4>The Node ID<a class="headerlink" href="#the-node-id" title="Permalink to this heading">¶</a></h4>
 <p>The node ID is a unique identifier assigned to each existing node by HDF5 when the file containing it is opened,
 and to new nodes as they are created. SLL inquiries generally return node IDs as a result and accept node IDs as input.
 By building a table of IDs, calling software can subsequently access specific nodes without further search.
 The Node ID is real and is not under user control, its lifetime is ended by the closing of the HDF5 file.</p>
 </section>
 <section id="the-node-name">
-<h4>The Node Name<a class="headerlink" href="#the-node-name" title="Permalink to this headline">¶</a></h4>
+<h4>The Node Name<a class="headerlink" href="#the-node-name" title="Permalink to this heading">¶</a></h4>
 <p>The node Name is a 32-byte character field which is user controllable.
 Its general use is to distinguish among the children of a given node; consequently, no two children of the same parent may have the same Name.
 Constraints related to the node name are detailed in the <em>General CGNS SLL Mapping Concepts</em> section, under <a class="reference internal" href="#hdf5nodename"><span class="std std-ref">Node Name</span></a>.</p>
 </section>
 <section id="the-label">
-<h4>The Label<a class="headerlink" href="#the-label" title="Permalink to this headline">¶</a></h4>
+<h4>The Label<a class="headerlink" href="#the-label" title="Permalink to this heading">¶</a></h4>
 <p>The Label is a 32-byte character field which is user controllable. SLL assigns no formal role to the Label, but the intent was to identify the structure of the included data. It is common for the various children of a single parent to store different instances of the same structure. Therefore, there is no prohibition against more than one child of the same parent having the same Label.</p>
 </section>
 <section id="the-data-type">
-<h4>The Data Type<a class="headerlink" href="#the-data-type" title="Permalink to this headline">¶</a></h4>
+<h4>The Data Type<a class="headerlink" href="#the-data-type" title="Permalink to this heading">¶</a></h4>
 <p>The Data Type is a 32-byte character field which specifies the type and precision of any data which is stored in the data field. Types provided by HDF5 are:</p>
 <table class="docutils align-default" id="id15">
 <caption><span class="caption-text"><strong>Data Types</strong></span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 42%" />
-<col style="width: 20%" />
-<col style="width: 38%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data Type</p></th>
 <th class="head"><p>Notation</p></th>
@@ -337,11 +315,11 @@ Constraints related to the node name are detailed in the <em>General CGNS SLL Ma
 </tr>
 <tr class="row-odd"><td><p>Complex 64</p></td>
 <td><p>X4</p></td>
-<td><p>H5T_COMPOUND <a class="footnote-reference brackets" href="#id3" id="id1">1</a></p></td>
+<td><p>H5T_COMPOUND <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>Complex 128</p></td>
 <td><p>X8</p></td>
-<td><p>H5T_COMPOUND <a class="footnote-reference brackets" href="#id3" id="id2">1</a></p></td>
+<td><p>H5T_COMPOUND <a class="footnote-reference brackets" href="#id3" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Character</p></td>
 <td><p>C1</p></td>
@@ -363,19 +341,17 @@ Constraints related to the node name are detailed in the <em>General CGNS SLL Ma
 <p>There is no mapping to HDF5 MT and LK types, because there is no actual data space associated with the nodes. The type information itself is stored in the node as the strings “MT” and “LK”.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<dl class="footnote brackets">
-<dt class="label" id="id3"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>)</span></dt>
-<dd><p>The types X4 and X8 are not true types in HDF5. They are mapped to H5T_COMPOUND structures to combine the real and imaginary parts. This support is experimental.</p>
-</dd>
-</dl>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>)</span>
+<p>The types X4 and X8 are not true types in HDF5. They are mapped to H5T_COMPOUND structures to combine the real and imaginary parts. This support is experimental.</p>
+</aside>
+</aside>
 </div>
 <p>The data storage format is translated as described below.</p>
 <table class="docutils align-default" id="id16">
 <caption><span class="caption-text"><strong>Native Formats</strong></span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 49%" />
-<col style="width: 51%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Native Format</p></th>
 <th class="head"><p>HDF5 Type</p></th>
@@ -398,19 +374,19 @@ Constraints related to the node name are detailed in the <em>General CGNS SLL Ma
 </table>
 </section>
 <section id="the-number-of-dimensions">
-<h4>The Number of Dimensions<a class="headerlink" href="#the-number-of-dimensions" title="Permalink to this headline">¶</a></h4>
+<h4>The Number of Dimensions<a class="headerlink" href="#the-number-of-dimensions" title="Permalink to this heading">¶</a></h4>
 <p>The Data portion of a node is designed to store multi-dimensional arrays of data, each element of which is presumed to be of the Data Type specified. The Number of Dimensions specifies the number of integers required to reference a single datum within the array.</p>
 </section>
 <section id="the-dimension-values">
-<h4>The Dimension Values<a class="headerlink" href="#the-dimension-values" title="Permalink to this headline">¶</a></h4>
+<h4>The Dimension Values<a class="headerlink" href="#the-dimension-values" title="Permalink to this heading">¶</a></h4>
 <p>The Dimension Values are a list of integers expressing the actual sizes of the stored array in each of the dimensions specified. These dimensions are stored by the <em>dataspace</em> associated with the <em>dataset</em>; no other attributes contains these values.</p>
 </section>
 <section id="the-data">
-<h4>The Data<a class="headerlink" href="#the-data" title="Permalink to this headline">¶</a></h4>
+<h4>The Data<a class="headerlink" href="#the-data" title="Permalink to this heading">¶</a></h4>
 <p>In an HDF5 node, the portion of the node holding the actual stored data array is a <em>dataset</em>.</p>
 </section>
 <section id="the-child-table">
-<h4>The Child Table<a class="headerlink" href="#the-child-table" title="Permalink to this headline">¶</a></h4>
+<h4>The Child Table<a class="headerlink" href="#the-child-table" title="Permalink to this heading">¶</a></h4>
 <p>All groups of the current group are said to be the children of this group, except the groups with a name starting with a space character. Each of these children groups is a <em>normal</em> node (i.e. group).</p>
 <p>Children may be identified by their names and labels, and, thence, by their node IDs once these have been determined.
 HDF5 provides no notion of order among children, but the SLL layer adds a creation order stored in the <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">order]</span></code> attribute. This order is guaranteed to be the same from call to call, even after the file has been closed and re-opened.</p>
@@ -419,7 +395,7 @@ Since calling software must open the file from the root, it presumably cannot ac
 It is the responsibility of the calling software to record the node ID of the parent if this information will be required.</p>
 </section>
 <section id="the-link-mechanism">
-<span id="link-mechanism"></span><h4>The link mechanism<a class="headerlink" href="#the-link-mechanism" title="Permalink to this headline">¶</a></h4>
+<span id="link-mechanism"></span><h4>The link mechanism<a class="headerlink" href="#the-link-mechanism" title="Permalink to this heading">¶</a></h4>
 <p>A <code class="docutils literal notranslate"><span class="pre">LK</span></code> typed node is a link. Such a node refers to another node elsewhere.
 In other words, the <em>link</em> has no child or contents, but is a name of a node somewhere in the current file or in another file.
 The <code class="docutils literal notranslate"><span class="pre">LK</span></code> typed node is said to be the <em>source</em> node, while the node elsewhere is said to be the <em>destination</em> node.
@@ -433,19 +409,19 @@ The file is unmounted if there is no reference to itself.</p>
 </section>
 </section>
 <section id="general-hdf5-mapping-concepts">
-<h2>General HDF5 Mapping Concepts<a class="headerlink" href="#general-hdf5-mapping-concepts" title="Permalink to this headline">¶</a></h2>
+<h2>General HDF5 Mapping Concepts<a class="headerlink" href="#general-hdf5-mapping-concepts" title="Permalink to this heading">¶</a></h2>
 <p>This section describes the general philosophy underlying the use of the HDF5 tree structure by CGNS. The section <a class="reference internal" href="FMM/nodes.html#fmmnodedescriptions"><span class="std std-ref">Detailed CGNS Node Descriptions</span></a> describes the exact conventions for each type of data.</p>
 <p>We first describe the <a class="reference internal" href="#hdfelements"><span class="std std-ref">roles of the various HDF5 elements</span></a> (i.e. groups or attributes) as they are specifically applied within CGNS, followed by a description of <a class="reference internal" href="#internal"><span class="std std-ref">the overall layout</span></a> of the tree structure itself.</p>
 <section id="use-of-hdf5-elements-in-cgns">
-<span id="hdfelements"></span><h3>Use of HDF5 Elements in CGNS<a class="headerlink" href="#use-of-hdf5-elements-in-cgns" title="Permalink to this headline">¶</a></h3>
+<span id="hdfelements"></span><h3>Use of HDF5 Elements in CGNS<a class="headerlink" href="#use-of-hdf5-elements-in-cgns" title="Permalink to this heading">¶</a></h3>
 <p>We previously described the general role of each of the HDF5 elements without reference to CFD. Here we note any additional information regarding their use within CGNS.</p>
 <p>We first describe attributes recognized by both HDF5 and CGNS. We then describe certain elements which are derived from context, i.e., which the node possesses by virtue of its location within a CGNS database. These notions, namely, <a class="reference internal" href="#hdf5cardinality"><span class="std std-ref">Cardinality</span></a>, <a class="reference internal" href="#hdf5parameters"><span class="std std-ref">Parameters</span></a>, and <a class="reference internal" href="#hdf5functions"><span class="std std-ref">Functions</span></a>, are unique to CGNS.</p>
 <section id="id4">
-<h4>The Node ID<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<h4>The Node ID<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h4>
 <p>The Node ID is completely controlled by HDF5, and thus its role is exactly the same for CGNS as it is for HDF5. CGNS software accesses the Node ID only through calls to HDF5. HDF5 itself guarantees that Node IDs are unique and constant within any HDF5 file (or collection of files) while the file(s) are open.</p>
 </section>
 <section id="hdf5nodename">
-<span id="id5"></span><h4>The Node Name<a class="headerlink" href="#hdf5nodename" title="Permalink to this headline">¶</a></h4>
+<span id="id5"></span><h4>The Node Name<a class="headerlink" href="#hdf5nodename" title="Permalink to this heading">¶</a></h4>
 <p>In CGNS, the Name may be left to the choice of the user, or it may be specified by the <a class="reference internal" href="SIDS/CGNS_SIDS.html#cgns-sids"><span class="std std-ref">SIDS</span></a>.
 At the levels of the tree nearest the root, the (end-)user is free to set the Name to distinguish among like objects in the case at hand.
 For example, in a multizone problem, nodes associated with different zones might be named <code class="docutils literal notranslate"><span class="pre">&quot;UnderLeftWing&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;AboveForwardFuselage&quot;</span></code>.
@@ -463,7 +439,7 @@ In this case any suitable name can be used, but there is no guarantee of proper 
 <p>A CGNS Name can contain any printable ASCII character except the <em>slash</em> “/” and the <em>dot</em> “.” when this dot is the first character of the name.</p>
 </section>
 <section id="id6">
-<h4>The Label<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<h4>The Label<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h4>
 <p>Within CGNS, nearly all labels reflect C-style type definitions (“typedefs”) specified by the SIDS, and end in the characters <code class="docutils literal notranslate"><span class="pre">&quot;_t&quot;</span></code>.
 Some “Leaf” nodes (i.e. nodes that have no children) do not represent higher level CGNS structures and therefore have labels that do not follow the <code class="docutils literal notranslate"><span class="pre">&quot;_t&quot;</span></code> convention.
 At this writing, all such nodes have the type <code class="docutils literal notranslate"><span class="pre">int[]</span></code>, i.e., integer array, a type already recognized in C, for which a separate type definition would be artificial.
@@ -474,59 +450,59 @@ Such nodes are generally located by the software through their names, which are 
 For example, the first default Name for a node of type <code class="docutils literal notranslate"><span class="pre">Zone_t</span></code> will be <code class="docutils literal notranslate"><span class="pre">&quot;Zone1&quot;</span></code>; the second will be <code class="docutils literal notranslate"><span class="pre">&quot;Zone2&quot;</span></code>; and so on.</p>
 </section>
 <section id="id7">
-<h4>The Data Type<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<h4>The Data Type<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h4>
 <p>Data Types are completely specified by the file mapping.
 Although HDF5 provides a number of types, in CGNS the only types used are <code class="code docutils literal notranslate"><span class="pre">MT</span></code> (No Data), <code class="code docutils literal notranslate"><span class="pre">I4</span></code> (Integer), <code class="code docutils literal notranslate"><span class="pre">R4</span></code> and <code class="code docutils literal notranslate"><span class="pre">R8</span></code> (Real), <code class="code docutils literal notranslate"><span class="pre">X4</span></code> and <code class="code docutils literal notranslate"><span class="pre">X8</span></code> (Complex), <code class="code docutils literal notranslate"><span class="pre">C1</span></code> (Character), and <code class="code docutils literal notranslate"><span class="pre">LK</span></code> (Link).</p>
 <p>The specification of data types within the File Mapping allows for the probability that files written under different circumstances may differ in precision. The issue is complicated by the ability of HDF5 to sense the capabilities of the platform on which it is running and interpret or record data accordingly.
 The general rule is that, although the user of HDF5 can specify the precision in which it is desired to read or write the data, HDF5 knows both the precision available at the source and the precision acceptable to the destination and will mitigate accordingly.
-Thus to specify the precison of real data as <code class="code docutils literal notranslate"><span class="pre">R4</span></code>, for example, has no meaning unless both <code class="code docutils literal notranslate"><span class="pre">R4</span></code> and <code class="code docutils literal notranslate"><span class="pre">R8</span></code> are available.
+Thus to specify the precision of real data as <code class="code docutils literal notranslate"><span class="pre">R4</span></code>, for example, has no meaning unless both <code class="code docutils literal notranslate"><span class="pre">R4</span></code> and <code class="code docutils literal notranslate"><span class="pre">R8</span></code> are available.
 Therefore, the generic specification <code class="docutils literal notranslate"><span class="pre">&quot;DataType&quot;</span></code> is used to allow for all possibilities.</p>
 <p>For all integer data specified by the SIDS, <code class="code docutils literal notranslate"><span class="pre">I4</span></code> provides sufficient precision.</p>
 </section>
 <section id="id8">
-<h4>The Number of Dimensions<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<h4>The Number of Dimensions<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h4>
 <p>Whenever data is stored at a node, it is in the form of a single array of elements of a single date type. Insofar as possible, the dimension specified by CGNS is the natural underlying dimension; for example, a rectangular array of pressures is stored with dimension equal to the physical dimension of the problem.</p>
 <p>There are situations in which this representation is not feasible. For instance, a list of points which do not form a rectangular array in physical space may be compacted into a one-dimensional array in HDF5.</p>
 <p>Frequently the data is of type <code class="code docutils literal notranslate"><span class="pre">C1</span></code> (character data).
 In some cases, the data holds additional information in the form of a name specified by the SIDS, and in some cases holds user comment. All such data is generally represented as a one-dimensional array (or list) of characters.</p>
 </section>
 <section id="id9">
-<h4>The Dimension Values<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<h4>The Dimension Values<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h4>
 <p>These are used exactly as specified by HDF5. In the case of rectangular arrays of physical data, the dimension values are set to the actual sizes in physical space. Note that these sizes often depend on whether the values are associated with grid nodes, cell centers or other physical locations with respect to the grid. In any event, they refer to the amount of data actually stored, not to any larger array from which it may have been extracted.</p>
 <p>In the case of list data, the dimension value is the length of the list. Lists of characters may contain termination bytes such as <code class="docutils literal notranslate"><span class="pre">&quot;\n&quot;</span></code>; by this means an entire document can be stored in the data field.</p>
 </section>
 <section id="id10">
-<h4>The Data<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<h4>The Data<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h4>
 <p>CGNS imposes no conventions on the data itself beyond those specified by HDF5.
 Note that it is a responsibility of the CGNS software to ensure that the amount and type of stored data agrees with the specification of the data type, number of dimensions, and dimension values.</p>
 </section>
 <section id="id11">
-<h4>The Child Table<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<h4>The Child Table<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h4>
 <p>The Child Table is completely controlled by HDF5, and thus its role is exactly the same for CGNS as it is for HDF5. CGNS software accesses and modifies the child table only through calls to HDF5.</p>
 <p>In addition to the meaning of attributes of individual HDF5 nodes, the File Mapping specifies the relations between nodes in a CGNS database. Consequently, the File Mapping determines what kinds of nodes will lie in the child table.</p>
-<p>It is important to reemphasize that HDF5 provides no notion of order among children. This means children can be identified only by their names, labels and system-provided node IDs. In particular, the order of a list of children returned by HDF5 has nothing to do with the order in which they were inserted in the file. However, the order returned is consistent from call to call provided the file has not been closed and the node structure has not been modifed.</p>
+<p>It is important to reemphasize that HDF5 provides no notion of order among children. This means children can be identified only by their names, labels and system-provided node IDs. In particular, the order of a list of children returned by HDF5 has nothing to do with the order in which they were inserted in the file. However, the order returned is consistent from call to call provided the file has not been closed and the node structure has not been modified.</p>
 </section>
 <section id="cardinality">
-<span id="hdf5cardinality"></span><h4>Cardinality<a class="headerlink" href="#cardinality" title="Permalink to this headline">¶</a></h4>
+<span id="hdf5cardinality"></span><h4>Cardinality<a class="headerlink" href="#cardinality" title="Permalink to this heading">¶</a></h4>
 <p>The <em>cardinality</em> of a CGNS node is the number of nodes of the same label permitted at one point in the tree, i.e., as children of the same parent. It consists of both lower and upper limits.</p>
 <p>Since the notion of a CGNS database allows for work in progress, the lower limit is generally zero (although the database may be of little use until certain nodes are filled). The upper limit is usually either one or many (N).</p>
 </section>
 <section id="parameters">
-<span id="hdf5parameters"></span><h4>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h4>
+<span id="hdf5parameters"></span><h4>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading">¶</a></h4>
 <p>CGNS relies on the fact that SLL nodes cannot be found except by following the pointers from their parents. This means that software accessing a node has had an opportunity to note all the data above that node in the tree. Therefore, nodes do not repeat within themselves information which is necessary for their interpretation but which is available at a higher level.</p>
 <p>A datum which is necessary for the proper interpretation of a node but which is derived from its ancestors is referred to as a <em>structure parameter</em>.</p>
 </section>
 <section id="functions">
-<span id="hdf5functions"></span><h4>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h4>
+<span id="hdf5functions"></span><h4>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h4>
 <p>Occasionally the proper interpretation of a node depends on an implicitly understood <em>function</em> of its structure parameters.
 Usually these relate to the actual amount of data stored.
 Several of these functions are defined in the <a class="reference internal" href="SIDS/CGNS_SIDS.html#cgns-sids"><span class="std std-ref">SIDS</span></a> and referenced in this document.</p>
 </section>
 </section>
 <section id="cgns-databases">
-<h3>CGNS Databases<a class="headerlink" href="#cgns-databases" title="Permalink to this headline">¶</a></h3>
+<h3>CGNS Databases<a class="headerlink" href="#cgns-databases" title="Permalink to this heading">¶</a></h3>
 <section id="definition-of-a-cgns-database">
-<h4>Definition of a CGNS Database<a class="headerlink" href="#definition-of-a-cgns-database" title="Permalink to this headline">¶</a></h4>
+<h4>Definition of a CGNS Database<a class="headerlink" href="#definition-of-a-cgns-database" title="Permalink to this heading">¶</a></h4>
 <p>By definition, a CGNS database is created when, within an HDF5 file, a node is created which conforms to the <a class="reference internal" href="#hdf5basenode"><span class="std std-ref">specifications given below</span></a> for a node of type “<code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code>”.
 This node is conceptually the root of the CGNS database.
 Because it is created and controlled by the user, it cannot be the root of the HDF5 file.
@@ -543,7 +519,7 @@ Therefore, beyond the occurrence of a <code class="code sidskey docutils literal
 </div></blockquote>
 </section>
 <section id="location-of-cgns-databases-within-hdf5-files">
-<h4>Location of CGNS Databases within HDF5 Files<a class="headerlink" href="#location-of-cgns-databases-within-hdf5-files" title="Permalink to this headline">¶</a></h4>
+<h4>Location of CGNS Databases within HDF5 Files<a class="headerlink" href="#location-of-cgns-databases-within-hdf5-files" title="Permalink to this heading">¶</a></h4>
 <p>An HDF5 file may contain more than one <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> node; i.e., there may be more than one CGNS database rooted within the same HDF5 file.
 CGNS software accepts the name of the desired database as an argument, and will locate the correct <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> node within the specified HDF5 file.
 Obviously, each <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> node in a single HDF5 file must have a unique name.</p>
@@ -552,7 +528,7 @@ Thus, for example, a CGNS database may reference the grid from another CGNS data
 In this case, the structure of the HDF5 file into which the link is made is invisible except below the node to which the link is made.</p>
 </section>
 <section id="file-management">
-<h4>File Management<a class="headerlink" href="#file-management" title="Permalink to this headline">¶</a></h4>
+<h4>File Management<a class="headerlink" href="#file-management" title="Permalink to this heading">¶</a></h4>
 <p>Beyond <em>Open</em> and <em>Close</em> neither HDF5 nor CGNS provides any file management facilities. The user is responsible for ensuring that:</p>
 <ul class="simple">
 <li><p>The HDF5 file containing the root of the required database is available and its permissions are properly set at runtime.</p></li>
@@ -563,14 +539,14 @@ In this case, the structure of the HDF5 file into which the link is made is invi
 </section>
 </section>
 <section id="internal-organization-of-a-cgns-database">
-<span id="internal"></span><h3>Internal Organization of a CGNS Database<a class="headerlink" href="#internal-organization-of-a-cgns-database" title="Permalink to this headline">¶</a></h3>
+<span id="internal"></span><h3>Internal Organization of a CGNS Database<a class="headerlink" href="#internal-organization-of-a-cgns-database" title="Permalink to this heading">¶</a></h3>
 <section id="the-cgnsbase-t-node">
-<span id="hdf5basenode"></span><h4>The CGNSBase_t Node<a class="headerlink" href="#the-cgnsbase-t-node" title="Permalink to this headline">¶</a></h4>
+<span id="hdf5basenode"></span><h4>The CGNSBase_t Node<a class="headerlink" href="#the-cgnsbase-t-node" title="Permalink to this heading">¶</a></h4>
 <p>At the highest level of the tree defining a CGNS database there is always a node labeled “<code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code>”.
 The name of this node is user defined, and serves essentially as the name of the database itself. This name is used by the CGNS software to open the database.</p>
 </section>
 <section id="the-cgnslibraryversion-t-node">
-<h4>The CGNSLibraryVersion_t Node<a class="headerlink" href="#the-cgnslibraryversion-t-node" title="Permalink to this headline">¶</a></h4>
+<h4>The CGNSLibraryVersion_t Node<a class="headerlink" href="#the-cgnslibraryversion-t-node" title="Permalink to this heading">¶</a></h4>
 <p>An HDF5 file may also contain other nodes below the root node beside <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code>,
 but these are <em>not</em> officially part of the CGNS database and will not be recognized by most CGNS software.
 One exception to this is a node called <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSLibraryVersion_t</span></code>, which is a child of the HDF5 root node.
@@ -578,7 +554,7 @@ This node stores the version number of the CGNS standard with which the file is 
 But because the Mid-Level Library software makes use of it, the node is included in this document.</p>
 </section>
 <section id="topological-basis-of-cgns-database-organization">
-<h4>Topological Basis of CGNS Database Organization<a class="headerlink" href="#topological-basis-of-cgns-database-organization" title="Permalink to this headline">¶</a></h4>
+<h4>Topological Basis of CGNS Database Organization<a class="headerlink" href="#topological-basis-of-cgns-database-organization" title="Permalink to this heading">¶</a></h4>
 <p>Below the root, the organization of a CGNS database reflects the problem topology. Omitting detail, the overall structure of the HDF5 file is shown in the first of the <span class="xref std std-ref">CGNS File Mapping Figures</span>.
 Below the HDF5 root node is the <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSLibraryVersion_t</span></code> node, and one or more <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> nodes.
 Each <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> node is the root of a CGNS database.</p>
@@ -594,7 +570,7 @@ For example, immediately below a <code class="code sidskey docutils literal notr
 The CGNS convention is that such a node overrides (for the associated portion of the topology only) any data found at a higher level.</p>
 </section>
 <section id="topics-not-currently-covered">
-<h4>Topics Not Currently Covered<a class="headerlink" href="#topics-not-currently-covered" title="Permalink to this headline">¶</a></h4>
+<h4>Topics Not Currently Covered<a class="headerlink" href="#topics-not-currently-covered" title="Permalink to this heading">¶</a></h4>
 <p>No specification of the kind represented by this file mapping can ever be complete. However, it is worth noting that there are certain entities common in CFD which are not currently specified by the file mapping.</p>
 <p>Within nodes of type <code class="code sidsref docutils literal notranslate"><span class="pre">FlowSolution_t</span></code>, the current file mapping permits the storage of fields of any number of dependent variables. In addition to those whose names are specified in the SIDS the user may add any desired quantities, naming them appropriately. Names that are not currently codified in the SIDS will not be common between practitioners without separate communication.</p>
 <p>Obviously any sort of physical field could be stored in a <code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolution_t</span></code> node. The problem with using CGNS for such applications lies in the probable need to specify additional physical information. Standardizing this information is tantamount to extending the SIDS and File Mapping to the disciplines in question.</p>

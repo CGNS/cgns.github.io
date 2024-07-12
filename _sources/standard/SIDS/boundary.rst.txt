@@ -107,7 +107,7 @@ If the boundary conditions contain dimensional data, :sidsref:`DimensionalUnits`
 If present, these three entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard :ref:`precedence rules <precedence>`.
 
 Reference-state data is useful for situations where boundary-condition data is not provided, and flow solvers are free to enforce any appropriate boundary condition equations.
-The presense of :sidsref:`ReferenceState` at this level or below specifies the appropriate flow conditions from which the flow solver should extract its boundary-condition data.
+The presence of :sidsref:`ReferenceState` at this level or below specifies the appropriate flow conditions from which the flow solver should extract its boundary-condition data.
 For example, when computing an external flowfield around an airplane, an engine nozzle exit is often simulated by imposing a stagnation pressure boundary condition (or some other stagnation quantity) different from freestream.
 The nozzle-exit stagnation quantities could be specified in an instance of :sidskey:`ReferenceState` at this level or below in lieu of providing explicit Dirichlet or Neumann data. (See :ref:`Boundary Condition Specification Data. <BC-specdata>`)
 

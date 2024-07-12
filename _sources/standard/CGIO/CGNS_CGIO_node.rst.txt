@@ -34,7 +34,7 @@ cgio_get_node_id
 :Description:
   Gets the node identifier for the node specified by :code:`pathname` in the database given by :code:`cgio_num`.
   if :code:`pathname` starts with :code:`'/'`, then it is taken as an absolute path and is located based on the root id of the database,
-  otherwise it is taken to be a relative path from the parent node identifed by :code:`pid`.
+  otherwise it is taken to be a relative path from the parent node identified by :code:`pid`.
   The function returns 0 and the node identifier in :code:`id` on success, else an error code.
 
 cgio_get_name
@@ -93,7 +93,7 @@ cgio_set_name
 :Modes:  `- w m`
 
 :Description:
-  Sets (renames) the node identied by :code:`id` in the database given by :code:`cgio_num` to :code:`name`.
+  Sets (renames) the node identified by :code:`id` in the database given by :code:`cgio_num` to :code:`name`.
   The parent node identifier is given by :code:`pid`. There must not already exist a child node of :code:`pid` with that name. The function return 0 on success, else an error code.
 
 cgio_get_label
@@ -148,7 +148,7 @@ cgio_set_label
 :Modes:  `- w m`
 
 :Description:
-  Sets the label of the node identied by :code:`id` in the database given by :code:`cgio_num` to label.
+  Sets the label of the node identified by :code:`id` in the database given by :code:`cgio_num` to label.
   The function return 0 on success, else an error code. 
 
 cgio_get_data_type

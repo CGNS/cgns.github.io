@@ -15,7 +15,7 @@ Implementation Summary
 
 The purpose of the current document is to describe the way in which CFD data is to be represented in an HDF5 data tree. To do this, it is necessary to first describe the HDF5 data structure itself in some detail. Therefore, a conceptual summary of HDF5 is given here in order to make the current document relatively independent, and to allow the reader to focus on those aspects of HDF5 which are essential to understanding the file mapping.
 
-Any HDF5 file with a conformant mapping is *CGNS/HDF5* compliant. The mapping has been made using a per-node basis. Instead of having a new mapping dedicated to HDF5, we have made a mapping from the ADF nodes to a set of HDF5 groups. While this is not an optimal mapping, the use of such an HDF5 node allows us to re-use the ADF API without change.
+Any HDF5 file with a conformant mapping is *CGNS/HDF5* compliant. The mapping has been made using a per-node basis. Instead of having a new mapping dedicated to HDF5, we have made a mapping from the ADF nodes to a set of HDF5 groups. While this is not an optimal mapping, the use of such an HDF5 node allows us to reuse the ADF API without change.
 
 The `HDF5 documentation <https://portal.hdfgroup.org/display/HDF5/HDF5>`_ should be used as the authoritative references to resolve any issues not covered by this summary.
 
@@ -32,11 +32,11 @@ Refer to the `HDF5 web site <https://www.hdfgroup.org/solutions/hdf5/>`_ for fur
 
 Dedicated HDF5 Structures
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-The *CGNS node* is an HDF5 group. It contains attributes, an optional dataset and optional child groups. This structure is required and can be extended by other implementors as long as the following requirements are fullfilled.
+The *CGNS node* is an HDF5 group. It contains attributes, an optional dataset and optional child groups. This structure is required and can be extended by other implementers as long as the following requirements are fulfilled.
 
 In a CGNS tree, most of the nodes are *normal* nodes. These nodes can optionally contain data and have other nodes as children.
 
-There are special nodes, such as the root node and the nodes managing the links. These special link structures use the HDF5 mount system. It is not necessary for either the MLL or SLL users to understand the HDF5 mount system, but it should be understood by SLL implementors.
+There are special nodes, such as the root node and the nodes managing the links. These special link structures use the HDF5 mount system. It is not necessary for either the MLL or SLL users to understand the HDF5 mount system, but it should be understood by SLL implementers.
 
 The CGNS Node Mapping
 ~~~~~~~~~~~~~~~~~~~~~
@@ -81,7 +81,7 @@ The name of the root node is ``[HDF5 MotherNode]``, its label is ``[Root Node of
 
 The node hosting the link entries is a special node named ``[ mount]`` without attributes nor data.
 This group should be a child of the root node, its absolute path is ``[/ mount]``.
-The group ``[ mount]`` contains one group for each mounted file refered to by a link.
+The group ``[ mount]`` contains one group for each mounted file referred to by a link.
 Each entry has the attributes described in the table below.
 The link node itself is a group with the special name ``[ link]``.
 This implementation is discussed further in the section describing the :ref:`link mechanism <link-mechanism>`.
@@ -271,7 +271,7 @@ Although HDF5 provides a number of types, in CGNS the only types used are :code:
 
 The specification of data types within the File Mapping allows for the probability that files written under different circumstances may differ in precision. The issue is complicated by the ability of HDF5 to sense the capabilities of the platform on which it is running and interpret or record data accordingly.
 The general rule is that, although the user of HDF5 can specify the precision in which it is desired to read or write the data, HDF5 knows both the precision available at the source and the precision acceptable to the destination and will mitigate accordingly.
-Thus to specify the precison of real data as :code:`R4`, for example, has no meaning unless both :code:`R4` and :code:`R8` are available.
+Thus to specify the precision of real data as :code:`R4`, for example, has no meaning unless both :code:`R4` and :code:`R8` are available.
 Therefore, the generic specification ``"DataType"`` is used to allow for all possibilities.
 
 For all integer data specified by the SIDS, :code:`I4` provides sufficient precision.
@@ -302,7 +302,7 @@ The Child Table is completely controlled by HDF5, and thus its role is exactly t
 
 In addition to the meaning of attributes of individual HDF5 nodes, the File Mapping specifies the relations between nodes in a CGNS database. Consequently, the File Mapping determines what kinds of nodes will lie in the child table.
 
-It is important to reemphasize that HDF5 provides no notion of order among children. This means children can be identified only by their names, labels and system-provided node IDs. In particular, the order of a list of children returned by HDF5 has nothing to do with the order in which they were inserted in the file. However, the order returned is consistent from call to call provided the file has not been closed and the node structure has not been modifed.
+It is important to reemphasize that HDF5 provides no notion of order among children. This means children can be identified only by their names, labels and system-provided node IDs. In particular, the order of a list of children returned by HDF5 has nothing to do with the order in which they were inserted in the file. However, the order returned is consistent from call to call provided the file has not been closed and the node structure has not been modified.
 
 .. _HDF5Cardinality:
 

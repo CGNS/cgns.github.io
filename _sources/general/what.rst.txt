@@ -100,7 +100,7 @@ freely, subject to the following restrictions:
    not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source
    distribution.  This license is borrowed from the zlib/libpng License,
-   and supercedes the GNU Lesser General Public License (LGPL) which
+   and supersedes the GNU Lesser General Public License (LGPL) which
    previously governed the use and distribution of the software.
 
 **Reference**

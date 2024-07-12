@@ -18,7 +18,7 @@ Historically, the version number was used to describe the version of the :ref:`M
 CGNS Entry Level Structure Definition: ``CGNSBase_t``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The highest level structure in a CGNS database is :sidskey:`CGNSBase_t`. This top level entity is designed to be self-contained, a complete CFD computation can be archived and reproduced using the data defined in the CGNSBase. However a CGNS tree can contain more than one base, these can be related to the same CFD case or not. The behavior of a multi-base CGNS tree is application dependant, even if inter-base relationships are authorized in three cases:
+The highest level structure in a CGNS database is :sidskey:`CGNSBase_t`. This top level entity is designed to be self-contained, a complete CFD computation can be archived and reproduced using the data defined in the CGNSBase. However a CGNS tree can contain more than one base, these can be related to the same CFD case or not. The behavior of a multi-base CGNS tree is application dependent, even if inter-base relationships are authorized in three cases:
 
  * A reference to another base's zone name (including its sub-nodes' names) as defined in the multi-zone connectivities (see :ref:`Multizone Interface Connectivity <cnct>` and time-dependant pointers :ref:`Time-Dependent Flow <timedep>`);
  * A reference to another base's family name (see :ref:`Family Data Structure Definition <Family_t>`: :sidsref:`Family_t`) as as :sidskey:`FamilyName_t` data;

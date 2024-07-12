@@ -150,7 +150,7 @@ cgio_move_node
 :Modes:  `- w m`
 
 :Description:
-  Moves the node indentified by :code:`id` below the parent node identified by :code:`pid` to below the new parent node identified by :code:`new_pid` in the database given by :code:`cgio_num`. A node by the same name as that that for id must not already exist under :code:`new_pid`. A node may only be moved if it and the parent nodes all reside in the same physical database. Returns 0 on success, else an error code. 
+  Moves the node identified by :code:`id` below the parent node identified by :code:`pid` to below the new parent node identified by :code:`new_pid` in the database given by :code:`cgio_num`. A node by the same name as that that for id must not already exist under :code:`new_pid`. A node may only be moved if it and the parent nodes all reside in the same physical database. Returns 0 on success, else an error code. 
 
 
 cgio_number_children
@@ -220,7 +220,7 @@ cgio_children_names
   The size reserved for each name in :code:`child_names` is given by :code:`name_len`.
   The array :code:`child_names` should be dimensioned at least (:code:`name_len * max_ret`).
   Since node names are limited to a length of :code:`CGIO_MAX_NAME_LENGHT` (32), :code:`name_len` should be at least 32 to ensure the returned names are not truncated.
-  In C, an additional byte should be added to :code:`name_len` allow for the terminating :code:`'0'` for each name. If successfull, the function returns 0; the actual number of returned names is given by :code:`num_ret`, and the array of names in :code:`child_names`. In C, the names are '0'-terminated within each name field. In Fortran, any unused space is padded with blanks (space character).
+  In C, an additional byte should be added to :code:`name_len` allow for the terminating :code:`'0'` for each name. If successful, the function returns 0; the actual number of returned names is given by :code:`num_ret`, and the array of names in :code:`child_names`. In C, the names are '0'-terminated within each name field. In Fortran, any unused space is padded with blanks (space character).
 
 
 cgio_children_ids
@@ -257,7 +257,7 @@ cgio_children_ids
   The starting index for the array of ids is given by :code:`start`, and the maximum ids to return by :code:`max_ret`.
   Both :code:`start` and :code:`max_ret` should be between 1 and :code:`num_child`, inclusively.
   The array :code:`child_ids` should be dimensioned at least (:code:`max_ret`).
-  If successfull, the function returns 0; the actual number of returned ids is given by :code:`num_ret`, and the array of identifiers in :code:`child_ids`.
+  If successful, the function returns 0; the actual number of returned ids is given by :code:`num_ret`, and the array of identifiers in :code:`child_ids`.
 
 
 .. last line

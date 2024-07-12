@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   
   <!-- Licensed under the Apache 2.0 License -->
@@ -16,17 +15,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
     <title>5. Data-Array Structure Definitions &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css?v=ee5bbeb1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css?v=2c72f61b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css?v=97141bf4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css?v=593b94c8" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=117e2fac"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="icon" href="../../_static/CGNS_empty.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="6. Hierarchical Structures" href="hierarchy.html" />
@@ -128,7 +126,7 @@
           <div class="document clearer body">
             
   <section id="data-array-structure-definitions">
-<span id="standarddataarraystruct"></span><h1><span class="section-number">5. </span>Data-Array Structure Definitions<a class="headerlink" href="#data-array-structure-definitions" title="Permalink to this headline">¶</a></h1>
+<span id="standarddataarraystruct"></span><h1><span class="section-number">5. </span>Data-Array Structure Definitions<a class="headerlink" href="#data-array-structure-definitions" title="Permalink to this heading">¶</a></h1>
 <p>This section defines the structure type <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> for describing data arrays.
 This general-purpose structure is used to declare data arrays and scalars throughout the CGNS hierarchy.
 It is used to describe grid coordinates, flow-solution data, governing flow parameters, boundary-condition data, and other information.
@@ -151,22 +149,22 @@ These requirements are reflected in the structure definition for <code class="co
 <p>The remainder of this section is as follows: The structure type <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is first defined.
 Then the class identification and data manipulation is discussed for each of the five data classes. Finally, examples of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities are presented.</p>
 <section id="definition-dataarray-t">
-<h2><span class="section-number">5.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataArray_t</span></code><a class="headerlink" href="#definition-dataarray-t" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataArray_t</span></code><a class="headerlink" href="#definition-dataarray-t" title="Permalink to this heading">¶</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> describes a multi-dimensional data array of given type, dimensionality and size in each dimension. The data may be dimensional, nondimensional or pure constants. Qualifiers are provided to describe dimensional units or normalization information associated with the data.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Dimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">Dimension</span><span class="p">]</span><span class="w"> </span><span class="n">DimensionValues</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Dimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">Dimension</span><span class="p">]</span><span class="w"> </span><span class="n">DimensionValues</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="w"> </span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="n">Dimension</span><span class="p">,</span><span class="w"> </span><span class="n">DimensionValues</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                     </span><span class="kr">(r)</span><span class="w"></span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="w"> </span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="n">Dimension</span><span class="p">,</span><span class="w"> </span><span class="n">DimensionValues</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                     </span><span class="kr">(r)</span>
 
-<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">DimensionalExponents_t</span><span class="w"> </span><span class="n">DimensionalExponents</span><span class="w"> </span><span class="p">;</span><span class="w">                      </span><span class="kr">(o)</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DimensionalExponents_t</span><span class="w"> </span><span class="n">DimensionalExponents</span><span class="w"> </span><span class="p">;</span><span class="w">                      </span><span class="kr">(o)</span>
 
-<span class="w">  </span><span class="kt">DataConversion_t</span><span class="w"> </span><span class="n">DataConversion</span><span class="w"> </span><span class="p">;</span><span class="w">                                  </span><span class="kr">(o)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataConversion_t</span><span class="w"> </span><span class="n">DataConversion</span><span class="w"> </span><span class="p">;</span><span class="w">                                  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -182,25 +180,25 @@ Then the class identification and data manipulation is discussed for each of the
 Therefore, for vector quantities (e.g., the position vector or the velocity vector), separate structure entities are required for each component of the vector.
 For example, the Cartesian coordinates of a 3-D grid are described by three separate <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities: one for x, one for y and one for z (see the example for <span class="xref std std-ref">Cartesian Coordinates for a 2-D Structured Grid</span>).</p>
 <section id="definition-dataconversion-t">
-<h3><span class="section-number">5.1.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataConversion_t</span></code><a class="headerlink" href="#definition-dataconversion-t" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.1.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataConversion_t</span></code><a class="headerlink" href="#definition-dataconversion-t" title="Permalink to this heading">¶</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion_t</span></code> contains conversion factors for recovering raw dimensional data from given nondimensional data. These conversion factors are typically associated with nondimensional data that is normalized by dimensional reference quantities.</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">DataConversion_t</span><span class="w"> </span><span class="o">:=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionScale</span><span class="w"> </span><span class="p">;</span><span class="w">                                             </span><span class="kr">(r)</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">DataConversion_t</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionScale</span><span class="w"> </span><span class="p">;</span><span class="w">                                             </span><span class="kr">(r)</span>
 
-<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionOffset</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(r)</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionOffset</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(r)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Given a nondimensional piece of data, <code class="code sidskey docutils literal notranslate"><span class="pre">Data(nondimensional)</span></code>, the conversion to “raw” dimensional form is:</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">Data</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="n">nondimensional</span><span class="p">)</span><span class="o">*</span><span class="n">ConversionScale</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ConversionOffset</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">Data</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="n">nondimensional</span><span class="p">)</span><span class="o">*</span><span class="n">ConversionScale</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ConversionOffset</span>
 </pre></div>
 </div>
 <p>These conversion factors are further described in the section <a class="reference internal" href="#normbydim"><span class="std std-ref">Nondimensional Data Normalized by Dimensional Quantities</span></a>.</p>
 </section>
 </section>
 <section id="data-manipulation">
-<h2><span class="section-number">5.2. </span>Data Manipulation<a class="headerlink" href="#data-manipulation" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.2. </span>Data Manipulation<a class="headerlink" href="#data-manipulation" title="Permalink to this heading">¶</a></h2>
 <p>The optional entities of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> provide information for manipulating the data, including changing units or normalization.
 This section describes the rules under which these optional entities operate and the specific manipulations that can be performed on the data.</p>
 <p>Within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code>, the class of data and all information required for manipulations may be completely and precisely specified by the entities <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code>.
@@ -215,7 +213,7 @@ The rules for determining the appropriate set of global data to apply is further
 Examples that make use of global data are available for both <a class="reference internal" href="grid.html#grid-example"><span class="std std-ref">grid coordinates</span></a> and <span class="xref std std-ref">flow solutions</span>.
 A complete <span class="xref std std-ref">two-zone example</span> case also depicts this alternate functionality.</p>
 <section id="dimensional-data">
-<span id="dimensional"></span><h3><span class="section-number">5.2.1. </span>Dimensional Data<a class="headerlink" href="#dimensional-data" title="Permalink to this headline">¶</a></h3>
+<span id="dimensional"></span><h3><span class="section-number">5.2.1. </span>Dimensional Data<a class="headerlink" href="#dimensional-data" title="Permalink to this heading">¶</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">Dimensional</span></code>, the data is dimensional.
 The optional qualifiers <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> describe dimensional units associated with the data.
 These qualifiers are provided to specify the system of dimensional units and the dimensional exponents, respectively.
@@ -227,11 +225,11 @@ The rules for determining this appropriate set of global dimensional units are p
 Otherwise, the exponents are unspecified. We strongly recommend inclusion of the <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> qualifier whenever the data is dimensional and the instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is not among the list of standardized identifiers.</p>
 </section>
 <section id="nondimensional-data-normalized-by-dimensional-quantities">
-<span id="normbydim"></span><h3><span class="section-number">5.2.2. </span>Nondimensional Data Normalized by Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-dimensional-quantities" title="Permalink to this headline">¶</a></h3>
+<span id="normbydim"></span><h3><span class="section-number">5.2.2. </span>Nondimensional Data Normalized by Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-dimensional-quantities" title="Permalink to this heading">¶</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByDimensional</span></code>, the data is nondimensional and is normalized by dimensional reference quantities.
 All optional entities in <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> are used. <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> contains factors to convert the nondimensional data to “raw” dimensional data; these factors are <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionScale</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionOffset</span></code>.
 The conversion process is as follows:</p>
-<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">Data</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="n">nondimensional</span><span class="p">)</span><span class="o">*</span><span class="n">ConversionScale</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ConversionOffset</span><span class="w"></span>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="k">Data</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Data</span><span class="p">(</span><span class="n">nondimensional</span><span class="p">)</span><span class="o">*</span><span class="n">ConversionScale</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ConversionOffset</span>
 </pre></div>
 </div>
 <p>where <code class="code sidskey docutils literal notranslate"><span class="pre">Data(nondimensional)</span></code> is the original nondimensional data, and <code class="code sidskey docutils literal notranslate"><span class="pre">Data(raw)</span></code> is the converted raw data.
@@ -244,7 +242,7 @@ In the first case the data is dimensional, and in the second, the converted raw 
 Also, the equivalent defaults for <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> produce no changes in the data; hence, it is almost the same as stating the original data is dimensional.</p>
 </section>
 <section id="nondimensional-data-normalized-by-unknown-dimensional-quantities">
-<h3><span class="section-number">5.2.3. </span>Nondimensional Data Normalized by Unknown Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-unknown-dimensional-quantities" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.2.3. </span>Nondimensional Data Normalized by Unknown Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-unknown-dimensional-quantities" title="Permalink to this heading">¶</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByUnknownDimensional</span></code>, the data is nondimensional and is normalized by some unspecified dimensional quantities.
 This type of data is typical of a completely nondimensional test case, where all field data and all reference quantities are nondimensional.</p>
 <p>Only the <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> qualifier is used in this case, although it is expected that this qualifier will be seldom utilized in practice.
@@ -257,11 +255,6 @@ The problem with this practice is that to manipulate the data from a given code,
 This largely results from what we call inconsistent normalization - more than the minimum required scales are used to normalize data within the code.
 For example, in the <em>OVERFLOW</em> flow solver, the following nondimensionalization is used:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 28%" />
-<col style="width: 34%" />
-<col style="width: 38%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x' = x / L\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(u' = u / (L/T)\)</span></p></td>
@@ -280,11 +273,6 @@ For example, in the <em>OVERFLOW</em> flow solver, the following nondimensionali
 <p>where primed quantities are nondimensional and all others are dimensional.</p>
 <p>Consider an existing database where all field data and all reference data is nondimensional and normalized as shown. Assume the database has a single reference state given by,</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 26%" />
-<col style="width: 34%" />
-<col style="width: 40%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x'_{ref} = x_{ref}  / L\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(u'_{ref} = u_{ref}  / (L/T)\)</span></p></td>
@@ -329,11 +317,6 @@ Probably, the easiest method would be to remove the molecular viscosity scale (<
 The only change from the above example would be the nondimensionalization of viscosity, which would become <span class="math notranslate nohighlight">\(\mu'' = \mu / (\rho_\infty c_\infty L)\)</span>.
 The code could then output all field data as,</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 27%" />
-<col style="width: 29%" />
-<col style="width: 45%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x'_{ijk} = x_{ijk} / L\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(u'_{ijk} = u_{ijk} / c_\infty\)</span></p></td>
@@ -351,10 +334,6 @@ The code could then output all field data as,</p>
 </table>
 <p>and output the freestream reference quantities,</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 38%" />
-<col style="width: 62%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(u'_\infty = u_\infty / c_\infty\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\rho'_\infty = \rho_\infty / \rho_\infty = 1\)</span></p></td>
@@ -374,7 +353,7 @@ The code could then output all field data as,</p>
 <p>On input, the flow solver should be able to recover its internal normalizations from the data in a nondimensional CGNS database by treating the data as if it were dimensional.</p>
 </section>
 <section id="nondimensional-parameters">
-<h3><span class="section-number">5.2.4. </span>Nondimensional Parameters<a class="headerlink" href="#nondimensional-parameters" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.2.4. </span>Nondimensional Parameters<a class="headerlink" href="#nondimensional-parameters" title="Permalink to this heading">¶</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">NondimensionalParameter</span></code>, the data is a nondimensional parameter (or array of nondimensional parameters). Examples include Mach number, Reynolds number and pressure coefficient. These parameters are prevalent in CFD, although their definitions tend to vary between different application codes. A list of <span class="xref std std-ref">standardized data-name identifiers for nondimensional parameters</span> is provided.</p>
 <p>We distinguish nondimensional parameters from other data classes by the fact that they are <em>always</em> dimensionless. In a completely nondimensional database, they are distinct in that their normalization is not necessarily consistent with other data.</p>
 <p>Typically, the <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> qualifiers are not used for nondimensional parameters; although, there are a few situations where they may be used (these are discussed below).
@@ -391,60 +370,60 @@ Conversely, Reynolds number is a parameter that violates the second requirement 
 For nondimensional parameters that satisfy these two requirements, the qualifiers <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> may be used as in the section <a class="reference internal" href="#normbydim"><span class="std std-ref">Nondimensional Data Normalized by Dimensional Quantities</span></a> to recover the raw dimensional data.</p>
 </section>
 <section id="dimensionless-constants">
-<h3><span class="section-number">5.2.5. </span>Dimensionless Constants<a class="headerlink" href="#dimensionless-constants" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.2.5. </span>Dimensionless Constants<a class="headerlink" href="#dimensionless-constants" title="Permalink to this heading">¶</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">DimensionlessConstant</span></code>, the data is a constant (or array of constants) with no associated dimensional units. The <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> qualifiers are not used.</p>
 </section>
 <section id="data-array-examples">
-<h3><span class="section-number">5.2.6. </span>Data-Array Examples<a class="headerlink" href="#data-array-examples" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.2.6. </span>Data-Array Examples<a class="headerlink" href="#data-array-examples" title="Permalink to this heading">¶</a></h3>
 <p>This section presents five examples of data-array entities and illustrates the use of optional information for describing dimensional and nondimensional data.</p>
 <section id="example-one-dimensional-data-array-constants">
-<h4><span class="section-number">5.2.6.1. </span>Example - One-Dimensional Data Array, Constants<a class="headerlink" href="#example-one-dimensional-data-array-constants" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">5.2.6.1. </span>Example - One-Dimensional Data Array, Constants<a class="headerlink" href="#example-one-dimensional-data-array-constants" title="Permalink to this heading">¶</a></h4>
 <p>A one-dimensional array of integers; the array is the integers from 1 to 10. The data is pure constants.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = int</span>
 <span class="c1">!  Dimension = 1</span>
 <span class="c1">!  DimensionValues = 10</span>
-<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Data1</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Data1</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">]</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DimensionlessConstant</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DimensionlessConstant</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The structure parameters for <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> state the data is an one-dimensional integer array of length ten. The value of <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> indicates the data is <span class="xref std std-ref">unitless constants</span>.</p>
 </section>
 <section id="example-two-dimensional-data-array-pressures">
-<span id="ex-data2"></span><h4><span class="section-number">5.2.6.2. </span>Example - Two-Dimensional Data Array, Pressures<a class="headerlink" href="#example-two-dimensional-data-array-pressures" title="Permalink to this headline">¶</a></h4>
+<span id="ex-data2"></span><h4><span class="section-number">5.2.6.2. </span>Example - Two-Dimensional Data Array, Pressures<a class="headerlink" href="#example-two-dimensional-data-array-pressures" title="Permalink to this heading">¶</a></h4>
 <p>A two-dimensional array of pressures with size <span class="math notranslate nohighlight">\(11 \times 9\)</span> given by the array <span class="math notranslate nohighlight">\(P(i,j)\)</span>.
 The data is dimensional with units of <span class="math notranslate nohighlight">\(N/m^{2}\)</span> (i.e., <span class="math notranslate nohighlight">\(kg/(m s^{2})\)</span>).
 Note that Pressure is the data-name identifier for static pressure.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = real</span>
 <span class="c1">!  Dimension = 2</span>
 <span class="c1">!  DimensionValues = [11,9]</span>
-<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pressure</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">P</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">),</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pressure</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">P</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">),</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dimensional</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dimensional</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="n">MassUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">Kilogram</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">LengthUnits</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">Meter</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">TimeUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">Second</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">TemperatureUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TemperatureUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">AngleUnits</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">AngleUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="n">MassUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">Kilogram</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">LengthUnits</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">Meter</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">TimeUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">Second</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">TemperatureUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TemperatureUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">AngleUnits</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">AngleUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">DimensionalExponents_t</span><span class="w"> </span><span class="n">DimensionalExponents</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="n">MassExponent</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">LengthExponent</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">TimeExponent</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">TemperatureExponent</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">AngleExponent</span><span class="w">       </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DimensionalExponents_t</span><span class="w"> </span><span class="n">DimensionalExponents</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="n">MassExponent</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">LengthExponent</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">TimeExponent</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">TemperatureExponent</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">AngleExponent</span><span class="w">       </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>From the <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">data-name identifier conventions</span></a>, <code class="code sidskey docutils literal notranslate"><span class="pre">Pressure</span></code> has a floating-point data type; hence, the appropriate structure parameter for <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is <code class="code docutils literal notranslate"><span class="pre">real</span></code>.</p>
@@ -455,7 +434,7 @@ Combining the information gives pressure as <span class="math notranslate nohigh
 <p>Note that FORTRAN multidimensional array indexing is used to store the data; this is reflected in the FORTRAN-like implied do-loops for <span class="math notranslate nohighlight">\(P(i,j)\)</span>.</p>
 </section>
 <section id="example-three-dimensional-data-array-nondimensional-static-enthalpy">
-<h4><span class="section-number">5.2.6.3. </span>Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-static-enthalpy" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">5.2.6.3. </span>Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-static-enthalpy" title="Permalink to this heading">¶</a></h4>
 <p>A 3-D array of size <span class="math notranslate nohighlight">\(33 \times 9 \times 17\)</span> containing nondimensional static enthalpy.
 The data is normalized by freestream velocity as follows:</p>
 <div class="math notranslate nohighlight">
@@ -465,36 +444,36 @@ The freestream velocity is dimensional with a value of 10 m/s.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = real</span>
 <span class="c1">!  Dimension = 3</span>
 <span class="c1">!  DimensionValues = [33,9,17]</span>
-<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Enthalpy</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((</span><span class="n">H</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">33</span><span class="p">),</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">17</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Enthalpy</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((</span><span class="n">H</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">33</span><span class="p">),</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">17</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NormalizedByDimensional</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NormalizedByDimensional</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">DataConversion_t</span><span class="w"> </span><span class="n">DataConversion</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionScale</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionOffset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataConversion_t</span><span class="w"> </span><span class="n">DataConversion</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionScale</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="kt">real</span><span class="w"> </span><span class="n">ConversionOffset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="n">MassUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">MassUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">LengthUnits</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">Meter</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">TimeUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">Second</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">TemperatureUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TemperatureUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">AngleUnits</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">AngleUnitsNull</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="n">MassUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">MassUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">LengthUnits</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">Meter</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">TimeUnits</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">Second</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">TemperatureUnits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TemperatureUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">AngleUnits</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">AngleUnitsNull</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">DimensionalExponents_t</span><span class="w"> </span><span class="n">DimensionalExponents</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="p">{{</span><span class="w"></span>
-<span class="w">    </span><span class="n">MassExponent</span><span class="w">        </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">LengthExponent</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="mi">2</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">TimeExponent</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">TemperatureExponent</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">AngleExponent</span><span class="w">       </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DimensionalExponents_t</span><span class="w"> </span><span class="n">DimensionalExponents</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="n">MassExponent</span><span class="w">        </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">LengthExponent</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="o">+</span><span class="mi">2</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">TimeExponent</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">TemperatureExponent</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="n">AngleExponent</span><span class="w">       </span><span class="o">=</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>From the list of <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">standardized data-name identifiers</span></a>, the identifier for static enthalpy is <code class="code sidskey docutils literal notranslate"><span class="pre">Enthalpy</span></code> and its data type is <code class="code docutils literal notranslate"><span class="pre">real</span></code>.</p>
@@ -503,49 +482,49 @@ The freestream velocity is dimensional with a value of 10 m/s.</p>
 Note that <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> could have been defaulted using the conventions for the data-name identifier <code class="code sidskey docutils literal notranslate"><span class="pre">Enthalpy</span></code>.</p>
 </section>
 <section id="example-three-dimensional-data-array-nondimensional-database">
-<h4><span class="section-number">5.2.6.4. </span>Example - Three-Dimensional Data Array, Nondimensional Database<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-database" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">5.2.6.4. </span>Example - Three-Dimensional Data Array, Nondimensional Database<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-database" title="Permalink to this heading">¶</a></h4>
 <p>The previous example for nondimensional enthalpy is repeated for a completely nondimensional database.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = real</span>
 <span class="c1">!  Dimension = 3</span>
 <span class="c1">!  DimensionValues = [33,9,17]</span>
-<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Enthalpy</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((</span><span class="n">H</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">33</span><span class="p">),</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">17</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Enthalpy</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">33</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(((</span><span class="n">H</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">33</span><span class="p">),</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">17</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NormalizedByUnknownDimensional</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NormalizedByUnknownDimensional</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The value of <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> indicates the appropriate class.</p>
 </section>
 <section id="example-data-arrays-for-reynolds-number">
-<h4><span class="section-number">5.2.6.5. </span>Example - Data Arrays for Reynolds Number<a class="headerlink" href="#example-data-arrays-for-reynolds-number" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">5.2.6.5. </span>Example - Data Arrays for Reynolds Number<a class="headerlink" href="#example-data-arrays-for-reynolds-number" title="Permalink to this heading">¶</a></h4>
 <p>Reynolds number of <span class="math notranslate nohighlight">\(1.554 \times 10^{6}\)</span> based on a velocity scale of <span class="math notranslate nohighlight">\(10\ m/s\)</span>, a length scale of <span class="math notranslate nohighlight">\(2.3\ m\)</span> and a kinematic viscosity scale of <span class="math notranslate nohighlight">\(1.48 \times 10^{−5}\ m^{2}/s\)</span>.
 Assume the database has globally set the dimensional units to kilograms, meters, and seconds, and the global default data class to dimensional (<code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">Dimensional</span></code>).</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = real</span>
 <span class="c1">!  Dimension = 1</span>
 <span class="c1">!  DimensionValues = 1</span>
-<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.554</span><span class="n">e</span><span class="o">+</span><span class="mi">06</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.554</span><span class="n">e</span><span class="o">+</span><span class="mi">06</span><span class="w"> </span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NondimensionalParameter</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NondimensionalParameter</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds_Velocity</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10.</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds_Velocity</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10.</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds_Length</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.3</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds_Length</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.3</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 
-<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds_ViscosityKinematic</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="p">{{</span><span class="w"></span>
-<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.48</span><span class="n">e</span><span class="mi">-05</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Reynolds_ViscosityKinematic</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+<span class="w">  </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.48</span><span class="n">e</span><span class="mi">-05</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds</span></code> contains the value of the Reynolds number, and the value of its <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> qualifier designates it as a <span class="xref std std-ref">nondimensional parameter</span>. By conventions for <span class="xref std std-ref">standardized data-name identifiers for nondimensional parameters</span>, the defining scales are contained in the associated entities <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_Velocity</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_Length</span></code>, and <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_ViscosityKinematic</span></code>.

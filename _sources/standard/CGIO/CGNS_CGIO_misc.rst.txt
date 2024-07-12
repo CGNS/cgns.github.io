@@ -26,7 +26,7 @@ cgio_flush_to_disk
 :Modes:  `- w m`
 
 :Description:
-  Forces any buffered data in the database manager to be written to disk. Returns 0 if successfull, else an error code.
+  Forces any buffered data in the database manager to be written to disk. Returns 0 if successful, else an error code.
 
 cgio_library_version
 --------------------
@@ -53,7 +53,7 @@ cgio_library_version
 :Description:
   Gets the current library version for the database given by :code:`cgio_num`.
   The version is returned in version which is of maximum length :code:`CGIO_MAX_VERSION_LENGTH` (32).
-  In C, version should be dimensioned at least 33 in the calling routine to allow for the terminating :code:`'0'`. The function returns 0 if successfull, else an error code. 
+  In C, version should be dimensioned at least 33 in the calling routine to allow for the terminating :code:`'0'`. The function returns 0 if successful, else an error code. 
  
 
 cgio_file_version
@@ -87,7 +87,7 @@ cgio_file_version
   The creation date is returned in :code:`creation_date`, and the last modified date in :code:`modified_date`,
   which are of maximum length :code:`CGIO_MAX_DATE_LENGTH` (32).
   In C, these should be dimensioned at least 33 in the calling routine to allow for the terminating :code:`'0'`.
-  The function returns 0 if successfull, else an error code.
+  The function returns 0 if successful, else an error code.
 
 
 .. last line

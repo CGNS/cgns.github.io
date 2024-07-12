@@ -15,7 +15,7 @@ Glossary
    API
       Stands for **Application Programming Interface**, it is a set
       of functions, constants, requirements written in a specific
-      programming langage for application developpers.
+      programming language for application developers.
       
    CGNS/MLL
       The **Mid-Level Library** (MLL) is an example implementation of the

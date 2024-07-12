@@ -190,7 +190,7 @@ Business Jet
       - July.29.04
 
   
-  :Description: Multiblock stuctured grids for a business jet, a wing/body, and a wing/body/nacelle/pylon configuration are available from Stanford.
+  :Description: Multiblock structured grids for a business jet, a wing/body, and a wing/body/nacelle/pylon configuration are available from Stanford.
   :Data File: `Stanford CGNS test files <http://aero-comlab.stanford.edu/vdweide/CGNSFiles/>`_ (link to external site)
 
 

@@ -125,10 +125,179 @@ The particle coordinates data is stored in the list of :sidsref:`DataArray_t` en
 Standardized data-name identifiers for the particle coordinates are
 described in :ref:`Conventions for Data-Name Identifiers<convention>`.
 
-:sidsref:`DataClass`</a> defines the default class for data contained in the :sidsref:`DataArray_t` entities. For dimensional grid coordinates, :sidsref:`DimensionalUnits` may be used to describe the system of units employed. If present, these two entities take precedence over the corresponding entities at higher levels of the CGNS hierarchy, following the standard :ref:`precedence rules<precedence>`. An example that uses these particle-coordinate defaults is shown under :ref:`Particle Coordinates Examples<_particle_coordinates_example>`.
+:sidsref:`DataClass` defines the default class for data contained in the :sidsref:`DataArray_t` entities. For dimensional grid coordinates, :sidsref:`DimensionalUnits` may be used to describe the system of units employed. If present, these two entities take precedence over the corresponding entities at higher levels of the CGNS hierarchy, following the standard :ref:`precedence rules<precedence>`. An example that uses these particle-coordinate defaults is shown under :ref:`Particle Coordinates Examples<_particle_coordinates_example>`.
 
 
 .. _particle_coordinates_example:
+
+Example - Particle Coordinates for a 3-D Case
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This example show how to set the particle coordinate in the case where :sidskey:`ParticleSize` is 15.
+
+.. code-block:: sids
+
+  !  ParticleSize = 15
+  ParticleCoordinates_t&lt;15&gt; ParticleCoordinates =
+    {{
+
+    ! DataType = real
+    ! ParticleSize = 15
+    DataArray_t&lt;real, 1, 15&gt; CoordinateX =
+      {{
+      Data(real, 1, 15) = (x(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; CoordinateY =
+      {{
+      Data(real, 1, 15) = (y(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; CoordinateZ =
+      {{
+      Data(real, 1, 15) = (z(i), i=1,15) ;
+      }} ;
+    }} ;
+</pre>
+
+
+<a name="ParticleSolution"></a>
+<h3>13.3 Particle Solution Structure Definition: :sidskey:`ParticleSolution_t`</h3>
+
+<p>
+The solution on each particle within a given :sidskey:`ParticleZone_t` is described by the
+:sidskey:`ParticleSolution_t` structure.
+This structure contains a list for the data arrays of the individual
+solution variables. Particle solutions are implicitly defined at particle centers,
+and correspond to the solution for the entire particle.
+
+<pre>
+  ParticleSolution_t&lt; int ParticleSize&gt; :=
+    {
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    IndexRange PointRange ;                                            (o)
+    IndexArray&lt;DataSize[], int&gt; PointList ;                            (o)
+
+    List( DataArray_t&lt;DataType, DataSize[]&gt;
+          DataArray1 ... DataArrayN ) ;                                (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    } ;
+</pre>
+
+<i>Notes</i>
+
+<ol>
+<li> Default names for the
+     <a href="build.html#Descriptor">:sidskey:`Descriptor_t`</a>,
+     <a href="data.html#DataArray">:sidskey:`DataArray_t`</a>, and
+     <a href="misc.html#UserDefinedData">:sidskey:`UserDefinedData_t`</a>
+     lists are as shown; users may choose other legitimate names.
+     Legitimate names must be unique within a given instance
+     of :sidskey:`ParticleSolution_t` and shall not include the
+     names :sidskey:`DataClass`, :sidskey:`DimensionalUnits`,
+     :sidskey:`PointList` or :sidskey:`PointRange`.
+<li> There are no required fields for :sidskey:`ParticleSolution_t`.
+<li> Both of the fields :sidskey:`PointList` and :sidskey:`PointRange` are
+     optional. Only one of these two fields may be specified.
+<li> The structure parameter :sidskey:`DataType` must be consistent with
+     the data stored in the
+     <a href="data.html#DataArray">:sidskey:`DataArray_t`</a>
+     structure entities; :sidskey:`DataType` is
+     :sidskey:`real` for all particle-solution identifiers defined in
+     the section <a href="dataname.html">Conventions for Data-Name
+     Identifiers</a>.
+<li> Indexing of data within the
+     <a href="data.html#DataArray">:sidskey:`DataArray_t`</a> structure
+     must be consistent with coordonates defined in the <a href="#ParticleCoordinates">:sidskey:`ParticleCoordinates_t`</a>.
+</ol>
+
+<p>
+The particle solution data is stored in the list of
+<a href="data.html#DataArray">:sidskey:`DataArray_t`</a> entities; each
+:sidskey:`DataArray_t` structure entity may contain a single component of
+the solution vector.
+Standardized data-name identifiers for the particle-solution quantities are
+described in the section <a href="dataname.html">Conventions for Data-Name
+Identifiers</a>.
+
+<p>
+<a href="build.html#DataClass">:sidskey:`DataClass`</a> defines the default
+class for data contained in the
+<a href="data.html#DataArray">:sidskey:`DataArray_t`</a> entities.
+For dimensional particle solution data,
+<a href="build.html#DimensionalUnits">:sidskey:`DimensionalUnits`</a> may be
+used to describe the system of units employed.
+If present, these two entities take precedence over the corresponding
+entities at higher levels of the CGNS hierarchy, following the
+standard <a href="cgnsbase.html#precedence">precedence rules</a>.
+
+<p>
+The <a href="misc.html#UserDefinedData">:sidskey:`UserDefinedData_t`</a>
+data structure allows arbitrary user-defined data to be stored in
+:sidskey:`Descriptor_t` and :sidskey:`DataArray_t` children without the
+restrictions or implicit meanings imposed on these node types at other
+node locations.
+
+<a name="DataSize_particle"></a>
+<h4>FUNCTION :sidskey:`DataSize[]`:</h4>
+
+return value: :sidskey:`int`
+<br>
+dependencies: :sidskey:`PointRange`, :sidskey:`PointList`
+
+<p>
+:sidskey:`ParticleSolution_t` requires the structure function :sidskey:`DataSize`,
+which is used to specify the number of entities corresponding
+to a given :sidskey:`PointRange` or :sidskey:`PointList`. This will therefore be the
+size of the ParticleSolution data arrays. If :sidskey:`PointRange` is
+specified, then :sidskey:`DataSize` is obtained from the number of points
+(inclusive) between the beginning and ending indices of :sidskey:`PointRange`.
+If :sidskey:`PointList` is specified, then :sidskey:`DataSize` is the number of
+indices in the list of points. In this situation, :sidskey:`DataSize` becomes
+a user input along with the indices of the list :sidskey:`PointList`. By <i>user</i>
+we mean the application code that is generating the CGNS database.
+
+<a name="ParticleSolutionExample"></a>
+<h4>Example - Particle Solution</h4>
+<pre>
+  ParticleSolution_t&lt;15&gt; ParticleSolution =
+    {{
+
+    ! DataType = real
+    ! ParticleSize = 15
+
+    DataArray_t&lt;real, 1, 15&gt; Radius =
+      {{
+      Data(real, 1, 15) = (r(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; Temperature =
+      {{
+      Data(real, 1, 15) = (T(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; VelocityX =
+      {{
+      Data(real, 1, 15) = (u(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; VelocityY =
+      {{
+      Data(real, 1, 15) = (v(i), i=1,15) ;
+      }} ;
+
+    DataArray_t&lt;real, 1, 15&gt; VelocityZ =
+      {{
+      Data(real, 1, 15) = (z(i), i=1,15) ;
+      }} ;
+    }} ;
+</pre>
 
 
 

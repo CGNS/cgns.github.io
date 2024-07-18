@@ -138,22 +138,22 @@ This example show how to set the particle coordinate in the case where :sidskey:
 .. code-block:: sids
 
   !  ParticleSize = 15
-  ParticleCoordinates_t&lt;15&gt; ParticleCoordinates =
+  ParticleCoordinates_t<15> ParticleCoordinates =
     {{
 
     ! DataType = real
     ! ParticleSize = 15
-    DataArray_t&lt;real, 1, 15&gt; CoordinateX =
+    DataArray_t<real, 1, 15> CoordinateX =
       {{
       Data(real, 1, 15) = (x(i), i=1,15) ;
       }} ;
 
-    DataArray_t&lt;real, 1, 15&gt; CoordinateY =
+    DataArray_t<real, 1, 15> CoordinateY =
       {{
       Data(real, 1, 15) = (y(i), i=1,15) ;
       }} ;
 
-    DataArray_t&lt;real, 1, 15&gt; CoordinateZ =
+    DataArray_t<real, 1, 15> CoordinateZ =
       {{
       Data(real, 1, 15) = (z(i), i=1,15) ;
       }} ;
@@ -172,14 +172,14 @@ solution variables. Particle solutions are implicitly defined at particle center
 and correspond to the solution for the entire particle.
 
 <pre>
-  ParticleSolution_t&lt; int ParticleSize&gt; :=
+  ParticleSolution_t< int ParticleSize> :=
     {
     List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
 
     IndexRange PointRange ;                                            (o)
-    IndexArray&lt;DataSize[], int&gt; PointList ;                            (o)
+    IndexArray<DataSize[], int> PointList ;                            (o)
 
-    List( DataArray_t&lt;DataType, DataSize[]&gt;
+    List( DataArray_t<DataType, DataSize[]>
           DataArray1 ... DataArrayN ) ;                                (o)
 
     DataClass_t DataClass ;                                            (o)
@@ -266,33 +266,33 @@ we mean the application code that is generating the CGNS database.
 <a name="ParticleSolutionExample"></a>
 <h4>Example - Particle Solution</h4>
 <pre>
-  ParticleSolution_t&lt;15&gt; ParticleSolution =
+  ParticleSolution_t<15> ParticleSolution =
     {{
 
     ! DataType = real
     ! ParticleSize = 15
 
-    DataArray_t&lt;real, 1, 15&gt; Radius =
+    DataArray_t<real, 1, 15> Radius =
       {{
       Data(real, 1, 15) = (r(i), i=1,15) ;
       }} ;
 
-    DataArray_t&lt;real, 1, 15&gt; Temperature =
+    DataArray_t<real, 1, 15> Temperature =
       {{
       Data(real, 1, 15) = (T(i), i=1,15) ;
       }} ;
 
-    DataArray_t&lt;real, 1, 15&gt; VelocityX =
+    DataArray_t<real, 1, 15> VelocityX =
       {{
       Data(real, 1, 15) = (u(i), i=1,15) ;
       }} ;
 
-    DataArray_t&lt;real, 1, 15&gt; VelocityY =
+    DataArray_t<real, 1, 15> VelocityY =
       {{
       Data(real, 1, 15) = (v(i), i=1,15) ;
       }} ;
 
-    DataArray_t&lt;real, 1, 15&gt; VelocityZ =
+    DataArray_t<real, 1, 15> VelocityZ =
       {{
       Data(real, 1, 15) = (z(i), i=1,15) ;
       }} ;

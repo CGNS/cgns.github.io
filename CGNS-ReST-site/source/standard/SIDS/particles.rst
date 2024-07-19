@@ -162,8 +162,8 @@ This example show how to set the particle coordinates in the case where :sidskey
 
 .. _ParticleSolution:
 
-Particle Solution Structure Definition: :sidskey:`ParticleSolution_t
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Particle Solution Structure Definition: :sidskey:`ParticleSolution_t` 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The solution on each particle within a given :sidskey:`ParticleZone_t` is described by the
 :sidskey:`ParticleSolution_t` structure.
@@ -289,7 +289,7 @@ Particle Equation Set Structure Definition: :sidskey:`ParticleEquationSet_t`
 
 .. note::
 
-   1. Default names for the ":sidsref:`Descriptor_t` and :sidsref:`UserDefinedData_t` lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of :sidskey:`ParticleEquationSet_t` and shall not include the names :sidskey:`ParticleGoverningEquations`, :sidskey:`ParticleCollisionModel`, :sidskey:`ParticleBreakupModel`, :sidskey:`ParticleForceModel`, :sidskey:`ParticleWallInteractionModel_t`, :sidskey:`ParticlePhaseChangeModel`, :sidskey:`DataClass`, or :sidskey:`DimensionalUnits`.
+   1. Default names for the :sidsref:`Descriptor_t` and :sidsref:`UserDefinedData_t` lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of :sidskey:`ParticleEquationSet_t` and shall not include the names :sidskey:`ParticleGoverningEquations`, :sidskey:`ParticleCollisionModel`, :sidskey:`ParticleBreakupModel`, :sidskey:`ParticleForceModel`, :sidskey:`ParticleWallInteractionModel_t`, :sidskey:`ParticlePhaseChangeModel`, :sidskey:`DataClass`, or :sidskey:`DimensionalUnits`.
    2. There are no required elements for :sidskey:`ParticleEquationSet_t`.
 
 :sidskey:`EquationDimension` is the dimensionality of the governing equations; it is the number of spatial variables describing the flow.
@@ -396,7 +396,7 @@ Particle Collision Model Structure Definition: :sidskey:`ParticleCollisionModel_
 
 .. note::
 
-  1. Default names for the <a href="build.html#Descriptor":sidsref:`Descriptor_t`, :sidsref:`DataArray_t`, and :sidsref:`UserDefinedData_t` lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of :sidskey:`ParticleCollisionModel_t` and shall not include the names :sidskey:`DataClass` or :sidskey:`DimensionalUnits`.
+  1. Default names for the ":sidsref:`Descriptor_t`, :sidsref:`DataArray_t`, and :sidsref:`UserDefinedData_t` lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of :sidskey:`ParticleCollisionModel_t` and shall not include the names :sidskey:`DataClass` or :sidskey:`DimensionalUnits`.
   2. :sidskey:`ParticleCollisionModelType` is the only required element.
 
 For any data that is dimensional, :sidsref:`DimensionalUnits` may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard :ref:`precedence rules<precedence>`.
@@ -407,12 +407,12 @@ The :sidskey:`ParticleCollisionModelType` names currently listed correspond to t
 
 .. table::
 
-   ============================= =========================================================================================================================================================================================================
-   :sidskey:`ORourke`            O’Rourke, P. J ., "Collective Drop Effects on Vaporizing Liquid Sprays," Ph.D. Thesis, Princeton University, Princeton, N J , United States, 1981.
-   :sidskey:`NTC`                Schmidt, D.P. and Rutland, C. J ., "A New Droplet Collision Algorithm," Journal of Computational Physics , 164 ( 1 ), 62 - 80 , 2000. DOI: 10.1006/jcph.2000.6568
-   :sidskey:`HertzKuwabaraKono`  Goro Kuwabara and Kimitoshi Kono 1987 Jpn. J. Appl. Phys. 26 1230
-   :sidskey:`HertzMindlin`       Tsuji Y.  et al. (1992) Lagrangian numerical simulation of plug flow of cohesionless particles in a horizontal pipe. Powder Technology, 71(3): p. 239-250. http://dx.doi.org/10.1016/0032-5910(92)88030-L
-   ============================= =========================================================================================================================================================================================================
+   ============================== =========================================================================================================================================================================================================
+   :sidskey:`ORourke`             O’Rourke, P. J ., "Collective Drop Effects on Vaporizing Liquid Sprays," Ph.D. Thesis, Princeton University, Princeton, N J , United States, 1981.
+   :sidskey:`NTC`                 Schmidt, D.P. and Rutland, C. J ., "A New Droplet Collision Algorithm," Journal of Computational Physics , 164 ( 1 ), 62 - 80 , 2000. DOI: 10.1006/jcph.2000.6568
+   :sidskey:`HertzKuwabaraKono`   Goro Kuwabara and Kimitoshi Kono 1987 Jpn. J. Appl. Phys. 26 1230
+   :sidskey:`HertzMindlin`        Tsuji Y.  et al. (1992) Lagrangian numerical simulation of plug flow of cohesionless particles in a horizontal pipe. Powder Technology, 71(3): p. 239-250. http://dx.doi.org/10.1016/0032-5910(92)88030-L
+   ============================== =========================================================================================================================================================================================================
 
 .. _ParticleBreakupModel:
 
@@ -473,7 +473,7 @@ The :sidskey:`ParticleBreakupModelType` names currently listed correspond to the
    :sidsref:`RayleighTaylor`      Senecal, P.K., Richards, K.J., Pomraning, E., Yang, T., Dai, M.Z., McDavid, R.M., Patterson, M.A., Hou, S., and Shethaji, T., "A New Parallel Cut-Cell Cartesian CFD Code for Rapid Grid Generation Applied to In-Cylinder Diesel Engine Simulations," SAE Paper 2007-01-0159, 2007. DOI: 10.4271/2007-01-0159
    :sidsref:`TAB`                 O’Rourke, P.J. and Amsden, A.A., "The TAB Method for Numerical Calculation of Spray Droplet Breakup," SAE Paper 872089, 1987. DOI: 10.4271/872089.
    :sidskey:`ETAB`                F.X. Tanner "Liquid Jet Atomization and Droplet Breakup Modeling of Non-Evaporating Diesel Fuel Sprays" SAE 970050, SAE Transactions: Journal of Engines, Vol 106, Sec 3 pp 127-140
-   :sidskey:`LISA`                 Senecal, P.K., Schmidt, D.P., Nouar, I., Rutland, C.J., Reitz, R.D., and Corradini, M.L., "Modeling High-Speed Viscous Liquid Sheet Atomization," International Journal of Multiphase Flow, 25(6-7), 1073-1097, 1999. DOI: 10.1016/S0301-9322(99)00057-9
+   :sidskey:`LISA`                Senecal, P.K., Schmidt, D.P., Nouar, I., Rutland, C.J., Reitz, R.D., and Corradini, M.L., "Modeling High-Speed Viscous Liquid Sheet Atomization," International Journal of Multiphase Flow, 25(6-7), 1073-1097, 1999. DOI: 10.1016/S0301-9322(99)00057-9
    :sidskey:`SHF`                 R. Schmehl, G. Maier, S. Witting "CFD Analysis of Fuel Atomization, Secondary Droplet Breakup and Spray Dispersion in the Premix Duct of a LPP Combustor". Eight International Conference on Liquid Atomization and Spray Systems, 2000
    :sidskey:`PilchErdman`         Pilch, M., & Erdman, C. A. (1987). Use of breakup time data and velocity history data to predict the maximum size of stable fragments for acceleration-induced breakup of a liquid drop. International journal of multiphase flow, 13(6), 741-757. DOI:10.1016/0301-9322(87)90063-2
    :sidskey:`ReitzDiwakar`        Reitz, R.D. and Diwakar, R. "Effect of drop breakup on fuel sprays" SAE Tech. paper series, 860469 (1986)
@@ -512,7 +512,7 @@ Particle Force Model Structure Definition: :sidskey:`ParticleForceModel_t`
     {
     List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
 
-    ParticleForceModelType_t ParticleForceModelType ;          (r)
+    ParticleForceModelType_t ParticleForceModelType ;                  (r)
 
     List( DataArray_t<DataType, 1, 1> DataArray1 ... DataArrayN ) ;    (o)
 
@@ -541,7 +541,7 @@ The :sidskey:`ParticleForceModelType` names currently listed correspond to the f
    :sidskey:`PlessisMasliyah`  Du Plessis, J. P. (1994). Analytical quantification of coefficients in the Ergun equation for fluid friction in a packed bed. Transport in porous media, 16(2), 189-207. DOI:10.1007/BF00617551
    :sidskey:`WenYu`            Wen, C. Y., & Yu, Y. H., (1966). Mechanics of fluidization. Chem. Eng. Prog. Symp. Ser. 62, 100-111.
    :sidskey:`CliftGrace`       Clift, R., Grace, J.R., and Weber, M.E., Bubbles, Drops,  and Particles, Academic Press, NewYork, 1978.
-   sidskey:`HaiderLevenspiel`  Haider, A. and Levenspiel, O., "Drag Coefficient and Terminal Velocity of Spherical and Non-Spherical Particles," Powder Technology 58(1), 63-70, 1989.
+   :sidskey:`HaiderLevenspiel` Haider, A. and Levenspiel, O., "Drag Coefficient and Terminal Velocity of Spherical and Non-Spherical Particles," Powder Technology 58(1), 63-70, 1989.
    :sidskey:`SaffmanMei`       Koohandaz, A., Khavasi, E., Eyvazian, A., and Yousefi, H., "Prediction of particles deposition in a dilute quasi-steady gravity current by Lagrangian markers: Effect of shear-induced lift force," Scientific Reports, 10, 16673, 2020.
    =========================== ========================================================================================================================================================================================================================================
 

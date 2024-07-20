@@ -35,7 +35,7 @@ ParticleCoordinates Figure
       * -  Data-Type:    
         -  :sidskey:`R4`  or :sidskey:`R8`      
       * -  Dimensions:    
-        -  :sidskey:1      
+        -  1      
       * -  Dimension Values:     
         -  :sidskey:`ParticleSize`
       * -  Data:    

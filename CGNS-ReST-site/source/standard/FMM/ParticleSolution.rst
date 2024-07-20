@@ -68,7 +68,7 @@ ParticleSolution Figure
           * -  Dimensions:      
             -  1           
           * -  Dimension Values:       
-            -  :sidskey:2           
+            -  2           
           * -  Data:      
             -  :sidskey:`Begin` , :sidskey:`End`            
           * -  Cardinality:      

@@ -203,7 +203,7 @@ ParticleEquationSet Figure
           * -  Name:           
             -  :sidsref:`EquationDimension`                    
           * -  Label:           
-            -  ":sidskey:`int` "                   
+            -  :sidskey:`int`                   
           * -  Data-Type:           
             -  :sidskey:`I4`                    
           * -  Dimensions:           

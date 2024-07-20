@@ -196,7 +196,7 @@ and correspond to the solution for the entire particle.
    2. There are no required fields for :sidskey:`ParticleSolution_t`.
    3. Both of the fields :sidskey:`PointList` and :sidskey:`PointRange` are optional. Only one of these two fields may be specified.
    4. The structure parameter :sidskey:`DataType` must be consistent with the data stored in the :sidsref:`DataArray_t` structure entities; :sidskey:`DataType` is :sidskey:`real` for all particle-solution identifiers defined in the section :ref:`Conventions for Data-Name Identifiers<dataname>`.
-   5. Indexing of data within the :sidsref:`DataArray_t` structure must be consistent with coordonates defined in the :sidsref:`ParticleCoordinates_t`.
+   5. Indexing of data within the :sidsref:`DataArray_t` structure must be consistent with coordinates defined in the :sidsref:`ParticleCoordinates_t`.
 
 The particle solution data is stored in the list of :sidsref:`DataArray_t` entities; each :sidskey:`DataArray_t` structure entity may contain a single component of the solution vector. Standardized data-name identifiers for the particle-solution quantities are described in the section :ref:`Conventions for Data-Name Identifiers<dataname>`.
 
@@ -539,7 +539,7 @@ The :sidskey:`ParticleForceModelType` names currently listed correspond to the f
    =========================== ========================================================================================================================================================================================================================================
    :sidskey:`Ergun`            Gidaspow, D. (1994). Multiphase flow and fluidization: continuum and kinetic theory descriptions. Academic press.
    :sidskey:`PlessisMasliyah`  Du Plessis, J. P. (1994). Analytical quantification of coefficients in the Ergun equation for fluid friction in a packed bed. Transport in porous media, 16(2), 189-207. DOI:10.1007/BF00617551
-   :sidskey:`WenYu`            Wen, C. Y., & Yu, Y. H., (1966). Mechanics of fluidization. Chem. Eng. Prog. Symp. Ser. 62, 100-111.
+   :sidskey:`WenYu`            Wen, C. Y., & Yu, Y. H., (1966). Mechanics of fluidization. Chemical Engineering Progress Symposium Series. 62, 100-111.
    :sidskey:`CliftGrace`       Clift, R., Grace, J.R., and Weber, M.E., Bubbles, Drops,  and Particles, Academic Press, NewYork, 1978.
    :sidskey:`HaiderLevenspiel` Haider, A. and Levenspiel, O., "Drag Coefficient and Terminal Velocity of Spherical and Non-Spherical Particles," Powder Technology 58(1), 63-70, 1989.
    :sidskey:`SaffmanMei`       Koohandaz, A., Khavasi, E., Eyvazian, A., and Yousefi, H., "Prediction of particles deposition in a dilute quasi-steady gravity current by Lagrangian markers: Effect of shear-induced lift force," Scientific Reports, 10, 16673, 2020.

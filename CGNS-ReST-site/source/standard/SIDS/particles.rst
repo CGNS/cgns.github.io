@@ -469,9 +469,7 @@ The :sidskey:`ParticleBreakupModelType` names currently listed correspond to the
 
    ============================== ==============================================================================================================================================================================================================================================================================================================
    :sidskey:`KelvinHelmholtz`     Reitz, R.D. and Bracco, F.V., "Mechanisms of Breakup of Round Liquid Jets," Encyclopedia of Fluid Mechanics, Gulf Publishing Company, 1986.
-   .. codespell:ignore Som
    :sidskey:`KelvinHelmholtzACT`  Som, S. and Aggarwal, S.K., "Effects of Primary Breakup Modeling on Spray and Combustion Characteristics of Compression Ignition Engines", Combustion and Flame, 157(6), 1179-1193, 2010. DOI: 10.1016/j.combustflame.2010.02.018
-   .. codespell:ignore Som
    :sidsref:`RayleighTaylor`      Senecal, P.K., Richards, K.J., Pomraning, E., Yang, T., Dai, M.Z., McDavid, R.M., Patterson, M.A., Hou, S., and Shethaji, T., "A New Parallel Cut-Cell Cartesian CFD Code for Rapid Grid Generation Applied to In-Cylinder Diesel Engine Simulations," SAE Paper 2007-01-0159, 2007. DOI: 10.4271/2007-01-0159
    :sidsref:`TAB`                 O’Rourke, P.J. and Amsden, A.A., "The TAB Method for Numerical Calculation of Spray Droplet Breakup," SAE Paper 872089, 1987. DOI: 10.4271/872089.
    :sidskey:`ETAB`                F.X. Tanner "Liquid Jet Atomization and Droplet Breakup Modeling of Non-Evaporating Diesel Fuel Sprays" SAE 970050, SAE Transactions: Journal of Engines, Vol 106, Sec 3 pp 127-140

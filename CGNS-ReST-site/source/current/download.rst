@@ -2,7 +2,7 @@
    See LICENSING/COPYRIGHT at root dir of this documentation sources
 
 .. _SupportDownload:
-   
+
 Download
 ========
 
@@ -27,7 +27,7 @@ What to Download
 For the up-to-date **development** source, visit `GitHub Development <https://github.com/CGNS/CGNS/tree/develop>`_.
 
 .. code-block:: shell
-  
+
   git clone https://github.com/CGNS/CGNS.git
 
 For the **stable** source, visit `GitHub Stable <https://github.com/CGNS/CGNS/tree/master>`_.
@@ -99,7 +99,7 @@ Historical Stable Releases:
   Release 3.2.1 implements the suggestions by Cambridge Flow Solutions to the CMake scripts and adds routines to set the MPI communicator for parallel I/O. There are also numerous updates and fixes to the test cases, tools and CGNStools utilities.
 
   .. note:
-    
+
     CGNStools is no longer built automatically, you need to set the configure flag, --enable-cgnstools if using configure.
 
 * :CGNS Version 3.1.4:

@@ -236,7 +236,7 @@ For example, in a multizone problem, nodes associated with different zones might
 At this level, it is generally not possible to identify a collection of names which are likely to recur. This means that the naming of high level objects does not require standardization, and the SIDS are silent regarding the naming convention.
 
 Because every HDF5 node must be given a name when it is opened, default names, based on the node Label, are provided by convention.
-The :ref:`CGNS Midlevel Library<MLLIntroduction>` will record the default names if none is provided by the user.
+The :ref:`CGNS Midlevel Library<CGNS/MLL - An API for C and Fortran applications>` will record the default names if none is provided by the user.
 The precise formula is given in the Label section below.
 
 At levels of the tree farther from the root, the SIDS often specify the name.
@@ -386,12 +386,12 @@ The CGNSLibraryVersion_t Node
 An HDF5 file may also contain other nodes below the root node beside :sidskey:`CGNSBase_t`,
 but these are *not* officially part of the CGNS database and will not be recognized by most CGNS software.
 One exception to this is a node called :sidskey:`CGNSLibraryVersion_t`, which is a child of the HDF5 root node.
-This node stores the version number of the CGNS standard with which the file is consistent, and is created automatically when the file is created or modified using the :ref:`CGNS Mid-Level Library<MLLIntroduction>`. Officially, the CGNS version number is not a part of the CGNS database (because it is not located below :sidskey:`CGNSBase_t`).
+This node stores the version number of the CGNS standard with which the file is consistent, and is created automatically when the file is created or modified using the :ref:`CGNS Mid-Level Library<CGNS/MLL - An API for C and Fortran applications>`. Officially, the CGNS version number is not a part of the CGNS database (because it is not located below :sidskey:`CGNSBase_t`).
 But because the Mid-Level Library software makes use of it, the node is included in this document.
 
 Topological Basis of CGNS Database Organization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Below the root, the organization of a CGNS database reflects the problem topology. Omitting detail, the overall structure of the HDF5 file is shown in the first of the :ref:`CGNS File Mapping Figures<StandardFMMfigs>`.
+Below the root, the organization of a CGNS database reflects the problem topology. Omitting detail, the overall structure of the HDF5 file is shown in the first of the :ref:`CGNS File Mapping Figures`.
 Below the HDF5 root node is the :sidskey:`CGNSLibraryVersion_t` node, and one or more :sidskey:`CGNSBase_t` nodes.
 Each :sidskey:`CGNSBase_t` node is the root of a CGNS database.
 

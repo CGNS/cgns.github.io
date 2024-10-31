@@ -41,6 +41,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.todo',
+    'sphinx.ext.extlinks',
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
@@ -69,6 +70,15 @@ templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 highlight_language = 'c'
+pygments_style = 'sphinx'
+
+# adding Lexer
+from sphinx.highlighting import lexers
+import sys
+sys.path.append('.')
+from sidslexer import SidsLexer
+
+lexers["sids"] = SidsLexer()
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

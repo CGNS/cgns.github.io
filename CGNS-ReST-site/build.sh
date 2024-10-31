@@ -9,6 +9,11 @@
 # this is doc generation for a UNIX host
 # generation is made in a separate directory, change its path here:
 
+CURRENT_DIR=$PWD
+cd ..
+git submodule update --remote --merge
+cd $CURRENT_DIR
+
 export build_dir=./docs/_build/html
 
 cp -r ./images ${build_dir}/

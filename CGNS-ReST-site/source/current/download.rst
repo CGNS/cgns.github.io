@@ -42,12 +42,14 @@ Current Stable Release:
 ^^^^^^^^^^^^^^^^^^^^^^^
 
   :`CGNS Version 4.1.2 (Patch) <https://github.com/CGNS/CGNS/releases/tag/v4.1.2>`_:
+
   Patched version v4.1.2 addressed backward compatibility issues.
 
 Historical Stable Releases:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * :`CGNS Version 4.1.1 (Patch) <https://github.com/CGNS/CGNS/releases/tag/v4.1.1>`_:
+
   Patched version v4.1.1 addressed backward compatibility and tools compilation errors.
 
 * :`CGNS Version 4.1.0 <https://github.com/CGNS/CGNS/releases/tag/v4.1.0>`_:
@@ -77,17 +79,21 @@ Historical Stable Releases:
   Version 4.0.0 was released with CPEX 0041 implemented, (essentially this is CGNS 3.4.0 released as version 4.0.0).
 
 * :`CGNS Version 3.4.1 (patch) <https://github.com/CGNS/CGNS/releases/tag/v3.4.2>`_:
+
   Patched version v3.4.1 removed CPEX 0041.
 
 * :`CGNS Version 3.4.0 <https://github.com/CGNS/CGNS/releases/tag/v3.4.0>`_:
+
   In addition to numerous bug fixes, this version added new features: CPEX 40 Rind Plane Indexing, CPEX 41 NGON modification proposal, added support for NAG Fortran compilers, enforce the HDF5 version >= 1.8 is used in building HDF5, automatic detection and linking of szip and zlib if required by HDF5.
 
 * :`CGNS Version 3.3.0 <https://github.com/CGNS/CGNS/releases/tag/v3.3.0>`_:
+
   This Version implements CPEX 0038 and 0039, adds new functionality to the parallel capability, and makes extensive changes related to the Fortran library.
 
   Important note for Fortran users: V3.3 removes the usage of "include cgnslib_f.h". Instead, from this release forward, one must now employ the module "use CGNS". Also, if making use of 64-bit integers, Fortran programs must declare the relevant 64-bit integers via, e.g.: integer(cgsize_t) integername.
 
 * :CGNS Version 3.2.1:
+
   This Version 3.2 release provides partial integration of parallel I/O using HDF5 with MPI. It also implements the Hierarchy of families (CPEX 0033), Multiple families (CPEX 0034), and Cubic elements (CPEX 0036). Conversion programs to and from AFLR3, FAST, and TetGen have also been added to CGNStools.
 
   Release 3.2.1 implements the suggestions by Cambridge Flow Solutions to the CMake scripts and adds routines to set the MPI communicator for parallel I/O. There are also numerous updates and fixes to the test cases, tools and CGNStools utilities.
@@ -97,6 +103,7 @@ Historical Stable Releases:
     CGNStools is no longer built automatically, you need to set the configure flag, --enable-cgnstools if using configure.
 
 * :CGNS Version 3.1.4:
+
   Includes 64-bit integer capability and updated Tools for viewing and editing CGNS files. HDF5 is now the default file type, when CGNS is built with HDF5 version 1.8 or later. (CGNS can always read or write both HDF5 and ADF file types.)
 
 Older recent release versions are also available from https://github.com/CGNS/CGNS/releases.

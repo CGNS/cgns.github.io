@@ -461,10 +461,10 @@ CPEX0032
   * - Contacts
     - Marc Poinot
   * - Documentation
-    - :download:`IterativeData.pdf <../../proposed_extensions/IterativeData.pdf>`
-      :download:`FrameReference.pdf <../../proposed_extensions/FrameReference.pdf>`
-      :download:`FamilyRigidMotion.pdf <../../proposed_extensions/FamilyRigidMotion.pdf>`
-      :download:`RigidMotion.pdf <../../proposed_extensions/RigidMotion.pdf>`
+    - :download:`IterativeData.pdf <../../proposed_extensions/CGNS-prop-ext-FamilyRigidMotionIterativeData.pdf>`
+      :download:`FrameReference.pdf <../../proposed_extensions/CGNS-prop-ext-FrameReference.pdf>`
+      :download:`FamilyRigidMotion.pdf <../../proposed_extensions/CGNS-prop-ext-FamilyRigidMotion-3.pdf>`
+      :download:`RigidMotion.pdf <../../proposed_extensions/CGNS-prop-ext-RigidMotion.pdf>`
   * - Date First Posted
     - Jul.01.08
   * - Date of Last Revision
@@ -521,8 +521,8 @@ CPEX0030
   * - Contacts
     - Chris Rumsey, Marc Poinot, Bob Bush, Mark Fisher, Steven Allmaras
   * - Documentation
-    - :download:`Regions.pdf <../../proposed_extensions/Regions.pdf>`
-      :download:`Regions_filemap.pdf <../../proposed_extensions/Regions_filemap.pdf>`
+    - :download:`Regions.pdf <../../proposed_extensions/RegionsX.pdf>`
+      :download:`Regions_filemap.pdf <../../proposed_extensions/RegionsIX_filemap.pdf>`
   * - Date First Posted
     - Nov.09.06
   * - Date of Last Revision
@@ -1140,7 +1140,7 @@ CPEX0008
   * - Contacts
     - Michel Delanaye, Etienne Robin, Alpesh Patel
   * - Documentation
-    - :download:`HierarchicalElements.pdf <../../proposed_extensions/HierarchicalElements.pdf>` , Response from M.Aftosmis: :download:`hierarchicalResponse.pdf <../../proposed_extensions/hierarchicalResponse.pdf>`
+    - :download:`HierarchicalElements.pdf <../../proposed_extensions/HierarchicalElements.pdf>` , Response from M.Aftosmis: :download:`hierarchicalResponse.pdf <../../proposed_extensions/HierarchicalResponse.pdf>`
   * - Date First Posted
     - Aug.02.00
   * - Date of Last Revision

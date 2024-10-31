@@ -4,14 +4,14 @@
 :orphan:
 
 .. _Contributed:
-   
+
 Contributed
 ===========
 
-           Plot3dg_to_CGNS external link	  	Converts a "standard" Plot3D grid file to a CGNS grid file.
+   Plot3dg_to_CGNS external link        Converts a "standard" Plot3D grid file to a CGNS grid file.
    Contact: Chris Rumsey (Christopher.L.Rumsey@nasa.gov)
 
-   CGNS_to_Plot3d external link		Converts a CGNS file with a cell-centered solution to "standard" Plot3D grid and solution files.
+   CGNS_to_Plot3d external link Converts a CGNS file with a cell-centered solution to "standard" Plot3D grid and solution files.
    Contact: Chris Rumsey (Christopher.L.Rumsey@nasa.gov)
 
    CGNS_readhist external link		Reads a CGNS file and writes history data to a formatted file.

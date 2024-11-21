@@ -28,11 +28,6 @@ ________________________________________________
   Keep the reference order to be after CGNSInternals_FNC_CG_CONFIG
 ..
 
-List of Valid CGNS Configuration Parameters
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. doxygengroup:: CGNSInternals_CG_CONFIG
-    :content-only:
-
 .. doxygengroup:: CGNSInternals
     :content-only:
 
@@ -551,3 +546,94 @@ Links
 
 .. doxygengroup:: Links
     :content-only:
+
+
+**********************
+Particle Specification
+**********************
+
+.. _ParticleZoneInformation-ref:
+
+
+Particle Zone Information
+________________________________________________
+
+.. note::
+   When a CGNS file is opened via the cg_open() MLL function, the particle zones are sorted
+   alphanumerically by name (the creation order is ignored/discarded). It is considered good
+   standard practice to always choose particle names to be alphabetically increasing.
+   For example, Particle0001, Particle0002, etc. is appropriate for up to 9999 particles.
+
+.. doxygengroup:: ParticleZoneInformation
+    :content-only:
+
+------
+
+.. _ParticleIterative-ref:
+
+Particle Iterative Data
+________________________________________________
+
+.. doxygengroup:: ParticleIterativeData
+    :content-only:
+
+------
+
+.. _ParticleCoordinates-ref:
+
+Particle Coordinates
+________________________________________________
+
+.. doxygengroup:: ParticleCoordinates
+    :content-only:
+
+------
+.. _ParticleSolution-ref:
+
+Particle Solution
+________________________________________________
+
+.. doxygengroup:: ParticleSolution
+    :content-only:
+
+------
+
+.. _ParticleSolutionData-ref:
+
+Particle Solution Data
+________________________________________________
+
+.. doxygengroup:: ParticleSolutionData
+    :content-only:
+
+------
+
+.. _ParticleEquationSet-ref:
+
+Particle Equation Set
+________________________________________________
+
+.. doxygengroup:: ParticleEquationSet
+    :content-only:
+
+------
+
+.. _ParticleGoverningEquations-ref:
+
+Particle Governing Equations
+________________________________________________
+
+.. doxygengroup:: ParticleGoverningEquations
+    :content-only:
+
+------
+
+.. _ParticleModel-ref:
+
+Particle Model
+________________________________________________
+
+.. doxygengroup:: ParticleModel
+    :content-only:
+
+------

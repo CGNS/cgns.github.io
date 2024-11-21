@@ -102,10 +102,11 @@ html_theme = 'conestack'
 html_theme_options = {
     'cs_color': '#260078',
     'cs_bg_color': 'var(--bs-indigo)',
-    'logo_url': '_static/CGNS_empty.svg',
+    'logo_url': '_static/cgns_color_home.svg',
     'logo_title': ' ',
     'logo_width': '78px',
-    'logo_height': '66px'
+    'logo_height': '66px',
+    'github_url': 'https://github.com/CGNS/CGNS'
 }
 
 #html_theme_options = {

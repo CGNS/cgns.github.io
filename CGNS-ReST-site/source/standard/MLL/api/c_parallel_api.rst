@@ -28,6 +28,20 @@ Parallel Grid Coordinate Data
 .. doxygengroup:: ParallelGridCoordinate
     :content-only:
 
+*********************************
+Parallel Particle Coordinate Data
+*********************************
+
+.. _ParallelParticleCoordinate-ref:
+
+Parallel Particle Coordinates
+________________________________________________
+
+.. doxygengroup:: ParallelParticleCoordinate
+    :content-only:
+
+------
+
 *********************************************
 Parallel Element Connectivity Data
 *********************************************

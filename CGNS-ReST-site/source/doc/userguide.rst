@@ -1148,7 +1148,7 @@ Note that the use of ElementList and ElementRange (recommended in previous versi
 
 A portion of the layout of the CGNS file for the ZoneBC_t node and its children is shown below. The ZoneBC_t node lies directly under Zone_t.
 
-.. figure:: ../../images/users/figs/tree_cartesianUBC.gif
+.. figure:: ../../images/users/figs/tree_cartesian_UBC.gif
    :width: 168px
    :align: center
    :alt: Diagram showing CGNS layout for unstructured grid with boundary conditions at face centers

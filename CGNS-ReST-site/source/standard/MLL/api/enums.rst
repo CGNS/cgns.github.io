@@ -28,3 +28,5 @@ List of enumerated values (key words) for each of these variable types (typedefs
 .. doxygenenum:: WallFunctionType_t
 .. doxygenenum:: AreaType_t
 .. doxygenenum:: AverageInterfaceType_t
+.. doxygenenum:: ParticleGoverningEquationsType_t
+.. doxygenenum:: ParticleModelType_t

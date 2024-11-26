@@ -52,13 +52,27 @@ Parallel Element Connectivity Data
     :content-only:
 
 ******************************
-Parallel Solution Data
+Parallel Flow Solution Data
 ******************************
+
+.. note::
+   The application is responsible for ensuring that the data type for the solution
+   data matches that defined in the file; no conversions are done.
 
 .. _SolutionData-ref:
 
 .. doxygengroup:: SolutionData
     :content-only:
+
+.. _ParallelParticleSolutionData-ref:
+
+Parallel Particle Solution Data
+________________________________________________
+
+.. doxygengroup:: ParallelParticleSolutionData
+    :content-only:
+
+------
 
 ******************************
 Parallel Array Data

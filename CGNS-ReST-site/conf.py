@@ -24,10 +24,7 @@ subprocess.call('doxygen Doxyfile', shell=True)
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'CGNS'
-# copyright is overridden by '_static/css/copyright.css'
-# see https://github.com/readthedocs/sphinx_rtd_theme/issues/828
-copyright = ""
-#author = 'CGNS'
+author = ''
 
 # -- General configuration ---------------------------------------------------
 #
@@ -83,62 +80,19 @@ lexers["sids"] = SidsLexer()
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_css_files = [
-    'css/custom.css',
-]
+html_theme = "sphinx_book_theme"
 
-#html_theme = 'alabaster'
-html_static_path = ['_static']
-
-##html_permalinks_icon = '<span>#</span>'
-#html_theme = 'sphinxawesome_theme'
-
-#MSB import guzzle_sphinx_theme
-#MSBhtml_theme_path = guzzle_sphinx_theme.html_theme_path()
-#MSBhtml_theme = 'guzzle_sphinx_theme'
-
-html_theme = 'conestack'
-#
-html_theme_options = {
-    'cs_color': '#260078',
-    'cs_bg_color': 'var(--bs-indigo)',
-    'logo_url': '_static/cgns_color_home.svg',
-    'logo_title': ' ',
-    'logo_width': '78px',
-    'logo_height': '66px',
-    'github_url': 'https://github.com/CGNS/CGNS'
+html_context = {
+   "default_mode": "light",
+   "default_theme": "light"
 }
 
-#html_theme_options = {
-#    'cs_color': '#F0F8FF',
-#    'cs_bg_color': '#F0F8FF'
-#    'logo_url': '_static/your_logo.svg',
-#    'logo_title': 'CGNS/MLL - An API for C and Fortran applications',
-#    'logo_width': '40px',
-#    'logo_height': '40px'
-#}
-
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
-#html_theme = 'sphinx_rtd_theme'
-#html_theme_options = {
-#    'canonical_url': '',
-#    'analytics_id': '',
-#    'display_version': True,
-#    'prev_next_buttons_location': 'bottom',
-#    'style_external_links': False,
-#    'logo_only': False,
-    # Toc options
-#    'collapse_navigation': True,
-#    'sticky_navigation': True,
-#    'navigation_depth': 4,
-#    'includehidden': True,
-#    'titles_only': False
-#}
-# html_logo = ''
-# github_url = ''
-# html_baseurl = 'https://docs.example.org/doc'
+# Options for HTML output
+html_title = "CGNS Documentation"
+html_baseurl = "https://cgns.org"
+html_logo = "_static/CGNS_logo_nobckgrnd.svg"
+#html_favicon = "assets/img/favicon.ico"
+#html_last_updated_fmt = ""
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -147,9 +101,20 @@ html_static_path = ["_static"]
 
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
-html_css_files = [
-    "css/copyright.css",
-]
+html_css_files = ["css/custom.css"]
+html_theme_options = {
+    "repository_url": "https://github.com/CGNS/CGNS",
+    "use_issues_button": False,
+    "use_edit_page_button": False,
+    "use_download_button": False,
+    "use_fullscreen_button": False,
+    "use_repository_button": True,
+    "default_mode": "light",
+    "extra_footer": 'Dedicated to the public domain with <a href="https://creativecommons.org/publicdomain/zero/1.0/" class="reference external">CC0 1.0</a>.',
+#    "show_navbar_depth": 1,
+#    "toc_title": "Sections",
+}
+
 fortran_src = ["../src/c.F90"]
 fortran_subsection_type = "title"
 # -- Breathe configuration -------------------------------------------------

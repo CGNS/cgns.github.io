@@ -431,6 +431,23 @@ ____________________________________________
 
 ------
 
+.. _ParticleEquationSet-ref:
+
+Particle Equation Set
+________________________________________________
+
+.. raw:: html
+
+   <i>Node</i>: <code>ParticleEquationSet_t</code>
+              (<a href="../../SIDS/particles.html#ParticleEquationSet">SIDS</a>,
+               <a href="../../FMM/nodes.html#ParticleEquationSet">File Mapping</a>)
+   <br><br>
+
+.. doxygengroup:: ParticleEquationSet
+    :content-only:
+
+------
+
 .. _GoverningEquations-ref:
 
 Governing Equations (GoverningEquations_t)
@@ -440,11 +457,31 @@ ____________________________________________
 
 ------
 
+.. _ParticleGoverningEquations-ref:
+
+Particle Governing Equations
+________________________________________________
+
+.. doxygengroup:: ParticleGoverningEquations
+    :content-only:
+
+------
+
 .. _AuxiliaryModel-ref:
 
 Auxiliary Model
 ____________________________________________
 .. doxygengroup:: AuxiliaryModel
+    :content-only:
+
+------
+
+.. _ParticleModel-ref:
+
+Particle Model
+________________________________________________
+
+.. doxygengroup:: ParticleModel
     :content-only:
 
 ------
@@ -588,6 +625,7 @@ ________________________________________________
     :content-only:
 
 ------
+
 .. _ParticleSolution-ref:
 
 Particle Solution
@@ -606,34 +644,5 @@ ________________________________________________
 .. doxygengroup:: ParticleSolutionData
     :content-only:
 
-------
 
-.. _ParticleEquationSet-ref:
 
-Particle Equation Set
-________________________________________________
-
-.. doxygengroup:: ParticleEquationSet
-    :content-only:
-
-------
-
-.. _ParticleGoverningEquations-ref:
-
-Particle Governing Equations
-________________________________________________
-
-.. doxygengroup:: ParticleGoverningEquations
-    :content-only:
-
-------
-
-.. _ParticleModel-ref:
-
-Particle Model
-________________________________________________
-
-.. doxygengroup:: ParticleModel
-    :content-only:
-
-------

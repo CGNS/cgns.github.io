@@ -10,16 +10,16 @@
    03/2021 - (marc.poinot@safrangroup.com)
              Major update with the help of mickael.philit@safrangroup.com
 
-.. IGNORE warning message produced by the image directive below	     
-.. image:: /images/logo/CGNS_logo_1.png
-   :width: 400px
+.. IGNORE warning message produced by the image directive below
+.. image:: /_static/CGNS_logo_nobckgrnd.svg
+   :width: 500px
    :align: center
 
 .. _CGNSHomePage:
 
 The official CGNS home page
 ===========================
-	   
+
 The **CFD General Notation System** (CGNS) provides a general, portable,
 and extensible standard for the storage and retrieval of computational
 fluid dynamics (CFD) analysis data.  It consists of a collection of
@@ -27,7 +27,7 @@ conventions, and :ref:`free and open software <CGNSLicense>` implementing those
 conventions. It is self-descriptive, machine-independent,
 well-documented, and administered by an international steering
 committee.
-     
+
 It is also an :ref:`American Institute of Aeronautics and
 Astronautics (AIAA) Recommended Practice <AIAAPractice>`.
 The system consists of two
@@ -53,7 +53,7 @@ Main Topics
 .. list-table::
    :widths: 33 34 33
    :align: center
-   
+
    * - :ref:`What is CGNS? <WhatIsCGNS>`
      - :ref:`Quick Start Guide <QuickStartGuide>`
      - :ref:`News <LatestNews>`
@@ -75,14 +75,14 @@ Reference Documentation
 
 .. cssclass:: table-bordered
 
-.. removed quicklink below (same as above links)	      
+.. removed quicklink below (same as above links)
 ..     - :ref:`Overview and Entry-Level Document <Overview>`
-	      
+
 .. list-table::
    :widths: 50 50
    :width: 100%
    :align: center
-	   
+
    * - :ref:`CGNS/SIDS <CGNS-SIDS>`
      - :ref:`CGNS/HDF5 <HDF5Implementation>`
    * - :ref:`CGNS/MLL <StandardMLL>`
@@ -94,7 +94,7 @@ Reference Documentation
 
    Jump to :ref:`the glossary <CGNSGlossary>`
 
-		
+
 Site map
 -------------
 
@@ -106,5 +106,5 @@ Site map
    current
    governance
 
-.. last line 
+.. last line
 

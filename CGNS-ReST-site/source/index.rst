@@ -94,17 +94,5 @@ Reference Documentation
 
    Jump to :ref:`the glossary <CGNSGlossary>`
 
-
-Site map
--------------
-
-.. toctree::
-   :maxdepth: 4
-
-   general
-   standard
-   current
-   governance
-
 .. last line
 

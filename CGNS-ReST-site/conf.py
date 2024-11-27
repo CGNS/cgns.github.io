@@ -103,16 +103,23 @@ html_static_path = ["_static"]
 # or fully qualified paths (eg. https://...)
 html_css_files = ["css/custom.css"]
 html_theme_options = {
-    "repository_url": "https://github.com/CGNS/CGNS",
-    "use_issues_button": False,
+    "repository_url": "https://github.com/CGNS/cgns-modern.github.io",
+    "use_issues_button": True,
     "use_edit_page_button": False,
     "use_download_button": False,
-    "use_fullscreen_button": False,
+    "use_fullscreen_button": True,
     "use_repository_button": True,
     "default_mode": "light",
     "extra_footer": 'Dedicated to the public domain with <a href="https://creativecommons.org/publicdomain/zero/1.0/" class="reference external">CC0 1.0</a>.',
 #    "show_navbar_depth": 1,
 #    "toc_title": "Sections",
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/CGNS/CGNS",
+            "icon": "fa-solid fa-code-fork",
+        },
+    ],
 }
 
 fortran_src = ["../src/c.F90"]

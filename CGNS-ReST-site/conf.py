@@ -109,7 +109,6 @@ html_theme_options = {
     "use_download_button": False,
     "use_fullscreen_button": True,
     "use_repository_button": True,
-    "default_mode": "light",
     "extra_footer": 'Dedicated to the public domain with <a href="https://creativecommons.org/publicdomain/zero/1.0/" class="reference external">CC0 1.0</a>.',
 #    "show_navbar_depth": 1,
 #    "toc_title": "Sections",
@@ -117,7 +116,7 @@ html_theme_options = {
         {
             "name": "GitHub",
             "url": "https://github.com/CGNS/CGNS",
-            "icon": "fa-solid fa-code-fork",
+            "icon": "fa-solid fa-download",
         },
     ],
 }

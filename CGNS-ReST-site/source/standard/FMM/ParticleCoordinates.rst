@@ -7,18 +7,16 @@
 
 .. role:: sidsref(code)
 
-.. _ZoneIterativeDataFigure:
+.. _ParticleCoordinatesFigure:
 
-.. _ParticleIterativeDataFigure:
-
-ZoneIterativeData/ParticleIterativeData Figure
-==============================================
+ParticleCoordinates Figure
+==========================
 
 .. container:: fighead
      
-   **ZoneIterativeData or ParticleIterativeData Node**
+   **ParticleCoordinates Node**
    
-   (See :ref:`Zone_t figure <ZoneFigure>` or :ref:`ParticleZone_t figure <ParticleZoneFigure>`)
+   (See :ref:`ParticleZone_t figure <ParticleZoneFigure>` )
    
      
 
@@ -35,17 +33,17 @@ ZoneIterativeData/ParticleIterativeData Figure
       * -  Label:    
         -  :sidsref:`DataArray_t`      
       * -  Data-Type:    
-        -  :sidskey:`C1`  or user defined     
+        -  :sidskey:`R4`  or :sidskey:`R8`      
       * -  Dimensions:    
-        -  2 or user defined     
+        -  1      
       * -  Dimension Values:     
-        -  (32, :sidskey:`NumberOfSteps` ) or user defined     
+        -  :sidskey:`ParticleSize`
       * -  Data:    
-        -  Context dependent or user defined     
+        -  Particle coordinate values     
       * -  Cardinality:    
         -  0, *N*      
       * -  Parameters:    
-        -  :sidskey:`DataType` , dimension of data, size of data     
+        -  :sidskey:`DataType` , :sidskey:`ParticleSize`      
       * -  Child Nodes:    
         -  :ref:`DataArray_t figure <DataArrayFigure>`  
 
@@ -89,7 +87,7 @@ ZoneIterativeData/ParticleIterativeData Figure
       * -  Label:     
         -  :sidsref:`DimensionalUnits_t`      
       * -  See:    
-        -  :ref:`CGNSBase_t figure <CGNSBaseFigure>`  
+        -  :ref:`DimensionalUnits_t figure <DimensionalUnitsFigure>`  
 
 .. container:: figelem
  
@@ -104,5 +102,6 @@ ZoneIterativeData/ParticleIterativeData Figure
         -  :sidsref:`UserDefinedData_t`      
       * -  See:    
         -  :ref:`UserDefinedData_t figure <UserDefinedDataFigure>`  
+
 
 .. last line

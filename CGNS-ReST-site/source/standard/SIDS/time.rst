@@ -110,6 +110,44 @@ Any number of extra :sidskey:`DataArray_t` nodes are allowed. These should be us
 
 The :sidskey:`ZoneIterativeData_t` data structure may not exist without the :sidskey:`BaseIterativeData_t` under the :sidskey:`CGNSBase_t` node. However :sidskey:`BaseIterativeData_t` may exist without :sidskey:`ZoneIterativeData_t`. 
 
+.. _ParticleIterativeData:
+
+Particle Iterative Data Structure Definition: :sidskey:`ParticleIterativeData_t`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :sidskey:`ParticleIterativeData_t` data structure is located under the :sidsref:`Particle_t` node. It may be used to record pointers to particle data for each recorded step of the simulation, and is defined as follows:
+
+.. code-block:: sids
+
+  ParticleIterativeData_t< int NumberOfSteps > :=
+    {
+    DataArray_t<char, 2, [32, NumberOfSteps]>
+       ParticleCoordinatesPointers ;                                   (o)
+    DataArray_t<char, 2, [32, NumberOfSteps]>
+       ParticleSolutionPointers ;                                      (o)
+
+    List( DataArray_t<> DataArray1 ... DataArrayN ) ;                  (o)
+
+    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+    DataClass_t DataClass ;                                            (o)
+
+    DimensionalUnits_t DimensionalUnits ;                              (o)
+
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+    }
+
+.. note::
+
+     Default names for the :sidsref:`DataArray_t`, :sidsref:`Descriptor_t`, and :sidsref:`UserDefinedData_t` lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of :sidskey:`ParticleIterativeData_t` and shall not include the names :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`ParticleSolutionPointers`.
+
+The data arrays with data-name identifiers :sidskey:`xxxPointers` contain lists of associated data structures for each recorded time value or iteration. These data structures contain data at the associated time value, or at the end of the associated iteration. There is an implied one-to-one correspondence between each pointer (from 1, 2, ..., :sidskey:`NumberOfSteps`) and the associated :sidskey:`TimeValues` and/or :sidskey:`IterationValues` under :sidskey:`BaseIterativeData_t`. They refer by name to data structures within the current particle node. The name :sidskey:`Null` is used when a particular time or iteration does not have a corresponding data structure to point to. 
+
+Any number of extra :sidsref:`DataArray_t` nodes are allowed. These should be used to record data not covered by this specification.
+
+
+The :sidskey:`ParticleIterativeData_t` data structure may not exist without the :sidskey:`BaseIterativeData_t` under the :sidsref:`CGNSBase_t` node. However :sidskey:`BaseIterativeData_t` may exist without :sidskey:`ParticleIterativeData_t`.
+
 
 Rigid Grid Motion Structure Definition: ``RigidGridMotion_t``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -535,5 +573,30 @@ No units are given in this example, but a real case would establish them. Also, 
        .. code-block:: sids
         
          Data = (Null, ArbitraryGridMotion#2)
+
+Example - Moving Particles
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this example, we will show how the :sidskey:`ParticleIterativeData_t` nodes can be used to provide time-dependent data in a :sidsref:`ParticleData_t` node.
+
+
+Multiple :sidsref:`ParticleCoordinates_t` and :sidskey:`ParticleSolution_t` data structures are recorded under the particle node. :sidskey:`ParticleCoordinatesPointers` and :sidskey:`ParticleSolutionPointers` keep the list of which particle coordinates definition and particle solution definition correspond to each time step.
+
+.. code-block:: sids
+
+  Particle_t Particles {
+
+    !--- Time dependent data
+    List ( ParticleCoordinates_t ParticleCoordinates MovedParticle#1 MovedParticle#2 ...
+           MovedParticle#N )
+    List ( ParticleSolution_t Solution#0 Solution#1 Solution#2 ... Solution#N )
+    ParticleIterativeData_t {
+      ParticleCoordinatesPointers = {"MovedParticle#1", "MovedParticle#2", ...,
+         "MovedParticle#N"}
+      ParticleSolutionPointers = {"Solution#1", "Solution#2", ..., "Solution#N"}
+    }
+  }
+
+Note that there may be more solutions under a particle node than those pointed to by :sidskey:`ParticleCoordinatesPointers` or :sidskey:`ParticleSolutionPointers`. In this example, :sidskey:`ParticleCoordinates` and :sidskey:`Solution#0` could correspond to a restart solution.
 
 .. last line

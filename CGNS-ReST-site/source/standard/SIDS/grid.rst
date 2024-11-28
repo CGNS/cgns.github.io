@@ -710,7 +710,7 @@ Flow Solution Structure Definition: :sidskey:`FlowSolution_t`
     3. Both of the fields :sidskey:`PointList` and :sidskey:`PointRange` are optional. Only one of these two fields may be specified.
     4. The structure parameter :sidskey:`DataType` must be consistent with the data stored in the :sidsref:`DataArray_t` structure entities; :sidskey:`DataType` is :code:`real` for all flow-solution identifiers defined in the section :ref:`Conventions for Data-Name Identifiers<dataname>`.
     5. For unstructured zones :sidsref:`GridLocation` options are limited to :sidskey:`Vertex` or :sidskey:`CellCenter`, unless one of :sidskey:`PointList` or :sidskey:`PointRange` is present.
-    6. Indexing of data within the :sidsref:`DataArray_t` structure must ne consistent with the associated numbering of vertices or elements.
+    6. Indexing of data within the :sidsref:`DataArray_t` structure must be consistent with the associated numbering of vertices or elements.
 
 :sidskey:`FlowSolution_t` requires four structure parameters; :sidskey:`CellDimension` identifies the dimensionality of cells or elements, :sidskey:`IndexDimension` identifies the dimensionality of the grid-size arrays, and :sidskey:`VertexSize` and :sidskey:`CellSize` are the number of core vertices and cells, respectively, in each index direction, excluding rind points. For structured zones, core vertices and cells begin at :code:`[1,1,1]` (in 3-D) and end at :sidskey:`VertexSize` and :sidskey:`CellSize`, respectively. For unstructured zones, :sidskey:`IndexDimension` is always 1.
 

@@ -136,7 +136,7 @@
 <p>The intended use of these structures initially is primarily for archival purposes and to provide additional documentation of the flow solution. If successful in this role, it is foreseeable that these flow-equation structures may eventually be also used as inputs for grid generators, flow solvers, and post-processors.</p>
 <section id="flow-equation-set-structure-definition-flowequationset-t">
 <h2><span class="section-number">10.1. </span>Flow Equation Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code><a class="headerlink" href="#flow-equation-set-structure-definition-flowequationset-t" title="Permalink to this heading">¶</a></h2>
-<p><code class="code sidskey docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code> is a general description of the governing flow equations. It includes the dimensionality of the governing equations, and the collection of specific equation-set descriptions covered in subsequent sections. It can be a child node of either <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> or <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code> (or both).</p>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">FlowEquationSet_t</span></code> is a general description of the governing flow equations. It includes the dimensionality of the governing equations, and the collection of specific equation-set descriptions covered in subsequent sections. It can be a child node of <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> or <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code> (or both).</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">FlowEquationSet_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
 <span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
@@ -196,7 +196,8 @@
 <span class="w">  </span><span class="n">NSLaminar</span><span class="p">,</span>
 <span class="w">  </span><span class="n">NSTurbulent</span><span class="p">,</span>
 <span class="w">  </span><span class="n">NSLaminarIncompressible</span><span class="p">,</span>
-<span class="w">  </span><span class="n">NSTurbulentIncompressible</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="n">NSTurbulentIncompressible</span><span class="p">,</span>
+<span class="w">  </span><span class="n">LatticeBoltzmann</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 
 <span class="kt">GoverningEquations_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
@@ -268,7 +269,7 @@ The full Navier-Stokes equations in 3-D are indicated by <code class="code sidsk
 <span class="w">  </span><span class="n">ChemicalEquilibCurveFit</span><span class="p">,</span><span class="w"> </span><span class="n">ChemicalEquilibMinimization</span><span class="p">,</span>
 <span class="w">  </span><span class="n">ChemicalNonequilib</span><span class="p">,</span><span class="w"> </span><span class="n">EMElectricField</span><span class="p">,</span><span class="w"> </span><span class="n">EMMagneticField</span><span class="p">,</span>
 <span class="w">  </span><span class="n">EMConductivity</span><span class="p">,</span><span class="w"> </span><span class="n">Voltage</span><span class="p">,</span><span class="w"> </span><span class="n">Interpolated</span><span class="p">,</span>
-<span class="w">  </span><span class="n">Equilibrium_LinRessler</span><span class="p">,</span><span class="w"> </span><span class="n">Chemistry_LinRessler</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="n">Equilibrium_LinRessler</span><span class="p">,</span><span class="w"> </span><span class="n">Chemistry_LinRessler</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
 </section>

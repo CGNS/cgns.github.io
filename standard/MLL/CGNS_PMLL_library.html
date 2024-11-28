@@ -133,7 +133,7 @@
      <li> <code><b>cgp_poly_elements_write_data</b></code> - Write element data in parallel
      <li> <code><b>cgp_elements_read_data</b></code> - Read element data in parallel
      </ul>
-<li> <a href="#solution">Solution Data</a>
+<li> <a href="#flowsolution">Flow Solution Data</a>
      <ul>
      <li> <code><b>cgp_field_write</b></code> - Create a solution field data node
      <li> <code><b>cgp_field_write_data</b></code> - Write field data in parallel
@@ -141,6 +141,22 @@
      <li> <code><b>cgp_field_read_data</b></code> - Read field data in parallel
      <li> <code><b>cgp_field_general_read_data</b></code> - Read subset of flow solution field to a shaped array in parallel
      </ul>
+     <li> <a href="#particlecoord">Particle Coordinate Data</a>
+      <ul>
+      <li> <code><b>cgp_particle_coord_write</b></code> - Create a particle coordinate data node
+      <li> <code><b>cgp_particle_coord_write_data</b></code> - Write particle coordinate data in parallel
+      <li> <code><b>cgp_particle_coord_general_write_data</b></code> - Write shaped array to a subset of particle coordinates in parallel
+      <li> <code><b>cgp_particle_coord_read_data</b></code> - Read particle coordinate data in parallel
+      <li> <code><b>cgp_particle_coord_general_read_data</b></code> - Read subset of particle coordinates to a shaped array in parallel
+      </ul>
+ <li> <a href="#particlesolution">Particle Solution Data</a>
+      <ul>
+      <li> <code><b>cgp_particle_field_write</b></code> - Create a particle solution field data node
+      <li> <code><b>cgp_particle_field_write_data</b></code> - Write particle field data in parallel
+      <li> <code><b>cgp_particle_field_general_write_data</b></code> - Write shaped array to a subset of particle solution field in parallel
+      <li> <code><b>cgp_particle_field_read_data</b></code> - Read particle data in parallel
+      <li> <code><b>cgp_particle_field_general_read_data</b></code> - Read subset of particle solution field to a shaped array in parallel
+      </ul> 
 <li> <a href="#array">Array Data</a>
      <ul>
      <li> <code><b>cgp_array_write</b></code> - Create an array data node
@@ -597,8 +613,8 @@ the same function for reading the solution data in parallel.
 that <code>cgsize_t</code> in the application is the same size as that
 defined in the file; no conversions are done.
 
-<a name="solution"></a>
-<h3>Solution Data</h3>
+<a name="flowsolution"></a>
+<h3>Flow Solution Data</h3>
 
 <table width=100% cellspacing=0 cellpadding=5 border rules=groups
        bgcolor="#f5f5f0">
@@ -740,6 +756,299 @@ the same function for reading the solution data in parallel.
 <code>datatype</code> is different from <code>mem_datatype</code>.  For other routines,
 it is the responsibility of the application to ensure that the data type for the
 solution data matches that as defined in the file; no conversions are done.
+
+<a name="particlecoord"></a>
+<h3>Particle Coordinate Data</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_particle_coord_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>DataType_t datatype</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>char *coordname</span>, <span class=out><i>int *C</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_particle_coord_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int C</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=in>void *coord_array</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_particle_coord_general_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int C</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *coord_array</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_particle_coord_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int C</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=out><i>void *coord_array</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_particle_coord_general_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int C</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *coord_array</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tbody>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_particle_coord_write_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>datatype</span>, <span class=in>coordname</span>, <span class=out><i>C</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_particle_coord_write_data_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>C</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>coord_array</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_particle_coord_read_data_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>C</span>, <span class=in>range_min</span>, <span class=in>range_max</span>, <span class=out><i>coord_array</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="../midlevel/general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>fn</code><td><code>&nbsp;&nbsp;</code>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><code>B</code><td>
+   <td>Base index number, where 1 &le; <code>B</code> &le; <code>nbases</code>.
+<tr valign=baseline><td>
+   <td><code>P</code><td>
+   <td>Particle index number, where 1 &le; <code>P</code> &le; <code>nparticlezones</code>.
+<tr valign=baseline><td>
+   <td><code>C</code><td>
+   <td>Coordinate array index number, where
+       1 &le; <code>C</code> &le; <code>ncoords</code>.
+<tr valign=baseline><td>
+   <td><code>datatype</code><td>
+   <td>Data type of the coordinate array written to the file.
+       Admissible data types for a coordinate array are <code>RealSingle</code>
+       and <code>RealDouble</code>.
+<tr valign=baseline><td>
+   <td><code>coordname</code><td>
+   <td>Name of the coordinate array.
+       It is strongly advised to use the
+       <a href="../sids/dataname.html#dataname_grid">SIDS nomenclature
+       conventions</a> when naming the coordinate arrays to ensure file
+       compatibility.
+<tr valign=baseline><td>
+   <td><code>range_min</code><td>
+   <td>Lower range index in file.
+<tr valign=baseline><td>
+   <td><code>range_max</code><td>
+   <td>Upper range index in file.
+<tr valign=baseline><td>
+   <td><code>mem_datatype</code><td>
+   <td>Data type of an array in memory.
+       Admissible data types for a coordinate array are <code>RealSingle</code>
+       and <code>RealDouble</code>..
+<tr valign=baseline><td>
+   <td><code>mem_rank</code><td>
+   <td>Number of dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><code>mem_dimensions</code><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><code>mem_range_min</code><td>
+   <td>Lower range index in memory.
+<tr valign=baseline><td>
+   <td><code>mem_range_max</code><td>
+   <td>Upper range index in memory.
+<tr valign=baseline><td>
+   <td><code>coord_array</code><td>
+   <td>Array of coordinate values for the range prescribed.
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<p>
+The above functions are used to read and write particle coordinate data
+by multiple processes in a parallel fashion. To write the data in
+parallel, first call <code>cgp_particle_coord_write</code> to create an empty
+data node. This call is identical to
+<a href="../midlevel/grid.html#gridcoordinates"><code>cg_particle_coord_write</code></a>
+with <code>coord_array</code> set to <code>NULL</code> (no data written). The
+actual data is then written to the node in parallel using either
+<code>cgp_particle_coord_write_data</code> or <code>cgp_particle_coord_general_write_data</code>
+where <code>range_min</code> and <code>range_max</code> specify the subset of
+coordinate data to be written by a given process.
+The routines <code>cgp_particle_coord_read_data</code> and
+<code>cgp_particle_coord_general_read_data</code> perform
+the same function for reading the coordinate data in parallel.
+   
+<p>
+<b>Note:</b> The routines <code>cgp_particle_coord_general_write_data</code> and
+<code>cgp_particle_coord_general_read_data</code> perform data conversions if
+<code>datatype</code> is different from <code>mem_datatype</code>.  For other routines,
+it is the responsibility of the application to ensure that the data type for the
+coordinate data matches that as defined in the file; no conversions are done.
+
+<a name="particlesolution"></a>
+<h3>Particle Solution Data</h3>
+
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_particle_field_write(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t datatype</span>, <span class=in>char *fieldname</span>, <span class=out><i>int *F</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_particle_field_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=in>void *solution_array</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_particle_field_general_write_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>void *solution_array</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_particle_field_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=cgin>cgsize_t *range_min</span>, <span class=cgin>cgsize_t *range_max</span>, <span class=out><i>void *solution_array</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cgp_particle_field_general_read_data(<span class=in>int fn</span>, <span class=in>int B</span>, <span class=in>int P</span>, <span class=in>int S</span>, <span class=in>int F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *range_min</span>, <span class=in>cgsize_t *range_max</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>DataType_t mem_datatype</span>, <span class=in>int mem_rank</span>, <span class=in>cgsize_t *mem_dimensions</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>cgsize_t *mem_range_min</span>, <span class=in>cgsize_t *mem_range_max</span>,</br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>void *solution_array</i></span>);</b></code>
+     <td align=center valign=baseline>
+         <code><b>r&nbsp;-&nbsp;m</b></code>
+<tbody>
+<tr><td nowrap>
+       <code><b>call cgp_particle_field_write_f(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=in>datatype</span>, <span class=in>fieldname</span>, <span class=out><i>F</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_particle_field_write_data_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=in>F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=in>solution_array</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call <span class=cgf>cgp_particle_field_read_data_f</span>(<span class=in>fn</span>, <span class=in>B</span>, <span class=in>P</span>, <span class=in>S</span>, <span class=in>F</span>,<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=in>range_min</span>, <span class=in>range_max</span>, <span class=out><i>solution_array</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+<br><font size="1">(Note that for Fortran calls, all integer arguments are integer*4 in 32-bit mode and integer*8 in 64-bit mode. See
+<a href="../midlevel/general.html#f-port">64-bit Fortran Portability and Issues</a>.)</font>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>fn</code><td><code>&nbsp;&nbsp;</code>
+   <td>CGNS file index number.
+<tr valign=baseline><td>
+   <td><code>B</code><td>
+   <td>Base index number, where 1 &le; <code>B</code> &le; <code>nbases</code>.
+<tr valign=baseline><td>
+   <td><code>P</code><td>
+   <td>Particle index number, where 1 &le; <code>P</code> &le; <code>nparticlezones</code>.
+<tr valign=baseline><td>
+   <td><code>S</code><td>
+   <td>Flow solution index number, where
+       1 &le; <code>S</code> &le; <code>nsols</code>.
+<tr valign=baseline><td>
+   <td><code>F</code><td>
+   <td>Solution array index number, where
+       1 &le; <code>F</code> &le; <code>nfields</code>.
+<tr valign=baseline><td>
+   <td><code>datatype</code><td>
+   <td>Data type of the solution array written to the file.
+       Admissible data types for a solution array are <code>Integer</code>,
+       <code>LongInteger</code>, <code>RealSingle</code>, and <code>RealDouble</code>.
+<tr valign=baseline><td>
+   <td><code>fieldname</code><td>
+   <td>Name of the solution array.
+       It is strongly advised to use the
+       <a href="../sids/dataname.html#dataname_flow">SIDS nomenclature
+       conventions</a> when naming the solution arrays to ensure file
+       compatibility. Additionally,
+       <a href="../sids/dataname.html#dataname_particles">particle specific SIDS nomenclature</a>
+       can also be used
+<tr valign=baseline><td>
+   <td><code>range_min</code><td>
+   <td>Lower range index in file.
+<tr valign=baseline><td>
+   <td><code>range_max</code><td>
+   <td>Upper range index in file.
+<tr valign=baseline><td>
+   <td><code>mem_datatype</code><td>
+   <td>Data type of an array in memory.
+       Admissible data types for a solution array are <code>Integer</code>,
+       <code>LongInteger</code>, <code>RealSingle</code>, and <code>RealDouble</code>.
+<tr valign=baseline><td>
+   <td><code>mem_rank</code><td>
+   <td>Number of dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><code>mem_dimensions</code><td>
+   <td>Dimensions of array in memory.
+<tr valign=baseline><td>
+   <td><code>mem_range_min</code><td>
+   <td>Lower range index in memory.
+<tr valign=baseline><td>
+   <td><code>mem_range_max</code><td>
+   <td>Upper range index in memory.
+<tr valign=baseline><td>
+   <td><code>solution_array</code><td>
+   <td>Array of solution values for the range prescribed.
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<p>
+The above functions are used to read and write particle solution arrays
+by multiple processes in a parallel fashion. To write the data in
+parallel, first call <code>cgp_particle_field_write</code> to create an empty
+data node. This call is identical to
+<a href="../midlevel/solution.html#particlesolution_array"><code>cg_particle_field_write</code></a>
+with <code>solution_array</code> set to <code>NULL</code> (no data written). The
+actual data is then written to the node in parallel using either
+<code>cgp_particle_field_write_data</code> or <code>cgp_particle_field_general_write_data</code>
+where <code>range_min</code> and <code>range_max</code> specify the subset of
+the solution data to be written by a given process.
+The routines <code>cgp_particle_field_read_data</code> and
+<code>cgp_particle_field_general_read_data</code> perform
+the same function for reading the solution data in parallel.
+   
+<p>
+<b>Note:</b> The routines <code>cgp_particle_field_general_write_data</code> and
+<code>cgp_particle_field_general_read_data</code> perform data conversions if
+<code>datatype</code> is different from <code>mem_datatype</code>.  For other routines,
+it is the responsibility of the application to ensure that the data type for the
+solution data matches that as defined in the file; no conversions are done.
+   
 
 <a name="array"></a>
 <h3>Array Data</h3>

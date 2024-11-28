@@ -29,6 +29,7 @@ The **Mid-Level Library** (aka MLL) is an example implementation of the
    CGNS_MLL_location
    CGNS_MLL_auxiliary
    CGNS_MLL_grid
+   CGNS_MLL_particle
    CGNS_MLL_solution
    CGNS_MLL_connectivity
    CGNS_MLL_bc

@@ -41,6 +41,8 @@ The CGNS Base contains the cell dimension and physical dimension of the computat
 
     List( Zone_t<CellDimension, PhysicalDimension> Zone1 ... ZoneN ) ; (o)
 
+    List( ParticleZone_t<PhysicalDimension> Particles1 ... ParticlesN ) ;   (o)
+
     ReferenceState_t ReferenceState ;                                  (o)
 
     Axisymmetry_t Axisymmetry ;                                        (o)
@@ -67,7 +69,7 @@ The CGNS Base contains the cell dimension and physical dimension of the computat
     } ;
 
 .. note::
-    1. Default names for the :sidsref:`Descriptor_t`, :sidsref:`Zone_t`, :sidsref:`IntegralData_t`, :sidsref:`Family_t` and :sidsref:`UserDefinedData_t` lists are as shown;
+    1. Default names for the :sidsref:`Descriptor_t`, :sidsref:`Zone_t`, :sidsref:`ParticleZone_t`, :sidsref:`IntegralData_t`, :sidsref:`Family_t` and :sidsref:`UserDefinedData_t` lists are as shown;
        users may choose other legitimate names. Legitimate names must be unique at this level and shall not include the names :sidskey:`Axisymmetry`, :sidskey:` BaseIterativeData`, :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`FlowEquationSet`, :sidskey:`GlobalConvergenceHistory`, :sidskey:`Gravity`, :sidskey:`ReferenceState`, :sidskey:`RotatingCoordinates` or :sidskey:`SimulationType`.
     2. The number of entities of type :sidskey:`Zone_t` defines the number of zones in the domain.
     3. :sidskey:`CellDimension` and :sidskey:`PhysicalDimension` are the only required fields. The :sidskey:`Descriptor_t`, :sidskey:`Zone_t` and :sidskey:`IntegralData_t` lists may be empty, and all other optional fields absent.
@@ -92,12 +94,16 @@ For a structured zone, the quantities :sidskey:`IndexDimension` and :sidskey:`Ce
 
 On the other hand we assume that all zones of the base have the same :sidskey:`CellDimension`, e.g. if :sidskey:`CellDimension` is 3, all zones must be composed of 3D cells within the :sidskey:`CGNSBase_t`.
 
+If the base contains only particles (no mesh), then :sidskey:`CellDimension` carries no meaning. It remains required for compatibility purposes and must best set to 0.
+
 We need :sidskey:`IndexDimension` for both structured and unstructured zones in order to use original data structures such as :sidsref:`GridCoordinates_t`, :sidsref:`FlowSolution_t`, :sidsref:`DiscreteData_t`, etc.
 :sidskey:`CellDimension` is necessary to express the interpolants in :sidskey:`ZoneConnectivity` with an unstructured zone (mismatch or overset connectivity). When the cells are bidimensional, two interpolants per node are required, whereas when the cells are tridimensional, three interpolants per node must be provided. :sidskey:`PhysicalDimension` becomes useful when expressing quantities such as the :sidskey:`InwardNormalList` in the :sidsref:`BC_t` data structure. It's possible to have a mesh where :sidskey:`IndexDimension` = 2 but the normal vectors still require :math:`x`, :math:`y`, :math:`z` components in order to be properly defined. Consider, for example, a structured surface mesh in the 3D space.
 
 Information about the number of time steps or iterations being recorded, and the time and/or iteration values at each step, may be contained in the :sidsref:`BaseIterativeData` structure.
 
 Data specific to each zone in a multizone case is contained in the list of :sidsref:`Zone_t` structure entities.
+
+The :sidsref:`ParticleZone_t` node allows to store sets of particles.
 
 Reference data applicable to the entire CGNS database is contained in the :sidsref:`ReferenceState` structure; quantities such as Reynolds number and freestream Mach number are contained here (for external flow problems).
 
@@ -277,21 +283,23 @@ Single Base
 
 The dependence of a structure entity's information on data contained at higher levels of the hierarchy is typically explicitly expressed through structure parameters. For example, all arrays within :sidsref:`Zone_t` depend on the dimensionality of the computational grid. This dimensionality is passed down to a :sidskey:`Zone_t` entity through a structure parameter in the definition of :sidskey:`Zone_t`.
 
-We have established an alternate dependency for a limited number of entities that is not explicitly stated in the structure type definitions. These special situations include entities for describing data class, system of dimensional units, reference states and flow equation sets. At each level of the hierarchy (where appropriate), entities for describing this information are defined, and if present they take precedence over all corresponding information existing at higher levels of the CGNS hierarchy. Essentially, we have established globally applicable data with provisions for recursively overriding it with local data.
+We have established an alternate dependency for a limited number of entities that is not explicitly stated in the structure type definitions. These special situations include entities for describing data class, system of dimensional units, reference states, flow equation sets and particle equation sets. At each level of the hierarchy (where appropriate), entities for describing this information are defined, and if present they take precedence over all corresponding information existing at higher levels of the CGNS hierarchy. Essentially, we have established globally applicable data with provisions for recursively overriding it with local data.
 
 Specifically, the entities that follow this alternate dependency are:
 
  * :sidskey:`FlowEquationSet_t` :sidskey:`FlowEquationSet`,
+ * :sidskey:`ParticleEquationSet_t` :sidskey:`ParticleEquationSet`,
  * :sidskey:`ReferenceState_t` :sidskey:`ReferenceState`,
  * :sidskey:`DataClass_t` :sidskey:`DataClass`,
  * :sidskey:`DimensionalUnits_t` :sidskey:`DimensionalUnits`.
 
 :sidsref:`FlowEquationSet` contains a description of the governing flow equations;
+:sidsref:`ParticleEquationSet` contains a description of the governing particle equations;
 :sidsref:`ReferenceState` describes a set of reference state flow conditions;
 :sidsref:`DataClass` defines the class of data (e.g., :ref:`dimensional <dim>` or :ref:`nondimensional <normbydim>`);
 and :sidsref:`DimensionalUnits` specifies the system of units used for dimensional data.
 
-All of these entities may be defined within the highest level :sidsref:`CGNSBase_t` structure, and if present in a given database, establish globally applicable information; these may also be considered to be global defaults. Each of these four entities may also be defined within the :sidsref:`Zone_t` structure. If present in a given instance of :sidskey:`Zone_t`, they supersede the global data and establish new defaults that apply only within that zone.
+All of these entities may be defined within the highest level :sidsref:`CGNSBase_t` structure, and if present in a given database, establish globally applicable information; these may also be considered to be global defaults. Each of these four entities may also be defined within the :sidsref:`Zone_t` or :sidsref:`ParticleZone_t` structure (:sidsref:`FlowEquationSet` may not be defined in the :sidsref:`ParticleZone_t` and :sidsref:`ParticleEquationSet` may not be defined in :sidsref:`Zone_t`). If present in a given instance of :sidskey:`Zone_t` or :sidskey:`ParticleZone_t`, they supersede the global data and establish new defaults that apply only within that zone or particle zone.
 
 For example, if a different set of flow equations is solved within a given zone than is solved in the rest of the flowfield, then this can be conveyed through :sidsref:`FlowEquationSet`. In this case, one :sidskey:`FlowEquationSet` entity would be placed within :sidskey:`CGNSBase_t` to state the globally applicable flow equations, and a second :sidskey:`FlowEquationSet` entity would be placed within the given zone (within its instance of :sidskey:`Zone_t`); this second :sidskey:`FlowEquationSet` entity supersedes the first only within the given zone.
 
@@ -316,6 +324,7 @@ With a multiple-bases CGNS tree, some nodes defined at the base level may lead t
   * :sidskey:`DataClass`
   * :sidskey:`DimensionalUnits`
   * :sidskey:`FlowEquationSet`
+  * :sidskey:`ParticleEquationSet`
   * :sidskey:`Family_t`
 
 The application has to take into account the corresponding base definition for the referred-to node.

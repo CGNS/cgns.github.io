@@ -122,6 +122,21 @@
      <li> <code><b>cg_model_write</b></code> - Write auxiliary model types
      <li> <code><b>cg_model_read</b></code> - Read auxiliary model types
      </ul>
+<li> <a href="#particleequationset">Particle Equation Set</a>
+     <ul>
+     <li> <code><b>cg_particle_equationset_write</b></code> - Write dimensionality of particle equations
+     <li> <code><b>cg_particle_equationset_read</b></code> - Read particle equation set info
+     </ul>
+<li> <a href="#particlegoverningequations">Particle Governing Equations</a>
+     <ul>
+     <li> <code><b>cg_particle_governing_write</b></code> - Write type of particle governing equation
+     <li> <code><b>cg_particle_governing_read</b></code> - Read type of particle governing equation
+     </ul>
+<li> <a href="#particlemodels">Particle Models</a>
+     <ul>
+     <li> <code><b>cg_particle_model_write</b></code> - Write particle model types
+     <li> <code><b>cg_particle_model_read</b></code> - Read particle model types
+    </ul>    
 </ul>
 
 <a name="flowequationset"></a>
@@ -478,7 +493,253 @@ The types allowed for the various models are:
        Chemistry_LinRessler</code>
 </table>
 
+<h3>Particle Equation Set</h3>
+
+<i>Node</i>: <code>ParticleEquationSet_t</code>
+             (<a href="../sids/particles.html#ParticleEquationSet">SIDS</a>,
+              <a href="../filemap/nodes.html#ParticleEquationSet">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_equationset_write(<span class=in>int EquationDimension</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_equationset_read(<span class=out><i>int *EquationDimension</i></span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *ParticleGoverningEquationsFlag</i></span>, <span class=out><i>int *CollisionModelFlag</i></span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *BreakupModelFlag</i></span>, <span class=out><i>int *ForceModelFlag</i></span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>int *WallInteractionModelFlag</i></span>, <span class=out><i>int *PhaseChangeModelFlag</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tr><td nowrap>
+<tbody>
+<tr><td nowrap>
+        <code><b>call cg_particle_equationset_write_f(<span class=in>EquationDimension</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cg_particle_equationset_read_f(<span class=out><i>EquationDimension</i></span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ParticleGoverningEquationsFlag</i></span>, <span class=out><i>CollisionModelFlag</i></span>, <span class=out><i>BreakupModelFlag</i></span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>ForceModelFlag</i></span>, <span class=out><i>WallInteractionModelFlag</i></span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=out><i>PhaseChangeModelFlag</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>EquationDimension</code><td><code>&nbsp;&nbsp;</code>
+   <td>Dimensionality of the governing equations; it is the number of
+       spatial variables describing the flow of particles.
+<tr valign=baseline><td>
+   <td><code>ParticleGoverningEquationsFlag</code><td>
+   <td>Flag indicating whether or not this <code>ParticleEquationSet_t</code>
+       node includes the definition of the governing equations;
+       0 if it doesn't, 1 if it does.
+<tr valign=baseline><td>
+   <td><code>CollisionModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>ParticleEquationSet_t</code>
+       node includes the definition of a particle collision model;
+       0 if it doesn't, 1 if it does.
+<tr valign=baseline><td>
+   <td><code>BreakupModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>ParticleEquationSet_t</code>
+       node includes the definition of a particle breakup model;
+       0 if it doesn't, 1 if it does.
+<tr valign=baseline><td>
+   <td><code>ForceModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>ParticleEquationSet_t</code>
+       node includes the definition of a particle force model;
+       0 if it doesn't, 1 if it does.
+<tr valign=baseline><td>
+   <td><code>WallInteractionModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>ParticleEquationSet_t</code>
+       node includes the definition of a particle-wall interaction model;
+       0 if it doesn't, 1 if it does.
+<tr valign=baseline><td>
+   <td><code>PhaseChangeModelFlag</code><td>
+   <td>Flag indicating whether or not this <code>ParticleEquationSet_t</code>
+       node includes the definition of a particle phase change model;
+       0 if it doesn't, 1 if it does.
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<a name="particlegoverningequations"></a>
+<h3>Particle Governing Equations</h3>
+
+<i>Node</i>: <code>ParticleGoverningEquations_t</code>
+             (<a href="../sids/particles.html#ParticleGoverningEquations">SIDS</a>,
+              <a href="../filemap/nodes.html#ParticleGoverningEquations">File Mapping</a>)
+
+<br><br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_governing_write(<span class=in>ParticleGoverningEquationsType_t ParticleEquationstype</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_governing_read(<span class=out><i>ParticleGoverningEquationsType_t *ParticleEquationstype</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tbody>
+<tr><td nowrap>
+        <code><b>call cg_particle_governing_write_f(<span class=in>ParticleEquationstype</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cg_particle_governing_read_f(<span class=out><i>ParticleEquationstype</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>ParticleEquationstype</code><td><code>&nbsp;&nbsp;</code>
+   <td>Type of particle governing equations.
+       The admissible types are <code>CG_Null</code>, <code>CG_UserDefined</code>,
+       <code>DEM</code>, <code>DSMC</code>, <code>SPH</code>.
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
+<a name="particlemodels"></a>
+<h3>Particle Models</h3>
+
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline>
+   <td><i>Nodes</i>:
+   <td><code>ParticleCollisionModel_t</code>
+           (<a href="../sids/particles.html#ParticleCollisionModel">SIDS</a>,
+            <a href="../filemap/nodes.html#ParticleCollisionModel">File Mapping</a>)
+   <br><code>ParticleBreakupModel_t</code>
+           (<a href="../sids/particles.html#ParticleBreakupModel">SIDS</a>,
+            <a href="../filemap/nodes.html#ParticleBreakupModel">File Mapping</a>)
+   <br><code>ParticleForceModel_t</code>
+           (<a href="../sids/particles.html#ParticleForceModel">SIDS</a>,
+            <a href="../filemap/nodes.html#ParticleForceModel">File Mapping</a>)
+   <br><code>ParticleWallInteractionModel_t</code>
+           (<a href="../sids/particles.html#ParticleWallInteractionModel">SIDS</a>,
+            <a href="../filemap/nodes.html#ParticleWallInteractionModel">File Mapping</a>)
+   <br><code>ParticlePhaseChangeModel_t</code>
+           (<a href="../sids/particles.html#ParticlePhaseChangeModel">SIDS</a>,
+            <a href="../filemap/nodes.html#ParticlePhaseChangeModel">File Mapping</a>)
+</table>
+
+<br>
+<table width=100% cellspacing=0 cellpadding=5 border rules=groups
+       bgcolor="#f5f5f0">
+<colgroup width=90%>
+<colgroup>
+<thead>
+<tr><th align=left scope=col width=90%>Functions
+    <th scope=col>Modes
+<tbody>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_model_write(<span class=in>char *ModelLabel</span>, <span class=in>ParticleModelType_t ModelType</span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b><span class=out><i>ier</i></span> = cg_particle_model_read(<span class=in>char *ModelLabel</span>, <span class=out><i>ParticleModelType_t *ModelType</i></span>);</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+<tbody>
+<tr><td nowrap>
+        <code><b>call cg_particle_model_write_f(<span class=in>ModelLabel</span>, <span class=in>ModelType</span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>-&nbsp;w&nbsp;m</b></code>
+<tr><td nowrap>
+        <code><b>call cg_particle_model_read_f(<span class=in>ModelLabel</span>, <span class=out><i>ModelType</i></span>, <span class=out><i>ier</i></span>)</b></code>
+    <td align=center valign=baseline>
+        <code><b>r&nbsp;-&nbsp;m</b></code>
+</table>
+
+<br>
+<b><span class=in>Input</span>/<span class=out><i>Output</i></span></b>
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+   <td><code>ModelLabel</code><td><code>&nbsp;&nbsp;</code>
+   <td>The CGNS label for the particle model being defined.
+       The particle models supported by CGNS are:
+       <ul>
+       <li><code>ParticleCollisionModel_t</code>
+       <li><code>ParticleBreakupModel_t</code>
+       <li><code>ParticleForceModel_t</code>
+       <li><code>ParticleWallInteractionModel_t</code>
+       <li><code>ParticlePhaseChangeModel_t</code>
+       </ul>
+<tr valign=baseline><td>&nbsp;
+<tr valign=baseline><td>
+   <td><code>ModelType</code><td>
+   <td>One of the model types (listed below) allowed for the
+       <code>ModelLabel</code> selected.
+<tr valign=baseline><td>
+   <td><code>ier</code><td>
+   <td>Error status.
+</table>
+
 <p>
+The types allowed for the various models are:
+
+<br><br>
+<table cellspacing=0 cellpadding=0 noborder>
+<tr valign=baseline><td><code>&nbsp;&nbsp;&nbsp;</code>
+    <td><code>ParticleCollisionModel_t</code>
+    <td><code>&nbsp;&nbsp;</code>
+    <td><code>CG_Null, CG_UserDefined, Linear, NonLinear, HardSphere, SoftSphere, LinearSpringDashpot,
+            Pair, HertzMindlin, HertzKuwabaraKono, ORourke, Stochastic, NonStochastic, NTC</code>
+<tr valign=baseline><td>
+    <td><code>ParticleBreakupModel_t</code>
+    <td>
+    <td><code>CG_Null, CG_UserDefined, KelvinHelmholtz, KelvinHelmholtzACT, RayleighTaylor,
+            KelvinHelmholtzRayleighTaylor,
+            ReitzKHRT, TAB, ETAB, LISA, SHF, PilchErdman, ReitzDiwakar</code>
+<tr valign=baseline><td>
+    <td><code>ParticleForceModel_t</code>
+    <td>
+    <td><code>CG_Null, CG_UserDefined, Sphere, NonSphere, Tracer, BeetstraVanDerHoefKuipers, Ergun, CliftGrace,
+            Gidaspow, HaiderLevenspiel, PlessisMasliyah, SyamlalOBrien, SaffmanMei, TennetiGargSubramaniam,
+            Tomiyama, Stokes, StokesCunningham, WenYu</code>
+<tr valign=baseline><td>
+    <td><code>ParticleWallInteractionModel_t</code>
+    <td>
+    <td><code>CG_Null, CG_UserDefined, Linear, NonLinear, HardSphere, SoftSphere, LinearSpringDashpot, BaiGosman,
+            HertzMindlin, HertzKuwabaraKono, Khunke, ORourke, NTC</code>
+<tr valign=baseline><td>
+    <td><code>ParticlePhaseChangeModel_t</code>
+    <td>
+    <td><code>CG_Null, CG_UserDefined, Boil, Chiang, Frossling, FuchsKnudsen, Flash</code>
+</table>
+
+<p>
+    
 
 </body>
 </html>

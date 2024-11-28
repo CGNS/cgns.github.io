@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>13. Particle Data &#8212; CGNS Official Web Site</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css?v=ee5bbeb1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css?v=2c72f61b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css?v=97141bf4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css?v=593b94c8" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=117e2fac"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="icon" href="../../_static/CGNS_empty.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Appendix A: Conventions for Data-Name Identifiers" href="appendix_a.html" />
+    <link rel="prev" title="12. Miscellaneous Data Structures" href="misc.html" />
+  
+  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="appendix_a.html" title="Appendix A: Conventions for Data-Name Identifiers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="misc.html" title="12. Miscellaneous Data Structures"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" accesskey="U">CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">13. </span>Particle Data</a></li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">13. Particle Data</a><ul>
+<li><a class="reference internal" href="#particle-zone-structure-definition-particlezone-t">13.1. Particle Zone Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code></a></li>
+<li><a class="reference internal" href="#particle-coordinates-structure-definition-particlecoordinates-t">13.2. Particle Coordinates Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code></a><ul>
+<li><a class="reference internal" href="#example-particle-coordinates-for-a-3-d-case">13.2.1. Example - Particle Coordinates for a 3-D Case</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#particle-solution-structure-definition-particlesolution-t">13.3. Particle Solution Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code></a><ul>
+<li><a class="reference internal" href="#example-particle-solution">13.3.1. Example - Particle Solution</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#particle-equation-set-structure-definition-particleequationset-t">13.4. Particle Equation Set Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleEquationSet_t</span></code></a><ul>
+<li><a class="reference internal" href="#governing-equations-structure-definition-particlegoverningequations-t">13.4.1. Governing Equations Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquations_t</span></code></a></li>
+<li><a class="reference internal" href="#particle-model-type-structure-definition-particlemodeltype-t">13.4.2. Particle Model Type Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code></a></li>
+<li><a class="reference internal" href="#particle-collision-model-structure-definition-particlecollisionmodel-t">13.4.3. Particle Collision Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModel_t</span></code></a></li>
+<li><a class="reference internal" href="#particle-breakup-model-structure-definition-particlebreakupmodel-t">13.4.4. Particle Breakup Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModel_t</span></code></a></li>
+<li><a class="reference internal" href="#particle-force-model-structure-definition-particleforcemodel-t">13.4.5. Particle Force Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModel_t</span></code></a></li>
+<li><a class="reference internal" href="#particle-wall-interaction-model-structure-definition-particlewallinteractionmodel-t">13.4.6. Particle Wall Interaction Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModel_t</span></code></a></li>
+<li><a class="reference internal" href="#particle-phase-change-model-structure-definition-particlephasechangemodel-t">13.4.7. Particle Phase Change Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModel_t</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../../index.html">Docs</a></li>
+              
+                <li><a href="../../standard.html">Standard Specification</a></li>
+              
+                <li><a href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a></li>
+              
+              <li><span class="section-number">13. </span>Particle Data</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <section id="particle-data">
+<h1><span class="section-number">13. </span>Particle Data<a class="headerlink" href="#particle-data" title="Permalink to this heading">¶</a></h1>
+<p>This section defines structure types for describing the particle data.</p>
+<section id="particle-zone-structure-definition-particlezone-t">
+<h2><span class="section-number">13.1. </span>Particle Zone Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code><a class="headerlink" href="#particle-zone-structure-definition-particlezone-t" title="Permalink to this heading">¶</a></h2>
+<p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> structure contains all information pertinent to an individual set of particles.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleZone_t</span><span class="o">&lt;</span><span class="w"> </span><span class="n">PhysicalDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">ParticleSize</span><span class="w"> </span><span class="p">;</span><span class="w">                                                 </span><span class="kr">(r)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="n">ParticleCoordinate</span><span class="o">&lt;</span><span class="n">ParticleSize</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="n">ParticleCoordinates</span><span class="w"> </span><span class="n">MovedParticles1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">MovedParticlesN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">FamilyName_t</span><span class="w"> </span><span class="n">FamilyName</span><span class="w"> </span><span class="p">;</span><span class="w">                                          </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">AdditionalFamilyName_t</span><span class="w"> </span><span class="n">AddFamilyName1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">AddFamilyNameN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">ParticleSolution_t</span><span class="o">&lt;</span><span class="n">ParticleSize</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="n">ParticleSolution1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">ParticleSolutionN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                  </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">IntegralData_t</span><span class="w"> </span><span class="n">IntegralData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">IntegralDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">           </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleIterativeData_t</span><span class="o">&lt;</span><span class="n">NumberOfSteps</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ParticleIterativeData</span><span class="w"> </span><span class="p">;</span><span class="w">     </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ReferenceState_t</span><span class="w"> </span><span class="n">ReferenceState</span><span class="w"> </span><span class="p">;</span><span class="w">                                  </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleEquationSet_t</span><span class="w"> </span><span class="n">ParticleEquationSet</span><span class="w"> </span><span class="p">;</span><span class="w">                        </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">IntegralData_t</span></code>, and <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">FlowEquationSet</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleIterativeData</span></code>, and <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code>.</p></li>
+<li><p>The original particle coordinates should have the name <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates</span></code>. Default names for the remaining entities in the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code> list are as shown; users may choose other legitimate names, subject to, the restrictions listed in the previous note.</p></li>
+<li><p>There may be multiple <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> per base. This allows users to create different groups of particles. <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">AdditionalFamilyName_t</span></code> nodes can be used to discern each <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> node.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSize</span></code> is the only required field within the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> structure.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> requires the parameter <code class="code sidskey docutils literal notranslate"><span class="pre">PhysicalDimension</span></code>. <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSize</span></code> corresponds to the number of particles in the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code>. <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSize</span></code> identifies the size of the particle-size arrays and is passed on to the particle coordinates and particle solution.</p>
+<p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code> structure contains the physical coordinates of the center of each particle in the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code>. The original particle coordinates are contained in <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates</span></code>. Additional <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code> data structures are allowed, to store particles at multiple time steps or iterations.</p>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code> identifies to which family particles belongs. Where multiple families are desired, <code class="code sidskey docutils literal notranslate"><span class="pre">AdditionalFamilyName</span></code> nodes may be used to specify them. Both <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">AdditionalFamilyName</span></code> should refer to a <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> level <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code>, in the parent base of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> or in another sibling base (see <span class="xref std std-ref">Base Level Families</span>).</p>
+<p>Particle-solution quantities are contained in the list of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code> structures.
+Multiple <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code> structures can be provided to store
+particle-solution data at multiple time steps or iterations.</p>
+<p>Miscellaneous <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleZone_t</span></code>-specific global data is contained
+in the list of <code class="code sidsref docutils literal notranslate"><span class="pre">IntegralData_t</span></code> structures.</p>
+<p>The particle-based <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> vectors in <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code> can correspond to a subset of particles defined in <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code> through the use of a <code class="code sidsref docutils literal notranslate"><span class="pre">PointRange</span></code> or <code class="code sidsref docutils literal notranslate"><span class="pre">PointList</span></code>. Unless a <code class="code sidsref docutils literal notranslate"><span class="pre">PointList</span></code> is defined, particle-based <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> vectors in <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code> must use the same ordering as those defined in <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleIterativeData_t</span></code> data structure may be used to record pointers to particle data at multiple time steps or iterations.</p>
+<p>Reference-state data specific to an individual zone is contained in the <code class="code sidsref docutils literal notranslate"><span class="pre">ReferenceState</span></code> structure.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the particle default for the class of data contained in the <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> and its substructures. If a <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> contains dimensional data, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. <code class="code sidsref docutils literal notranslate"><span class="pre">ReferenceState</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleEquationSet</span></code> have special function in the hierarchy. They are applicable throughout a given particle zone, but their precedence may be superseded by local entities contained in the particle zone’s substructures. If any of these entities are present within a given instance of <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleZone_t</span></code>, they take precedence over the corresponding global entities contained in database’s <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> entity. These precedence rules are further discussed in the section on <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">Precedence Rules and Scope Within the Hierarchy</span></a>.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> have special function in the hierarchy. They are applicable throughout a given <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleZone_t</span></code>, but their precedence may be superseded by local entities contained in the <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleZone_t</span></code>’s substructures. If any of these entities are present within a given instance of <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleZone_t</span></code>, they take precedence over the corresponding global entities contained in the database’s <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> or <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> entity. These precedence rules are further discussed in the section on <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">Precedence Rules and Scope Within the Hierarchy</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</section>
+<section id="particle-coordinates-structure-definition-particlecoordinates-t">
+<h2><span class="section-number">13.2. </span>Particle Coordinates Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code><a class="headerlink" href="#particle-coordinates-structure-definition-particlecoordinates-t" title="Permalink to this heading">¶</a></h2>
+<p>The physical coordinates of the particle centers are described by the
+<code class="code sidsref docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code> structure. This structure contains a list for the data arrays of the individual components of the position vector.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleCoordinates_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ParticleSize</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PhysicalDimension</span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="n">PhysicalDimension</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BoundingBox</span><span class="w"> </span><span class="p">;</span><span class="w">           </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="n">ParticleSize</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                                </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code>, or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p>There are no required fields for <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code>.</p></li>
+<li><p>The structure parameter <code class="code sidsref docutils literal notranslate"><span class="pre">DataType</span></code> must be consistent with the data stored in the <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> substructures.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code> requires one structure parameters:  <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSize</span></code>, which is the number of particles in the <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> node.</p>
+<p>The particle coordinates data is stored in the list of <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities; each <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> structure entity may contain a single component of the position vector (e.g., three separate <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities are used for x, y, and z).</p>
+<p>Standardized data-name identifiers for the particle coordinates are
+described in <span class="xref std std-ref">Conventions for Data-Name Identifiers</span>.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default class for data contained in the <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities. For dimensional grid coordinates, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of units employed. If present, these two entities take precedence over the corresponding entities at higher levels of the CGNS hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>. An example that uses these particle-coordinate defaults is shown under <a class="reference internal" href="#particlecoordinatesexample"><span class="std std-ref">Particle Coordinates Examples</span></a>.</p>
+<section id="example-particle-coordinates-for-a-3-d-case">
+<span id="particlecoordinatesexample"></span><h3><span class="section-number">13.2.1. </span>Example - Particle Coordinates for a 3-D Case<a class="headerlink" href="#example-particle-coordinates-for-a-3-d-case" title="Permalink to this heading">¶</a></h3>
+<p>This example show how to set the particle coordinates in the case where <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSize</span></code> is 15.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  ParticleSize = 15</span>
+<span class="kt">ParticleCoordinates_t</span><span class="o">&lt;</span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ParticleCoordinates</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+
+<span class="w">  </span><span class="c1">! DataType = real</span>
+<span class="w">  </span><span class="c1">! ParticleSize = 15</span>
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CoordinateX</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CoordinateY</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CoordinateZ</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="particle-solution-structure-definition-particlesolution-t">
+<span id="particlesolution"></span><h2><span class="section-number">13.3. </span>Particle Solution Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code><a class="headerlink" href="#particle-solution-structure-definition-particlesolution-t" title="Permalink to this heading">¶</a></h2>
+<p>The solution on each particle within a given <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> is described by the
+<code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code> structure.
+This structure contains a list for the data arrays of the individual
+solution variables. Particle solutions are implicitly defined at particle centers,
+and correspond to the solution for the entire particle.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleSolution_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ParticleSize</span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="n">IndexRange</span><span class="w"> </span><span class="n">PointRange</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="n">IndexArray</span><span class="o">&lt;</span><span class="n">DataSize</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PointList</span><span class="w"> </span><span class="p">;</span><span class="w">                            </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="n">DataSize</span><span class="p">[]</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                                </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>.</p></li>
+<li><p>There are no required fields for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code>.</p></li>
+<li><p>Both of the fields <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> are optional. Only one of these two fields may be specified.</p></li>
+<li><p>The structure parameter <code class="code sidskey docutils literal notranslate"><span class="pre">DataType</span></code> must be consistent with the data stored in the <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> structure entities; <code class="code sidskey docutils literal notranslate"><span class="pre">DataType</span></code> is <code class="code sidskey docutils literal notranslate"><span class="pre">real</span></code> for all particle-solution identifiers defined in the section <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">Conventions for Data-Name Identifiers</span></a>.</p></li>
+<li><p>Indexing of data within the <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> structure must be consistent with coordinates defined in the <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code>.</p></li>
+</ol>
+</div>
+<p>The particle solution data is stored in the list of <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities; each <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> structure entity may contain a single component of the solution vector. Standardized data-name identifiers for the particle-solution quantities are described in the section <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">Conventions for Data-Name Identifiers</span></a>.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default class for data contained in the <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities. For dimensional particle solution data, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of units employed. If present, these two entities take precedence over the corresponding entities at higher levels of the CGNS hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+<span class="target" id="datasizeparticle"></span><dl class="c function">
+<dt class="sig sig-object c" id="c.DataSize">
+<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DataSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return value<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-even">Dependencies<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code></p>
+</dd>
+</dl>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code> requires the structure function <code class="code sidskey docutils literal notranslate"><span class="pre">DataSize</span></code>, which is used to specify the number of entities corresponding to a given <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code>. This will therefore be the size of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution</span></code> data arrays. If <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> is specified, then <code class="code sidskey docutils literal notranslate"><span class="pre">DataSize</span></code> is obtained from the number of points (inclusive) between the beginning and ending indices of <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>. If <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code> is specified, then <code class="code sidskey docutils literal notranslate"><span class="pre">DataSize</span></code> is the number of indices in the list of points. In this situation, <code class="code sidskey docutils literal notranslate"><span class="pre">DataSize</span></code> becomes a user input along with the indices of the list <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code>. By “user”, we mean the application code that is generating the CGNS database.</p>
+</dd></dl>
+
+<section id="example-particle-solution">
+<span id="particlesolutionexample"></span><h3><span class="section-number">13.3.1. </span>Example - Particle Solution<a class="headerlink" href="#example-particle-solution" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleSolution_t</span><span class="o">&lt;</span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ParticleSolution</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{{</span>
+
+<span class="w">  </span><span class="c1">! DataType = real</span>
+<span class="w">  </span><span class="c1">! ParticleSize = 15</span>
+
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Radius</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Temperature</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityX</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityY</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+
+<span class="w">  </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VelocityZ</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{{</span>
+<span class="w">    </span><span class="k">Data</span><span class="p">(</span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="w">    </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="particle-equation-set-structure-definition-particleequationset-t">
+<span id="particleequationset"></span><h2><span class="section-number">13.4. </span>Particle Equation Set Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleEquationSet_t</span></code><a class="headerlink" href="#particle-equation-set-structure-definition-particleequationset-t" title="Permalink to this heading">¶</a></h2>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleEquationSet_t</span></code> is a general description of the governing particle equations. It includes the dimensionality of the governing equations, and the collection of specific equation-set descriptions covered in subsequent sections. It can be a child node of <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> or <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> (or both).</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleEquationSet_t</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">EquationDimension</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleGoverningEquations_t</span><span class="p">;</span><span class="w"> </span><span class="n">ParticleGoverningEquations</span><span class="w"> </span><span class="p">;</span><span class="w">         </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleCollisionModel_t</span><span class="w"> </span><span class="n">ParticleCollisionModel</span><span class="w"> </span><span class="p">;</span><span class="w">                  </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleBreakupModel_t</span><span class="w"> </span><span class="n">ParticleBreakupModel</span><span class="w"> </span><span class="p">;</span><span class="w">                      </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleForceModel_t</span><span class="w"> </span><span class="n">ParticleForceModel</span><span class="w"> </span><span class="p">;</span><span class="w">                          </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleWallInteractionModel_t</span><span class="w"> </span><span class="n">ParticleWallInteractionModel</span><span class="w"> </span><span class="p">;</span><span class="w">      </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticlePhaseChangeModel_t</span><span class="w"> </span><span class="n">ParticlePhaseChangeModel</span><span class="w"> </span><span class="p">;</span><span class="w">              </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleEquationSet_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquations</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModel_t</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModel</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code>, or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p>There are no required elements for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleEquationSet_t</span></code>.</p></li>
+</ol>
+</div>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">EquationDimension</span></code> is the dimensionality of the governing equations; it is the number of spatial variables describing the flow.</p>
+<p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the flow-equation set. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+<section id="governing-equations-structure-definition-particlegoverningequations-t">
+<span id="particlegoverningequations"></span><h3><span class="section-number">13.4.1. </span>Governing Equations Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquations_t</span></code><a class="headerlink" href="#governing-equations-structure-definition-particlegoverningequations-t" title="Permalink to this heading">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquations_t</span></code> describes the class of governing equations associated with particles.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleGoverningEquationsType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
+<span class="w">  </span><span class="n">ParticleGovEqTypeNull</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ParticleGovEqTypeUserDefined</span><span class="p">,</span>
+<span class="w">  </span><span class="n">DEM</span><span class="p">,</span>
+<span class="w">  </span><span class="n">DSMC</span><span class="p">,</span>
+<span class="w">  </span><span class="n">SPH</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+
+<span class="kt">ParticleGoverningEquations_t</span><span class="p">;</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleGoverningEquationsType_t</span><span class="w"> </span><span class="n">ParticleGoverningEquationsType</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(r)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquations_t</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquationsType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+</section>
+<section id="particle-model-type-structure-definition-particlemodeltype-t">
+<span id="particlemodeltype"></span><h3><span class="section-number">13.4.2. </span>Particle Model Type Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code><a class="headerlink" href="#particle-model-type-structure-definition-particlemodeltype-t" title="Permalink to this heading">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> is a complete list of all models covered in subsequent sections. A specific model will contain a subset of this enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
+<span class="w">  </span><span class="n">Linear</span><span class="p">,</span><span class="w"> </span><span class="n">NonLinear</span><span class="p">,</span><span class="w"> </span><span class="n">HardSphere</span><span class="p">,</span><span class="w"> </span><span class="n">SoftSphere</span><span class="p">,</span><span class="w"> </span><span class="n">LinearSpringDashpot</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Pair</span><span class="p">,</span><span class="w"> </span><span class="n">BaiGosman</span><span class="p">,</span><span class="w"> </span><span class="n">HertzMindlin</span><span class="p">,</span><span class="w"> </span><span class="n">HertzKuwabaraKono</span><span class="p">,</span><span class="w"> </span><span class="n">Kuhnke</span><span class="p">,</span><span class="w"> </span><span class="n">ORourke</span><span class="p">,</span><span class="w"> </span><span class="n">Wruck</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Stochastic</span><span class="p">,</span><span class="w"> </span><span class="n">NonStochastic</span><span class="p">,</span><span class="w"> </span><span class="n">NTC</span><span class="p">,</span><span class="w"> </span><span class="n">KelvinHelmholtz</span><span class="p">,</span>
+<span class="w">  </span><span class="n">KelvinHelmholtzACT</span><span class="p">,</span><span class="w"> </span><span class="n">RayleighTaylor</span><span class="p">,</span>
+<span class="w">  </span><span class="n">KelvinHelmholtzRayleighTaylor</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ReitzKHRT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">TAB</span><span class="p">,</span><span class="w"> </span><span class="n">ETAB</span><span class="p">,</span><span class="w"> </span><span class="n">LISA</span><span class="p">,</span><span class="w"> </span><span class="n">SHF</span><span class="p">,</span><span class="w"> </span><span class="n">PilchErdman</span><span class="p">,</span><span class="w"> </span><span class="n">ReitzDiwakar</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Sphere</span><span class="p">,</span><span class="w"> </span><span class="n">NonShpere</span><span class="p">,</span><span class="w"> </span><span class="n">Tracer</span><span class="p">,</span><span class="w"> </span><span class="n">BeetstraVanDerHoefKuipers</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Ergun</span><span class="p">,</span><span class="w"> </span><span class="n">CliftGrace</span><span class="p">,</span><span class="w"> </span><span class="n">Gidaspow</span><span class="p">,</span><span class="w"> </span><span class="n">HaiderLevenspiel</span><span class="p">,</span><span class="w"> </span><span class="n">PlessisMasliyah</span><span class="p">,</span>
+<span class="w">  </span><span class="n">SyamlalOBrien</span><span class="p">,</span><span class="w"> </span><span class="n">SaffmanMei</span><span class="p">,</span><span class="w"> </span><span class="n">TennetiGargSubramaniam</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Tomiyama</span><span class="p">,</span><span class="w"> </span><span class="n">Stokes</span><span class="p">,</span><span class="w"> </span><span class="n">StokesCunningham</span><span class="p">,</span><span class="w"> </span><span class="n">WenYu</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Boil</span><span class="p">,</span><span class="w"> </span><span class="n">Condense</span><span class="p">,</span><span class="w"> </span><span class="n">Flash</span><span class="p">,</span><span class="w"> </span><span class="n">Nucleate</span><span class="p">,</span><span class="w"> </span><span class="n">Chiang</span><span class="p">,</span><span class="w"> </span><span class="n">Frossling</span><span class="p">,</span><span class="w"> </span><span class="n">FuchsKnudsen</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="particle-collision-model-structure-definition-particlecollisionmodel-t">
+<span id="particlecollisionmodel"></span><h3><span class="section-number">13.4.3. </span>Particle Collision Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModel_t</span></code><a class="headerlink" href="#particle-collision-model-structure-definition-particlecollisionmodel-t" title="Permalink to this heading">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModel_t</span></code> describes the collision model used for particle-particle interactions. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleCollisionModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Linear</span><span class="p">,</span>
+<span class="w">  </span><span class="n">NonLinear</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HardSphere</span><span class="p">,</span>
+<span class="w">  </span><span class="n">SoftSphere</span><span class="p">,</span>
+<span class="w">  </span><span class="n">LinearSpringDashpot</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Pair</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HertzMindlin</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HertzKuwabaraKono</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ORourke</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Stochastic</span><span class="p">,</span>
+<span class="w">  </span><span class="n">NonStochastic</span><span class="p">,</span>
+<span class="w">  </span><span class="n">NTC</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+
+<span class="kt">ParticleCollisionModel_t</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleCollisionModelType_t</span><span class="w"> </span><span class="n">ParticleCollisionModelType</span><span class="w"> </span><span class="p">;</span><span class="w">          </span><span class="kr">(r)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the “<code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p>For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+<p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModelType</span></code> names currently listed correspond to the following particular references.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ORourke</span></code></p></td>
+<td><p>O’Rourke, P. J ., “Collective Drop Effects on Vaporizing Liquid Sprays,” Ph.D. Thesis, Princeton University, Princeton, N J , United States, 1981.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">NTC</span></code></p></td>
+<td><p>Schmidt, D.P. and Rutland, C. J ., “A New Droplet Collision Algorithm,” Journal of Computational Physics , 164 ( 1 ), 62 - 80 , 2000. DOI: 10.1006/jcph.2000.6568</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">HertzKuwabaraKono</span></code></p></td>
+<td><p>Goro Kuwabara and Kimitoshi Kono 1987 Jpn. J. Appl. Phys. 26 1230</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">HertzMindlin</span></code></p></td>
+<td><p>Tsuji Y.  et al. (1992) Lagrangian numerical simulation of plug flow of cohesionless particles in a horizontal pipe. Powder Technology, 71(3): p. 239-250. <a class="reference external" href="http://dx.doi.org/10.1016/0032-5910(92)88030-L">http://dx.doi.org/10.1016/0032-5910(92)88030-L</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="particle-breakup-model-structure-definition-particlebreakupmodel-t">
+<span id="particlebreakupmodel"></span><h3><span class="section-number">13.4.4. </span>Particle Breakup Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModel_t</span></code><a class="headerlink" href="#particle-breakup-model-structure-definition-particlebreakupmodel-t" title="Permalink to this heading">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModel_t</span></code> describes the model used for particle breakup. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleBreakupModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span>
+<span class="w">  </span><span class="n">KelvinHelmholtz</span><span class="p">,</span>
+<span class="w">  </span><span class="n">KelvinHelmholtzACT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">RayleighTaylor</span><span class="p">,</span>
+<span class="w">  </span><span class="n">KelvinHelmholtzRayleighTaylor</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ReitzKHRT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">TAB</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ETAB</span><span class="p">,</span>
+<span class="w">  </span><span class="n">LISA</span><span class="p">,</span>
+<span class="w">  </span><span class="n">SHF</span><span class="p">,</span>
+<span class="w">  </span><span class="n">PilchErdman</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ReitzDiwakar</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+
+<span class="kt">ParticleBreakupModel_t</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleBreakupModelType_t</span><span class="w"> </span><span class="n">ParticleBreakupModelType</span><span class="w"> </span><span class="p">;</span><span class="w">              </span><span class="kr">(r)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p>For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+<p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModelType</span></code> names currently listed correspond to the following particular references.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">KelvinHelmholtz</span></code></p></td>
+<td><p>Reitz, R.D. and Bracco, F.V., “Mechanisms of Breakup of Round Liquid Jets,” Encyclopedia of Fluid Mechanics, Gulf Publishing Company, 1986.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">KelvinHelmholtzACT</span></code></p></td>
+<td><p>Som, S. and Aggarwal, S.K., “Effects of Primary Breakup Modeling on Spray and Combustion Characteristics of Compression Ignition Engines”, Combustion and Flame, 157(6), 1179-1193, 2010. DOI: 10.1016/j.combustflame.2010.02.018</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidsref docutils literal notranslate"><span class="pre">RayleighTaylor</span></code></p></td>
+<td><p>Senecal, P.K., Richards, K.J., Pomraning, E., Yang, T., Dai, M.Z., McDavid, R.M., Patterson, M.A., Hou, S., and Shethaji, T., “A New Parallel Cut-Cell Cartesian CFD Code for Rapid Grid Generation Applied to In-Cylinder Diesel Engine Simulations,” SAE Paper 2007-01-0159, 2007. DOI: 10.4271/2007-01-0159</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidsref docutils literal notranslate"><span class="pre">TAB</span></code></p></td>
+<td><p>O’Rourke, P.J. and Amsden, A.A., “The TAB Method for Numerical Calculation of Spray Droplet Breakup,” SAE Paper 872089, 1987. DOI: 10.4271/872089.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ETAB</span></code></p></td>
+<td><p>F.X. Tanner “Liquid Jet Atomization and Droplet Breakup Modeling of Non-Evaporating Diesel Fuel Sprays” SAE 970050, SAE Transactions: Journal of Engines, Vol 106, Sec 3 pp 127-140</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">LISA</span></code></p></td>
+<td><p>Senecal, P.K., Schmidt, D.P., Nouar, I., Rutland, C.J., Reitz, R.D., and Corradini, M.L., “Modeling High-Speed Viscous Liquid Sheet Atomization,” International Journal of Multiphase Flow, 25(6-7), 1073-1097, 1999. DOI: 10.1016/S0301-9322(99)00057-9</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SHF</span></code></p></td>
+<td><ol class="upperalpha simple" start="18">
+<li><p>Schmehl, G. Maier, S. Witting “CFD Analysis of Fuel Atomization, Secondary Droplet Breakup and Spray Dispersion in the Premix Duct of a LPP Combustor”. Eight International Conference on Liquid Atomization and Spray Systems, 2000</p></li>
+</ol>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">PilchErdman</span></code></p></td>
+<td><p>Pilch, M., &amp; Erdman, C. A. (1987). Use of breakup time data and velocity history data to predict the maximum size of stable fragments for acceleration-induced breakup of a liquid drop. International journal of multiphase flow, 13(6), 741-757. DOI:10.1016/0301-9322(87)90063-2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ReitzDiwakar</span></code></p></td>
+<td><p>Reitz, R.D. and Diwakar, R. “Effect of drop breakup on fuel sprays” SAE Tech. paper series, 860469 (1986)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="particle-force-model-structure-definition-particleforcemodel-t">
+<span id="particleforcemodel"></span><h3><span class="section-number">13.4.5. </span>Particle Force Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModel_t</span></code><a class="headerlink" href="#particle-force-model-structure-definition-particleforcemodel-t" title="Permalink to this heading">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModel_t</span></code> describes the model used for for forces, typically lift and drag, applied on particle. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleForceModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Sphere</span><span class="p">,</span>
+<span class="w">  </span><span class="n">NonSphere</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Tracer</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BeetstraVanDerHoefKuipers</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Ergun</span><span class="p">,</span>
+<span class="w">  </span><span class="n">CliftGrace</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Gidaspow</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HaiderLevenspiel</span><span class="p">,</span>
+<span class="w">  </span><span class="n">PlessisMasliyah</span><span class="p">,</span>
+<span class="w">  </span><span class="n">SyamlalOBrien</span><span class="p">,</span>
+<span class="w">  </span><span class="n">SaffmanMei</span><span class="p">,</span>
+<span class="w">  </span><span class="n">TennetiGargSubramaniam</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Tomiyama</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Stokes</span><span class="p">,</span>
+<span class="w">  </span><span class="n">StokesCunningham</span><span class="p">,</span>
+<span class="w">  </span><span class="n">WenYu</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+
+<span class="kt">ParticleForceModel_t</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleForceModelType_t</span><span class="w"> </span><span class="n">ParticleForceModelType</span><span class="w"> </span><span class="p">;</span><span class="w">                  </span><span class="kr">(r)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance      of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p>For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+<p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModelType</span></code> names currently listed correspond to the following particular references.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Ergun</span></code></p></td>
+<td><p>Gidaspow, D. (1994). Multiphase flow and fluidization: continuum and kinetic theory descriptions. Academic press.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">PlessisMasliyah</span></code></p></td>
+<td><p>Du Plessis, J. P. (1994). Analytical quantification of coefficients in the Ergun equation for fluid friction in a packed bed. Transport in porous media, 16(2), 189-207. DOI:10.1007/BF00617551</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">WenYu</span></code></p></td>
+<td><p>Wen, C. Y., &amp; Yu, Y. H., (1966). Mechanics of fluidization. Chemical Engineering Progress Symposium Series. 62, 100-111.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">CliftGrace</span></code></p></td>
+<td><p>Clift, R., Grace, J.R., and Weber, M.E., Bubbles, Drops,  and Particles, Academic Press, NewYork, 1978.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">HaiderLevenspiel</span></code></p></td>
+<td><p>Haider, A. and Levenspiel, O., “Drag Coefficient and Terminal Velocity of Spherical and Non-Spherical Particles,” Powder Technology 58(1), 63-70, 1989.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">SaffmanMei</span></code></p></td>
+<td><p>Koohandaz, A., Khavasi, E., Eyvazian, A., and Yousefi, H., “Prediction of particles deposition in a dilute quasi-steady gravity current by Lagrangian markers: Effect of shear-induced lift force,” Scientific Reports, 10, 16673, 2020.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="particle-wall-interaction-model-structure-definition-particlewallinteractionmodel-t">
+<span id="particlewallinteractionmodel"></span><h3><span class="section-number">13.4.6. </span>Particle Wall Interaction Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModel_t</span></code><a class="headerlink" href="#particle-wall-interaction-model-structure-definition-particlewallinteractionmodel-t" title="Permalink to this heading">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModel_t</span></code> describes the model used for particle-wall interactions, including splash models. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleWallInteractionModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Linear</span><span class="p">,</span>
+<span class="w">  </span><span class="n">NonLinear</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HardSphere</span><span class="p">,</span>
+<span class="w">  </span><span class="n">SoftSphere</span><span class="p">,</span>
+<span class="w">  </span><span class="n">LinearSpringDashpot</span><span class="p">,</span>
+<span class="w">  </span><span class="n">BaiGosman</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HertzMindlin</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HertzKuwabaraKono</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Kuhnke</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ORourke</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Wruck</span><span class="p">,</span>
+<span class="w">  </span><span class="n">NTC</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+
+<span class="kt">ParticleWallInteractionModel_t</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                    </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticleWallInteractionModelType_t</span><span class="w"> </span><span class="n">ParticleWallInteractionModelType</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="kr">(r)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">       </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                               </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                                 </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">     </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p>For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+<p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModelType</span></code> names currently listed correspond to the following particular references.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ORourke</span></code></p></td>
+<td><p>O’Rourke, P. J ., “Collective Drop Effects on Vaporizing Liquid Sprays,” Ph.D. Thesis, Princeton University, Princeton, N J , United States, 1981.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Kuhnke</span></code></p></td>
+<td><p>Kuhnke, D., “Spray/Wall-interaction Modelling by Dimensionless Data Analysis,” Ph.D. Thesis, Shaker Verlag, 2004, ISBN 3-8322-3539.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">NTC</span></code></p></td>
+<td><p>Schmidt, D.P. and Rutland, C. J ., “A New Droplet Collision Algorithm,” Journal of Computational Physics , 164 ( 1 ), 62 - 80 , 2000. DOI: 10.1006/jcph.2000.6568</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">BaiGosman</span></code></p></td>
+<td><p>Bai, C. and Gosman, A. “Development of Methodology for Spray Impingement Simulation,” SAE Paper 950283, 1995. DOI: 10.4271/950283</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">HertzKuwabaraKono</span></code></p></td>
+<td><p>Goro Kuwabara and Kimitoshi Kono 1987 Jpn. J. Appl. Phys. 26 1230</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">HertzMindlin</span></code></p></td>
+<td><p>Tsuji Y.  et al. (1992) Lagrangian numerical simulation of plug flow of cohesionless particles in a horizontal pipe. Powder Technology, 71(3): p. 239-250. <a class="reference external" href="http://dx.doi.org/10.1016/0032-5910(92)88030-L">http://dx.doi.org/10.1016/0032-5910(92)88030-L</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Wruck</span></code></p></td>
+<td><p>Wruck, N.M. and Renz, U., “Transient Phase-Change of Droplets Impacting on a Hot Wall,”Wiley-VCH Verlag GmbH, ISBN 978-3-527-27149-8.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="particle-phase-change-model-structure-definition-particlephasechangemodel-t">
+<span id="particlephasechangemodel"></span><h3><span class="section-number">13.4.7. </span>Particle Phase Change Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModel_t</span></code><a class="headerlink" href="#particle-phase-change-model-structure-definition-particlephasechangemodel-t" title="Permalink to this heading">¶</a></h3>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModel_t</span></code> describes the model used for particle phase change, typically evaporation and condensation. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> enumeration.</p>
+<div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticlePhaseChangeModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
+<span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span>
+<span class="w">  </span><span class="n">ModelTypeUserDefined</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Boil</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Condense</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Flash</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Nucleate</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Chiang</span><span class="p">,</span>
+<span class="w">  </span><span class="n">Frossling</span><span class="p">,</span>
+<span class="w">  </span><span class="n">FuchsKnudsen</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+
+<span class="kt">ParticlePhaseChangeModel_t</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">Descriptor1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DescriptorN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">                 </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">ParticlePhaseChangeModelType_t</span><span class="w"> </span><span class="n">ParticlePhaseChangeModelType</span><span class="w"> </span><span class="p">;</span><span class="w">      </span><span class="kr">(r)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DataArray1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">DataArrayN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">    </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DataClass_t</span><span class="w"> </span><span class="n">DataClass</span><span class="w"> </span><span class="p">;</span><span class="w">                                            </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="kt">DimensionalUnits_t</span><span class="w"> </span><span class="n">DimensionalUnits</span><span class="w"> </span><span class="p">;</span><span class="w">                              </span><span class="kr">(o)</span>
+
+<span class="w">  </span><span class="k">List</span><span class="p">(</span><span class="w"> </span><span class="kt">UserDefinedData_t</span><span class="w"> </span><span class="n">UserDefinedData1</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">UserDefinedDataN</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">  </span><span class="kr">(o)</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Default names for the <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code>, <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code>, and <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModel_t</span></code> and shall not include the names <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>.</p></li>
+<li><p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModelType</span></code> is the only required element.</p></li>
+</ol>
+</div>
+<p>For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
+<p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
+<p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModelType</span></code> names currently listed correspond to the following particular references.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Frossling</span></code></p></td>
+<td><p>Amsden, A.A., O’Rourke, P.J ., and Butler, T.D., “KIVA-II: A Computer Program for Chemically Reactive Flows with Sprays,” Los Alamos National Laboratory Technical Report LA-11560-MS, 1989.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Chiang</span></code></p></td>
+<td><p>Chiang, C.H., Raju, M.S., and Sirignano, W.A., “Numerical Analysis of a Convecting, Vaporizing Fuel Droplet with Variable Properties,” International Journal of Heat and Mass Transfer, 35( 5), 1307-1324, 1992. DOI: 10.1016/0017-9310(92)90186-V</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Flash</span></code></p></td>
+<td><p>Price, C., Hamzehloo, A., Aleiferis, P., and Richardson, R., “An Approach to Modeling Flash-Boiling Fuel Sprays for Direct-Injection Spark-Ignition Engines,” Atomization and Sprays, 26(12), 1197-1239, 2016. DOI: 10.1615/AtomizSpr.2016015807</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Condense</span></code></p></td>
+<td><p>Kryukov, A.P., Levashov, V.Yu., and Sazhin, S.S., “Evaporation of diesel fuel droplets: kinetic versus hydrodynamic models,” International Journal of Heat and Mass Transfer 47, 2541-2549, 2004.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Nucleate</span></code></p></td>
+<td><p>Liu, X. and Cheng, P., “Dropwise condensation theory revisited Part II: Droplet nucleation density and condensation heat flux,” International Journal of Heat and Mass Transfer, 83, 842-849, 2015.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="misc.html" title="previous chapter (use the left arrow)"><span class="section-number">12. </span>Miscellaneous Data Structures</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="appendix_a.html" title="next chapter (use the right arrow)">Appendix A: Conventions for Data-Name Identifiers</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="appendix_a.html" title="Appendix A: Conventions for Data-Name Identifiers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="misc.html" title="12. Miscellaneous Data Structures"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" >CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">13. </span>Particle Data</a></li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

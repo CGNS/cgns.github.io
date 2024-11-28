@@ -997,6 +997,296 @@ The :sidskey:`ZoneSubRegion_t`  node allows for the ability to give flowfield or
 
 
 
+.. _particlespecification:
+
+Particle Specification
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. _ParticleZone:
+
+:sidskey:`ParticleZone_t`
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sets of particles are held in :sidskey:`ParticleZone_t`` nodes. :sidskey:`ParticleZone_t` are children of :sidskey:`CGNSBase_t`. There can be multiple :sidskey:`ParticleZone_t` nodes should the user want to distinguish between different sets of particles.
+
+.. list-table:: **Node Attributes**
+   :stub-columns: 1
+
+   * - Name:
+     - User defined
+   * - Label:
+     - :sidsref:`ParticleZone_t`
+   * - DataType:
+     - :sidskey:`cgsize_t`
+   * - Dimension:
+     - 1
+   * - Dimension Values:
+     - 1
+   * - Children:
+     - See :ref:`ParticleZone_t figure <ParticleZoneFigure>`
+   * - Cardinality:
+     - 0, *N*
+   * - Parameters:
+     - :sidskey:`PhysicalDimension`
+  
+
+
+.. _ParticleCoordinates:
+
+:sidskey:`ParticleCoordinates_t`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A :sidskey:`ParticleCoordinates_t` node describes the location of each particle associated with a single particle zone. The values of the physical coordinates of the particle centers are stored in :sidskey:`DataArray_t` children of :sidskey:`ParticleCoordinates_t`. The names of the coordinates are stored in the Name field of the corresponding :sidskey:`DataArray_t` node. For common coordinate systems, i.e., Cartesian, polar, cylindrical, and spherical, the names are specified by the SIDS.
+
+Under each node of type :sidskey:`ParticleZone_t`, the original particle coordinate is contained in a node named :sidskey:`ParticleCoordinates`. Additional :sidskey:`ParticleCoordinates_t` data structures are allowed, with user-defined names, to store particles at multiple time steps or iterations.
+
+.. list-table:: **Node Attributes**
+   :stub-columns: 1
+
+   * - Name:
+     - :sidskey:`ParticleCoordinates` or user defined
+   * - Label:
+     - :sidsref:`ParticleCoordinates_t`
+   * - DataType:
+     - :sidskey:`MT` or :sidskey:`R4` or :sidskey:`R8`
+   * - Dimension:
+     - 2
+   * - Dimension Values:
+     - :sidskey:`PhysicalDimension`,2
+   * - Children:
+     - See :ref:`ParticleCoordinates_t figure <ParticleCoordinatesFigure>`
+   * - Cardinality:
+     - 0, *N*
+   * - Parameters:
+     - :sidskey:`ParticleSize`, :sidskey:`PhysicalDimension`
+
+
+
+.. _ParticleSolution:
+
+:sidskey:`ParticleSolution_t`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A :sidskey:`ParticleSolution_t` node describes a set of physical data associated with particles for a single particle zone. It is intended for the storage of computed discrete data such as temperatures and velocities of particles. There is no convention as to how many or what kind of quantities must or may be stored. In particular, it is not specified that the quantities need in any sense be either complete or non-redundant.
+
+The data are stored in :sidskey:`DataArray_t` children of :sidskey:`ParticleSolution_t`. These :sidskey:`DataArray_t` nodes are dimension `ParticleSize`, as set by the particle zone, and the order of storage within the :sidskey:`DataArray_t` nodes is presumed the same as it is for the associated :sidskey:`ParticleCoordinates_t`. The names of the physical quantities are stored in the Name field of the corresponding :sidskey:`DataArray_t` node. For common fluid dynamic quantities the names are specified by the SIDS.
+
+The meaning of the field arrays is modified in the usual way by any :sidskey:`DataClass_t` or :sidskey:`DimensionalUnits_t` children of the :sidskey:`ParticleSolution_t` node.
+
+.. list-table:: **Node Attributes**
+   :stub-columns: 1
+
+   * - Name:
+     - User defined
+   * - Label:
+     - :sidsref:`ParticleSolution_t`
+   * - DataType:
+     - :sidskey:`MT`
+   * - Children:
+     - See :ref:`ParticleSolution_t figure <ParticleSolutionFigure>`
+   * - Cardinality:
+     - 0, *N*
+   * - Parameters:
+     - :sidskey:`ParticleSize`
+   * - Functions:
+     - :sidskey:`DataSize`
+
+
+
+.. _ParticleEquationSet:
+
+:sidskey:`ParticleEquationSet_t`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A node of type :sidskey:`ParticleEquationSet_t` appears either at the highest level of the tree (under :sidskey:`CGNSBase_t`), to indicate the equation set whose solution is recorded throughout the database, or below a :sidskey:`ParticleZone_t` node, to indicate the set of equations solved in that particle zone. The usual convention applies, i.e., specifications at the local (particle zone) level override global specifications.
+
+.. list-table:: **Node Attributes**
+   :stub-columns: 1
+
+   * - Name:
+     - :sidskey:`ParticleEquationSet`
+   * - Label:
+     - :sidsref:`ParticleEquationSet_t`
+   * - DataType:
+     - :sidskey:`MT`
+   * - Children:
+     - See :ref:`ParticleEquationSet_t figure <ParticleEquationSetFigure>`
+   * - Cardinality:
+     - 0,1
+
+
+
+.. _ParticleGoverningEquations:
+
+:sidskey:`ParticleGoverningEquations_t`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This node stores the framework of the governing equations being solved, for example, :sidskey:`DEM`, :sidskey:`DSMC`, or :sidskey:`SPH`.
+
+.. list-table:: **Node Attributes**
+   :stub-columns: 1
+
+   * - Name:
+     - :sidskey:`ParticleGoverningEquations`
+   * - Label:
+     - :sidsref:`ParticleEquationSet_t`
+   * - DataType:
+     - :sidskey:`C1`
+   * - Dimension:
+     - 1
+   * - Dimension Values:
+     - Length of string
+   * - Data:
+     - :sidskey:`ParticleGoverningEquationsType` value
+   * - Children:
+     - See :ref:`ParticleEquationSet_t figure <ParticleEquationSetFigure>`
+   * - Cardinality:
+     - 0,1
+
+
+
+.. _ParticleCollisionModel:
+
+:sidskey:`ParticleCollisionModel_t`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A node of type :sidskey:`ParticleCollisionModel_t` names the particle collision model used, for example, :sidskey:`HardShpere` or :sidskey:`HertzKuwabaraKono`.
+
+.. list-table:: **Node Attributes**
+   :stub-columns: 1
+
+   * - Name:
+     - :sidskey:`ParticleCollisionModel_t`
+   * - Label:
+     - :sidsref:`ParticleCollisionModel_t`
+   * - DataType:
+     - :sidskey:`C1`
+   * - Dimension:
+     - 1
+   * - Dimension Values:
+     - Length of string
+   * - Data:
+     - :sidskey:`ParticleCollisionModelType` value
+   * - Children:
+     - See :ref:`ParticleCollisionModel_t figure <ParticleCollisionModelFigure>`
+   * - Cardinality:
+     - 0,1
+
+
+
+.. _ParticleBreakupModel:
+
+:sidskey:`ParticleBreakupModel_t`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A node of type :sidskey:`ParticleBreakupModel_t` names the particle breakup model used, for example, :sidskey:`KelvinHelmholtz` or :sidskey:`TAB`.
+
+.. list-table:: **Node Attributes**
+   :stub-columns: 1
+
+   * - Name:
+     - :sidskey:`ParticleBreakupModel_t`
+   * - Label:
+     - :sidsref:`ParticleBreakupModel_t`
+   * - DataType:
+     - :sidskey:`C1`
+   * - Dimension:
+     - 1
+   * - Dimension Values:
+     - Length of string
+   * - Data:
+     - :sidskey:`ParticleBreakupModelType` value
+   * - Children:
+     - See :ref:`ParticleBreakupModel_t figure <ParticleBreakupModelFigure>`
+   * - Cardinality:
+     - 0,1
+
+
+
+.. _ParticleForceModel:
+
+:sidskey:`ParticleForceModel_t`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A node of type :sidskey:`ParticleForceModel_t` names the particle force model used, for example, :sidskey:`Sphere` or :sidskey:`WenYu`.
+
+.. list-table:: **Node Attributes**
+   :stub-columns: 1
+
+   * - Name:
+     - :sidskey:`ParticleForceModel_t`
+   * - Label:
+     - :sidsref:`ParticleForceModel_t`
+   * - DataType:
+     - :sidskey:`C1`
+   * - Dimension:
+     - 1
+   * - Dimension Values:
+     - Length of string
+   * - Data:
+     - :sidskey:`ParticleForceModelType` value
+   * - Children:
+     - See :ref:`ParticleForceModel_t figure <ParticleForceModelFigure>`
+   * - Cardinality:
+     - 0,1
+
+
+
+.. _ParticleWallInteractionModel:
+
+:sidskey:`ParticleWallInteractionModel_t`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A node of type :sidskey:`ParticleWallInteractionModel_t` names the particle-wall interaction model used, for example, :sidskey:`HardSphere` or :sidskey:`HertzKuwabaraKono`.
+
+.. list-table:: **Node Attributes**
+   :stub-columns: 1
+
+   * - Name:
+     - :sidskey:`ParticleWallInteractionModel_t`
+   * - Label:
+     - :sidsref:`ParticleWallInteractionModel_t`
+   * - DataType:
+     - :sidskey:`C1`
+   * - Dimension:
+     - 1
+   * - Dimension Values:
+     - Length of string
+   * - Data:
+     - :sidskey:`ParticleWallInteractionModelType` value
+   * - Children:
+     - See :ref:`ParticleWallInteractionModel_t figure <ParticleWallInteractionModelFigure>`
+   * - Cardinality:
+     - 0,1
+
+
+
+:sidskey:`ParticlePhaseChangeModel_t`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A node of type :sidskey:`ParticlePhaseChangeModel_t` names the particle phase change model used, for example, :sidskey:`Frossling` or :sidskey:`FuchsKnudsen`.
+
+.. list-table:: **Node Attributes**
+   :stub-columns: 1
+
+   * - Name:
+     - :sidskey:`ParticlePhaseChangeModel_t`
+   * - Label:
+     - :sidsref:`ParticlePhaseChangeModel_t`
+   * - DataType:
+     - :sidskey:`C1`
+   * - Dimension:
+     - 1
+   * - Dimension Values:
+     - Length of string
+   * - Data:
+     - :sidskey:`ParticlePhaseChangeModelType` value
+   * - Children:
+     - See :ref:`ParticlePhaseChangeModel_t figure <ParticlePhaseChangeModelFigure>`
+   * - Cardinality:
+     - 0,1
+  
+
 .. _connectivitygroup:
 
 Connectivity Group
@@ -2462,7 +2752,7 @@ The :sidskey:`CGNSBase_t`  node is by definition the highest level node in the d
 
 The only data stored in the node itself are :sidskey:`CellDimension` , the dimensionality of a cell in the mesh (i.e., 3 for a volume cell and 2 for a face cell), and :sidskey:`PhysicalDimension` , the number of indices required to specify a unique physical location in the field data being recorded. However, a variety of global information concerning the entire database may be stored in children of the :sidskey:`CGNSBase_t`  node. In particular, a :sidskey:`Descriptor_t`  node at this level can store user commentary on the entire history of the development of the database.
 
-Other information typically stored directly below the :sidskey:`CGNSBase_t`  node includes convergence histories, reference states, dimensional units, integrated quantities, and information on the flow equations being solved.
+Other information typically stored directly below the :sidskey:`CGNSBase_t`  node includes convergence histories, reference states, dimensional units, integrated quantities, and information on the flow and particle equations being solved.
 
 .. list-table:: **Node Attributes**
    :stub-columns: 1

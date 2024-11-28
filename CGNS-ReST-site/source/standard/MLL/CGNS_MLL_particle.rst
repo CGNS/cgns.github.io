@@ -1,4 +1,4 @@
-﻿.. CGNS Documentation files
+.. CGNS Documentation files
    See LICENSING/COPYRIGHT at root dir of this documentation sources
 
 
@@ -8,12 +8,12 @@
    :language: c
 
 
-.. _MLLSolutionData:
+.. _MLLParticleSpecification:
    
-Solution Data
--------------
+Particle Specification
+----------------------
 
 .. raw:: html
-   :file: midlevel/solution.html
+   :file: midlevel/particle.html
 
 .. last line

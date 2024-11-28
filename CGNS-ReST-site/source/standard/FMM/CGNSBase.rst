@@ -63,7 +63,33 @@ CGNSBase Figure
             -  :sidskey:`CellDimension`, :sidskey:`PhysicalDimension`                    
           * -  Child Nodes:           
             -  :ref:`Zone_t figure <ZoneFigure>`         
-    
+
+    .. container:: figelem2
+            
+       .. list-table::
+          :class:  figtable
+          :stub-columns: 1
+          :widths: 38 62
+                       
+          * -  Name:           
+            -  User defined                   
+          * -  Label:           
+            -  :sidsref:`ParticleZone_t`                    
+          * -  Data-Type:           
+            -  :sidskey:`cgsize_t`                    
+          * -  Dimensions:           
+            -  1                   
+          * -  Dimension Values:            
+            -  1                   
+          * -  Data:           
+            -  :sidskey:`ParticleSize`                    
+          * -  Cardinality:           
+            -  0, *N*                    
+          * -  Parameters:           
+            -  :sidskey:`PhysicalDimension`                    
+          * -  Child Nodes:           
+            -  :ref:`ParticleZone_t figure <ParticleZoneFigure>`   
+
     .. container:: figelem2
             
        .. list-table::
@@ -262,7 +288,25 @@ CGNSBase Figure
           * -  Parameters:           
             -  :sidskey:`CellDimension`                    
           * -  Child Nodes:            
-            -  :ref:`FlowEquationSet_t figure <FlowEquationSetFigure>`         
+            -  :ref:`FlowEquationSet_t figure <FlowEquationSetFigure>`
+
+    .. container:: figelem2
+            
+       .. list-table::
+          :class:  figtable
+          :stub-columns: 1
+          :widths: 38 62
+                       
+          * -  Name:           
+            -  :sidskey:`ParticleEquationSet`                    
+          * -  Label:           
+            -  :sidsref:`ParticleEquationSet_t`                    
+          * -  Data-Type:           
+            -  :sidskey:`MT`                    
+          * -  Cardinality:           
+            -  0,1                                   
+          * -  Child Nodes:            
+            -  :ref:`ParticleEquationSet_t figure <ParticleEquationSetFigure>`  
     
     .. container:: figelem2
             

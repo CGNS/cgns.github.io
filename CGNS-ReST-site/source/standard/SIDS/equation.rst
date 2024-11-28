@@ -18,7 +18,7 @@ The intended use of these structures initially is primarily for archival purpose
 Flow Equation Set Structure Definition: ``FlowEquationSet_t``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:sidskey:`FlowEquationSet_t` is a general description of the governing flow equations. It includes the dimensionality of the governing equations, and the collection of specific equation-set descriptions covered in subsequent sections. It can be a child node of either :sidsref:`CGNSBase_t` or :sidsref:`Zone_t` (or both).
+:sidskey:`FlowEquationSet_t` is a general description of the governing flow equations. It includes the dimensionality of the governing equations, and the collection of specific equation-set descriptions covered in subsequent sections. It can be a child node of :sidsref:`CGNSBase_t` or :sidsref:`Zone_t` (or both).
 
 .. code-block:: sids
 
@@ -86,7 +86,8 @@ Governing Equations Structure Definition: ``GoverningEquations_t``
     NSLaminar,
     NSTurbulent,
     NSLaminarIncompressible,
-    NSTurbulentIncompressible ) ;
+    NSTurbulentIncompressible,
+    LatticeBoltzmann) ;
 
   GoverningEquations_t< int CellDimension > :=
     {
@@ -156,7 +157,7 @@ Model Type Structure Definition: ``ModelType_t``
     ChemicalEquilibCurveFit, ChemicalEquilibMinimization,
     ChemicalNonequilib, EMElectricField, EMMagneticField,
     EMConductivity, Voltage, Interpolated,
-    Equilibrium_LinRessler, Chemistry_LinRessler ) ;
+    Equilibrium_LinRessler, Chemistry_LinRessler) ;
 
 
 Thermodynamic Gas Model Structure Definition: ``GasModel_t``

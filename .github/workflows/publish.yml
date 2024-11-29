@@ -34,14 +34,20 @@ jobs:
           pip3 install numpy
           pip3 install breathe
           pip3 install sphinx-book-theme
-          # pip3 install sphinx-mathjax-offline
+          pip3 install linkchecker
 
       - name: "Build sphinx doc"
         run: |
           cd CGNS-ReST-site
           make html
         shell: bash
-      
+
+      - name: "Check for broken links"
+        run: |
+          cd CGNS-ReST-site/docs/_build/html/
+          linkchecker --check-extern ./index.html
+        continue-on-error: true
+
       - name: "Deploy"
         run: |
           cd CGNS-ReST-site

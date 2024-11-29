@@ -3,8 +3,8 @@
 
 .. _DocUserGuide:
 
-Userguide
-=========
+User's Guide to CGNS
+====================
 
 A concise introduction to many of the most commonly-used features of CGNS, with coding examples using the Mid-Level Library to write and read simple files containing CGNS databases.
 
@@ -14,16 +14,9 @@ Original Version of this User's Guide was also published as NASA/TM-2001-211236,
 All examples of source code discussed in this Guide are available from `github repository <https://github.com/CGNS/CGNS/tree/master/src/Test_UserGuideCode>`_ , as a complement to the document itself.
 We strongly recommend that you download these examples.
 
-
 .. note::
-    Questions and comments on this guide are welcome and should be directed to:
-      |   Chris Rumsey
-      |   Mail Stop 128
-      |   NASA Langley Research Center
-      |   Hampton, VA  23681-2199
-      |   (757) 864-2165
-      |   e-mail:  c<dot>l<dot>rumsey<at>larc<dot>nasa<dot>gov
-
+    Questions and comments on this guide are welcome and should be directed to
+    the CGNS forum `CGNStalk <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_.
 
 The rules and conventions governing how the nodes in a CGNS file are organized, including their names and labels, are specified in the SIDS document, with additional details in the SIDS File Mapping Manual. These documents also specify in detail how CFD information is to be stored within the nodes in a standardized fashion so that other users can easily access and read it. When a CGNS file strictly adheres to the rules given in the SIDS document, it is said to be "SIDS-compliant." A CGNS file must be SIDS-compliant in order for other users to be able to properly interpret it.
 A brief overview of the most commonly used aspects of the SIDS is included in the current document.

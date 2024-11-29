@@ -1,10 +1,14 @@
 .. _cgns_api_c-ref:
 
-###############
-CGNS C API
-###############
+#################
+CGNS API Overview
+#################
 
 These are all the types and functions available in the CGNS C API.
+
+.. note::
+  For details and conventions regarding the equivalent Fortran APIs,
+  please refer to :ref:`MLLGeneralRemarks-ref`.
 
 .. _CGNSFile-ref:
 

@@ -1,14 +1,15 @@
 .. _cgns_api_c_par-ref:
 
-The Parallel Mid-level Library (aka PMLL) is an extension of CGNS/MLL C and Fortran API to enable parallel aware file mapping.
+The Parallel Mid-level Library (aka PMLL) is an extension of CGNS/MLL C and Fortran APIs to enable parallel aware file mapping.
 
 ##############################
-CGNS Parallel C API
+CGNS Parallel API Overview
 ##############################
 
-This document describes the use of parallel input/output within the CGNS library, 
-and the associated routines. It utilizies MPI-IO within the context of HDF5 external 
-link to do the IO, and thus the CGNS library must be built with this support.
+This document describes parallel input/output (I/O) in the CGNS library and
+the associated routines. It utilizes MPI-IO through the HDF5 library to support
+parallel I/O operations. As a result, the CGNS library must be built with HDF5
+to enable the parallel CGNS APIs.
 
 ******************************
 Parallel File Operations

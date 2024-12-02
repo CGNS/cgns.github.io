@@ -94,11 +94,9 @@ Reference Documentation
 
    Jump to :ref:`the glossary <CGNSGlossary>`
 
-Site map
--------------
-
 .. toctree::
    :maxdepth: 4
+   :hidden:
 
    general
    standard

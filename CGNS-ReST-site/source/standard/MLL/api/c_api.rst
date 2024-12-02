@@ -1,8 +1,8 @@
 .. _cgns_api_c-ref:
 
-#################
-CGNS API Overview
-#################
+###################################################
+CGNS/MLL API Overview for C and Fortran applications
+###################################################
 
 These are all the types and functions available in the CGNS C API.
 
@@ -86,8 +86,14 @@ Structural Nodes
 
 .. _CGNSBaseInformation-ref: 
 
-CGNS Base Information (CGNSBase_t)
+CGNS Base Information
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <a href="../../FMM/nodes.html#cgnsbase-t"><code>CGNSBase_t</code></a>
+             (<a href="../../SIDS/hierarchy.html#cgns-entry-level-structure-definition-cgnsbase-t">SIDS</a>)</p>
+
 .. doxygengroup:: CGNSBaseInformation
     :content-only:
 
@@ -95,8 +101,16 @@ ____________________________________________
 
 .. _CGNSZoneInformation-ref: 
 
-CGNS Zone Information (Zone_t)
+CGNS Zone Information
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <a href="./enums.html#c.Zone_t"><code>Zone_t</code></a>
+             (<a href="../../SIDS/hierarchy.html#zone-structure-definition-zone-t">SIDS</a>))</p>
+
+.. <a href="../../FMM/nodes.html#Zone">File Mapping</a>)</p>
+
 .. doxygengroup:: CGNSZoneInformation
     :content-only:
 
@@ -104,8 +118,13 @@ ____________________________________________
 
 .. _SimulationType-ref: 
 
-Simulation Type (SimulationType_t)
+Simulation Type
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <a href="./enums.html#c.SimulationType_t"><code>SimulationType_t</code></a>
+
 .. doxygengroup:: SimulationType
     :content-only:
 
@@ -117,8 +136,13 @@ Descriptors
 
 .. _DescriptiveText-ref:
 
-Descriptive Text (Descriptor_t)
+Descriptive Text
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>: <code>Descriptor_t</code>
+
 .. doxygengroup:: DescriptiveText
     :content-only:
 
@@ -126,8 +150,13 @@ ____________________________________________
 
 .. _OrdinalValue-ref:
 
-Ordinal Value (Ordinal_t)
+Ordinal Value
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>Ordinal_t</code>
+
 .. doxygengroup:: OrdinalValue
     :content-only:
 
@@ -139,8 +168,13 @@ Physical Data
 
 .. _DataArrays-ref:
 
-Data Arrays (DataArray_t)
+Data Arrays
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>DataArray_t</code>
+
 .. doxygengroup:: DataArrays
     :content-only:
 
@@ -150,6 +184,11 @@ ____________________________________________
 
 Data Class (DataClass_t)
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <a href="./enums.html#c.DataClass_t"><code>DataClass_t</code></a>
+
 .. doxygengroup:: DataClass
     :content-only:
 
@@ -157,8 +196,13 @@ ____________________________________________
 
 .. _DataConversionFactors-ref:
 
-Data Conversion Factors (DataConversion_t)
+Data Conversion Factors
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>DataConversion_t</code>
+
 .. doxygengroup:: DataConversionFactors
     :content-only:
 
@@ -166,8 +210,13 @@ ____________________________________________
 
 .. _DimensionalUnits-ref:
 
-Dimensional Units (DimensionalUnits_t)
+Dimensional Units
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>: <code>DimensionalUnits_t</code>
+
 .. doxygengroup::  DimensionalUnits
     :content-only:
 
@@ -175,8 +224,13 @@ ____________________________________________
 
 .. _DimensionalExponents-ref:
 
-Dimensional Exponents (DimensionalExponents_t)
+Dimensional Exponents
 _________________________________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>DimensionalExponents_t</code>
+
 .. doxygengroup::  DimensionalExponents
     :content-only:
 
@@ -193,10 +247,9 @@ ____________________________________________
 
 .. raw:: html
 
-   <p><i>Node</i>: <code>GridLocation_t</code>
+   <p><i>Node</i>:  <a href="./enums.html#c.GridLocation_t"><code>GridLocation_t</code></a>
              (<a href="../../SIDS/block.html#GridLocation">SIDS</a>,
               <a href="../../FMM/nodes.html#GridLocation">File Mapping</a>)</p>
-
 
 .. doxygengroup:: GridLocation
     :content-only:
@@ -210,7 +263,8 @@ ____________________________________________
 
 .. raw:: html
 
-   <p><i>Node</i>: <code>IndexArray_t</code>, <code>IndexRange_t</code>
+   <p><i>Node</i>: <code>IndexArray_t</code>,
+             <code>IndexRange_t</code>
              (<a href="../../SIDS/block.html#IndexArray">SIDS</a>,
               <a href="../../FMM/nodes.html#IndexRange">File Mapping</a>)</p>
 
@@ -241,8 +295,13 @@ Auxiliary Data
 
 .. _ReferenceState-ref:
 
-Reference State (ReferenceState_t)
+Reference State
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>: <code>ReferenceState_t</code>
+
 .. doxygengroup:: ReferenceState
     :content-only:
 
@@ -250,8 +309,13 @@ ____________________________________________
 
 .. _Gravity-ref:
 
-Gravity (Gravity_t)
+Gravity
 ______________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>Gravity_t</code>
+
 .. doxygengroup:: Gravity
     :content-only:
 
@@ -259,8 +323,13 @@ ______________________
 
 .. _ConvergenceHistory-ref:
 
-Convergence History (ConvergenceHistory_t)
+Convergence History
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>ConvergenceHistory_t</code>
+
 .. doxygengroup:: ConvergenceHistory
     :content-only:
 
@@ -268,8 +337,13 @@ ____________________________________________
 
 .. _IntegralData-ref:
 
-Integral Data (IntegralData_t)
+Integral Data
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>IntegralData_t</code>
+
 .. doxygengroup:: IntegralData
     :content-only:
 
@@ -277,8 +351,13 @@ ____________________________________________
 
 .. _UserDefinedData-ref:
 
-User-Defined Data (UserDefinedData_t)
+User-Defined Data
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>UserDefinedData_t</code>
+
 .. doxygengroup:: UserDefinedData
     :content-only:
 
@@ -288,6 +367,7 @@ ____________________________________________
 
 Freeing Memory
 ____________________________________________
+
 .. doxygengroup:: FreeingMemory
     :content-only:
 
@@ -299,8 +379,13 @@ Grid Specification
 
 .. _ZoneGridCoordinates-ref:
 
-Zone Grid Coordinates (GridCoordinates_t)
+Zone Grid Coordinates
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>: <code>GridCoordinates_t</code>
+
 .. doxygengroup:: ZoneGridCoordinates
     :content-only:
 
@@ -308,8 +393,15 @@ ____________________________________________
 
 .. _ElementConnectivity-ref:
 
-Element Connectivity (Elements_t)
+Element Connectivity
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>: <a href="./enums.html#c.ElementType_t"><code>Elements_t</code></a>
+             (<a href="../../SIDS/grid.html#Elements">SIDS</a>,
+              <a href="../../FMM/nodes.html#Elements">File Mapping</a>)</p>
+
 .. doxygengroup:: ElementConnectivity
     :content-only:
 
@@ -317,8 +409,13 @@ ____________________________________________
 
 .. _Axisymmetry-ref:
 
-Axisymmetry (Axisymmetry_t)
+Axisymmetry
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>Axisymmetry_t</code>
+
 .. doxygengroup:: Axisymmetry
     :content-only:
 
@@ -326,8 +423,13 @@ ____________________________________________
 
 .. _Rotating-ref:
 
-Rotating Coordinates (RotatingCoordinates_t)
+Rotating Coordinates
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>RotatingCoordinates_t</code>
+
 .. doxygengroup:: RotatingCoordinates
     :content-only:
 
@@ -339,8 +441,13 @@ Solution Data
 
 .. _FlowSolution-ref:
 
-Flow Solution (FlowSolution_t)
+Flow Solution
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>FlowSolution_t</code>
+
 .. doxygengroup:: FlowSolution
     :content-only:
 
@@ -348,8 +455,13 @@ ____________________________________________
 
 .. _DiscreteData-ref:
 
-Discrete Data (DiscreteData_t)
+Discrete Data
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>DiscreteData_t</code>
+
 .. doxygengroup:: DiscreteData
     :content-only:
 
@@ -357,8 +469,13 @@ ____________________________________________
 
 .. _ZoneSubregions-ref:
 
-Zone Subregions (ZoneSubRegion_t)
+Zone Subregions
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>: <code>ZoneSubRegion_t</code>
+
 .. doxygengroup:: ZoneSubregions
     :content-only:
 
@@ -370,8 +487,13 @@ Grid Connectivity
 
 .. _OneToOneConnectivity-ref:
 
-One-to-One Connectivity (GridConnectivity1to1_t)
+One-to-One Connectivity
 _________________________________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>: <code>GridConnectivity1to1_t</code>
+
 .. doxygengroup:: OneToOneConnectivity
     :content-only:
 
@@ -379,8 +501,13 @@ _________________________________________________________________
 
 .. _GeneralizedConnectivity-ref:
 
-Generalized Connectivity (GridConnectivity_t)
+Generalized Connectivity
 _________________________________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>GridConnectivity_t</code>
+
 .. doxygengroup:: GeneralizedConnectivity
     :content-only:
 
@@ -388,8 +515,13 @@ _________________________________________________________________
 
 .. _SpecialGridConnectivityProperty-ref:
 
-Special Grid Connectivity Properties (GridConnectivityProperty_t)
+Special Grid Connectivity Properties
 _________________________________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>GridConnectivityProperty_t</code>
+
 .. doxygengroup:: SpecialGridConnectivityProperty
     :content-only:
 
@@ -397,8 +529,13 @@ _________________________________________________________________
 
 .. _OversetHoles-ref:
 
-Overset Holes (OversetHoles_t)
+Overset Holes
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>OversetHoles_t</code>
+
 .. doxygengroup:: OversetHoles
     :content-only:
 
@@ -410,8 +547,13 @@ Boundary Conditions
 
 .. _BoundaryConditionType-ref:
 
-Boundary Condition Type and Location (BC_t)
+Boundary Condition Type and Location
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>: <code>BC_t</code>
+
 .. doxygengroup:: BoundaryConditionType
     :content-only:
 
@@ -419,8 +561,13 @@ ____________________________________________
 
 .. _BoundaryConditionDatasets-ref:
 
-Boundary Condition Datasets (BCDataSet_t)
+Boundary Condition Datasets
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>BCDataSet_t</code>
+
 .. doxygengroup:: BoundaryConditionDatasets
     :content-only:
 
@@ -428,8 +575,13 @@ ____________________________________________
 
 .. _BCData-ref:
 
-Boundary Condition Data (BCData_t)
+Boundary Condition Data
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>: <code>BCData_t</code>
+
 .. doxygengroup:: BCData
     :content-only:
 
@@ -437,8 +589,13 @@ ____________________________________________
 
 .. _SpecialBoundaryConditionProperty-ref:
 
-Special Boundary Condition Properties (BCProperty_t)
+Special Boundary Condition Properties
 _________________________________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>: <code>BCProperty_t</code>
+
 .. doxygengroup:: SpecialBoundaryConditionProperty
     :content-only:
 
@@ -450,8 +607,13 @@ Equation Specification
 
 .. _FlowEquationSet-ref:
 
-Flow Equation Set (FlowEquationSet_t)
+Flow Equation Set
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>FlowEquationSet_t</code>
+
 .. doxygengroup:: FlowEquationSet
     :content-only:
 
@@ -464,7 +626,7 @@ ________________________________________________
 
 .. raw:: html
 
-   <p><i>Node</i>: <code>ParticleEquationSet_t</code>
+   <p><i>Node</i>: <a href="./enums.html#c.ParticleEquationSet_t"><code>ParticleEquationSet_t</code></a>
               (<a href="../../SIDS/particles.html#ParticleEquationSet">SIDS</a>,
                <a href="../../FMM/nodes.html#ParticleEquationSet">File Mapping</a>)</p>
 
@@ -475,8 +637,13 @@ ________________________________________________
 
 .. _GoverningEquations-ref:
 
-Governing Equations (GoverningEquations_t)
+Governing Equations
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>GoverningEquations_t</code>
+
 .. doxygengroup:: GoverningEquations
     :content-only:
 
@@ -486,6 +653,11 @@ ____________________________________________
 
 Particle Governing Equations
 ________________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <a href="./enums.html#c.ParticleGoverningEquationsType_t"><code>ParticleGoverningEquationsType_t</code></a>
+
 
 .. doxygengroup:: ParticleGoverningEquations
     :content-only:
@@ -506,6 +678,11 @@ ____________________________________________
 Particle Model
 ________________________________________________
 
+.. raw:: html
+
+   <p><i>Node</i>:  <a href="./enums.html#c.ParticleModelType_t"><code>ParticleModelType_t</code></a>
+
+
 .. doxygengroup:: ParticleModel
     :content-only:
 
@@ -517,8 +694,13 @@ Families
 
 .. _CGNSFamilyDefinition-ref:
 
-Family Definition (Family_t)
+Family Definition
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>Family_t</code>
+
 .. doxygengroup:: CGNSFamilyDefinition
     :content-only:
 
@@ -526,8 +708,13 @@ ____________________________________________
 
 .. _CGNSGeometry-ref:
 
-Geometry Reference (GeometryReference_t)
+Geometry Reference
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>: <code>GeometryReference_t</code>
+
 .. doxygengroup:: CGNSGeometryReference
     :content-only:
 
@@ -535,8 +722,13 @@ ____________________________________________
 
 .. _CGNSFamilyBoundaryCondition-ref:
 
-Family Boundary Condition (FamilyBC_t)
+Family Boundary Condition
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>FamilyBC_t</code>
+
 .. doxygengroup:: CGNSFamilyBoundaryCondition
     :content-only:
 
@@ -544,8 +736,13 @@ ____________________________________________
 
 .. _FamilyName-ref:
 
-Family Name (FamilyName_t)
+Family Name
 ____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>FamilyName_t</code>
+
 .. doxygengroup:: FamilyName
     :content-only:
 
@@ -562,10 +759,9 @@ ____________________________________________
 
 .. raw:: html
 
-   <i>Node</i>: <code>BaseIterativeData_t</code>
+   <i>Node</i>: <a href="./enums.html#c.BaseIterativeData_t"><code>BaseIterativeData_t</code></a>
              (<a href="../../SIDS/time.html#BaseIterativeData">SIDS</a>,
               <a href="../../FMM/nodes.html#BaseIterativeData">File Mapping</a>)
-   <br><br>
 
 .. doxygengroup:: BaseIterativeData
     :content-only:
@@ -579,10 +775,9 @@ ____________________________________________
 
 .. raw:: html
 
-   <i>Node</i>: <code>ZoneIterativeData_t</code>
+   <i>Node</i>:  <a href="./enums.html#c.ZoneIterativeData_t"><code>ZoneIterativeData_t</code></a>
               (<a href="../../SIDS/time.html#ZoneIterativeData">SIDS</a>,
                <a href="../../FMM/nodes.html#ZoneIterativeData">File Mapping</a>)
-   <br><br>
 
 .. doxygengroup:: ZoneIterativeData
     :content-only:
@@ -596,10 +791,9 @@ ____________________________________________
 
 .. raw:: html
 
-   <i>Node</i>: <code>ParticleIterativeData_t</code>
+   <i>Node</i>: <a href="./enums.html#c.ParticleIterativeData_t"><code>ParticleIterativeData_t</code></a>
              (<a href="../../SIDS/time.html#ParticleIterativeData">SIDS</a>,
               <a href="../../FMM/nodes.html#ParticleIterativeData">File Mapping</a>)
-   <br><br>
 
 .. doxygengroup:: ParticleIterativeData
     :content-only:
@@ -625,12 +819,12 @@ ____________________________________________
 
 .. _ArbitraryGridMotion-ref:
 
-Arbitrary Grid Motion (ArbitraryGridMotion_t)
+Arbitrary Grid Motion
 ________________________________________________
 
 .. raw:: html
 
-   <p><i>Node</i>: <code>ArbitraryGridMotion_t</code>
+   <p><i>Node</i>:  <code>ArbitraryGridMotion_t</code>
              (<a href="../../SIDS/time.html#ArbitraryGridMotion">SIDS</a>,
               <a href="../../FMM/filemap/nodes.html#ArbitraryGridMotion">File Mapping</a>)</p>
 
@@ -682,16 +876,6 @@ ________________________________________________
    For example, Particle0001, Particle0002, etc. is appropriate for up to 9999 particles.
 
 .. doxygengroup:: ParticleZoneInformation
-    :content-only:
-
-------
-
-.. _ParticleIterative-ref:
-
-Particle Iterative Data
-________________________________________________
-
-.. doxygengroup:: ParticleIterativeData
     :content-only:
 
 ------

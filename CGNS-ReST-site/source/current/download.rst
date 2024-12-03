@@ -6,9 +6,13 @@
 Download
 ========
 
-All CGNS files are stored on GitHub (https://github.com/CGNS). Issue tracking is located under *Issues* of the same repository. Please star the repoistory if you find the software useful.
+All CGNS files are stored on GitHub (https://github.com/CGNS). Issue tracking is located under
+*Issues* of the same repository. Please star the repository if you find the software useful.
 
-We also **strongly** recommend that you join the Discussion Group. This forum is the primary method used to keep CGNS users current with release and other important information updates. It is also used for discussing important problems/issues and for obtaining help from other CGNS users.
+We also **strongly** recommend that you join the `CGNStalk <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_
+Discussion Group. This forum is the primary
+method used to keep CGNS users current with release and other important information updates.
+It is also used for discussing important problems/issues and for obtaining help from other CGNS users.
 
 What to Download
 ----------------

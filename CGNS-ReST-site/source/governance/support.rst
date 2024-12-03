@@ -52,7 +52,7 @@ The documentation is generated from files found
 in `this <https://github.com/CGNS/cgns-modern.github.io>`_ repository. We use
 **Sphinx** to produce the web pages from these files.
 Additionally, Doxygen and Breathe generate the MLL API documentation from the CGNS
-source code. The documenation website should be cloned with the CGNS source submodule
+source code. The documentation website should be cloned with the CGNS source submodule
 in orrder to generate the Doxygen documentation by using:
 
 .. code-block:: shell

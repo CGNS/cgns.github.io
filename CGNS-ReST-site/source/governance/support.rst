@@ -48,22 +48,35 @@ can be found on `this page <http://www.github.com/CGNS/CGNS>`_.
 Building the documentation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The documentation is generated from text files. We use **Sphinx** to produce
-the web pages from these text files and a set of layout templates.
-The template we use for CGNS is a modified version of the **Guzzle** template.
-This modified version is released with the doc sources.
+The documentation is generated from files found
+in `this <https://github.com/CGNS/cgns-modern.github.io>`_ repository. We use
+**Sphinx** to produce the web pages from these files.
+Additionally, Doxygen and Breathe generate the MLL API documentation from the CGNS
+source code. The documenation website should be cloned with the CGNS source submodule
+in orrder to generate the Doxygen documentation by using:
+
+.. code-block:: shell
+
+   $ git clone --recurse-submodules https://github.com/CGNS/cgns-modern.github.io.git
+
+The theme we use for CGNS is a custom version of the **Sphinx Book Theme**.
+The modifications include specific changes made to the theme, such as color schemes,
+layout adjustments, and additional features and is controlled by files in the *_static*
+directory.
 
 ## STEP 0
 #########
 
-You have to install the production libs and tools, you have to
+You have to install the required libs and tools, so you have to
 make available:
 
   - Python (v3+)
   - Sphinx (v3.2+) and all its associated libs (see below)
-  - guzzle sphinx theme
+  - Doxygen (v1.11.0+)
+  - Breathe (v4.35.0+)
+  - book sphinx theme
 
-To check your production configuration, 
+To check your configuration, 
 open an Unix shell, for example **bash** and run the commands
 (do not type the `$` sign which is supposed to be the shell prompt:
 
@@ -79,7 +92,7 @@ If the python version is not 3.x.y or if you do not have python, you
 have to install it. On some systems, you would have to type `python3`
 to run python instead of only `python` without version number.
 
-Once python 3.x.y is there, go to **STEP 2**.
+Once python 3.x.y is there, go to **STEP 1**.
 
 .. warning::
 
@@ -91,58 +104,27 @@ Once python 3.x.y is there, go to **STEP 2**.
 ## STEP 1
 #########
 
-The `>>>` sign is the python interpreter prompt. We resume our test by
-trying to find out if our python installation has all required packages:
+Using the shell command:
 
-.. code-block:: python
+.. code-block:: shell
 
-   >>> import sphinx
-   >>> import guzzle_sphinx_theme
+  $ pip list
 
-If the command fails on `import sphinx`, you can install it using 
-the shell command (**not** a python command):
+verify the following packages are installed:
+
+- Sphinx
+- breathe
+- sphinx-book-theme
+
+If they are not, then you can install them using the shell command:
 
 .. code-block:: shell
 
    $ pip install sphinx
+   $ pip install sphinx-book-theme
+   $ pip install breathe
 
-If the command fails on the `import guzzle_sphinx_theme` you have to
-install the guzzle package.
-The *guzzle* theme can be found in the CGNS doc sources, you find the package
-in <clone-directory>/
-You can find below an example installation of *guzzle* you have to modify 
-to fit your own environment.
-
-.. code-block:: shell
-
-   mkdir /tmp/gz
-   cp guzzle_sphinx_theme-master.zip /tmp/gz
-   cd /tmp/gz
-   unzip guzzle_sphinx_theme-master.zip
-   cd guzzle_sphinx_theme-master/
-   python setup.py build
-   mkdir /tmp/gz/install
-   export PYTHONPATH=/tmp/gz/install/lib/python3.7/site-packages/:$PYTHONPATH
-   python setup.py install --prefix=/tmp/gz/install
-
-Once you have installed *guzzle*,
-make sure the Python .egg file is uncompressed.
-For example, on a Unix platform with a *sh* shell:
-
-.. code-block:: shell
-
-   cd /tmp/gz/install/lib/python3.7/site-packages
-   unzip guzzle_sphinx_theme-0.7.11-py3.7.egg
-
-If you still have an error in `import guzzle_sphinx_theme` you can move
-the page this way:
-
-.. code-block:: shell
-
-   cd /tmp/gz/install/lib/python3.7/site-packages
-   mv guzzle_sphinx_theme-0.7.11-py3.7.egg/guzzle_sphix_theme .
-
-Try again this **STEP 1** if succeed, you jump to **STEP 2**
+You may have to install the python packages that they may depend on, in addition to Doxygen.
 
 ## STEP 2
 #########
@@ -155,14 +137,13 @@ say for example: ``/my/own/local/doc/directory``
 .. code-block:: shell
 
    cd /my/own/local/doc/directory
-   git clone https://github.com/CGNS/cgns.github.io.git
-   git checkout doc-rest-migration
+   git clone --recurse-submodules https://github.com/CGNS/cgns-modern.github.io.git
 
 .. note::
 
    You need to have **git** to get the actual documentation source tree.
    We cannot detail here how to install git or how to allow it to access to
-   the CGNS repository. If you really are lost, please use CGNS mailing list.
+   the CGNS repository. If you really are lost, please use CGNS discussion forum.
 
 ## STEP 3
 #########
@@ -171,30 +152,25 @@ Everything is ready now, once you are in ``/my/own/local/doc/directory``
 all sources are in::
 
   CGNS-ReST-site/
-
-.. note::
-
-  If this directory is not there, be sure you are on the *doc-rest-migration*
-  branch.
   
 Most of the files to be created/edited are **rst** files located in and below CGNS-ReST-site/source/
 
 To produce the documentation, you run::
 
   cd CGNS-ReST-site
-  sh ./build.sh
+  make html
 
-All doc is generated into::
+All doc is generated into CGNS-ReSt-site::
 
-  /my/own/local/doc/directory/cgns-test.github.io
+  docs/_build/html/
 
 To check the produced documentation, you open a web browser (*chrome*, 
 *firefox*, whatever...) and you open the top page which is ``index.html``
 (in this example we are still in the  ``CGNS-ReST-site``)::
 
-  firefox ../../cgns-test.github.io/index.html
+  firefox docs/_build/html/index.html
 
-Second you run the `build.sh` script, it generates all the stuff and
+Second you run *make html*, it generates all the stuff and
 copies a final/ usable html directory with all required files.
 You can copy this directory at any place you want, the directory is
 self-contained. 

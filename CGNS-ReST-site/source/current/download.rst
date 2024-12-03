@@ -6,16 +6,7 @@
 Download
 ========
 
-All CGNS files are stored on GitHub (https://github.com/CGNS). Issue tracking is located at: https://cgnsorg.atlassian.net.
-
-If you have not done so already, please **REGISTER** by e-mailing to the `CGNS REGISTRAR <c.l.rumsey@nasa.gov>`_ the following information:
-
-- Your name
-- Company, university, lab, or facility name (if applicable)
-- Email, if different from your current sending address
-- Intended use for CGNS
-
-Although there is no registration requirement in order to obtain CGNS, by registering you will help the CGNS team to serve its users better. We never give, sell, or distribute emails to anyone.
+All CGNS files are stored on GitHub (https://github.com/CGNS). Issue tracking is located under *Issues* of the same repository. Please star the repoistory if you find the software useful.
 
 We also **strongly** recommend that you join the Discussion Group. This forum is the primary method used to keep CGNS users current with release and other important information updates. It is also used for discussing important problems/issues and for obtaining help from other CGNS users.
 

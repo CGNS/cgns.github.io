@@ -10,13 +10,20 @@ General Remarks
 
 .. _Acquiring-ref:
 
-The CGNS Mid-Level Library may be downloaded from the TODO:LINK (CGNS site) external link. The manual, as well as the other CGNS documentation, is available from the TODO:LINK (CGNS documentation web site).
+The CGNS Mid-Level Library may be downloaded from the `CGNS site <https://github.com/CGNS/CGNS>`_. The manual,
+as well as the other CGNS documentation, is available from the `CGNS documentation web site <https://cgns.org>`_.
 
 ****************************************
     Organization of This Manual
 ****************************************
 
-The sections that follow describe the Mid-Level Library functions in detail. The first three sections cover TODO:LINK (some basic file operations) (i.e., opening and closing a CGNS file, and some configuration options), TODO:LINK(accessing a specific node in a CGNS database(, and TODO:LINK(error handling). The remaining sections describe the functions used to read, write, and modify nodes and data in a CGNS database. These sections basically follow the organization used in the "Detailed CGNS Node Descriptions" section of the TODO:LINK(SIDS File Mapping manual).
+The sections that follow describe the Mid-Level Library functions in detail. The first three sections cover
+`basic file operations <../../MLL/api/c_api.html#file-and-library-operations>`_ (i.e., opening and
+closing a CGNS file, and CGNS internal configuration options),
+`accessing a specific node in a CGNS database <../../MLL/api/c_api.html#accessing-a-node>`_,
+and `error handling <../../MLL/api/c_api.html#error-handling>`_. The remaining sections describe the functions
+used to read, write, and modify nodes and data in a CGNS database. These sections basically follow the
+organization used in the Section :ref:`Detailed CGNS Node Descriptions <FMMNodeDescriptions>`.
 
 ****************************************
     Syntax
@@ -52,7 +59,11 @@ then the responsibility of the application to release this space by a call to cg
 ****************************************
     Error Status
 ****************************************
-All C functions return an integer value representing the error status. All Fortran functions have an additional parameter, *ier*, which contains the value of the error status. An error status different from zero implies that an error occurred. The error message can be printed using the :ref:`error handling functions<errorhandling-ref>` of the CGNS library. The error codes are coded in the C and Fortran include files *cgnslib.h* and *cgnslib_f.h*.
+All C functions return an integer value representing the error status. All Fortran functions have an
+additional parameter, *ier*, which contains the value of the error status. An error status different
+from zero implies that an error occurred. The error message can be printed using the
+:ref:`error handling functions<errorhandling-ref>` of the CGNS library. The error codes are
+coded in the C and Fortran include files *cgnslib.h* and *cgnslib_f.h*.
 
 .. _Typedefs-ref:
 
@@ -60,17 +71,31 @@ All C functions return an integer value representing the error status. All Fortr
     Typedefs
 ****************************************
 
-Beginning with CGNS-3.1.0, two new typedef variables have been introduced to support 64-bit mode. The *cglong_t* typedef is always a 64-bit integer, and ``cgsize_t`` will be either a 32-bit or 64-bit integer depending on how the library was built. Many of the C functions in the MLL have been changed to use ``cgsize_t`` instead of *int* in the arguments. These functions include any that may exceed the 2Gb limit of an int, e.g. zone dimensions, element data, boundary conditions, and connectivity. In Fortran, all integer data is taken to be *INTEGER\*4* for 32-bit and *INTEGER\*8* for 64-bit builds. 
+Beginning with CGNS-3.1.0, two new typedef variables have been introduced to support 64-bit mode. The *cglong_t* typedef
+is always a 64-bit integer, and ``cgsize_t`` will be either a 32-bit or 64-bit integer depending on how the library was built.
+Many of the C functions in the MLL have been changed to use ``cgsize_t`` instead of *int* in the arguments. These functions
+include any that may exceed the 2Gb limit of an int, e.g. zone dimensions, element data, boundary conditions, and connectivity.
+In Fortran, all integer data is taken to be *INTEGER\*4* for 32-bit and *INTEGER\*8* for 64-bit builds. 
 
 ..
  MSB: I'm not entirely sure that the last sentence is accurate or what specific data it refers to.
 
-Several types of variables are defined using typedefs in the *cgnslib.h* file. These are intended to facilitate the implementation of CGNS in C. These variable types are defined as an enumeration of key words admissible for any variable of these types. The file *cgnslib.h* must be included in any C application programs which use these data types.
+Several types of variables are defined using typedefs in the *cgnslib.h* file. These are intended to facilitate
+the implementation of CGNS in C. These variable types are defined as an enumeration of key words admissible for
+any variable of these types. The file *cgnslib.h* must be included in any C application programs which use these
+data types.
 
-In Fortran, the same key words are defined as integer parameters in the *CGNS* module (previously *cgnslib_f.h*). Such variables should be declared as *integer* in Fortran applications. The *CGNS* module (previously *cgnslib_f.h*) must be included in any Fortran application using these key words.
+In Fortran, the same key words are defined as integer parameters in the *CGNS* module (previously *cgnslib_f.h*).
+Such variables should be declared as *integer* in Fortran applications. The *CGNS* module (previously *cgnslib_f.h*)
+must be included in any Fortran application using these key words.
 
 .. note::
-         The first two enumerated values in these lists, xxxNull and xxxUserDefined, are only available in the C interface, and are provided in the advent that your C compiler does strict type checking. In Fortran, these values are replaced by the numerically equivalent *CG_Null* and *CG_UserDefined*. These values are also defined in the C interface, thus either form may be used. The function prototypes for the MLL use *CG_Null* and *CG_UserDefined*, rather than the more specific values.T
+         The first two enumerated values in these lists, xxxNull and xxxUserDefined, are only
+         available in the C interface, and are provided in the advent that your C compiler does
+         strict type checking. In Fortran, these values are replaced by the numerically
+         equivalent *CG_Null* and *CG_UserDefined*. These values are also defined in the C interface,
+         thus either form may be used. The function prototypes for the MLL use *CG_Null*
+         and *CG_UserDefined*, rather than the more specific values.
 
 .. toctree::
 
@@ -122,7 +147,8 @@ Typedef Name Access Functions
 ****************************************
     64-bit C Portability and Issues
 ****************************************
-If you use the ``cgsize_t`` data type in new code, it will work in both 32 and 64-bit compilation modes. In order to support CGNS versions prior to 3.1, you may also want to add something like this to your code:
+If you use the ``cgsize_t`` data type in new code, it will work in both 32 and 64-bit compilation modes.
+In order to support CGNS versions prior to 3.1, you may also want to add something like this to your code:
 
 .. code-block:: C
 
@@ -130,7 +156,8 @@ If you use the ``cgsize_t`` data type in new code, it will work in both 32 and 6
   #define cgsize_t int
   #endif
 
-Existing code that uses *int* will not work with a CGNS 3.1 library compiled in 64-bit mode. You may want to add something like this to your code:
+Existing code that uses *int* will not work with a CGNS 3.1 library compiled in 64-bit mode. You may want
+to add something like this to your code:
 
 .. code-block:: C
 

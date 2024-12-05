@@ -2,6 +2,10 @@
 
 The Parallel Mid-level Library (aka PMLL) is an extension of CGNS/MLL C and Fortran APIs to enable parallel aware file mapping.
 
+.. note::
+   Please refer to :ref:`MLLGeneralRemarks-ref` for details and conventions regarding
+   the equivalent Fortran APIs, paying special attention to :ref:`CGNSFortranPort-ref`.
+
 ##############################
 CGNS Parallel API Overview
 ##############################
@@ -91,6 +95,9 @@ Parallel Miscellaneous Routines
 .. _ParallelMisc-ref:
 
 .. doxygengroup:: ParallelMisc
+    :content-only:
+
+.. doxygengroup:: PointListData
     :content-only:
 
 

@@ -7,8 +7,8 @@ CGNS/MLL API Overview for C and Fortran applications
 These are all the types and functions available in the CGNS C API.
 
 .. note::
-  For details and conventions regarding the equivalent Fortran APIs,
-  please refer to :ref:`MLLGeneralRemarks-ref`.
+   Please refer to :ref:`MLLGeneralRemarks-ref` for details and conventions regarding
+   the equivalent Fortran APIs, paying special attention to :ref:`CGNSFortranPort-ref`.
 
 .. _CGNSFile-ref:
 

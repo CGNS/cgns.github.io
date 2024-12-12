@@ -6,10 +6,10 @@
 User's Guide to CGNS
 ====================
 
-A concise introduction to many of the most commonly-used features of CGNS, with coding examples using the Mid-Level Library to write and read simple files containing CGNS databases.
+A concise introduction to many of the most commonly used features of CGNS, with coding examples using the Mid-Level Library to write and read simple files containing CGNS databases.
 
-This User's Guide is intended as a tutorial: light in content, but heavy in examples, advice, and guidelines.
-Original Version of this User's Guide was also published as NASA/TM-2001-211236, October 2001.
+This User Guide is intended as a tutorial: light in content but heavy on examples, advice, and guidelines.
+The original version of this User's Guide was also published in NASA/TM-2001-211236, October 2001.
 
 All examples of source code discussed in this Guide are available from `github repository <https://github.com/CGNS/CGNS/tree/master/src/Test_UserGuideCode>`_ , as a complement to the document itself.
 We strongly recommend that you download these examples.
@@ -18,34 +18,34 @@ We strongly recommend that you download these examples.
     Questions and comments on this guide are welcome and should be directed to
     the CGNS forum `CGNStalk <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_.
 
-The rules and conventions governing how the nodes in a CGNS file are organized, including their names and labels, are specified in the SIDS document, with additional details in the SIDS File Mapping Manual. These documents also specify in detail how CFD information is to be stored within the nodes in a standardized fashion so that other users can easily access and read it. When a CGNS file strictly adheres to the rules given in the SIDS document, it is said to be "SIDS-compliant." A CGNS file must be SIDS-compliant in order for other users to be able to properly interpret it.
+The rules and conventions governing how the nodes in a CGNS file are organized, including their names and labels, are specified in the SIDS document, with additional details in the SIDS File Mapping Manual. These documents also specify in detail how CFD information will be stored within the nodes in a standardized fashion so that other users can easily access and read it. When a CGNS file strictly adheres to the rules given in the SIDS document, it is said to be "SIDS-compliant." A CGNS file must be SIDS-compliant in order for other users to be able to interpret it correctly.
 A brief overview of the most commonly used aspects of the SIDS is included in the current document.
 
-However, to get started with CGNS, it is not necessary for the user to fully understand the SIDS document.
-The mid-level, or API calls have been created to aid users in writing and reading CGNS files that are SIDS-compliant.
-[There are currently two levels of programming access to CGNS. The lowest level consists of CGIO-level calls which interact directly with the database manager. These calls perform the most basic functions, such as creating a child node, writing data, reading data, etc. However, these low-level calls know nothing at all about the SIDS, so the user is responsible for putting data in the correct place, to make the CGNS file SIDS-compliant. The mid-level, or API calls, which always begin with the characters "`cg_`", were written with knowledge of the SIDS. Therefore, it is easier to adhere to the SIDS standards when writing a CGNS file using the API calls, and some checks for SIDS-compliance are also made by the API calls when accessing a CGNS file (SIDS compliance is not guaranteed, but the API calls go a long way toward facilitating it). The API calls also drastically shorten the calling sequences necessary to perform many of the functions needed to create and read CGNS files.] Using the API, most CFD data of interest to the majority of users can be written into or read from a CGNS file very easily with only an elementary understanding of the SIDS.
+However, the user does not need to fully understand the SIDS document to get started with CGNS.
+The mid-level API calls have been created to aid users in writing and reading SIDS-compliant CGNS files.
+[There are currently two levels of programming access to CGNS. The lowest level consists of CGIO-level calls interacting directly with the database manager. These calls perform the most basic functions, such as creating a child node, writing data, reading data, etc. However, these low-level calls know nothing about the SIDS, so the user is responsible for putting data in the correct place to make the CGNS file SIDS-compliant. The mid-level, or API calls, which always begin with the characters "`cg_`", were written with knowledge of the SIDS. Therefore, it is easier to adhere to the SIDS standards when writing a CGNS file using the API calls, and some checks for SIDS-compliance are also made by the API calls when accessing a CGNS file (SIDS compliance is not guaranteed, but the API calls go a long way toward facilitating it). The API calls also drastically shorten the calling sequences necessary to perform many of the functions needed to create and read CGNS files.] Using the API, most CFD data of interest to the majority of users can be written into or read from a CGNS file very easily with only an elementary understanding of the SIDS.
 
-In the following sections, we give detailed instructions on how to create typical CGNS files or portions of files.
+In the following sections, we give detailed instructions on creating typical CGNS files or portions of files.
 These instructions are given in the form of simple examples.
 They make use of the mid-level API calls, although not all API calls are covered in this document (a complete list of available API calls can be found in the Mid-Level Library document).
-We recommend that the user read through the examples in this section in order, because some information in the later sections depends on being familiar with information given in the earlier ones.
-Hopefully, users should be able to easily extend these simple examples to their own applications.
+We recommend that the user read through the examples in this section in order because some information in the later sections depends on being familiar with the information given in the earlier ones.
+Hopefully, users can easily extend these simple examples to their applications.
 Additional applications are covered in a later section.
 
-Also note that we have delayed the discussion of units and nondimensionalization until later.
-For now, all examples simply store and retrieve pure numbers, and it is assumed that the user knows what the dimensions or nondimensionalizations of each variable are.
+Also, note that we have delayed the discussion of units and nondimensionalization until later.
+For now, all examples simply store and retrieve pure numbers, and it is assumed that the user knows the dimensions or nondimensionalizations of each variable.
 
 Structured grid
 ---------------
 
 
-This first section gives several structured grid examples, whereas the following section gives unstructured grid examples. However, we recommend that the current section be read first, in its entirety, even if the user is only interested in unstructured grid applications. This is because much of the organization of the CGNS files is identical for both grid types, and later sections of this document assume that the user is familiar with information given in earlier sections.
+This first section gives several structured grid examples, whereas the following section gives unstructured grid examples. However, we recommend that the current section be read first, in its entirety, even if the user is only interested in unstructured grid applications. This is because much of the organization of the CGNS files is identical for both grid types, and later sections of this document assume that the user is familiar with the information given in earlier sections.
 
 Single-zone structured grid
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-This first example is for a very simple 3-D Cartesian grid of size 21 × 17 × 9. The grid points themselves are created using the following FORTRAN code snippet:
+This first example is for a straightforward 3-D Cartesian grid of size 21 × 17 × 9. The grid points themselves are created using the following FORTRAN code snippet:
 
 .. code-block:: fortran
 
@@ -70,7 +70,8 @@ where `ni=21`, `nj=17`, and `nk=9`. A picture of the grid is shown below.
 
    *Simple Cartesian structured grid.*
 
-A complete FORTRAN code that creates this grid and uses API calls to write it to a CGNS file called grid.cgns is shown here (note that a FORTRAN line continuation is denoted by a +). This (and all later) coded examples are available from the CGNS site external link, and summarized in this document in the section Example Computer Codes.
+A complete FORTRAN code that creates this grid and uses API calls to write it to a CGNS file called grid.cgns is shown here (note that a FORTRAN line continuation is denoted by a +).
+This (and all later) coded examples are available from the CGNS site external link, and summarized in this document in the section Example Computer Codes.
 
 
 .. code-block:: fortran
@@ -92,14 +93,14 @@ A complete FORTRAN code that creates this grid and uses API calls to write it to
     !   (../CGNS_CVS/cgnslib/LINUX/ is the location where the compiled
     !   library libcgns.a is located)
     !
-    !   cgns.mod and cgnstypes_f03.h files must be located in directory specified by -I during compile:
+    !   cgns.mod and cgnstypes_f03.h files must be located in the directory specified by -I during compilation:
           use cgns
           implicit none
     #include "cgnstypes_f03.h"
     !
     !   dimension statements (note that tri-dimensional arrays
     !   x,y,z must be dimensioned exactly as (21,17,N) (N>=9)
-    !   for this particular case or else they will be written to
+    !   for this particular case, or else they will be written to
     !   the CGNS file incorrectly!  Other options are to use 1-D
     !   arrays, use dynamic memory, or pass index values to a
     !   subroutine and dimension exactly there):
@@ -163,15 +164,15 @@ A complete FORTRAN code that creates this grid and uses API calls to write it to
           end
 
 
-There are several items to note regarding this code. Whenever a new entity is created using the API, an integer index is returned. This index is used in subsequent API calls to refer to the entity. For example, the above call to cg_open_f, which opens the file grid.cgns, assigns to this entity the index index_file. This same index_file is used to identify this entity in subsequent calls. Similarly, cg_base_write_f assigns an index index_base to the base, cg_zone_write_f assigns an index index_zone to the zone, and cg_coord_write_f assigns an index index_coord to each coordinate.
+There are several items to note regarding this code. An integer index is returned whenever a new entity is created using the API. This index is used in subsequent API calls to refer to the entity. For example, the above call to cg_open_f opens the file grid.cgns and assigns to this entity the index index_file. This same index_file is used to identify this entity in subsequent calls. Similarly, cg_base_write_f assigns an index index_base to the base, cg_zone_write_f assigns an index index_zone to the zone, and cg_coord_write_f assigns an index index_coord to each coordinate.
 
 For FORTRAN code, an include statement pointing to cgnslib_f.h must be present. (The cgnslib_f.h file comes with the CGNS software.) Also, it is imperative that the x, y, and z arrays be dimensioned exactly as (21,17,N), where N ≥ 9 (or else as a one-dimensional array of at least size 21*17*9) for this particular example; this is because the cg_coord_write_f routine writes the first 21*17*9 values contained in the array as it is stored in memory. If x, y, and z are tri-dimensional arrays and the first two indices are dimensioned larger than 21 and 17, respectively, then incorrect values will be placed in the CGNS file. In a real working code, one would probably either (a) use one-dimensional arrays, (b) dynamically allocate appropriate memory for x, y, and z, or else (c) pass the index values to a subroutine and write via an appropriately dimensioned work array.
 
-In this case, the cell dimension (icelldim) is 3 (because the grid is made up of volume cells), and the physical dimension (iphysdim) is 3 (because 3 coordinates define 3-D). (See the section Overview of the SIDS for a more detailed description.) The isize array contains the vertex size, cell size, and boundary vertex size for each index direction. For a 3-D structured grid, the index dimension is always the same as the cell dimension, so this means there are 3 vertex sizes, 3 cell sizes, and 3 boundary vertex sizes (one each for the i, j, and k directions). For structured grids, the cell size is always one less than the corresponding vertex size, and the boundary vertex size has no meaning and is always zero. When writing the grid coordinates, the user must use SIDS-standard names. For example, x, y, and z coordinates must be named CoordinateX, CoordinateY, and CoordinateZ, respectively. Other standard names exist for other possible choices. Finally, basename and zonename must be declared as character strings, and the integer array isize must be dimensioned appropriately.
+In this case, the cell dimension (icelldim) is 3 (because the grid is made up of volume cells), and the physical dimension (iphysdim) is 3 (because 3 coordinates define 3-D). (See the section Overview of the SIDS for a more detailed description.) The isize array contains the vertex size, cell size, and boundary vertex size for each index direction. For a 3-D structured grid, the index dimension is always the same as the cell dimension, so this means there are 3 vertex sizes, 3 cell sizes, and 3 boundary vertex sizes (one each for the i, j, and k directions). For structured grids, the cell size is always one less than the corresponding vertex size, and the boundary vertex size has no meaning and is always zero. When writing the grid coordinates, the user must use SIDS-standard names. For example, coordinates of x, y, and z must be named CoordinateX, CoordinateY, and CoordinateZ, respectively. Other standard names exist for other possible choices. Finally, basename and zonename must be declared as character strings, and the integer array isize must be dimensioned appropriately.
 
-The grid coordinate arrays can be written in single or double precision. The desired data type is communicated to the API using the keywords RealSingle or RealDouble. The user must insure that the data type transmitted to the API is consistent with the the one used in declaring the coordinates arrays. When it is compiled, the code must also link to the compiled CGNS library libcgns.a. Instructions for compiling the CGNS library are given in README files that come with the CGNS software.
+The grid coordinate arrays can be written in single or double precision. The desired data type is communicated to the API using the keywords RealSingle or RealDouble. The user must ensure that the data type transmitted to the API is consistent with the the one used in declaring the coordinates arrays. When it is compiled, the code must also link to the compiled CGNS library libcgns.a. Instructions for compiling the CGNS library are given in README files that come with the CGNS software.
 
-A complete code written in C that performs the same task of creating grid coordinates and writing them to a CGNS file is given here.
+Here is complete code written in C that performs the same task of creating grid coordinates and writing them to a CGNS file.
 
 .. code-block:: C
 
@@ -272,14 +273,14 @@ A complete code written in C that performs the same task of creating grid coordi
 
 
 .. note::
-   In the C-code, the ".h" file that must be included is called `cgnslib.h`.
+   The ".h" file, which is called `cgnslib.h`, must be included in the C code.
 
 From now on, all codes will be given in FORTRAN only. The C-equivalent calls are similar, as demonstrated above.
-Also, from now on, complete code will not be shown, but rather only code segments, in order to save space.
+Also, to save space, complete code will not be shown from now on, but rather only code segments.
 However, complete codes can be accessed from the CGNS site external link.
 
-The CGNS file grid.cgns that is created by the code above is a binary file that, internally, possesses the tree-like structure shown below. Each tree node has a name, a label, and may or may not contain data.
-In the example in the figure, all the nodes contain data except for the GridCoordinates node, for which MT indicates no data.
+The CGNS file grid.cgns created by the code above is a binary file that internally possesses the tree-like structure shown below. Each tree node has a name and a label and may or may not contain data.
+In the figure's example, all the nodes contain data except for the GridCoordinates node, for which MT indicates no data.
 
 .. figure:: ../../images/users/figs/tree_cartesian.gif
    :width: 240px
@@ -289,7 +290,7 @@ In the example in the figure, all the nodes contain data except for the GridCoor
    *Layout of CGNS file for simple Cartesian structured grid.*
 
 
-However, the user really does not need to know the full details of the tree-like structure in this case.
+However, in this case, the user does not need to know the full details of the tree-like structure.
 The API has automatically created a SIDS-compliant CGNS file!
 Now, the user can just as easily read the CGNS file using the API.
 The FORTRAN code segment used to read the CGNS file grid.cgns that we just created is given here:
@@ -327,15 +328,15 @@ The FORTRAN code segment used to read the CGNS file grid.cgns that we just creat
   !   close CGNS file
         call cg_close_f(index_file,ier)
 
-Note that this FORTRAN coding is very rudimentary. It assumes that we know that there is only one base and one zone. In a real working code, one should check the numbers in the file, and either allow for the possibility of multiple bases or zones, or explicitly disallow it. Also, this coding implicitly assumes that the grid.cgns file is a 3-D structured grid (cell dimension = physical dimension = 3). In a real working code, one should check to make sure that this is true, or else allow for other possibilities. One should also check to make sure the zone type is Structured if this is the type expected.
+Note that this FORTRAN coding is very rudimentary. It assumes that we know that there is only one base and one zone. In a real working code, one should check the numbers in the file and either allow for the possibility of multiple bases or zones or explicitly disallow it. Also, this coding implicitly assumes that the grid.cgns file is a 3-D structured grid (cell dimension = physical dimension = 3). In a real working code, one should check to ensure this is true or allow for other possibilities. One should also check to ensure the zone type is *Structured* and if this is the expected type.
 
-As before, the x, y, and z arrays in this case *must* be dimensioned correctly: for a tri-dimensional array, (21,17,N), where N ≥ 9. (In a real working code, one would probably either (a) use one-dimensional arrays, (b) dynamically allocate appropriate memory for x, y, and z after reading isize, or else (c) pass the isize values to a subroutine and dimension a work array appropriately prior to reading.) Also note that, regardless of the precision in which the grid coordinates were written to the CGNS file (single or double), one can read them either way; the API automatically performs the translation. (The arrays x, y, and z in the code above must be declared as single precision if RealSingle is used and as double precision if RealDouble is used.) Finally, isize should be dimensioned appropriately, zonename should be declared as a character variable, and irmin and irmax should be dimensioned appropriately.
+As before, the x, y, and z arrays in this case *must* be dimensioned correctly: for a tri-dimensional array, (21,17,N), where N ≥ 9. (In an actual working code, one would probably either (a) use one-dimensional arrays, (b) dynamically allocate appropriate memory for x, y, and z after reading *isize*, or else (c) pass the isize values to a subroutine and dimension a work array appropriately prior to reading.) Also note that, regardless of the precision in which the grid coordinates were written to the CGNS file (single or double), one can read them either way; the API automatically performs the translation. (The arrays x, y, and z in the code above must be declared as single precision if RealSingle is used and as double precision if RealDouble is used.) Finally, *isize* should be dimensioned appropriately, *zonename* should be declared as a character variable, and *irmin* and *irmax* should be dimensioned appropriately.
 
 
 Single-Zone Structured Grid and Flow Solution
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this section, we now write a flow solution associated with the grid from the previous section. We assume that we have two flow solution arrays available: static density and static pressure. To illustrate three important options, we will show how to write the flow solution (a) at vertices, (b) at cell centers, and (c) at cell centers plus rind cells.
+In this section, we now write a flow solution associated with the grid from the previous section. We assume we have two flow solution arrays available: static density and static pressure. To illustrate three important options, we will show how to write the flow solution (a) at vertices, (b) at cell centers, and (c) at cell centers plus rind cells.
 
 (a) Flow Solution at Vertices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -376,7 +377,7 @@ The first option is illustrated schematically in 2-D in the figure below. Simply
 
 .. note::
 
-   In this code, the density (r) and pressure (p) variables must be dimensioned correctly for this particular case: for a tri-dimensional array, (21,17,N), where N ≥ 9 (see discussion in the previous section). Note that the API, knowing that the flow solution type is Vertex, automatically writes out the correct index range, corresponding with the zone's grid index range. Also note that we opened the existing CGNS file and modified it (CG_MODE_MODIFY) - we knew ahead of time that only one base and only one zone exist; a real working code would make appropriate checks. Finally, solname should be declared as a character variable and r and p must be declared as double precision variables when RealDouble type is used.
+   In this code, the density (r) and pressure (p) variables must be dimensioned correctly for this particular case: for a tri-dimensional array, (21,17,N), where N ≥ 9 (see discussion in the previous section). Note that the API, knowing that the flow solution type is Vertex, automatically writes out the correct index range, corresponding with the zone's grid index range. Also, note that we opened the existing CGNS file and modified it (CG_MODE_MODIFY) - we knew ahead of time that only one base and only one zone exist; an actual working code would make appropriate checks. Finally, solname should be declared as a character variable and r and p must be declared as double precision variables when RealDouble type is used.
 
 The layout of the CGNS file with the flow solution at vertices included is shown in the figure below. The three nodes under GridCoordinates_t have been left out to conserve space in the figure, but they exist as indicated by the three unconnected lines.
 
@@ -391,7 +392,7 @@ The layout of the CGNS file with the flow solution at vertices included is shown
 
    Because GridLocation = Vertex is the default, it is not necessary to specify it.
 
-The vertex flow solution can be read in using the following FORTRAN code segment (can read in as single or double precision - see discussion in the previous section):
+The vertex flow solution can be read using the following FORTRAN code segment (can read in as single or double precision - see discussion in the previous section):
 
 .. code-block:: fortran
 
@@ -436,13 +437,13 @@ The vertex flow solution can be read in using the following FORTRAN code segment
 
 .. note::
 
-  This code segment assumes that it is known that the flow solution contains no rind data (to be covered in detail below). If rind data does exist, but the user does not account for it, then the flow solution information will be read incorrectly. Hence, a real working code would check for rind cells, and adjust the dimensions and index ranges appropriately. Other similar cautions as those mentioned earlier regarding dimensioning of variables, real working code checks, etc., apply here as well. These cautions will not always be repeated from this point forward.
+  This code segment assumes that it is known that the flow solution contains no rind data (to be covered in detail below). If rind data exists but the user does not account for it, then the flow solution information will be misread. Hence, an actual working code would check for rind cells, and adjust the dimensions and index ranges appropriately. Other cautions similar to those mentioned earlier regarding the dimensioning of variables, real working code checks, etc., apply here as well. These cautions will only sometimes be repeated from this point forward.
 
 
 (b) Flow Solution at Cell Centers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The option for outputting the flow solution at cell centers is illustrated schematically in 2-D in the figure below. The flow solutions are defined at the centers of the cells defined by the four surrounding grid points. In 3-D, the cell centers are defined by eight surrounding grid points.
+The figure below illustrates schematically the option for outputting the flow solution at cell centers in 2-D. The flow solutions are defined at the centers of the cells by the four surrounding grid points. In 3-D, the cell centers are defined by eight surrounding grid points.
 
 
 .. figure:: ../../images/users/figs/cellcenter.gif
@@ -461,9 +462,9 @@ The code segment to write to cell centers is identical to that given above for v
         call cg_sol_write_f(index_file,index_base,index_zone,solname,
        + CellCenter,index_flow,ier)
 
-Also, now the density (r) and pressure (p) variables must be dimensioned correctly for this particular case: for a tri-dimensional array, (20,16,N), where N ≥ 8 (i.e., one less in each index dimension than the grid itself). Again, the API, knowing that the flow solution type is CellCenter, automatically writes out the correct index range, corresponding with the zone's grid index range minus 1 in each index direction.
+Also, now the density (r) and pressure (p) variables must be dimensioned correctly for this particular case: for a tri-dimensional array, (20,16,N), where N ≥ 8 (i.e., one less in each index dimension than the grid itself). Again, knowing that the flow solution type is CellCenter, the API automatically writes out the correct index range, corresponding with the zone's grid index range minus 1 in each index direction.
 
-The layout of the CGNS file with the flow solution at cell centers is shown (below the FlowSolution_t node only) in the next figure. Note that the indices over which the flow solutions are written are now from (1,1,1) to (20,16,8) (contrast with the FlowSolution part of the figure with the flow solution at vertices
+The next figure shows the layout of the CGNS file with the flow solution at cell centers (below the FlowSolution_t node only). Note that the indices over which the flow solutions are written are now from (1,1,1) to (20,16,8) (contrast with the FlowSolution part of the figure with the flow solution at vertices
 
 .. figure:: ../../images/users/figs/tree_cartesian_solC.gif
    :width: 250px
@@ -496,7 +497,7 @@ and, as usual, the r and p arrays must be dimensioned appropriately.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-Rind data is additional flow solution data exterior to a grid, at "ghost" locations. Rind data can be associated with other GridLocation values beside CellCenter, although we only show an example using CellCenter here. Furthermore, this example is for structured grids only, for which Rind data can be defined implicitly (via indexing conventions alone). The option for outputting the flow solution at cell centers with additional rind data is illustrated schematically in 2-D in the figure below. In this diagram, we show one layer of rind cell data in the row below the grid itself. There could be rind data at other sides of the grid, or there could be more than one row at a given side.
+Rind data is additional flow solution data exterior to a grid, at "ghost" locations. Rind data can be associated with other GridLocation values besides CellCenter, although we only show an example using CellCenter here. Furthermore, this example is for structured grids only, for which Rind data can be defined implicitly (via indexing conventions alone). The option for outputting the flow solution at cell centers with additional rind data is illustrated schematically in 2-D in the figure below. This diagram shows one layer of rind cell data in the row below the grid itself. There could be rind data at other sides of the grid, or there could be more than one row at a given side.
 
 .. figure:: ../../images/users/figs/cellcenter_rind.gif
    :width: 170px
@@ -506,7 +507,7 @@ Rind data is additional flow solution data exterior to a grid, at "ghost" locati
    *Schematic showing location (circles) of CellCenter flow solution, including rind cells, relative to grid.*
 
 
-In CGNS, the flow solution at rind cells is not stored as separate entities, but rather the flow solution range is extended to include the rind cells. For example, in the 2-D schematic of the above figure, instead of an index range of p(3,2) for pressures stored at the cell centers, the flow solution would now have an index range of p(3,0:2) or p(3,3). See the SIDS document for details.
+In CGNS, the flow solution at rind cells is not stored as separate entities; rather, the flow solution range is extended to include the rind cells. For example, in the 2-D schematic of the above figure, instead of an index range of p(3,2) for pressures stored at the cell centers, the flow solution would now have an index range of p(3,0:2) or p(3,3). See the SIDS document for details.
 
 For our 3-D example, we assume that we have one row of rind data at 4 faces of the zone (ilo, ihi, jlo, jhi, where these represent the low and high ends of the i and j directions, respectively), and no rind cells at klo or khi (at either end of the k direction). The code segment to write the flow solution and rind data is as follows:
 
@@ -547,7 +548,7 @@ For our 3-D example, we assume that we have one row of rind data at 4 faces of t
          call cg_close_f(index_file,ier)
 
 
-Note that in the case of rind data, the user must position the Rind_t node appropriately, using the cg_goto_f call. In this case, the Rind_t node belongs under the FlowSolution_t node.
+Note that in the case of rind data, the user must position the Rind_t node appropriately using the cg_goto_f call. In this case, the Rind_t node belongs under the FlowSolution_t node.
 
 For this case of cell center flow solution with rind data, the density (r) and pressure (p) are written to the CGNS file with the following index ranges: from i = 0 to i = 20 + 1 = 21 (or a total i length of 22), from j = 0 to j = 16 + 1 = 17 (or a total j length of 18), and from k = 1 to k = 8. The variables r and p must be dimensioned appropriately to reflect these index ranges modified by the rind values.
 
@@ -622,7 +623,7 @@ To illustrate the use of boundary conditions, we again use the same single-zone 
 
 where `BCTunnelInflow`, `BCExtrapolate`, and `BCWallInviscid` are data-name identifiers for boundary conditions. The complete list of boundary condition identifiers is found in the SIDS document. In this example, we take the approach of using the lowest-level BC implementation allowed - see the figure showing the general hierarchical structure of ZoneBC_t in the SIDS overview section.
 
-In this section, we show two different approaches for defining the region over which each boundary condition acts. The first is with type PointRange, meaning that we define the minimum and maximum points on a face that define a logically rectangular region (this method is usable only for faces that are capable of being defined in this way). The second is with type PointList, which gives the list of all the points for which the boundary condition applies. This latter method is generally used for any zone whose defined region is not logically rectangular.
+In this section, we show two different approaches for defining the region over which each boundary condition acts. The first is with type `PointRange`, meaning that we define the minimum and maximum points on a face that define a logically rectangular region (this method is usable only for faces that are capable of being defined in this way). The second is with the type `PointList`, which lists all the points for which the boundary condition applies. This latter method is generally used for any zone whose defined region is not logically rectangular.
 
 
 (a) Boundary Conditions Specifying Range
@@ -691,7 +692,7 @@ A FORTRAN code segment to write the boundary condition information of type Point
    !  close CGNS file
          call cg_close_f(index_file,ier)
 
-The zone names (e.g., Ilo) are arbitrary. Note that the variable zonename must be declared as a character variable, and isize and ipnts must be dimensioned appropriately.
+The zone names (e.g., Ilo) are arbitrary. Note that the variable `zonename` must be declared as a character variable, and `isize` and `ipnt` must be dimensioned appropriately.
 
 The layout of the CGNS file for this example is shown below. Four of the children nodes of ZoneBC_t are left off for clarity.
 
@@ -702,7 +703,7 @@ The layout of the CGNS file for this example is shown below. Four of the childre
 
    *Layout of CGNS file for simple Cartesian structured grid with flow solution and boundary conditions using PointRange.*
 
-Reading the boundary conditions can also be easily accomplished using API calls, but we do not show an example of this here. Because there are multiple BC_t children nodes under the ZoneBC_t node, the user must first read in the number of children nodes that exist, then loop through them and retrieve the information from each.
+Reading the boundary conditions can also be easily accomplished using API calls, but we do not show an example of this here. Because there are multiple BC_t children nodes under the ZoneBC_t node, the user must first read the number of children nodes that exist, then loop through them and retrieve the information from each.
 
 (b) Boundary Conditions Specifying Points
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -838,7 +839,7 @@ The 1-to-1 connectivity information for the current example can be written to a 
         call cg_close_f(index_file,ier)
 
 
-Note that this code segment is geared very specifically toward our 2-zone example, i.e., it relies on our knowledge of this particular case. Transform defines the relative orientation of the i, j, and k indices of the abutting zones. Details concerning the values of Transform can be found in the SIDS document. However, note that Transform values of (1,2,3) indicate that the i, j, k axes of both zones are oriented in the same directions. Reading the connectivity information can also be easily accomplished using API calls, but we do not show an example of this here. And finally, we do not show the layout of the nodes associated with the connectivity here. The interested user is referred to the SIDS overview for an example figure.
+Note that this code segment is specifically geared toward our 2-zone example, i.e., it relies on our knowledge of this case. Transform defines the relative orientation of the i, j, and k indices of the abutting zones. Details concerning the values of Transform can be found in the SIDS document. However, note that Transform values of (1,2,3) indicate that the i, j, k axes of both zones are oriented in the same directions. Reading the connectivity information can also be easily accomplished using API calls, but we do not show an example of this here. And finally, we do not show the layout of the nodes associated with the connectivity here. The interested user is referred to the SIDS overview for an example figure.
 
 (b) Connectivity Using General Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -913,12 +914,13 @@ The method for recording mismatched (patched) or overset connectivity informatio
 Unstructured Grid
 -----------------
 
-This section gives several unstructured grid examples. The user should already be familiar with the information covered in the previous section, which gives structured grid examples. Because much of the organization of the CGNS files is identical for both grid types, many of the ideas covered in the structured grid section are not repeated again here.
+This section provides several unstructured grid examples. The user should already be familiar with the information covered in the previous section, which provides
+structured grid examples. Because the organization of the CGNS files is identical for both grid types, many of the ideas covered in the structured grid section are not repeated here.
 
 Single-Zone Unstructured Grid
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This example uses the exact single-zone grid shown earlier. However, it is now written as an unstructured grid, which is made up of a series of 6-sided elements (cubes in this case). A FORTRAN code segment that uses API calls to write this grid to a CGNS file called grid.cgns is shown here (note that it does not matter how the nodes are ordered in an unstructured zone, but in this example they are ordered sequentially for simplicity of presentation):
+This example uses the exact single-zone grid shown earlier. However, it is now written as an unstructured grid comprising a series of 6-sided elements (cubes in this case). A FORTRAN code segment that uses API calls to write this grid to a CGNS file called *grid.cgns* is shown here (note that it does not matter how the nodes are ordered in an unstructured zone, but in this example, they are ordered sequentially for simplicity of presentation):
 
 
 .. code-block:: fortran
@@ -1013,7 +1015,7 @@ The overall layout of the CGNS file created by the above code segment is shown b
 
    *Layout of CGNS file for unstructured grid.*
 
-For unstructured zones, the user may also wish to separately list the boundary elements in the CGNS file. This may be useful for assigning boundary conditions, as we will show later. In the current example, assume that the user wishes to assign three different types of boundary conditions: inflow at one end, outflow at the other end, and side walls on the four faces in-between. To accomplish this, it would be helpful to have three additional Elements_t nodes in the CGNS file, each of which lists the corresponding faces as elements (QUAD_4 in this case).
+For unstructured zones, the user may also wish to list the boundary elements in the CGNS file separately. This may be useful for assigning boundary conditions, as we will show later. In the current example, assume that the user wishes to assign three different types of boundary conditions: inflow at one end, outflow at the other end, and side walls on the four faces in-between. To accomplish this, it would be helpful to have three additional Elements_t nodes in the CGNS file, each of which lists the corresponding faces as elements (QUAD_4 in this case).
 
 A FORTRAN code segment that accomplishes a part of this is given here. It may be a part of the same code (above) that defined the grid and HEXA_8 connectivity.
 
@@ -1061,9 +1063,9 @@ The layout of the CGNS file in this case is exactly the same as that shown in th
 Single-Zone Unstructured Grid and Flow Solution
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To add a flow solution to an unstructured zone, the procedure is identical to that for a structured zone. However, the Rind field for unstructured grids indicates additional points rather than planes. Example of Rind capability for unstructured grids is not covered here. Considering the vertex and cell-center examples shown previously, the only difference for unstructured zones is that all arrays are one-dimensional (there is only one index), as opposed to three indices for 3-D structured arrays. A vertex solution indicates that the solution is stored at vertices or nodes. In the above example, there would be lists of 3213 data array items per solution variable. A cell center solution implies that the solution is stored at the center of each element. In the above example, there would be lists of 2560 data array items per solution variable.
+The procedure for adding a flow solution to an unstructured zone is identical to that of a structured zone. However, the Rind field for unstructured grids indicates additional points rather than planes. An example of Rind capability for unstructured grids is not covered here. Considering the vertex and cell-center examples shown previously, the only difference for unstructured zones is that all arrays are one-dimensional (there is only one index), as opposed to three indices for 3-D structured arrays. A vertex solution indicates that the solution is stored at vertices or nodes. In the above example, there would be lists of 3213 data array items per solution variable. A cell center solution implies that the solution is stored at the center of each element. In the above example, there would be lists of 2560 data array items per solution variable.
 
-The overall layout of the CGNS file is the same as that shown previously, except that there would also be a FlowSolution_t node under Zone  1, and this node would have the children nodes GridLocation, Density, and Pressure.
+The overall layout of the CGNS file is the same as shown previously, except that there would also be a FlowSolution_t node under Zone  1, and this node would have the children nodes GridLocation, Density, and Pressure.
 
 
 Single-Zone Unstructured Grid with Boundary Conditions
@@ -1135,11 +1137,11 @@ Because this concept is quite different from what was done with the structured z
   !  close CGNS file
         call cg_close_f(index_file,ier)
 
-Note that we assume here that we know in advance the element numbers associated with each of the boundaries. We have written these element numbers as a PointList, but, because they are in order, we could just as easily have used PointRange instead. In that case, only two ipnts values would be needed, equal to nelem_start and nelem_end, and icount would be 2. Finally, note that the GridLocation_t node under BC_t must be written using the API call cg_goto_f (which positions you correctly in the tree) followed by cg_gridlocation_write_f.
+Note that we assume here that we know in advance the element numbers associated with each of the boundaries. We have written these element numbers as a PointList, but because they are in order, we could just as easily have used PointRange instead. In that case, only two ipnts values would be needed, equal to nelem_start and nelem_end, and icount would be 2. Finally, note that the GridLocation_t node under BC_t must be written using the API call cg_goto_f (which positions you correctly in the tree) followed by cg_gridlocation_write_f.
 
-Note that the use of ElementList and ElementRange (recommended in previous versions of CGNS) has been deprecated and should not be used in new code. These are still accepted, but will be internally replaced with the appropriate values of PointList/PointRange and GridLocation_t.
+Note that the use of ElementList and ElementRange (recommended in previous versions of CGNS) has been deprecated and should not be used in new code. These are still accepted but will be internally replaced with the appropriate values of PointList/PointRange and GridLocation_t.
 
-A portion of the layout of the CGNS file for the ZoneBC_t node and its children is shown below. The ZoneBC_t node lies directly under Zone_t.
+Below is a portion of the layout of the CGNS file for the ZoneBC_t node and its children. The ZoneBC_t node lies directly under Zone_t.
 
 .. figure:: ../../images/users/figs/tree_cartesian_UBC.gif
    :width: 168px

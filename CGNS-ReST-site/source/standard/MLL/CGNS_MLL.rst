@@ -20,18 +20,19 @@ The **Mid-Level Library** (aka MLL) is an example implementation of the
 Mid-Level Library
 **********************
 
-This document outlines a CGNS library designed to ease implementation of CGNS by
+This document outlines a CGNS library designed to ease the implementation of CGNS by
 providing developers with a collection of handy I/O functions. Since knowledge of
 the database manager and file structure is not required to use this library, it 
 greatly facilitates the task of interfacing with CGNS.
 
 The CGNS **Mid-Level Library** (aka MLL) is based on the :ref:`SIDS File Mapping<StandardFMM>`.
-It allows reading and writing all of the information described in that manual
+It allows reading and writing all of the information described in that manual,
 including grid coordinates, block interfaces, flow solutions, and boundary conditions.
-Use of the mid-level library functions insures efficient communication between the
+Using the mid-level library functions ensures efficient communication between the
 user application and the internal representation of the CGNS data.
 
-It is assumed that the reader is familiar with the information in the :ref:`CGNS Standard Interface Data Structures (SIDS) <CGNS-SIDS>`, as well as :ref:`SIDS File Mapping<StandardFMM>`. The reader is also strongly encouraged to read the :ref:`DocUserGuide`,
+It is assumed that the reader is familiar with the information in the :ref:`CGNS Standard Interface Data Structures (SIDS) <CGNS-SIDS>`, as well as :ref:`SIDS File Mapping<StandardFMM>`.
+The reader is also strongly encouraged to read the :ref:`DocUserGuide`,
 which contains coding examples using the Mid-Level Library to write and read simple files containing CGNS databases. 
 
 .. toctree::
@@ -42,9 +43,9 @@ which contains coding examples using the Mid-Level Library to write and read sim
 Parallel Mid-Level Library
 ***************************
 
-The Parallel Mid-level Library (aka PMLL) is an extension of CGNS/MLL C and Fortran API to enable parallel aware file mapping.
+The Parallel Mid-level Library (aka PMLL) is an extension of the CGNS/MLL C and Fortran API that enables parallel-aware file mapping.
 
 .. toctree::
    api/c_parallel_api
 
-This document was originally written by Diane Poirier of ICEM CFD Engineering for the CGNS Project Group.
+Diane Poirier of ICEM CFD Engineering originally wrote this document for the CGNS Project Group.

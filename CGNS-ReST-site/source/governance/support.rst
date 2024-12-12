@@ -64,8 +64,8 @@ The modifications include specific changes made to the theme, such as color sche
 layout adjustments, and additional features and is controlled by files in the *_static*
 directory.
 
-## STEP 0
-#########
+**STEP 0**
+++++++++++++++++++++++++++++++
 
 You have to install the required libs and tools, so you have to
 make available:
@@ -101,8 +101,8 @@ Once python 3.x.y is there, go to **STEP 1**.
   and you **should** change these path with your own **3.x** to make it
   work properly.
 
-## STEP 1
-#########
+**STEP 1**
+++++++++++++++++++++++++++++++
 
 Using the shell command:
 
@@ -126,8 +126,8 @@ If they are not, then you can install them using the shell command:
 
 You may have to install the python packages that they may depend on, in addition to Doxygen.
 
-## STEP 2
-#########
+**STEP 2**
+++++++++++++++++++++++++++++++
 
 Congrats! you are now ready to contribute to the CGNS documentation.
 We retrieve the last version from the *git* repository.
@@ -145,8 +145,8 @@ say for example: ``/my/own/local/doc/directory``
    We cannot detail here how to install git or how to allow it to access to
    the CGNS repository. If you really are lost, please use CGNS discussion forum.
 
-## STEP 3
-#########
+**STEP 3**
+++++++++++++++++++++++++++++++
 
 Everything is ready now, once you are in ``/my/own/local/doc/directory`` 
 all sources are in::
@@ -179,17 +179,19 @@ The equation rendering makes a reference to an external link,
 so that you may have issues with the equations if you are not connected
 to the public internet.
 
-## STEP 4
-#########
+**STEP 4**
+++++++++++++++++++++++++++++++
 
 Now you open your favorite text editor. You follow the documentation
 editing recommendations described hereafter and you loop on steps 3 and 4.
 
-## STEP 5
-#########
+**STEP 5**
+++++++++++++++++++++++++++++++
 
 You are done with your editing. You commit your changes with a nice
-comment and you push it to the repository::
+comment and you push it to the repository:
+
+.. code-block:: console
 
    git add -A
    git commit -m 'update section 4.2.1'
@@ -201,29 +203,26 @@ comment and you push it to the repository::
    perform a merge by yourself after a ``git pull``
 
 Documentation editing
-^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 
-Doc Conventions for these CGNS web pages
+Documenation conventions for these CGNS web pages are as follows:
 
-header
-~~~~~~
+.. code-block:: rst
 
-.. code-block:: rest
+  Top level header -- Equal Sign
+  =================================
 
-   Top level header
-   ================
+  Second level -- Hyphen
+  ---------------------------------
+   
+  Third level -- Circumflex
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   Second level
-   ------------
+  Fourth level -- Tilde
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Third level
-   ^^^^^^^^^^^
-
-   Fourth level
-   ~~~~~~~~~~~~
-
-   Fifth level
-   ++++++++++
+  Fifth level -- Plus Sign
+  ++++++++++++++++++++++++++++++
 
 The index is generated, you just have to mention an index entry in the text.
 For example, if you wan to add a reference to *boundary condition* in the index,
@@ -251,7 +250,7 @@ vice-versa.
    appropriate boundary condition equations. 
 
 Internal link
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 An internal link is composed of its *anchor* (the place in the web site
 where you want to go to) and a *reference* (the words which triggers
@@ -276,7 +275,7 @@ The actual link is inserted with:
 The anchor in into angular brackets, the clickable text is user defined.   
 
 External link
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For an external reference the syntax is:
 
@@ -287,7 +286,7 @@ For an external reference the syntax is:
 Do not miss the trailing underscore.
 
 Block quote
-~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To add a quote in the text, inside a box (this is the default style 
 of our template), shift the text block on the right:
@@ -307,7 +306,7 @@ Generating documentation from source code is possible.
    -- C compiler (stdout)
 
 Simple Table
-~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. cssclass:: table-bordered
 	      
@@ -323,7 +322,7 @@ Simple Table
 +--------+--------+-----------+
 
 Admonition
-~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A set of special blocks are called *admonitions*. These includes notes,
 warnings... their layout, again, is set by the style we use.
@@ -355,7 +354,7 @@ warnings... their layout, again, is set by the style we use.
    start from first page
 
 Image
-~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are several ways to insert an image. 
 The first example adds an image as a new paragraph:
@@ -401,7 +400,7 @@ Then you refer to thus label in the text where you want the insertion:
    Your image in this file has the path: ``../../../images/sids/figs/bar_2.png``
    
 Citation
-~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Inserting footnotes, citation or any reference can be defined in
 several ways:
@@ -431,7 +430,7 @@ In the text you can add references such as [2]_, [1]_, [CIT2002]_.
 .. _CPEXguidelines:
 
 CPEX guidelines
-^^^^^^^^^^^^^^^
+---------------------
 
 The CPEX process requires multiple docs.
 
@@ -444,7 +443,5 @@ The CPEX should include the following information:
   - A SIDS detailed description of extension using similar documentation style found in the SIDS
   - File Mapping description of Node Attributes, following the prescription given in existing :ref:`Node Description Documentation <FMMNodeDescriptions>`
   - Specific example(s) of extension
-
-
 
 .. last line

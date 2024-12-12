@@ -132,12 +132,12 @@ mechanisms for the convenient application of CFD tools.
 Elements and Documentation
 --------------------------
 
-Introduction Structure of a CGNS Database Standard Interface Data
-Structures (SIDS) SIDS File Mapping Database Manager Mid-Level
-Library, or API Documentation Introduction CGNS concerns itself with
-the recording and retrieval of data associated with the computation of
-fluid flows. Included are such structures as grids, flowfields,
-boundary conditions, and zone connectivity information. CGNS
+Introduction
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+CGNS concerns itself with the recording and retrieval of data associated
+with the computation of fluid flows. Included are such structures as grids,
+flowfields, boundary conditions, and zone connectivity information. CGNS
 "understands" this data in the sense that it contains conventions for
 recording it based on its structure and its role in CFD.
 
@@ -166,17 +166,24 @@ The elements of CGNS address all activities associated with the
 storage of the data on external media and its movement to and from the
 applications programs. These elements include the following:
 
-The Standard Interface Data Structures (SIDS), which specify the
-intellectual content of CFD data and the conventions that govern
-naming and terminology.  The SIDS File Mapping, which specifies the
-exact location where the CFD data defined by the SIDS is to be stored
-within a database file.  The Database Manager, which consists of both
-a file format specification and its I/O software, which handles the
-actual reading and writing of data from and to external storage media.
+* The Standard Interface Data Structures (SIDS), which specify the
+  intellectual content of CFD data and the conventions that govern
+  naming and terminology.
+
+* The SIDS File Mapping, which specifies the exact location where
+  the CFD data defined by the SIDS is to be stored within a database file.
+
+* The Database Manager, which consists of both a file format specification
+  and its I/O software, which handles the actual reading and writing of data
+  from and to external storage media.
+
 The following sections discuss in more detail the roles of the CGNS
 elements and introduce their documentation.
 
-Structure of a CGNS Database In this section, the conceptual structure
+Structure of a CGNS Database
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In this section, the conceptual structure
 of a CGNS database, and the nodes from which it is built, are
 discussed. This describes the way in which the CGNS software "sees"
 the database, not necessarily the way in which it is
@@ -188,24 +195,38 @@ nodes. These nodes are arranged in a tree structure that is logically
 similar to a UNIX file system. The nodes are said to be connected in a
 "child-parent" relationship according to the following simple rules:
 
-Each node may have any number of child nodes.  Except for one node,
-called the root, each node is the child of exactly one other node,
-called its parent.  The root node has no parent.  Structure of a Node
+ #. Each node may have any number of child nodes.
+ #. Except for one node, called the root, each node is the child
+    of exactly one other node, called its parent.
+ #. The root node has no parent.
+
+Structure of a Node
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Each node has exactly the same internal structure. The entities
-associated with each node are the following: Node Identifier (ID) Name
-Label Data Type Dimension Dimension Values Data Child Table Node
-Identifier. The Node ID is a floating point number assigned by the
+associated with each node are the following:
+
+ * Node Identifier (ID)
+ * Name
+ * Label
+ * Data Type
+ * Dimension
+ * Dimension Values
+ * Data
+ * Child Table
+
+**Node Identifier**. The Node ID is a floating point number assigned by the
 system when the database is opened or created. Applications may record
 the ID and use it to return directly to the corresponding node when
 required. The Node ID is valid only while the database is open;
 subsequent openings of the same database may be expected to yield
 different IDs.
 
-Name. The Name field holds a character string chosen by the user or
+**Name**. The Name field holds a character string chosen by the user or
 specified by the SIDS to identify the particular instance of the data
 being recorded.
 
-Label. The Label, also a character string, is specified by the CGNS
+**Label**. The Label, also a character string, is specified by the CGNS
 mapping conventions and identifies the kind of data being
 recorded. For example, a node with label Zone_t may record (at and
 below it) information on the zone with Name "UnderWing." No node may
@@ -218,7 +239,7 @@ EnthalpyStagnation). Although the user may specify another name, these
 between applications. These names and their meanings are established
 by the SIDS.
 
-Data Type, Dimension, Dimension Values, Data. Nodes may or may not
+**Data Type, Dimension, Dimension Values, Data**. Nodes may or may not
 contain data. For those that do, CGNS specifies a single array whose
 type (integer, etc.), dimension, and size are recorded in the Data
 Type, Dimension, and Dimension Value fields, respectively. The mapping
@@ -228,32 +249,35 @@ themselves. For these nodes, the Data Type is MT, and the other fields
 are empty. A link to another node within the current or an external
 CGNS database is indicated by a Data Type of LK
 
-Child Table. The Child Table contains a list of the node's
+**Child Table**. The Child Table contains a list of the node's
 children. It is maintained by the database manager as children are
 created and deleted.
 
-High-Level Organization of the CGNS Database For a full specification
+High-Level Organization of the CGNS Database
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For a full specification
 of the location of CFD data in the CGNS database, the user should see
 the SIDS File Mapping document. For convenience, we summarize the
-high-level structure below.  A CGNS database consists of a tree of
+high-level structure below. A CGNS database consists of a tree of
 nodes implemented as all or part of one or more database files. All
 information is identified by and accessed through a single node in one
 of these files.
 
 By definition, the root node of a CGNS database has the Label
-CGNSBase_t. The name of the CGNS database can be specified by the user
-and is stored in the "Name" field of the CGNSBase_t node. Current CGNS
-conventions require that the CGNSBase_t node be located directly below
+`CGNSBase_t`. The name of the CGNS database can be specified by the user
+and is stored in the "Name" field of the `CGNSBase_t` node. Current CGNS
+conventions require that the `CGNSBase_t` node be located directly below
 a "root node" in the database file identified by the name "/".
 
 A database file may contain multiple CGNS databases, and thus multiple
-CGNSBase_t nodes. However, each node labeled CGNSBase_t in a single
+`CGNSBase_t` nodes. However, each node labeled `CGNSBase_t` in a single
 file must have a unique name. The user or application must know the
 name of the file containing the entry-level node and, if there is more
-than one node labeled CGNSBase_t in that file, the name of the
+than one node labeled `CGNSBase_t` in that file, the name of the
 database as well.
 
-Below the CGNSBase_t node, the mapping conventions specify a subnode
+Below the `CGNSBase_t` node, the mapping conventions specify a subnode
 for each zone. This node has label Zone_t. Its Name refers to the
 particular zone whose characteristics are recorded at and below the
 node, such as "UnderWing." In general, names can be specified by the
@@ -283,8 +307,10 @@ the same file. This mechanism enables one database to share a grid,
 for example, with another database without duplicating the
 information.
 
-Standard Interface Data Structures (SIDS) The establishment of a
-standard for storing CFD-related information requires a detailed
+Standard Interface Data Structures (SIDS)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The establishment of a standard for storing CFD-related information requires a detailed
 specification of the content and meaning of the data to be stored. For
 example, it is necessary to state the meaning of the words "boundary
 condition" in a form sufficiently concrete to be recorded precisely,
@@ -306,7 +332,10 @@ structures are closely reflected in CGNS-compliant files: simple
 entities are often stored in single nodes, while more complex
 structures are stored in entire subtrees.
 
-SIDS File Mapping Because of the generality of the tree structure,
+SIDS File Mapping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Because of the generality of the tree structure,
 there are many conceivable means of encoding CFD data. But for any
 application to access, say, the boundary conditions for zone
 "UnderWing", requires a single convention with regard to where in the
@@ -328,12 +357,13 @@ deficiency of data.
 
 CGNS conventions do not specify the following:
 
-the use the applications programs may make of the data the means by
-which the applications programs modify the data the form in which the
-data is stored internal to an application The validity, accuracy and
-completeness of the data are determined entirely by the applications
-software.  The tree structure also makes it possible for applications
-to ignore data for which they have no use. (In fact, they cannot even
+ * the use the applications programs may make of the data
+ * the means by which the applications programs modify the data
+ *  the form in which the data is stored internal to an application
+
+The validity, accuracy and completeness of the data are determined entirely
+by the applications software.  The tree structure also makes it possible for
+applications to ignore data for which they have no use. (In fact, they cannot even
 discover the data's existence without a specific inquiry.) Therefore,
 it is permissible for an file containing a CGNS database to contain
 additional nodes not specified by the mapping. Such nodes will be
@@ -359,7 +389,10 @@ recommended that the alternate form be prepared at the time of use and
 kept separate from the CGNS data. This avoids habitual reliance on the
 alternate form, which would invalidate the standard.
 
-Database Manager A database manager contains the I/O software, which
+Database Manager
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A database manager contains the I/O software, which
 handles the actual reading and writing of data from and to external
 storage media. It must conform, at least in context, to that specified
 by the SIDS File Mapping document, and provide a minimal number of
@@ -395,7 +428,10 @@ developed as a replacement to the individual ADF and HDF5 core
 routines. These allow general access to the low-level I/O,
 irrespective of the underlying database manager.
 
-Mid-Level Library, or API The CGNS Mid-Level Library, or Applications
+Mid-Level Library, or API
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The CGNS Mid-Level Library, or Applications
 Programming Interface (API), is one of the most directly visible parts
 of CGNS, and it is of particular interest to applications code
 developers. It consists of a set of routines that are designed to
@@ -411,25 +447,35 @@ The CGNS Mid-Level Library document contains complete descriptions and
 usage instructions for all mid-level routines. All calls are provided
 in both C and Fortran.
 
-Documentation The CGNS elements described above are documented
+Documentation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The CGNS elements described above are documented
 individually, and are available as follows:
 
-Standard Interface Data Structures
-SIDS File Mapping Manual
-Mid-Level Library
-CGIO User's Guide
-ADF Implementation
-HDF5 Implementation
+ * Standard Interface Data Structures
+ * SIDS File Mapping Manual
+ * Mid-Level Library
+ * CGIO User's Guide
+ * ADF Implementation
+ * HDF5 Implementation
+
 In addition, the following documentation is also recommended:
 
-CGNS Overview and Entry-Level Document (this document) A User's Guide
-to CGNS "The CGNS System", AIAA Paper 98-3007 [PDF (496K, 16 pages)]
-"Advances in the CGNS Database Standard for Aerodynamics and CFD",
-AIAA Paper 2000-0681 [PDF (106K, 11 pages)] "CFD General Notation
-System (CGNS): Status and Future Directions", AIAA Paper 2002-0752,
-[PDF (289K, 13 pages)] The specific documents of interest vary with
-the level of intended use of CGNS.  Prospective Users Prospective
-users are presumably unfamiliar with CGNS. They will probably wish to
+ * CGNS Overview and Entry-Level Document (this document)
+ * A User's Guide to CGNS
+ * "The CGNS System", AIAA Paper 98-3007 [PDF (496K, 16 pages)]
+ * "Advances in the CGNS Database Standard for Aerodynamics and CFD",
+    AIAA Paper 2000-0681, [PDF (106K, 11 pages)]
+ * "CFD General Notation System (CGNS): Status and Future Directions",
+    AIAA Paper 2002-0752, [PDF (289K, 13 pages)]
+
+The specific documents of interest vary with the level of intended use of CGNS.
+
+Prospective Users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Prospective users are presumably unfamiliar with CGNS. They will probably wish to
 begin with the current Overview document, or, if they require more
 detailed information, the AIAA papers listed above. Beyond that, most
 will find a quick read of the SIDS File Mapping Manual (or
@@ -441,7 +487,10 @@ give an indication of what might be required to implement CGNS in a
 given application. Prospective users should probably not concern
 themselves with the details of ADF or HDF5.
 
-End Users The end user is the practitioner of CFD who generates the
+End Users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The end user is the practitioner of CFD who generates the
 grids, runs the flow codes and/or analyzes the results. For this user,
 a scan of this Overview document will sufficiently explain the overall
 workings of the system. This includes end user responsibilities for
@@ -451,7 +500,10 @@ CGNS, as well as those portions of the SIDS which deal with standard
 data names. The AIAA papers listed above may also be useful if more
 details about the capabilities of CGNS are desired.
 
-Applications Code Developers The applications code developer builds or
+Applications Code Developers 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The applications code developer builds or
 maintains code to support the various sub-processes encountered in
 CFD, e.g., grid generation, flow solution, post-processing, or flow
 visualization. The code developer must be able to install CGNS
@@ -471,7 +523,10 @@ supported by the Mid-Level Library, will need to use the CGIO
 low-level routines to access the underlying database manager
 directly. The CGIO User's Guide documents these routines in detail.
 
-CGNS System Developers CGNS System development can be kept somewhat
+CGNS System Developers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+CGNS System development can be kept somewhat
 compartmentalized. Developers responsible for the maintenance or
 building of supplements to the ADF Core, need not concern themselves
 with documentation other than the ADF User Guide. (Development and

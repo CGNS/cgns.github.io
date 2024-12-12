@@ -5,12 +5,12 @@
    04/2020 - (marc.poinot@safrangroup.com)
              start Markdown translation and change layout, see how pages
 	     are changed/moved in the MIGRATION.txt file
-	     See governance/support about this web site migration
+	     See governance/support about this website migration
 
    03/2021 - (marc.poinot@safrangroup.com)
              Major update with the help of mickael.philit@safrangroup.com
 
-.. IGNORE warning message produced by the image directive below
+.. IGNORE the warning message produced by the image directive below
 .. image:: /_static/CGNS_logo_nobckgrnd.svg
    :width: 500px
    :align: center
@@ -21,7 +21,7 @@ The official CGNS home page
 ===========================
 
 The **CFD General Notation System** (CGNS) provides a general, portable,
-and extensible standard for the storage and retrieval of computational
+and extensible standard for storing and retrieving computational
 fluid dynamics (CFD) analysis data.  It consists of a collection of
 conventions, and :ref:`free and open software <CGNSLicense>` implementing those
 conventions. It is self-descriptive, machine-independent,
@@ -41,7 +41,7 @@ The CGNS system is designed to facilitate the exchange of data between
 sites and applications, and to help stabilize the archiving of
 aerodynamic data.  The data are stored in a compact, binary format and
 are accessible through a complete and extensible library of functions.
-The API (Application Program Interface) is platform independent and
+The API (Application Program Interface) is platform-independent and
 can be easily implemented in C, C++, Fortran and Fortran90
 applications.
 

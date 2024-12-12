@@ -1,8 +1,8 @@
 .. _cgns_api_c-ref:
 
-###################################################
+#####################################################
 CGNS/MLL API Overview for C and Fortran applications
-###################################################
+#####################################################
 
 These are all the types and functions available in the CGNS C API.
 

@@ -205,7 +205,7 @@ comment and you push it to the repository:
 Documentation editing
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Documenation conventions for these CGNS web pages are as follows:
+Documentation conventions for these CGNS web pages are as follows:
 
 .. code-block:: rst
 

@@ -11,7 +11,7 @@ General Remarks
 .. _Acquiring-ref:
 
 The CGNS Mid-Level Library may be downloaded from the `CGNS site <https://github.com/CGNS/CGNS>`_. The manual,
-as well as the other CGNS documentation, is available from the `CGNS documentation web site <https://cgns.org>`_.
+as well as the other CGNS documentation is available from the `CGNS documentation website <https://cgns.org>`_.
 
 ****************************************
     Organization of This Manual
@@ -32,7 +32,7 @@ organization used in the Section :ref:`Detailed CGNS Node Descriptions <FMMNodeD
 The API descriptions are structured as follows. First, a brief overview is provided, followed by an optional,
 more detailed explanation. Next, the argument parameters are listed, accompanied by descriptions of each variable.
 Finally, there is a summary of the return value. Note, as of CGNS-3.1.0, some of the arguments to the Mid-Level Library
-have changed from *int* to *cgsize_t* in order to support 64-bit data. Changed APIs can quickly be identified by
+have changed from *int* to *cgsize_t* to support 64-bit data. Changed APIs can quickly be identified by
 searching for *cgsize_t*.
 
 .. MLL_Language-ref:
@@ -53,17 +53,17 @@ All data structure names and labels in CGNS are limited to 32 characters.
 When reading a file, it is advised to pre-allocate the character string
 variables to 32 characters in Fortran, and 33 in C (to include the string terminator).
 Other character strings, such as the CGNS file name or descriptor text, are unlimited in length. 
-The space for unlimited length character strings will be created by the Mid-Level Library; it is 
-then the responsibility of the application to release this space by a call to cg_free.
+The Mid-Level Library will create the space for unlimited-length character strings; it is 
+then the application's responsibility to release this space by a call to cg_free.
 
 ****************************************
     Error Status
 ****************************************
 All C functions return an integer value representing the error status. All Fortran functions have an
-additional parameter, *ier*, which contains the value of the error status. An error status different
+additional parameter, *ier*, which contains the error status value. An error status different
 from zero implies that an error occurred. The error message can be printed using the
 :ref:`error handling functions<errorhandling-ref>` of the CGNS library. The error codes are
-coded in the C and Fortran include files *cgnslib.h* and *cgnslib_f.h*.
+coded in the C and Fortran include files *cgnslib.h* and the CGNS module (or *cgnslib_f.h*).
 
 .. _Typedefs-ref:
 
@@ -72,29 +72,29 @@ coded in the C and Fortran include files *cgnslib.h* and *cgnslib_f.h*.
 ****************************************
 
 Beginning with CGNS-3.1.0, two new typedef variables have been introduced to support 64-bit mode. The *cglong_t* typedef
-is always a 64-bit integer, and ``cgsize_t`` will be either a 32-bit or 64-bit integer depending on how the library was built.
+is always a 64-bit integer, and ``cgsize_t`` will be either a 32-bit or 64-bit integer, depending on how the library was built.
 Many of the C functions in the MLL have been changed to use ``cgsize_t`` instead of *int* in the arguments. These functions
-include any that may exceed the 2Gb limit of an int, e.g. zone dimensions, element data, boundary conditions, and connectivity.
+include any that may exceed the 2Gb limit of an int, e.g., zone dimensions, element data, boundary conditions, and connectivity.
 In Fortran, all integer data is taken to be *INTEGER\*4* for 32-bit and *INTEGER\*8* for 64-bit builds. 
 
 ..
- MSB: I'm not entirely sure that the last sentence is accurate or what specific data it refers to.
+ TODO:MSB: I'm not entirely sure that the last sentence is accurate or what specific data it refers to.
 
 Several types of variables are defined using typedefs in the *cgnslib.h* file. These are intended to facilitate
-the implementation of CGNS in C. These variable types are defined as an enumeration of key words admissible for
-any variable of these types. The file *cgnslib.h* must be included in any C application programs which use these
+the implementation of CGNS in C. These variable types are defined as an enumeration of keywords admissible for
+any variable of these types. The file *cgnslib.h* must be included in any C application programs that use these
 data types.
 
-In Fortran, the same key words are defined as integer parameters in the *CGNS* module (previously *cgnslib_f.h*).
+Fortran defines the same keywords as integer parameters in the *CGNS* module (previously *cgnslib_f.h*).
 Such variables should be declared as *integer* in Fortran applications. The *CGNS* module (previously *cgnslib_f.h*)
-must be included in any Fortran application using these key words.
+must be included in any Fortran application using these keywords.
 
 .. note::
          The first two enumerated values in these lists, xxxNull and xxxUserDefined, are only
          available in the C interface, and are provided in the advent that your C compiler does
          strict type checking. In Fortran, these values are replaced by the numerically
-         equivalent *CG_Null* and *CG_UserDefined*. These values are also defined in the C interface,
-         thus either form may be used. The function prototypes for the MLL use *CG_Null*
+         equivalent *CG_Null* and *CG_UserDefined*. These values are also defined in the C interface. Thus,
+         either form may be used. The function prototypes for the MLL use *CG_Null*
          and *CG_UserDefined*, rather than the more specific values.
 
 .. toctree::
@@ -105,7 +105,7 @@ must be included in any Fortran application using these key words.
     Character Names for Typedefs
 ****************************************
 
-The CGNS library defines character arrays which map the typedefs above to character strings.
+The CGNS library defines character arrays that map the typedefs above to character strings.
 These are global arrays dimensioned to the size of each list of typedefs. To retrieve a character 
 string representation of a typedef, use the typedef value as an index to the appropriate character array. 
 For example, to retrieve the string "*Meter*" for the ``LengthUnits_t`` Meter typedef, use ``LengthUnitsName[Meter]``. 
@@ -203,7 +203,7 @@ Starting with CGNS-3.3.0, the Fortran APIs have the following specifications (re
 
     * Fortran arguments should be declared as the default ``INTEGER`` if the corresponding argument in the C API is declared as an ``int``.
     * Fortran arguments should be declared as ``INTEGER(cgsize_t)`` if the corresponding argument in the C API is declared as ``cgsize_t``.
-    * Fortran arguments should be declared as type ``INTEGER(cgenum_t)`` if the corresponding argument in the C API is declared as  :ref:`enumerated values (enums)<Typedefs-ref>`. 
+    * Fortran arguments should be declared as type ``INTEGER(cgenum_t)`` if the corresponding argument in the C API is declared as :ref:`enumerated values (enums)<Typedefs-ref>`. 
 
 An integer parameter,`` CG_BUILD_64BIT``, can be used to tell the size of ``cgsize_t``, which will be set to 1 in 64-bit mode and 0 otherwise. You may use this parameter to check at run time if the CGNS library has been compiled in 64-bit mode or not, as in:
 
@@ -214,16 +214,16 @@ An integer parameter,`` CG_BUILD_64BIT``, can be used to tell the size of ``cgsi
       STOP
   ENDIF
 
-If you are using a CGNS library prior to version 3.1, this parameter will not be defined and you will need to
+If you are using a CGNS library prior to version 3.1, this parameter will not be defined, and you will need to
 rely on your compiler initializing all undefined values to 0 (not always the case) for this test to work.
 
 .. warning::
 
-   **The following practice is not recommend!**
+   **The following practice is not recommended!**
 
-   If you have explicitly defined your default integers which are passed to the CGNS library as ``INTEGER*8``, or used 
+   If you have explicitly defined your default integers, which are passed to the CGNS library as ``INTEGER*8``, or used 
    a compiler option to promote implicit integers to ``INTEGER*8``, then you MUST compile the CGNS library with the same 
-   compiler option in order to promote implicit integers to ``INTEGER*8``. If you really must promote all integers 
-   to ``INTEGER*8`` in your code, and you are not able to compile the CGNS library with the same compilar options, then 
+   compiler option to promote implicit integers to ``INTEGER*8``. If you really must promote all integers 
+   to ``INTEGER*8`` in your code, and you are not able to compile the CGNS library with the same compiler options, then 
    it is recommended that all arguments in the CGNS Fortran APIs should be declared as ``INTEGER(C_INT)`` if the 
    corresponding argument in the C API is declared as an ``int``.

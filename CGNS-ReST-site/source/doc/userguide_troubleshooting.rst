@@ -8,11 +8,11 @@ Troubleshooting
 Handling Errors
 ^^^^^^^^^^^^^^^
 
-The API has an extensive number of checks for errors, relating both to invalid data input as well as SIDS-noncompliance.
+The API has extensive checks for errors relating to invalid data input and SIDS Noncompliance.
 However, it is not guaranteed that the API will catch all problems prior to reaching the core level. Even then, additional
-errors can arise due to I/O or invalid input. The list of errors that can arise in the CGIO or database manager core
+errors can arise due to I/O or invalid input. The list of errors that can occur in the CGIO or database manager core
 routines may be found in the :ref:`CGIO User's Guide <Error Messages>`. If an error occurs, the message given by API or
-core routine should hopefully be descriptive enough to point to the source of the error.
+core routine should be descriptive enough to point to the source of the error.
 
 Known Problems
 ^^^^^^^^^^^^^^

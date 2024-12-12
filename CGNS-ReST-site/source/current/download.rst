@@ -16,8 +16,10 @@ It is also used for discussing important problems/issues and for obtaining help 
 
 What to Download
 ----------------
+.. note::
 
-**First and most importantly, we recommend that you read the CGNS User Guide. This guide also includes sample code (UserGuideCode) for helping to get started with CGNS.**
+   First and most importantly, we recommend that you read :ref:`DocUserGuide`. This guide also includes
+   sample code (UserGuideCode) for helping to get started with CGNS.
 
 For the up-to-date **development** source, visit `GitHub Development <https://github.com/CGNS/CGNS/tree/develop>`_.
 
@@ -31,17 +33,22 @@ For the **stable** source, visit `GitHub Stable <https://github.com/CGNS/CGNS/tr
 
   git clone -b master https://github.com/CGNS/CGNS.git
 
-As a minimum, you will need to download and compile the CGNS library code. Compilation requires an ANSI compliant C compiler. The source code may downloaded as a gzipped, tar file:
+As a minimum, you will need to download and compile the CGNS library code. Compilation requires
+an ANSI compliant C99 compiler. The source code may be downloaded as a gzipped, tar file.
 
 Current Stable Release:
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-  :`CGNS Version 4.1.2 (Patch) <https://github.com/CGNS/CGNS/releases/tag/v4.1.2>`_:
+  The lastest stable release can always be found at: `CGNS Latest Version <https://github.com/CGNS/CGNS/releases/latest>`_
 
-  Patched version v4.1.2 addressed backward compatibility issues.
 
 Historical Stable Releases:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. note::
+
+   Please see the release notes at: `CGNS Releases <https://github.com/CGNS/CGNS/releases>`_ 
+   for CGNS versions 4.2.0 and up.
+
 
 * :`CGNS Version 4.1.1 (Patch) <https://github.com/CGNS/CGNS/releases/tag/v4.1.1>`_:
 

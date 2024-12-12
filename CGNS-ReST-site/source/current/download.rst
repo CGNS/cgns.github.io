@@ -39,7 +39,7 @@ an ANSI compliant C99 compiler. The source code may be downloaded as a gzipped, 
 Current Stable Release:
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-  The lastest stable release can always be found at: `CGNS Latest Version <https://github.com/CGNS/CGNS/releases/latest>`_
+  The latest stable release can always be found at: `CGNS Latest Version <https://github.com/CGNS/CGNS/releases/latest>`_
 
 
 Historical Stable Releases:

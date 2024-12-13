@@ -6,9 +6,13 @@
 More CGNS Software
 ==================
 
-This list may be outdated. If you want to add/change/remove any entry, 
-please contact the CGNS Steering Committee 
-on the :ref:`mailing list <SupportDiscussionForum>`.
+.. |fa-github| raw:: html
+
+   <i class="fa-brands fa-github"></i>
+
+This list may be outdated. If you want to add/change/remove any entry,
+please open a github documentation issue using the |fa-github|
+icon found at the top of this page.
 
 The CGNS Steering Committee did not check the compliance of these tools,
 the listing is informative and does not implies the CGNS Steering Committee

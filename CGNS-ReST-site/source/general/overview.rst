@@ -15,20 +15,23 @@ CGNS,
 2. identifies the elements of the system and their relationships,
 3. describes the various documents that elaborate the details.
 
-Reading the material on the
-purpose and general description of CGNS should help users determine
-whether CGNS will meet their needs. Those wanting a bit more detail
-should read the section describing the various elements of CGNS. For
-those interested only in understanding the scope and capabilities of
+Reading the material on the :ref:`purpose <Purpose-ref>`
+and :ref:`general <General-ref>` description of CGNS should help users
+determine whether CGNS will meet their needs. Those wanting a bit more detail
+should read the section describing the various :ref:`Axioms of CGNS <Axiom-ref>`.
+For those interested only in understanding the scope and capabilities of
 CGNS, or for the end user unconcerned with the internal workings of
 the system, the Overview may prove sufficient documentation by itself.
 
 The Overview also includes certain information that is current as of
 the document date but which may change with time. All information on
-CGNS compatible "applications" software (i.e., external programs such
-as grid generators, flow codes, or postprocessors) is of this
-type. Also subject to change is the information on the acquisition of
-the software and documentation, and the current status of CGNS.
+CGNS compatible :ref:`"applications" software <application_software-ref>`
+(i.e., external programs such as grid generators, flow codes, or
+postprocessors) is of this type. Also subject to change is the information
+on the :ref:`acquisition of the software and documentation <Overview_acquiring-ref>`,
+and the current status of CGNS.
+
+.. _Purpose-ref:
 
 Purpose and Scope
 -----------------
@@ -51,26 +54,37 @@ open to anyone.
 The CGNS standard, applied through the use of the supplied software,
 is intended to:
 
-facilitate the exchange of CFD data between sites between applications
-codes across computing platforms stabilize the archiving of CFD data
+ * facilitate the exchange of CFD data
+   * between sites
+   * between applications codes
+   * across computing platforms
+ * stabilize the archiving of CFD data
+
 The principal target of CGNS is data normally associated with
 compressible viscous flow (i.e., the Navier-Stokes equations), but the
 standard is also applicable to subclasses such as Euler and potential
 flows. The CGNS standard addresses the following types of data.
 
-Structured, unstructured, and hybrid grids Flow solution data, which
-may be nodal, cell-centered, face-centered, or edge-centered Multizone
-interface connectivity, both abutting and overset Boundary conditions
-Flow equation descriptions, including the equation of state, viscosity
-and thermal conductivity models, turbulence models, and multi-species
-chemistry models Time-dependent flow, including moving and deforming
-grids Dimensional units and nondimensionalization information
-Reference states Convergence history Association to CAD geometry
-definitions Much of the standard and the software is applicable to
+ * Structured, unstructured, and hybrid grids
+ * Flow solution data, which may be nodal, cell-centered, face-centered, or edge-centered
+ * Multizone interface connectivity, both abutting and overset
+ * Boundary conditions
+ * Flow equation descriptions, including the equation of state, viscosity
+   and thermal conductivity models, turbulence models, and multi-species
+   chemistry models
+ * Time-dependent flow, including moving and deforming grids 
+ * Dimensional units and nondimensionalization information
+ * Reference states
+ * Convergence history
+ * Association to CAD geometry definitions
+
+Much of the standard and the software is applicable to
 computational field physics in general. Disciplines other than fluid
 dynamics would need to augment the data definitions and storage
 conventions, but the fundamental database software, which provides
 platform independence, is not specific to fluid dynamics.
+
+.. _General-ref:
 
 General Description
 -------------------
@@ -78,12 +92,17 @@ General Description
 A CGNS database describes the current state of one or more entire CFD
 (Computational Fluid Dynamics) problems, including the following:
 
-grid
-flowfield
-boundary conditions
-topological connection information
-auxiliary data (e.g., nondimensionalization parameters, reference states)
-Not all of these data need to be present at any particular time. The overall view is that of a shared database that can be accessed by the various software tools common to CFD, such as solvers, grid generators, field visualizers, and postprocessors. Each of these "applications" serves as an editor of the data, adding to, modifying, or interpreting it according to that application's specific role.
+ * grid
+ * flowfield
+ * boundary conditions
+ * topological connection information
+ * auxiliary data (e.g., nondimensionalization parameters, reference states)
+
+Not all of these data need to be present at any particular time. The overall
+view is that of a shared database that can be accessed by the various software
+tools common to CFD, such as solvers, grid generators, field visualizers, and
+postprocessors. Each of these "applications" serves as an editor of the data,
+adding to, modifying, or interpreting it according to that application's specific role.
 
 CGNS conventions and software provide for the recording of a complete
 and flexible problem description. The exact meaning of a subsonic
@@ -129,7 +148,9 @@ However, the ease of communication between applications that CGNS
 provides should motivate the development of new batch and interactive
 mechanisms for the convenient application of CFD tools.
 
-Elements and Documentation
+.. _Axiom-ref:
+
+Axiom and Documentation
 --------------------------
 
 Introduction
@@ -537,12 +558,13 @@ extensions to the SIDS, may possibly be undertaken with a knowledge of
 the SIDS alone, but such contributions must also be added to the SIDS
 File Mapping before they can be implemented.
 
+.. _application_software-ref:
+
 Applications Software
 ---------------------
 
-The development of
-CGNS-compliant applications, e.g., grid generators, postprocessors,
-and the like, has not been a direct undertaking of the CGNS
+The development of CGNS-compliant applications, e.g., grid generators,
+postprocessors, and the like, has not been a direct undertaking of the CGNS
 team. Rather, it has been the intent to make the attractiveness of
 interoperable CFD applications, together with general acceptance of
 the CGNS standard by Boeing, NASA, and others, sufficient to induce
@@ -552,6 +574,8 @@ Several CGNS-compatible applications have indeed been developed, and
 more continue to appear, this web site has :ref:`a page with an 
 informational list of the known applications compliant with CGNS
 <CGNSCompliantSoftware>`.
+
+.. _Overview_acquiring-ref:
 
 Acquiring CGNS
 --------------

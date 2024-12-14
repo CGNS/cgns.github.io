@@ -28,7 +28,7 @@ site. As of September 2007, the CGNStalk mailing list had 224
 participants from 20 different countries and at least 79 different
 organizations.
 
-The software continues to be actively develop by many contributers
+The software continues to be actively develop by many contributors
 to the CGNS git repository on `Github <http://www.github.com/CGNS/CGNS>`_
 
 Several extensions to CGNS have been formally proposed. Documentation

@@ -463,7 +463,7 @@ The current members of the committee are:
 - ANSYS
 - BETA CAE Systems
 - Boeing Commercial
-- Colorado State University
+- Convergent Science
 - DLR
 - HDF Group
 - Intelligent Light
@@ -477,7 +477,6 @@ The current members of the committee are:
 - Tecplot, Inc.
 - TTC Technologies
 - TU Delft
-- University of Colorado
 - University of Kansas
 
 .. note::

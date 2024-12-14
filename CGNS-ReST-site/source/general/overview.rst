@@ -11,9 +11,9 @@ its documentation. The
 Overview, which was written primarily for new and prospective users of
 CGNS,
 
-1. introduces terminology,
-2. identifies the elements of the system and their relationships,
-3. describes the various documents that elaborate the details.
+ 1. introduces terminology,
+ 2. identifies the elements of the system and their relationships,
+ 3. describes the various documents that elaborate the details.
 
 Reading the material on the :ref:`purpose <Purpose-ref>`
 and :ref:`general <General-ref>` description of CGNS should help users
@@ -29,7 +29,7 @@ CGNS compatible :ref:`"applications" software <application_software-ref>`
 (i.e., external programs such as grid generators, flow codes, or
 postprocessors) is of this type. Also subject to change is the information
 on the :ref:`acquisition of the software and documentation <Overview_acquiring-ref>`,
-and the current status of CGNS.
+and the :ref:`current status <CurrentStatus-ref>` of CGNS.
 
 .. _Purpose-ref:
 
@@ -55,9 +55,11 @@ The CGNS standard, applied through the use of the supplied software,
 is intended to:
 
  * facilitate the exchange of CFD data
+
    * between sites
    * between applications codes
    * across computing platforms
+
  * stabilize the archiving of CFD data
 
 The principal target of CGNS is data normally associated with
@@ -187,19 +189,21 @@ The elements of CGNS address all activities associated with the
 storage of the data on external media and its movement to and from the
 applications programs. These elements include the following:
 
-* The Standard Interface Data Structures (SIDS), which specify the
-  intellectual content of CFD data and the conventions that govern
-  naming and terminology.
+ * The :ref:`Overview_SIDS-ref`, which specify the
+   intellectual content of CFD data and the conventions that govern
+   naming and terminology.
 
-* The SIDS File Mapping, which specifies the exact location where
-  the CFD data defined by the SIDS is to be stored within a database file.
+ * The :ref:`SIDS_File_Map-ref`, which specifies the exact location where
+   the CFD data defined by the SIDS is to be stored within a database file.
 
-* The Database Manager, which consists of both a file format specification
-  and its I/O software, which handles the actual reading and writing of data
-  from and to external storage media.
+ * The :ref:`Database_Manager-ref`, which consists of both a file format specification
+   and its I/O software, which handles the actual reading and writing of data
+   from and to external storage media.
 
 The following sections discuss in more detail the roles of the CGNS
 elements and introduce their documentation.
+
+.. _Overview_Struct_Database:
 
 Structure of a CGNS Database
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -249,16 +253,16 @@ being recorded.
 
 **Label**. The Label, also a character string, is specified by the CGNS
 mapping conventions and identifies the kind of data being
-recorded. For example, a node with label Zone_t may record (at and
+recorded. For example, a node with label ``Zone_t`` may record (at and
 below it) information on the zone with Name "UnderWing." No node may
 have more than one child with the same name, but the CGNS mapping
 conventions commonly specify many children with the same label. For
 some nodes, the mapping conventions specify that the name field has
 significance for the meaning of the data (e.g.,
-EnthalpyStagnation). Although the user may specify another name, these
+``EnthalpyStagnation``). Although the user may specify another name, these
 "paper" conventions serve the transfer of data between users and
-between applications. These names and their meanings are established
-by the SIDS.
+between applications. These names and their meanings are :ref:`established
+by the SIDS. <dataname>`
 
 **Data Type, Dimension, Dimension Values, Data**. Nodes may or may not
 contain data. For those that do, CGNS specifies a single array whose
@@ -266,9 +270,9 @@ type (integer, etc.), dimension, and size are recorded in the Data
 Type, Dimension, and Dimension Value fields, respectively. The mapping
 conventions specify some nodes that serve to establish the tree
 structure and point to further data below but contain no data
-themselves. For these nodes, the Data Type is MT, and the other fields
+themselves. For these nodes, the Data Type is ``MT``, and the other fields
 are empty. A link to another node within the current or an external
-CGNS database is indicated by a Data Type of LK
+CGNS database is indicated by a Data Type of ``LK``
 
 **Child Table**. The Child Table contains a list of the node's
 children. It is maintained by the database manager as children are
@@ -279,31 +283,31 @@ High-Level Organization of the CGNS Database
 
 For a full specification
 of the location of CFD data in the CGNS database, the user should see
-the SIDS File Mapping document. For convenience, we summarize the
+the :ref:`SIDS File Mapping Manual <StandardFMM>`. For convenience, we summarize the
 high-level structure below. A CGNS database consists of a tree of
 nodes implemented as all or part of one or more database files. All
 information is identified by and accessed through a single node in one
 of these files.
 
 By definition, the root node of a CGNS database has the Label
-`CGNSBase_t`. The name of the CGNS database can be specified by the user
-and is stored in the "Name" field of the `CGNSBase_t` node. Current CGNS
-conventions require that the `CGNSBase_t` node be located directly below
+``CGNSBase_t``. The name of the CGNS database can be specified by the user
+and is stored in the "Name" field of the ``CGNSBase_t`` node. Current CGNS
+conventions require that the ``CGNSBase_t`` node be located directly below
 a "root node" in the database file identified by the name "/".
 
 A database file may contain multiple CGNS databases, and thus multiple
-`CGNSBase_t` nodes. However, each node labeled `CGNSBase_t` in a single
+``CGNSBase_t`` nodes. However, each node labeled ``CGNSBase_t`` in a single
 file must have a unique name. The user or application must know the
 name of the file containing the entry-level node and, if there is more
-than one node labeled `CGNSBase_t` in that file, the name of the
+than one node labeled ``CGNSBase_t`` in that file, the name of the
 database as well.
 
-Below the `CGNSBase_t` node, the mapping conventions specify a subnode
-for each zone. This node has label Zone_t. Its Name refers to the
+Below the ``CGNSBase_t`` node, the mapping conventions specify a subnode
+for each zone. This node has label ``Zone_t``. Its Name refers to the
 particular zone whose characteristics are recorded at and below the
 node, such as "UnderWing." In general, names can be specified by the
 user, but defaults are specified for nodes that the user does not
-choose to name. For the Zone_t nodes, the defaults are Zone1, Zone2,
+choose to name. For the ``Zone_t`` nodes, the defaults are Zone1, Zone2,
 and so forth, in order of creation. A similar convention for default
 names applies elsewhere. It is impossible to create a node without a
 name (or with a name of zero length). The CGNS Mid-Level Library
@@ -328,6 +332,8 @@ the same file. This mechanism enables one database to share a grid,
 for example, with another database without duplicating the
 information.
 
+.. _Overview_SIDS-ref:
+
 Standard Interface Data Structures (SIDS)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -336,15 +342,15 @@ specification of the content and meaning of the data to be stored. For
 example, it is necessary to state the meaning of the words "boundary
 condition" in a form sufficiently concrete to be recorded precisely,
 and yet sufficiently flexible to embrace current and future
-practice. The Standard Interface Data Structures (SIDS) document
+practice. The :ref:`Standard Interface Data Structures (SIDS) <CGNS-SIDS>` document
 describes this "intellectual content" of CFD-related data in detail.
 
 An exact description of the intellectual content is required not only
 to define the precise form of the data but also to guarantee that the
 meaning of the data is consistently interpreted by practitioners. Thus
-the SIDS include a collection of naming conventions that specify the
-precise meaning of nomenclature (e.g., the strings DensityStatic and
-BCWallViscous).
+the SIDS include a collection of :ref:`naming conventions <dataname>` that specify the
+precise meaning of nomenclature (e.g., the strings ``DensityStatic`` and
+``BCWallViscous``).
 
 The SIDS are written in a self-contained C-like descriptive
 language. SIDS data structures are defined in a hierarchical manner in
@@ -353,6 +359,8 @@ structures are closely reflected in CGNS-compliant files: simple
 entities are often stored in single nodes, while more complex
 structures are stored in entire subtrees.
 
+.. _SIDS_File_Map-ref:
+
 SIDS File Mapping
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -360,10 +368,10 @@ Because of the generality of the tree structure,
 there are many conceivable means of encoding CFD data. But for any
 application to access, say, the boundary conditions for zone
 "UnderWing", requires a single convention with regard to where in the
-file that data has been stored. The SIDS File Mapping document,
+file that data has been stored. The :ref:`SIDS File Mapping Manual <StandardFMM>`,
 sometimes referred to as the "File Mapping," establishes the precise
 node, and properties of that node, where each piece of CGNS data
-should be recorded. The CGNS Mid-Level Library relies on the File
+should be recorded. The :ref:`CGNS Mid-Level Library <Overview_MLL>` relies on the File
 Mapping to locate CFD-related data within the file.  The mapping
 provides locations for an extensive set of CFD data. Most applications
 will make use of only a small subset of this data. Further, inasmuch
@@ -380,7 +388,7 @@ CGNS conventions do not specify the following:
 
  * the use the applications programs may make of the data
  * the means by which the applications programs modify the data
- *  the form in which the data is stored internal to an application
+ * the form in which the data is stored internal to an application
 
 The validity, accuracy and completeness of the data are determined entirely
 by the applications software.  The tree structure also makes it possible for
@@ -399,8 +407,9 @@ recorded data. Thus there are two kinds of conventions operative
 within CGNS. Adherence to the File Mapping conventions guarantees that
 the software will be able to find and read the data. Adherence to the
 SIDS guarantees uniformity of meaning among users and between
-applications. The SIDS File Mapping document establishes the context
-of CGNS for a database manager; the SIDS define the nomenclature,
+applications. The :ref:`SIDS File Mapping Manual <StandardFMM>`
+establishes the context of CGNS for a database manager; the
+:ref:`SIDS<CGNS-SIDS>` define the nomenclature,
 content, and meaning of the stored data.
 
 The File Mapping generally avoids the storage of redundant
@@ -409,6 +418,8 @@ intellectually equivalent) form of the data; in such cases it is
 recommended that the alternate form be prepared at the time of use and
 kept separate from the CGNS data. This avoids habitual reliance on the
 alternate form, which would invalidate the standard.
+
+.. _Database_Manager-ref:
 
 Database Manager
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -422,7 +433,7 @@ is possible to install CGNS I/O into an application using only these
 core routines. However, such an approach would require the installer
 to access the data at a very fundamental level and would result in
 lengthy sequences of core function calls. Therefore, the CGNS system
-also includes a Mid-Level Library, an API (Application Programming
+also includes a :ref:`Mid-Level Library <Overview_MLL>`, an API (Application Programming
 Interface) that contains additional routines intended to facilitate
 higher-level access to the data. These are CFD-knowledgeable routines
 suitable for direct installation into applications codes.  The CGNS
@@ -430,9 +441,10 @@ software was originally developed around ADF (Advanced Data Format) as
 it's database manager, thus much of the concepts and structures of
 CGNS originated from there.
 
-In version 2.4 of the CGNS software, HDF5 (Hierarchical Data Format
-was introduced as an alternative database manager. At that time,
-either ADF or HDF5 (but not both) was selectable at build time.
+In version 2.4 of the CGNS software, :ref:`HDF5 <HDF5Implementation>`
+(Hierarchical Data Format was introduced as an alternative database
+manager. At that time, either ADF or HDF5 (but not both) was selectable
+at build time.
 
 It should be noted that because of HDF5's parallel and compression
 capability as well as its support, the CGNS Steering Committee has
@@ -444,10 +456,13 @@ two.
 
 Beginning with CGNS version 3.0, both ADF and HDF5 are supported
 concurrently and transparently by CGNS. To facilitate this, a new set
-of core routines, described in the CGIO User's Guide, have been
+of core routines, described in the
+:ref:`CGIO User's Guide <StandardCGIO>`, have been
 developed as a replacement to the individual ADF and HDF5 core
 routines. These allow general access to the low-level I/O,
 irrespective of the underlying database manager.
+
+.. _Overview_MLL:
 
 Mid-Level Library, or API
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -464,7 +479,7 @@ CGNS I/O into their applications without having detailed knowledge of
 the File Mapping. For instance, an application might use CGNS
 mid-level calls to retrieve all boundary conditions for a given zone.
 
-The CGNS Mid-Level Library document contains complete descriptions and
+The CGNS :ref:`Mid-Level Library <StandardMLL>` document contains complete descriptions and
 usage instructions for all mid-level routines. All calls are provided
 in both C and Fortran.
 
@@ -474,21 +489,21 @@ Documentation
 The CGNS elements described above are documented
 individually, and are available as follows:
 
- * Standard Interface Data Structures
- * SIDS File Mapping Manual
- * Mid-Level Library
- * CGIO User's Guide
+ * :ref:`Standard Interface Data Structures (SIDS) <CGNS-SIDS>`
+ * :ref:`SIDS File Mapping Manual <StandardFMM>`
+ * :ref:`Mid-Level Library <StandardMLL>`
+ * :ref:`CGIO User's Guide <StandardCGIO>`
  * ADF Implementation
- * HDF5 Implementation
+ * :ref:`HDF5 <HDF5Implementation>`
 
 In addition, the following documentation is also recommended:
 
  * CGNS Overview and Entry-Level Document (this document)
- * A User's Guide to CGNS
- * "The CGNS System", AIAA Paper 98-3007 [PDF (496K, 16 pages)]
- * "Advances in the CGNS Database Standard for Aerodynamics and CFD",
+ * :ref:`A User's Guide to CGNS <DocUserGuide>`
+ * "The CGNS System", (AIAA Paper 98-3007), `[Available from AIAA] <https://arc.aiaa.org/doi/10.2514/6.1998-3007>`_
+ * :download:`Advances in the CGNS Database Standard for Aerodynamics and CFD <../../papers/aiaa00-0681.pdf>`,
     AIAA Paper 2000-0681, [PDF (106K, 11 pages)]
- * "CFD General Notation System (CGNS): Status and Future Directions",
+ * :download:`CFD General Notation System (CGNS): Status and Future Directions  <../../papers/aiaa02-0752.pdf>`,
     AIAA Paper 2002-0752, [PDF (289K, 13 pages)]
 
 The specific documents of interest vary with the level of intended use of CGNS.
@@ -499,12 +514,12 @@ Prospective Users
 Prospective users are presumably unfamiliar with CGNS. They will probably wish to
 begin with the current Overview document, or, if they require more
 detailed information, the AIAA papers listed above. Beyond that, most
-will find a quick read of the SIDS File Mapping Manual (or
+will find a quick read of the :ref:`SIDS File Mapping Manual <StandardFMM>` (or
 enlightening as to the logical form of the contents of CGNS
-files. Browsing the figures in the File Mapping Manual, as well as the
-SIDS itself, will provide some feel for the scope of the system. The
-User's Guide to CGNS, and the CGNS Mid-Level Library document, should
-give an indication of what might be required to implement CGNS in a
+files. Browsing the :ref:`figures in the File Mapping Manual<StandardFMMfigs>`, as well as the
+:ref:`SIDS <CGNS-SIDS>` itself, will provide some feel for the scope of the system. The
+:ref:`User's Guide to CGNS <DocUserGuide>`, and the CGNS :ref:`Mid-Level Library <StandardMLL>`
+document, should give an indication of what might be required to implement CGNS in a
 given application. Prospective users should probably not concern
 themselves with the details of ADF or HDF5.
 
@@ -516,10 +531,11 @@ grids, runs the flow codes and/or analyzes the results. For this user,
 a scan of this Overview document will sufficiently explain the overall
 workings of the system. This includes end user responsibilities for
 matters not governed by CGNS, such as the maintenance of files and
-directories. The end user will also find useful the User's Guide to
-CGNS, as well as those portions of the SIDS which deal with standard
-data names. The AIAA papers listed above may also be useful if more
-details about the capabilities of CGNS are desired.
+directories. The end user will also find useful the
+:ref:`User's Guide to CGNS <DocUserGuide>`, as well as those portions
+of the :ref:`SIDS <CGNS-SIDS>` which deal with
+:ref:`standard data names <dataname>`. The AIAA papers listed above may
+also be useful if more details about the capabilities of CGNS are desired.
 
 Applications Code Developers 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -529,20 +545,21 @@ maintains code to support the various sub-processes encountered in
 CFD, e.g., grid generation, flow solution, post-processing, or flow
 visualization. The code developer must be able to install CGNS
 compliant I/O. The most convenient method for doing so is to utilize
-the CGNS Mid-Level Library. The User's Guide to CGNS is the starting
-point for learning to use the Mid-Level Library to create and use CGNS
-files. The CGNS Mid-Level Library document itself should also be
-considered essential. This library of routines will perform the most
+the CGNS Mid-Level Library. The :ref:`User's Guide to CGNS <DocUserGuide>`
+is the starting point for learning to use the Mid-Level Library to create and
+use CGNS files. The CGNS  :ref:`Mid-Level Library <StandardMLL>` document itself
+should also be considered essential. This library of routines will perform the most
 common I/O operations in a CGNS-compliant manner. However, even when
 the Mid-Level Library suffices to implement all necessary I/O, an
 understanding of the file mapping and SIDS will be useful. It will
-likely be necessary to consult the SIDS to determine the precise
+likely be necessary to consult the :ref:`SIDS <CGNS-SIDS>` to determine the precise
 meaning of the nomenclature.
 
 Applications code developers wishing to read or write data that isn't
 supported by the Mid-Level Library, will need to use the CGIO
 low-level routines to access the underlying database manager
-directly. The CGIO User's Guide documents these routines in detail.
+directly. The :ref:`CGIO User's Guide <StandardCGIO>` documents these
+routines in detail.
 
 CGNS System Developers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -551,12 +568,12 @@ CGNS System development can be kept somewhat
 compartmentalized. Developers responsible for the maintenance or
 building of supplements to the ADF Core, need not concern themselves
 with documentation other than the ADF User Guide. (Development and
-maintenance of HDF5 is under the purview of NCSA, so has no relevance
-here.) System developers wishing to add to the CGNS Mid-Level Library
+maintenance of HDF5 is under the purview of The HDF Group, so has no relevance
+here.) System developers wishing to add to the CGNS :ref:`Mid-Level Library <StandardMLL>`
 will need all the documents. Theoretical developments, such as
-extensions to the SIDS, may possibly be undertaken with a knowledge of
-the SIDS alone, but such contributions must also be added to the SIDS
-File Mapping before they can be implemented.
+extensions to the :ref:`SIDS <CGNS-SIDS>`, may possibly be undertaken with a knowledge of
+the SIDS alone, but such contributions must also be added to the
+:ref:`SIDS File Mapping Manual <StandardFMM>` before they can be implemented.
 
 .. _application_software-ref:
 
@@ -582,21 +599,22 @@ Acquiring CGNS
 
 The CGNS software is available free of charge, under the terms of the 
 :ref:`CGNS License <CGNSLicense>`. Also available there are the cgnstools 
-utilities, the source code examples from A User's Guide to CGNS, 
+utilities, the source code examples from :ref:`A User's Guide to CGNS <DocUserGuide>`, 
 and additional Fortran source code examples.
 
-The CGNS Library contains source code for the Mid-Level Library, the
-CGIO core, and the ADF and HDF5 implementations, plus CMake and
+The CGNS Library contains source code for the :ref:`Mid-Level Library <StandardMLL>`, the
+:ref:`CGIO core <Axiom-ref>`, and the 
+:ref:`ADF and HDF5 implementations <Overview_Struct_Database>`, plus CMake and
 configure scripts for building the library for a variety of platforms.
 
-The CGNS documentation may be accessed via the CGNS Documentation home
-page. In addition to current version, documentation may also be
+The CGNS documentation may be accessed via the `CGNS Documentation home
+page <https://cgns.org>`_. In addition to current version, documentation may also be
 available for the previous and beta versions of CGNS. All the CGNS
 documentation is available in HTML form (PDF is no longer being
 supported except for the SIDS).
 
-In addition to the CGNS documentation itself, several conference
-papers and slide presentations are available, as well as minutes from
-the CGNS meetings and telecons.
+In addition to the CGNS documentation itself, several :ref:`conference
+papers and slide presentations <DocExtra>` are available, as well as
+:ref:`minutes from the CGNS meetings and telecons <DocMinutes>`.
 
 .. last line

@@ -199,7 +199,7 @@ An alternative instance of the entity :sidskey:`Sample1` shown above is the foll
     Dimension = 4 ;
     }} ;
 
-None of the entities and types defined in the above examples are actually used in the definition of the SIDS. As a final note, the reader should be aware that the SIDS is a conceptual description of the form of the data. The actual location of data in the file is determined by the file mapping, defined by the appropriate :ref:`File Mapping Manual <Standard-FMM>`.
+None of the entities and types defined in the above examples are actually used in the definition of the SIDS. As a final note, the reader should be aware that the SIDS is a conceptual description of the form of the data. The actual location of data in the file is determined by the file mapping, defined by the appropriate :ref:`File Mapping Manual <StandardFMM>`.
 
 
 .. _structgrid:

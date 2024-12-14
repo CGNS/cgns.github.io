@@ -13,6 +13,8 @@ the noticeable contribution to the standard.
 See also some history facts in 
 the :ref:`Steering committee section <YeMightySteeringCommittee>`.
 
+.. _CurrentStatus-ref:
+
 Current Status
 ^^^^^^^^^^^^^^
 **Current Status**
@@ -26,13 +28,12 @@ site. As of September 2007, the CGNStalk mailing list had 224
 participants from 20 different countries and at least 79 different
 organizations.
 
-Software The current "production" release of CGNS is Version 3.1,
-released in January 2011.
+The software continues to be actively develop by many contributers
+to the CGNS git repository on `Github <http://www.github.com/CGNS/CGNS>`_
 
 Several extensions to CGNS have been formally proposed. Documentation
 supporting these extensions, and information on their current status,
-is available via the "Proposals for Extensions external link" link at
-the CGNS web site external link.
+is available at :ref:`Proposals for Extensions (CPEX) <CPEX>`.
 
 History
 ^^^^^^^
@@ -264,16 +265,16 @@ system demonstrator.
 
 The system demonstrator consisted of the following tasks:
 
- 1. The grid was generated using NASA Ames grid tools and written as a
+ #. The grid was generated using NASA Ames grid tools and written as a
     Plot3D file.
 
- 2. The grid file was sent to Boeing St. Louis, where it was processed
+ #. The grid file was sent to Boeing St. Louis, where it was processed
     by a locally-modified version of GMAN. GMAN calculated the grid
     connectivity information, and wrote the grid and connectivity data
     into a CGNS database. Boundary conditions were also added to the
     CGNS database at this time.
 
- 3. The CGNS file was returned to NASA Ames, where it was read by the
+ #. The CGNS file was returned to NASA Ames, where it was read by the
     newly-modified OVERFLOW code. (Some iteration was necessary here,
     because the definition of overset holes used by GMAN differs from
     that normally expected by OVERFLOW. The CGNS file was intact, and
@@ -281,7 +282,7 @@ The system demonstrator consisted of the following tasks:
     computed the flow field, writing the results into the CGNS
     database.
 
-  4. The CGNS file was next sent to ICEM CFD. There, the CGNS database
+ #. The CGNS file was next sent to ICEM CFD. There, the CGNS database
      was read and displayed using Visual3.
 
 The system demonstrator involved significant cross-platform transfer
@@ -391,7 +392,8 @@ development of the AIAA Recommended Practice for the storage of CFD
 data. The Recommended Practice consists of the CGNS Standard Interface
 Data Structures (SIDS) document, reformatted to conform to AIAA's
 requirements. The current AIAA Recommended Practice (corresponding to
-CGNS Version 2.4) is available at the AIAA Online Store external link,
+CGNS Version 2.4) is available at the
+`AIAA Online Store <http://www.aiaa.org/content.cfm?pageid=363&id=1657>`_,
 and as a PDF file (1.01M, 200 pages) at the CGNS Documentation web
 site.
 

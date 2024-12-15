@@ -23,8 +23,8 @@ For those interested only in understanding the scope and capabilities of
 CGNS, or for the end user unconcerned with the internal workings of
 the system, the Overview may prove sufficient documentation by itself.
 
-The Overview also includes certain information that is current as of
-the document date but which may change with time. All information on
+The Overview also includes certain current information as of
+the document date but may change with time. All information on
 CGNS compatible :ref:`"applications" software <application_software-ref>`
 (i.e., external programs such as grid generators, flow codes, or
 postprocessors) is of this type. Also subject to change is the information
@@ -45,10 +45,10 @@ implementing those conventions, for the storage and retrieval of CFD
 (Computational Fluid Dynamics) data. The system consists of two
 parts: (1) a standard format for recording the data, and (2) software
 that reads, writes, and modifies data in that format. The format is a
-conceptual entity established by the documentation, and is intended to
+conceptual entity established by the documentation and is intended to
 be general, portable, expandable, and durable. The software is a
 physical product supplied to enable developers to access and produce
-data recorded in that format. All CGNS software is completely free and
+data recorded in that format. All CGNS software is entirely free and
 open to anyone.
 
 The CGNS standard, applied through the use of the supplied software,
@@ -63,8 +63,8 @@ is intended to:
  * stabilize the archiving of CFD data
 
 The principal target of CGNS is data normally associated with
-compressible viscous flow (i.e., the Navier-Stokes equations), but the
-standard is also applicable to subclasses such as Euler and potential
+compressible viscous flow (i.e., the Navier-Stokes equations). Still, the
+standard applies to subclasses such as Euler and potential
 flows. The CGNS standard addresses the following types of data.
 
  * Structured, unstructured, and hybrid grids
@@ -80,7 +80,7 @@ flows. The CGNS standard addresses the following types of data.
  * Convergence history
  * Association to CAD geometry definitions
 
-Much of the standard and the software is applicable to
+Much of the standard and the software applies to
 computational field physics in general. Disciplines other than fluid
 dynamics would need to augment the data definitions and storage
 conventions, but the fundamental database software, which provides
@@ -104,14 +104,14 @@ Not all of these data need to be present at any particular time. The overall
 view is that of a shared database that can be accessed by the various software
 tools common to CFD, such as solvers, grid generators, field visualizers, and
 postprocessors. Each of these "applications" serves as an editor of the data,
-adding to, modifying, or interpreting it according to that application's specific role.
+adding, modifying, or interpreting it according to that application's specific role.
 
 CGNS conventions and software provide for the recording of a complete
-and flexible problem description. The exact meaning of a subsonic
-inflow boundary condition, for example, can be described in complete
+and flexible problem description. For example, the exact meaning of a subsonic
+inflow boundary condition can be described in complete
 detail if desired. User comments can be included nearly anywhere,
 affording the opportunity, for instance, for date stamping or history
-information to be included. Dimension and sizing information is
+information to be included. Dimension and sizing information are
 carefully defined. Any number of flow variables may be recorded, with
 or without standard names, and it is also possible to add user-defined
 or site-specific data. These features afford the opportunity for
@@ -134,7 +134,7 @@ modeling instructions (e.g., thin layer assumptions, turbulence model)
 may be specified. Nevertheless, there are items specific to individual
 applications for which there is currently no specification within
 CGNS. Most commonly, these are operational instructions, such as
-number of sweeps, solution method, multigrid directives, and so
+the number of sweeps, solution method, multigrid directives, and so
 on. Owing to the miscellaneous nature of this data, there has been no
 attempt to codify it within a global standard. It is therefore
 expected that many applications will continue to require small
@@ -147,7 +147,7 @@ computing platform, maintaining the files, and launching the
 applications.
 
 However, the ease of communication between applications that CGNS
-provides should motivate the development of new batch and interactive
+provides should motivate the development of new batches and interactive
 mechanisms for the convenient application of CFD tools.
 
 .. _Axiom-ref:
@@ -158,7 +158,7 @@ Axiom and Documentation
 Introduction
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-CGNS concerns itself with the recording and retrieval of data associated
+CGNS concerns itself with the recording and retrieving of data associated
 with the computation of fluid flows. Included are such structures as grids,
 flowfields, boundary conditions, and zone connectivity information. CGNS
 "understands" this data in the sense that it contains conventions for
@@ -177,11 +177,11 @@ application by its developer. The applications are not regarded as
 part of CGNS itself.
 
 CGNS is passive. It does not initiate action and cannot "push"
-information into the applications codes or "pull" information
-out. Rather, the codes must request the information they seek and
+information into the application codes or "pull" information
+out. Instead, the codes must request the information they seek and
 store the information they produce. The applications must be launched
 by a user who organizes the location and content of the database. The
-process and sequence of events remain under user control. Thus CGNS
+process and sequence of events remain under user control. Thus, CGNS
 facilitates, but does not incorporate, the development of batch or
 interactive environments designed to control the CFD process.
 
@@ -189,12 +189,12 @@ The elements of CGNS address all activities associated with the
 storage of the data on external media and its movement to and from the
 applications programs. These elements include the following:
 
- * The :ref:`Overview_SIDS-ref`, which specify the
+ * The :ref:`Overview_SIDS-ref`, which specifies the
    intellectual content of CFD data and the conventions that govern
    naming and terminology.
 
  * The :ref:`SIDS_File_Map-ref`, which specifies the exact location where
-   the CFD data defined by the SIDS is to be stored within a database file.
+   the CFD data defined by the SIDS will be stored within a database file.
 
  * The :ref:`Database_Manager-ref`, which consists of both a file format specification
    and its I/O software, which handles the actual reading and writing of data
@@ -253,7 +253,7 @@ being recorded.
 
 **Label**. The Label, also a character string, is specified by the CGNS
 mapping conventions and identifies the kind of data being
-recorded. For example, a node with label ``Zone_t`` may record (at and
+recorded. For example, a node with the label ``Zone_t`` may record (at and
 below it) information on the zone with Name "UnderWing." No node may
 have more than one child with the same name, but the CGNS mapping
 conventions commonly specify many children with the same label. For
@@ -283,16 +283,16 @@ High-Level Organization of the CGNS Database
 
 For a full specification
 of the location of CFD data in the CGNS database, the user should see
-the :ref:`SIDS File Mapping Manual <StandardFMM>`. For convenience, we summarize the
+the :ref:`SIDS File Mapping Manual <StandardFMM>`. For convenience, we'd like to summarize the
 high-level structure below. A CGNS database consists of a tree of
 nodes implemented as all or part of one or more database files. All
-information is identified by and accessed through a single node in one
+information is identified and accessed through a single node in one
 of these files.
 
 By definition, the root node of a CGNS database has the Label
 ``CGNSBase_t``. The name of the CGNS database can be specified by the user
 and is stored in the "Name" field of the ``CGNSBase_t`` node. Current CGNS
-conventions require that the ``CGNSBase_t`` node be located directly below
+conventions require that the ``CGNSBase_t`` node to be located directly below
 a "root node" in the database file identified by the name "/".
 
 A database file may contain multiple CGNS databases, and thus multiple
@@ -352,8 +352,8 @@ the SIDS include a collection of :ref:`naming conventions <dataname>` that speci
 precise meaning of nomenclature (e.g., the strings ``DensityStatic`` and
 ``BCWallViscous``).
 
-The SIDS are written in a self-contained C-like descriptive
-language. SIDS data structures are defined in a hierarchical manner in
+The SIDS is written in a self-contained C-like descriptive
+language. SIDS data structures are defined hierarchically in
 which more complex entities are built from simpler ones. These
 structures are closely reflected in CGNS-compliant files: simple
 entities are often stored in single nodes, while more complex
@@ -366,7 +366,7 @@ SIDS File Mapping
 
 Because of the generality of the tree structure,
 there are many conceivable means of encoding CFD data. But for any
-application to access, say, the boundary conditions for zone
+application to access, say, the boundary conditions for the zone
 "UnderWing", requires a single convention with regard to where in the
 file that data has been stored. The :ref:`SIDS File Mapping Manual <StandardFMM>`,
 sometimes referred to as the "File Mapping," establishes the precise
@@ -377,7 +377,7 @@ provides locations for an extensive set of CFD data. Most applications
 will make use of only a small subset of this data. Further, inasmuch
 as applications are viewed as editors that are in the process of
 building the database, most of them are intended for use on incomplete
-data sets. Therefore, it is not required that all the data elements
+data sets. Therefore, it is optional that all the data elements
 specified by the CGNS conventions be complete in order for a database
 to be CGNS compliant. The user must ensure that the current state of
 the database will support whatever application he may launch. Of
@@ -413,8 +413,8 @@ establishes the context of CGNS for a database manager; the
 content, and meaning of the stored data.
 
 The File Mapping generally avoids the storage of redundant
-data. Sometimes an application may require an alternate (but
-intellectually equivalent) form of the data; in such cases it is
+data. Sometimes, an application may require an alternate (but
+intellectually equivalent) form of the data; in such cases, it is
 recommended that the alternate form be prepared at the time of use and
 kept separate from the CGNS data. This avoids habitual reliance on the
 alternate form, which would invalidate the standard.
@@ -448,7 +448,7 @@ at build time.
 
 It should be noted that because of HDF5's parallel and compression
 capability as well as its support, the CGNS Steering Committee has
-made the decision to slowly transition (beginning in 2005) to HDF5 as
+decided to slowly transition (beginning in 2005) to HDF5 as
 the official data storage mechanism. However, ADF will continue to be
 available for use, with the CGNS mid-level library capable of (1)
 using either format and (2) translating back and forth between the
@@ -474,7 +474,7 @@ developers. It consists of a set of routines that are designed to
 allow applications to access CGNS data according to the role of the
 data in CFD. Unlike the ADF (or HDF5) Core, routines in the CGNS
 Mid-Level Library "understand" the SIDS-defined CFD data structures
-and the File Mapping. This enables applications developers to insert
+and the File Mapping. This enables application developers to insert
 CGNS I/O into their applications without having detailed knowledge of
 the File Mapping. For instance, an application might use CGNS
 mid-level calls to retrieve all boundary conditions for a given zone.
@@ -519,9 +519,9 @@ enlightening as to the logical form of the contents of CGNS
 files. Browsing the :ref:`figures in the File Mapping Manual<StandardFMMfigs>`, as well as the
 :ref:`SIDS <CGNS-SIDS>` itself, will provide some feel for the scope of the system. The
 :ref:`User's Guide to CGNS <DocUserGuide>`, and the CGNS :ref:`Mid-Level Library <StandardMLL>`
-document, should give an indication of what might be required to implement CGNS in a
-given application. Prospective users should probably not concern
-themselves with the details of ADF or HDF5.
+document should indicate what might be required to implement CGNS in a
+given application. Prospective users should probably not be concerned
+about the details of ADF or HDF5.
 
 End Users
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -529,9 +529,9 @@ End Users
 The end user is the practitioner of CFD who generates the
 grids, runs the flow codes and/or analyzes the results. For this user,
 a scan of this Overview document will sufficiently explain the overall
-workings of the system. This includes end user responsibilities for
-matters not governed by CGNS, such as the maintenance of files and
-directories. The end user will also find useful the
+workings of the system. This includes end-user responsibilities for
+matters not governed by CGNS, such as maintaining files and
+directories. The end user will also find helpful the
 :ref:`User's Guide to CGNS <DocUserGuide>`, as well as those portions
 of the :ref:`SIDS <CGNS-SIDS>` which deal with
 :ref:`standard data names <dataname>`. The AIAA papers listed above may
@@ -543,11 +543,11 @@ Applications Code Developers
 The applications code developer builds or
 maintains code to support the various sub-processes encountered in
 CFD, e.g., grid generation, flow solution, post-processing, or flow
-visualization. The code developer must be able to install CGNS
-compliant I/O. The most convenient method for doing so is to utilize
+visualization. The code developer must be able to install CGNS-compliant
+I/O. The most convenient method for doing so is to utilize
 the CGNS Mid-Level Library. The :ref:`User's Guide to CGNS <DocUserGuide>`
 is the starting point for learning to use the Mid-Level Library to create and
-use CGNS files. The CGNS  :ref:`Mid-Level Library <StandardMLL>` document itself
+use CGNS files. The CGNS :ref:`Mid-Level Library <StandardMLL>` document itself
 should also be considered essential. This library of routines will perform the most
 common I/O operations in a CGNS-compliant manner. However, even when
 the Mid-Level Library suffices to implement all necessary I/O, an
@@ -588,7 +588,7 @@ the CGNS standard by Boeing, NASA, and others, sufficient to induce
 applications developers to incorporate CGNS I/O into their offerings.
 
 Several CGNS-compatible applications have indeed been developed, and
-more continue to appear, this web site has :ref:`a page with an 
+more continue to appear, this website has :ref:`a page with an 
 informational list of the known applications compliant with CGNS
 <CGNSCompliantSoftware>`.
 
@@ -608,9 +608,9 @@ The CGNS Library contains source code for the :ref:`Mid-Level Library <StandardM
 configure scripts for building the library for a variety of platforms.
 
 The CGNS documentation may be accessed via the `CGNS Documentation home
-page <https://cgns.org>`_. In addition to current version, documentation may also be
+page <https://cgns.org>`_. In addition to the current version, documentation may also be
 available for the previous and beta versions of CGNS. All the CGNS
-documentation is available in HTML form (PDF is no longer being
+documentation is available in HTML form (PDF is no longer 
 supported except for the SIDS).
 
 In addition to the CGNS documentation itself, several :ref:`conference

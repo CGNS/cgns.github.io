@@ -75,10 +75,6 @@ Beginning with CGNS-3.1.0, two new typedef variables have been introduced to sup
 is always a 64-bit integer, and ``cgsize_t`` will be either a 32-bit or 64-bit integer, depending on how the library was built.
 Many of the C functions in the MLL have been changed to use ``cgsize_t`` instead of *int* in the arguments. These functions
 include any that may exceed the 2Gb limit of an int, e.g., zone dimensions, element data, boundary conditions, and connectivity.
-In Fortran, all integer data is taken to be *INTEGER\*4* for 32-bit and *INTEGER\*8* for 64-bit builds. 
-
-..
- TODO:MSB: I'm not entirely sure that the last sentence is accurate or what specific data it refers to.
 
 Several types of variables are defined using typedefs in the *cgnslib.h* file. These are intended to facilitate
 the implementation of CGNS in C. These variable types are defined as an enumeration of keywords admissible for

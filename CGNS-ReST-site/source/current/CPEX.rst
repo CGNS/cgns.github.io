@@ -12,11 +12,23 @@ The CPEX is intended to be the primary mechanism for proposing new features and 
 The CPEX author is responsible for building consensus within the community and documenting dissenting opinions.
 
 The CPEX editors assign CPEX numbers and change their status.
-All CPEX-related email should be sent to cgnstalk@lists.nasa.gov and a CPEX issue should be created on `cgnsorg.atlassian.net <https://cgnsorg.atlassian.net/issues/?jql=project%20%3D%20%22CGNS%22%20AND%20component%20%3D%20%22CPEX%22>`_ to track review and CPEX evolution.
-Each CPEX must have a champion - someone who writes the CPEX, shepherds the discussions, and attempts to build community consensus around the idea. The CPEX champion must first try to determine if their idea is appropriate for a CPEX. (Small enhancements or patches may not need a CPEX.) If a CPEX is appropriate, the champion must write a proposal, following the guidelines below. A CPEX number is then assigned. This is typically followed by a period of discussion, comments, input, and consensus-building, as well as an in-depth critical review.
+
+A CPEX issue should be created as `a GitHub issue <https://github.com/CGNS/CGNS/issues>`_, to track review and CPEX evolution.
+It is also recommended to create a discussion topic for CPEX at the
+`CGNSTalk Github Discussion Group <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_.
+
+Each CPEX must have a champion - someone who writes the CPEX, shepherds the discussions, and attempts to build community
+consensus around the idea. The CPEX champion must first try to determine if their idea is appropriate for a CPEX (Small
+enhancements or patches may not need a CPEX). If a CPEX is appropriate, the champion must write a proposal, following the
+guidelines below. A CPEX number is then assigned. This is typically followed by a period of discussion, comments, input,
+and consensus-building, as well as an in-depth critical review.
+
 The CGNS Steering Committee ultimately votes for or against adoption.
 
-The proposals listed below that were "not accepted" never made it to implementation, possibly because of lack of unified support, incomplete details, lack of champion involvement in the process, or because they were not generalizable to a wide enough class of problems. It is possible to resurrect and/or revise and resubmit older proposals. Some additional guidelines regarding changes or additions to the CGNS standard can be found in the CGNS Steering Committee Charter.
+The proposals listed below that were "not accepted" never made it to implementation, possibly because of lack of unified
+support, incomplete details, lack of champion involvement in the process, or because they were not generalizable to a wide
+enough class of problems. It is possible to resurrect and/or revise and resubmit older proposals. Some additional
+guidelines regarding changes or additions to the CGNS standard can be found in the CGNS Steering Committee Charter.
 
 The CPEX should include the following information:
 
@@ -39,7 +51,7 @@ No additions or changes to the CGNS standard will be adopted - without overwhelm
   
   CPEX work flow and requirements are new as of 09/2009, so older proposals may be missing some of the required information.
 
-Comments on proposals should be sent to cgnstalk@lists.nasa.gov and/or written directly in the comment section of the jira issue.
+Comments on proposals should be submitted either to the `CGNSTalk Github Discussion Group <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_ or directly in the comment section of the corresponding GitHub issue.
 
 .. note::
 

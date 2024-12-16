@@ -121,8 +121,8 @@ html_theme_options = {
     ],
 }
 
-fortran_src = ["../src/c.F90"]
-fortran_subsection_type = "title"
+#fortran_src = ["../src/c.F90"]
+#fortran_subsection_type = "title"
 # -- Breathe configuration -------------------------------------------------
 
 breathe_projects = {

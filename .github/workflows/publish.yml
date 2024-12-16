@@ -44,16 +44,16 @@ jobs:
 
       - name: "Check for broken links"
         run: |
-          cd CGNS-ReST-site/docs/_build/html/
+          cd CGNS-ReST-site/docs/html/
           linkchecker --check-extern ./index.html
         continue-on-error: true
 
       - name: "Deploy"
         run: |
           cd CGNS-ReST-site
-          git clone -b gh-pages --single-branch https://github.com/CGNS/cgns-modern.github.io.git docs/_build/deploy
-          rsync -q -av --checksum --progress docs/_build/html/ docs/_build/deploy
-          cd docs/_build/deploy
+          git clone -b gh-pages --single-branch https://github.com/CGNS/cgns-modern.github.io.git docs/deploy
+          rsync -q -av --checksum --progress docs/html/ docs/deploy
+          cd docs/deploy
           git config --global user.name 'autopages'
           git config --global user.email 'cgns@users.noreply.github.com'
           git add --all .

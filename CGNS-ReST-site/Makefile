@@ -6,7 +6,7 @@
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = .
-BUILDDIR      = ./docs
+BUILDDIR      = ./docs/html
 CURRENT_DIR   = $(shell pwd)
 
 # Put it first so that "make" without argument is like "make help".

@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install doxygen
 
       - name: "Checkout"
         uses: actions/checkout@v4.1.1
@@ -25,24 +29,31 @@ jobs:
       - name: "Install python dependencies"
         run: |
           pip3 install setuptools six
-          pip3 install sphinx sphinx-rtd-theme
-          pip3 install guzzle_sphinx_theme
           pip3 install sphinx-fortran
-          # pip3 install sphinx-mathjax-offline
+          pip3 install sphinx_sitemap
+          pip3 install numpy
+          pip3 install breathe
+          pip3 install sphinx-book-theme
+          pip3 install linkchecker
 
       - name: "Build sphinx doc"
         run: |
           cd CGNS-ReST-site
-          chmod +x build.sh
-          ./build.sh
+          make html
         shell: bash
-      
+
+      - name: "Check for broken links"
+        run: |
+          cd CGNS-ReST-site/docs/html/
+          linkchecker --check-extern ./index.html
+        continue-on-error: true
+
       - name: "Deploy"
         run: |
           cd CGNS-ReST-site
-          git clone -b gh-pages --single-branch https://github.com/CGNS/cgns-modern.github.io.git docs/_build/deploy
-          rsync -q -av --checksum --progress docs/_build/html/ docs/_build/deploy
-          cd docs/_build/deploy
+          git clone -b gh-pages --single-branch https://github.com/CGNS/cgns-modern.github.io.git docs/deploy
+          rsync -q -av --checksum --progress docs/html/ docs/deploy
+          cd docs/deploy
           git config --global user.name 'autopages'
           git config --global user.email 'cgns@users.noreply.github.com'
           git add --all .

@@ -2,32 +2,29 @@
    See LICENSING/COPYRIGHT at root dir of this documentation sources
 
 .. _SupportDownload:
-   
+
 Download
 ========
 
-All CGNS files are stored on GitHub (https://github.com/CGNS). Issue tracking is located at: https://cgnsorg.atlassian.net.
+All CGNS files are stored on GitHub (https://github.com/CGNS). Issue tracking is located under
+*Issues* of the same repository. Please star the repository if you find the software useful.
 
-If you have not done so already, please **REGISTER** by e-mailing to the `CGNS REGISTRAR <c.l.rumsey@nasa.gov>`_ the following information:
-
-- Your name
-- Company, university, lab, or facility name (if applicable)
-- Email, if different from your current sending address
-- Intended use for CGNS
-
-Although there is no registration requirement in order to obtain CGNS, by registering you will help the CGNS team to serve its users better. We never give, sell, or distribute emails to anyone.
-
-We also **strongly** recommend that you join the Discussion Group. This forum is the primary method used to keep CGNS users current with release and other important information updates. It is also used for discussing important problems/issues and for obtaining help from other CGNS users.
+We also **strongly** recommend that you join the `CGNStalk <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_
+Discussion Group. This forum is the primary
+method to keep CGNS users updated on releases and other important information updates.
+It is also used to discuss important problems/issues and obtain help from CGNS users.
 
 What to Download
 ----------------
+.. note::
 
-**First and most importantly, we recommend that you read the CGNS User Guide. This guide also includes sample code (UserGuideCode) for helping to get started with CGNS.**
+   First and most importantly, we recommend that you read :ref:`DocUserGuide`. This guide also includes
+   sample code (UserGuideCode) for helping to get started with CGNS.
 
 For the up-to-date **development** source, visit `GitHub Development <https://github.com/CGNS/CGNS/tree/develop>`_.
 
 .. code-block:: shell
-  
+
   git clone https://github.com/CGNS/CGNS.git
 
 For the **stable** source, visit `GitHub Stable <https://github.com/CGNS/CGNS/tree/master>`_.
@@ -36,18 +33,25 @@ For the **stable** source, visit `GitHub Stable <https://github.com/CGNS/CGNS/tr
 
   git clone -b master https://github.com/CGNS/CGNS.git
 
-As a minimum, you will need to download and compile the CGNS library code. Compilation requires an ANSI compliant C compiler. The source code may downloaded as a gzipped, tar file:
+At the minimum, you will need to download and compile the CGNS library code. Compilation requires
+an ANSI-compliant C99 compiler. The source code may be downloaded as a gzipped tar file.
 
 Current Stable Release:
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-  :`CGNS Version 4.1.2 (Patch) <https://github.com/CGNS/CGNS/releases/tag/v4.1.2>`_:
-  Patched version v4.1.2 addressed backward compatibility issues.
+  The latest stable release can always be found at: `CGNS Latest Version <https://github.com/CGNS/CGNS/releases/latest>`_
+
 
 Historical Stable Releases:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. note::
+
+   Please see the release notes at: `CGNS Releases <https://github.com/CGNS/CGNS/releases>`_ 
+   for CGNS versions 4.2.0 and up.
+
 
 * :`CGNS Version 4.1.1 (Patch) <https://github.com/CGNS/CGNS/releases/tag/v4.1.1>`_:
+
   Patched version v4.1.1 addressed backward compatibility and tools compilation errors.
 
 * :`CGNS Version 4.1.0 <https://github.com/CGNS/CGNS/releases/tag/v4.1.0>`_:
@@ -72,32 +76,37 @@ Historical Stable Releases:
 
   **Background** [`1 <https://cgnsorg.atlassian.net/wiki/spaces/CGNS/pages/220463122/Resolve+issue+with+release+s+3.4.0+version+compatibility+the+4.0.0+release+and+forward+compatibility.>`_]: The CGNS versions are currently numbered as follows: "Version x.y, Revision z", or "Version x.y-z".The first number represents the "major" version number. **Within this number, the library maintains forward compatibility**.
 
-  **Issue**: With the introduction of CPEX 0041 "NGON modification proposal", CGNS 3.4.0 broke the convention of maintaining forward compatibility with-in the major versioning of CGNS.
+  **Issue**: With the introduction of CPEX 0041 "NGON modification proposal", CGNS 3.4.0 broke the convention of maintaining forward compatibility within the major versioning of CGNS.
 
-  Version 4.0.0 was released with CPEX 0041 implemented, (essentially this is CGNS 3.4.0 released as version 4.0.0).
+  Version 4.0.0 was released with CPEX 0041 implemented (essentially, this is CGNS 3.4.0 released as version 4.0.0).
 
 * :`CGNS Version 3.4.1 (patch) <https://github.com/CGNS/CGNS/releases/tag/v3.4.2>`_:
+
   Patched version v3.4.1 removed CPEX 0041.
 
 * :`CGNS Version 3.4.0 <https://github.com/CGNS/CGNS/releases/tag/v3.4.0>`_:
+
   In addition to numerous bug fixes, this version added new features: CPEX 40 Rind Plane Indexing, CPEX 41 NGON modification proposal, added support for NAG Fortran compilers, enforce the HDF5 version >= 1.8 is used in building HDF5, automatic detection and linking of szip and zlib if required by HDF5.
 
 * :`CGNS Version 3.3.0 <https://github.com/CGNS/CGNS/releases/tag/v3.3.0>`_:
+
   This Version implements CPEX 0038 and 0039, adds new functionality to the parallel capability, and makes extensive changes related to the Fortran library.
 
-  Important note for Fortran users: V3.3 removes the usage of "include cgnslib_f.h". Instead, from this release forward, one must now employ the module "use CGNS". Also, if making use of 64-bit integers, Fortran programs must declare the relevant 64-bit integers via, e.g.: integer(cgsize_t) integername.
+  Important note for Fortran users: V3.3 removes the usage of "include cgnslib_f.h." Instead, from this release forward, one must now employ the module "use CGNS." Also, if using 64-bit integers, Fortran programs must declare the relevant 64-bit integers via, e.g., integer(cgsize_t) integer KIND.
 
 * :CGNS Version 3.2.1:
-  This Version 3.2 release provides partial integration of parallel I/O using HDF5 with MPI. It also implements the Hierarchy of families (CPEX 0033), Multiple families (CPEX 0034), and Cubic elements (CPEX 0036). Conversion programs to and from AFLR3, FAST, and TetGen have also been added to CGNStools.
+
+  This Version 3.2 release partially integrates parallel I/O using HDF5 with MPI. It also implements the Hierarchy of families (CPEX 0033), Multiple families (CPEX 0034), and Cubic elements (CPEX 0036). Conversion programs to and from AFLR3, FAST, and TetGen have also been added to CGNStools.
 
   Release 3.2.1 implements the suggestions by Cambridge Flow Solutions to the CMake scripts and adds routines to set the MPI communicator for parallel I/O. There are also numerous updates and fixes to the test cases, tools and CGNStools utilities.
 
   .. note:
-    
+
     CGNStools is no longer built automatically, you need to set the configure flag, --enable-cgnstools if using configure.
 
 * :CGNS Version 3.1.4:
-  Includes 64-bit integer capability and updated Tools for viewing and editing CGNS files. HDF5 is now the default file type, when CGNS is built with HDF5 version 1.8 or later. (CGNS can always read or write both HDF5 and ADF file types.)
+
+  It includes 64-bit integer capability and updated tools for viewing and editing CGNS files. When CGNS is built with HDF5 version 1.8 or later, HDF5 is now the default file type. (CGNS can always read or write both HDF5 and ADF file types.)
 
 Older recent release versions are also available from https://github.com/CGNS/CGNS/releases.
 

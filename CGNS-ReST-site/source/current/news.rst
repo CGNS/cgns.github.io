@@ -12,7 +12,7 @@ Hot topics
 .. warning:: New web site layout
 
    - the pages you are reading now are part of the new website
-   - send feedback to the CGNS mailing list
+   - send feedback to the CGNS as an issue
    - see how to contribute in the :ref:`support section <support>`
      
 .. admonition:: DO NOT MISS...
@@ -26,7 +26,7 @@ Hot topics
 	   
 .. topic:: May, 2021
 
-   - CGNStalk mailing list is decommissioned, and replaced by a CGNStalk forum created on Github.
+   - **CGNStalk mailing list is decommissioned**, and replaced by a CGNStalk forum created on Github.
 
 Previous releases
 -----------------
@@ -447,6 +447,11 @@ the documentation news and fixes and end of this page.
 .. topic:: August 8, 2005:
 
    - CGNStalk discussion list moved from cgnstalk@grc.nasa.gov to cgnstalk@lists.nasa.gov.
+
+.. note:
+
+   The CGNStalk mailing list is no longer available and has been replaced by the
+   `CGNSTalk Github Discussion Group <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_.
 
 .. topic:: May 14, 2005: Version 2.4 (Revision 2) of the CGNS library released.
 

@@ -14,10 +14,65 @@ Minutes are available for the following CGNS Steering Committee meetings and tel
 Minutes
 ^^^^^^^
 
+**2024**
+--------
+
+.. list-table::
+  :width: 40 %
+
+  * - 16 Jan
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2024_1_16.pdf>`)
+  * - 9 Apr
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2024_4_9.pdf>`)
+  * - 9 Jul
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2024_7_9.pdf>`)
+  * - 5 Nov
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2024_11_5.pdf>`)
+
+**2023**
+--------
+
+.. list-table::
+  :width: 40 %
+
+  * - 10 Jan
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2023_1_10.pdf>`)
+  * - 4 Apr
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2023_4_4.pdf>`)
+  * - 11 Sep
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2023_7_11.pdf>`)
+  * - 3 Oct
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2023_10_3.pdf>`)
+
+**2022**
+--------
+
+.. list-table::
+  :width: 40 %
+
+  * - 29 Mar
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2022_3_29.pdf>`)
+  * - 19 Jul
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2022_7_19.pdf>`)
+  * - 11 Oct
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2022_10_11.pdf>`)
+
+
 **2021**
 --------
 
-.. list-table:: 
+.. list-table::
   :width: 40 %
 
   * - 2 Mar
@@ -36,7 +91,7 @@ Minutes
 **2020**
 --------
 
-.. list-table:: 
+.. list-table::
   :width: 40 %
 
   * - 28 Jan
@@ -66,7 +121,7 @@ Minutes
     - (:download:`PDF<../../minutes/CGNS_Minutes_2019_09_03.pdf>`)
   * - 25 June
     - Telecon
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2019_06_25.pdf>`) 	   
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2019_06_25.pdf>`)
   * - 21 May
     - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2019_05_21.pdf>`)
@@ -82,13 +137,13 @@ Minutes
 
 .. list-table::
   :width: 40 %
-	
+
   * - 06 Nov
     - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2018_11_06.pdf>`)
   * - 18 Sep
     - Telecon
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2018_09_18.pdf>`) 	   
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2018_09_18.pdf>`)
   * - 05 Jun
     - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2018_06_05.pdf>`)
@@ -97,30 +152,30 @@ Minutes
     - (:download:`PDF<../../minutes/CGNS_Minutes_2018_03_27.pdf>`)
   * - 30 Jan
     - Telecon
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2018_01_30.pdf>`) 	   
- 
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2018_01_30.pdf>`)
+
 **2017**
 --------
 
 .. list-table::
   :width: 40 %
 
-  * - 24 Oct	  
-    - Telecon	  
+  * - 24 Oct
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2017_10_24.pdf>`)
-  * - 12 Sep	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2017_09_12.pdf>`) 	   
-  * - 25 Jul	  
-    - Telecon	  
+  * - 12 Sep
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2017_09_12.pdf>`)
+  * - 25 Jul
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2017_07_25.pdf>`)
-  * - 5 May	  
-    - Telecon	  
+  * - 5 May
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2017_05_05.pdf>`)
-  * - 31 Jan	  
-    - Telecon	  
+  * - 31 Jan
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2017_01_31.pdf>`)
- 
+
 
 **2016**
 --------
@@ -128,65 +183,65 @@ Minutes
 .. list-table::
   :width: 40 %
 
-  * - 29 Nov	  
-    - Telecon	  
+  * - 29 Nov
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2016_11_29.pdf>`)
-  * - 23 Sep	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2016_09_23.pdf>`) 	   
-  * - 05 Jul	  
-    - Telecon	  
+  * - 23 Sep
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2016_09_23.pdf>`)
+  * - 05 Jul
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2016_07_05.pdf>`)
-  * - 05 Apr	  
-    - Telecon	  
+  * - 05 Apr
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2016_04_05.pdf>`)
-  * - 01 Mar	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2016_03_01.pdf>`) 	   
+  * - 01 Mar
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2016_03_01.pdf>`)
 
-    
+
 **2015**
 --------
 
 .. list-table::
   :width: 40 %
- 
-  * - 08 Dec	  
-    - Telecon	  
+
+  * - 08 Dec
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2015_12_08.pdf>`)
-  * - 20 Oct	  
-    - Telecon	  
+  * - 20 Oct
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2015_10_20.pdf>`)
-  * - 08 Sep	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2015_09_08.pdf>`) 	   
-  * - 19 May	  
-    - Telecon	  
+  * - 08 Sep
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2015_09_08.pdf>`)
+  * - 19 May
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2015_05_19.pdf>`)
-  * - 03 Mar	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2015_03_03.pdf>`) 	   
+  * - 03 Mar
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2015_03_03.pdf>`)
 
 **2014**
 --------
- 
+
 .. list-table::
   :width: 40 %
 
-  * - 02 Dec	  
-    - Telecon	  
+  * - 02 Dec
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2014_12_02.pdf>`)
-  * - 02 Oct	  
-    - Telecon	  
+  * - 02 Oct
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2014_10_02.pdf>`)
-  * - 03 Sep	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2014_09_03.pdf>`) 	   
-  * - 18 Feb	  
-    - Telecon	  
+  * - 03 Sep
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2014_09_03.pdf>`)
+  * - 18 Feb
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2014_02_18.pdf>`)
-  * - 28 Jan	  
-    - Telecon	  
+  * - 28 Jan
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2014_01_28.pdf>`)
 
 **2013**
@@ -195,23 +250,23 @@ Minutes
 .. list-table::
   :width: 40 %
 
-  * - 17 Dec	  
-    - Telecon	  
+  * - 17 Dec
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2013_12_17.pdf>`)
-  * - 18 Sep	  
-    - Telecon	  
+  * - 18 Sep
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2013_09_18.pdf>`)
-  * - 16 Jul	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2013_07_16.pdf>`) 	   
-  * - 30 Apr	  
-    - Telecon	  
+  * - 16 Jul
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2013_07_16.pdf>`)
+  * - 30 Apr
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2013_04_30.pdf>`)
-  * - 12 Mar	  
-    - Telecon	  
+  * - 12 Mar
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2013_03_12.pdf>`)
-  * - 5 Feb	  
-    - Telecon	  
+  * - 5 Feb
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2013_02_05.pdf>`)
 
 **2012**
@@ -220,24 +275,24 @@ Minutes
 .. list-table::
   :width: 40 %
 
-  * - 10 Dec	  
-    - Telecon	  
+  * - 10 Dec
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2012_12_10.pdf>`)
-  * - 23 Oct	  
-    - Telecon	  
+  * - 23 Oct
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2012_10_23.pdf>`)
-  * - 25 Sep	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2012_09_25.pdf>`) 	   
-  * - 24 Apr	  
-    - Telecon	  
+  * - 25 Sep
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2012_09_25.pdf>`)
+  * - 24 Apr
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2012_04_24.pdf>`)
-  * - 13 Mar	  
-    - Telecon	  
+  * - 13 Mar
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2012_03_13.pdf>`)
-  * - 24 Jan	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2012_01_24.pdf>`) 	   
+  * - 24 Jan
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2012_01_24.pdf>`)
 
 **2011**
 --------
@@ -245,24 +300,24 @@ Minutes
 .. list-table::
   :width: 40 %
 
-  * - 06 Dec	  
-    - Telecon	  
+  * - 06 Dec
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2011_12_06.pdf>`)
-  * - 30 Aug	  
-    - Telecon	  
+  * - 30 Aug
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2011_08_30.pdf>`)
-  * - 07 Jun	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2011_06_07.pdf>`) 	   
-  * - 19 Apr	  
-    - Telecon	  
+  * - 07 Jun
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2011_06_07.pdf>`)
+  * - 19 Apr
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2011_04_19.pdf>`)
-  * - 02 Mar	  
-    - Telecon	  
+  * - 02 Mar
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2011_03_02.pdf>`)
-  * - 02 Feb	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2011_02_02.pdf>`) 	   
+  * - 02 Feb
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2011_02_02.pdf>`)
 
 **2010**
 --------
@@ -270,26 +325,26 @@ Minutes
 .. list-table::
   :width: 40 %
 
-  * - 01 Dec	  
-    - Telecon	  
+  * - 01 Dec
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2010_12_01.pdf>`)
-  * - 20 Oct	  
-    - Telecon	  
+  * - 20 Oct
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2010_10_20.pdf>`)
-  * - 08 Sep	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2010_09_08.pdf>`) 	   
-  * - 10 Jun	  
-    - Telecon	  
+  * - 08 Sep
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2010_09_08.pdf>`)
+  * - 10 Jun
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2010_06_10.pdf>`)
-  * - 29 Apr	  
-    - Telecon	  
+  * - 29 Apr
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2010_04_29.pdf>`)
-  * - 18 Mar	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/CGNS_Minutes_2010_03_18.pdf>`)  
-  * - 28 Jan	  
-    - Telecon	  
+  * - 18 Mar
+    - Telecon
+    - (:download:`PDF<../../minutes/CGNS_Minutes_2010_03_18.pdf>`)
+  * - 28 Jan
+    - Telecon
     - (:download:`PDF<../../minutes/CGNS_Minutes_2010_01_28.pdf>`)
 
 **2009**
@@ -298,23 +353,23 @@ Minutes
 .. list-table::
   :width: 40 %
 
-  * - 01 Dec	  
-    - Telecon	  
+  * - 01 Dec
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_dec09.pdf>`)
-  * - 02 Sep	  
-    - Telecon	  
+  * - 02 Sep
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_sept09.pdf>`)
-  * - 07 Jul	  
-    - Telecon	  
-    - (:download:`PDF<../../minutes/telecon_jul09.pdf>`) 	   
-  * - 20 May	  
-    - Telecon	  
+  * - 07 Jul
+    - Telecon
+    - (:download:`PDF<../../minutes/telecon_jul09.pdf>`)
+  * - 20 May
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_may09.pdf>`)
-  * - 1 Apr 	  
-    - Telecon	  
+  * - 1 Apr
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_apr09.pdf>`)
-  * - 7 Jan 	  
-    - Meeting	  
+  * - 7 Jan
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jan09.pdf>`)
 
 **2008**
@@ -323,42 +378,42 @@ Minutes
 .. list-table::
   :width: 40 %
 
-  * - 5 Nov 	  
-    - Telecon	  
+  * - 5 Nov
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_nov08.pdf>`)
-  * - 10 Sep 	  
-    - Telecon	  
+  * - 10 Sep
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_sep08.pdf>`)
-  * - 2 Jul 	  
-    - Telecon	  
+  * - 2 Jul
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_jul08.pdf>`)
-  * - 7 May	  
-    - Telecon	  
+  * - 7 May
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_may08.pdf>`)
-  * - 6 Jan	  
-    - Meeting	  
+  * - 6 Jan
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jan08.pdf>`)
- 
+
 **2007**
 --------
 
 .. list-table::
   :width: 40 %
 
-  * - 28 Nov	  
-    - Telecon	  
+  * - 28 Nov
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_nov07.pdf>`)
-  * - 12 Sep	  
-    - Telecon	  
+  * - 12 Sep
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_sep07.pdf>`)
-  * - 22 May	  
-    - Telecon	  
+  * - 22 May
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_may07.pdf>`)
-  * - 21 Mar	  
-    - Telecon	  
+  * - 21 Mar
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_mar07.pdf>`)
-  * - 10 Jan	  
-    - Meeting	  
+  * - 10 Jan
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jan07.pdf>`)
 
 **2006**
@@ -367,20 +422,20 @@ Minutes
 .. list-table::
   :width: 40 %
 
-  * - 4 Oct	  
-    - Telecon	  
+  * - 4 Oct
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_oct06.pdf>`)
-  * - 2 Aug	  
-    - Telecon	  
+  * - 2 Aug
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_aug06.pdf>`)
-  * - 10 May	  
-    - Telecon	  
+  * - 10 May
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_may06.pdf>`)
-  * - 22 Mar	  
-    - Telecon	  
+  * - 22 Mar
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_mar06.pdf>`)
-  * - 11 Jan	  
-    - Meeting	  
+  * - 11 Jan
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jan06.pdf>`)
 
 **2005**
@@ -389,158 +444,158 @@ Minutes
 .. list-table::
   :width: 40 %
 
-  * - 4 Oct	  
-    - Telecon	  
+  * - 4 Oct
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_oct05.pdf>`)
-  * - 2 Aug	  
-    - Telecon	  
+  * - 2 Aug
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_aug05.pdf>`)
-  * - 25 May	  
-    - Telecon	  
+  * - 25 May
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_may05.pdf>`)
-  * - 16 Mar	  
-    - Telecon	  
+  * - 16 Mar
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_mar05.pdf>`)
-  * - 12 Jan	  
-    - Meeting	  
+  * - 12 Jan
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jan05.pdf>`)
- 
+
 **2004**
 --------
 
 .. list-table::
   :width: 40 %
 
-  * - 17 Nov	  
-    - Telecon	  
+  * - 17 Nov
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_nov04.pdf>`)
-  * - 28 Sep	  
-    - Telecon	  
+  * - 28 Sep
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_sep04.pdf>`)
-  * - 30 Jun	  
-    - Meeting	  
+  * - 30 Jun
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jun04.pdf>`)
-  * - 25 Mar	  
-    - Telecon	  
+  * - 25 Mar
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_mar04.pdf>`)
-  * - 7 Jan	  
-    - Meeting	  
+  * - 7 Jan
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jan04.pdf>`)
- 
+
 **2003**
 --------
 
 .. list-table::
   :width: 40 %
 
-  * - 20 Nov	  
-    - Telecon	  
+  * - 20 Nov
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_nov03.pdf>`)
-  * - 18 Sep	  
-    - Telecon	  
+  * - 18 Sep
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_sep03.pdf>`)
-  * - 24 Jun	  
-    - Meeting	  
+  * - 24 Jun
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jun03.pdf>`)
-  * - 29 May	  
-    - Telecon	  
+  * - 29 May
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_may03.pdf>`)
-  * - 20 Mar	  
-    - Telecon	  
+  * - 20 Mar
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_mar03.pdf>`)
-  * - 15 Jan	  
-    - Meeting	  
+  * - 15 Jan
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jan03.pdf>`)
- 
+
 **2002**
 --------
 
 .. list-table::
   :width: 40 %
 
-  * - 4 Dec	  
-    - Telecon	  
+  * - 4 Dec
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_dec02.pdf>`)
-  * - 18 Sep	  
-    - Telecon	  
+  * - 18 Sep
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_sep02.pdf>`)
-  * - 24 Jun	  
-    - Meeting	  
+  * - 24 Jun
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jun02.pdf>`)
-  * - 15 May	  
-    - Telecon	  
+  * - 15 May
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_may02.pdf>`)
-  * - 13 Mar	  
-    - Telecon	  
+  * - 13 Mar
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_mar02.pdf>`)
-  * - 14 Jan	  
-    - Meeting	  
+  * - 14 Jan
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jan02.pdf>`)
- 
+
 **2001**
 --------
 
 .. list-table::
   :width: 40 %
 
-  * - 6 Nov	  
-    - Telecon	  
+  * - 6 Nov
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_nov01.pdf>`)
-  * - 6 Sep	  
-    - Telecon	  
+  * - 6 Sep
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_sep01.pdf>`)
-  * - 12 Jun	  
-    - Meeting	  
+  * - 12 Jun
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jun01.pdf>`)
-  * - 17 May	  
-    - Telecon	  
+  * - 17 May
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_may01.pdf>`)
-  * - 15 Mar	  
-    - Telecon	  
+  * - 15 Mar
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_mar01.pdf>`)
-  * - 9 Jan	  
-    - Meeting	  
+  * - 9 Jan
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jan01.pdf>`)
- 
+
 **2000**
 --------
 
 .. list-table::
   :width: 40 %
 
-  * - 7 Dec	  
-    - Telecon	  
+  * - 7 Dec
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_dec00.pdf>`)
-  * - 25 Oct	  
-    - Telecon	  
+  * - 25 Oct
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_oct00.pdf>`)
-  * - 24 Aug	  
-    - Telecon	  
+  * - 24 Aug
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_aug00.pdf>`)
-  * - 21 Jun	  
-    - Meeting	  
+  * - 21 Jun
+    - Meeting
     - (:download:`PDF<../../minutes/meeting_jun00.pdf>`)
-  * - 11 May	  
-    - Telecon	  
+  * - 11 May
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_may00.pdf>`)
-  * - 16 Mar	  
-    - Telecon	  
+  * - 16 Mar
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_mar00.pdf>`)
-  * - 10 Jan	  
+  * - 10 Jan
     - Meeting
     - (:download:`PDF<../../minutes/meeting_jan00.pdf>`)
 
 **1999**
 --------
 
-.. list-table:: 
+.. list-table::
   :width: 40 %
 
-  * - 9 Dec	  
-    - Telecon	  
+  * - 9 Dec
+    - Telecon
     - (:download:`PDF<../../minutes/telecon_dec99.pdf>`)
-  * - 14 Oct	  
-    - Meeting	  
-    - (:download:`PDF<../../minutes/meeting_oct99.pdf>`) 
+  * - 14 Oct
+    - Meeting
+    - (:download:`PDF<../../minutes/meeting_oct99.pdf>`)
 
 .. last line

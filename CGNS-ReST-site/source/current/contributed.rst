@@ -4,21 +4,21 @@
 :orphan:
 
 .. _Contributed:
-   
+
 Contributed
 ===========
 
-           Plot3dg_to_CGNS external link	  	Converts a "standard" Plot3D grid file to a CGNS grid file.
-   Contact: Chris Rumsey (Christopher.L.Rumsey@nasa.gov)
+   Plot3dg_to_CGNS external link        Converts a "standard" Plot3D grid file to a CGNS grid file.
+   Contact: Please send any inquiries to the `CGNStalk <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_ discussion forum.
 
-   CGNS_to_Plot3d external link		Converts a CGNS file with a cell-centered solution to "standard" Plot3D grid and solution files.
-   Contact: Chris Rumsey (Christopher.L.Rumsey@nasa.gov)
+   CGNS_to_Plot3d external link Converts a CGNS file with a cell-centered solution to "standard" Plot3D grid and solution files.
+   Contact: Please send any inquiries to the `CGNStalk <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_ discussion forum. 
 
    CGNS_readhist external link		Reads a CGNS file and writes history data to a formatted file.
-   Contact: Chris Rumsey (Christopher.L.Rumsey@nasa.gov)
+   Contact: Please send any inquiries to the `CGNStalk <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_ discussion forum.
 
    FTU external link		Converts CGNS files to and from Plot3D format. Has a text-based menu allowing the manipulation of a CGNS base.
-   Contact: Bob Bush (bushrh@pweh.com)
+   Contact: Please send any inquiries to the `CGNStalk <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_ discussion forum.
 
    CGNSview external link		A CGNS file viewer and editor; requires Tcl/Tk 8.3 or above. The GUI allows complete editing of CGNS files (both ADF and HDF5), and handles links and data conversions. It works at the CGIO interface level, and thus is not affected by "bad" CGNS files. It includes built-in CGNS node and label information, and documentation support through HTML (including access to all CGNS docs).
    Contact: Bruce Wedan (leavingdust@gmail.com)

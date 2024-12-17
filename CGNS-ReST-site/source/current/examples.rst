@@ -2,19 +2,25 @@
    See LICENSING/COPYRIGHT at root dir of this documentation sources
 
 .. _SupportExamples:
-   
+
 Examples
 ========
 
-These files are distributed as a service to help CGNS users test their own implementations.
-They are submitted by users "as is" and are **not certified by anyone except the sender to be CGNS compliant**. 
+These files are provided to assist CGNS users in testing their implementations.
+They have been submitted by users "as is" and are **not certified by anyone other
+than the sender as being CGNS compliant**.
 
-If you have any questions about these data files, please contact the person listed in the table. The CGNS Committee is not able to provide technical support for the data files listed on this webpage. 
+If you have questions about these data files, please reach out to the person listed
+in the table or post your inquiries on CGNStalk if no contact information is available.
+Please note that the CGNS Committee cannot provide technical support for the data files
+listed on this webpage.
 
-Please send any CGNS data files (along with a graphic file if possible) or the URL of the datafiles which you would like to share with the CGNS users community to: cgnstalk@lists.nasa.gov .
- 
-Note that most of the files on this page are very old.
+We encourage you to share any CGNS data files (along with a graphic file, if possible)
+or the URL of the data files with the CGNS user community on
+`CGNStalk <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_.
 
+Please be aware that most of the files, and contact information, on this
+page are quite old.
 
 Structured Grid
 ---------------
@@ -49,7 +55,7 @@ Axisymmetric bump
     * - Contact
       - Posted Date
       - Revision Date
-    * - `Chris Rumsey <c.l.rumsey@nasa.gov>`_
+    * - Chris Rumsey, Contact is Unavailable.
       - Apr.14.00
       - Feb.03.14
 
@@ -69,7 +75,7 @@ Axisymmetric bump
     * - Contact
       - Posted Date
       - Revision Date
-    * - `Chris Rumsey <c.l.rumsey@nasa.gov>`_
+    * - Chris Rumsey, Contact is Unavailable.
       - Apr.14.00
       - Feb.03.14
 
@@ -79,7 +85,6 @@ Axisymmetric bump
   :Description: Structured, 4 blocks, 2D (2 planes in third dimension) multielement airfoil, with cell centered solution
   :Data File (ADF): :download:`multi.cgns.gz<../../example_cgns_files/Chris/multi.cgns.gz>` (2.3Mb)
   :Data File (HDF): :download:`multi_hdf5.cgns.gz<../../example_cgns_files/Chris/multi_hdf5.cgns.gz>` (2.3Mb)
-    
 
 3D Delta Wing
 ^^^^^^^^^^^^^
@@ -90,7 +95,7 @@ Axisymmetric bump
     * - Contact
       - Posted Date
       - Revision Date
-    * - `Chris Rumsey <c.l.rumsey@nasa.gov>`_
+    * - Chris Rumsey, Contact is Unavailable.
       - Apr.14.00
       - Jul.24.07
 
@@ -109,7 +114,7 @@ Wing Vertex solution
     * - Contact
       - Posted Date
       - Revision Date
-    * - `Chris Rumsey <c.l.rumsey@nasa.gov>`_
+    * - Chris Rumsey, Contact is Unavailable.
       - Jul.23.07
       - Jul.23.07
 
@@ -166,7 +171,7 @@ DLR-F6 Wing body
     * - Contact
       - Posted Date
       - Revision Date
-    * - `Chris Rumsey <c.l.rumsey@nasa.gov>`_
+    * - Chris Rumsey, Contact is Unavailable.
       - Feb.09.07
       - Feb.09.07
 
@@ -189,7 +194,6 @@ Business Jet
       - July.29.04
       - July.29.04
 
-  
   :Description: Multiblock structured grids for a business jet, a wing/body, and a wing/body/nacelle/pylon configuration are available from Stanford.
   :Data File: `Stanford CGNS test files <http://aero-comlab.stanford.edu/vdweide/CGNSFiles/>`_ (link to external site)
 

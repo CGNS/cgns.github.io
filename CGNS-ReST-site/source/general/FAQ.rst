@@ -20,17 +20,16 @@ You can obtain the software by going to the :ref:`Download <SupportDownload>` se
 How can I get help if I run into problems?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-There is no full-time CGNS *"help desk"*. Instead, the CGNS community relies on both extensive documentation and other CGNS users for help and support.
-The documentation is available at :ref:`Documentation Home <CGNSHomePage>`.
-In particular, we recommend that beginning users consult the :ref:`User's Guide <DocUserGuide>`, which includes many example programs in both Fortran and C.
-If you still need help, please make use of the :ref:`Discussion Group <SupportDiscussionForum>`, via e-mail: cgnstalk@lists.nasa.gov. We strongly encourage you to join this group so you can be a part of ongoing CGNS discussions and updates.
+There is no full-time CGNS *"help desk"*. Instead, the CGNS community relies on both extensive documentation
+and other CGNS users for help and support. The documentation is available at :ref:`Documentation Home <CGNSHomePage>`.
+In particular, we recommend that beginning users consult the :ref:`User's Guide <DocUserGuide>`, which includes many
+example programs in both Fortran and C. If you still need help, please make use of the
+`CGNSTalk Github Discussion Group <https://github.com/CGNS/CGNS/discussions/categories/cgnstalk>`_.
+We strongly encourage you to join this discussion group so you can be a part of ongoing CGNS discussions and updates.
 
 .. tip::
   
-  Issues should be reported on the dedicated `bug tracker <https://cgnsorg.atlassian.net/jira/core/projects/CGNS/issues/>`_ .
-
-  **Coming soon!** The discussion group will be opening a github discussion forum.
- 
+  Issues should be reported on the dedicated `bug tracker <https://github.com/CGNS/CGNS/issues>`_ .
 
 There is a lot of documentation... which are most important for me to read?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -39,9 +38,12 @@ We recommend the :ref:`User's Guide <DocUserGuide>` as a first *"must read"*.
 This will introduce you to CGNS and guide you through many basic examples.
 As a tutorial overview, the "CGNS Tutorial Session" (slide format) may also be useful.
 It can be found under :ref:`Papers and Slides <DocPapers>` (Slides section).
-The full details about the intellectual content of CGNS data model is given in the :ref:`SIDS document <CGNS-SIDS>` (which is also an AIAA Recommended Practice).
-Finally, when you start programming, you will probably need to refer to the :ref:`Mid-Level Library <StandardMLL>` documentation, which describes the Fortran and C calls used to read and write the CGNS files.
- 
+The full details about the intellectual content of CGNS data model is given in
+the :ref:`SIDS document <CGNS-SIDS>` (which is also an AIAA Recommended Practice).
+Finally, when you start programming, you will probably need to refer to the
+:ref:`Mid-Level Library <StandardMLL>` documentation, which describes the
+Fortran and C calls used to read and write the CGNS files.
+
 
 What does SIDS mean?
 ^^^^^^^^^^^^^^^^^^^^
@@ -112,7 +114,9 @@ How do I keep up with the goings-on of the Steering Committee?
 The CGNS Steering Committee meets and/or holds telecons about 5 times per year.
 The minutes are posted on the :ref:`Meeting Minutes <DocMinutes>` page.
 Also, the meetings are an open forum: anyone is welcome to attend.
-To find out the date and time of the next meeting, please e-mail to cgnstalk@lists.nasa.gov.
+To find out the date and time of the next meeting, please refer to the minutes
+from the last Steering Committee meeting, or contact the chair of the
+Steering Committee for additional details.
 
 
 Can I use the CGNS logo as part of my website or other documentation?

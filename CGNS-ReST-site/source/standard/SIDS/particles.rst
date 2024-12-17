@@ -160,7 +160,7 @@ This example show how to set the particle coordinates in the case where :sidskey
     }} ;
 
 
-.. _ParticleSolution:
+.. _SIDS-ParticleSolution:
 
 Particle Solution Structure Definition: :sidskey:`ParticleSolution_t` 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -253,7 +253,7 @@ Example - Particle Solution
     }} ;
 
 
-.. _ParticleEquationSet:
+.. _SIDS-ParticleEquationSet:
 
 Particle Equation Set Structure Definition: :sidskey:`ParticleEquationSet_t`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -298,7 +298,7 @@ Particle Equation Set Structure Definition: :sidskey:`ParticleEquationSet_t`
 
 The :sidsref:`UserDefinedData_t` data structure allows arbitrary user-defined data to be stored in :sidskey:`Descriptor_t` and :sidskey:`DataArray_t` children without the restrictions or implicit meanings imposed on these node types at other node locations.
 
-.. _ParticleGoverningEquations:
+.. _SIDS-ParticleGoverningEquations:
 
 Governing Equations Structure Definition: :sidskey:`ParticleGoverningEquations_t`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -354,7 +354,7 @@ Particle Model Type Structure Definition: :sidskey:`ParticleModelType_t`
     Tomiyama, Stokes, StokesCunningham, WenYu,
     Boil, Condense, Flash, Nucleate, Chiang, Frossling, FuchsKnudsen) ;
 
-.. _ParticleCollisionModel:
+.. _SIDS-ParticleCollisionModel:
 
 Particle Collision Model Structure Definition: :sidskey:`ParticleCollisionModel_t`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -414,7 +414,7 @@ The :sidskey:`ParticleCollisionModelType` names currently listed correspond to t
    :sidskey:`HertzMindlin`        Tsuji Y.  et al. (1992) Lagrangian numerical simulation of plug flow of cohesionless particles in a horizontal pipe. Powder Technology, 71(3): p. 239-250. http://dx.doi.org/10.1016/0032-5910(92)88030-L
    ============================== =========================================================================================================================================================================================================
 
-.. _ParticleBreakupModel:
+.. _SIDS-ParticleBreakupModel:
 
 Particle Breakup Model Structure Definition: :sidskey:`ParticleBreakupModel_t`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -479,7 +479,7 @@ The :sidskey:`ParticleBreakupModelType` names currently listed correspond to the
    :sidskey:`ReitzDiwakar`        Reitz, R.D. and Diwakar, R. "Effect of drop breakup on fuel sprays" SAE Tech. paper series, 860469 (1986)
    ============================== ==============================================================================================================================================================================================================================================================================================================
 
-.. _ParticleForceModel: 
+.. _SIDS-ParticleForceModel: 
 
 Particle Force Model Structure Definition: :sidskey:`ParticleForceModel_t`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -545,7 +545,7 @@ The :sidskey:`ParticleForceModelType` names currently listed correspond to the f
    :sidskey:`SaffmanMei`       Koohandaz, A., Khavasi, E., Eyvazian, A., and Yousefi, H., "Prediction of particles deposition in a dilute quasi-steady gravity current by Lagrangian markers: Effect of shear-induced lift force," Scientific Reports, 10, 16673, 2020.
    =========================== ========================================================================================================================================================================================================================================
 
-.. _ParticleWallInteractionModel:
+.. _SIDS-ParticleWallInteractionModel:
 
 Particle Wall Interaction Model Structure Definition: :sidskey:`ParticleWallInteractionModel_t`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

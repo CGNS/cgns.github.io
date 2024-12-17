@@ -1,132 +1,484 @@
+
+
 <!DOCTYPE html>
 
-<html lang="en">
+
+<html lang="en" data-content_root="" data-theme="light">
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>8. Multizone Interface Connectivity &#8212; CGNS Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <!-- Licensed under the Apache 2.0 License -->
-  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
-  <!-- Licensed under the SIL Open Font License -->
-  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
-  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
   
-    <title>8. Multizone Interface Connectivity &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css?v=ee5bbeb1" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css?v=2c72f61b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css?v=97141bf4" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css?v=593b94c8" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=117e2fac"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="icon" href="../../_static/CGNS_empty.ico"/>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'standard/SIDS/multizone';</script>
+    <link rel="canonical" href="https://cgns.org/standard/SIDS/multizone.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="9. Boundary Conditions" href="boundary.html" />
     <link rel="prev" title="7. Grid Coordinates, Elements, and Flow Solution" href="grid.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
   
-  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
   
-   
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="boundary.html" title="9. Boundary Conditions"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="grid.html" title="7. Grid Coordinates, Elements, and Flow Solution"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" accesskey="U">CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">8. </span>Multizone Interface Connectivity</a></li> 
-      </ul>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-light" alt="CGNS Documentation - Home"/>
+    <script>document.write(`<img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark" alt="CGNS Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CGNS/CGNS" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-download fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../general.html">Introduction to CGNS</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../general/what.html">What is CGNS?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/start.html">Quick Start Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/history.html">Status and History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/FAQ.html">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/implementations.html">Implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../standard.html">Standard Specification</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Standardization bodies</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="intro.html">1. Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="design.html">2. Design Philosophy of Standard Interface Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="convention.html">3. Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="block.html">4. Building Block Structure Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html">5. Data-Array Structure Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">6. Hierarchical Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html">7. Grid Coordinates, Elements, and Flow Solution</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">8. Multizone Interface Connectivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boundary.html">9. Boundary Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="equation.html">10. Governing Flow Equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html">11. Time-Dependent Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="misc.html">12. Miscellaneous Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.html">13. Particle Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix_a.html">Appendix A: Conventions for Data-Name Identifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix_b.html">Appendix B: Structured Two-Zone Flat Plate Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_FMM.html">CGNS/FMM - Data model mapping to implementation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../FMM/nodes.html">Detailed CGNS Node Descriptions</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../FMM/figures.html">CGNS File Mapping Figures</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ArbitraryGridMotion.html">ArbitraryGridMotion Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Area.html">Area Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/AverageInterface.html">AverageInterface Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Axisymmetry.html">Axisymmetry Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BaseIterativeData.html">BaseIterativeData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BC.html">BC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BCData.html">BCData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BCDataSet.html">BCDataSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BCProperty.html">BCProperty Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/CGNSBase.html">CGNSBase Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ChemicalKineticsModel.html">ChemicalKineticsModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ConvergenceHistory.html">ConvergenceHistory Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/DataArray.html">DataArray Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/DimensionalExponents.html">DimensionalExponents Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/DimensionalUnits.html">DimensionalUnits Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Elements.html">Elements Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/EMConductivityModel.html">EMConductivityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/EMElectricFieldModel.html">EMElectricFieldModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/EMMagneticFieldModel.html">EMMagneticFieldModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Family.html">Family Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FamilyBC.html">FamilyBC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FamilyBCDataSet.html">FamilyBCDataSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FlowEquationSet.html">FlowEquationSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FlowSolution.html">FlowSolution/DiscreteData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GasModel.html">GasModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GeometryReference.html">GeometryReference Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GoverningEquations.html">GoverningEquations Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Gravity.html">Gravity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridConnectivity.html">GridConnectivity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridConnectivity1to1.html">GridConnectivity1to1 Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridConnectivityProperty.html">GridConnectivityProperty Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridCoordinates.html">GridCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/IntegralData.html">IntegralData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/OversetHoles.html">OversetHoles Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleBreakupModel.html">ParticleBreakupModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleCollisionModel.html">ParticleCollisionModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleCoordinates.html">ParticleCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleEquationSet.html">ParticleEquationSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleForceModel.html">ParticleForceModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleGoverningEquations.html">ParticleGoverningEquations Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticlePhaseChangeModel.html">ParticlePhaseChangeModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleSolution.html">ParticleSolution Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleWallInteractionModel.html">ParticleWallInteractionModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleZone.html">ParticleZone Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Periodic.html">Periodic Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ReferenceState.html">ReferenceState Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/RigidGridMotion.html">RigidGridMotion Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/RotatingCoordinates.html">RotatingCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ThermalConductivityModel.html">ThermalConductivityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ThermalRelaxationModel.html">ThermalRelaxationModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/TurbulenceClosure.html">TurbulenceClosure Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/TurbulenceModel.html">TurbulenceModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/UserDefinedData.html">UserDefinedData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ViscosityModel.html">ViscosityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/WallFunction.html">WallFunction Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Zone.html">Zone Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneBC.html">ZoneBC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneGridConnectivity.html">ZoneGridConnectivity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneIterativeData.html">ZoneIterativeData/ParticleIterativeData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneSubRegion.html">ZoneSubRegion Figure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../MLL/CGNS_MLL.html">CGNS/MLL - C and Fortran APIs for Applications</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../MLL/api/general_remarks.html">General Remarks</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MLL/api/enums.html">List of enumerated values (key words) for each of these variable types (typedefs)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MLL/api/c_api.html">CGNS/MLL API Overview for C and Fortran applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MLL/api/c_parallel_api.html">CGNS Parallel API Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_database.html">Database-Level Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_structure.html">Data Structure Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_links.html">Link Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_node.html">Node Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_dataio.html">Data I/O Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_errors.html">Error Handling Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_misc.html">Miscellaneous Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_example.html">Code Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hdf5.html">CGNS/HDF5 - An HPC implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python.html">CGNS/Python - A Python implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../current.html">Resources</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../current/news.html">News</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../current/CPEX.html">CPEX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../current/download.html">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../current/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../current/softwarelist.html">More CGNS Software</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../doc.html">More documentation</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doc/papers.html">Papers</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../doc/userguide.html">User’s Guide to CGNS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../governance.html">CGNS Governance</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../governance/committee.html">Steering Committee</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../governance/meetings.html">Meetings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../governance/support.html">Support</a></li>
+</ul>
+</li>
+</ul>
+
     </div>
-    <div class="container-wrapper">
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
-      <div id="mobile-toggle">
-        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+
       </div>
-  <div id="left-column">
-    <div class="sphinxsidebar">
-<div class="sidebar-block">
-  <div class="sidebar-wrapper">
-    <div id="main-search">
-      <form class="form-inline" action="../../search.html" method="GET" role="form">
-        <div class="input-group">
-          <input name="q" type="text" class="form-control" placeholder="Search...">
-        </div>
-        <input type="hidden" name="check_keywords" value="yes" />
-        <input type="hidden" name="area" value="default" />
-      </form>
-    </div>
-  </div>
-</div>
-<div class="sidebar-block">
-  <div class="sidebar-wrapper">
-    <h2>Contents</h2>
-    <div class="sidebar-localtoc">
-      <ul>
-<li><a class="reference internal" href="#">8. Multizone Interface Connectivity</a><ul>
-<li><a class="reference internal" href="#zonal-connectivity-structure-definition-zonegridconnectivity-t">8.1. Zonal Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code></a></li>
-<li><a class="reference internal" href="#to-1-interface-connectivity-structure-definition-gridconnectivity1to1-t">8.2. 1-to-1 Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity1to1_t</span></code></a></li>
-<li><a class="reference internal" href="#to-1-interface-connectivity-examples">8.3. 1-to-1 Interface Connectivity Examples</a><ul>
-<li><a class="reference internal" href="#example-1-to-1-abutting-of-complete-faces">8.3.1. Example - 1-to-1 Abutting of Complete Faces</a></li>
-<li><a class="reference internal" href="#example-1-to-1-abutting-complete-face-to-a-subset-of-a-face">8.3.2. Example - 1-to-1 Abutting, Complete Face to a Subset of a Face</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#general-interface-connectivity-structure-definition-gridconnectivity-t">8.4. General Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity_t</span></code></a></li>
-<li><a class="reference internal" href="#general-interface-connectivity-examples">8.5. General Interface Connectivity Examples</a><ul>
-<li><a class="reference internal" href="#example-structured-abutting-zones">8.5.1. Example - Structured Abutting Zones</a></li>
-<li><a class="reference internal" href="#example-unstructured-abutting-zones-hexa-8-donor-cell">8.5.2. Example - Unstructured Abutting Zones, HEXA_8 Donor Cell</a></li>
-<li><a class="reference internal" href="#example-unstructured-abutting-zones-tri-3-donor-cell">8.5.3. Example - Unstructured Abutting Zones, TRI_3 Donor Cell</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#grid-connectivity-property-structure-definition-gridconnectivityproperty-t">8.6. Grid Connectivity Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivityProperty_t</span></code></a><ul>
-<li><a class="reference internal" href="#periodic-interface-structure-definition-periodic-t">8.6.1. Periodic Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">Periodic_t</span></code></a></li>
-<li><a class="reference internal" href="#average-interface-structure-definition-averageinterface-t">8.6.2. Average Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">AverageInterface_t</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#overset-grid-holes-structure-definition-oversetholes-t">8.7. Overset Grid Holes Structure Definition: <code class="docutils literal notranslate"><span class="pre">OversetHoles_t</span></code></a></li>
-</ul>
-</li>
-</ul>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-    </div>
-  </div>
-</div>
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
       
     </div>
-  </div>
-        <div id="right-column">
-          
-          <div role="navigation" aria-label="breadcrumbs navigation">
-            <ol class="breadcrumb">
-              <li><a href="../../index.html">Docs</a></li>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CGNS/cgns-modern.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CGNS/cgns-modern.github.io/issues/new?title=Issue%20on%20page%20%2Fstandard/SIDS/multizone.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
               
-                <li><a href="../../standard.html">Standard Specification</a></li>
               
-                <li><a href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a></li>
-              
-              <li><span class="section-number">8. </span>Multizone Interface Connectivity</li>
-            </ol>
-          </div>
-          
-          <div class="document clearer body">
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Multizone Interface Connectivity</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zonal-connectivity-structure-definition-zonegridconnectivity-t">8.1. Zonal Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#to-1-interface-connectivity-structure-definition-gridconnectivity1to1-t">8.2. 1-to-1 Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity1to1_t</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#to-1-interface-connectivity-examples">8.3. 1-to-1 Interface Connectivity Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-to-1-abutting-of-complete-faces">8.3.1. Example - 1-to-1 Abutting of Complete Faces</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-to-1-abutting-complete-face-to-a-subset-of-a-face">8.3.2. Example - 1-to-1 Abutting, Complete Face to a Subset of a Face</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-interface-connectivity-structure-definition-gridconnectivity-t">8.4. General Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity_t</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-interface-connectivity-examples">8.5. General Interface Connectivity Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-structured-abutting-zones">8.5.1. Example - Structured Abutting Zones</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-unstructured-abutting-zones-hexa-8-donor-cell">8.5.2. Example - Unstructured Abutting Zones, HEXA_8 Donor Cell</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-unstructured-abutting-zones-tri-3-donor-cell">8.5.3. Example - Unstructured Abutting Zones, TRI_3 Donor Cell</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-connectivity-property-structure-definition-gridconnectivityproperty-t">8.6. Grid Connectivity Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivityProperty_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#periodic-interface-structure-definition-periodic-t">8.6.1. Periodic Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">Periodic_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-interface-structure-definition-averageinterface-t">8.6.2. Average Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">AverageInterface_t</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overset-grid-holes-structure-definition-oversetholes-t">8.7. Overset Grid Holes Structure Definition: <code class="docutils literal notranslate"><span class="pre">OversetHoles_t</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section id="multizone-interface-connectivity">
-<span id="sids-connectivity"></span><h1><span class="section-number">8. </span>Multizone Interface Connectivity<a class="headerlink" href="#multizone-interface-connectivity" title="Permalink to this heading">¶</a></h1>
+<span id="sids-connectivity"></span><h1><span class="section-number">8. </span>Multizone Interface Connectivity<a class="headerlink" href="#multizone-interface-connectivity" title="Permalink to this heading">#</a></h1>
 <p>This section defines structures for describing multizone interface connectivity for <a class="reference internal" href="convention.html#interfaces"><span class="std std-ref">1-to-1 abutting, mismatched abutting, and overset type interfaces</span></a>.
 All interface connectivity information pertaining to a given zone is grouped together in a <code class="code sidsref docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code> structure entity; this in turn is contained in a <span class="xref std std-ref">zone structure entity</span>.</p>
 <p>Before presentation of the structure definitions, a few design features require comment.
@@ -139,7 +491,7 @@ In fact, this single structure type can be used to describe all zonal interfaces
 <p>It is a CGNS design intent that a given zone boundary segment or location should at most be defined (or covered) by either a boundary condition or a multizone interface connectivity, but not by both.</p>
 </div>
 <section id="zonal-connectivity-structure-definition-zonegridconnectivity-t">
-<h2><span class="section-number">8.1. </span>Zonal Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code><a class="headerlink" href="#zonal-connectivity-structure-definition-zonegridconnectivity-t" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">8.1. </span>Zonal Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code><a class="headerlink" href="#zonal-connectivity-structure-definition-zonegridconnectivity-t" title="Permalink to this heading">#</a></h2>
 <p>All multizone interface grid connectivity information pertaining to a given zone is contained in the <code class="code sidskey docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code> structure.
 This includes abutting interfaces (1-to-1 and general mismatched), overset-grid interfaces, and overset-grid holes.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ZoneGridConnectivity_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
@@ -170,7 +522,7 @@ Abutting and overset connectivity is contained in the <code class="code sidsref 
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 </section>
 <section id="to-1-interface-connectivity-structure-definition-gridconnectivity1to1-t">
-<h2><span class="section-number">8.2. </span>1-to-1 Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity1to1_t</span></code><a class="headerlink" href="#to-1-interface-connectivity-structure-definition-gridconnectivity1to1-t" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">8.2. </span>1-to-1 Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity1to1_t</span></code><a class="headerlink" href="#to-1-interface-connectivity-structure-definition-gridconnectivity1to1-t" title="Permalink to this heading">#</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">GridConnectivity1to1_t</span></code> only applies to structured zones interfacing with structured donors and whose interface is a logically rectangular region.
 It contains connectivity information for a multizone interface patch that is abutting with 1-to-1 matching between adjacent zone indices (also referred to as <span class="math notranslate nohighlight">\(C^{0}\)</span> connectivity).
 An interface patch is the subrange of the face of a zone that touches one and only one other zone.
@@ -214,9 +566,9 @@ By convention the indices contained in <code class="code sidskey docutils litera
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">Transform</span></code> contains a short-hand notation for the transformation matrix describing the relation between indices of the two adjacent zones.
 The transformation matrix itself has rank <code class="code sidskey docutils literal notranslate"><span class="pre">IndexDimension</span></code> and contains elements <span class="math notranslate nohighlight">\(+1\)</span>, <span class="math notranslate nohighlight">\(−1\)</span> and <span class="math notranslate nohighlight">\(0\)</span>; it is orthonormal and its inverse is its transpose.
 The transformation matrix (<code class="code docutils literal notranslate"><span class="pre">T</span></code>) works as follows: If <code class="code docutils literal notranslate"><span class="pre">Index1</span></code> and <code class="code docutils literal notranslate"><span class="pre">Index2</span></code> are the indices of a given point on the interface, where <code class="code docutils literal notranslate"><span class="pre">Index1</span></code> is in the current zone and <code class="code docutils literal notranslate"><span class="pre">Index2</span></code> is in the adjacent zone, then their relationship is,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Index2</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="p">(</span><span class="n">Index1</span> <span class="o">-</span> <span class="n">Begin1</span><span class="p">)</span> <span class="o">+</span> <span class="n">Begin2</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">Index2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="p">.(</span><span class="n">Index1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Begin1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Begin2</span>
 
-<span class="n">Index1</span> <span class="o">=</span> <span class="n">Transpose</span><span class="p">[</span><span class="n">T</span><span class="p">]</span><span class="o">.</span><span class="p">(</span><span class="n">Index2</span> <span class="o">-</span> <span class="n">Begin2</span><span class="p">)</span> <span class="o">+</span> <span class="n">Begin1</span>
+<span class="n">Index1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Transpose</span><span class="p">[</span><span class="n">T</span><span class="p">].(</span><span class="n">Index2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Begin2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Begin1</span>
 </pre></div>
 </div>
 <p>where the <code class="code docutils literal notranslate"><span class="pre">&quot;.&quot;</span></code> notation indicates matrix-vector multiply. <code class="code docutils literal notranslate"><span class="pre">Begin1</span></code> and <code class="code docutils literal notranslate"><span class="pre">End1</span></code> are the subrange indices contained in <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>, and <code class="code docutils literal notranslate"><span class="pre">Begin2</span></code> and <code class="code docutils literal notranslate"><span class="pre">End2</span></code> are the subrange indices contained in <code class="code sidskey docutils literal notranslate"><span class="pre">PointRangeDonor</span></code>.</p>
@@ -253,10 +605,10 @@ For example, <code class="code docutils literal notranslate"><span class="pre">E
 Since there are no restrictions on the values contained in <code class="code sidskey docutils literal notranslate"><span class="pre">Ordinal</span></code> (or that <code class="code sidskey docutils literal notranslate"><span class="pre">Ordinal</span></code> is even provided), there is no guarantee that the interfaces in an existing CGNS database will have sequential values from 1 to N without holes or repetitions. Use of <code class="code sidskey docutils literal notranslate"><span class="pre">Ordinal</span></code> is discouraged and is on a user-beware basis.</p>
 </section>
 <section id="to-1-interface-connectivity-examples">
-<h2><span class="section-number">8.3. </span>1-to-1 Interface Connectivity Examples<a class="headerlink" href="#to-1-interface-connectivity-examples" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">8.3. </span>1-to-1 Interface Connectivity Examples<a class="headerlink" href="#to-1-interface-connectivity-examples" title="Permalink to this heading">#</a></h2>
 <p>This section contains two examples of structure entities for describing the connectivity for structured-zone 1-to-1 abutting multizone interfaces. The Structured Two-Zone Flat Plate Example contains additional examples of 1-to-1 interfaces.</p>
 <section id="example-1-to-1-abutting-of-complete-faces">
-<h3><span class="section-number">8.3.1. </span>Example - 1-to-1 Abutting of Complete Faces<a class="headerlink" href="#example-1-to-1-abutting-of-complete-faces" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">8.3.1. </span>Example - 1-to-1 Abutting of Complete Faces<a class="headerlink" href="#example-1-to-1-abutting-of-complete-faces" title="Permalink to this heading">#</a></h3>
 <p>Two zones have the same orientation; zone 1 is <span class="math notranslate nohighlight">\(9 \times 17 \times 11\)</span> and zone 2 is <span class="math notranslate nohighlight">\(9 \times 17 \times 21\)</span>.
 The <em>k</em>-max face of zone 1 abuts the <em>k</em>-min face of zone 2. Contained in the structure entities of zone 1 is the following interface structure:</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">GridConnectivity1to1_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Zone1</span><span class="o">/</span><span class="n">ZoneGridConnectivity</span><span class="o">/</span><span class="n">KMax</span><span class="w"> </span><span class="o">=</span>
@@ -297,11 +649,11 @@ The <em>k</em>-max face of zone 1 abuts the <em>k</em>-min face of zone 2. Conta
 <p>This example assumes zones 1 and 2 have the identifiers <code class="code docutils literal notranslate"><span class="pre">Zone1</span></code> and <code class="code docutils literal notranslate"><span class="pre">Zone2</span></code>, respectively.</p>
 </section>
 <section id="example-1-to-1-abutting-complete-face-to-a-subset-of-a-face">
-<h3><span class="section-number">8.3.2. </span>Example - 1-to-1 Abutting, Complete Face to a Subset of a Face<a class="headerlink" href="#example-1-to-1-abutting-complete-face-to-a-subset-of-a-face" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">8.3.2. </span>Example - 1-to-1 Abutting, Complete Face to a Subset of a Face<a class="headerlink" href="#example-1-to-1-abutting-complete-face-to-a-subset-of-a-face" title="Permalink to this heading">#</a></h3>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="../../_images/cnct_1to1.gif"><img alt="Two abutting zones, with 1-to-1 abutting of a complete face to a subset of a face" src="../../_images/cnct_1to1.gif" style="width: 600px;" /></a>
 <figcaption>
-<p><span class="caption-text"><em>Example Interface for 1-to-1 Connectivity</em></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text"><em>Example Interface for 1-to-1 Connectivity</em></span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The above figure shows a more complex 1-to-1 abutting interface, where the entire <em>j</em>-max face of zone 2 coincides with a subset of the <em>i</em>-max face of zone 1.
@@ -345,7 +697,7 @@ In general this will not always be the case.</p>
 </section>
 </section>
 <section id="general-interface-connectivity-structure-definition-gridconnectivity-t">
-<h2><span class="section-number">8.4. </span>General Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity_t</span></code><a class="headerlink" href="#general-interface-connectivity-structure-definition-gridconnectivity-t" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">8.4. </span>General Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity_t</span></code><a class="headerlink" href="#general-interface-connectivity-structure-definition-gridconnectivity-t" title="Permalink to this heading">#</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">GridConnectivity_t</span></code> contains connectivity information for generalized multizone interfaces, and may be used for any mix of structured and unstructured zones. Its purpose is to describe mismatched-abutting and overset interfaces, but can also be used for 1-to-1 abutting interfaces.</p>
 <p>For abutting interfaces that are not 1-to-1, also referred to as patched or mismatched, an interface patch is the subrange of the face of a zone that touches one and only one other zone.
 This structure identifies the subrange of indices (or array of indices) that make up the interface and gives their image in the adjacent (donor) zone.
@@ -420,7 +772,7 @@ For example, if the point is located within the cell at a position 75% in the <e
 <p>where <span class="math notranslate nohighlight">\(d\)</span> is the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, or <span class="math notranslate nohighlight">\(z\)</span> value at an interior point in the cell, <span class="math notranslate nohighlight">\(d_{i}\)</span> is the <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, or <span class="math notranslate nohighlight">\(z\)</span> value at node <em>i</em>, and <span class="math notranslate nohighlight">\(W_{i}\)</span> is a weight at node <em>i</em>.
 The weights are functions of the parametric variables <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(s\)</span>, and <span class="math notranslate nohighlight">\(t\)</span> (corresponding with the <em>i</em>, <em>j</em>, and <em>k</em> directions, respectively), which vary from 0 to 1, inclusively.
 For structured grids in 3-D, <span class="math notranslate nohighlight">\(N = 8\)</span>. Note that for skewed, non-parallel grids, it is not always easy to determine the interpolants geometrically, and it may be necessary to solve an inverse problem using the interpolation function.</p>
-<table class="docutils align-default">
+<table class="table">
 <tbody>
 <tr class="row-odd"><td><figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/cnct_struct.gif"><img alt="Structured grid cell" src="../../_images/cnct_struct.gif" style="width: 300px;" /></a>
@@ -441,8 +793,8 @@ W_{i+1,j+1,k+1} &amp;= r s t\end{split}\]</div>
 </table>
 <p>For unstructured grids, <code class="code sidskey docutils literal notranslate"><span class="pre">InterpolantsDonor</span></code> is defined only for the basic linear element types: <code class="code sidskey docutils literal notranslate"><span class="pre">BAR_2</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">TRI_3</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">QUAD_4</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">TETRA_4</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PYRA_5</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PENTA_6</span></code>, and <code class="code sidskey docutils literal notranslate"><span class="pre">HEXA_8</span></code>.
 The directionality for the <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(s\)</span>, and <span class="math notranslate nohighlight">\(t\)</span> interpolants for the basic element types is defined as follows.</p>
-<table class="docutils align-default" id="id2">
-<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">BAR_2</span></code></span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<table class="table" id="id2">
+<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">BAR_2</span></code></span><a class="headerlink" href="#id2" title="Permalink to this table">#</a></caption>
 <tbody>
 <tr class="row-odd"><td><figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/cnct_unst_bar2.gif"><img alt="Unstructured grid line element" src="../../_images/cnct_unst_bar2.gif" style="width: 260px;" /></a>
@@ -455,8 +807,8 @@ W_{2} &amp;= r\end{split}\]</div>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id3">
-<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">TRI_3</span></code></span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<table class="table" id="id3">
+<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">TRI_3</span></code></span><a class="headerlink" href="#id3" title="Permalink to this table">#</a></caption>
 <tbody>
 <tr class="row-odd"><td><figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/cnct_unst_tri3.gif"><img alt="Unstructured grid triangular element" src="../../_images/cnct_unst_tri3.gif" style="width: 260px;" /></a>
@@ -470,8 +822,8 @@ W_{3} &amp;= s\end{split}\]</div>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id4">
-<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">QUAD_4</span></code></span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<table class="table" id="id4">
+<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">QUAD_4</span></code></span><a class="headerlink" href="#id4" title="Permalink to this table">#</a></caption>
 <tbody>
 <tr class="row-odd"><td><figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/cnct_unst_quad4.gif"><img alt="Unstructured grid quadrilateral element" src="../../_images/cnct_unst_quad4.gif" style="width: 260px;" /></a>
@@ -486,8 +838,8 @@ W_{4} &amp;= (1 - r) s\end{split}\]</div>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id5">
-<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">TETRA_4</span></code></span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<table class="table" id="id5">
+<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">TETRA_4</span></code></span><a class="headerlink" href="#id5" title="Permalink to this table">#</a></caption>
 <tbody>
 <tr class="row-odd"><td><figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/cnct_unst_tetra4.gif"><img alt="Unstructured grid tetrahedral element" src="../../_images/cnct_unst_tetra4.gif" style="width: 260px;" /></a>
@@ -502,8 +854,8 @@ W_{4} &amp;= t\end{split}\]</div>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id6">
-<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">PYRA_5</span></code></span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<table class="table" id="id6">
+<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">PYRA_5</span></code></span><a class="headerlink" href="#id6" title="Permalink to this table">#</a></caption>
 <tbody>
 <tr class="row-odd"><td><figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/cnct_unst_pyra5.gif"><img alt="Unstructured grid pyramid element" src="../../_images/cnct_unst_pyra5.gif" style="width: 260px;" /></a>
@@ -519,8 +871,8 @@ W_{5} &amp;= t\end{split}\]</div>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id7">
-<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">PENTA_6</span></code></span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<table class="table" id="id7">
+<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">PENTA_6</span></code></span><a class="headerlink" href="#id7" title="Permalink to this table">#</a></caption>
 <tbody>
 <tr class="row-odd"><td><figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/cnct_unst_penta6.gif"><img alt="Unstructured grid pentahedral element" src="../../_images/cnct_unst_penta6.gif" style="width: 260px;" /></a>
@@ -537,8 +889,8 @@ W_{6} &amp;= s t\end{split}\]</div>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id8">
-<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">HEXA_8</span></code></span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<table class="table" id="id8">
+<caption><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">HEXA_8</span></code></span><a class="headerlink" href="#id8" title="Permalink to this table">#</a></caption>
 <tbody>
 <tr class="row-odd"><td><figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/cnct_unst_hexa8.gif"><img alt="Unstructured grid hexahedral element" src="../../_images/cnct_unst_hexa8.gif" style="width: 280px;" /></a>
@@ -571,7 +923,7 @@ Since there are no restrictions on the values contained in <code class="code sid
 Use of <code class="code sidskey docutils literal notranslate"><span class="pre">Ordinal</span></code> is discouraged and is on a user-beware basis.</p>
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PointListSize">
-<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PointListSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.PointListSize" title="Permalink to this definition">¶</a><br /></dt>
+<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PointListSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.PointListSize" title="Permalink to this definition">#</a><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return value<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
@@ -589,14 +941,14 @@ If <code class="code sidskey docutils literal notranslate"><span class="pre">Poi
 
 </section>
 <section id="general-interface-connectivity-examples">
-<h2><span class="section-number">8.5. </span>General Interface Connectivity Examples<a class="headerlink" href="#general-interface-connectivity-examples" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">8.5. </span>General Interface Connectivity Examples<a class="headerlink" href="#general-interface-connectivity-examples" title="Permalink to this heading">#</a></h2>
 <section id="example-structured-abutting-zones">
-<h3><span class="section-number">8.5.1. </span>Example - Structured Abutting Zones<a class="headerlink" href="#example-structured-abutting-zones" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">8.5.1. </span>Example - Structured Abutting Zones<a class="headerlink" href="#example-structured-abutting-zones" title="Permalink to this heading">#</a></h3>
 <p>Say that you have a three-dimensional structured grid. Assume that at the interface between two zones you have the following situation.</p>
 <figure class="align-center" id="id9">
 <a class="reference internal image-reference" href="../../_images/cnct_example1.gif"><img alt="Cell faces at interface between two structured zones" src="../../_images/cnct_example1.gif" style="width: 490px;" /></a>
 <figcaption>
-<p><span class="caption-text"><em>Example Interface for Generalized Connectivity, Structured Grids</em></span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text"><em>Example Interface for Generalized Connectivity, Structured Grids</em></span><a class="headerlink" href="#id9" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In this particular example, the patching occurs on a “plane”.
@@ -618,12 +970,12 @@ In this case, say that the point R is located 0.75 along the <em>j</em>-index di
 <p>Note that if the donor zone was instead located on an <em>i</em> = 1 (<code class="code docutils literal notranslate"><span class="pre">imin</span></code> face), then the <code class="code sidskey docutils literal notranslate"><span class="pre">CellListDonor</span></code> would be <code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">10,</span> <span class="pre">2)</span></code> and the <code class="code sidskey docutils literal notranslate"><span class="pre">InterpolantsDonor</span></code> would be <code class="code docutils literal notranslate"><span class="pre">(0.0,</span> <span class="pre">0.75,</span> <span class="pre">0.45)</span></code>.</p>
 </section>
 <section id="example-unstructured-abutting-zones-hexa-8-donor-cell">
-<h3><span class="section-number">8.5.2. </span>Example - Unstructured Abutting Zones, HEXA_8 Donor Cell<a class="headerlink" href="#example-unstructured-abutting-zones-hexa-8-donor-cell" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">8.5.2. </span>Example - Unstructured Abutting Zones, HEXA_8 Donor Cell<a class="headerlink" href="#example-unstructured-abutting-zones-hexa-8-donor-cell" title="Permalink to this heading">#</a></h3>
 <p>As a second example, assume that you have the same setup as before, but now with a three-dimensional unstructured grid. In this case, we no longer have a 3-D array of indices defining coordinate directions. Instead, we simply have a 1-D list of indices as well as a list of volume (and possibly face) elements composed of those indices. In this example we again are assuming the two zones abut in a 2-D sense. We now have the choice of describing the donor in terms of its volume element or its boundary (face) element, if available. Here in this example, we use the volume element.</p>
 <figure class="align-center" id="id10">
 <a class="reference internal image-reference" href="../../_images/cnct_example2.gif"><img alt="Cell faces at interface between two unstructured zones" src="../../_images/cnct_example2.gif" style="width: 490px;" /></a>
 <figcaption>
-<p><span class="caption-text"><em>Example Interface for Generalized Connectivity, Unstructured Grids with HEXA_8 Donor Cell</em></span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text"><em>Example Interface for Generalized Connectivity, Unstructured Grids with HEXA_8 Donor Cell</em></span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">HEXA_8</span></code> volume element has been appropriately numbered, using the Unstructured Grid Element Numbering Conventions. In this example, it is the 1-2-3-4 face of the volumetric element that is abutting with the other zone (but it could be any of its six faces)</p>
@@ -637,13 +989,13 @@ In this case, say that the point R is located 0.75 along the <em>j</em>-index di
 </div>
 </section>
 <section id="example-unstructured-abutting-zones-tri-3-donor-cell">
-<h3><span class="section-number">8.5.3. </span>Example - Unstructured Abutting Zones, TRI_3 Donor Cell<a class="headerlink" href="#example-unstructured-abutting-zones-tri-3-donor-cell" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">8.5.3. </span>Example - Unstructured Abutting Zones, TRI_3 Donor Cell<a class="headerlink" href="#example-unstructured-abutting-zones-tri-3-donor-cell" title="Permalink to this heading">#</a></h3>
 <p>As a third example, assume that you have two zones in a three-dimensional unstructured grid with triangles and quadrilaterals at its boundaries. Here the current zone (made up of quadrilateral faces) is abutting the donor zone (made up of triangular faces) in a 2-D sense.
 We again have the choice of describing the donor in terms of its volume element or its boundary (face) element. Here in this example, we use the face element.</p>
 <figure class="align-center" id="id11">
 <a class="reference internal image-reference" href="../../_images/cnct_example3.gif"><img alt="Cell faces at interface between two unstructured zones" src="../../_images/cnct_example3.gif" style="width: 390px;" /></a>
 <figcaption>
-<p><span class="caption-text"><em>Example Interface for Generalized Connectivity, Unstructured Grids with TRI_3 Donor Cell</em></span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text"><em>Example Interface for Generalized Connectivity, Unstructured Grids with TRI_3 Donor Cell</em></span><a class="headerlink" href="#id11" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">CellListDonor</span></code> in this case is simply given by</p>
@@ -658,7 +1010,7 @@ We again have the choice of describing the donor in terms of its volume element 
 </section>
 </section>
 <section id="grid-connectivity-property-structure-definition-gridconnectivityproperty-t">
-<h2><span class="section-number">8.6. </span>Grid Connectivity Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivityProperty_t</span></code><a class="headerlink" href="#grid-connectivity-property-structure-definition-gridconnectivityproperty-t" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">8.6. </span>Grid Connectivity Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivityProperty_t</span></code><a class="headerlink" href="#grid-connectivity-property-structure-definition-gridconnectivityproperty-t" title="Permalink to this heading">#</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">GridConnectivityProperty_t</span></code> allows the recording of special properties associated with particular connectivity patches.
 At the current time, only two properties (<code class="code sidskey docutils literal notranslate"><span class="pre">Periodic_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">AverageInterface_t</span></code>) are included, but extensions involving other properties may be implemented as additional nodes under <code class="code sidskey docutils literal notranslate"><span class="pre">GridConnectivityProperty_t</span></code> in the future.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">GridConnectivityProperty_t</span><span class="w"> </span><span class="o">:=</span>
@@ -680,7 +1032,7 @@ At the current time, only two properties (<code class="code sidskey docutils lit
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">Periodic_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">AverageInterface_t</span></code> data structures may be used to record properties associated with periodic interfaces, or interfaces where data is to be averaged in some way, respectively.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <section id="periodic-interface-structure-definition-periodic-t">
-<h3><span class="section-number">8.6.1. </span>Periodic Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">Periodic_t</span></code><a class="headerlink" href="#periodic-interface-structure-definition-periodic-t" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">8.6.1. </span>Periodic Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">Periodic_t</span></code><a class="headerlink" href="#periodic-interface-structure-definition-periodic-t" title="Permalink to this heading">#</a></h3>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">Periodic_t</span></code> data structure allows data associated with a periodic interface to be recorded.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Periodic_t</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
@@ -707,7 +1059,7 @@ At the current time, only two properties (<code class="code sidskey docutils lit
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 </section>
 <section id="average-interface-structure-definition-averageinterface-t">
-<h3><span class="section-number">8.6.2. </span>Average Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">AverageInterface_t</span></code><a class="headerlink" href="#average-interface-structure-definition-averageinterface-t" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">8.6.2. </span>Average Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">AverageInterface_t</span></code><a class="headerlink" href="#average-interface-structure-definition-averageinterface-t" title="Permalink to this heading">#</a></h3>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">AverageInterface_t</span></code> data structure is used when data at the current connectivity interface is to be averaged in some way prior to passing it to a neighboring interface.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">AverageInterface_t</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
@@ -741,7 +1093,7 @@ Note that <code class="code sidskey docutils literal notranslate"><span class="p
 </section>
 </section>
 <section id="overset-grid-holes-structure-definition-oversetholes-t">
-<h2><span class="section-number">8.7. </span>Overset Grid Holes Structure Definition: <code class="docutils literal notranslate"><span class="pre">OversetHoles_t</span></code><a class="headerlink" href="#overset-grid-holes-structure-definition-oversetholes-t" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">8.7. </span>Overset Grid Holes Structure Definition: <code class="docutils literal notranslate"><span class="pre">OversetHoles_t</span></code><a class="headerlink" href="#overset-grid-holes-structure-definition-oversetholes-t" title="Permalink to this heading">#</a></h2>
 <p>Grid connectivity for overset grids must also include “holes” within zones, where any solution states are ignored or “turned off”, because they are solved for in some other overlapping zone.
 The structure <code class="code sidskey docutils literal notranslate"><span class="pre">OversetHoles_t</span></code> specifies those points within a given zone that make up a hole (or holes), and applies to both structured and unstructured zones. Grid points specified in this structure are equivalent to those with IBLANK=0 in the PLOT3D format.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">OversetHoles_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
@@ -788,49 +1140,113 @@ The structure <code class="code sidskey docutils literal notranslate"><span clas
 </section>
 
 
-          </div>
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="grid.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>Grid Coordinates, Elements, and Flow Solution</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="boundary.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">9. </span>Boundary Conditions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
             
-  <div class="footer-relations">
-    
-      <div class="pull-left">
-        <a class="btn btn-default" href="grid.html" title="previous chapter (use the left arrow)"><span class="section-number">7. </span>Grid Coordinates, Elements, and Flow Solution</a>
-      </div>
-    
-      <div class="pull-right">
-        <a class="btn btn-default" href="boundary.html" title="next chapter (use the right arrow)"><span class="section-number">9. </span>Boundary Conditions</a>
-      </div>
-    </div>
-    <div class="clearer"></div>
-  
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="boundary.html" title="9. Boundary Conditions"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="grid.html" title="7. Grid Coordinates, Elements, and Flow Solution"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" >CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">8. </span>Multizone Interface Connectivity</a></li> 
-      </ul>
-    </div>
-<script type="text/javascript">
-  $("#mobile-toggle a").click(function () {
-    $("#left-column").toggle();
-  });
-</script>
-<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
-  <div class="footer">
-    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
   </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zonal-connectivity-structure-definition-zonegridconnectivity-t">8.1. Zonal Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneGridConnectivity_t</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#to-1-interface-connectivity-structure-definition-gridconnectivity1to1-t">8.2. 1-to-1 Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity1to1_t</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#to-1-interface-connectivity-examples">8.3. 1-to-1 Interface Connectivity Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-to-1-abutting-of-complete-faces">8.3.1. Example - 1-to-1 Abutting of Complete Faces</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-to-1-abutting-complete-face-to-a-subset-of-a-face">8.3.2. Example - 1-to-1 Abutting, Complete Face to a Subset of a Face</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-interface-connectivity-structure-definition-gridconnectivity-t">8.4. General Interface Connectivity Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivity_t</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-interface-connectivity-examples">8.5. General Interface Connectivity Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-structured-abutting-zones">8.5.1. Example - Structured Abutting Zones</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-unstructured-abutting-zones-hexa-8-donor-cell">8.5.2. Example - Unstructured Abutting Zones, HEXA_8 Donor Cell</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-unstructured-abutting-zones-tri-3-donor-cell">8.5.3. Example - Unstructured Abutting Zones, TRI_3 Donor Cell</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-connectivity-property-structure-definition-gridconnectivityproperty-t">8.6. Grid Connectivity Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">GridConnectivityProperty_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#periodic-interface-structure-definition-periodic-t">8.6.1. Periodic Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">Periodic_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-interface-structure-definition-averageinterface-t">8.6.2. Average Interface Structure Definition: <code class="docutils literal notranslate"><span class="pre">AverageInterface_t</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overset-grid-holes-structure-definition-oversetholes-t">8.7. Overset Grid Holes Structure Definition: <code class="docutils literal notranslate"><span class="pre">OversetHoles_t</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Dedicated to the public domain with <a href="https://creativecommons.org/publicdomain/zero/1.0/" class="reference external">CC0 1.0</a>.
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

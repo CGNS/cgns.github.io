@@ -1,0 +1,832 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>General Remarks &#8212; CGNS Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'standard/MLL/api/general_remarks';</script>
+    <link rel="canonical" href="https://cgns.org/standard/MLL/api/general_remarks.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="List of enumerated values (key words) for each of these variable types (typedefs)" href="enums.html" />
+    <link rel="prev" title="CGNS/MLL - C and Fortran APIs for Applications" href="../CGNS_MLL.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-light" alt="CGNS Documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark" alt="CGNS Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CGNS/CGNS" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-download fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../general.html">Introduction to CGNS</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/what.html">What is CGNS?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/start.html">Quick Start Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/history.html">Status and History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/FAQ.html">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/implementations.html">Implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../standard.html">Standard Specification</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../reference.html">Standardization bodies</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../SIDS/CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/intro.html">1. Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/design.html">2. Design Philosophy of Standard Interface Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/convention.html">3. Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/block.html">4. Building Block Structure Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/array.html">5. Data-Array Structure Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/hierarchy.html">6. Hierarchical Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/grid.html">7. Grid Coordinates, Elements, and Flow Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/multizone.html">8. Multizone Interface Connectivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/boundary.html">9. Boundary Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/equation.html">10. Governing Flow Equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/time.html">11. Time-Dependent Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/misc.html">12. Miscellaneous Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/particles.html">13. Particle Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/appendix_a.html">Appendix A: Conventions for Data-Name Identifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/appendix_b.html">Appendix B: Structured Two-Zone Flat Plate Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../CGNS_FMM.html">CGNS/FMM - Data model mapping to implementation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../FMM/nodes.html">Detailed CGNS Node Descriptions</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../FMM/figures.html">CGNS File Mapping Figures</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ArbitraryGridMotion.html">ArbitraryGridMotion Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Area.html">Area Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/AverageInterface.html">AverageInterface Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Axisymmetry.html">Axisymmetry Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/BaseIterativeData.html">BaseIterativeData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/BC.html">BC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/BCData.html">BCData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/BCDataSet.html">BCDataSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/BCProperty.html">BCProperty Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/CGNSBase.html">CGNSBase Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ChemicalKineticsModel.html">ChemicalKineticsModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ConvergenceHistory.html">ConvergenceHistory Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/DataArray.html">DataArray Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/DimensionalExponents.html">DimensionalExponents Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/DimensionalUnits.html">DimensionalUnits Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Elements.html">Elements Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/EMConductivityModel.html">EMConductivityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/EMElectricFieldModel.html">EMElectricFieldModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/EMMagneticFieldModel.html">EMMagneticFieldModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Family.html">Family Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/FamilyBC.html">FamilyBC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/FamilyBCDataSet.html">FamilyBCDataSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/FlowEquationSet.html">FlowEquationSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/FlowSolution.html">FlowSolution/DiscreteData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GasModel.html">GasModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GeometryReference.html">GeometryReference Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GoverningEquations.html">GoverningEquations Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Gravity.html">Gravity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GridConnectivity.html">GridConnectivity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GridConnectivity1to1.html">GridConnectivity1to1 Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GridConnectivityProperty.html">GridConnectivityProperty Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GridCoordinates.html">GridCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/IntegralData.html">IntegralData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/OversetHoles.html">OversetHoles Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleBreakupModel.html">ParticleBreakupModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleCollisionModel.html">ParticleCollisionModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleCoordinates.html">ParticleCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleEquationSet.html">ParticleEquationSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleForceModel.html">ParticleForceModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleGoverningEquations.html">ParticleGoverningEquations Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticlePhaseChangeModel.html">ParticlePhaseChangeModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleSolution.html">ParticleSolution Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleWallInteractionModel.html">ParticleWallInteractionModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleZone.html">ParticleZone Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Periodic.html">Periodic Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ReferenceState.html">ReferenceState Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/RigidGridMotion.html">RigidGridMotion Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/RotatingCoordinates.html">RotatingCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ThermalConductivityModel.html">ThermalConductivityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ThermalRelaxationModel.html">ThermalRelaxationModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/TurbulenceClosure.html">TurbulenceClosure Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/TurbulenceModel.html">TurbulenceModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/UserDefinedData.html">UserDefinedData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ViscosityModel.html">ViscosityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/WallFunction.html">WallFunction Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Zone.html">Zone Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ZoneBC.html">ZoneBC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ZoneGridConnectivity.html">ZoneGridConnectivity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ZoneIterativeData.html">ZoneIterativeData/ParticleIterativeData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ZoneSubRegion.html">ZoneSubRegion Figure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../CGNS_MLL.html">CGNS/MLL - C and Fortran APIs for Applications</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3 current active has-children"><a class="current reference internal" href="#">General Remarks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="enums.html">List of enumerated values (key words) for each of these variable types (typedefs)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="c_api.html">CGNS/MLL API Overview for C and Fortran applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="c_parallel_api.html">CGNS Parallel API Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_database.html">Database-Level Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_structure.html">Data Structure Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_links.html">Link Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_node.html">Node Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_dataio.html">Data I/O Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_errors.html">Error Handling Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_misc.html">Miscellaneous Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_example.html">Code Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../hdf5.html">CGNS/HDF5 - An HPC implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python.html">CGNS/Python - A Python implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../current.html">Resources</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../current/news.html">News</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../current/CPEX.html">CPEX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../current/download.html">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../current/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../current/softwarelist.html">More CGNS Software</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../doc.html">More documentation</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../doc/papers.html">Papers</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../../doc/userguide.html">User’s Guide to CGNS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../governance.html">CGNS Governance</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../governance/committee.html">Steering Committee</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../governance/meetings.html">Meetings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../governance/support.html">Support</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CGNS/cgns-modern.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CGNS/cgns-modern.github.io/issues/new?title=Issue%20on%20page%20%2Fstandard/MLL/api/general_remarks.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>General Remarks</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acquiring-the-software-and-documentation">Acquiring the Software and Documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#organization-of-this-manual">Organization of This Manual</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">Syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#language">Language</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#character-strings">Character Strings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-status">Error Status</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typedefs">Typedefs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#character-names-for-typedefs">Character Names for Typedefs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typedef-name-access-functions">Typedef Name Access Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit-c-portability-and-issues">64-bit C Portability and Issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-cgns-from-fortran">Calling CGNS from Fortran</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit-fortran-portability">64-bit Fortran Portability</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="general-remarks">
+<span id="mllgeneralremarks-ref"></span><h1>General Remarks<a class="headerlink" href="#general-remarks" title="Permalink to this heading">#</a></h1>
+<section id="acquiring-the-software-and-documentation">
+<h2>Acquiring the Software and Documentation<a class="headerlink" href="#acquiring-the-software-and-documentation" title="Permalink to this heading">#</a></h2>
+<p id="acquiring-ref">The CGNS Mid-Level Library may be downloaded from the <a class="reference external" href="https://github.com/CGNS/CGNS">CGNS site</a>. The manual,
+as well as the other CGNS documentation is available from the <a class="reference external" href="https://cgns.org">CGNS documentation website</a>.</p>
+</section>
+<section id="organization-of-this-manual">
+<h2>Organization of This Manual<a class="headerlink" href="#organization-of-this-manual" title="Permalink to this heading">#</a></h2>
+<p>The sections that follow describe the Mid-Level Library functions in detail. The first three sections cover
+<a class="reference external" href="../../MLL/api/c_api.html#file-and-library-operations">basic file operations</a> (i.e., opening and
+closing a CGNS file, and CGNS internal configuration options),
+<a class="reference external" href="../../MLL/api/c_api.html#accessing-a-node">accessing a specific node in a CGNS database</a>,
+and <a class="reference external" href="../../MLL/api/c_api.html#error-handling">error handling</a>. The remaining sections describe the functions
+used to read, write, and modify nodes and data in a CGNS database. These sections basically follow the
+organization used in the Section <a class="reference internal" href="../../FMM/nodes.html#fmmnodedescriptions"><span class="std std-ref">Detailed CGNS Node Descriptions</span></a>.</p>
+</section>
+<section id="syntax">
+<h2>Syntax<a class="headerlink" href="#syntax" title="Permalink to this heading">#</a></h2>
+<p>The API descriptions are structured as follows. First, a brief overview is provided, followed by an optional,
+more detailed explanation. Next, the argument parameters are listed, accompanied by descriptions of each variable.
+Finally, there is a summary of the return value. Note, as of CGNS-3.1.0, some of the arguments to the Mid-Level Library
+have changed from <em>int</em> to <em>cgsize_t</em> to support 64-bit data. Changed APIs can quickly be identified by
+searching for <em>cgsize_t</em>.</p>
+</section>
+<section id="language">
+<h2>Language<a class="headerlink" href="#language" title="Permalink to this heading">#</a></h2>
+<p>The CGNS Mid-Level Library is written in C, but each function has a Fortran counterpart.
+All function names start with “<em>cg_</em>”. The Fortran functions have the same name as
+their C counterpart with the addition of the suffix “<em>_f</em>”.</p>
+</section>
+<section id="character-strings">
+<h2>Character Strings<a class="headerlink" href="#character-strings" title="Permalink to this heading">#</a></h2>
+<p>All data structure names and labels in CGNS are limited to 32 characters.
+When reading a file, it is advised to pre-allocate the character string
+variables to 32 characters in Fortran, and 33 in C (to include the string terminator).
+Other character strings, such as the CGNS file name or descriptor text, are unlimited in length.
+The Mid-Level Library will create the space for unlimited-length character strings; it is
+then the application’s responsibility to release this space by a call to cg_free.</p>
+</section>
+<section id="error-status">
+<h2>Error Status<a class="headerlink" href="#error-status" title="Permalink to this heading">#</a></h2>
+<p>All C functions return an integer value representing the error status. All Fortran functions have an
+additional parameter, <em>ier</em>, which contains the error status value. An error status different
+from zero implies that an error occurred. The error message can be printed using the
+<a class="reference internal" href="c_api.html#errorhandling-ref"><span class="std std-ref">error handling functions</span></a> of the CGNS library. The error codes are
+coded in the C and Fortran include files <em>cgnslib.h</em> and the CGNS module (or <em>cgnslib_f.h</em>).</p>
+</section>
+<section id="typedefs">
+<span id="typedefs-ref"></span><h2>Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this heading">#</a></h2>
+<p>Beginning with CGNS-3.1.0, two new typedef variables have been introduced to support 64-bit mode. The <em>cglong_t</em> typedef
+is always a 64-bit integer, and <code class="docutils literal notranslate"><span class="pre">cgsize_t</span></code> will be either a 32-bit or 64-bit integer, depending on how the library was built.
+Many of the C functions in the MLL have been changed to use <code class="docutils literal notranslate"><span class="pre">cgsize_t</span></code> instead of <em>int</em> in the arguments. These functions
+include any that may exceed the 2Gb limit of an int, e.g., zone dimensions, element data, boundary conditions, and connectivity.</p>
+<p>Several types of variables are defined using typedefs in the <em>cgnslib.h</em> file. These are intended to facilitate
+the implementation of CGNS in C. These variable types are defined as an enumeration of keywords admissible for
+any variable of these types. The file <em>cgnslib.h</em> must be included in any C application programs that use these
+data types.</p>
+<p>Fortran defines the same keywords as integer parameters in the <em>CGNS</em> module (previously <em>cgnslib_f.h</em>).
+Such variables should be declared as <em>integer</em> in Fortran applications. The <em>CGNS</em> module (previously <em>cgnslib_f.h</em>)
+must be included in any Fortran application using these keywords.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The first two enumerated values in these lists, xxxNull and xxxUserDefined, are only
+available in the C interface, and are provided in the advent that your C compiler does
+strict type checking. In Fortran, these values are replaced by the numerically
+equivalent <em>CG_Null</em> and <em>CG_UserDefined</em>. These values are also defined in the C interface. Thus,
+either form may be used. The function prototypes for the MLL use <em>CG_Null</em>
+and <em>CG_UserDefined</em>, rather than the more specific values.</p>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="enums.html">List of enumerated values (key words) for each of these variable types (typedefs)</a></li>
+</ul>
+</div>
+</section>
+<section id="character-names-for-typedefs">
+<h2>Character Names for Typedefs<a class="headerlink" href="#character-names-for-typedefs" title="Permalink to this heading">#</a></h2>
+<p>The CGNS library defines character arrays that map the typedefs above to character strings.
+These are global arrays dimensioned to the size of each list of typedefs. To retrieve a character
+string representation of a typedef, use the typedef value as an index to the appropriate character array.
+For example, to retrieve the string “<em>Meter</em>” for the <code class="docutils literal notranslate"><span class="pre">LengthUnits_t</span></code> Meter typedef, use <code class="docutils literal notranslate"><span class="pre">LengthUnitsName[Meter]</span></code>.
+Functions are available to retrieve these names without the need for direct global data access. These functions
+also do bounds checking on the input, and if out of range, will return the string “&lt;invalid&gt;”. An additional
+benefit is that these will work from within a Windows DLL, and are thus the recommended access technique.
+The routines have the same name as the global data arrays, but with a “<em>cg_</em>” prepended.
+For the example above, use <code class="docutils literal notranslate"><span class="pre">cg_LengthUnitsName(Meter)</span></code>.</p>
+<section id="typedef-name-access-functions">
+<h3>Typedef Name Access Functions<a class="headerlink" href="#typedef-name-access-functions" title="Permalink to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_MassUnitsName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_LengthUnitsName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_TimeUnitsName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_TemperatureUnitsName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_ElectricCurrentUnitsName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_SubstanceAmountUnitsName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_LuminousIntensityUnitsName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_DataClassName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_GridLocationName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_BCDataTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_GridConnectivityTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_PointSetTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_GoverningEquationsTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_ModelTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_BCTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_DataTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_ElementTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_ZoneTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_RigidGridMotionTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_ArbitraryGridMotionTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_SimulationTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_WallFunctionTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_AreaTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “cg_AverageInterfaceTypeName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<section id="bit-c-portability-and-issues">
+<h2>64-bit C Portability and Issues<a class="headerlink" href="#bit-c-portability-and-issues" title="Permalink to this heading">#</a></h2>
+<p>If you use the <code class="docutils literal notranslate"><span class="pre">cgsize_t</span></code> data type in new code, it will work in both 32 and 64-bit compilation modes.
+In order to support CGNS versions prior to 3.1, you may also want to add something like this to your code:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#if CGNS_VERSION &lt; 3100</span>
+<span class="cp">#define cgsize_t int</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+<p>Existing code that uses <em>int</em> will not work with a CGNS 3.1 library compiled in 64-bit mode. You may want
+to add something like this to your code:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#if CGNS_VERSION &gt;= 3100 &amp;&amp; CG_BUILD_64BIT</span>
+<span class="cp">#error does not work in 64 bit mode</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+<p>or modify your code to use <code class="docutils literal notranslate"><span class="pre">cgsize_t</span></code>.</p>
+</section>
+<section id="calling-cgns-from-fortran">
+<span id="callingcgnsfortran-ref"></span><h2>Calling CGNS from Fortran<a class="headerlink" href="#calling-cgns-from-fortran" title="Permalink to this heading">#</a></h2>
+<p>Starting with CGNS-3.3.0, a new CGNS module was added to the library. Fortran programs can
+use the new module by adding <code class="docutils literal notranslate"><span class="pre">USE</span> <span class="pre">CGNS</span></code>. The use of <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">'cgnslib_f.h'</span></code> is deprecated as of CGNS-3.3.0.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Fortran Helper Functions</strong></p>
+<div class="highlight-Fortran notranslate"><div class="highlight"><pre><span></span><span class="k">FUNCTION </span><span class="n">cg_get_type</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns the data type of <code class="docutils literal notranslate"><span class="pre">buf</span></code>, where <code class="docutils literal notranslate"><span class="pre">buf</span></code> is a scalar. This is a useful function
+for automatically passing the correct data type of a buffer.</p>
+<p>For example:</p>
+<div class="highlight-Fortran notranslate"><div class="highlight"><pre><span></span><span class="k">CALL </span><span class="n">cg_coord_read_f</span><span class="p">(</span><span class="n">cg</span><span class="p">,</span><span class="n">base</span><span class="p">,</span><span class="n">zone</span><span class="p">,</span><span class="n">coordname</span><span class="p">,</span><span class="n">cg_get_type</span><span class="p">(</span><span class="n">mydata</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span><span class="n">rmin</span><span class="p">,</span><span class="n">DataSize</span><span class="p">,</span><span class="n">mydata</span><span class="p">,</span><span class="n">ier</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="bit-fortran-portability">
+<span id="cgnsfortranport-ref"></span><h2>64-bit Fortran Portability<a class="headerlink" href="#bit-fortran-portability" title="Permalink to this heading">#</a></h2>
+<p>Starting with CGNS-3.3.0, the Fortran APIs have the following specifications (recommended for portability):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Fortran arguments should be declared as the default <code class="docutils literal notranslate"><span class="pre">INTEGER</span></code> if the corresponding argument in the C API is declared as an <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p></li>
+<li><p>Fortran arguments should be declared as <code class="docutils literal notranslate"><span class="pre">INTEGER(cgsize_t)</span></code> if the corresponding argument in the C API is declared as <code class="docutils literal notranslate"><span class="pre">cgsize_t</span></code>.</p></li>
+<li><p>Fortran arguments should be declared as type <code class="docutils literal notranslate"><span class="pre">INTEGER(cgenum_t)</span></code> if the corresponding argument in the C API is declared as <a class="reference internal" href="#typedefs-ref"><span class="std std-ref">enumerated values (enums)</span></a>.</p></li>
+</ul>
+</div></blockquote>
+<p>An integer parameter,`` CG_BUILD_64BIT``, can be used to tell the size of <code class="docutils literal notranslate"><span class="pre">cgsize_t</span></code>, which will be set to 1 in 64-bit mode and 0 otherwise. You may use this parameter to check at run time if the CGNS library has been compiled in 64-bit mode or not, as in:</p>
+<div class="highlight-Fortran notranslate"><div class="highlight"><pre><span></span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">CG_BUILD_64BIT</span><span class="w"> </span><span class="p">.</span><span class="n">NE</span><span class="p">.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">    PRINT</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;will not work in 64-bit mode&#39;</span>
+<span class="w">    </span><span class="k">STOP</span>
+<span class="k">ENDIF</span>
+</pre></div>
+</div>
+<p>If you are using a CGNS library prior to version 3.1, this parameter will not be defined, and you will need to
+rely on your compiler initializing all undefined values to 0 (not always the case) for this test to work.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>The following practice is not recommended!</strong></p>
+<p>If you have explicitly defined your default integers, which are passed to the CGNS library as <code class="docutils literal notranslate"><span class="pre">INTEGER*8</span></code>, or used
+a compiler option to promote implicit integers to <code class="docutils literal notranslate"><span class="pre">INTEGER*8</span></code>, then you MUST compile the CGNS library with the same
+compiler option to promote implicit integers to <code class="docutils literal notranslate"><span class="pre">INTEGER*8</span></code>. If you really must promote all integers
+to <code class="docutils literal notranslate"><span class="pre">INTEGER*8</span></code> in your code, and you are not able to compile the CGNS library with the same compiler options, then
+it is recommended that all arguments in the CGNS Fortran APIs should be declared as <code class="docutils literal notranslate"><span class="pre">INTEGER(C_INT)</span></code> if the
+corresponding argument in the C API is declared as an <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../CGNS_MLL.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">CGNS/MLL - C and Fortran APIs for Applications</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="enums.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">List of enumerated values (key words) for each of these variable types (typedefs)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acquiring-the-software-and-documentation">Acquiring the Software and Documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#organization-of-this-manual">Organization of This Manual</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">Syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#language">Language</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#character-strings">Character Strings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-status">Error Status</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typedefs">Typedefs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#character-names-for-typedefs">Character Names for Typedefs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typedef-name-access-functions">Typedef Name Access Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit-c-portability-and-issues">64-bit C Portability and Issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-cgns-from-fortran">Calling CGNS from Fortran</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit-fortran-portability">64-bit Fortran Portability</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Dedicated to the public domain with <a href="https://creativecommons.org/publicdomain/zero/1.0/" class="reference external">CC0 1.0</a>.
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

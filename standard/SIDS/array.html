@@ -1,132 +1,484 @@
+
+
 <!DOCTYPE html>
 
-<html lang="en">
+
+<html lang="en" data-content_root="" data-theme="light">
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>5. Data-Array Structure Definitions &#8212; CGNS Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <!-- Licensed under the Apache 2.0 License -->
-  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
-  <!-- Licensed under the SIL Open Font License -->
-  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
-  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
   
-    <title>5. Data-Array Structure Definitions &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css?v=ee5bbeb1" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css?v=2c72f61b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css?v=97141bf4" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css?v=593b94c8" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=117e2fac"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="icon" href="../../_static/CGNS_empty.ico"/>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'standard/SIDS/array';</script>
+    <link rel="canonical" href="https://cgns.org/standard/SIDS/array.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="6. Hierarchical Structures" href="hierarchy.html" />
     <link rel="prev" title="4. Building Block Structure Definition" href="block.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
   
-  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
   
-   
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="hierarchy.html" title="6. Hierarchical Structures"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="block.html" title="4. Building Block Structure Definition"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" accesskey="U">CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>Data-Array Structure Definitions</a></li> 
-      </ul>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-light" alt="CGNS Documentation - Home"/>
+    <script>document.write(`<img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark" alt="CGNS Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CGNS/CGNS" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-download fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../general.html">Introduction to CGNS</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../general/what.html">What is CGNS?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/start.html">Quick Start Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/history.html">Status and History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/FAQ.html">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/implementations.html">Implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../standard.html">Standard Specification</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Standardization bodies</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="intro.html">1. Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="design.html">2. Design Philosophy of Standard Interface Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="convention.html">3. Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="block.html">4. Building Block Structure Definition</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">5. Data-Array Structure Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">6. Hierarchical Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html">7. Grid Coordinates, Elements, and Flow Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multizone.html">8. Multizone Interface Connectivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boundary.html">9. Boundary Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="equation.html">10. Governing Flow Equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html">11. Time-Dependent Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="misc.html">12. Miscellaneous Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particles.html">13. Particle Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix_a.html">Appendix A: Conventions for Data-Name Identifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix_b.html">Appendix B: Structured Two-Zone Flat Plate Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_FMM.html">CGNS/FMM - Data model mapping to implementation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../FMM/nodes.html">Detailed CGNS Node Descriptions</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../FMM/figures.html">CGNS File Mapping Figures</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ArbitraryGridMotion.html">ArbitraryGridMotion Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Area.html">Area Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/AverageInterface.html">AverageInterface Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Axisymmetry.html">Axisymmetry Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BaseIterativeData.html">BaseIterativeData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BC.html">BC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BCData.html">BCData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BCDataSet.html">BCDataSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BCProperty.html">BCProperty Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/CGNSBase.html">CGNSBase Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ChemicalKineticsModel.html">ChemicalKineticsModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ConvergenceHistory.html">ConvergenceHistory Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/DataArray.html">DataArray Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/DimensionalExponents.html">DimensionalExponents Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/DimensionalUnits.html">DimensionalUnits Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Elements.html">Elements Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/EMConductivityModel.html">EMConductivityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/EMElectricFieldModel.html">EMElectricFieldModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/EMMagneticFieldModel.html">EMMagneticFieldModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Family.html">Family Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FamilyBC.html">FamilyBC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FamilyBCDataSet.html">FamilyBCDataSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FlowEquationSet.html">FlowEquationSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FlowSolution.html">FlowSolution/DiscreteData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GasModel.html">GasModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GeometryReference.html">GeometryReference Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GoverningEquations.html">GoverningEquations Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Gravity.html">Gravity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridConnectivity.html">GridConnectivity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridConnectivity1to1.html">GridConnectivity1to1 Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridConnectivityProperty.html">GridConnectivityProperty Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridCoordinates.html">GridCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/IntegralData.html">IntegralData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/OversetHoles.html">OversetHoles Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleBreakupModel.html">ParticleBreakupModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleCollisionModel.html">ParticleCollisionModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleCoordinates.html">ParticleCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleEquationSet.html">ParticleEquationSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleForceModel.html">ParticleForceModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleGoverningEquations.html">ParticleGoverningEquations Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticlePhaseChangeModel.html">ParticlePhaseChangeModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleSolution.html">ParticleSolution Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleWallInteractionModel.html">ParticleWallInteractionModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleZone.html">ParticleZone Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Periodic.html">Periodic Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ReferenceState.html">ReferenceState Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/RigidGridMotion.html">RigidGridMotion Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/RotatingCoordinates.html">RotatingCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ThermalConductivityModel.html">ThermalConductivityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ThermalRelaxationModel.html">ThermalRelaxationModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/TurbulenceClosure.html">TurbulenceClosure Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/TurbulenceModel.html">TurbulenceModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/UserDefinedData.html">UserDefinedData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ViscosityModel.html">ViscosityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/WallFunction.html">WallFunction Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Zone.html">Zone Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneBC.html">ZoneBC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneGridConnectivity.html">ZoneGridConnectivity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneIterativeData.html">ZoneIterativeData/ParticleIterativeData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneSubRegion.html">ZoneSubRegion Figure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../MLL/CGNS_MLL.html">CGNS/MLL - C and Fortran APIs for Applications</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../MLL/api/general_remarks.html">General Remarks</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MLL/api/enums.html">List of enumerated values (key words) for each of these variable types (typedefs)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MLL/api/c_api.html">CGNS/MLL API Overview for C and Fortran applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MLL/api/c_parallel_api.html">CGNS Parallel API Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_database.html">Database-Level Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_structure.html">Data Structure Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_links.html">Link Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_node.html">Node Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_dataio.html">Data I/O Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_errors.html">Error Handling Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_misc.html">Miscellaneous Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_example.html">Code Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hdf5.html">CGNS/HDF5 - An HPC implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python.html">CGNS/Python - A Python implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../current.html">Resources</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../current/news.html">News</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../current/CPEX.html">CPEX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../current/download.html">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../current/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../current/softwarelist.html">More CGNS Software</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../doc.html">More documentation</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doc/papers.html">Papers</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../doc/userguide.html">User’s Guide to CGNS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../governance.html">CGNS Governance</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../governance/committee.html">Steering Committee</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../governance/meetings.html">Meetings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../governance/support.html">Support</a></li>
+</ul>
+</li>
+</ul>
+
     </div>
-    <div class="container-wrapper">
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
-      <div id="mobile-toggle">
-        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+
       </div>
-  <div id="left-column">
-    <div class="sphinxsidebar">
-<div class="sidebar-block">
-  <div class="sidebar-wrapper">
-    <div id="main-search">
-      <form class="form-inline" action="../../search.html" method="GET" role="form">
-        <div class="input-group">
-          <input name="q" type="text" class="form-control" placeholder="Search...">
-        </div>
-        <input type="hidden" name="check_keywords" value="yes" />
-        <input type="hidden" name="area" value="default" />
-      </form>
-    </div>
-  </div>
-</div>
-<div class="sidebar-block">
-  <div class="sidebar-wrapper">
-    <h2>Contents</h2>
-    <div class="sidebar-localtoc">
-      <ul>
-<li><a class="reference internal" href="#">5. Data-Array Structure Definitions</a><ul>
-<li><a class="reference internal" href="#definition-dataarray-t">5.1. Definition <code class="docutils literal notranslate"><span class="pre">DataArray_t</span></code></a><ul>
-<li><a class="reference internal" href="#definition-dataconversion-t">5.1.1. Definition <code class="docutils literal notranslate"><span class="pre">DataConversion_t</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#data-manipulation">5.2. Data Manipulation</a><ul>
-<li><a class="reference internal" href="#dimensional-data">5.2.1. Dimensional Data</a></li>
-<li><a class="reference internal" href="#nondimensional-data-normalized-by-dimensional-quantities">5.2.2. Nondimensional Data Normalized by Dimensional Quantities</a></li>
-<li><a class="reference internal" href="#nondimensional-data-normalized-by-unknown-dimensional-quantities">5.2.3. Nondimensional Data Normalized by Unknown Dimensional Quantities</a></li>
-<li><a class="reference internal" href="#nondimensional-parameters">5.2.4. Nondimensional Parameters</a></li>
-<li><a class="reference internal" href="#dimensionless-constants">5.2.5. Dimensionless Constants</a></li>
-<li><a class="reference internal" href="#data-array-examples">5.2.6. Data-Array Examples</a><ul>
-<li><a class="reference internal" href="#example-one-dimensional-data-array-constants">5.2.6.1. Example - One-Dimensional Data Array, Constants</a></li>
-<li><a class="reference internal" href="#example-two-dimensional-data-array-pressures">5.2.6.2. Example - Two-Dimensional Data Array, Pressures</a></li>
-<li><a class="reference internal" href="#example-three-dimensional-data-array-nondimensional-static-enthalpy">5.2.6.3. Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy</a></li>
-<li><a class="reference internal" href="#example-three-dimensional-data-array-nondimensional-database">5.2.6.4. Example - Three-Dimensional Data Array, Nondimensional Database</a></li>
-<li><a class="reference internal" href="#example-data-arrays-for-reynolds-number">5.2.6.5. Example - Data Arrays for Reynolds Number</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-    </div>
-  </div>
-</div>
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
       
     </div>
-  </div>
-        <div id="right-column">
-          
-          <div role="navigation" aria-label="breadcrumbs navigation">
-            <ol class="breadcrumb">
-              <li><a href="../../index.html">Docs</a></li>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CGNS/cgns-modern.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CGNS/cgns-modern.github.io/issues/new?title=Issue%20on%20page%20%2Fstandard/SIDS/array.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
               
-                <li><a href="../../standard.html">Standard Specification</a></li>
               
-                <li><a href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a></li>
-              
-              <li><span class="section-number">5. </span>Data-Array Structure Definitions</li>
-            </ol>
-          </div>
-          
-          <div class="document clearer body">
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data-Array Structure Definitions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-dataarray-t">5.1. Definition <code class="docutils literal notranslate"><span class="pre">DataArray_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-dataconversion-t">5.1.1. Definition <code class="docutils literal notranslate"><span class="pre">DataConversion_t</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-manipulation">5.2. Data Manipulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensional-data">5.2.1. Dimensional Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nondimensional-data-normalized-by-dimensional-quantities">5.2.2. Nondimensional Data Normalized by Dimensional Quantities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nondimensional-data-normalized-by-unknown-dimensional-quantities">5.2.3. Nondimensional Data Normalized by Unknown Dimensional Quantities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nondimensional-parameters">5.2.4. Nondimensional Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionless-constants">5.2.5. Dimensionless Constants</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-array-examples">5.2.6. Data-Array Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-one-dimensional-data-array-constants">5.2.6.1. Example - One-Dimensional Data Array, Constants</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-two-dimensional-data-array-pressures">5.2.6.2. Example - Two-Dimensional Data Array, Pressures</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-three-dimensional-data-array-nondimensional-static-enthalpy">5.2.6.3. Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-three-dimensional-data-array-nondimensional-database">5.2.6.4. Example - Three-Dimensional Data Array, Nondimensional Database</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-data-arrays-for-reynolds-number">5.2.6.5. Example - Data Arrays for Reynolds Number</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section id="data-array-structure-definitions">
-<span id="standarddataarraystruct"></span><h1><span class="section-number">5. </span>Data-Array Structure Definitions<a class="headerlink" href="#data-array-structure-definitions" title="Permalink to this heading">¶</a></h1>
+<span id="standarddataarraystruct"></span><h1><span class="section-number">5. </span>Data-Array Structure Definitions<a class="headerlink" href="#data-array-structure-definitions" title="Permalink to this heading">#</a></h1>
 <p>This section defines the structure type <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> for describing data arrays.
 This general-purpose structure is used to declare data arrays and scalars throughout the CGNS hierarchy.
 It is used to describe grid coordinates, flow-solution data, governing flow parameters, boundary-condition data, and other information.
@@ -149,7 +501,7 @@ These requirements are reflected in the structure definition for <code class="co
 <p>The remainder of this section is as follows: The structure type <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is first defined.
 Then the class identification and data manipulation is discussed for each of the five data classes. Finally, examples of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities are presented.</p>
 <section id="definition-dataarray-t">
-<h2><span class="section-number">5.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataArray_t</span></code><a class="headerlink" href="#definition-dataarray-t" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">5.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataArray_t</span></code><a class="headerlink" href="#definition-dataarray-t" title="Permalink to this heading">#</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> describes a multi-dimensional data array of given type, dimensionality and size in each dimension. The data may be dimensional, nondimensional or pure constants. Qualifiers are provided to describe dimensional units or normalization information associated with the data.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">DataArray_t</span><span class="o">&lt;</span><span class="w"> </span><span class="n">DataType</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Dimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">Dimension</span><span class="p">]</span><span class="w"> </span><span class="n">DimensionValues</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
@@ -180,7 +532,7 @@ Then the class identification and data manipulation is discussed for each of the
 Therefore, for vector quantities (e.g., the position vector or the velocity vector), separate structure entities are required for each component of the vector.
 For example, the Cartesian coordinates of a 3-D grid are described by three separate <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities: one for x, one for y and one for z (see the example for <span class="xref std std-ref">Cartesian Coordinates for a 2-D Structured Grid</span>).</p>
 <section id="definition-dataconversion-t">
-<h3><span class="section-number">5.1.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataConversion_t</span></code><a class="headerlink" href="#definition-dataconversion-t" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">5.1.1. </span>Definition <code class="docutils literal notranslate"><span class="pre">DataConversion_t</span></code><a class="headerlink" href="#definition-dataconversion-t" title="Permalink to this heading">#</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion_t</span></code> contains conversion factors for recovering raw dimensional data from given nondimensional data. These conversion factors are typically associated with nondimensional data that is normalized by dimensional reference quantities.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">DataConversion_t</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
@@ -198,7 +550,7 @@ For example, the Cartesian coordinates of a 3-D grid are described by three sepa
 </section>
 </section>
 <section id="data-manipulation">
-<h2><span class="section-number">5.2. </span>Data Manipulation<a class="headerlink" href="#data-manipulation" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">5.2. </span>Data Manipulation<a class="headerlink" href="#data-manipulation" title="Permalink to this heading">#</a></h2>
 <p>The optional entities of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> provide information for manipulating the data, including changing units or normalization.
 This section describes the rules under which these optional entities operate and the specific manipulations that can be performed on the data.</p>
 <p>Within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code>, the class of data and all information required for manipulations may be completely and precisely specified by the entities <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code>.
@@ -213,7 +565,7 @@ The rules for determining the appropriate set of global data to apply is further
 Examples that make use of global data are available for both <a class="reference internal" href="grid.html#grid-example"><span class="std std-ref">grid coordinates</span></a> and <span class="xref std std-ref">flow solutions</span>.
 A complete <span class="xref std std-ref">two-zone example</span> case also depicts this alternate functionality.</p>
 <section id="dimensional-data">
-<span id="dimensional"></span><h3><span class="section-number">5.2.1. </span>Dimensional Data<a class="headerlink" href="#dimensional-data" title="Permalink to this heading">¶</a></h3>
+<span id="dimensional"></span><h3><span class="section-number">5.2.1. </span>Dimensional Data<a class="headerlink" href="#dimensional-data" title="Permalink to this heading">#</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">Dimensional</span></code>, the data is dimensional.
 The optional qualifiers <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> describe dimensional units associated with the data.
 These qualifiers are provided to specify the system of dimensional units and the dimensional exponents, respectively.
@@ -225,7 +577,7 @@ The rules for determining this appropriate set of global dimensional units are p
 Otherwise, the exponents are unspecified. We strongly recommend inclusion of the <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> qualifier whenever the data is dimensional and the instance of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> is not among the list of standardized identifiers.</p>
 </section>
 <section id="nondimensional-data-normalized-by-dimensional-quantities">
-<span id="normbydim"></span><h3><span class="section-number">5.2.2. </span>Nondimensional Data Normalized by Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-dimensional-quantities" title="Permalink to this heading">¶</a></h3>
+<span id="normbydim"></span><h3><span class="section-number">5.2.2. </span>Nondimensional Data Normalized by Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-dimensional-quantities" title="Permalink to this heading">#</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByDimensional</span></code>, the data is nondimensional and is normalized by dimensional reference quantities.
 All optional entities in <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> are used. <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> contains factors to convert the nondimensional data to “raw” dimensional data; these factors are <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionScale</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">ConversionOffset</span></code>.
 The conversion process is as follows:</p>
@@ -242,7 +594,7 @@ In the first case the data is dimensional, and in the second, the converted raw 
 Also, the equivalent defaults for <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> produce no changes in the data; hence, it is almost the same as stating the original data is dimensional.</p>
 </section>
 <section id="nondimensional-data-normalized-by-unknown-dimensional-quantities">
-<h3><span class="section-number">5.2.3. </span>Nondimensional Data Normalized by Unknown Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-unknown-dimensional-quantities" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">5.2.3. </span>Nondimensional Data Normalized by Unknown Dimensional Quantities<a class="headerlink" href="#nondimensional-data-normalized-by-unknown-dimensional-quantities" title="Permalink to this heading">#</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> = <code class="code sidskey docutils literal notranslate"><span class="pre">NormalizedByUnknownDimensional</span></code>, the data is nondimensional and is normalized by some unspecified dimensional quantities.
 This type of data is typical of a completely nondimensional test case, where all field data and all reference quantities are nondimensional.</p>
 <p>Only the <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> qualifier is used in this case, although it is expected that this qualifier will be seldom utilized in practice.
@@ -254,7 +606,7 @@ We describe this process in detail in the following. A complete <span class="xre
 The problem with this practice is that to manipulate the data from a given code, one must often know the particulars of the nondimensionalization used.
 This largely results from what we call inconsistent normalization - more than the minimum required scales are used to normalize data within the code.
 For example, in the <em>OVERFLOW</em> flow solver, the following nondimensionalization is used:</p>
-<table class="docutils align-default">
+<table class="table">
 <tbody>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x' = x / L\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(u' = u / (L/T)\)</span></p></td>
@@ -272,7 +624,7 @@ For example, in the <em>OVERFLOW</em> flow solver, the following nondimensionali
 </table>
 <p>where primed quantities are nondimensional and all others are dimensional.</p>
 <p>Consider an existing database where all field data and all reference data is nondimensional and normalized as shown. Assume the database has a single reference state given by,</p>
-<table class="docutils align-default">
+<table class="table">
 <tbody>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x'_{ref} = x_{ref}  / L\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(u'_{ref} = u_{ref}  / (L/T)\)</span></p></td>
@@ -316,7 +668,7 @@ On output, the code could renormalize data so it is consistently normalized.
 Probably, the easiest method would be to remove the molecular viscosity scale (<span class="math notranslate nohighlight">\(\mu_\infty\)</span>), and only use <span class="math notranslate nohighlight">\(L\)</span>, <span class="math notranslate nohighlight">\(\rho_\infty\)</span> and <span class="math notranslate nohighlight">\(c_\infty\)</span> for all normalizations (recall these are dimensional scales).
 The only change from the above example would be the nondimensionalization of viscosity, which would become <span class="math notranslate nohighlight">\(\mu'' = \mu / (\rho_\infty c_\infty L)\)</span>.
 The code could then output all field data as,</p>
-<table class="docutils align-default">
+<table class="table">
 <tbody>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x'_{ijk} = x_{ijk} / L\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(u'_{ijk} = u_{ijk} / c_\infty\)</span></p></td>
@@ -333,7 +685,7 @@ The code could then output all field data as,</p>
 </tbody>
 </table>
 <p>and output the freestream reference quantities,</p>
-<table class="docutils align-default">
+<table class="table">
 <tbody>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(u'_\infty = u_\infty / c_\infty\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\rho'_\infty = \rho_\infty / \rho_\infty = 1\)</span></p></td>
@@ -353,7 +705,7 @@ The code could then output all field data as,</p>
 <p>On input, the flow solver should be able to recover its internal normalizations from the data in a nondimensional CGNS database by treating the data as if it were dimensional.</p>
 </section>
 <section id="nondimensional-parameters">
-<h3><span class="section-number">5.2.4. </span>Nondimensional Parameters<a class="headerlink" href="#nondimensional-parameters" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">5.2.4. </span>Nondimensional Parameters<a class="headerlink" href="#nondimensional-parameters" title="Permalink to this heading">#</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">NondimensionalParameter</span></code>, the data is a nondimensional parameter (or array of nondimensional parameters). Examples include Mach number, Reynolds number and pressure coefficient. These parameters are prevalent in CFD, although their definitions tend to vary between different application codes. A list of <span class="xref std std-ref">standardized data-name identifiers for nondimensional parameters</span> is provided.</p>
 <p>We distinguish nondimensional parameters from other data classes by the fact that they are <em>always</em> dimensionless. In a completely nondimensional database, they are distinct in that their normalization is not necessarily consistent with other data.</p>
 <p>Typically, the <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> qualifiers are not used for nondimensional parameters; although, there are a few situations where they may be used (these are discussed below).
@@ -370,14 +722,14 @@ Conversely, Reynolds number is a parameter that violates the second requirement 
 For nondimensional parameters that satisfy these two requirements, the qualifiers <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> may be used as in the section <a class="reference internal" href="#normbydim"><span class="std std-ref">Nondimensional Data Normalized by Dimensional Quantities</span></a> to recover the raw dimensional data.</p>
 </section>
 <section id="dimensionless-constants">
-<h3><span class="section-number">5.2.5. </span>Dimensionless Constants<a class="headerlink" href="#dimensionless-constants" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">5.2.5. </span>Dimensionless Constants<a class="headerlink" href="#dimensionless-constants" title="Permalink to this heading">#</a></h3>
 <p>If <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">DimensionlessConstant</span></code>, the data is a constant (or array of constants) with no associated dimensional units. The <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataConversion</span></code> qualifiers are not used.</p>
 </section>
 <section id="data-array-examples">
-<h3><span class="section-number">5.2.6. </span>Data-Array Examples<a class="headerlink" href="#data-array-examples" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">5.2.6. </span>Data-Array Examples<a class="headerlink" href="#data-array-examples" title="Permalink to this heading">#</a></h3>
 <p>This section presents five examples of data-array entities and illustrates the use of optional information for describing dimensional and nondimensional data.</p>
 <section id="example-one-dimensional-data-array-constants">
-<h4><span class="section-number">5.2.6.1. </span>Example - One-Dimensional Data Array, Constants<a class="headerlink" href="#example-one-dimensional-data-array-constants" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">5.2.6.1. </span>Example - One-Dimensional Data Array, Constants<a class="headerlink" href="#example-one-dimensional-data-array-constants" title="Permalink to this heading">#</a></h4>
 <p>A one-dimensional array of integers; the array is the integers from 1 to 10. The data is pure constants.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = int</span>
 <span class="c1">!  Dimension = 1</span>
@@ -393,7 +745,7 @@ For nondimensional parameters that satisfy these two requirements, the qualifier
 <p>The structure parameters for <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> state the data is an one-dimensional integer array of length ten. The value of <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> indicates the data is <span class="xref std std-ref">unitless constants</span>.</p>
 </section>
 <section id="example-two-dimensional-data-array-pressures">
-<span id="ex-data2"></span><h4><span class="section-number">5.2.6.2. </span>Example - Two-Dimensional Data Array, Pressures<a class="headerlink" href="#example-two-dimensional-data-array-pressures" title="Permalink to this heading">¶</a></h4>
+<span id="ex-data2"></span><h4><span class="section-number">5.2.6.2. </span>Example - Two-Dimensional Data Array, Pressures<a class="headerlink" href="#example-two-dimensional-data-array-pressures" title="Permalink to this heading">#</a></h4>
 <p>A two-dimensional array of pressures with size <span class="math notranslate nohighlight">\(11 \times 9\)</span> given by the array <span class="math notranslate nohighlight">\(P(i,j)\)</span>.
 The data is dimensional with units of <span class="math notranslate nohighlight">\(N/m^{2}\)</span> (i.e., <span class="math notranslate nohighlight">\(kg/(m s^{2})\)</span>).
 Note that Pressure is the data-name identifier for static pressure.</p>
@@ -434,7 +786,7 @@ Combining the information gives pressure as <span class="math notranslate nohigh
 <p>Note that FORTRAN multidimensional array indexing is used to store the data; this is reflected in the FORTRAN-like implied do-loops for <span class="math notranslate nohighlight">\(P(i,j)\)</span>.</p>
 </section>
 <section id="example-three-dimensional-data-array-nondimensional-static-enthalpy">
-<h4><span class="section-number">5.2.6.3. </span>Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-static-enthalpy" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">5.2.6.3. </span>Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-static-enthalpy" title="Permalink to this heading">#</a></h4>
 <p>A 3-D array of size <span class="math notranslate nohighlight">\(33 \times 9 \times 17\)</span> containing nondimensional static enthalpy.
 The data is normalized by freestream velocity as follows:</p>
 <div class="math notranslate nohighlight">
@@ -482,7 +834,7 @@ The freestream velocity is dimensional with a value of 10 m/s.</p>
 Note that <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalExponents</span></code> could have been defaulted using the conventions for the data-name identifier <code class="code sidskey docutils literal notranslate"><span class="pre">Enthalpy</span></code>.</p>
 </section>
 <section id="example-three-dimensional-data-array-nondimensional-database">
-<h4><span class="section-number">5.2.6.4. </span>Example - Three-Dimensional Data Array, Nondimensional Database<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-database" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">5.2.6.4. </span>Example - Three-Dimensional Data Array, Nondimensional Database<a class="headerlink" href="#example-three-dimensional-data-array-nondimensional-database" title="Permalink to this heading">#</a></h4>
 <p>The previous example for nondimensional enthalpy is repeated for a completely nondimensional database.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = real</span>
 <span class="c1">!  Dimension = 3</span>
@@ -498,7 +850,7 @@ Note that <code class="code sidskey docutils literal notranslate"><span class="p
 <p>The value of <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> indicates the appropriate class.</p>
 </section>
 <section id="example-data-arrays-for-reynolds-number">
-<h4><span class="section-number">5.2.6.5. </span>Example - Data Arrays for Reynolds Number<a class="headerlink" href="#example-data-arrays-for-reynolds-number" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">5.2.6.5. </span>Example - Data Arrays for Reynolds Number<a class="headerlink" href="#example-data-arrays-for-reynolds-number" title="Permalink to this heading">#</a></h4>
 <p>Reynolds number of <span class="math notranslate nohighlight">\(1.554 \times 10^{6}\)</span> based on a velocity scale of <span class="math notranslate nohighlight">\(10\ m/s\)</span>, a length scale of <span class="math notranslate nohighlight">\(2.3\ m\)</span> and a kinematic viscosity scale of <span class="math notranslate nohighlight">\(1.48 \times 10^{−5}\ m^{2}/s\)</span>.
 Assume the database has globally set the dimensional units to kilograms, meters, and seconds, and the global default data class to dimensional (<code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span> <span class="pre">=</span> <span class="pre">Dimensional</span></code>).</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  DataType = real</span>
@@ -537,49 +889,113 @@ The structure parameters for each <code class="code sidskey docutils literal not
 </section>
 
 
-          </div>
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="block.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Building Block Structure Definition</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="hierarchy.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Hierarchical Structures</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
             
-  <div class="footer-relations">
-    
-      <div class="pull-left">
-        <a class="btn btn-default" href="block.html" title="previous chapter (use the left arrow)"><span class="section-number">4. </span>Building Block Structure Definition</a>
-      </div>
-    
-      <div class="pull-right">
-        <a class="btn btn-default" href="hierarchy.html" title="next chapter (use the right arrow)"><span class="section-number">6. </span>Hierarchical Structures</a>
-      </div>
-    </div>
-    <div class="clearer"></div>
-  
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="hierarchy.html" title="6. Hierarchical Structures"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="block.html" title="4. Building Block Structure Definition"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" >CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>Data-Array Structure Definitions</a></li> 
-      </ul>
-    </div>
-<script type="text/javascript">
-  $("#mobile-toggle a").click(function () {
-    $("#left-column").toggle();
-  });
-</script>
-<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
-  <div class="footer">
-    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
   </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-dataarray-t">5.1. Definition <code class="docutils literal notranslate"><span class="pre">DataArray_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-dataconversion-t">5.1.1. Definition <code class="docutils literal notranslate"><span class="pre">DataConversion_t</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-manipulation">5.2. Data Manipulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensional-data">5.2.1. Dimensional Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nondimensional-data-normalized-by-dimensional-quantities">5.2.2. Nondimensional Data Normalized by Dimensional Quantities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nondimensional-data-normalized-by-unknown-dimensional-quantities">5.2.3. Nondimensional Data Normalized by Unknown Dimensional Quantities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nondimensional-parameters">5.2.4. Nondimensional Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionless-constants">5.2.5. Dimensionless Constants</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-array-examples">5.2.6. Data-Array Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-one-dimensional-data-array-constants">5.2.6.1. Example - One-Dimensional Data Array, Constants</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-two-dimensional-data-array-pressures">5.2.6.2. Example - Two-Dimensional Data Array, Pressures</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-three-dimensional-data-array-nondimensional-static-enthalpy">5.2.6.3. Example - Three-Dimensional Data Array, Nondimensional Static Enthalpy</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-three-dimensional-data-array-nondimensional-database">5.2.6.4. Example - Three-Dimensional Data Array, Nondimensional Database</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-data-arrays-for-reynolds-number">5.2.6.5. Example - Data Arrays for Reynolds Number</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Dedicated to the public domain with <a href="https://creativecommons.org/publicdomain/zero/1.0/" class="reference external">CC0 1.0</a>.
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

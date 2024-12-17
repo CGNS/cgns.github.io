@@ -1,133 +1,485 @@
+
+
 <!DOCTYPE html>
 
-<html lang="en">
+
+<html lang="en" data-content_root="" data-theme="light">
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>13. Particle Data &#8212; CGNS Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <!-- Licensed under the Apache 2.0 License -->
-  <link rel="stylesheet" type="text/css" href="../../_static/fonts/open-sans/stylesheet.css" />
-  <!-- Licensed under the SIL Open Font License -->
-  <link rel="stylesheet" type="text/css" href="../../_static/fonts/source-serif-pro/source-serif-pro.css" />
-  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap-theme.min.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
   
-    <title>13. Particle Data &#8212; CGNS Official Web Site</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../_static/guzzle.css?v=ee5bbeb1" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css?v=2c72f61b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/math_override.css?v=97141bf4" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/midlevel.css?v=593b94c8" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=117e2fac"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <link rel="icon" href="../../_static/CGNS_empty.ico"/>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'standard/SIDS/particles';</script>
+    <link rel="canonical" href="https://cgns.org/standard/SIDS/particles.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Appendix A: Conventions for Data-Name Identifiers" href="appendix_a.html" />
     <link rel="prev" title="12. Miscellaneous Data Structures" href="misc.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
   
-  <link rel="apple-touch-icon" href="../../_static/CGNS_empty.svg" />
   
-   
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="appendix_a.html" title="Appendix A: Conventions for Data-Name Identifiers"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="misc.html" title="12. Miscellaneous Data Structures"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" accesskey="U">CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">13. </span>Particle Data</a></li> 
-      </ul>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-light" alt="CGNS Documentation - Home"/>
+    <script>document.write(`<img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark" alt="CGNS Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CGNS/CGNS" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-download fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../general.html">Introduction to CGNS</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../general/what.html">What is CGNS?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/start.html">Quick Start Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/history.html">Status and History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/FAQ.html">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/implementations.html">Implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../standard.html">Standard Specification</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Standardization bodies</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="intro.html">1. Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="design.html">2. Design Philosophy of Standard Interface Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="convention.html">3. Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="block.html">4. Building Block Structure Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html">5. Data-Array Structure Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">6. Hierarchical Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html">7. Grid Coordinates, Elements, and Flow Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multizone.html">8. Multizone Interface Connectivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boundary.html">9. Boundary Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="equation.html">10. Governing Flow Equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html">11. Time-Dependent Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="misc.html">12. Miscellaneous Data Structures</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">13. Particle Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix_a.html">Appendix A: Conventions for Data-Name Identifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix_b.html">Appendix B: Structured Two-Zone Flat Plate Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_FMM.html">CGNS/FMM - Data model mapping to implementation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../FMM/nodes.html">Detailed CGNS Node Descriptions</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../FMM/figures.html">CGNS File Mapping Figures</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ArbitraryGridMotion.html">ArbitraryGridMotion Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Area.html">Area Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/AverageInterface.html">AverageInterface Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Axisymmetry.html">Axisymmetry Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BaseIterativeData.html">BaseIterativeData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BC.html">BC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BCData.html">BCData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BCDataSet.html">BCDataSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/BCProperty.html">BCProperty Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/CGNSBase.html">CGNSBase Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ChemicalKineticsModel.html">ChemicalKineticsModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ConvergenceHistory.html">ConvergenceHistory Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/DataArray.html">DataArray Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/DimensionalExponents.html">DimensionalExponents Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/DimensionalUnits.html">DimensionalUnits Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Elements.html">Elements Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/EMConductivityModel.html">EMConductivityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/EMElectricFieldModel.html">EMElectricFieldModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/EMMagneticFieldModel.html">EMMagneticFieldModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Family.html">Family Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FamilyBC.html">FamilyBC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FamilyBCDataSet.html">FamilyBCDataSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FlowEquationSet.html">FlowEquationSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/FlowSolution.html">FlowSolution/DiscreteData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GasModel.html">GasModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GeometryReference.html">GeometryReference Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GoverningEquations.html">GoverningEquations Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Gravity.html">Gravity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridConnectivity.html">GridConnectivity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridConnectivity1to1.html">GridConnectivity1to1 Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridConnectivityProperty.html">GridConnectivityProperty Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/GridCoordinates.html">GridCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/IntegralData.html">IntegralData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/OversetHoles.html">OversetHoles Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleBreakupModel.html">ParticleBreakupModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleCollisionModel.html">ParticleCollisionModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleCoordinates.html">ParticleCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleEquationSet.html">ParticleEquationSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleForceModel.html">ParticleForceModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleGoverningEquations.html">ParticleGoverningEquations Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticlePhaseChangeModel.html">ParticlePhaseChangeModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleSolution.html">ParticleSolution Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleWallInteractionModel.html">ParticleWallInteractionModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ParticleZone.html">ParticleZone Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Periodic.html">Periodic Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ReferenceState.html">ReferenceState Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/RigidGridMotion.html">RigidGridMotion Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/RotatingCoordinates.html">RotatingCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ThermalConductivityModel.html">ThermalConductivityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ThermalRelaxationModel.html">ThermalRelaxationModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/TurbulenceClosure.html">TurbulenceClosure Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/TurbulenceModel.html">TurbulenceModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/UserDefinedData.html">UserDefinedData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ViscosityModel.html">ViscosityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/WallFunction.html">WallFunction Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/Zone.html">Zone Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneBC.html">ZoneBC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneGridConnectivity.html">ZoneGridConnectivity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneIterativeData.html">ZoneIterativeData/ParticleIterativeData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneSubRegion.html">ZoneSubRegion Figure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../MLL/CGNS_MLL.html">CGNS/MLL - C and Fortran APIs for Applications</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../MLL/api/general_remarks.html">General Remarks</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MLL/api/enums.html">List of enumerated values (key words) for each of these variable types (typedefs)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MLL/api/c_api.html">CGNS/MLL API Overview for C and Fortran applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MLL/api/c_parallel_api.html">CGNS Parallel API Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_database.html">Database-Level Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_structure.html">Data Structure Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_links.html">Link Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_node.html">Node Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_dataio.html">Data I/O Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_errors.html">Error Handling Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_misc.html">Miscellaneous Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_example.html">Code Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hdf5.html">CGNS/HDF5 - An HPC implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python.html">CGNS/Python - A Python implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../current.html">Resources</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../current/news.html">News</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../current/CPEX.html">CPEX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../current/download.html">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../current/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../current/softwarelist.html">More CGNS Software</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../doc.html">More documentation</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doc/papers.html">Papers</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../doc/userguide.html">User’s Guide to CGNS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../governance.html">CGNS Governance</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../governance/committee.html">Steering Committee</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../governance/meetings.html">Meetings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../governance/support.html">Support</a></li>
+</ul>
+</li>
+</ul>
+
     </div>
-    <div class="container-wrapper">
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
-      <div id="mobile-toggle">
-        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+
       </div>
-  <div id="left-column">
-    <div class="sphinxsidebar">
-<div class="sidebar-block">
-  <div class="sidebar-wrapper">
-    <div id="main-search">
-      <form class="form-inline" action="../../search.html" method="GET" role="form">
-        <div class="input-group">
-          <input name="q" type="text" class="form-control" placeholder="Search...">
-        </div>
-        <input type="hidden" name="check_keywords" value="yes" />
-        <input type="hidden" name="area" value="default" />
-      </form>
-    </div>
-  </div>
-</div>
-<div class="sidebar-block">
-  <div class="sidebar-wrapper">
-    <h2>Contents</h2>
-    <div class="sidebar-localtoc">
-      <ul>
-<li><a class="reference internal" href="#">13. Particle Data</a><ul>
-<li><a class="reference internal" href="#particle-zone-structure-definition-particlezone-t">13.1. Particle Zone Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code></a></li>
-<li><a class="reference internal" href="#particle-coordinates-structure-definition-particlecoordinates-t">13.2. Particle Coordinates Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code></a><ul>
-<li><a class="reference internal" href="#example-particle-coordinates-for-a-3-d-case">13.2.1. Example - Particle Coordinates for a 3-D Case</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#particle-solution-structure-definition-particlesolution-t">13.3. Particle Solution Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code></a><ul>
-<li><a class="reference internal" href="#example-particle-solution">13.3.1. Example - Particle Solution</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#particle-equation-set-structure-definition-particleequationset-t">13.4. Particle Equation Set Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleEquationSet_t</span></code></a><ul>
-<li><a class="reference internal" href="#governing-equations-structure-definition-particlegoverningequations-t">13.4.1. Governing Equations Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquations_t</span></code></a></li>
-<li><a class="reference internal" href="#particle-model-type-structure-definition-particlemodeltype-t">13.4.2. Particle Model Type Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code></a></li>
-<li><a class="reference internal" href="#particle-collision-model-structure-definition-particlecollisionmodel-t">13.4.3. Particle Collision Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModel_t</span></code></a></li>
-<li><a class="reference internal" href="#particle-breakup-model-structure-definition-particlebreakupmodel-t">13.4.4. Particle Breakup Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModel_t</span></code></a></li>
-<li><a class="reference internal" href="#particle-force-model-structure-definition-particleforcemodel-t">13.4.5. Particle Force Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModel_t</span></code></a></li>
-<li><a class="reference internal" href="#particle-wall-interaction-model-structure-definition-particlewallinteractionmodel-t">13.4.6. Particle Wall Interaction Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModel_t</span></code></a></li>
-<li><a class="reference internal" href="#particle-phase-change-model-structure-definition-particlephasechangemodel-t">13.4.7. Particle Phase Change Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModel_t</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-    </div>
-  </div>
-</div>
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
       
     </div>
-  </div>
-        <div id="right-column">
-          
-          <div role="navigation" aria-label="breadcrumbs navigation">
-            <ol class="breadcrumb">
-              <li><a href="../../index.html">Docs</a></li>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CGNS/cgns-modern.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CGNS/cgns-modern.github.io/issues/new?title=Issue%20on%20page%20%2Fstandard/SIDS/particles.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
               
-                <li><a href="../../standard.html">Standard Specification</a></li>
               
-                <li><a href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a></li>
-              
-              <li><span class="section-number">13. </span>Particle Data</li>
-            </ol>
-          </div>
-          
-          <div class="document clearer body">
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Particle Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-zone-structure-definition-particlezone-t">13.1. Particle Zone Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-coordinates-structure-definition-particlecoordinates-t">13.2. Particle Coordinates Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-particle-coordinates-for-a-3-d-case">13.2.1. Example - Particle Coordinates for a 3-D Case</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-solution-structure-definition-particlesolution-t">13.3. Particle Solution Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-particle-solution">13.3.1. Example - Particle Solution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-equation-set-structure-definition-particleequationset-t">13.4. Particle Equation Set Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleEquationSet_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#governing-equations-structure-definition-particlegoverningequations-t">13.4.1. Governing Equations Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquations_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-model-type-structure-definition-particlemodeltype-t">13.4.2. Particle Model Type Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-collision-model-structure-definition-particlecollisionmodel-t">13.4.3. Particle Collision Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModel_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-breakup-model-structure-definition-particlebreakupmodel-t">13.4.4. Particle Breakup Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModel_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-force-model-structure-definition-particleforcemodel-t">13.4.5. Particle Force Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModel_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-wall-interaction-model-structure-definition-particlewallinteractionmodel-t">13.4.6. Particle Wall Interaction Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModel_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-phase-change-model-structure-definition-particlephasechangemodel-t">13.4.7. Particle Phase Change Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModel_t</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section id="particle-data">
-<h1><span class="section-number">13. </span>Particle Data<a class="headerlink" href="#particle-data" title="Permalink to this heading">¶</a></h1>
+<h1><span class="section-number">13. </span>Particle Data<a class="headerlink" href="#particle-data" title="Permalink to this heading">#</a></h1>
 <p>This section defines structure types for describing the particle data.</p>
 <section id="particle-zone-structure-definition-particlezone-t">
-<h2><span class="section-number">13.1. </span>Particle Zone Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code><a class="headerlink" href="#particle-zone-structure-definition-particlezone-t" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">13.1. </span>Particle Zone Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code><a class="headerlink" href="#particle-zone-structure-definition-particlezone-t" title="Permalink to this heading">#</a></h2>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> structure contains all information pertinent to an individual set of particles.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleZone_t</span><span class="o">&lt;</span><span class="w"> </span><span class="n">PhysicalDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
@@ -173,7 +525,7 @@
 </div>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> requires the parameter <code class="code sidskey docutils literal notranslate"><span class="pre">PhysicalDimension</span></code>. <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSize</span></code> corresponds to the number of particles in the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code>. <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSize</span></code> identifies the size of the particle-size arrays and is passed on to the particle coordinates and particle solution.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code> structure contains the physical coordinates of the center of each particle in the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code>. The original particle coordinates are contained in <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates</span></code>. Additional <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code> data structures are allowed, to store particles at multiple time steps or iterations.</p>
-<p><code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code> identifies to which family particles belongs. Where multiple families are desired, <code class="code sidskey docutils literal notranslate"><span class="pre">AdditionalFamilyName</span></code> nodes may be used to specify them. Both <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">AdditionalFamilyName</span></code> should refer to a <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> level <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code>, in the parent base of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> or in another sibling base (see <span class="xref std std-ref">Base Level Families</span>).</p>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code> identifies to which family particles belongs. Where multiple families are desired, <code class="code sidskey docutils literal notranslate"><span class="pre">AdditionalFamilyName</span></code> nodes may be used to specify them. Both <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">AdditionalFamilyName</span></code> should refer to a <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> level <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code>, in the parent base of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> or in another sibling base (see <a class="reference internal" href="hierarchy.html#base-level-families"><span class="std std-ref">Base Level Families</span></a>).</p>
 <p>Particle-solution quantities are contained in the list of <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code> structures.
 Multiple <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code> structures can be provided to store
 particle-solution data at multiple time steps or iterations.</p>
@@ -187,7 +539,7 @@ in the list of <code class="code sidsref docutils literal notranslate"><span cla
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidsref docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 </section>
 <section id="particle-coordinates-structure-definition-particlecoordinates-t">
-<h2><span class="section-number">13.2. </span>Particle Coordinates Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code><a class="headerlink" href="#particle-coordinates-structure-definition-particlecoordinates-t" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">13.2. </span>Particle Coordinates Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code><a class="headerlink" href="#particle-coordinates-structure-definition-particlecoordinates-t" title="Permalink to this heading">#</a></h2>
 <p>The physical coordinates of the particle centers are described by the
 <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code> structure. This structure contains a list for the data arrays of the individual components of the position vector.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleCoordinates_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ParticleSize</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PhysicalDimension</span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
@@ -221,7 +573,7 @@ in the list of <code class="code sidsref docutils literal notranslate"><span cla
 described in <span class="xref std std-ref">Conventions for Data-Name Identifiers</span>.</p>
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default class for data contained in the <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities. For dimensional grid coordinates, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of units employed. If present, these two entities take precedence over the corresponding entities at higher levels of the CGNS hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>. An example that uses these particle-coordinate defaults is shown under <a class="reference internal" href="#particlecoordinatesexample"><span class="std std-ref">Particle Coordinates Examples</span></a>.</p>
 <section id="example-particle-coordinates-for-a-3-d-case">
-<span id="particlecoordinatesexample"></span><h3><span class="section-number">13.2.1. </span>Example - Particle Coordinates for a 3-D Case<a class="headerlink" href="#example-particle-coordinates-for-a-3-d-case" title="Permalink to this heading">¶</a></h3>
+<span id="particlecoordinatesexample"></span><h3><span class="section-number">13.2.1. </span>Example - Particle Coordinates for a 3-D Case<a class="headerlink" href="#example-particle-coordinates-for-a-3-d-case" title="Permalink to this heading">#</a></h3>
 <p>This example show how to set the particle coordinates in the case where <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSize</span></code> is 15.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  ParticleSize = 15</span>
 <span class="kt">ParticleCoordinates_t</span><span class="o">&lt;</span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ParticleCoordinates</span><span class="w"> </span><span class="o">=</span>
@@ -249,7 +601,7 @@ described in <span class="xref std std-ref">Conventions for Data-Name Identifier
 </section>
 </section>
 <section id="particle-solution-structure-definition-particlesolution-t">
-<span id="particlesolution"></span><h2><span class="section-number">13.3. </span>Particle Solution Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code><a class="headerlink" href="#particle-solution-structure-definition-particlesolution-t" title="Permalink to this heading">¶</a></h2>
+<span id="sids-particlesolution"></span><h2><span class="section-number">13.3. </span>Particle Solution Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code><a class="headerlink" href="#particle-solution-structure-definition-particlesolution-t" title="Permalink to this heading">#</a></h2>
 <p>The solution on each particle within a given <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> is described by the
 <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code> structure.
 This structure contains a list for the data arrays of the individual
@@ -301,7 +653,7 @@ and correspond to the solution for the entire particle.</p>
 </dd></dl>
 
 <section id="example-particle-solution">
-<span id="particlesolutionexample"></span><h3><span class="section-number">13.3.1. </span>Example - Particle Solution<a class="headerlink" href="#example-particle-solution" title="Permalink to this heading">¶</a></h3>
+<span id="particlesolutionexample"></span><h3><span class="section-number">13.3.1. </span>Example - Particle Solution<a class="headerlink" href="#example-particle-solution" title="Permalink to this heading">#</a></h3>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleSolution_t</span><span class="o">&lt;</span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ParticleSolution</span><span class="w"> </span><span class="o">=</span>
 <span class="w">  </span><span class="p">{{</span>
 
@@ -338,7 +690,7 @@ and correspond to the solution for the entire particle.</p>
 </section>
 </section>
 <section id="particle-equation-set-structure-definition-particleequationset-t">
-<span id="particleequationset"></span><h2><span class="section-number">13.4. </span>Particle Equation Set Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleEquationSet_t</span></code><a class="headerlink" href="#particle-equation-set-structure-definition-particleequationset-t" title="Permalink to this heading">¶</a></h2>
+<span id="sids-particleequationset"></span><h2><span class="section-number">13.4. </span>Particle Equation Set Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleEquationSet_t</span></code><a class="headerlink" href="#particle-equation-set-structure-definition-particleequationset-t" title="Permalink to this heading">#</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleEquationSet_t</span></code> is a general description of the governing particle equations. It includes the dimensionality of the governing equations, and the collection of specific equation-set descriptions covered in subsequent sections. It can be a child node of <code class="code sidsref docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> or <code class="code sidsref docutils literal notranslate"><span class="pre">ParticleZone_t</span></code> (or both).</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleEquationSet_t</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
@@ -377,7 +729,7 @@ and correspond to the solution for the entire particle.</p>
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the flow-equation set. For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <section id="governing-equations-structure-definition-particlegoverningequations-t">
-<span id="particlegoverningequations"></span><h3><span class="section-number">13.4.1. </span>Governing Equations Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquations_t</span></code><a class="headerlink" href="#governing-equations-structure-definition-particlegoverningequations-t" title="Permalink to this heading">¶</a></h3>
+<span id="sids-particlegoverningequations"></span><h3><span class="section-number">13.4.1. </span>Governing Equations Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquations_t</span></code><a class="headerlink" href="#governing-equations-structure-definition-particlegoverningequations-t" title="Permalink to this heading">#</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquations_t</span></code> describes the class of governing equations associated with particles.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleGoverningEquationsType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
 <span class="w">  </span><span class="n">ParticleGovEqTypeNull</span><span class="p">,</span>
@@ -406,7 +758,7 @@ and correspond to the solution for the entire particle.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 </section>
 <section id="particle-model-type-structure-definition-particlemodeltype-t">
-<span id="particlemodeltype"></span><h3><span class="section-number">13.4.2. </span>Particle Model Type Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code><a class="headerlink" href="#particle-model-type-structure-definition-particlemodeltype-t" title="Permalink to this heading">¶</a></h3>
+<span id="particlemodeltype"></span><h3><span class="section-number">13.4.2. </span>Particle Model Type Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code><a class="headerlink" href="#particle-model-type-structure-definition-particlemodeltype-t" title="Permalink to this heading">#</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> is a complete list of all models covered in subsequent sections. A specific model will contain a subset of this enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
 <span class="w">  </span><span class="n">Linear</span><span class="p">,</span><span class="w"> </span><span class="n">NonLinear</span><span class="p">,</span><span class="w"> </span><span class="n">HardSphere</span><span class="p">,</span><span class="w"> </span><span class="n">SoftSphere</span><span class="p">,</span><span class="w"> </span><span class="n">LinearSpringDashpot</span><span class="p">,</span>
@@ -425,7 +777,7 @@ and correspond to the solution for the entire particle.</p>
 </div>
 </section>
 <section id="particle-collision-model-structure-definition-particlecollisionmodel-t">
-<span id="particlecollisionmodel"></span><h3><span class="section-number">13.4.3. </span>Particle Collision Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModel_t</span></code><a class="headerlink" href="#particle-collision-model-structure-definition-particlecollisionmodel-t" title="Permalink to this heading">¶</a></h3>
+<span id="sids-particlecollisionmodel"></span><h3><span class="section-number">13.4.3. </span>Particle Collision Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModel_t</span></code><a class="headerlink" href="#particle-collision-model-structure-definition-particlecollisionmodel-t" title="Permalink to this heading">#</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModel_t</span></code> describes the collision model used for particle-particle interactions. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleCollisionModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
 <span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span>
@@ -469,7 +821,7 @@ and correspond to the solution for the entire particle.</p>
 <p>For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModelType</span></code> names currently listed correspond to the following particular references.</p>
-<table class="docutils align-default">
+<table class="table">
 <tbody>
 <tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ORourke</span></code></p></td>
 <td><p>O’Rourke, P. J ., “Collective Drop Effects on Vaporizing Liquid Sprays,” Ph.D. Thesis, Princeton University, Princeton, N J , United States, 1981.</p></td>
@@ -487,7 +839,7 @@ and correspond to the solution for the entire particle.</p>
 </table>
 </section>
 <section id="particle-breakup-model-structure-definition-particlebreakupmodel-t">
-<span id="particlebreakupmodel"></span><h3><span class="section-number">13.4.4. </span>Particle Breakup Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModel_t</span></code><a class="headerlink" href="#particle-breakup-model-structure-definition-particlebreakupmodel-t" title="Permalink to this heading">¶</a></h3>
+<span id="sids-particlebreakupmodel"></span><h3><span class="section-number">13.4.4. </span>Particle Breakup Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModel_t</span></code><a class="headerlink" href="#particle-breakup-model-structure-definition-particlebreakupmodel-t" title="Permalink to this heading">#</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModel_t</span></code> describes the model used for particle breakup. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleBreakupModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
 <span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span>
@@ -530,7 +882,7 @@ and correspond to the solution for the entire particle.</p>
 <p>For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModelType</span></code> names currently listed correspond to the following particular references.</p>
-<table class="docutils align-default">
+<table class="table">
 <tbody>
 <tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">KelvinHelmholtz</span></code></p></td>
 <td><p>Reitz, R.D. and Bracco, F.V., “Mechanisms of Breakup of Round Liquid Jets,” Encyclopedia of Fluid Mechanics, Gulf Publishing Company, 1986.</p></td>
@@ -566,7 +918,7 @@ and correspond to the solution for the entire particle.</p>
 </table>
 </section>
 <section id="particle-force-model-structure-definition-particleforcemodel-t">
-<span id="particleforcemodel"></span><h3><span class="section-number">13.4.5. </span>Particle Force Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModel_t</span></code><a class="headerlink" href="#particle-force-model-structure-definition-particleforcemodel-t" title="Permalink to this heading">¶</a></h3>
+<span id="sids-particleforcemodel"></span><h3><span class="section-number">13.4.5. </span>Particle Force Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModel_t</span></code><a class="headerlink" href="#particle-force-model-structure-definition-particleforcemodel-t" title="Permalink to this heading">#</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModel_t</span></code> describes the model used for for forces, typically lift and drag, applied on particle. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleForceModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
 <span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span>
@@ -614,7 +966,7 @@ and correspond to the solution for the entire particle.</p>
 <p>For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModelType</span></code> names currently listed correspond to the following particular references.</p>
-<table class="docutils align-default">
+<table class="table">
 <tbody>
 <tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Ergun</span></code></p></td>
 <td><p>Gidaspow, D. (1994). Multiphase flow and fluidization: continuum and kinetic theory descriptions. Academic press.</p></td>
@@ -638,7 +990,7 @@ and correspond to the solution for the entire particle.</p>
 </table>
 </section>
 <section id="particle-wall-interaction-model-structure-definition-particlewallinteractionmodel-t">
-<span id="particlewallinteractionmodel"></span><h3><span class="section-number">13.4.6. </span>Particle Wall Interaction Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModel_t</span></code><a class="headerlink" href="#particle-wall-interaction-model-structure-definition-particlewallinteractionmodel-t" title="Permalink to this heading">¶</a></h3>
+<span id="sids-particlewallinteractionmodel"></span><h3><span class="section-number">13.4.6. </span>Particle Wall Interaction Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModel_t</span></code><a class="headerlink" href="#particle-wall-interaction-model-structure-definition-particlewallinteractionmodel-t" title="Permalink to this heading">#</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModel_t</span></code> describes the model used for particle-wall interactions, including splash models. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticleWallInteractionModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
 <span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span>
@@ -682,7 +1034,7 @@ and correspond to the solution for the entire particle.</p>
 <p>For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModelType</span></code> names currently listed correspond to the following particular references.</p>
-<table class="docutils align-default">
+<table class="table">
 <tbody>
 <tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">ORourke</span></code></p></td>
 <td><p>O’Rourke, P. J ., “Collective Drop Effects on Vaporizing Liquid Sprays,” Ph.D. Thesis, Princeton University, Princeton, N J , United States, 1981.</p></td>
@@ -709,7 +1061,7 @@ and correspond to the solution for the entire particle.</p>
 </table>
 </section>
 <section id="particle-phase-change-model-structure-definition-particlephasechangemodel-t">
-<span id="particlephasechangemodel"></span><h3><span class="section-number">13.4.7. </span>Particle Phase Change Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModel_t</span></code><a class="headerlink" href="#particle-phase-change-model-structure-definition-particlephasechangemodel-t" title="Permalink to this heading">¶</a></h3>
+<span id="particlephasechangemodel"></span><h3><span class="section-number">13.4.7. </span>Particle Phase Change Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModel_t</span></code><a class="headerlink" href="#particle-phase-change-model-structure-definition-particlephasechangemodel-t" title="Permalink to this heading">#</a></h3>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModel_t</span></code> describes the model used for particle phase change, typically evaporation and condensation. The enumerated values for <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModelType_t</span></code> are a subset of the <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code> enumeration.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ParticlePhaseChangeModelType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
 <span class="w">  </span><span class="n">ModelTypeNull</span><span class="p">,</span>
@@ -748,7 +1100,7 @@ and correspond to the solution for the entire particle.</p>
 <p>For any data that is dimensional, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModelType</span></code> names currently listed correspond to the following particular references.</p>
-<table class="docutils align-default">
+<table class="table">
 <tbody>
 <tr class="row-odd"><td><p><code class="code sidskey docutils literal notranslate"><span class="pre">Frossling</span></code></p></td>
 <td><p>Amsden, A.A., O’Rourke, P.J ., and Butler, T.D., “KIVA-II: A Computer Program for Chemically Reactive Flows with Sprays,” Los Alamos National Laboratory Technical Report LA-11560-MS, 1989.</p></td>
@@ -772,49 +1124,112 @@ and correspond to the solution for the entire particle.</p>
 </section>
 
 
-          </div>
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="misc.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">12. </span>Miscellaneous Data Structures</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="appendix_a.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Appendix A: Conventions for Data-Name Identifiers</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
             
-  <div class="footer-relations">
-    
-      <div class="pull-left">
-        <a class="btn btn-default" href="misc.html" title="previous chapter (use the left arrow)"><span class="section-number">12. </span>Miscellaneous Data Structures</a>
-      </div>
-    
-      <div class="pull-right">
-        <a class="btn btn-default" href="appendix_a.html" title="next chapter (use the right arrow)">Appendix A: Conventions for Data-Name Identifiers</a>
-      </div>
-    </div>
-    <div class="clearer"></div>
-  
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="appendix_a.html" title="Appendix A: Conventions for Data-Name Identifiers"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="misc.html" title="12. Miscellaneous Data Structures"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">CGNS Official Web Site</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../../standard.html" >Standard Specification</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="CGNS_SIDS.html" >CGNS/SIDS - Standard Interface Data Structures</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">13. </span>Particle Data</a></li> 
-      </ul>
-    </div>
-<script type="text/javascript">
-  $("#mobile-toggle a").click(function () {
-    $("#left-column").toggle();
-  });
-</script>
-<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
-  <div class="footer">
-    &copy; Copyright 1991-2020, CGNS Steering Commmittee. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
   </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-zone-structure-definition-particlezone-t">13.1. Particle Zone Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleZone_t</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-coordinates-structure-definition-particlecoordinates-t">13.2. Particle Coordinates Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCoordinates_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-particle-coordinates-for-a-3-d-case">13.2.1. Example - Particle Coordinates for a 3-D Case</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-solution-structure-definition-particlesolution-t">13.3. Particle Solution Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleSolution_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-particle-solution">13.3.1. Example - Particle Solution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-equation-set-structure-definition-particleequationset-t">13.4. Particle Equation Set Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleEquationSet_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#governing-equations-structure-definition-particlegoverningequations-t">13.4.1. Governing Equations Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleGoverningEquations_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-model-type-structure-definition-particlemodeltype-t">13.4.2. Particle Model Type Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleModelType_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-collision-model-structure-definition-particlecollisionmodel-t">13.4.3. Particle Collision Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleCollisionModel_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-breakup-model-structure-definition-particlebreakupmodel-t">13.4.4. Particle Breakup Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleBreakupModel_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-force-model-structure-definition-particleforcemodel-t">13.4.5. Particle Force Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleForceModel_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-wall-interaction-model-structure-definition-particlewallinteractionmodel-t">13.4.6. Particle Wall Interaction Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticleWallInteractionModel_t</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-phase-change-model-structure-definition-particlephasechangemodel-t">13.4.7. Particle Phase Change Model Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">ParticlePhaseChangeModel_t</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Dedicated to the public domain with <a href="https://creativecommons.org/publicdomain/zero/1.0/" class="reference external">CC0 1.0</a>.
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

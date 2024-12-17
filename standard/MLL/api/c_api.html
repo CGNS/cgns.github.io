@@ -1,0 +1,1336 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>CGNS/MLL API Overview for C and Fortran applications &#8212; CGNS Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'standard/MLL/api/c_api';</script>
+    <link rel="canonical" href="https://cgns.org/standard/MLL/api/c_api.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CGNS Parallel API Overview" href="c_parallel_api.html" />
+    <link rel="prev" title="List of enumerated values (key words) for each of these variable types (typedefs)" href="enums.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-light" alt="CGNS Documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark" alt="CGNS Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CGNS/CGNS" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-download fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../general.html">Introduction to CGNS</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/what.html">What is CGNS?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/start.html">Quick Start Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/history.html">Status and History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/FAQ.html">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../general/implementations.html">Implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../standard.html">Standard Specification</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../reference.html">Standardization bodies</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../SIDS/CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/intro.html">1. Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/design.html">2. Design Philosophy of Standard Interface Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/convention.html">3. Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/block.html">4. Building Block Structure Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/array.html">5. Data-Array Structure Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/hierarchy.html">6. Hierarchical Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/grid.html">7. Grid Coordinates, Elements, and Flow Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/multizone.html">8. Multizone Interface Connectivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/boundary.html">9. Boundary Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/equation.html">10. Governing Flow Equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/time.html">11. Time-Dependent Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/misc.html">12. Miscellaneous Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/particles.html">13. Particle Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/appendix_a.html">Appendix A: Conventions for Data-Name Identifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../SIDS/appendix_b.html">Appendix B: Structured Two-Zone Flat Plate Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../CGNS_FMM.html">CGNS/FMM - Data model mapping to implementation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../FMM/nodes.html">Detailed CGNS Node Descriptions</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../FMM/figures.html">CGNS File Mapping Figures</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ArbitraryGridMotion.html">ArbitraryGridMotion Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Area.html">Area Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/AverageInterface.html">AverageInterface Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Axisymmetry.html">Axisymmetry Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/BaseIterativeData.html">BaseIterativeData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/BC.html">BC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/BCData.html">BCData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/BCDataSet.html">BCDataSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/BCProperty.html">BCProperty Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/CGNSBase.html">CGNSBase Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ChemicalKineticsModel.html">ChemicalKineticsModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ConvergenceHistory.html">ConvergenceHistory Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/DataArray.html">DataArray Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/DimensionalExponents.html">DimensionalExponents Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/DimensionalUnits.html">DimensionalUnits Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Elements.html">Elements Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/EMConductivityModel.html">EMConductivityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/EMElectricFieldModel.html">EMElectricFieldModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/EMMagneticFieldModel.html">EMMagneticFieldModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Family.html">Family Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/FamilyBC.html">FamilyBC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/FamilyBCDataSet.html">FamilyBCDataSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/FlowEquationSet.html">FlowEquationSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/FlowSolution.html">FlowSolution/DiscreteData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GasModel.html">GasModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GeometryReference.html">GeometryReference Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GoverningEquations.html">GoverningEquations Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Gravity.html">Gravity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GridConnectivity.html">GridConnectivity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GridConnectivity1to1.html">GridConnectivity1to1 Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GridConnectivityProperty.html">GridConnectivityProperty Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/GridCoordinates.html">GridCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/IntegralData.html">IntegralData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/OversetHoles.html">OversetHoles Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleBreakupModel.html">ParticleBreakupModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleCollisionModel.html">ParticleCollisionModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleCoordinates.html">ParticleCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleEquationSet.html">ParticleEquationSet Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleForceModel.html">ParticleForceModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleGoverningEquations.html">ParticleGoverningEquations Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticlePhaseChangeModel.html">ParticlePhaseChangeModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleSolution.html">ParticleSolution Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleWallInteractionModel.html">ParticleWallInteractionModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ParticleZone.html">ParticleZone Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Periodic.html">Periodic Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ReferenceState.html">ReferenceState Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/RigidGridMotion.html">RigidGridMotion Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/RotatingCoordinates.html">RotatingCoordinates Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ThermalConductivityModel.html">ThermalConductivityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ThermalRelaxationModel.html">ThermalRelaxationModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/TurbulenceClosure.html">TurbulenceClosure Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/TurbulenceModel.html">TurbulenceModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/UserDefinedData.html">UserDefinedData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ViscosityModel.html">ViscosityModel Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/WallFunction.html">WallFunction Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/Zone.html">Zone Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ZoneBC.html">ZoneBC Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ZoneGridConnectivity.html">ZoneGridConnectivity Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ZoneIterativeData.html">ZoneIterativeData/ParticleIterativeData Figure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../FMM/ZoneSubRegion.html">ZoneSubRegion Figure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../CGNS_MLL.html">CGNS/MLL - C and Fortran APIs for Applications</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="general_remarks.html">General Remarks</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="enums.html">List of enumerated values (key words) for each of these variable types (typedefs)</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">CGNS/MLL API Overview for C and Fortran applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="c_parallel_api.html">CGNS Parallel API Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_database.html">Database-Level Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_structure.html">Data Structure Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_links.html">Link Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_node.html">Node Management Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_dataio.html">Data I/O Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_errors.html">Error Handling Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_misc.html">Miscellaneous Routines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../CGIO/CGNS_CGIO_example.html">Code Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../hdf5.html">CGNS/HDF5 - An HPC implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python.html">CGNS/Python - A Python implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../current.html">Resources</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../current/news.html">News</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../current/CPEX.html">CPEX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../current/download.html">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../current/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../current/softwarelist.html">More CGNS Software</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../doc.html">More documentation</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../doc/papers.html">Papers</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../../doc/userguide.html">User’s Guide to CGNS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../governance.html">CGNS Governance</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../governance/committee.html">Steering Committee</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../governance/meetings.html">Meetings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../governance/support.html">Support</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/CGNS/cgns-modern.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/CGNS/cgns-modern.github.io/issues/new?title=Issue%20on%20page%20%2Fstandard/MLL/api/c_api.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>CGNS/MLL API Overview for C and Fortran applications</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#file-and-library-operations">File and Library Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-cgns-internals">Configuring CGNS Internals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interfacing-with-cgio">Interfacing with CGIO</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#navigating-a-cgns-file">Navigating a CGNS File</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-a-node">Accessing a Node</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deleting-a-node">Deleting a Node</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-handling">Error Handling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structural-nodes">Structural Nodes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cgns-base-information">CGNS Base Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cgns-zone-information">CGNS Zone Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-type">Simulation Type</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptors">Descriptors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptive-text">Descriptive Text</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-value">Ordinal Value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physical-data">Physical Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-arrays">Data Arrays</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-class-dataclass-t">Data Class (DataClass_t)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-conversion-factors">Data Conversion Factors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensional-units">Dimensional Units</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensional-exponents">Dimensional Exponents</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#location-and-position">Location and Position</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-location">Grid Location</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#point-sets">Point Sets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rind-layers">Rind Layers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#auxiliary-data">Auxiliary Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-state">Reference State</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gravity">Gravity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convergence-history">Convergence History</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integral-data">Integral Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-defined-data">User-Defined Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#freeing-memory">Freeing Memory</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-specification">Grid Specification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zone-grid-coordinates">Zone Grid Coordinates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#element-connectivity">Element Connectivity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#axisymmetry">Axisymmetry</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotating-coordinates">Rotating Coordinates</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-data">Solution Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-solution">Flow Solution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-data">Discrete Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zone-subregions">Zone Subregions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-connectivity">Grid Connectivity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-one-connectivity">One-to-One Connectivity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-connectivity">Generalized Connectivity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#special-grid-connectivity-properties">Special Grid Connectivity Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overset-holes">Overset Holes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-conditions">Boundary Conditions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-type-and-location">Boundary Condition Type and Location</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-datasets">Boundary Condition Datasets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-data">Boundary Condition Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#special-boundary-condition-properties">Special Boundary Condition Properties</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#equation-specification">Equation Specification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-equation-set">Flow Equation Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-equation-set">Particle Equation Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#governing-equations">Governing Equations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-governing-equations">Particle Governing Equations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#auxiliary-model">Auxiliary Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-model">Particle Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#families">Families</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-definition">Family Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-reference">Geometry Reference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-boundary-condition">Family Boundary Condition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-name">Family Name</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-dependent-data">Time-Dependent Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#base-iterative-data">Base Iterative Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zone-iterative-data">Zone Iterative Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-iterative-data">Particle Iterative Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rigid-grid-motion">Rigid Grid Motion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arbitrary-grid-motion">Arbitrary Grid Motion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zone-grid-connectivity">Zone Grid Connectivity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-specification">Particle Specification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-zone-information">Particle Zone Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-coordinates">Particle Coordinates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-solution">Particle Solution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-solution-data">Particle Solution Data</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="cgns-mll-api-overview-for-c-and-fortran-applications">
+<span id="cgns-api-c-ref"></span><h1>CGNS/MLL API Overview for C and Fortran applications<a class="headerlink" href="#cgns-mll-api-overview-for-c-and-fortran-applications" title="Permalink to this heading">#</a></h1>
+<p>These are all the types and functions available in the CGNS C API.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please refer to <a class="reference internal" href="general_remarks.html#mllgeneralremarks-ref"><span class="std std-ref">General Remarks</span></a> for details and conventions regarding
+the equivalent Fortran APIs, paying special attention to <a class="reference internal" href="general_remarks.html#cgnsfortranport-ref"><span class="std std-ref">64-bit Fortran Portability</span></a>.</p>
+</div>
+<section id="file-and-library-operations">
+<span id="cgnsfile-ref"></span><h2>File and Library Operations<a class="headerlink" href="#file-and-library-operations" title="Permalink to this heading">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “CGNSFile” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+<section id="configuring-cgns-internals">
+<span id="cgnsinternals-ref"></span><h3>Configuring CGNS Internals<a class="headerlink" href="#configuring-cgns-internals" title="Permalink to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “CGNSInternals_FNC_CG_CONFIG” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “CGNSInternals” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+<section id="interfacing-with-cgio">
+<span id="cgnsinterfacecgio-ref"></span><h3>Interfacing with CGIO<a class="headerlink" href="#interfacing-with-cgio" title="Permalink to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “CGNSInterfaceCGIO” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="navigating-a-cgns-file">
+<h2>Navigating a CGNS File<a class="headerlink" href="#navigating-a-cgns-file" title="Permalink to this heading">#</a></h2>
+<section id="accessing-a-node">
+<span id="accessinganode-ref"></span><h3>Accessing a Node<a class="headerlink" href="#accessing-a-node" title="Permalink to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “AccessingANode” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenpage: Cannot find page “CGNS_Navigation_Ill” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="deleting-a-node">
+<span id="deletinganode-ref"></span><h3>Deleting a Node<a class="headerlink" href="#deleting-a-node" title="Permalink to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “DeletingANode” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="error-handling">
+<span id="errorhandling-ref"></span><h2>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this heading">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ErrorHandling” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="structural-nodes">
+<h2>Structural Nodes<a class="headerlink" href="#structural-nodes" title="Permalink to this heading">#</a></h2>
+<section id="cgns-base-information">
+<span id="cgnsbaseinformation-ref"></span><h3>CGNS Base Information<a class="headerlink" href="#cgns-base-information" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <a href="../../FMM/nodes.html#cgnsbase-t"><code>CGNSBase_t</code></a>
+          (<a href="../../SIDS/hierarchy.html#cgns-entry-level-structure-definition-cgnsbase-t">SIDS</a>)</p><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “CGNSBaseInformation” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="cgns-zone-information">
+<span id="cgnszoneinformation-ref"></span><h3>CGNS Zone Information<a class="headerlink" href="#cgns-zone-information" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <a href="./enums.html#c.Zone_t"><code>Zone_t</code></a>
+          (<a href="../../SIDS/hierarchy.html#zone-structure-definition-zone-t">SIDS</a>))</p><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “CGNSZoneInformation” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="simulation-type">
+<span id="simulationtype-ref"></span><h3>Simulation Type<a class="headerlink" href="#simulation-type" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <a href="./enums.html#c.SimulationType_t"><code>SimulationType_t</code></a><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “SimulationType” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="descriptors">
+<h2>Descriptors<a class="headerlink" href="#descriptors" title="Permalink to this heading">#</a></h2>
+<section id="descriptive-text">
+<span id="descriptivetext-ref"></span><h3>Descriptive Text<a class="headerlink" href="#descriptive-text" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>Descriptor_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “DescriptiveText” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="ordinal-value">
+<span id="ordinalvalue-ref"></span><h3>Ordinal Value<a class="headerlink" href="#ordinal-value" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>Ordinal_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “OrdinalValue” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="physical-data">
+<h2>Physical Data<a class="headerlink" href="#physical-data" title="Permalink to this heading">#</a></h2>
+<section id="data-arrays">
+<span id="dataarrays-ref"></span><h3>Data Arrays<a class="headerlink" href="#data-arrays" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>DataArray_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “DataArrays” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="data-class-dataclass-t">
+<span id="dataclass-ref"></span><h3>Data Class (DataClass_t)<a class="headerlink" href="#data-class-dataclass-t" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <a href="./enums.html#c.DataClass_t"><code>DataClass_t</code></a><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “DataClass” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="data-conversion-factors">
+<span id="dataconversionfactors-ref"></span><h3>Data Conversion Factors<a class="headerlink" href="#data-conversion-factors" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>DataConversion_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “DataConversionFactors” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="dimensional-units">
+<span id="dimensionalunits-ref"></span><h3>Dimensional Units<a class="headerlink" href="#dimensional-units" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>DimensionalUnits_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “DimensionalUnits” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="dimensional-exponents">
+<span id="dimensionalexponents-ref"></span><h3>Dimensional Exponents<a class="headerlink" href="#dimensional-exponents" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>DimensionalExponents_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “DimensionalExponents” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="location-and-position">
+<h2>Location and Position<a class="headerlink" href="#location-and-position" title="Permalink to this heading">#</a></h2>
+<section id="grid-location">
+<span id="gridlocation-ref"></span><h3>Grid Location<a class="headerlink" href="#grid-location" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <a href="./enums.html#c.GridLocation_t"><code>GridLocation_t</code></a>
+          (<a href="../../SIDS/block.html#GridLocation">SIDS</a>,
+           <a href="../../FMM/nodes.html#GridLocation">File Mapping</a>)</p><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “GridLocation” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="point-sets">
+<span id="pointsets-ref"></span><h3>Point Sets<a class="headerlink" href="#point-sets" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>IndexArray_t</code>,
+          <code>IndexRange_t</code>
+          (<a href="../../SIDS/block.html#IndexArray">SIDS</a>,
+           <a href="../../FMM/nodes.html#IndexRange">File Mapping</a>)</p><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “PointSets” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="rind-layers">
+<span id="rindlayers-ref"></span><h3>Rind Layers<a class="headerlink" href="#rind-layers" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>Rind_t</code>
+          (<a href="../../SIDS/block.html#Rind">SIDS</a>,
+           <a href="../../FMM/nodes.html#Rind">File Mapping</a>)</p><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “RindLayers” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="auxiliary-data">
+<h2>Auxiliary Data<a class="headerlink" href="#auxiliary-data" title="Permalink to this heading">#</a></h2>
+<section id="reference-state">
+<span id="referencestate-ref"></span><h3>Reference State<a class="headerlink" href="#reference-state" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>ReferenceState_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ReferenceState” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="gravity">
+<span id="gravity-ref"></span><h3>Gravity<a class="headerlink" href="#gravity" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>Gravity_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “Gravity” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="convergence-history">
+<span id="convergencehistory-ref"></span><h3>Convergence History<a class="headerlink" href="#convergence-history" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>ConvergenceHistory_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ConvergenceHistory” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="integral-data">
+<span id="integraldata-ref"></span><h3>Integral Data<a class="headerlink" href="#integral-data" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>IntegralData_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “IntegralData” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="user-defined-data">
+<span id="userdefineddata-ref"></span><h3>User-Defined Data<a class="headerlink" href="#user-defined-data" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>UserDefinedData_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “UserDefinedData” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="freeing-memory">
+<span id="freeingmemory-ref"></span><h3>Freeing Memory<a class="headerlink" href="#freeing-memory" title="Permalink to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “FreeingMemory” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="grid-specification">
+<h2>Grid Specification<a class="headerlink" href="#grid-specification" title="Permalink to this heading">#</a></h2>
+<section id="zone-grid-coordinates">
+<span id="zonegridcoordinates-ref"></span><h3>Zone Grid Coordinates<a class="headerlink" href="#zone-grid-coordinates" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>GridCoordinates_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ZoneGridCoordinates” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="element-connectivity">
+<span id="elementconnectivity-ref"></span><h3>Element Connectivity<a class="headerlink" href="#element-connectivity" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <a href="./enums.html#c.ElementType_t"><code>Elements_t</code></a>
+          (<a href="../../SIDS/grid.html#Elements">SIDS</a>,
+           <a href="../../FMM/nodes.html#Elements">File Mapping</a>)</p><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ElementConnectivity” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="axisymmetry">
+<span id="axisymmetry-ref"></span><h3>Axisymmetry<a class="headerlink" href="#axisymmetry" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>Axisymmetry_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “Axisymmetry” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="rotating-coordinates">
+<span id="rotating-ref"></span><h3>Rotating Coordinates<a class="headerlink" href="#rotating-coordinates" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>RotatingCoordinates_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “RotatingCoordinates” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="solution-data">
+<h2>Solution Data<a class="headerlink" href="#solution-data" title="Permalink to this heading">#</a></h2>
+<section id="flow-solution">
+<span id="flowsolution-ref"></span><h3>Flow Solution<a class="headerlink" href="#flow-solution" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>FlowSolution_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “FlowSolution” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="discrete-data">
+<span id="discretedata-ref"></span><h3>Discrete Data<a class="headerlink" href="#discrete-data" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>DiscreteData_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “DiscreteData” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="zone-subregions">
+<span id="zonesubregions-ref"></span><h3>Zone Subregions<a class="headerlink" href="#zone-subregions" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>ZoneSubRegion_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ZoneSubregions” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="grid-connectivity">
+<h2>Grid Connectivity<a class="headerlink" href="#grid-connectivity" title="Permalink to this heading">#</a></h2>
+<section id="one-to-one-connectivity">
+<span id="onetooneconnectivity-ref"></span><h3>One-to-One Connectivity<a class="headerlink" href="#one-to-one-connectivity" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>GridConnectivity1to1_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “OneToOneConnectivity” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="generalized-connectivity">
+<span id="generalizedconnectivity-ref"></span><h3>Generalized Connectivity<a class="headerlink" href="#generalized-connectivity" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>GridConnectivity_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “GeneralizedConnectivity” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="special-grid-connectivity-properties">
+<span id="specialgridconnectivityproperty-ref"></span><h3>Special Grid Connectivity Properties<a class="headerlink" href="#special-grid-connectivity-properties" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>GridConnectivityProperty_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “SpecialGridConnectivityProperty” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="overset-holes">
+<span id="oversetholes-ref"></span><h3>Overset Holes<a class="headerlink" href="#overset-holes" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>OversetHoles_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “OversetHoles” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="boundary-conditions">
+<h2>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this heading">#</a></h2>
+<section id="boundary-condition-type-and-location">
+<span id="boundaryconditiontype-ref"></span><h3>Boundary Condition Type and Location<a class="headerlink" href="#boundary-condition-type-and-location" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>BC_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “BoundaryConditionType” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="boundary-condition-datasets">
+<span id="boundaryconditiondatasets-ref"></span><h3>Boundary Condition Datasets<a class="headerlink" href="#boundary-condition-datasets" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>BCDataSet_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “BoundaryConditionDatasets” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="boundary-condition-data">
+<span id="bcdata-ref"></span><h3>Boundary Condition Data<a class="headerlink" href="#boundary-condition-data" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>BCData_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “BCData” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="special-boundary-condition-properties">
+<span id="specialboundaryconditionproperty-ref"></span><h3>Special Boundary Condition Properties<a class="headerlink" href="#special-boundary-condition-properties" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>BCProperty_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “SpecialBoundaryConditionProperty” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="equation-specification">
+<h2>Equation Specification<a class="headerlink" href="#equation-specification" title="Permalink to this heading">#</a></h2>
+<section id="flow-equation-set">
+<span id="flowequationset-ref"></span><h3>Flow Equation Set<a class="headerlink" href="#flow-equation-set" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>FlowEquationSet_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “FlowEquationSet” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="particle-equation-set">
+<span id="particleequationset-ref"></span><h3>Particle Equation Set<a class="headerlink" href="#particle-equation-set" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <a href="./enums.html#c.ParticleEquationSet_t"><code>ParticleEquationSet_t</code></a>
+           (<a href="../../SIDS/particles.html#ParticleEquationSet">SIDS</a>,
+            <a href="../../FMM/nodes.html#ParticleEquationSet">File Mapping</a>)</p><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ParticleEquationSet” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="governing-equations">
+<span id="governingequations-ref"></span><h3>Governing Equations<a class="headerlink" href="#governing-equations" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>GoverningEquations_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “GoverningEquations” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="particle-governing-equations">
+<span id="particlegoverningequations-ref"></span><h3>Particle Governing Equations<a class="headerlink" href="#particle-governing-equations" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <a href="./enums.html#c.ParticleGoverningEquationsType_t"><code>ParticleGoverningEquationsType_t</code></a><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ParticleGoverningEquations” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="auxiliary-model">
+<span id="auxiliarymodel-ref"></span><h3>Auxiliary Model<a class="headerlink" href="#auxiliary-model" title="Permalink to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “AuxiliaryModel” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="particle-model">
+<span id="particlemodel-ref"></span><h3>Particle Model<a class="headerlink" href="#particle-model" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <a href="./enums.html#c.ParticleModelType_t"><code>ParticleModelType_t</code></a><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ParticleModel” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="families">
+<h2>Families<a class="headerlink" href="#families" title="Permalink to this heading">#</a></h2>
+<section id="family-definition">
+<span id="cgnsfamilydefinition-ref"></span><h3>Family Definition<a class="headerlink" href="#family-definition" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>Family_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “CGNSFamilyDefinition” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="geometry-reference">
+<span id="cgnsgeometry-ref"></span><h3>Geometry Reference<a class="headerlink" href="#geometry-reference" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>GeometryReference_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “CGNSGeometryReference” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="family-boundary-condition">
+<span id="cgnsfamilyboundarycondition-ref"></span><h3>Family Boundary Condition<a class="headerlink" href="#family-boundary-condition" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>FamilyBC_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “CGNSFamilyBoundaryCondition” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="family-name">
+<span id="familyname-ref"></span><h3>Family Name<a class="headerlink" href="#family-name" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>FamilyName_t</code><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “FamilyName” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="time-dependent-data">
+<h2>Time-Dependent Data<a class="headerlink" href="#time-dependent-data" title="Permalink to this heading">#</a></h2>
+<section id="base-iterative-data">
+<span id="baseiterativedata-ref"></span><h3>Base Iterative Data<a class="headerlink" href="#base-iterative-data" title="Permalink to this heading">#</a></h3>
+<i>Node</i>: <a href="./enums.html#c.BaseIterativeData_t"><code>BaseIterativeData_t</code></a>
+          (<a href="../../SIDS/time.html#BaseIterativeData">SIDS</a>,
+           <a href="../../FMM/nodes.html#BaseIterativeData">File Mapping</a>)<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “BaseIterativeData” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="zone-iterative-data">
+<span id="zoneiterativedata-ref"></span><h3>Zone Iterative Data<a class="headerlink" href="#zone-iterative-data" title="Permalink to this heading">#</a></h3>
+<i>Node</i>:  <a href="./enums.html#c.ZoneIterativeData_t"><code>ZoneIterativeData_t</code></a>
+           (<a href="../../SIDS/time.html#ZoneIterativeData">SIDS</a>,
+            <a href="../../FMM/nodes.html#ZoneIterativeData">File Mapping</a>)<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ZoneIterativeData” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="particle-iterative-data">
+<span id="particleiterativedata-ref"></span><h3>Particle Iterative Data<a class="headerlink" href="#particle-iterative-data" title="Permalink to this heading">#</a></h3>
+<i>Node</i>: <a href="./enums.html#c.ParticleIterativeData_t"><code>ParticleIterativeData_t</code></a>
+          (<a href="../../SIDS/time.html#ParticleIterativeData">SIDS</a>,
+           <a href="../../FMM/nodes.html#ParticleIterativeData">File Mapping</a>)<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ParticleIterativeData” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="rigid-grid-motion">
+<span id="rigidgridmotion-ref"></span><h3>Rigid Grid Motion<a class="headerlink" href="#rigid-grid-motion" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>RigidGridMotion_t</code>
+          (<a href="../../SIDS/time.html#RigidGridMotion">SIDS</a>,
+           <a href="../../FMM/nodes.html#RigidGridMotion">File Mapping</a>)</p><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “RigidGridMotion” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="arbitrary-grid-motion">
+<span id="arbitrarygridmotion-ref"></span><h3>Arbitrary Grid Motion<a class="headerlink" href="#arbitrary-grid-motion" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>ArbitraryGridMotion_t</code>
+          (<a href="../../SIDS/time.html#ArbitraryGridMotion">SIDS</a>,
+           <a href="../../FMM/filemap/nodes.html#ArbitraryGridMotion">File Mapping</a>)</p><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ArbitraryGridMotion” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="zone-grid-connectivity">
+<span id="zonegridconnectivity-ref"></span><h3>Zone Grid Connectivity<a class="headerlink" href="#zone-grid-connectivity" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>: <code>ZoneGridConnectivity_t</code>
+          (<a href="../../SIDS/time.html#ZoneGridConnectivity">SIDS</a>,
+           <a href="../../FMM/filemap/nodes.html#ZoneGridConnectivity">File Mapping</a>)</p><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ZoneGridConnectivity” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="links">
+<h2>Links<a class="headerlink" href="#links" title="Permalink to this heading">#</a></h2>
+<div class="admonition warning" id="links-ref">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “Links” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+<section id="particle-specification">
+<h2>Particle Specification<a class="headerlink" href="#particle-specification" title="Permalink to this heading">#</a></h2>
+<section id="particle-zone-information">
+<span id="particlezoneinformation-ref"></span><h3>Particle Zone Information<a class="headerlink" href="#particle-zone-information" title="Permalink to this heading">#</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a CGNS file is opened via the cg_open() MLL function, the particle zones are sorted
+alphanumerically by name (the creation order is ignored/discarded). It is considered good
+standard practice to always choose particle names to be alphabetically increasing.
+For example, Particle0001, Particle0002, etc. is appropriate for up to 9999 particles.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ParticleZoneInformation” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="particle-coordinates">
+<span id="particlecoordinates-ref"></span><h3>Particle Coordinates<a class="headerlink" href="#particle-coordinates" title="Permalink to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ParticleCoordinates” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="particle-solution">
+<span id="particlesolution-ref"></span><h3>Particle Solution<a class="headerlink" href="#particle-solution" title="Permalink to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ParticleSolution” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="particle-solution-data">
+<span id="particlesolutiondata-ref"></span><h3>Particle Solution Data<a class="headerlink" href="#particle-solution-data" title="Permalink to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygengroup: Cannot find group “ParticleSolutionData” in doxygen xml output for project “CGNS Sphinx Doxygen Breathe” from directory: ./xml</p>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="enums.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">List of enumerated values (key words) for each of these variable types (typedefs)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="c_parallel_api.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">CGNS Parallel API Overview</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#file-and-library-operations">File and Library Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-cgns-internals">Configuring CGNS Internals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interfacing-with-cgio">Interfacing with CGIO</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#navigating-a-cgns-file">Navigating a CGNS File</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-a-node">Accessing a Node</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deleting-a-node">Deleting a Node</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-handling">Error Handling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structural-nodes">Structural Nodes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cgns-base-information">CGNS Base Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cgns-zone-information">CGNS Zone Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-type">Simulation Type</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptors">Descriptors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptive-text">Descriptive Text</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-value">Ordinal Value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physical-data">Physical Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-arrays">Data Arrays</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-class-dataclass-t">Data Class (DataClass_t)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-conversion-factors">Data Conversion Factors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensional-units">Dimensional Units</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensional-exponents">Dimensional Exponents</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#location-and-position">Location and Position</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-location">Grid Location</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#point-sets">Point Sets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rind-layers">Rind Layers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#auxiliary-data">Auxiliary Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-state">Reference State</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gravity">Gravity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convergence-history">Convergence History</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integral-data">Integral Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-defined-data">User-Defined Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#freeing-memory">Freeing Memory</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-specification">Grid Specification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zone-grid-coordinates">Zone Grid Coordinates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#element-connectivity">Element Connectivity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#axisymmetry">Axisymmetry</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotating-coordinates">Rotating Coordinates</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-data">Solution Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-solution">Flow Solution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-data">Discrete Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zone-subregions">Zone Subregions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-connectivity">Grid Connectivity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-one-connectivity">One-to-One Connectivity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-connectivity">Generalized Connectivity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#special-grid-connectivity-properties">Special Grid Connectivity Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overset-holes">Overset Holes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-conditions">Boundary Conditions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-type-and-location">Boundary Condition Type and Location</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-datasets">Boundary Condition Datasets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-data">Boundary Condition Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#special-boundary-condition-properties">Special Boundary Condition Properties</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#equation-specification">Equation Specification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-equation-set">Flow Equation Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-equation-set">Particle Equation Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#governing-equations">Governing Equations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-governing-equations">Particle Governing Equations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#auxiliary-model">Auxiliary Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-model">Particle Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#families">Families</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-definition">Family Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-reference">Geometry Reference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-boundary-condition">Family Boundary Condition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-name">Family Name</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-dependent-data">Time-Dependent Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#base-iterative-data">Base Iterative Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zone-iterative-data">Zone Iterative Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-iterative-data">Particle Iterative Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rigid-grid-motion">Rigid Grid Motion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arbitrary-grid-motion">Arbitrary Grid Motion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zone-grid-connectivity">Zone Grid Connectivity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-specification">Particle Specification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-zone-information">Particle Zone Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-coordinates">Particle Coordinates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-solution">Particle Solution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-solution-data">Particle Solution Data</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Dedicated to the public domain with <a href="https://creativecommons.org/publicdomain/zero/1.0/" class="reference external">CC0 1.0</a>.
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

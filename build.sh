@@ -10,7 +10,6 @@
 # generation is made in a separate directory, change its path here:
 
 CURRENT_DIR=$PWD
-cd ..
 git submodule update --remote --merge
 cd $CURRENT_DIR
 

@@ -137,7 +137,7 @@ say for example: ``/my/own/local/doc/directory``
 .. code-block:: shell
 
    cd /my/own/local/doc/directory
-   git clone --recurse-submodules https://github.com/CGNS/cgns-modern.github.io.git
+   git clone --recurse-submodules https://github.com/CGNS/cgns.github.io.git
 
 .. note::
 
@@ -149,15 +149,14 @@ say for example: ``/my/own/local/doc/directory``
 ++++++++++++++++++++++++++++++
 
 Everything is ready now, once you are in ``/my/own/local/doc/directory`` 
-all sources are in::
+all sources are in the top level directory and the MLL repository is present in::
 
-  CGNS-ReST-site/
+  CGNS/
   
-Most of the files to be created/edited are **rst** files located in and below CGNS-ReST-site/source/
+Most of the files to be created/edited are **rst** files located in and below source/
 
 To produce the documentation, you run::
 
-  cd CGNS-ReST-site
   make html
 
 All doc is generated into CGNS-ReSt-site::

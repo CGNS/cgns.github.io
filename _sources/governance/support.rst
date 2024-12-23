@@ -165,7 +165,7 @@ All doc is generated into CGNS-ReSt-site::
 
 To check the produced documentation, you open a web browser (*chrome*, 
 *firefox*, whatever...) and you open the top page which is ``index.html``
-(in this example we are still in the  ``CGNS-ReST-site``)::
+(in this example we are still in the root directory)::
 
   firefox docs/_build/html/index.html
 

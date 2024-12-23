@@ -63,6 +63,60 @@ Comments on proposals should be submitted either to the `CGNSTalk Github Discuss
   _Comment: Below should be listed all CPEX implemented or waiting for review
 
 
+.. _CPEX0048:
+
+CPEX0048
+--------
+
+.. list-table::
+  :stub-columns: 1
+
+  * - CPEX#
+    - 0048
+  * - Scope
+    - Support for monitoring probes in CGNS
+  * - Contacts
+    - Mickael PHILIT
+  * - Documentation
+    - :download:`CPEX-0048-Probes.pdf <../../proposed_extensions/CPEX_0048_CGNS_SIDS_Probes.pdf>`
+  * - Date First Posted
+    - Mar.25.22
+  * - Date of Last Revision
+    - Jul.10.23
+  * - SIDS Status
+    - accepted; awaiting implementation
+  * - Filemap Status
+    - accepted; awaiting implementation
+  * - MLL Status
+    - accepted; awaiting implementation
+
+.. _CPEX0047:
+
+CPEX0047
+--------
+
+.. list-table::
+  :stub-columns: 1
+
+  * - CPEX#
+    - 0047
+  * - Scope
+    - Quadrature rules and Data storage
+  * - Contacts
+    - Mickael PHILIT
+  * - Documentation
+    - :download:`CPEX-0047-IntegrationRules.pdf <../../proposed_extensions/CPEX0047_CGNS_SIDS_IntegrationPointDefinition_v3.pdf>`
+  * - Date First Posted
+    - Apr.16.21
+  * - Date of Last Revision
+    - Jun.11.21
+  * - SIDS Status
+    - accepted; awaiting implementation
+  * - Filemap Status
+    - accepted; awaiting implementation
+  * - MLL Status
+    - accepted; awaiting implementation
+
 .. _CPEX0046:
 
 CPEX0046
@@ -76,19 +130,19 @@ CPEX0046
   * - Scope
     - Particle Data
   * - Contacts
-    - Thomas Hauser
+    - Alexandre Minot
   * - Documentation
-    - `CPEX-0046 Particle Data <https://cgnsorg.atlassian.net/browse/CGNS-183>`_
+    - :download:`CPEX-0046-ParticleData.pdf <../../proposed_extensions/CPEX0046-v2-rev1.pdf>`
   * - Date First Posted
     - Mar.26.19
   * - Date of Last Revision
-    - Mar.26.19
+    - Jul.09.24
   * - SIDS Status
-    - under review
+    - implemented version 4.5
   * - Filemap Status
-    - under review
+    - implemented version 4.5
   * - MLL Status
-    - under review
+    - implemented version 4.5
 
 .. _CPEX0045:
 

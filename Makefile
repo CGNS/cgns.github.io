@@ -18,6 +18,7 @@ help:
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
+	git submodule init
 	git submodule update --remote --merge
 	if [ ! -d $(BUILDDIR) ]; then mkdir -p $(BUILDDIR); fi
 	cp -r ./images "$(BUILDDIR)"

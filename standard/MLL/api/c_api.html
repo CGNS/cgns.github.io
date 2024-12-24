@@ -528,6 +528,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#families">Families</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-definition">Family Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-hierarchy-tree">Family Hierarchy Tree</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-reference">Geometry Reference</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-boundary-condition">Family Boundary Condition</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-name">Family Name</a></li>
@@ -5409,6 +5410,109 @@ The types allowed for the various models are: ParticleCollisionModel_t CG_Null, 
 
 <hr class="docutils" />
 </section>
+<section id="family-hierarchy-tree">
+<span id="cgnsfamilyhierarchytreedefinition-ref"></span><h3>Family Hierarchy Tree<a class="headerlink" href="#family-hierarchy-tree" title="Permalink to this heading">#</a></h3>
+<p><i>Node</i>:  <code>Family_t</code><dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv420cg_node_family_writePKcPi">
+<span id="_CPPv320cg_node_family_writePKcPi"></span><span id="_CPPv220cg_node_family_writePKcPi"></span><span id="cg_node_family_write__cCP.iP"></span><span class="target" id="group__CGNSFamilyHierarchyTreeDefinition_1ga30fdaa334dc2a2e141f15309461779e5"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cg_node_family_write</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">family_name</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">Fam</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv420cg_node_family_writePKcPi" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Create a <em>Family_t</em> node (<em>Family_t</em> level) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>family_name</strong> – <strong>[in]</strong> Name of the family. </p></li>
+<li><p><strong>Fam</strong> – <strong>[out]</strong> Family index number, where 1 ≤ Fam ≤ nfamilies. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error status. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv417cg_node_nfamiliesPi">
+<span id="_CPPv317cg_node_nfamiliesPi"></span><span id="_CPPv217cg_node_nfamiliesPi"></span><span id="cg_node_nfamilies__iP"></span><span class="target" id="group__CGNSFamilyHierarchyTreeDefinition_1ga131a1d7876db8f6d977c64e66483ccb4"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cg_node_nfamilies</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">nfamilies</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417cg_node_nfamiliesPi" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Get number of families (Family_t level) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nfamilies</strong> – <strong>[out]</strong> Number of families in current node (<em>CGNSBase_t</em> or <em>Family_t</em>). </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error status. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv419cg_node_family_readiPcPiPi">
+<span id="_CPPv319cg_node_family_readiPcPiPi"></span><span id="_CPPv219cg_node_family_readiPcPiPi"></span><span id="cg_node_family_read__i.cP.iP.iP"></span><span class="target" id="group__CGNSFamilyHierarchyTreeDefinition_1ga9b223b5b9dc4a803b5491092272f766d"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cg_node_family_read</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">Fam</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">family_name</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">nFamBC</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">nGeo</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419cg_node_family_readiPcPiPi" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Read family info (Family_t level) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Fam</strong> – <strong>[in]</strong> Family index number, where 1 ≤ Fam ≤ nfamilies. </p></li>
+<li><p><strong>family_name</strong> – <strong>[out]</strong> Name of the family.. </p></li>
+<li><p><strong>nFamBC</strong> – <strong>[out]</strong> Number of boundary conditions for this family. This should be either 0 or 1. </p></li>
+<li><p><strong>nGeo</strong> – <strong>[out]</strong> Number of geometry references for this family. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error status. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv425cg_node_family_name_writePKcPKc">
+<span id="_CPPv325cg_node_family_name_writePKcPKc"></span><span id="_CPPv225cg_node_family_name_writePKcPKc"></span><span id="cg_node_family_name_write__cCP.cCP"></span><span class="target" id="group__CGNSFamilyHierarchyTreeDefinition_1ga6db8464dde2edbb22a676d68dfebf32d"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cg_node_family_name_write</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node_name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">family_name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv425cg_node_family_name_writePKcPKc" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Write multiple family names under <em>Family_t</em> (<em>Family_t</em> level) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_name</strong> – <strong>[in]</strong> Name of the <em>FamilyName_t</em> node. FamilyParent refers to the parent family of the <em>Family_t</em> node. </p></li>
+<li><p><strong>family_name</strong> – <strong>[in]</strong> Name of the family.. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error status. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv421cg_node_nfamily_namesPi">
+<span id="_CPPv321cg_node_nfamily_namesPi"></span><span id="_CPPv221cg_node_nfamily_namesPi"></span><span id="cg_node_nfamily_names__iP"></span><span class="target" id="group__CGNSFamilyHierarchyTreeDefinition_1ga045dd8024f28c788ff3203ac8439fb18"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cg_node_nfamily_names</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">nnames</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421cg_node_nfamily_namesPi" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Get number of family names under <em>Family_t</em> (<em>Family_t</em> level) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nnames</strong> – <strong>[out]</strong> Number of <em>FamilyName_t</em> nodes for this family. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error status. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv424cg_node_family_name_readiPcPc">
+<span id="_CPPv324cg_node_family_name_readiPcPc"></span><span id="_CPPv224cg_node_family_name_readiPcPc"></span><span id="cg_node_family_name_read__i.cP.cP"></span><span class="target" id="group__CGNSFamilyHierarchyTreeDefinition_1ga33fb47d4b1f21610fdd2371554fbf906"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cg_node_family_name_read</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">N</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node_name</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">family_name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv424cg_node_family_name_readiPcPc" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Read family info (<em>Family_t</em> level) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> – <strong>[in]</strong> Family name index number, where 1 ≤ N ≤ nNames. </p></li>
+<li><p><strong>node_name</strong> – <strong>[out]</strong> Name of the <em>FamilyName_t</em> node. FamilyParent refers to the parent family of the <em>Family_t</em> node. </p></li>
+<li><p><strong>family_name</strong> – <strong>[out]</strong> Name of the family.. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error status. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<hr class="docutils" />
+</section>
 <section id="geometry-reference">
 <span id="cgnsgeometry-ref"></span><h3>Geometry Reference<a class="headerlink" href="#geometry-reference" title="Permalink to this heading">#</a></h3>
 <p><i>Node</i>: <code>GeometryReference_t</code><dl class="cpp function">
@@ -7003,6 +7107,7 @@ The CGNS MLL relies on the user to compute the bounding box and ensure that the 
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#families">Families</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-definition">Family Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-hierarchy-tree">Family Hierarchy Tree</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-reference">Geometry Reference</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-boundary-condition">Family Boundary Condition</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#family-name">Family Name</a></li>

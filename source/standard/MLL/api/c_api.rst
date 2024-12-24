@@ -706,6 +706,20 @@ ____________________________________________
 
 ------
 
+.. _CGNSFamilyHierarchyTreeDefinition-ref:
+
+Family Hierarchy Tree
+____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>Family_t</code>
+
+.. doxygengroup:: CGNSFamilyHierarchyTreeDefinition
+    :content-only:
+
+------
+
 .. _CGNSGeometry-ref:
 
 Geometry Reference

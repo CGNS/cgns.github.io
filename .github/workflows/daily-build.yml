@@ -7,7 +7,7 @@ on:
 
 jobs:
   check_changes_build:
-    name: Check for updates to documentation or source code.
+    name: Check for updates to documentation or source code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout CGNS documentation repository (master branch)
@@ -15,19 +15,19 @@ jobs:
         with:
           ref: master
           repository: ${{ github.repository }}
-          path: repos/cgns.doc
+          path: repos/cgns_doc
 
       -name: Checkout the CGNS source repository (master branch)
         uses: actions/checkout@v4.1.7
         with:
           ref: master
           repository: 'CGNS/CGNS'
-          path: repos/cgns.src
+          path: repos/cgns_src
 
       - name: Get commit history for docs repository
         id: get_commits_doc_repo
         run: |
-          cd repos/cgns.doc
+          cd repos/cgns_doc
           last_day=$(date -d 'yesterday' '+%Y-%m-%d')
           first_commit_hash=$(git rev-list --max-count=1 --before="$last_day" HEAD)
           echo "FIRST_COMMIT_HASH_DOC_REPO=$first_commit_hash" >> $GITHUB_OUTPUT
@@ -35,7 +35,7 @@ jobs:
       - name: Get commit history for source repository
         id: get_commits_src_repo
         run: |
-          cd repos/cgns.src
+          cd repos/cgns_src
           last_day=$(date -d 'yesterday' '+%Y-%m-%d')
           first_commit_hash=$(git rev-list --max-count=1 --before="$last_day" HEAD)
           echo "FIRST_COMMIT_HASH_SRC_REPO=$first_commit_hash" >> $GITHUB_OUTPUT

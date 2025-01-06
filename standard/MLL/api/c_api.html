@@ -764,7 +764,7 @@ The function <a class="reference internal" href="#group__CGNSInternals__FNC__CG_
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>option</strong> – <strong>[in]</strong> The configuration options are defined in <em>cgnslib.h</em>. For the list, please refer to the list below. </p></li>
-<li><p><strong>value</strong> – <strong>[in]</strong> The value to set, type cast as <em>void</em> * . In Fortran, the type is <em>TYPE(C_PTR)</em>. </p></li>
+<li><p><strong>value</strong> – <strong>[in]</strong> The value to set, type cast as <em>void</em> * . In Fortran, the type is <em>TYPE(C_PTR)</em>, or <em>TYPE(C_FUNPTR)</em> for <em>CG_CONFIG_ERROR</em>. </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -776,7 +776,14 @@ The function <a class="reference internal" href="#group__CGNSInternals__FNC__CG_
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.CG_CONFIG_ERROR">
 <span class="target" id="group__CGNSInternals__FNC__CG__CONFIG_1ga54783db1587045d7d8e149914373d012"></span><span class="sig-name descname"><span class="n"><span class="pre">CG_CONFIG_ERROR</span></span></span><a class="headerlink" href="#c.CG_CONFIG_ERROR" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>This allows the user to define an error call-back function. The value should be a pointer to a function that receives the error. The function is defined as <code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">err_callback(int</span> <span class="pre">is_error,</span> <span class="pre">char</span> <span class="pre">*errmsg)</span></code> and will be called for errors and warnings. The first argument, <code class="docutils literal notranslate"><span class="pre">is_error</span></code>, will be 0 for warning messages, 1 for error messages, and -1 if the program is going to terminate (i.e., a call to <a class="reference internal" href="#group__ErrorHandling_1ga831a3a2a1639d83988d33607b5a2dcba"><span class="std std-ref">cg_error_exit()</span></a>). The second argument is the error or warning message. If this is defined, warning and error messages will go to the function rather than the terminal. A <code class="docutils literal notranslate"><span class="pre">value</span></code> of NULL (Fortran, <code class="docutils literal notranslate"><span class="pre">C_NULL_PTR</span></code>) will remove the call-back function. </p>
+<dd><p>This allows the user to define an error call-back function. The value should be a pointer to a function that receives the error. The function is defined as <code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">err_callback(int</span> <span class="pre">is_error,</span> <span class="pre">char</span> <span class="pre">*errmsg)</span></code>, or, in Fortran,. </p>
+<p><div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">err_callback</span><span class="p">(</span><span class="n">is_error</span><span class="p">,</span><span class="w"> </span><span class="n">errmsg</span><span class="p">)</span><span class="w"> </span><span class="k">BIND</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<span class="w">   </span><span class="kt">INTEGER</span><span class="p">(</span><span class="kt">C_INT</span><span class="p">),</span><span class="w"> </span><span class="k">VALUE</span><span class="w"> </span><span class="kd">::</span><span class="n">is_error</span>
+<span class="w">   </span><span class="kt">CHARACTER</span><span class="p">(</span><span class="nb">LEN</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="k">DIMENSION</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">errmsg</span>
+</pre></div>
+</div>
+ and will be called for errors and warnings.</p>
+<p>The first argument, <code class="docutils literal notranslate"><span class="pre">is_error</span></code>, will be 0 for warning messages, 1 for error messages, and -1 if the program is going to terminate (i.e., a call to <a class="reference internal" href="#group__ErrorHandling_1ga831a3a2a1639d83988d33607b5a2dcba"><span class="std std-ref">cg_error_exit()</span></a>). The second argument is the error or warning message. If this is defined, warning and error messages will go to the function rather than the terminal. A <code class="docutils literal notranslate"><span class="pre">value</span></code> of NULL (Fortran, <code class="docutils literal notranslate"><span class="pre">C_NULL_PTR</span></code> or <code class="docutils literal notranslate"><span class="pre">C_NULL_FUNPTR</span></code>) will remove the call-back function. </p>
 </dd></dl>
 
 <dl class="c macro">
@@ -2726,6 +2733,26 @@ The CGNS MLL relies on the user to compute the bounding box and ensure that the 
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv411cg_coord_idiiiiPd">
+<span id="_CPPv311cg_coord_idiiiiPd"></span><span id="_CPPv211cg_coord_idiiiiPd"></span><span id="cg_coord_id__i.i.i.i.doubleP"></span><span class="target" id="group__ZoneGridCoordinates_1ga9802707a7c67dcb8a9d3c0dc5e82837b"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cg_coord_id</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">B</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">Z</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">C</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">coord_id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411cg_coord_idiiiiPd" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Get coordinate id. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn</strong> – <strong>[in]</strong> CGNS file index number. </p></li>
+<li><p><strong>B</strong> – <strong>[in]</strong> Base index number, where 1 ≤ <em>B</em> ≤ <em>nbases</em>. </p></li>
+<li><p><strong>Z</strong> – <strong>[in]</strong> Zone index number, where 1 ≤ <em>Z</em> ≤ <em>nzones</em>. </p></li>
+<li><p><strong>C</strong> – <strong>[in]</strong> Coordinate array index number, where 1 ≤ <em>C</em> ≤ <em>ncoords</em>. </p></li>
+<li><p><strong>coord_id</strong> – <strong>[out]</strong> Coordinate id. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error status. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv414cg_coord_writeiii10DataType_tPKcPKvPi">
 <span id="_CPPv314cg_coord_writeiii10DataType_tPKcPKvPi"></span><span id="_CPPv214cg_coord_writeiii10DataType_tPKcPKvPi"></span><span id="cg_coord_write__i.i.i.DataType_t.cCP.voidCP.iP"></span><span class="target" id="group__ZoneGridCoordinates_1ga0718ec66ff13428c5defb73c3b1a2ac6"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cg_coord_write</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">B</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">Z</span></span>, <span class="n"><span class="pre">DataType_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">datatype</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">coordname</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">coord_ptr</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">C</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414cg_coord_writeiii10DataType_tPKcPKvPi" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Write grid coordinates. </p>
@@ -2792,6 +2819,26 @@ The CGNS MLL relies on the user to compute the bounding box and ensure that the 
 <li><p><strong>m_rmax</strong> – <strong>[in]</strong> Upper range index in memory (eg., imax, jmax, kmax). </p></li>
 <li><p><strong>coord_ptr</strong> – <strong>[in]</strong> Array of coordinate values. </p></li>
 <li><p><strong>C</strong> – <strong>[out]</strong> Coordinate array index number, where 1 ≤ <em>C</em> ≤ <em>ncoords</em>. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Error status. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv420cg_particle_coord_idiiiiPd">
+<span id="_CPPv320cg_particle_coord_idiiiiPd"></span><span id="_CPPv220cg_particle_coord_idiiiiPd"></span><span id="cg_particle_coord_id__i.i.i.i.doubleP"></span><span class="target" id="group__ZoneGridCoordinates_1gaa1fbff956dee1b25b755be2fa04fa1ed"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cg_particle_coord_id</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">B</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">P</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">C</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">coord_id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv420cg_particle_coord_idiiiiPd" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Get particle coordinate ids. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn</strong> – <strong>[in]</strong> CGNS file index number. </p></li>
+<li><p><strong>B</strong> – <strong>[in]</strong> Base index number, where 1 ≤ <em>B</em> ≤ <em>nbases</em>. </p></li>
+<li><p><strong>P</strong> – <strong>[in]</strong> Particle Zone index number, where 1 ≤ <em>P</em> ≤ <em>n_particle_zones</em>. </p></li>
+<li><p><strong>C</strong> – <strong>[in]</strong> Coordinate array index number, where 1 ≤ <em>C</em> ≤ <em>ncoords</em>. </p></li>
+<li><p><strong>coord_id</strong> – <strong>[out]</strong> Particle coordinate id. </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -6416,8 +6463,8 @@ For example, Particle0001, Particle0002, etc. is appropriate for up to 9999 part
 <li><p><strong>fn</strong> – <strong>[in]</strong> CGNS file index number. </p></li>
 <li><p><strong>B</strong> – <strong>[in]</strong> Base index number, where 1 ≤ <em>B</em> ≤ <em>nbases</em>. </p></li>
 <li><p><strong>P</strong> – <strong>[in]</strong> Particle Zone index number, where 1 ≤ <em>P</em> ≤ <em>n_particle_zones</em>. </p></li>
-<li><p><strong>C</strong> – <strong>[in]</strong> Coordinate array index number, where 1 ≤ <em>C</em> ≤ <em>ncoords</em>. </p></li>
-<li><p><strong>pcoord_name</strong> – <strong>[out]</strong> Name of the <em>ParticleCoordinates_t</em> node. Note that the name “ParticleCoordinates” is reserved for the original particle location and must be the first <em>ParticleCoordinates_t</em> node to be defined. </p></li>
+<li><p><strong>pcoord_name</strong> – <strong>[in]</strong> Name of the <em>ParticleCoordinates_t</em> node. Note that the name “ParticleCoordinates” is reserved for the original particle location and must be the first <em>ParticleCoordinates_t</em> node to be defined. </p></li>
+<li><p><strong>C</strong> – <strong>[out]</strong> Coordinate array index number, where 1 ≤ <em>C</em> ≤ <em>ncoords</em>. </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

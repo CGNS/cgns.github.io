@@ -533,11 +533,13 @@ ____________________________________________
 .. raw:: html
 
    <p><i>Node</i>:  <code>DiscreteData_t</code>
-   <p><tt>DiscreteData_t</tt> nodes are intended for the storage of fields of data not usually identified as part of the flow solution, such as fluxes or equation residuals.
-   <p>The description for these functions is similar to the <a href="#flow-solution"><tt>FlowSolution_t</tt></a> node as described above.
-   To read and write the discrete data, use <a href="#accessing-a-node"><tt>cg_goto</tt></a> to access the <tt>DiscreteData_t</tt> node, then <a href="#data-arrays"><tt>cg_array_read</tt></a> and <a href="#data-arrays"><tt>cg_array_write</tt></a>.
-   The dimensions provided to the array-write family of functions must match the dimensions specified by the <tt>Zone_t</tt> and DiscreteData_t</tt> nodes.
-   Use <a href="#grid-location"><tt>cg_gridlocation_write</tt></a> and <a href="#rind-layers"><tt>cg_rind_write</tt></a> under the <tt>DiscreteData_t</tt> node, as required.
+
+.. note::
+   :code:`DiscreteData_t` nodes are intended for the storage of fields of data not usually identified as part of the flow solution, such as fluxes or equation residuals.
+   The description for these functions is similar to the :ref:`FlowSolution_t<FlowSolution-ref>` node as described above.
+   To read and write the discrete data, use :cpp:func:`cg_goto` to access the :code:`DiscreteData_t` node, then :cpp:func:`cg_array_read` and :cpp:func:`cg_array_write`.
+   The dimensions provided to the array-write family of functions must match the dimensions specified by the :code:`Zone_t` and :code:`DiscreteData_t` nodes.
+   Use :cpp:func:`cg_gridlocation_write` and :cpp:func:`cg_rind_write` under the :code:`DiscreteData_t` node, as required.
 
 .. doxygengroup:: DiscreteData
     :content-only:

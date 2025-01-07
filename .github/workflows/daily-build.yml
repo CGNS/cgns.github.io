@@ -60,14 +60,14 @@ jobs:
             echo "No changes found in the previous day."
           fi
 
-      - name: Trigger downstream workflow (optional)
-        uses: actions/github-script@v6
-        if: ${{ steps.log_result.outputs.trigger_next_workflow }}
-        with:
-          script: |
-            github.actions.createWorkflowDispatch({
-              owner: 'CGNS',
-               repo: 'cgns.github.io ',
-               workflow_id: 'publish.yml',
-               ref:  ${{ github.ref }}
-            })
+#      - name: Trigger downstream workflow (optional)
+#        uses: actions/github-script@v6
+#        if: ${{ steps.log_result.outputs.trigger_next_workflow }}
+#        with:
+#          script: |
+#            github.actions.createWorkflowDispatch({
+#              owner: 'CGNS',
+#               repo: 'cgns.github.io ',
+#               workflow_id: 'publish.yml',
+#               ref:  ${{ github.ref }}
+#            })

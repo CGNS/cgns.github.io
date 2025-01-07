@@ -61,7 +61,13 @@ jobs:
           fi
 
       - name: Trigger downstream workflow (optional)
-        uses: './.github/workflows/publish.yml'
+        uses: actions/github-script@v6
         if: ${{ steps.log_result.outputs.trigger_next_workflow }}
         with:
-          ref: ${{ github.ref }}
+          script: |
+            github.actions.createWorkflowDispatch({
+              owner: 'CGNS',
+               repo: 'cgns.github.io ',
+               workflow_id: 'publish.yml',
+               ref:  ${{ github.ref }}
+            })

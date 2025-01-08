@@ -139,9 +139,18 @@ ____________________________________________
 .. raw:: html
 
    <p><i>Node</i>:  <a href="./enums.html#c.Zone_t"><code>Zone_t</code></a>
-             (<a href="../../SIDS/hierarchy.html#zone-structure-definition-zone-t">SIDS</a>))</p>
+             (<a href="../../SIDS/hierarchy.html#zone-structure-definition-zone-t">SIDS</a>)</p>
 
 .. <a href="../../FMM/nodes.html#Zone">File Mapping</a>)</p>
+
+.. note::
+   When a CGNS file is opened via the cg_open() MLL function, the zones are sorted alphanumerically by name (the creation order is ignored/discarded).
+   This mechanism is provided to enable ordinal zone indexing.
+   Therefore, if ordinal zone indexing is desired, it is considered good standard practice to always choose zone names to be alphabetically increasing.
+   For example, Zone0001, Zone0002, etc. is appropriate for up to 9999 zones.
+
+.. warning::
+   Because the cgnsview tool uses the low-level cgio API, it does not sort the zones by name and zone order presented may not match that of the MLL API. Generally, cgnsview presents the zones in creation order for both ADF and HDF5 formats. One exception is CGNS files that are either created or opened using the HDF5 v1.6 library (or older) will always be presented alphabetically (creation order tracking was added to HDF5 in v1.8).
 
 .. doxygengroup:: CGNSZoneInformation
     :content-only:

@@ -19,7 +19,7 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	git submodule init
-	git submodule update --remote --merge --allow-unrelated-histories
+	git submodule update --init --force --remote
 	if [ ! -d $(BUILDDIR) ]; then mkdir -p $(BUILDDIR); fi
 	cp -r ./images "$(BUILDDIR)"
 	@$(SPHINXBUILD) -E -n -c . -b html source "$(BUILDDIR)" $(SPHINXOPTS) $(O)

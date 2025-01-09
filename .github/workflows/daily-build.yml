@@ -1,4 +1,4 @@
-name: CGNS documentation daily build from previous day
+name: CGNS documentation daily build from previous day (master)
 
 on:
   workflow_dispatch:
@@ -66,8 +66,8 @@ jobs:
         with:
           script: |
             github.actions.createWorkflowDispatch({
-              owner: 'CGNS',
+               owner: 'CGNS',
                repo: 'cgns.github.io ',
                workflow_id: 'publish.yml',
-               ref:  '${{ github.ref }}'
+               ref:  master
             })

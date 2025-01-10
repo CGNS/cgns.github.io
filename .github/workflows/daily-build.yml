@@ -51,12 +51,13 @@ jobs:
           fi
 
       - name: Log result and trigger another workflow
+        id: log_result
         run: |
           if [[ "${{ steps.has_commits.outputs.HAS_COMMITS }}" == "true" ]]; then
-            echo "Modifications identified from the previous day."
-            # Trigger another workflow
             echo "trigger_next_workflow=true" >> $GITHUB_OUTPUT
+            echo "Modifications identified from the previous day."
           else
+            echo "trigger_next_workflow=false" >> $GITHUB_OUTPUT
             echo "No nodifications identified from the previous day."
           fi
 

@@ -63,11 +63,11 @@ jobs:
 
       - name: Trigger downstream workflow (optional)
         uses: actions/github-script@v6
-        if: steps.log_result.outputs.trigger_next_workflow == 'true'
+        if: success() && steps.log_result.outputs.trigger_next_workflow == 'true'
         with:
           script: |
             await github.rest.actions.createWorkflowDispatch({
-               owner: 'CGNS',
-               repo: 'cgns.github.io',
+               owner: context.repo.owner,
+               repo: context.repo.name,
                workflow_id: 'publish.yml'
             })

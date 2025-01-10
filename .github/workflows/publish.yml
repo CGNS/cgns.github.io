@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
 
@@ -19,6 +20,7 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v4.1.1
         with:
+          ref: master
           persist-credentials: false
           submodules: recursive
 
@@ -50,7 +52,7 @@ jobs:
 
       - name: "Deploy"
         run: |
-          git clone -b gh-pages --single-branch https://github.com/CGNS/cgns-modern.github.io.git docs/deploy
+          git clone -b gh-pages --single-branch https://github.com/CGNS/cgns.github.io.git docs/deploy
           rsync -q -av --checksum --progress docs/html/ docs/deploy
           cd docs/deploy
           git config --global user.name 'autopages'

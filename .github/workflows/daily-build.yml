@@ -50,7 +50,7 @@ jobs:
             echo "HAS_COMMITS=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Log result and trigger another workflow 2
+      - name: Log result and trigger another workflow
         id: log_result
         run: |
           if [[ "${{ steps.has_commits.outputs.HAS_COMMITS }}" == "true" ]]; then
@@ -69,6 +69,5 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
                owner: 'CGNS',
                repo: 'cgns.github.io',
-               workflow_id: 'publish.yml',
-               ref:  master
+               workflow_id: 'publish.yml'
             })

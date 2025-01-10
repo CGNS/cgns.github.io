@@ -65,7 +65,7 @@ jobs:
         if: steps.log_result.outputs.trigger_next_workflow == 'true'
         with:
           script: |
-            github.actions.createWorkflowDispatch({
+            await github.rest.actions.createWorkflowDispatch({
                owner: 'CGNS',
                repo: 'cgns.github.io ',
                workflow_id: 'publish.yml',

@@ -1,0 +1,73 @@
+name: CGNS documentation daily build from previous day (master)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *" # Run daily at midnight
+
+jobs:
+  check_changes_build:
+    name: Check for updates to documentation or source code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout CGNS documentation repository (master branch)
+        uses: actions/checkout@v4.1.7
+        with:
+          ref: master
+          repository: ${{ github.repository }}
+          path: repos/cgns_doc
+
+      - name: Checkout the CGNS source repository (master branch)
+        uses: actions/checkout@v4.1.7
+        with:
+          ref: master
+          repository: 'CGNS/CGNS'
+          path: repos/cgns_src
+
+      - name: Get commit history for docs repository
+        id: get_commits_doc_repo
+        run: |
+          cd repos/cgns_doc
+          last_day=$(date -d 'yesterday' '+%Y-%m-%d')
+          first_commit_hash=$(git rev-list --max-count=1 --before="$last_day" HEAD)
+          echo "FIRST_COMMIT_HASH_DOC_REPO=$first_commit_hash" >> $GITHUB_OUTPUT
+
+      - name: Get commit history for source repository
+        id: get_commits_src_repo
+        run: |
+          cd repos/cgns_src
+          last_day=$(date -d 'yesterday' '+%Y-%m-%d')
+          first_commit_hash=$(git rev-list --max-count=1 --before="$last_day" HEAD)
+          echo "FIRST_COMMIT_HASH_SRC_REPO=$first_commit_hash" >> $GITHUB_OUTPUT
+
+      - name: Check if any commits exist in either repository
+        id: has_commits
+        run: |
+          if [[ -z "${{ steps.get_commits_doc_repo.outputs.FIRST_COMMIT_HASH_DOC_REPO }}" ]] &&
+             [[ -z "${{ steps.get_commits_src_repo.outputs.FIRST_COMMIT_HASH_SRC_REPO }}" ]]; then
+            echo "HAS_COMMITS=false" >> $GITHUB_OUTPUT
+          else
+            echo "HAS_COMMITS=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Log result and trigger another workflow
+        run: |
+          if [[ "${{ steps.has_commits.outputs.HAS_COMMITS }}" == "true" ]]; then
+            echo "Changes found in the previous day."
+            # Trigger another workflow
+            echo "::set-output name=trigger_next_workflow::true"
+          else
+            echo "No changes found in the previous day."
+          fi
+
+      - name: Trigger downstream workflow (optional)
+        uses: actions/github-script@v6
+        if: ${{ steps.log_result.outputs.trigger_next_workflow }}
+        with:
+          script: |
+            github.actions.createWorkflowDispatch({
+               owner: 'CGNS',
+               repo: 'cgns.github.io ',
+               workflow_id: 'publish.yml',
+               ref:  master
+            })

@@ -53,16 +53,16 @@ jobs:
       - name: Log result and trigger another workflow
         run: |
           if [[ "${{ steps.has_commits.outputs.HAS_COMMITS }}" == "true" ]]; then
-            echo "Changes found in the previous day."
+            echo "Modifications identified from the previous day."
             # Trigger another workflow
-            echo "::set-output name=trigger_next_workflow::true"
+            echo "trigger_next_workflow=true" >> $GITHUB_OUTPUT
           else
-            echo "No changes found in the previous day."
+            echo "No nodifications identified from the previous day."
           fi
 
       - name: Trigger downstream workflow (optional)
         uses: actions/github-script@v6
-        if: ${{ steps.log_result.outputs.trigger_next_workflow }}
+        if: steps.log_result.outputs.trigger_next_workflow == 'true'
         with:
           script: |
             github.actions.createWorkflowDispatch({

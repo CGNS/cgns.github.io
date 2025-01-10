@@ -62,7 +62,7 @@ jobs:
 
       - name: Trigger downstream workflow (optional)
         uses: actions/github-script@v6
-#         if: steps.log_result.outputs.trigger_next_workflow == 'true'
+        if: steps.log_result.outputs.trigger_next_workflow == 'true'
         with:
           script: |
             github.actions.createWorkflowDispatch({

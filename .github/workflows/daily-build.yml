@@ -29,25 +29,26 @@ jobs:
         run: |
           cd repos/cgns_doc
           last_day=$(date -d 'yesterday' '+%Y-%m-%d')
-          first_commit_hash=$(git rev-list --max-count=1 --before="$last_day" HEAD)
-          echo "FIRST_COMMIT_HASH_DOC_REPO=$first_commit_hash" >> $GITHUB_OUTPUT
+          commit_count=$(git log --after="$last_day 00:00:00" --before="$last_day 23:59:59" --oneline | wc -l)
+          echo "COMMIT_COUNT_DOC_REPO=$commit_count" >> $GITHUB_OUTPUT
 
       - name: Get commit history for source repository
         id: get_commits_src_repo
         run: |
           cd repos/cgns_src
           last_day=$(date -d 'yesterday' '+%Y-%m-%d')
-          first_commit_hash=$(git rev-list --max-count=1 --before="$last_day" HEAD)
-          echo "FIRST_COMMIT_HASH_SRC_REPO=$first_commit_hash" >> $GITHUB_OUTPUT
+          commit_count=$(git log --after="$last_day 00:00:00" --before="$last_day 23:59:59" --oneline | wc -l)
+          echo "COMMIT_COUNT_SRC_REPO=$commit_count" >> $GITHUB_OUTPUT
 
       - name: Check if any commits exist in either repository
         id: has_commits
         run: |
-          if [[ -z "${{ steps.get_commits_doc_repo.outputs.FIRST_COMMIT_HASH_DOC_REPO }}" ]] &&
-             [[ -z "${{ steps.get_commits_src_repo.outputs.FIRST_COMMIT_HASH_SRC_REPO }}" ]]; then
+          if [[ "${{ steps.get_commits_doc_repo.outputs.COMMIT_COUNT_DOC_REPO }}" == "0" ]] && 
+             [[ "${{ steps.get_commits_src_repo.outputs.COMMIT_COUNT_SRC_REPO }}" == "0" ]]; then
             echo "HAS_COMMITS=false" >> $GITHUB_OUTPUT
           else
             echo "HAS_COMMITS=true" >> $GITHUB_OUTPUT
+
           fi
 
       - name: Log result and trigger another workflow

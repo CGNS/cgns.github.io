@@ -134,6 +134,9 @@ ____________________________________________
 Descriptors
 **********************
 
+.. cgns-group-function-summary:: DescriptiveText
+.. cgns-group-function-summary:: OrdinalValue
+
 .. _DescriptiveText-ref:
 
 Descriptive Text
@@ -166,6 +169,12 @@ ____________________________________________
 Physical Data
 **********************
 
+.. cgns-group-function-summary:: DataArrays
+.. cgns-group-function-summary:: DataClass
+.. cgns-group-function-summary:: DataConversionFactors
+.. cgns-group-function-summary:: DimensionalUnits
+.. cgns-group-function-summary:: DimensionalExponents
+
 .. _DataArrays-ref:
 
 Data Arrays
@@ -182,7 +191,7 @@ ____________________________________________
 
 .. _DataClass-ref:
 
-Data Class (DataClass_t)
+Data Class
 ____________________________________________
 
 .. raw:: html

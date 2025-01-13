@@ -10,11 +10,34 @@ These are all the types and functions available in the CGNS C API.
    Please refer to :ref:`MLLGeneralRemarks-ref` for details and conventions regarding
    the equivalent Fortran APIs, paying special attention to :ref:`CGNSFortranPort-ref`.
 
-.. _CGNSFile-ref:
-
 ******************************************
 File and Library Operations
 ******************************************
+
+.. cgns-group-function-summary:: CGNSFile Opening and Closing a CGNS File
+
+..
+  Because of the way internals is split into two groups, this summary of functions is done manually.  CGNSInternals_FNC_CG_CONFIG has no matching reference.  The manual implementation merges the output of the following:
+..
+  cgns-group-function-summary:: CGNSInternals_FNC_CG_CONFIG Configuring CGNS Internals
+..
+  cgns-group-function-summary:: CGNSInternals Configuring CGNS Internals
+
+* :ref:`Configuring CGNS Internals<CGNSInternals-ref>`
+
+  * :cpp:func:`cg_configure<cg_configure>` - Configure CGNS library internal options.
+  * :cpp:func:`cg_error_handler<cg_error_handler>` - Set CGNS error handler
+  * :cpp:func:`cg_set_compress<cg_set_compress>` - Set CGNS compression mode.
+  * :cpp:func:`cg_get_compress<cg_get_compress>` - Get CGNS compression mode.
+  * :cpp:func:`cg_set_path<cg_set_path>` - Set the CGNS link search path.
+  * :cpp:func:`cg_add_path<cg_add_path>` - Add to the CGNS link search path.
+
+.. cgns-group-function-summary:: CGNSInterfaceCGIO Interfacing with CGIO
+
+.. _CGNSFile-ref:
+
+CGNS File Operations
+____________________________________________
 
 .. doxygengroup:: CGNSFile
     :content-only:
@@ -48,6 +71,9 @@ ____________________________________________
 Navigating a CGNS File
 **********************
 
+.. cgns-group-function-summary:: AccessingANode
+.. cgns-group-function-summary:: DeletingANode
+
 .. _AccessingANode-ref:
 
 Accessing a Node
@@ -75,6 +101,11 @@ ____________________________________________
 Error Handling
 **********************
 
+..
+  This section is small enough not to need a summary (archived docs did not have a summary here either).  Also, cg_get_error's brief description is not brief!
+..
+  cgns-group-function-summary:: ErrorHandling
+
 .. doxygengroup:: ErrorHandling
     :content-only:
 
@@ -83,6 +114,10 @@ Error Handling
 **********************
 Structural Nodes
 **********************
+
+.. cgns-group-function-summary:: CGNSBaseInformation CGNS Base Information
+.. cgns-group-function-summary:: CGNSZoneInformation CGNS Zone Information
+.. cgns-group-function-summary:: SimulationType
 
 .. _CGNSBaseInformation-ref: 
 
@@ -249,6 +284,10 @@ _________________________________________________________________
 Location and Position
 **********************
 
+.. cgns-group-function-summary:: GridLocation
+.. cgns-group-function-summary:: PointSets
+.. cgns-group-function-summary:: RindLayers
+
 .. _GridLocation-ref:
 
 Grid Location
@@ -301,6 +340,13 @@ ____________________________________________
 **********************
 Auxiliary Data
 **********************
+
+.. cgns-group-function-summary:: ReferenceState
+.. cgns-group-function-summary:: Gravity
+.. cgns-group-function-summary:: ConvergenceHistory
+.. cgns-group-function-summary:: IntegralData
+.. cgns-group-function-summary:: UserDefinedData
+.. cgns-group-function-summary:: FreeingMemory
 
 .. _ReferenceState-ref:
 
@@ -386,6 +432,11 @@ ____________________________________________
 Grid Specification
 **********************
 
+.. cgns-group-function-summary:: ZoneGridCoordinates
+.. cgns-group-function-summary:: ElementConnectivity
+.. cgns-group-function-summary:: Axisymmetry
+.. cgns-group-function-summary:: RotatingCoordinates
+
 .. _ZoneGridCoordinates-ref:
 
 Zone Grid Coordinates
@@ -430,7 +481,7 @@ ____________________________________________
 
 ------
 
-.. _Rotating-ref:
+.. _RotatingCoordinates-ref:
 
 Rotating Coordinates
 ____________________________________________
@@ -448,6 +499,11 @@ ____________________________________________
 Solution Data
 **********************
 
+.. cgns-group-function-summary:: FlowSolution
+.. cgns-group-function-summary:: FlowSolutionData
+.. cgns-group-function-summary:: DiscreteData
+.. cgns-group-function-summary:: ZoneSubregions
+
 .. _FlowSolution-ref:
 
 Flow Solution
@@ -458,6 +514,16 @@ ____________________________________________
    <p><i>Node</i>:  <code>FlowSolution_t</code>
 
 .. doxygengroup:: FlowSolution
+    :content-only:
+
+------
+
+.. _FlowSolutionData-ref:
+
+Flow Solution Data
+____________________________________________
+
+.. doxygengroup:: FlowSolutionData
     :content-only:
 
 ------
@@ -493,6 +559,11 @@ ____________________________________________
 **********************
 Grid Connectivity
 **********************
+
+.. cgns-group-function-summary:: OneToOneConnectivity One-to-One Connectivity
+.. cgns-group-function-summary:: GeneralizedConnectivity
+.. cgns-group-function-summary:: SpecialGridConnectivityProperty
+.. cgns-group-function-summary:: OversetHoles
 
 .. _OneToOneConnectivity-ref:
 
@@ -554,6 +625,11 @@ ____________________________________________
 Boundary Conditions
 **********************
 
+.. cgns-group-function-summary:: BoundaryConditionType Boundary Condition Type and Location
+.. cgns-group-function-summary:: BoundaryConditionDatasets
+.. cgns-group-function-summary:: BCData Boundary Condition Data
+.. cgns-group-function-summary:: SpecialBoundaryConditionProperty Special Boundary Condition Properties
+
 .. _BoundaryConditionType-ref:
 
 Boundary Condition Type and Location
@@ -613,6 +689,13 @@ _________________________________________________________________
 **********************
 Equation Specification
 **********************
+
+.. cgns-group-function-summary:: FlowEquationSet
+.. cgns-group-function-summary:: ParticleEquationSet
+.. cgns-group-function-summary:: GoverningEquations
+.. cgns-group-function-summary:: ParticleGoverningEquations
+.. cgns-group-function-summary:: AuxiliaryModel
+.. cgns-group-function-summary:: ParticleModel
 
 .. _FlowEquationSet-ref:
 
@@ -701,6 +784,12 @@ ________________________________________________
 Families
 **********************
 
+.. cgns-group-function-summary:: CGNSFamilyDefinition Family Definition
+.. cgns-group-function-summary:: CGNSFamilyHierarchyTreeDefinition Family Hierarchy Tree
+.. cgns-group-function-summary:: CGNSGeometryReference Geometry Reference
+.. cgns-group-function-summary:: CGNSFamilyBoundaryCondition Family Boundary Condition
+.. cgns-group-function-summary:: FamilyName
+
 .. _CGNSFamilyDefinition-ref:
 
 Family Definition
@@ -729,7 +818,7 @@ ____________________________________________
 
 ------
 
-.. _CGNSGeometry-ref:
+.. _CGNSGeometryReference-ref:
 
 Geometry Reference
 ____________________________________________
@@ -774,6 +863,13 @@ ____________________________________________
 **********************
 Time-Dependent Data
 **********************
+
+.. cgns-group-function-summary:: BaseIterativeData
+.. cgns-group-function-summary:: ZoneIterativeData
+.. cgns-group-function-summary:: ParticleIterativeData
+.. cgns-group-function-summary:: RigidGridMotion
+.. cgns-group-function-summary:: ArbitraryGridMotion
+.. cgns-group-function-summary:: ZoneGridConnectivity
 
 .. _BaseIterativeData-ref:
 
@@ -876,6 +972,8 @@ ________________________________________________
 Links
 **********************
 
+.. cgns-group-function-summary:: Links
+
 .. _Links-ref:
 
 .. doxygengroup:: Links
@@ -885,6 +983,11 @@ Links
 **********************
 Particle Specification
 **********************
+
+.. cgns-group-function-summary:: ParticleZoneInformation
+.. cgns-group-function-summary:: ParticleCoordinates
+.. cgns-group-function-summary:: ParticleSolution
+.. cgns-group-function-summary:: ParticleSolutionData
 
 .. _ParticleZoneInformation-ref:
 
@@ -930,6 +1033,3 @@ ________________________________________________
 
 .. doxygengroup:: ParticleSolutionData
     :content-only:
-
-
-

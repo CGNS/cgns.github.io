@@ -29,45 +29,47 @@ jobs:
         run: |
           cd repos/cgns_doc
           last_day=$(date -d 'yesterday' '+%Y-%m-%d')
-          first_commit_hash=$(git rev-list --max-count=1 --before="$last_day" HEAD)
-          echo "FIRST_COMMIT_HASH_DOC_REPO=$first_commit_hash" >> $GITHUB_OUTPUT
+          commit_count=$(git log --after="$last_day 00:00:00" --before="$last_day 23:59:59" --oneline | wc -l)
+          echo "COMMIT_COUNT_DOC_REPO=$commit_count" >> $GITHUB_OUTPUT
 
       - name: Get commit history for source repository
         id: get_commits_src_repo
         run: |
           cd repos/cgns_src
           last_day=$(date -d 'yesterday' '+%Y-%m-%d')
-          first_commit_hash=$(git rev-list --max-count=1 --before="$last_day" HEAD)
-          echo "FIRST_COMMIT_HASH_SRC_REPO=$first_commit_hash" >> $GITHUB_OUTPUT
+          commit_count=$(git log --after="$last_day 00:00:00" --before="$last_day 23:59:59" --oneline | wc -l)
+          echo "COMMIT_COUNT_SRC_REPO=$commit_count" >> $GITHUB_OUTPUT
 
       - name: Check if any commits exist in either repository
         id: has_commits
         run: |
-          if [[ -z "${{ steps.get_commits_doc_repo.outputs.FIRST_COMMIT_HASH_DOC_REPO }}" ]] &&
-             [[ -z "${{ steps.get_commits_src_repo.outputs.FIRST_COMMIT_HASH_SRC_REPO }}" ]]; then
+          if [[ "${{ steps.get_commits_doc_repo.outputs.COMMIT_COUNT_DOC_REPO }}" == "0" ]] && 
+             [[ "${{ steps.get_commits_src_repo.outputs.COMMIT_COUNT_SRC_REPO }}" == "0" ]]; then
             echo "HAS_COMMITS=false" >> $GITHUB_OUTPUT
           else
             echo "HAS_COMMITS=true" >> $GITHUB_OUTPUT
+
           fi
 
       - name: Log result and trigger another workflow
+        id: log_result
         run: |
           if [[ "${{ steps.has_commits.outputs.HAS_COMMITS }}" == "true" ]]; then
-            echo "Changes found in the previous day."
-            # Trigger another workflow
-            echo "::set-output name=trigger_next_workflow::true"
+            echo "trigger_next_workflow=true" >> $GITHUB_OUTPUT
+            echo "Modifications identified from the previous day."
           else
-            echo "No changes found in the previous day."
+            echo "trigger_next_workflow=false" >> $GITHUB_OUTPUT
+            echo "No modifications identified from the previous day."
           fi
 
       - name: Trigger downstream workflow (optional)
-        uses: actions/github-script@v6
-        if: ${{ steps.log_result.outputs.trigger_next_workflow }}
+        uses: actions/github-script@v7
+        if: success() && steps.log_result.outputs.trigger_next_workflow == 'true'
         with:
           script: |
-            github.actions.createWorkflowDispatch({
+            await github.rest.actions.createWorkflowDispatch({
                owner: 'CGNS',
-               repo: 'cgns.github.io ',
+               repo: 'cgns.github.io',
                workflow_id: 'publish.yml',
-               ref:  master
+               ref: 'develop'
             })

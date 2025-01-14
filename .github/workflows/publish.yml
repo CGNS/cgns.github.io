@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+      - develop
+  pull_request:
+    branches:
+      - develop
   workflow_dispatch:
 
 jobs:
@@ -27,7 +31,7 @@ jobs:
       - name: "Setup python for sphinx"
         uses: actions/setup-python@v5
         with:
-          python-version: 3.10
+          python-version: 3.12.1
 
       - name: "Install python dependencies"
         run: |
@@ -51,6 +55,7 @@ jobs:
         continue-on-error: true
 
       - name: "Deploy"
+        if: github.ref == 'refs/heads/master'
         run: |
           git clone -b gh-pages --single-branch https://github.com/CGNS/cgns.github.io.git docs/deploy
           rsync -q -av --checksum --progress docs/html/ docs/deploy

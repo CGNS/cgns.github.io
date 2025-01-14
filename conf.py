@@ -14,7 +14,9 @@
 # sys.path.insert(0, os.path.abspath('.'))
 from sphinx.builders.html import StandaloneHTMLBuilder
 import subprocess, os, sys
+from pathlib import Path
 sys.path.insert(0, os.path.abspath('.'))
+sys.path.append(str(Path('_ext').resolve()))
 
 # Doxygen
 subprocess.call('doxygen Doxyfile', shell=True)
@@ -47,7 +49,8 @@ extensions = [
     'sphinx.ext.inheritance_diagram',
     'sphinxfortran.fortran_domain',
     'sphinxfortran.fortran_autodoc',
-    'breathe'
+    'breathe',
+    'cgns_function_summary'
 ]
 # Prefix to add to ticket numbers to get the full URL to JIRA
 # see use in the News page

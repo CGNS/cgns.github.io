@@ -101,10 +101,7 @@ ____________________________________________
 Error Handling
 **********************
 
-..
-  This section is small enough not to need a summary (archived docs did not have a summary here either).  Also, cg_get_error's brief description is not brief!
-..
-  cgns-group-function-summary:: ErrorHandling
+.. cgns-group-function-summary:: ErrorHandling
 
 .. doxygengroup:: ErrorHandling
     :content-only:

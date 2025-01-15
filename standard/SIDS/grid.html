@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" data-theme="light">
+<html lang="en" data-content_root="../../" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>7. Grid Coordinates, Elements, and Flow Solution &#8212; CGNS Documentation</title>
   
@@ -17,33 +16,36 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=6bab4044" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css?v=2c72f61b" />
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
-  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'standard/SIDS/grid';</script>
     <link rel="canonical" href="https://cgns.org/standard/SIDS/grid.html" />
@@ -53,6 +55,7 @@
     <link rel="prev" title="6. Hierarchical Structures" href="hierarchy.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -60,32 +63,16 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -93,7 +80,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -101,16 +87,25 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -125,6 +120,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="../../index.html">
   
@@ -136,11 +133,11 @@
     
     
     <img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-light" alt="CGNS Documentation - Home"/>
-    <script>document.write(`<img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark" alt="CGNS Documentation - Home"/>`);</script>
+    <img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark pst-js-only" alt="CGNS Documentation - Home"/>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><ul class="navbar-icon-links navbar-nav"
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
         <li class="nav-item">
           
@@ -151,14 +148,21 @@
           
           
           
-          <a href="https://github.com/CGNS/CGNS" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-download fa-lg" aria-hidden="true"></i></span>
+          <a href="https://github.com/CGNS/CGNS" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-download fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../general.html">Introduction to CGNS</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../general.html">Introduction to CGNS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../general/what.html">What is CGNS?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../general/start.html">Quick Start Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../general/overview.html">Overview</a></li>
@@ -167,10 +171,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../general/FAQ.html">FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../general/implementations.html">Implementations</a></li>
 </ul>
-</li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../standard.html">Standard Specification</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../standard.html">Standard Specification</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../reference.html">Standardization bodies</a></li>
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="intro.html">1. Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="design.html">2. Design Philosophy of Standard Interface Data Structures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="convention.html">3. Conventions</a></li>
@@ -187,10 +191,10 @@
 <li class="toctree-l3"><a class="reference internal" href="appendix_a.html">Appendix A: Conventions for Data-Name Identifiers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="appendix_b.html">Appendix B: Structured Two-Zone Flat Plate Example</a></li>
 </ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_FMM.html">CGNS/FMM - Data model mapping to implementation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_FMM.html">CGNS/FMM - Data model mapping to implementation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../FMM/nodes.html">Detailed CGNS Node Descriptions</a></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../FMM/figures.html">CGNS File Mapping Figures</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../FMM/figures.html">CGNS File Mapping Figures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../FMM/ArbitraryGridMotion.html">ArbitraryGridMotion Figure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../FMM/Area.html">Area Figure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../FMM/AverageInterface.html">AverageInterface Figure</a></li>
@@ -252,19 +256,19 @@
 <li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneIterativeData.html">ZoneIterativeData/ParticleIterativeData Figure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneSubRegion.html">ZoneSubRegion Figure</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../MLL/CGNS_MLL.html">CGNS/MLL - C and Fortran APIs for Applications</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../MLL/api/general_remarks.html">General Remarks</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../MLL/CGNS_MLL.html">CGNS/MLL - C and Fortran APIs for Applications</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../MLL/api/general_remarks.html">General Remarks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../MLL/api/enums.html">List of enumerated values (key words) for each of these variable types (typedefs)</a></li>
 </ul>
-</li>
+</details></li>
 <li class="toctree-l3"><a class="reference internal" href="../MLL/api/c_api.html">CGNS/MLL API Overview for C and Fortran applications</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../MLL/api/c_parallel_api.html">CGNS Parallel API Overview</a></li>
 </ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_database.html">Database-Level Routines</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_structure.html">Data Structure Management Routines</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_links.html">Link Management Routines</a></li>
@@ -274,32 +278,32 @@
 <li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_misc.html">Miscellaneous Routines</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_example.html">Code Examples</a></li>
 </ul>
-</li>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../hdf5.html">CGNS/HDF5 - An HPC implementation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../python.html">CGNS/Python - A Python implementation</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../current.html">Resources</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../current.html">Resources</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../current/news.html">News</a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../../current/CPEX.html">CPEX</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/download.html">Download</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/examples.html">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/softwarelist.html">More CGNS Software</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../doc.html">More documentation</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../doc.html">More documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../doc/papers.html">Papers</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../doc/userguide.html">User’s Guide to CGNS</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../governance.html">CGNS Governance</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../governance.html">CGNS Governance</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../governance/committee.html">Steering Committee</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../governance/meetings.html">Meetings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../governance/support.html">Support</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
 
     </div>
@@ -308,14 +312,19 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -324,14 +333,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -406,27 +415,19 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -486,13 +487,13 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="grid-coordinates-elements-and-flow-solution">
-<h1><span class="section-number">7. </span>Grid Coordinates, Elements, and Flow Solution<a class="headerlink" href="#grid-coordinates-elements-and-flow-solution" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">7. </span>Grid Coordinates, Elements, and Flow Solution<a class="headerlink" href="#grid-coordinates-elements-and-flow-solution" title="Link to this heading">#</a></h1>
 <p>This section defines structure types for describing the grid coordinates, element data, and flow solution data pertaining to a zone. Entities of each of the structure types defined in this section are contained in the <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code> structure.</p>
 <section id="grid-coordinates-structure-definition-gridcoordinates-t">
-<span id="gridcoordinates-t"></span><h2><span class="section-number">7.1. </span>Grid Coordinates Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">GridCoordinates_t</span></code><a class="headerlink" href="#grid-coordinates-structure-definition-gridcoordinates-t" title="Permalink to this heading">#</a></h2>
+<span id="gridcoordinates-t"></span><h2><span class="section-number">7.1. </span>Grid Coordinates Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">GridCoordinates_t</span></code><a class="headerlink" href="#grid-coordinates-structure-definition-gridcoordinates-t" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p>The physical coordinates of the grid vertices are described by the <code class="code sidskey docutils literal notranslate"><span class="pre">GridCoordinates_t</span></code> structure. This structure contains a list for the data arrays of the individual components of the position vector. It also provides a mechanism for identifying rind-point data included within the position-vector arrays.</p>
 </div></blockquote>
@@ -530,7 +531,7 @@ document.write(`
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default class for data contained in the <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities. For dimensional grid coordinates, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of units employed. If present, these two entities take precedence over the corresponding entities at higher levels of the CGNS hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>. An example that uses these grid-coordinate defaults is shown under <a class="reference internal" href="#grid-example"><span class="std std-ref">Grid Coordinates Examples</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">BoundingBox</span></code> array is optional and provides a measure within which all the grid points lie. It stores minima and maxima of Coordinates values sorted by alphabetical order for Cartesian and Cylindrical coordinate systems while Spherical and Auxiliary coordinate systems retain a specific order to be coherent with the existing SIDS notation:</p>
-<table class="table table-center" style="width: 400px">
+<div class="pst-scrollable-table-container"><table class="table table-center" style="width: 400px">
 <thead>
 <tr class="row-odd"><th class="head"><p>System</p></th>
 <th class="head"><p>Bounding Box</p></th>
@@ -571,6 +572,7 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>Thus, all coordinate systems are handled in a deterministic way. For 2-D coordinate system, the order is kept the same as for 3-D.
 Angle coordinate part of a bounding box is defined by <span class="math notranslate nohighlight">\(Inf(CoordinateTheta)\)</span> and <span class="math notranslate nohighlight">\(Sup(CoordinateTheta)\)</span> (respectively <span class="math notranslate nohighlight">\(Inf(CoordinatePhi)\)</span> and <span class="math notranslate nohighlight">\(Sup(CoordinatePhi)\)</span> for spherical coordinate angle) where <span class="math notranslate nohighlight">\(Inf\)</span> and <span class="math notranslate nohighlight">\(Sup\)</span> operators ensure unicity of the angle interval. The constraints for valid angle bounding box limits are:</p>
 <ul class="simple">
@@ -578,9 +580,9 @@ Angle coordinate part of a bounding box is defined by <span class="math notransl
 <li><p><span class="math notranslate nohighlight">\(Inf(CoordinateTheta) &lt; Sup(CoordinateTheta)\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(Sup(CoordinateTheta) - Inf(CoordinateTheta) ≤ 2 π\)</span></p></li>
 </ul>
-<span class="target" id="datasize-grid"></span><dl class="c function">
+<dl class="c function" id="datasize-grid">
 <dt class="sig sig-object c" id="c.DataSize">
-<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DataSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.DataSize" title="Permalink to this definition">#</a><br /></dt>
+<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DataSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.DataSize" title="Link to this definition">#</a><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return value<span class="colon">:</span></dt>
 <dd class="field-odd"><p>one-dimensional <code class="docutils literal notranslate"><span class="pre">int</span></code> array of length <code class="code sidskey docutils literal notranslate"><span class="pre">IndexDimension</span></code></p>
@@ -612,10 +614,10 @@ Angle coordinate part of a bounding box is defined by <span class="math notransl
 
 </section>
 <section id="grid-coordinates-examples">
-<span id="grid-example"></span><h2><span class="section-number">7.2. </span>Grid Coordinates Examples<a class="headerlink" href="#grid-coordinates-examples" title="Permalink to this heading">#</a></h2>
+<span id="grid-example"></span><h2><span class="section-number">7.2. </span>Grid Coordinates Examples<a class="headerlink" href="#grid-coordinates-examples" title="Link to this heading">#</a></h2>
 <p>This section contains examples of grid coordinates. These examples show the storage of the grid-coordinate data arrays, as well as different mechanisms for describing the class of data and the system of units or normalization.</p>
 <section id="example-cartesian-coordinates-for-a-2-d-structured-grid">
-<h3><span class="section-number">7.2.1. </span>Example - Cartesian Coordinates for a 2-D Structured Grid<a class="headerlink" href="#example-cartesian-coordinates-for-a-2-d-structured-grid" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.2.1. </span>Example - Cartesian Coordinates for a 2-D Structured Grid<a class="headerlink" href="#example-cartesian-coordinates-for-a-2-d-structured-grid" title="Link to this heading">#</a></h3>
 <p>This example uses Cartesian coordinates for a 2-D grid of size 17 × 33; the data arrays include only core vertices, and the coordinates are in units of feet.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  IndexDimension = 2</span>
 <span class="c1">!  VertexSize = [17,33]</span>
@@ -686,7 +688,7 @@ Angle coordinate part of a bounding box is defined by <span class="math notransl
 <p>Since the <code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> and <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> entities are not present in <code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateX</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateY</span></code>, the established rules for dimensional data dictate that <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> specified at the <code class="code sidsref docutils literal notranslate"><span class="pre">GridCoordinates_t</span></code> level be used to retrieve the information.</p>
 </section>
 <section id="example-cylindrical-coordinates-for-a-3-d-structured-grid">
-<h3><span class="section-number">7.2.2. </span>Example - Cylindrical Coordinates for a 3-D Structured Grid<a class="headerlink" href="#example-cylindrical-coordinates-for-a-3-d-structured-grid" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.2.2. </span>Example - Cylindrical Coordinates for a 3-D Structured Grid<a class="headerlink" href="#example-cylindrical-coordinates-for-a-3-d-structured-grid" title="Link to this heading">#</a></h3>
 <p>This example uses cylindrical coordinates for a 3-D grid whose core size is 17 × 33 × 9; the grid contains a single plane of rind on the minimum and maximum k faces. The coordinates are nondimensional.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  IndexDimension = 3</span>
 <span class="c1">!  VertexSize = [17,33,9]</span>
@@ -716,7 +718,7 @@ Angle coordinate part of a bounding box is defined by <span class="math notransl
 <p>Note that the entities <code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateZ</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">CoordinateTheta</span></code> are abbreviated.</p>
 </section>
 <section id="example-cartesian-coordinates-for-a-3-d-unstructured-grid">
-<h3><span class="section-number">7.2.3. </span>Example - Cartesian Coordinates for a 3-D Unstructured Grid<a class="headerlink" href="#example-cartesian-coordinates-for-a-3-d-unstructured-grid" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.2.3. </span>Example - Cartesian Coordinates for a 3-D Unstructured Grid<a class="headerlink" href="#example-cartesian-coordinates-for-a-3-d-unstructured-grid" title="Link to this heading">#</a></h3>
 <p>This example uses Cartesian grid coordinates for a 3-D unstructured zone where <code class="code sidskey docutils literal notranslate"><span class="pre">VertexSize</span></code> is 15.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">GridCoordinates_t</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GridCoordinates</span><span class="w"> </span><span class="o">=</span>
 <span class="w">  </span><span class="p">{{</span>
@@ -744,7 +746,7 @@ Angle coordinate part of a bounding box is defined by <span class="math notransl
 </section>
 </section>
 <section id="elements-structure-definition-elements-t">
-<h2><span class="section-number">7.3. </span>Elements Structure Definition: <code class="docutils literal notranslate"><span class="pre">Elements_t</span></code><a class="headerlink" href="#elements-structure-definition-elements-t" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">7.3. </span>Elements Structure Definition: <code class="docutils literal notranslate"><span class="pre">Elements_t</span></code><a class="headerlink" href="#elements-structure-definition-elements-t" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p>The <code class="code sidskey docutils literal notranslate"><span class="pre">Elements_t</span></code> data structure is required for unstructured zones, and contains the element connectivity data, the element type, the element range, the parent elements data, and the number of boundary elements.</p>
 </div></blockquote>
@@ -857,18 +859,19 @@ For faces on the boundary of the domain, the second parent is set to zero.</p>
 <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 </section>
 <section id="elements-examples">
-<h2><span class="section-number">7.4. </span>Elements Examples<a class="headerlink" href="#elements-examples" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">7.4. </span>Elements Examples<a class="headerlink" href="#elements-examples" title="Link to this heading">#</a></h2>
 <p>This section contains four examples of elements definition in CGNS.
 The first example is for a simple three-element tetrahedral grid, using the <code class="code sidskey docutils literal notranslate"><span class="pre">TETRA_4</span></code> element type.
 The second example is for the same grid as the first example, but the elements are treated as general polyhedra to illustrate the use of the <code class="code sidskey docutils literal notranslate"><span class="pre">NGON_n</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">NFACE_n</span></code> element types.
 The third and fourth examples are for an unstructured zone with 15 tetrahedral and 10 hexahedral elements, with the third example defining the elements in separate sections for the <code class="code sidskey docutils literal notranslate"><span class="pre">TETRA_4</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">HEXA_8</span></code> element types, and the fourth example combining them using the <code class="code sidskey docutils literal notranslate"><span class="pre">MIXED</span></code> element type.</p>
 <section id="example-tetra-4-element-types">
-<h3><span class="section-number">7.4.1. </span>Example - TETRA_4 Element Types<a class="headerlink" href="#example-tetra-4-element-types" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.4.1. </span>Example - TETRA_4 Element Types<a class="headerlink" href="#example-tetra-4-element-types" title="Link to this heading">#</a></h3>
 <p>This example uses the simple three-element tetrahedral grid shown below.</p>
 <figure class="align-center" id="id1">
-<a class="reference internal image-reference" href="../images/sids/figs/ex_tetra.gif"><img alt="Unstructured grid consisting of three tetrahedra" src="../images/sids/figs/ex_tetra.gif" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="../images/sids/figs/ex_tetra.gif"><img alt="Unstructured grid consisting of three tetrahedra" src="../images/sids/figs/ex_tetra.gif" style="width: 400px;" />
+</a>
 <figcaption>
-<p><span class="caption-text"><em>Example Tetrahedral Grid</em></span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-text"><em>Example Tetrahedral Grid</em></span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The element type is <code class="code sidskey docutils literal notranslate"><span class="pre">TETRA_4</span></code>, and the connectivity is defined in <code class="code sidskey docutils literal notranslate"><span class="pre">ElementConnectivity</span></code> by specifying the four nodes comprising each element, with the order consistent with the <a class="reference internal" href="convention.html#unst-tetra"><span class="std std-ref">numbering conventions for tetrahedral elements</span></a>. The data in <code class="code sidskey docutils literal notranslate"><span class="pre">ElementConnectivity</span></code> is grouped by element; note that the parentheses are added here for presentation purposes only.</p>
@@ -891,7 +894,7 @@ The third and fourth examples are for an unstructured zone with 15 tetrahedral a
 </div>
 </section>
 <section id="example-ngon-n-and-nface-n-element-types">
-<h3><span class="section-number">7.4.2. </span>Example - NGON_n and NFACE_n Element Types<a class="headerlink" href="#example-ngon-n-and-nface-n-element-types" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.4.2. </span>Example - NGON_n and NFACE_n Element Types<a class="headerlink" href="#example-ngon-n-and-nface-n-element-types" title="Link to this heading">#</a></h3>
 <p>This example uses the same grid as in the previous example, but treats the elements as general polyhedra to illustrate the use of the <code class="code sidskey docutils literal notranslate"><span class="pre">NGON_n</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">NFACE_n</span></code> element types. The grid consists of three volume elements, each made up of four face elements, with each face defined by three nodes.</p>
 <p>For each face, the nodes comprising that face are listed in <code class="code sidskey docutils literal notranslate"><span class="pre">ElementConnectivity</span></code> for the <code class="code sidskey docutils literal notranslate"><span class="pre">NGON_n</span></code> element type.
 The <code class="code sidskey docutils literal notranslate"><span class="pre">ElementRange</span></code> is <code class="docutils literal notranslate"><span class="pre">[1,10]</span></code>, corresponding to the 10 total faces in the grid. The <code class="code sidskey docutils literal notranslate"><span class="pre">ElementDataSize</span></code> is 30, corresponding to the total of 30 nodes defining the 10 faces.</p>
@@ -943,7 +946,7 @@ The <code class="code sidskey docutils literal notranslate"><span class="pre">El
 </div>
 </section>
 <section id="example-separate-element-types">
-<h3><span class="section-number">7.4.3. </span>Example - Separate Element Types<a class="headerlink" href="#example-separate-element-types" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.4.3. </span>Example - Separate Element Types<a class="headerlink" href="#example-separate-element-types" title="Link to this heading">#</a></h3>
 <p>In this example, elements are defined for an unstructured zone with 15 tetrahedral and 10 hexahedral elements. The elements are written in two separate sections, one for the tetrahedral elements and one for the hexahedral elements.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Zone_t</span><span class="w"> </span><span class="n">UnstructuredZone</span><span class="w"> </span><span class="o">=</span>
 <span class="w">  </span><span class="p">{{</span>
@@ -978,7 +981,7 @@ The <code class="code sidskey docutils literal notranslate"><span class="pre">El
 </div>
 </section>
 <section id="example-mixed-element-type">
-<h3><span class="section-number">7.4.4. </span>Example - MIXED Element Type<a class="headerlink" href="#example-mixed-element-type" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.4.4. </span>Example - MIXED Element Type<a class="headerlink" href="#example-mixed-element-type" title="Link to this heading">#</a></h3>
 <p>In this example, the same unstructured zone described in the previous example is written in a single element section of type <code class="code sidskey docutils literal notranslate"><span class="pre">MIXED</span></code> (i.e., an unstructured grid composed of mixed elements).</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Zone_t</span><span class="w"> </span><span class="n">UnstructuredZone</span><span class="w"> </span><span class="o">=</span>
 <span class="w">  </span><span class="p">{{</span>
@@ -1005,7 +1008,7 @@ The <code class="code sidskey docutils literal notranslate"><span class="pre">El
 </section>
 </section>
 <section id="axisymmetry-structure-definition-axisymmetry-t">
-<h2><span class="section-number">7.5. </span>Axisymmetry Structure Definition: <code class="docutils literal notranslate"><span class="pre">Axisymmetry_t</span></code><a class="headerlink" href="#axisymmetry-structure-definition-axisymmetry-t" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">7.5. </span>Axisymmetry Structure Definition: <code class="docutils literal notranslate"><span class="pre">Axisymmetry_t</span></code><a class="headerlink" href="#axisymmetry-structure-definition-axisymmetry-t" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p>The <code class="code sidskey docutils literal notranslate"><span class="pre">Axisymmetry_t</span></code> data structure allows recording the axis of rotation and the angle of rotation around this axis for a two-dimensional dataset that represents an axisymmetric database.</p>
 </div></blockquote>
@@ -1041,7 +1044,7 @@ The <code class="code sidskey docutils literal notranslate"><span class="pre">El
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 </section>
 <section id="rotating-coordinates-structure-definition-rotatingcoordinates-t">
-<h2><span class="section-number">7.6. </span>Rotating Coordinates Structure Definition: <code class="docutils literal notranslate"><span class="pre">RotatingCoordinates_t</span></code><a class="headerlink" href="#rotating-coordinates-structure-definition-rotatingcoordinates-t" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">7.6. </span>Rotating Coordinates Structure Definition: <code class="docutils literal notranslate"><span class="pre">RotatingCoordinates_t</span></code><a class="headerlink" href="#rotating-coordinates-structure-definition-rotatingcoordinates-t" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p>The <code class="code sidskey docutils literal notranslate"><span class="pre">RotatingCoordinates_t</span></code> data structure is used to record the rotation center and rotation rate vector of a rotating coordinate system.</p>
 </div></blockquote>
@@ -1075,7 +1078,7 @@ The <code class="code sidskey docutils literal notranslate"><span class="pre">El
 <p>If rotating coordinates are used, it is useful to store variables relative to the rotating frame. Standardized data-name identifiers should be used for these variables, as defined for flow-solution quantities in the section <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">Conventions for Data-Name Identifiers</span></a>.</p>
 </section>
 <section id="flow-solution-structure-definition-flowsolution-t">
-<h2><span class="section-number">7.7. </span>Flow Solution Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolution_t</span></code><a class="headerlink" href="#flow-solution-structure-definition-flowsolution-t" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">7.7. </span>Flow Solution Structure Definition: <code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolution_t</span></code><a class="headerlink" href="#flow-solution-structure-definition-flowsolution-t" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p>The flow solution within a given zone is described by the <code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolution_t</span></code> structure. This structure contains a list for the data arrays of the individual flow-solution variables, as well as identifying the grid location of the solution. It also provides a mechanism for identifying rind-point data included within the data arrays.</p>
 </div></blockquote>
@@ -1118,7 +1121,7 @@ The <code class="code sidskey docutils literal notranslate"><span class="pre">El
 <p>The flow solution data is stored in the list of <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities; each <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> structure entity may contain a single component of the solution vector. Standardized data-name identifiers for the flow-solution quantities are described in the section <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">Conventions for Data-Name Identifiers</span></a>. The field <code class="code sidsref docutils literal notranslate"><span class="pre">GridLocation</span></code> specifies the location of the solution data with respect to the grid; if absent, the data is assumed to coincide with grid vertices (i.e., <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span> <span class="pre">=</span> <span class="pre">Vertex</span></code>). All data within a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolution_t</span></code> must reside at the same grid location.</p>
 <p>For structured grids, the value of <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> alone specifies the location and indexing of the flow solution data. Vertices are explicitly indexed. Cell centers and face centers are indexed using the minimum of the connecting vertex indices, as described in the section <a class="reference internal" href="convention.html#structgrid"><span class="std std-ref">Structured Grid Notation and Indexing Conventions</span></a>.</p>
 <p>For unstructured grids, the value of <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> alone specifies location and indexing of flow solution data only for vertex and cell-centered data. The reason for this is that element-based grid connectivity provided in the <code class="code sidsref docutils literal notranslate"><span class="pre">Elements_t</span></code> data structures explicitly indexes only vertices and cells. For data stored at alternate grid locations (e.g., edges), additional connectivity information is needed. This is provided by the optional fields <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code>; these refer to vertices, edges, faces or cell centers, depending on the values of <code class="code sidskey docutils literal notranslate"><span class="pre">CellDimension</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code>. The following table shows these relations. The <code class="code sidskey docutils literal notranslate"><span class="pre">NODE</span></code> element type should not be used in place of the vertex. A vertex <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> should use the <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span> <span class="pre">=</span> <span class="pre">Vertex</span></code> pattern, which implies an indexing on the grid coordinates arrays and not a <code class="code sidskey docutils literal notranslate"><span class="pre">NODE</span> <span class="pre">Elements_t</span></code> array.</p>
-<table class="table table-center">
+<div class="pst-scrollable-table-container"><table class="table table-center">
 <colgroup>
 <col style="width: 20.0%" />
 <col style="width: 12.0%" />
@@ -1157,6 +1160,7 @@ The <code class="code sidskey docutils literal notranslate"><span class="pre">El
 </tr>
 </tbody>
 </table>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In the table, <strong>*FaceCenter</strong> stands for the possible types: <code class="code sidskey docutils literal notranslate"><span class="pre">IFaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">JFaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">KFaceCenter</span></code>, or <code class="code sidskey docutils literal notranslate"><span class="pre">FaceCenter</span></code>.</p>
@@ -1224,12 +1228,12 @@ The <code class="code sidskey docutils literal notranslate"><span class="pre">El
 
 </section>
 <section id="flow-solution-example">
-<h2><span class="section-number">7.8. </span>Flow Solution Example<a class="headerlink" href="#flow-solution-example" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">7.8. </span>Flow Solution Example<a class="headerlink" href="#flow-solution-example" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p>This section contains an example of the flow solution entity, including the designation of grid location and rind planes and data-normalization mechanisms.</p>
 </div></blockquote>
 <section id="example-flow-solution">
-<h3><span class="section-number">7.8.1. </span>Example - Flow Solution<a class="headerlink" href="#example-flow-solution" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.8.1. </span>Example - Flow Solution<a class="headerlink" href="#example-flow-solution" title="Link to this heading">#</a></h3>
 <p>Conservation-equation variables (<span class="math notranslate nohighlight">\(\rho, \rho U, \rho V \text{ and } \rho e_0\)</span>) for a 2-D grid of size <span class="math notranslate nohighlight">\(11 \times 5\)</span>. The flowfield is cell-centered with two planes of rind data. The density, momentum and stagnation energy (<span class="math notranslate nohighlight">\(\rho e_0\)</span>) data is nondimensionalized with respect to a freestream reference state whose quantities are dimensional. The freestream density and pressure are used for normalization; these values are <span class="math notranslate nohighlight">\(1.226\,kg/m^3\)</span> and <span class="math notranslate nohighlight">\(1.0132 \times 10^5\,N/m^2\)</span> (standard atmosphere conditions). The data-name identifier conventions for the conservation-equation variables are <code class="code sidskey docutils literal notranslate"><span class="pre">Density</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">MomentumX</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">MomentumY</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">EnergyStagnationDensity</span></code>.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 2</span>
 <span class="c1">!  IndexDimension = 2</span>
@@ -1319,7 +1323,7 @@ The <code class="code sidskey docutils literal notranslate"><span class="pre">El
 </section>
 </section>
 <section id="zone-subregion-structure-definition-zonesubregion-t">
-<h2><span class="section-number">7.9. </span>Zone Subregion Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneSubRegion_t</span></code><a class="headerlink" href="#zone-subregion-structure-definition-zonesubregion-t" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">7.9. </span>Zone Subregion Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneSubRegion_t</span></code><a class="headerlink" href="#zone-subregion-structure-definition-zonesubregion-t" title="Link to this heading">#</a></h2>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">ZoneSubRegion_t</span></code> node allows for the ability to give flowfield or other information over a subset of the entire zone in a CGNS file. This subset may be over a portion of a boundary,
 or it may be over a portion of the entire field.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ZoneSubRegion_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
@@ -1363,7 +1367,7 @@ users may choose other legitimate names. Legitimate names must be unique within 
 </div>
 <p>The extent of the subregion and the distribution of data within that subregion is determined by <code class="code sidskey docutils literal notranslate"><span class="pre">RegionCellDimension</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code>, and one of <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange/List</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">BCRegionName</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">GridConnectivityRegionName</span></code>. For a 3-D subregion (<code class="code sidskey docutils literal notranslate"><span class="pre">RegionCellDimension</span></code> = 3), data can be located at vertices, edges, face centers or cell centers. For a 2-D subregion (<code class="code sidskey docutils literal notranslate"><span class="pre">RegionCellDimension</span></code> = 2), data can be located at vertices, edges or cell centers (i.e. area elements). It is anticipated that one of the widest uses for <code class="code sidskey docutils literal notranslate"><span class="pre">ZoneSubRegion_t</span></code> will be to store specific boundary-only information. For example, in a 3-D simulation, one may wish to store additional data on surfaces. In this case, the <code class="code sidskey docutils literal notranslate"><span class="pre">RegionCellDimension</span></code> would be set to 2.</p>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">PointRange/List</span></code> refer to vertices, edges, faces or cell centers, depending on the values of <code class="code sidskey docutils literal notranslate"><span class="pre">RegionCellDimension</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code>. Note that it is both the dimensionality of the zone (<code class="code sidskey docutils literal notranslate"><span class="pre">CellDimension</span></code>) as well as the dimensionality of the subregion (<code class="code sidskey docutils literal notranslate"><span class="pre">RegionCellDimension</span></code>), that determines the types of elements permissible in <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange/List</span></code>. The following table shows these relations.</p>
-<table class="table table-center" style="width: 300px">
+<div class="pst-scrollable-table-container"><table class="table table-center" style="width: 300px">
 <thead>
 <tr class="row-odd"><th class="head" rowspan="2"><p>CellDimension</p></th>
 <th class="head" rowspan="2"><p>RegionCellDimension</p></th>
@@ -1420,6 +1424,7 @@ users may choose other legitimate names. Legitimate names must be unique within 
 </tr>
 </tbody>
 </table>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In the table, <strong>*FaceCenter</strong> stands for the possible types: <code class="code sidskey docutils literal notranslate"><span class="pre">IFaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">JFaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">KFaceCenter</span></code>, or <code class="code sidskey docutils literal notranslate"><span class="pre">FaceCenter</span></code>.</p>
@@ -1435,10 +1440,10 @@ users may choose other legitimate names. Legitimate names must be unique within 
 <p>All <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">AdditionalFamilyName</span></code> entries should respect the rules defined in <span class="xref std std-ref">Base Level Families</span> and <code class="code sidsref docutils literal notranslate"><span class="pre">Zone_t</span></code>.</p>
 </section>
 <section id="zone-subregion-examples">
-<h2><span class="section-number">7.10. </span>Zone Subregion Examples<a class="headerlink" href="#zone-subregion-examples" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">7.10. </span>Zone Subregion Examples<a class="headerlink" href="#zone-subregion-examples" title="Link to this heading">#</a></h2>
 <p>This section contains four examples of Zone Subregions, including the use of <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCRegionName</span></code>.</p>
 <section id="example-volume-subregion-for-a-structured-grid">
-<h3><span class="section-number">7.10.1. </span>Example - Volume Subregion for a Structured Grid<a class="headerlink" href="#example-volume-subregion-for-a-structured-grid" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.10.1. </span>Example - Volume Subregion for a Structured Grid<a class="headerlink" href="#example-volume-subregion-for-a-structured-grid" title="Link to this heading">#</a></h3>
 <p>For this example, it is assumed that a 1-zone 3-D structured grid exists of size (<span class="math notranslate nohighlight">\(197\times97\times33\)</span>). Inside of this zone, the user wishes to output a special subset region of interior data (say, temperature and kinematic viscosity) at the specific cell-center locations <span class="math notranslate nohighlight">\(i = 121-149\)</span>, <span class="math notranslate nohighlight">\(j = 17-45\)</span>, <span class="math notranslate nohighlight">\(k = 21-23\)</span>. Even though this same data may possibly exist under <code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolution_t</span></code> (which holds the flowfield data for the entire zone), this particular location may represent a special region of interest where the user wants to focus attention or output different types of flowfield variables or user-defined data. Note that for structured grids, the location list always references grid nodes; in this case with <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span> <span class="pre">=</span> <span class="pre">Cellcenter</span></code> the cell centers are indexed by the minimum <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(j\)</span>, and <span class="math notranslate nohighlight">\(k\)</span> indices of the connecting vertices.</p>
 <p>Under <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code>:</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ZoneSubRegion_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Region1</span><span class="w"> </span><span class="o">=</span>
@@ -1465,7 +1470,7 @@ users may choose other legitimate names. Legitimate names must be unique within 
 </div>
 </section>
 <section id="example-volume-subregion-for-an-unstructured-grid">
-<h3><span class="section-number">7.10.2. </span>Example - Volume Subregion for an Unstructured Grid<a class="headerlink" href="#example-volume-subregion-for-an-unstructured-grid" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.10.2. </span>Example - Volume Subregion for an Unstructured Grid<a class="headerlink" href="#example-volume-subregion-for-an-unstructured-grid" title="Link to this heading">#</a></h3>
 <p>This example is like the previous one, except it is for an unstructured zone. Inside of this zone, the user wishes to output a special subset region of data (say, temperature and kinematic viscosity) at a specific list of 2523 element cell-center locations, located somewhere within the (larger) field of elements. Recall that when <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> is anything other than <code class="code sidskey docutils literal notranslate"><span class="pre">Vertex</span></code> in conjunction with unstructured grids, then the location list represents element numbers and not grid node numbers.</p>
 <p>Under <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code>:</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ZoneSubRegion_t</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Region1</span><span class="w"> </span><span class="o">=</span>
@@ -1491,7 +1496,7 @@ users may choose other legitimate names. Legitimate names must be unique within 
 </div>
 </section>
 <section id="example-surface-subregion-for-an-unstructured-grid">
-<h3><span class="section-number">7.10.3. </span>Example - Surface Subregion for an Unstructured Grid<a class="headerlink" href="#example-surface-subregion-for-an-unstructured-grid" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.10.3. </span>Example - Surface Subregion for an Unstructured Grid<a class="headerlink" href="#example-surface-subregion-for-an-unstructured-grid" title="Link to this heading">#</a></h3>
 <p>In this example, boundary data is output on a 2-D surface subregion of a 3-D problem. Because this is data on a topologically 2-D boundary (in a 3-D simulation), <code class="code sidskey docutils literal notranslate"><span class="pre">RegionCellDimension</span></code> is set to 2. <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> is specified as <code class="code sidskey docutils literal notranslate"><span class="pre">FaceCenter</span></code>. Recall that when <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> is anything other than <code class="code sidskey docutils literal notranslate"><span class="pre">Vertex</span></code> in conjunction with unstructured grids, then the location list represents element numbers and not grid node numbers. Thus, the <code class="code sidskey docutils literal notranslate"><span class="pre">PointList/Range</span></code> indicates particular surface elements (or boundary elements) that need to have been defined in the file under their own <code class="code sidskey docutils literal notranslate"><span class="pre">Elements_t</span></code> node(s), separate from the 3-D volume elements that make up the grid. In this case, we assume that the surface element numbers at which we are outputting data are 5568 through 5592 inclusive. Because the numbers occur in sequential order, we can make use of <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>.</p>
 <p>Under <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code>:</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ZoneSubRegion_t</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Region1</span><span class="w"> </span><span class="o">=</span>
@@ -1518,7 +1523,7 @@ users may choose other legitimate names. Legitimate names must be unique within 
 </div>
 </section>
 <section id="example-surface-subregion-utilizing-bc-information">
-<h3><span class="section-number">7.10.4. </span>Example - Surface Subregion Utilizing BC Information<a class="headerlink" href="#example-surface-subregion-utilizing-bc-information" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.10.4. </span>Example - Surface Subregion Utilizing BC Information<a class="headerlink" href="#example-surface-subregion-utilizing-bc-information" title="Link to this heading">#</a></h3>
 <p>In this example, boundary data is output at the same locations where the BCs are specified in a particular <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code> node (in this case the <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code> is 25). Note that because this is data on a topologically 2-D boundary (in a 3-D simulation), <code class="code sidskey docutils literal notranslate"><span class="pre">RegionCellDimension</span></code> is set to 2. <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> is not specified, because it is inherited from the <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code> node along with the <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code>.</p>
 <p>Under <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code>:</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ZoneSubRegion_t</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Region1</span><span class="w"> </span><span class="o">=</span>
@@ -1550,7 +1555,7 @@ users may choose other legitimate names. Legitimate names must be unique within 
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -1578,7 +1583,9 @@ users may choose other legitimate names. Legitimate names must be unique within 
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1656,8 +1663,8 @@ users may choose other legitimate names. Legitimate names must be unique within 
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" data-theme="light">
+<html lang="en" data-content_root="../../" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>9. Boundary Conditions &#8212; CGNS Documentation</title>
   
@@ -17,33 +16,36 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=6bab4044" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css?v=2c72f61b" />
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css" />
-  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'standard/SIDS/boundary';</script>
     <link rel="canonical" href="https://cgns.org/standard/SIDS/boundary.html" />
@@ -53,6 +55,7 @@
     <link rel="prev" title="8. Multizone Interface Connectivity" href="multizone.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -60,32 +63,16 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -93,7 +80,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -101,16 +87,25 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -125,6 +120,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="../../index.html">
   
@@ -136,11 +133,11 @@
     
     
     <img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-light" alt="CGNS Documentation - Home"/>
-    <script>document.write(`<img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark" alt="CGNS Documentation - Home"/>`);</script>
+    <img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark pst-js-only" alt="CGNS Documentation - Home"/>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><ul class="navbar-icon-links navbar-nav"
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
         <li class="nav-item">
           
@@ -151,14 +148,21 @@
           
           
           
-          <a href="https://github.com/CGNS/CGNS" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-download fa-lg" aria-hidden="true"></i></span>
+          <a href="https://github.com/CGNS/CGNS" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-download fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../general.html">Introduction to CGNS</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../general.html">Introduction to CGNS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../general/what.html">What is CGNS?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../general/start.html">Quick Start Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../general/overview.html">Overview</a></li>
@@ -167,10 +171,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../general/FAQ.html">FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../general/implementations.html">Implementations</a></li>
 </ul>
-</li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../standard.html">Standard Specification</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../standard.html">Standard Specification</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../reference.html">Standardization bodies</a></li>
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="CGNS_SIDS.html">CGNS/SIDS - Standard Interface Data Structures</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="intro.html">1. Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="design.html">2. Design Philosophy of Standard Interface Data Structures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="convention.html">3. Conventions</a></li>
@@ -187,10 +191,10 @@
 <li class="toctree-l3"><a class="reference internal" href="appendix_a.html">Appendix A: Conventions for Data-Name Identifiers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="appendix_b.html">Appendix B: Structured Two-Zone Flat Plate Example</a></li>
 </ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_FMM.html">CGNS/FMM - Data model mapping to implementation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_FMM.html">CGNS/FMM - Data model mapping to implementation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../FMM/nodes.html">Detailed CGNS Node Descriptions</a></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../FMM/figures.html">CGNS File Mapping Figures</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../FMM/figures.html">CGNS File Mapping Figures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../FMM/ArbitraryGridMotion.html">ArbitraryGridMotion Figure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../FMM/Area.html">Area Figure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../FMM/AverageInterface.html">AverageInterface Figure</a></li>
@@ -252,19 +256,19 @@
 <li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneIterativeData.html">ZoneIterativeData/ParticleIterativeData Figure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../FMM/ZoneSubRegion.html">ZoneSubRegion Figure</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../MLL/CGNS_MLL.html">CGNS/MLL - C and Fortran APIs for Applications</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../MLL/api/general_remarks.html">General Remarks</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../MLL/CGNS_MLL.html">CGNS/MLL - C and Fortran APIs for Applications</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../MLL/api/general_remarks.html">General Remarks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../MLL/api/enums.html">List of enumerated values (key words) for each of these variable types (typedefs)</a></li>
 </ul>
-</li>
+</details></li>
 <li class="toctree-l3"><a class="reference internal" href="../MLL/api/c_api.html">CGNS/MLL API Overview for C and Fortran applications</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../MLL/api/c_parallel_api.html">CGNS Parallel API Overview</a></li>
 </ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../CGNS_CGIO.html">CGNS/CGIO - Basic node implementation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_database.html">Database-Level Routines</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_structure.html">Data Structure Management Routines</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_links.html">Link Management Routines</a></li>
@@ -274,32 +278,32 @@
 <li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_misc.html">Miscellaneous Routines</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../CGIO/CGNS_CGIO_example.html">Code Examples</a></li>
 </ul>
-</li>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../hdf5.html">CGNS/HDF5 - An HPC implementation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../python.html">CGNS/Python - A Python implementation</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../current.html">Resources</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../current.html">Resources</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../current/news.html">News</a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../../current/CPEX.html">CPEX</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/download.html">Download</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/examples.html">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/softwarelist.html">More CGNS Software</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../doc.html">More documentation</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../doc.html">More documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../doc/papers.html">Papers</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../doc/userguide.html">User’s Guide to CGNS</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../governance.html">CGNS Governance</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../governance.html">CGNS Governance</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../governance/committee.html">Steering Committee</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../governance/meetings.html">Meetings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../governance/support.html">Support</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
 
     </div>
@@ -308,14 +312,19 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -324,14 +333,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -406,27 +415,19 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -478,10 +479,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="boundary-conditions">
-<h1><span class="section-number">9. </span>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">9. </span>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading">#</a></h1>
 <p>This section is an attempt to unify boundary-condition specifications within Navier-Stokes codes. The structures and conventions developed are a compromise between simplicity and generality. It is imperative that they be easy to use initially, but that they are general enough to provide future flexibility and extensibility.</p>
 <p>This section may be somewhat daunting initially. It is suggested that the reader refer to the <span class="xref std std-ref">Boundary Condition Examples</span> during study of the following sections to help resolve any questions and confusions that might arise.</p>
 <p>The difficulty with boundary conditions is that there is such a wide variety used, and even a single boundary-condition equation is often implemented differently in different codes. Some boundary conditions, such as a symmetry plane, are fairly well defined. Other boundary conditions are much looser in their definition and implementation. An inflow boundary is a good example. It is generally accepted how many solution quantities should be specified at an inflow boundary (from mathematical well-posedness arguments), but what those quantities are will change with the class of flow problems (e.g., internal flows vs. external flows), and they will also change from code to code.</p>
@@ -495,13 +496,14 @@ document.write(`
 Details of <span class="xref std std-ref">specifying data to be imposed in boundary-condition equations</span> are provided next.
 Finally, several <span class="xref std std-ref">examples of boundary conditions</span> are presented.</p>
 <section id="boundary-condition-structures-overview">
-<h2><span class="section-number">9.1. </span>Boundary Condition Structures Overview<a class="headerlink" href="#boundary-condition-structures-overview" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.1. </span>Boundary Condition Structures Overview<a class="headerlink" href="#boundary-condition-structures-overview" title="Link to this heading">#</a></h2>
 <p>Prior to presenting the detailed boundary condition structures, we give a brief overview of the hierarchy used to describe boundary conditions.</p>
 <p>Boundary conditions are classified as either fixed or flow-dependent. Fixed boundary conditions enforce a given set of boundary-condition equations regardless of flow conditions; whereas, flow-dependent boundary conditions enforce different sets of boundary-condition equations depending on local flow conditions. We incorporate both fixed and flow-dependent boundary conditions into a uniform framework. This allows all boundary conditions to be described in a similar manner. We consider this functionally superior to separately treating fixed and flow-dependent boundary conditions, even though the latter allows a simpler description mechanism for fixed boundary conditions. The current organization also makes sense considering the fact that flow-dependent boundary conditions are composed of multiple sets of fixed boundary conditions.</p>
 <figure class="align-center" id="id1">
-<a class="reference internal image-reference" href="../../_images/bctree.gif"><img alt="CGNS hierarchy for a single boundary condition" src="../../_images/bctree.gif" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/bctree.gif"><img alt="CGNS hierarchy for a single boundary condition" src="../../_images/bctree.gif" style="width: 600px;" />
+</a>
 <figcaption>
-<p><span class="caption-text"><em>Hierarchy for Boundary Condition Structures</em></span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-text"><em>Hierarchy for Boundary Condition Structures</em></span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The above figure depicts the hierarchy used for prescribing a single boundary condition. Each boundary condition includes a type that describes the general equations to enforce, a patch specification, and a collection of data sets. The minimum required information for any boundary condition is the patch specification and the boundary-condition type (indicated by “BC type (compound)” in the figure). This minimum information is similar to that used in many existing flow solvers.</p>
@@ -520,7 +522,7 @@ The lower leaves of the above figure show data for generic flow-solution quantit
 Although not pictured in the above figure, it is also possible to specify the reference state from which the flow solver should extract the boundary-condition data.</p>
 </section>
 <section id="zonal-boundary-condition-structure-definition-zonebc-t">
-<h2><span class="section-number">9.2. </span>Zonal Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneBC_t</span></code><a class="headerlink" href="#zonal-boundary-condition-structure-definition-zonebc-t" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.2. </span>Zonal Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneBC_t</span></code><a class="headerlink" href="#zonal-boundary-condition-structure-definition-zonebc-t" title="Link to this heading">#</a></h2>
 <p>All boundary-condition information pertaining to a given zone is contained in the <code class="code sidskey docutils literal notranslate"><span class="pre">ZoneBC_t</span></code> structure.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ZoneBC_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PhysicalDimension</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
@@ -561,7 +563,7 @@ The nozzle-exit stagnation quantities could be specified in an instance of <code
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 </section>
 <section id="boundary-condition-structure-definition-bc-t">
-<h2><span class="section-number">9.3. </span>Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">BC_t</span></code><a class="headerlink" href="#boundary-condition-structure-definition-bc-t" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.3. </span>Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">BC_t</span></code><a class="headerlink" href="#boundary-condition-structure-definition-bc-t" title="Link to this heading">#</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code> contains boundary-condition information for a single BC surface patch of a zone.
 A BC patch is the subrange of the face of a zone where a given boundary condition is applied.</p>
 <p>The structure contains a boundary-condition type, as well as one or more sets of boundary-condition data that are used to define the boundary-condition equations to be enforced on the BC patch.
@@ -621,7 +623,7 @@ When <code class="code sidskey docutils literal notranslate"><span class="pre">G
 When <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> is set to <code class="code sidskey docutils literal notranslate"><span class="pre">EdgeCenter</span></code>, then <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange/List</span></code> refer to edge elements.
 For 3-D grids, when <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> is set to <code class="code sidskey docutils literal notranslate"><span class="pre">FaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">IFaceCenter</span></code>, etc., then <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange/List</span></code> refer to face elements.
 The interpretation of <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange/List</span></code> is summarized in the table below:</p>
-<table class="table table-center">
+<div class="pst-scrollable-table-container"><table class="table table-center">
 <thead>
 <tr class="row-odd"><th class="head" rowspan="2"><p><strong>CellDimension</strong></p></th>
 <th class="head" colspan="4"><p><strong>GridLocation</strong></p></th>
@@ -653,6 +655,7 @@ The interpretation of <code class="code sidskey docutils literal notranslate"><s
 </tr>
 </tbody>
 </table>
+</div>
 <p><em>Note</em>: In the table, <code class="code sidskey docutils literal notranslate"><span class="pre">*FaceCenter</span></code> stands for the possible types: <code class="code sidskey docutils literal notranslate"><span class="pre">IFaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">JFaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">KFaceCenter</span></code>, or <code class="code sidskey docutils literal notranslate"><span class="pre">FaceCenter</span></code>.</p>
 <p>For structured grids, face centers are indexed using the minimum of the connecting vertex indices, as described in <a class="reference internal" href="convention.html#structgrid"><span class="std std-ref">Structured Grid Notation and Indexing Conventions</span></a>.
 For unstructured grids, edge and face elements are indexed using their element numbering as defined in the <code class="code sidsref docutils literal notranslate"><span class="pre">Elements_t</span></code> data structures.</p>
@@ -666,7 +669,7 @@ For structured zones a computational-coordinate normal can be derived from the B
 Alternatively, for structured zones this information can be provided directly by <code class="code sidskey docutils literal notranslate"><span class="pre">InwardNormalIndex</span></code>.
 From Note 4, this vector points into the zone and can have only one non-zero element.
 For exterior faces of a zone in 3-D, <code class="code sidskey docutils literal notranslate"><span class="pre">InwardNormalIndex</span></code> should take the following values:</p>
-<table class="table table-center">
+<div class="pst-scrollable-table-container"><table class="table table-center">
 <thead>
 <tr class="row-odd"><th class="head"><p>Face</p></th>
 <th class="head"><p><code class="code sidskey docutils literal notranslate"><span class="pre">InwardNormalIndex</span></code></p></th>
@@ -692,6 +695,7 @@ For exterior faces of a zone in 3-D, <code class="code sidskey docutils literal 
 </tr>
 </tbody>
 </table>
+</div>
 <p>The physical-space normal vectors of the BC patch may be described by <code class="code sidskey docutils literal notranslate"><span class="pre">InwardNormalList</span></code>; these are located at vertices or cell faces, consistent with the BC patch specification.
 <code class="code sidskey docutils literal notranslate"><span class="pre">InwardNormalList</span></code> is listed as an optional field because it is not always needed to enforce boundary conditions, and the physical-space normals of a BC patch can usually be constructed from the grid.
 However, there are some situations, such as grid-coordinate singularity lines, where <code class="code sidskey docutils literal notranslate"><span class="pre">InwardNormalList</span></code> becomes a required field, because it cannot be generated from other information.</p>
@@ -716,7 +720,7 @@ Since there are no restrictions on the values contained in <code class="code sid
 Use of <code class="code sidskey docutils literal notranslate"><span class="pre">Ordinal</span></code> is discouraged and is on a user-beware basis.</p>
 <dl class="c function">
 <dt class="sig sig-object c" id="c.ListLength">
-<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ListLength</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.ListLength" title="Permalink to this definition">#</a><br /></dt>
+<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ListLength</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.ListLength" title="Link to this definition">#</a><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return value<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
@@ -736,7 +740,7 @@ Note that syntactically <code class="code sidskey docutils literal notranslate">
 
 </section>
 <section id="boundary-condition-data-set-structure-definition-bcdataset-t">
-<h2><span class="section-number">9.4. </span>Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCDataSet_t</span></code><a class="headerlink" href="#boundary-condition-data-set-structure-definition-bcdataset-t" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.4. </span>Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCDataSet_t</span></code><a class="headerlink" href="#boundary-condition-data-set-structure-definition-bcdataset-t" title="Link to this heading">#</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> contains Dirichlet and Neumann data for a single set of boundary-condition equations.
 Its intended use is for simple boundary-condition types, where the equations imposed do not depend on local flow conditions.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCDataSet_t</span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CellDimension</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexDimension</span><span class="p">,</span>
@@ -804,7 +808,7 @@ If present, these three entities take precedence over all corresponding entities
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.ListLengthBCData">
-<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ListLengthBCData</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.ListLengthBCData" title="Permalink to this definition">#</a><br /></dt>
+<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ListLengthBCData</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.ListLengthBCData" title="Link to this definition">#</a><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return value<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
@@ -818,7 +822,7 @@ If present, these three entities take precedence over all corresponding entities
 
 </section>
 <section id="boundary-condition-data-structure-definition-bcdata-t">
-<h2><span class="section-number">9.5. </span>Boundary Condition Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCData_t</span></code><a class="headerlink" href="#boundary-condition-data-structure-definition-bcdata-t" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.5. </span>Boundary Condition Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCData_t</span></code><a class="headerlink" href="#boundary-condition-data-structure-definition-bcdata-t" title="Link to this heading">#</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCData_t</span></code> contains a list of variables and associated data for boundary-condition specification.
 Each variable may be given as global data (i.e., a scalar) or local data defined at each grid point or cell face of the BC patch.
 By convention all data specified in a given instance of <code class="code sidskey docutils literal notranslate"><span class="pre">BCData_t</span></code> is to be used in the same <em>type</em> of boundary-condition equation.
@@ -864,7 +868,7 @@ If present, these two entities take precedence over all corresponding entities a
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 </section>
 <section id="boundary-condition-property-structure-definition-bcproperty-t">
-<h2><span class="section-number">9.6. </span>Boundary Condition Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCProperty_t</span></code><a class="headerlink" href="#boundary-condition-property-structure-definition-bcproperty-t" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.6. </span>Boundary Condition Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCProperty_t</span></code><a class="headerlink" href="#boundary-condition-property-structure-definition-bcproperty-t" title="Link to this heading">#</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCProperty_t</span></code> allows the recording of special properties associated with particular boundary condition patches.
 At the current time, only two properties (<code class="code sidskey docutils literal notranslate"><span class="pre">WallFunction_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">Area_t</span></code>) are included, but extensions involving boundary conditions may be implemented as additional nodes under <code class="code sidskey docutils literal notranslate"><span class="pre">BCProperty_t</span></code> in the future.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCProperty_t</span><span class="w"> </span><span class="o">:=</span>
@@ -886,7 +890,7 @@ At the current time, only two properties (<code class="code sidskey docutils lit
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">WallFunction_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">Area_t</span></code> data structures may be used to record properties associated with the use of wall functions, or area-related boundary conditions such as bleed, respectively.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 <section id="wall-function-structure-definition-wallfunction-t">
-<h3><span class="section-number">9.6.1. </span>Wall Function Structure Definition: <code class="docutils literal notranslate"><span class="pre">WallFunction_t</span></code><a class="headerlink" href="#wall-function-structure-definition-wallfunction-t" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.6.1. </span>Wall Function Structure Definition: <code class="docutils literal notranslate"><span class="pre">WallFunction_t</span></code><a class="headerlink" href="#wall-function-structure-definition-wallfunction-t" title="Link to this heading">#</a></h3>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">WallFunction_t</span></code> data structure allows data associated with the use of wall function boundary conditions to be recorded.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">WallFunction_t</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
@@ -912,7 +916,7 @@ At the current time, only two properties (<code class="code sidskey docutils lit
 <p>Because there is such a wide array of methods for employing wall functions (few of which are well-documented), the type <code class="code sidskey docutils literal notranslate"><span class="pre">Generic</span></code> is used to simply indicate that a wall function is employed, without specifying details.</p>
 </section>
 <section id="area-structure-definition-area-t">
-<h3><span class="section-number">9.6.2. </span>Area Structure Definition: <code class="docutils literal notranslate"><span class="pre">Area_t</span></code><a class="headerlink" href="#area-structure-definition-area-t" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.6.2. </span>Area Structure Definition: <code class="docutils literal notranslate"><span class="pre">Area_t</span></code><a class="headerlink" href="#area-structure-definition-area-t" title="Link to this heading">#</a></h3>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">Area_t</span></code> data structure allows data associated with area-related boundary conditions such as bleed to be recorded.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Area_t</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
@@ -952,7 +956,7 @@ Note that the capture area is usually defined with an outflow boundary condition
 </section>
 </section>
 <section id="boundary-condition-type-structure-definition-bctype-t">
-<h2><span class="section-number">9.7. </span>Boundary Condition Type Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCType_t</span></code><a class="headerlink" href="#boundary-condition-type-structure-definition-bctype-t" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.7. </span>Boundary Condition Type Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCType_t</span></code><a class="headerlink" href="#boundary-condition-type-structure-definition-bctype-t" title="Link to this heading">#</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> is an enumeration type that identifies the boundary-condition equations to be enforced at a given boundary location.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
 <span class="w">  </span><span class="n">BCTypeNull</span><span class="p">,</span><span class="w"> </span><span class="n">BCTypeUserDefined</span><span class="p">,</span><span class="w"> </span><span class="n">BCAxisymmetricWedge</span><span class="p">,</span><span class="w"> </span><span class="n">BCDegenerateLine</span><span class="p">.</span>
@@ -984,8 +988,8 @@ The specific boundary-condition equations to enforce for each value of <code cla
 <p>The subdivision of <code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> is based on function. For simple boundary conditions, the equations and data imposed are fixed; whereas, for compound boundary conditions different sets of equations are imposed depending on local flow conditions at the boundary. This distinction requires additional rules for dealing with simple and compound boundary-condition types.</p>
 <p>For the inflow/outflow boundary-condition descriptions, 3-D inviscid compressible flow is assumed; the 2-D equivalent should be obvious. These same boundary conditions are typically used for viscous cases also. This “3-D Euler” assumption will be noted wherever used.</p>
 <p>In the following tables, <span class="math notranslate nohighlight">\(Q\)</span> is the solution vector, <span class="math notranslate nohighlight">\(\mathbf{q}\)</span> is the velocity vector whose magnitude is <span class="math notranslate nohighlight">\(q\)</span>, the unit normal to the boundary is <span class="math notranslate nohighlight">\(\mathbf{n}\)</span>, and <span class="math notranslate nohighlight">\(\partial () / \partial n =\mathbf{n} \cdot \nabla\)</span> is differentiation normal to the boundary.</p>
-<table class="table" id="id2">
-<caption><span class="caption-text"><strong>Simple Boundary Condition Types</strong></span><a class="headerlink" href="#id2" title="Permalink to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text"><strong>Simple Boundary Condition Types</strong></span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> Identifier</p></th>
 <th class="head"><p>Boundary Condition Description</p></th>
@@ -1120,8 +1124,9 @@ Under the <code class="code sidskey docutils literal notranslate"><span class="p
 </tr>
 </tbody>
 </table>
-<table class="table" id="id3">
-<caption><span class="caption-text"><strong>Compound Boundary Condition Types</strong></span><a class="headerlink" href="#id3" title="Permalink to this table">#</a></caption>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-text"><strong>Compound Boundary Condition Types</strong></span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code> Identifier</p></th>
 <th class="head"><p>Boundary Condition Description</p></th>
@@ -1140,9 +1145,10 @@ Under the <code class="code sidskey docutils literal notranslate"><span class="p
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="matching-boundary-condition-data-sets">
-<h2><span class="section-number">9.8. </span>Matching Boundary Condition Data Sets<a class="headerlink" href="#matching-boundary-condition-data-sets" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.8. </span>Matching Boundary Condition Data Sets<a class="headerlink" href="#matching-boundary-condition-data-sets" title="Link to this heading">#</a></h2>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code> structure allows for a arbitrary list of boundary-condition data sets, described by the <code class="code sidsref docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> structure.
 For simple boundary conditions, a single data set must be chosen from a list that may contain more than one element.
 Likewise, for a compound boundary condition, a limited number of data sets must be chosen and applied appropriately.
@@ -1160,8 +1166,8 @@ The accompanying rule determines which of the matching data sets to apply at a g
 <p>This provides a general procedure applicable to both <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code> situations.
 For a given <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t/BCType</span></code> use those instances of <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> whose field <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t/BCTypeSimple</span></code> matches according to the following table.
 Apply the matching data set or sets as prescribed by the appropriate usage rule.</p>
-<table class="table" id="id4">
-<caption><span class="caption-text"><strong>Associated Boundary Condition Types and Usage Rules</strong></span><a class="headerlink" href="#id4" title="Permalink to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id4">
+<caption><span class="caption-text"><strong>Associated Boundary Condition Types and Usage Rules</strong></span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> Identifier</p></th>
 <th class="head"><p>Associated <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> Identifiers and Usage Rules</p></th>
@@ -1235,6 +1241,7 @@ Apply the matching data set or sets as prescribed by the appropriate usage rule.
 </tr>
 </tbody>
 </table>
+</div>
 <p>Although we present a strict division between the two categories of boundary-condition types, we realize that some overlap may exist.
 For example, some of the more general simple boundary-condition types, such as <code class="code sidskey docutils literal notranslate"><span class="pre">BCWall</span></code>, may include a situation of inflow/outflow (say if the wall is porous).
 These complications require further guidelines on appropriate definition and use of boundary-condition types. The real distinctions between <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code> are as follows:</p>
@@ -1249,7 +1256,7 @@ One option is to define a new <code class="code sidskey docutils literal notrans
 Another option may be to allow some identifiers to be both <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code> and let their appropriate use be based on context. This is still undetermined.</p>
 </section>
 <section id="boundary-condition-specification-data">
-<h2><span class="section-number">9.9. </span>Boundary Condition Specification Data<a class="headerlink" href="#boundary-condition-specification-data" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.9. </span>Boundary Condition Specification Data<a class="headerlink" href="#boundary-condition-specification-data" title="Link to this heading">#</a></h2>
 <p>For a given simple boundary condition (i.e., one that is not dependent on local flow conditions), the database provides a set of boundary-condition equations to be enforced through the structure definitions for <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCData_t</span></code>.
 Apart from the boundary-condition type, the precise equations to be enforced are described by boundary-condition solution data.
 These specified solution data are arranged by “equation type”:</p>
@@ -1312,35 +1319,38 @@ This includes situations where entities of <code class="code sidskey docutils li
 By convention, if no <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet</span></code> entities are present, then application codes are free to enforce appropriate BCs for the given value of <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code>.
 Furthermore, if the entities <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">NeumannData</span></code> are not present in an instance of <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code>, or if insufficient data is present in <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">NeumannData</span></code> (e.g., if only one Dirichlet variable is present for a subsonic inflow condition), then application codes are free to fill out the boundary-condition data as appropriate for the <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple</span></code> identifier.</p>
 <p>The various levels of BC implementation allowed are shown in the following figure, from the lowest level in which the application codes interpret the <code class="code sidsref docutils literal notranslate"><span class="pre">BCType</span></code>, to the fully SIDS-compliant BC implementation that completely defines the BC within the CGNS file.</p>
-<table class="table" id="id5">
-<caption><span class="caption-text"><strong>Boundary Condition Implementation Levels</strong></span><a class="headerlink" href="#id5" title="Permalink to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id5">
+<caption><span class="caption-text"><strong>Boundary Condition Implementation Levels</strong></span><a class="headerlink" href="#id5" title="Link to this table">#</a></caption>
 <tbody>
 <tr class="row-odd"><td><figure class="align-center" id="id6">
-<a class="reference internal image-reference" href="../../_images/bcimpl_low.gif"><img alt="CGNS dataset nodes for lowest boundary condition implementation level allowed" src="../../_images/bcimpl_low.gif" style="width: 170px;" /></a>
+<a class="reference internal image-reference" href="../../_images/bcimpl_low.gif"><img alt="CGNS dataset nodes for lowest boundary condition implementation level allowed" src="../../_images/bcimpl_low.gif" style="width: 170px;" />
+</a>
 <figcaption>
-<p><span class="caption-text"><em>Lowest-level allowed (application code interprets meaning of</em> <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> <em>)</em></span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+<p><span class="caption-text"><em>Lowest-level allowed (application code interprets meaning of</em> <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> <em>)</em></span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </td>
 <td><figure class="align-center" id="id7">
-<a class="reference internal image-reference" href="../../_images/bcimpl_full.gif"><img alt="CGNS dataset nodes for fully SIDS-compliant boundary condition implementation" src="../../_images/bcimpl_full.gif" style="width: 370px;" /></a>
+<a class="reference internal image-reference" href="../../_images/bcimpl_full.gif"><img alt="CGNS dataset nodes for fully SIDS-compliant boundary condition implementation" src="../../_images/bcimpl_full.gif" style="width: 370px;" />
+</a>
 <figcaption>
-<p><span class="caption-text"><em>Fully SIDS-compliant</em></span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+<p><span class="caption-text"><em>Fully SIDS-compliant</em></span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </td>
 </tr>
 </tbody>
 </table>
+</div>
 <p>An alternative approach to the present design could be to list all the solution variables and data (as <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code>-like structures) for the boundary condition, and contain descriptive tags in each one to indicate if they are Dirichlet or Neumann data.
 We have not taken this approach. We think grouping boundary-condition data by “equation type” as we have done better allows for future extension to other types of boundary conditions (e.g., 2nd-order non-reflecting BC’s that result in partial differential equations to be solved at the boundary).</p>
 </section>
 <section id="boundary-condition-examples">
-<h2><span class="section-number">9.10. </span>Boundary Condition Examples<a class="headerlink" href="#boundary-condition-examples" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.10. </span>Boundary Condition Examples<a class="headerlink" href="#boundary-condition-examples" title="Link to this heading">#</a></h2>
 <p>This section contains boundary-condition examples with increasing complexity. Included is the most simple <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code> entity and one of the most complex.
 The examples show situations of <span class="xref std std-ref">local and global</span> boundary-condition data, <span class="xref std std-ref">simple</span> and <span class="xref std std-ref">compound</span> boundary-condition types, and multiple boundary-condition data sets that must be matched with the appropriate boundary-condition type.</p>
 <section id="example-symmetry-plane">
-<h3><span class="section-number">9.10.1. </span>Example - Symmetry Plane<a class="headerlink" href="#example-symmetry-plane" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.10.1. </span>Example - Symmetry Plane<a class="headerlink" href="#example-symmetry-plane" title="Link to this heading">#</a></h3>
 <p>Symmetry plane for a patch on the <em>i</em>-min face of a 3-D structured zone.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 3, IndexDimension = 3</span>
 <span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC1</span><span class="w"> </span><span class="o">=</span>
@@ -1359,7 +1369,7 @@ The examples show situations of <span class="xref std std-ref">local and global<
 The BC patch is specified by <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> with a beginning index of (1,1,1) and an ending index of (1,9,17). By default, these refer to vertices.</p>
 </section>
 <section id="example-viscous-solid-wall-i">
-<h3><span class="section-number">9.10.2. </span>Example - Viscous Solid Wall I<a class="headerlink" href="#example-viscous-solid-wall-i" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.10.2. </span>Example - Viscous Solid Wall I<a class="headerlink" href="#example-viscous-solid-wall-i" title="Link to this heading">#</a></h3>
 <p>A viscous solid wall for a 3-D structured zone, where a Dirichlet condition is enforced for temperature; the wall temperature for the entire wall is specified to be 273 K. The BC patch is on the <em>j</em>-min face and is bounded by the indices (1,1,1) and (33,1,9).</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 3, IndexDimension = 3</span>
 <span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC2</span><span class="w"> </span><span class="o">=</span>
@@ -1422,7 +1432,7 @@ When this need is not present in a given instance of a structure entity, the str
 In some of the following examples, structure parameters that are superfluous or otherwise not needed are denoted by “<code class="code sidskey docutils literal notranslate"><span class="pre">?</span></code>”.</p>
 </section>
 <section id="example-subsonic-inflow">
-<h3><span class="section-number">9.10.3. </span>Example - Subsonic Inflow<a class="headerlink" href="#example-subsonic-inflow" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.10.3. </span>Example - Subsonic Inflow<a class="headerlink" href="#example-subsonic-inflow" title="Link to this heading">#</a></h3>
 <p>Subsonic inflow for a 2-D structured zone: The BC patch is on the <em>i</em>-min face and includes <span class="math notranslate nohighlight">\(j \in [2, 7]\)</span>.
 As prescribed by the boundary-condition type, three quantities must be specified.
 Uniform entropy and stagnation enthalpy are specified with values of 0.94 and 2.85, respectively.
@@ -1478,7 +1488,7 @@ The length of the array is given by <code class="code sidskey docutils literal n
 Note that the beginning and ending indices on the array <code class="code docutils literal notranslate"><span class="pre">v_inflow()</span></code> are unimportant (they are user inputs); there just needs to be five values provided.</p>
 </section>
 <section id="example-outflow">
-<h3><span class="section-number">9.10.4. </span>Example - Outflow<a class="headerlink" href="#example-outflow" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.10.4. </span>Example - Outflow<a class="headerlink" href="#example-outflow" title="Link to this heading">#</a></h3>
 <p>Outflow boundary condition with unspecified normal Mach number for an <em>i</em>-max face of a 3-D structured zone: For subsonic outflow, a uniform pressure is specified; for supersonic outflow, no boundary-condition equations are specified.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 3, IndexDimension = 3</span>
 <span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC4</span><span class="w"> </span><span class="o">=</span>
@@ -1517,7 +1527,7 @@ Another caveat is that providing two data sets with the same simple boundary-con
 This example also uses the “<code class="code sidskey docutils literal notranslate"><span class="pre">?</span></code>” notation for unused data-array-length structure parameters.</p>
 </section>
 <section id="example-farfield">
-<h3><span class="section-number">9.10.5. </span>Example - Farfield<a class="headerlink" href="#example-farfield" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.10.5. </span>Example - Farfield<a class="headerlink" href="#example-farfield" title="Link to this heading">#</a></h3>
 <p>Farfield boundary condition with arbitrary flow conditions for a <em>j</em>-max face of a 2-D structured zone: If subsonic inflow, specify entropy, vorticity and incoming acoustic characteristics; if supersonic inflow specify entire flow state; if subsonic outflow, specify incoming acoustic characteristic; and if supersonic outflow, extrapolate all flow quantities.
 None of the extrapolated quantities for the different boundary condition possibilities need be stated.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 2, IndexDimension = 2</span>
@@ -1576,7 +1586,7 @@ This information could also be obtained from the BC patch description given in <
 <code class="code sidskey docutils literal notranslate"><span class="pre">IndexRange</span></code> and all <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities are abbreviated, and all unused structure functions are not evaluated.</p>
 </section>
 <section id="example-viscous-solid-wall-ii">
-<h3><span class="section-number">9.10.6. </span>Example - Viscous Solid Wall II<a class="headerlink" href="#example-viscous-solid-wall-ii" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.10.6. </span>Example - Viscous Solid Wall II<a class="headerlink" href="#example-viscous-solid-wall-ii" title="Link to this heading">#</a></h3>
 <p>There are circumstances when a user may wish to define a BC patch using vertices (under <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code>), but store the BC data at face centers (under <code class="code sidsref docutils literal notranslate"><span class="pre">BCDataSet_t</span></code>).
 The following example is similar to the <span class="xref std std-ref">Viscous Solid Wall</span> example given previously, with the exception that the Dirichlet data for temperature is stored at face centers rather than at vertices.</p>
 <p>As before, the example is a viscous solid wall in a 3-D structured zone, where a Dirichlet condition is enforced for temperature; the wall temperature for the entire wall is specified to be 273 K.
@@ -1647,7 +1657,7 @@ The corresponding value of <code class="code sidskey docutils literal notranslat
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -1675,7 +1685,9 @@ The corresponding value of <code class="code sidskey docutils literal notranslat
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1745,8 +1757,8 @@ The corresponding value of <code class="code sidskey docutils literal notranslat
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

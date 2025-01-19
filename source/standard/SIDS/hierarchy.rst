@@ -70,7 +70,7 @@ The CGNS Base contains the cell dimension and physical dimension of the computat
 
 .. note::
     1. Default names for the :sidsref:`Descriptor_t`, :sidsref:`Zone_t`, :sidsref:`ParticleZone_t`, :sidsref:`IntegralData_t`, :sidsref:`Family_t` and :sidsref:`UserDefinedData_t` lists are as shown;
-       users may choose other legitimate names. Legitimate names must be unique at this level and shall not include the names :sidskey:`Axisymmetry`, :sidskey:` BaseIterativeData`, :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`FlowEquationSet`, :sidskey:`GlobalConvergenceHistory`, :sidskey:`Gravity`, :sidskey:`ReferenceState`, :sidskey:`RotatingCoordinates` or :sidskey:`SimulationType`.
+       users may choose other legitimate names. Legitimate names must be unique at this level and shall not include the names :sidskey:`Axisymmetry`, :sidskey:`BaseIterativeData`, :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`FlowEquationSet`, :sidskey:`GlobalConvergenceHistory`, :sidskey:`Gravity`, :sidskey:`ReferenceState`, :sidskey:`RotatingCoordinates` or :sidskey:`SimulationType`.
     2. The number of entities of type :sidskey:`Zone_t` defines the number of zones in the domain.
     3. :sidskey:`CellDimension` and :sidskey:`PhysicalDimension` are the only required fields. The :sidskey:`Descriptor_t`, :sidskey:`Zone_t` and :sidskey:`IntegralData_t` lists may be empty, and all other optional fields absent.
 

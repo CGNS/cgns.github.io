@@ -70,7 +70,7 @@ The CGNS Base contains the cell dimension and physical dimension of the computat
 
 .. note::
     1. Default names for the :sidsref:`Descriptor_t`, :sidsref:`Zone_t`, :sidsref:`ParticleZone_t`, :sidsref:`IntegralData_t`, :sidsref:`Family_t` and :sidsref:`UserDefinedData_t` lists are as shown;
-       users may choose other legitimate names. Legitimate names must be unique at this level and shall not include the names :sidskey:`Axisymmetry`, :sidskey:` BaseIterativeData`, :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`FlowEquationSet`, :sidskey:`GlobalConvergenceHistory`, :sidskey:`Gravity`, :sidskey:`ReferenceState`, :sidskey:`RotatingCoordinates` or :sidskey:`SimulationType`.
+       users may choose other legitimate names. Legitimate names must be unique at this level and shall not include the names :sidskey:`Axisymmetry`, :sidskey:`BaseIterativeData`, :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`FlowEquationSet`, :sidskey:`GlobalConvergenceHistory`, :sidskey:`Gravity`, :sidskey:`ReferenceState`, :sidskey:`RotatingCoordinates` or :sidskey:`SimulationType`.
     2. The number of entities of type :sidskey:`Zone_t` defines the number of zones in the domain.
     3. :sidskey:`CellDimension` and :sidskey:`PhysicalDimension` are the only required fields. The :sidskey:`Descriptor_t`, :sidskey:`Zone_t` and :sidskey:`IntegralData_t` lists may be empty, and all other optional fields absent.
 
@@ -94,7 +94,7 @@ For a structured zone, the quantities :sidskey:`IndexDimension` and :sidskey:`Ce
 
 On the other hand we assume that all zones of the base have the same :sidskey:`CellDimension`, e.g. if :sidskey:`CellDimension` is 3, all zones must be composed of 3D cells within the :sidskey:`CGNSBase_t`.
 
-If the base contains only particles (no mesh), then :sidskey:`CellDimension` carries no meaning. It remains required for compatibility purposes and must best set to 0.
+If the base contains only particles (no mesh), then :sidskey:`CellDimension` carries no meaning. It remains required for compatibility purposes and must be set to 0.
 
 We need :sidskey:`IndexDimension` for both structured and unstructured zones in order to use original data structures such as :sidsref:`GridCoordinates_t`, :sidsref:`FlowSolution_t`, :sidsref:`DiscreteData_t`, etc.
 :sidskey:`CellDimension` is necessary to express the interpolants in :sidskey:`ZoneConnectivity` with an unstructured zone (mismatch or overset connectivity). When the cells are bidimensional, two interpolants per node are required, whereas when the cells are tridimensional, three interpolants per node must be provided. :sidskey:`PhysicalDimension` becomes useful when expressing quantities such as the :sidskey:`InwardNormalList` in the :sidsref:`BC_t` data structure. It's possible to have a mesh where :sidskey:`IndexDimension` = 2 but the normal vectors still require :math:`x`, :math:`y`, :math:`z` components in order to be properly defined. Consider, for example, a structured surface mesh in the 3D space.

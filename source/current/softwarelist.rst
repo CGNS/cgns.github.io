@@ -35,6 +35,7 @@ The **status** key has the following meaning:
    :header: "Status", "Organization/owner", "Software", "Purpose", "Web site or email"
    :widths: 2, 10, 10, 10, 90
 
+   ok, Convergent Science, CONVERGE CFD, Solver, https://convergecfd.com
    --, BETA CAE Systems, "ANSA", Mesher, https://www.beta-cae.com/ansa
    ??, ANSYS, "ANSYS ICEM CFD", Mesher, ansysinfo@ansys.com
    ??, NUMECA, IGG, Mesher, http://www.numeca.be

@@ -336,7 +336,7 @@ Committee. The Chairperson will be a member of the Committee, be
 elected by consensus, and serve for a two-year term. There is no limit
 on how many terms the Chairperson can be elected. At the discretion of
 the Chairperson, a Vice-Chairperson may be appointed, by consensus of
-the Committee, to assist the Chairperson with his or her duties. The
+the Committee, to assist the Chairperson with his or her duties.
 The vice-chairperson will also be a member of the Committee. The
 appointment of a secretary to maintain records will be at the
 discretion of the Chairperson.

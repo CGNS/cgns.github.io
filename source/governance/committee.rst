@@ -368,7 +368,7 @@ the CGNS Standard. No more than five institutions,
 i.e., have the same parent organization, may be related. Changes to the Membership
 (including the limit on the number of institutions) will be determined
 by consensus or, if required, a two-thirds majority of the existing
-Membership.
+membership.
 
 To help satisfy the :ref:`duties of the Steering Committee as a whole <mission_sec-ref>`,
 the minimal responsibilities of each Steering Committee member

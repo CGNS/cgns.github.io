@@ -7,12 +7,16 @@
 Meetings
 ========
 
-Recent meeting notes can be consulted `here <https://cgnsorg.atlassian.net/l/c/Y2wwLqSA>`_ .
+Past meeting notes can be consulted `here <https://cgnsorg.atlassian.net/l/c/Y2wwLqSA>`_ .
 
 Minutes are available for the following CGNS Steering Committee meetings and telecons.
 
 Minutes
 ^^^^^^^
+**2025**
+--------
+
+   The detailed minutes from our 2025 meetings are now available on the `CGNS GitHub Wiki page <https://github.com/CGNS/CGNS/wiki/2025`_ .
 
 **2024**
 --------

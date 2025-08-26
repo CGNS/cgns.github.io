@@ -491,6 +491,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c.CG_CONFIG_HDF5_BUFFER"><code class="docutils literal notranslate"><span class="pre">CG_CONFIG_HDF5_BUFFER</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c.CG_CONFIG_HDF5_SIEVE_BUF_SIZE"><code class="docutils literal notranslate"><span class="pre">CG_CONFIG_HDF5_SIEVE_BUF_SIZE</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c.CG_CONFIG_HDF5_ELINK_CACHE_SIZE"><code class="docutils literal notranslate"><span class="pre">CG_CONFIG_HDF5_ELINK_CACHE_SIZE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c.CG_CONFIG_GET_MAXIMUM_FILES"><code class="docutils literal notranslate"><span class="pre">CG_CONFIG_GET_MAXIMUM_FILES</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c.CG_CONFIG_RESET"><code class="docutils literal notranslate"><span class="pre">CG_CONFIG_RESET</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv416cg_error_handlerPFviPcE"><code class="docutils literal notranslate"><span class="pre">cg_error_handler()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv415cg_set_compressi"><code class="docutils literal notranslate"><span class="pre">cg_set_compress()</span></code></a></li>
@@ -1252,9 +1253,13 @@ The function <a class="reference internal" href="#group__CGNSFile_1ga51752465919
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv412cg_configureiPv">
 <span id="_CPPv312cg_configureiPv"></span><span id="_CPPv212cg_configureiPv"></span><span id="cg_configure__i.voidP"></span><span class="target" id="group__CGNSInternals__FNC__CG__CONFIG_1ga435aaefb91ad026816e96f752f37eefd"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cg_configure</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">option</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412cg_configureiPv" title="Link to this definition">#</a><br /></dt>
-<dd><p>Configure CGNS library internal options. </p>
+<dd><p>Configure or retrieve CGNS library internal options or information. </p>
 <p>
-The function <a class="reference internal" href="#group__CGNSInternals__FNC__CG__CONFIG_1ga435aaefb91ad026816e96f752f37eefd"><span class="std std-ref">cg_configure()</span></a> allows particular CGNS library internal options to be configured. The currently supported options and expected values are listed below. </p>
+The function <a class="reference internal" href="#group__CGNSInternals__FNC__CG__CONFIG_1ga435aaefb91ad026816e96f752f37eefd"><span class="std std-ref">cg_configure()</span></a> allows particular CGNS library internal options to be configured or retrieved. The currently supported options and expected values are listed below.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most <code class="docutils literal notranslate"><span class="pre">options</span></code> are designed explicitly with the singular functionality of setting configuration parameters. Only those that include <strong>“_GET_”</strong> are capable of retrieving configuration settings. </p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1369,6 +1374,12 @@ The function <a class="reference internal" href="#group__CGNSInternals__FNC__CG_
 <dt class="sig sig-object c" id="c.CG_CONFIG_HDF5_ELINK_CACHE_SIZE">
 <span class="target" id="group__CGNSInternals__FNC__CG__CONFIG_1ga712a4e68fa839e41e6d8264ddbec42a1"></span><span class="sig-name descname"><span class="n"><span class="pre">CG_CONFIG_HDF5_ELINK_CACHE_SIZE</span></span></span><a class="headerlink" href="#c.CG_CONFIG_HDF5_ELINK_CACHE_SIZE" title="Link to this definition">#</a><br /></dt>
 <dd><p>Configures HDF5’s <code class="docutils literal notranslate"><span class="pre">H5Pset_elink_file_cache_size</span></code> and sets the number of files, <code class="docutils literal notranslate"><span class="pre">value</span></code>, that can be held open in an external link open file cache. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.CG_CONFIG_GET_MAXIMUM_FILES">
+<span class="target" id="group__CGNSInternals__FNC__CG__CONFIG_1gaee5bbf7080fcadf63f1b06a804fa8feb"></span><span class="sig-name descname"><span class="n"><span class="pre">CG_CONFIG_GET_MAXIMUM_FILES</span></span></span><a class="headerlink" href="#c.CG_CONFIG_GET_MAXIMUM_FILES" title="Link to this definition">#</a><br /></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">Value</span></code> returns an <code class="docutils literal notranslate"><span class="pre">int</span></code> (Fortran:<code class="docutils literal notranslate"><span class="pre">C_INT</span></code>) indicating the maximum number of allowed open and mounted files. </p>
 </dd></dl>
 
 <dl class="c macro">
@@ -8476,6 +8487,7 @@ The CGNS MLL relies on the user to compute the bounding box and ensure that the 
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c.CG_CONFIG_HDF5_BUFFER"><code class="docutils literal notranslate"><span class="pre">CG_CONFIG_HDF5_BUFFER</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c.CG_CONFIG_HDF5_SIEVE_BUF_SIZE"><code class="docutils literal notranslate"><span class="pre">CG_CONFIG_HDF5_SIEVE_BUF_SIZE</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c.CG_CONFIG_HDF5_ELINK_CACHE_SIZE"><code class="docutils literal notranslate"><span class="pre">CG_CONFIG_HDF5_ELINK_CACHE_SIZE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c.CG_CONFIG_GET_MAXIMUM_FILES"><code class="docutils literal notranslate"><span class="pre">CG_CONFIG_GET_MAXIMUM_FILES</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c.CG_CONFIG_RESET"><code class="docutils literal notranslate"><span class="pre">CG_CONFIG_RESET</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv416cg_error_handlerPFviPcE"><code class="docutils literal notranslate"><span class="pre">cg_error_handler()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv415cg_set_compressi"><code class="docutils literal notranslate"><span class="pre">cg_set_compress()</span></code></a></li>

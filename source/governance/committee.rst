@@ -527,7 +527,8 @@ The CGNS Steering Committee has had the following chairs:
 -  Jan 2003 - Jan 2008 : Chris Rumsey (NASA Langley)
 -  Jan 2008 - Sep 2014 : Thomas Hauser (U. Colorado)
 -  Sep 2014 - Sep 2019 : Bob Bush (Pratt & Whitney), Chris Rumsey (NASA Langley), ZJ Wang (U. Kansas)
--  Sep 2019 - present: Scot Breitenfeld (HDF Group) and Koen Hillewaert (Cenaero).
+-  Sep 2019 - May 2025 : Scot Breitenfeld (HDF Group) and Koen Hillewaert (Cenaero).
+-  May 2025 - Present  : Scot Breitenfeld (HDF Group)
 
 The current members of the committee are:
 

@@ -689,6 +689,9 @@ Flow Solution Structure Definition: :sidskey:`FlowSolution_t`
 
     GridLocation_t GridLocation ;                                      (o/d)
 
+    int SpatialOrder ;                                                 (o)
+    int TemporalOrder ;                                                (o/d)
+
     Rind_t<IndexDimension> Rind ;                                      (o/d)
 
     IndexRange_t<IndexDimension> PointRange ;                          (o)
@@ -705,16 +708,19 @@ Flow Solution Structure Definition: :sidskey:`FlowSolution_t`
     } ;
 
 .. note::
-    1. Default names for the :sidsref:`Descriptor_t`, :sidsref:`DataArray_t`, and :sidsref:`UserDefinedData_t` lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of :sidskey:`FlowSolution_t` and shall not include the names :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`GridLocation`, :sidskey:`PointList`, :sidskey:`PointRange`, or :sidskey:`Rind`.
-    2. There are no required fields for :sidskey:`FlowSolution_t`. :sidsref:`GridLocation` has a default of :sidskey:`Vertex` if absent. :sidskey:`Rind` also has a default if absent; the default is equivalent to having an instance of :sidskey:`Rind` whose :sidskey:`RindPlanes` array contains all zeros.
+    1. Default names for the :sidsref:`Descriptor_t`, :sidsref:`DataArray_t`, and :sidsref:`UserDefinedData_t` lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of :sidskey:`FlowSolution_t` and shall not include the names :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`GridLocation`, :sidskey:`PointList`, :sidskey:`PointRange`, :sidskey:`Rind`, :sidskey:`SpatialOrder`, or :sidskey:`TemporalOrder`.
+    2. There are no required fields for :sidskey:`FlowSolution_t`. :sidsref:`GridLocation` has a default of :sidskey:`Vertex` if absent. :sidskey:`Rind` also has a default if absent; the default is equivalent to having an instance of :sidskey:`Rind` whose :sidskey:`RindPlanes` array contains all zeros. :sidskey:`TemporalOrder` defaults to 0 if absent.
     3. Both of the fields :sidskey:`PointList` and :sidskey:`PointRange` are optional. Only one of these two fields may be specified.
     4. The structure parameter :sidskey:`DataType` must be consistent with the data stored in the :sidsref:`DataArray_t` structure entities; :sidskey:`DataType` is :code:`real` for all flow-solution identifiers defined in the section :ref:`Conventions for Data-Name Identifiers<dataname>`.
     5. For unstructured zones :sidsref:`GridLocation` options are limited to :sidskey:`Vertex` or :sidskey:`CellCenter`, unless one of :sidskey:`PointList` or :sidskey:`PointRange` is present.
     6. Indexing of data within the :sidsref:`DataArray_t` structure must be consistent with the associated numbering of vertices or elements.
+    7. For high-order solution fields, :sidskey:`SpatialOrder` and :sidskey:`TemporalOrder` specify the interpolation orders and refer to :sidsref:`SolutionInterpolation_t` metadata in the zone's family. See :ref:`High-Order Interpolation <HighOrderInterpolation>` for details.
 
 :sidskey:`FlowSolution_t` requires four structure parameters; :sidskey:`CellDimension` identifies the dimensionality of cells or elements, :sidskey:`IndexDimension` identifies the dimensionality of the grid-size arrays, and :sidskey:`VertexSize` and :sidskey:`CellSize` are the number of core vertices and cells, respectively, in each index direction, excluding rind points. For structured zones, core vertices and cells begin at :code:`[1,1,1]` (in 3-D) and end at :sidskey:`VertexSize` and :sidskey:`CellSize`, respectively. For unstructured zones, :sidskey:`IndexDimension` is always 1.
 
 The flow solution data is stored in the list of :sidsref:`DataArray_t` entities; each :sidskey:`DataArray_t` structure entity may contain a single component of the solution vector. Standardized data-name identifiers for the flow-solution quantities are described in the section :ref:`Conventions for Data-Name Identifiers<dataname>`. The field :sidsref:`GridLocation` specifies the location of the solution data with respect to the grid; if absent, the data is assumed to coincide with grid vertices (i.e., :sidskey:`GridLocation = Vertex`). All data within a given instance of :sidskey:`FlowSolution_t` must reside at the same grid location.
+
+For high-order solution interpolation, the optional fields :sidskey:`SpatialOrder` and :sidskey:`TemporalOrder` specify the polynomial interpolation orders for spatial and temporal dimensions, respectively. When present, :sidskey:`GridLocation` should be set to :sidskey:`CellCenter`, and :sidskey:`PointRange` or :sidskey:`PointList` may be used to specify which elements use this interpolation order (for variable-order solutions). The actual interpolation metadata (control points or modal coefficients) is defined in a :sidsref:`SolutionInterpolation_t` node within the zone's :sidsref:`Family_t`, identified by the combination of element type and interpolation orders. The solution data arrays then contain the interpolation coefficients or modal amplitudes rather than point values. See :ref:`High-Order Interpolation <HighOrderInterpolation>` for complete details.
 
 For structured grids, the value of :sidskey:`GridLocation` alone specifies the location and indexing of the flow solution data. Vertices are explicitly indexed. Cell centers and face centers are indexed using the minimum of the connecting vertex indices, as described in the section :ref:`Structured Grid Notation and Indexing Conventions <structgrid>`.
 

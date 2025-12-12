@@ -25,6 +25,7 @@ CGNS/SIDS - Standard Interface Data Structures
    array
    hierarchy
    grid
+   highorder
    multizone
    boundary
    equation

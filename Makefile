@@ -22,6 +22,7 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(MAKE) check_python
+	git config -f .gitmodules submodule.CGNS.branch CPEX45_high_order_wip
 	git submodule init
 	git submodule update --init --force --remote
 	if [ ! -d $(BUILDDIR) ]; then mkdir -p $(BUILDDIR); fi

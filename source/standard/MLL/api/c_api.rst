@@ -786,6 +786,8 @@ Families
 .. cgns-group-function-summary:: CGNSGeometryReference Geometry Reference
 .. cgns-group-function-summary:: CGNSFamilyBoundaryCondition Family Boundary Condition
 .. cgns-group-function-summary:: FamilyName
+.. cgns-group-function-summary:: ElementInterpolation
+.. cgns-group-function-summary:: SolutionInterpolation
 
 .. _CGNSFamilyDefinition-ref:
 
@@ -853,6 +855,38 @@ ____________________________________________
    <p><i>Node</i>:  <code>FamilyName_t</code>
 
 .. doxygengroup:: FamilyName
+    :content-only:
+
+------
+
+.. _ElementInterpolation-ref:
+
+Element Interpolation
+____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>ElementInterpolation_t</code>
+             (<a href="../../SIDS/highorder.html#HighOrderInterpolation">SIDS</a>,
+              <a href="../../FMM/nodes.html#ElementInterpolation">File Mapping</a>)</p>
+
+.. doxygengroup:: ElementInterpolation
+    :content-only:
+
+------
+
+.. _SolutionInterpolation-ref:
+
+Solution Interpolation
+____________________________________________
+
+.. raw:: html
+
+   <p><i>Node</i>:  <code>SolutionInterpolation_t</code>
+             (<a href="../../SIDS/highorder.html#HighOrderInterpolation">SIDS</a>,
+              <a href="../../FMM/nodes.html#SolutionInterpolation">File Mapping</a>)</p>
+
+.. doxygengroup:: SolutionInterpolation
     :content-only:
 
 ------

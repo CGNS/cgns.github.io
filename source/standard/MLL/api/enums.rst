@@ -16,6 +16,7 @@ List of enumerated values (key words) for each of these variable types (typedefs
  .. doxygenenum:: GoverningEquationsType_t
  .. doxygenenum:: GridLocation_t
  .. doxygenenum:: GridConnectivityType_t
+ .. doxygenenum:: InterpolationType_t
  .. doxygenenum:: LengthUnits_t
  .. doxygenenum:: LuminousIntensityUnits_t
  .. doxygenenum:: MassUnits_t

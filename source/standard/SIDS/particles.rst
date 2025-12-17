@@ -206,10 +206,11 @@ The :sidsref:`UserDefinedData_t` data structure allows arbitrary user-defined da
 
 .. _DataSizeParticle:
 
-.. c:function:: FUNCTION DataSize()
+**FUNCTION DataSize()**
 
-   :return value: ``int``
-   :dependencies: :sidskey:`PointRange`, :sidskey:`PointList`
+   *Return value:* ``int``
+
+   *Dependencies:* :sidskey:`PointRange`, :sidskey:`PointList`
 
    :sidskey:`ParticleSolution_t` requires the structure function :sidskey:`DataSize`, which is used to specify the number of entities corresponding to a given :sidskey:`PointRange` or :sidskey:`PointList`. This will therefore be the size of the :sidskey:`ParticleSolution` data arrays. If :sidskey:`PointRange` is specified, then :sidskey:`DataSize` is obtained from the number of points (inclusive) between the beginning and ending indices of :sidskey:`PointRange`. If :sidskey:`PointList` is specified, then :sidskey:`DataSize` is the number of indices in the list of points. In this situation, :sidskey:`DataSize` becomes a user input along with the indices of the list :sidskey:`PointList`. By "user", we mean the application code that is generating the CGNS database.
 

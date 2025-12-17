@@ -87,18 +87,79 @@ The four interpolation types are:
 
 .. _parametric_coords:
 
-Parametric Coordinate Systems
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Parametric Coordinate Systems (Reference Element Definitions)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The parametric coordinate system is defined per element type. For standard element types, the parametric coordinates are:
+**NORMATIVE REQUIREMENT**: The parametric coordinate system is rigorously defined per element type and **MUST** be used exactly as specified for CGNS interoperability. These reference element domains are the foundation for all basis functions and control point distributions.
 
-* **Line elements** (BAR_2, BAR_3, etc.): Use parameter :math:`u \in [-1, 1]`
-* **Triangular elements** (TRI_3, TRI_6, etc.): Use parameters :math:`(u, v)` with :math:`u, v \geq -1` and :math:`u + v \leq 1`
-* **Quadrilateral elements** (QUAD_4, QUAD_8, QUAD_9, etc.): Use parameters :math:`(u, v) \in [-1, 1] \times [-1, 1]`
-* **Tetrahedral elements** (TETRA_4, TETRA_10, etc.): Use parameters :math:`(u, v, w)` with :math:`u, v, w \geq -1` and :math:`u + v + w \leq 1`
-* **Hexahedral elements** (HEXA_8, HEXA_20, HEXA_27, etc.): Use parameters :math:`(u, v, w) \in [-1, 1] \times [-1, 1] \times [-1, 1]`
-* **Prismatic elements** (PENTA_6, PENTA_15, PENTA_18, etc.): Use triangular base :math:`(u, v)` and linear parameter :math:`w \in [-1, 1]`
-* **Pyramidal elements** (PYRA_5, PYRA_14, etc.): Use parameters :math:`(u, v, w)` with specific coordinate system for pyramids
+**1D Elements (BAR)**:
+
+* **Domain**: :math:`u \in [-1, +1]`
+* **Vertices**: Vertex 0 at :math:`u = -1`, Vertex 1 at :math:`u = +1`
+
+**2D Tensor Product Elements (QUAD)**:
+
+* **Domain**: :math:`(u, v) \in [-1, +1] \times [-1, +1]`
+* **Vertices** (counter-clockwise from bottom-left):
+
+  * Vertex 0: :math:`(u, v) = (-1, -1)`
+  * Vertex 1: :math:`(u, v) = (+1, -1)`
+  * Vertex 2: :math:`(u, v) = (+1, +1)`
+  * Vertex 3: :math:`(u, v) = (-1, +1)`
+
+**2D Simplex Elements (TRI)**:
+
+* **Domain**: :math:`\{(u, v) : u \geq -1, v \geq -1, u + v \leq 1\}`
+* **Vertices**:
+
+  * Vertex 0: :math:`(u, v) = (-1, -1)` (origin)
+  * Vertex 1: :math:`(u, v) = (+1, -1)` (right)
+  * Vertex 2: :math:`(u, v) = (-1, +1)` (top)
+
+* **Edge parametrization**:
+
+  * Edge 0 (Vertex 0 to 1): :math:`(u, v) = (s, -1)` for :math:`s \in [-1, +1]`
+  * Edge 1 (Vertex 1 to 2): :math:`(u, v) = (1-s, s)` for :math:`s \in [-1, +1]`
+  * Edge 2 (Vertex 2 to 0): :math:`(u, v) = (-1, s)` for :math:`s \in [-1, +1]`
+
+**3D Tensor Product Elements (HEXA)**:
+
+* **Domain**: :math:`(u, v, w) \in [-1, +1] \times [-1, +1] \times [-1, +1]`
+* **Vertices** (CGNS standard ordering):
+
+  * Plane :math:`w = -1`: Vertices 0,1,2,3 (same as QUAD)
+  * Plane :math:`w = +1`: Vertices 4,5,6,7 (same as QUAD)
+
+**3D Simplex Elements (TETRA)**:
+
+* **Domain**: :math:`\{(u, v, w) : u \geq -1, v \geq -1, w \geq -1, u + v + w \leq 1\}`
+* **Vertices**:
+
+  * Vertex 0: :math:`(u, v, w) = (-1, -1, -1)` (origin)
+  * Vertex 1: :math:`(u, v, w) = (+1, -1, -1)` (x-direction)
+  * Vertex 2: :math:`(u, v, w) = (-1, +1, -1)` (y-direction)
+  * Vertex 3: :math:`(u, v, w) = (-1, -1, +1)` (z-direction)
+
+**3D Hybrid Elements (PENTA)**:
+
+* **Domain**: Triangular base :math:`\{(u, v) : u \geq -1, v \geq -1, u + v \leq 1\}` extruded along :math:`w \in [-1, +1]`
+* **Vertices**:
+
+  * Plane :math:`w = -1`: Vertices 0,1,2 (triangle)
+  * Plane :math:`w = +1`: Vertices 3,4,5 (triangle)
+
+**3D Pyramid Elements (PYRA)**:
+
+* **Domain**: :math:`\{(u, v, w) : -1 \leq u, v \leq 1, -1 \leq w \leq 1, |u| + |v| \leq 1 + w\}`
+* **Vertices**:
+
+  * Base (:math:`w = -1`): Vertices 0,1,2,3 (square)
+  * Apex (:math:`w = +1`): Vertex 4 at :math:`(0, 0, +1)`
+
+* **Singular Mapping**: The top face :math:`w = +1` collapses to a single point (apex), creating a coordinate singularity
+
+.. danger::
+   **Critical Interoperability Requirement**: Using a different reference coordinate system (e.g., :math:`[0, 1]` instead of :math:`[-1, +1]`, or different vertex orderings) will produce **incompatible** CGNS files. All control point coordinates, basis function evaluations, and quadrature rules **MUST** be defined relative to these exact reference domains.
 
 .. note::
    For space-time computations, see :ref:`Space-Time Extensions <spacetime_extensions>` for the extension to parametric time :math:`\tau \in [-1, 1]`.
@@ -111,10 +172,55 @@ Scope
 
 Parametric Lagrange interpolation can be used for specifying both curved mesh elements and high-order solution fields. For elements, this convention allows redefinition of the position and order of control points with respect to the standard definitions for each :sidsref:`ElementType_t`. The standard definition continues to be used if no interpolation is explicitly specified.
 
+Control Point Distribution
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**CRITICAL REQUIREMENT**: For Lagrange interpolation to be unambiguous and interoperable, the distribution of control points in parametric space must be explicitly defined. The CGNS standard specifies the following control point distributions:
+
+**1D Control Point Distributions** (for edges and BAR elements):
+
+For a 1D edge in parametric coordinate :math:`u \in [-1, 1]` with :math:`p+1` control points:
+
+* **Equidistant**: :math:`u_i = -1 + \frac{2i}{p}` for :math:`i = 0, 1, \ldots, p`
+
+  * Simple uniform spacing
+  * **Warning**: Poor conditioning for :math:`p > 5`; strongly discouraged for :math:`p > 7`
+
+* **Gauss-Lobatto-Legendre (GLL)**: Roots of :math:`(1-u^2) P_p'(u) = 0` where :math:`P_p` is the Legendre polynomial of degree :math:`p`
+
+  * **Default and strongly recommended** for all polynomial orders
+  * Includes endpoints :math:`u_0 = -1`, :math:`u_p = +1`
+  * Optimal for spectral element methods and numerical quadrature
+  * Well-conditioned Vandermonde matrices for all practical :math:`p`
+
+**Multi-Dimensional Control Points** (for 2D and 3D elements):
+
+* **Tensor Product Elements** (QUAD, HEXA): Apply the chosen 1D distribution independently in each parametric direction
+
+  * QUAD: :math:`(u_i, v_j)` for all combinations of :math:`i, j`
+  * HEXA: :math:`(u_i, v_j, w_k)` for all combinations of :math:`i, j, k`
+
+* **Simplex Elements** (TRI, TETRA): Use **Warp & Blend** or **Fekete** point distributions
+
+  * These specialized distributions ensure good conditioning of the Vandermonde matrix
+  * Reference: Warburton (2006), "An explicit construction of interpolation nodes on the simplex"
+  * **Implementation note**: Exact coordinates for simplex distributions up to :math:`p=10` are tabulated in the CGNS reference implementation
+
+**Serendipity Elements**: Only include control points on edges (Edge Serendipity) or edges and faces (Face Serendipity), excluding interior points. The distribution on each edge/face follows the same rules as above.
+
+.. danger::
+   **Non-Standard Point Distributions**: Using non-standard control point locations (e.g., arbitrary positions) will result in:
+
+   * Ill-conditioned Vandermonde matrices
+   * Numerical instability during interpolation
+   * Non-portable CGNS files that cannot be reliably read by other software
+
+   **Requirement**: Implementations **MUST** use GLL distribution for tensor product elements and Warp & Blend for simplex elements unless explicitly documented otherwise.
+
 Function Spaces
 ~~~~~~~~~~~~~~~
 
-Lagrange interpolants require specification of both the control point locations and the function space :math:`\mathcal{V}`. The cardinality :math:`N` of the function space defines the number of control points that must be specified.
+Lagrange interpolants require specification of both the control point locations (as defined above) and the function space :math:`\mathcal{V}`. The cardinality :math:`N` of the function space defines the number of control points that must be specified.
 
 The Lagrange interpolant corresponding to control point :math:`\mathbf{u}_i` is denoted :math:`\lambda_i(\mathbf{u})`. Using an arbitrary set of basis functions :math:`\psi_j` for :math:`\mathcal{V}` (such that :math:`\mathcal{V} = \text{span}(\psi_j, j=0..N-1)`), the Lagrange interpolants are found as:
 
@@ -377,6 +483,222 @@ Total: :math:`N = 12(2-1) + 8 = 20`
 .. note::
    **Implementation Validation**: Use these reference values to verify your control point generation and ordering logic. If your implementation produces different coordinates for the same element type and order, it is **not** CGNS-compliant.
 
+Complete Index Ordering Tables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**CRITICAL FOR INTEROPERABILITY**: This section provides complete, unambiguous index ordering for all supported element types. These tables are **normative** and **mandatory** for CGNS compliance.
+
+**Quadrilateral (QUAD) - Complete Element Index Ordering**
+
+The following tables show the exact linear index for each :math:`(i, j)` tuple in column-major order :math:`\text{idx} = j \times (p+1) + i`:
+
+.. table:: **QUAD P=1 (4 nodes)**
+
+   +-----+-----+-----+
+   | j\\i | 0   | 1   |
+   +=====+=====+=====+
+   | 0   | 0   | 1   |
+   +-----+-----+-----+
+   | 1   | 2   | 3   |
+   +-----+-----+-----+
+
+.. table:: **QUAD P=2 (9 nodes)**
+
+   +-----+-----+-----+-----+
+   | j\\i | 0   | 1   | 2   |
+   +=====+=====+=====+=====+
+   | 0   | 0   | 1   | 2   |
+   +-----+-----+-----+-----+
+   | 1   | 3   | 4   | 5   |
+   +-----+-----+-----+-----+
+   | 2   | 6   | 7   | 8   |
+   +-----+-----+-----+-----+
+
+.. table:: **QUAD P=3 (16 nodes)**
+
+   +-----+-----+-----+-----+-----+
+   | j\\i | 0   | 1   | 2   | 3   |
+   +=====+=====+=====+=====+=====+
+   | 0   | 0   | 1   | 2   | 3   |
+   +-----+-----+-----+-----+-----+
+   | 1   | 4   | 5   | 6   | 7   |
+   +-----+-----+-----+-----+-----+
+   | 2   | 8   | 9   | 10  | 11  |
+   +-----+-----+-----+-----+-----+
+   | 3   | 12  | 13  | 14  | 15  |
+   +-----+-----+-----+-----+-----+
+
+**Hexahedron (HEXA) - Complete Element Index Ordering**
+
+The index is computed as :math:`\text{idx} = k \times (p+1)^2 + j \times (p+1) + i` (column-major with :math:`k` outermost):
+
+.. table:: **HEXA P=1 (8 nodes) - Node indices by plane**
+
+   **Plane k=0 (w=-1)**:
+
+   +-----+-----+-----+
+   | j\\i | 0   | 1   |
+   +=====+=====+=====+
+   | 0   | 0   | 1   |
+   +-----+-----+-----+
+   | 1   | 2   | 3   |
+   +-----+-----+-----+
+
+   **Plane k=1 (w=+1)**:
+
+   +-----+-----+-----+
+   | j\\i | 0   | 1   |
+   +=====+=====+=====+
+   | 0   | 4   | 5   |
+   +-----+-----+-----+
+   | 1   | 6   | 7   |
+   +-----+-----+-----+
+
+.. table:: **HEXA P=2 (27 nodes) - Node indices by plane**
+
+   **Plane k=0 (w=-1)**:
+
+   +-----+-----+-----+-----+
+   | j\\i | 0   | 1   | 2   |
+   +=====+=====+=====+=====+
+   | 0   | 0   | 1   | 2   |
+   +-----+-----+-----+-----+
+   | 1   | 3   | 4   | 5   |
+   +-----+-----+-----+-----+
+   | 2   | 6   | 7   | 8   |
+   +-----+-----+-----+-----+
+
+   **Plane k=1 (w=0)**:
+
+   +-----+-----+-----+-----+
+   | j\\i | 0   | 1   | 2   |
+   +=====+=====+=====+=====+
+   | 0   | 9   | 10  | 11  |
+   +-----+-----+-----+-----+
+   | 1   | 12  | 13  | 14  |
+   +-----+-----+-----+-----+
+   | 2   | 15  | 16  | 17  |
+   +-----+-----+-----+-----+
+
+   **Plane k=2 (w=+1)**:
+
+   +-----+-----+-----+-----+
+   | j\\i | 0   | 1   | 2   |
+   +=====+=====+=====+=====+
+   | 0   | 18  | 19  | 20  |
+   +-----+-----+-----+-----+
+   | 1   | 21  | 22  | 23  |
+   +-----+-----+-----+-----+
+   | 2   | 24  | 25  | 26  |
+   +-----+-----+-----+-----+
+
+**Triangle (TRI) - Complete Element Index Ordering**
+
+For simplices, the ordering follows Pascal's triangle with :math:`\text{idx}` incrementing row-by-row:
+
+.. table:: **TRI P=1 (3 nodes)**
+
+   +--------+-------+
+   | (i,j)  | idx   |
+   +========+=======+
+   | (0,0)  | 0     |
+   +--------+-------+
+   | (1,0)  | 1     |
+   +--------+-------+
+   | (0,1)  | 2     |
+   +--------+-------+
+
+.. table:: **TRI P=2 (6 nodes)**
+
+   +--------+-------+
+   | (i,j)  | idx   |
+   +========+=======+
+   | (0,0)  | 0     |
+   +--------+-------+
+   | (1,0)  | 1     |
+   +--------+-------+
+   | (2,0)  | 2     |
+   +--------+-------+
+   | (0,1)  | 3     |
+   +--------+-------+
+   | (1,1)  | 4     |
+   +--------+-------+
+   | (0,2)  | 5     |
+   +--------+-------+
+
+.. table:: **TRI P=3 (10 nodes)**
+
+   +--------+-------+
+   | (i,j)  | idx   |
+   +========+=======+
+   | (0,0)  | 0     |
+   +--------+-------+
+   | (1,0)  | 1     |
+   +--------+-------+
+   | (2,0)  | 2     |
+   +--------+-------+
+   | (3,0)  | 3     |
+   +--------+-------+
+   | (0,1)  | 4     |
+   +--------+-------+
+   | (1,1)  | 5     |
+   +--------+-------+
+   | (2,1)  | 6     |
+   +--------+-------+
+   | (0,2)  | 7     |
+   +--------+-------+
+   | (1,2)  | 8     |
+   +--------+-------+
+   | (0,3)  | 9     |
+   +--------+-------+
+
+**Tetrahedron (TETRA) - Complete Element Index Ordering**
+
+For tetrahedra, the ordering follows :math:`i+j+k \leq p` with :math:`i` varying fastest:
+
+.. table:: **TETRA P=1 (4 nodes)**
+
+   +------------+-------+
+   | (i,j,k)    | idx   |
+   +============+=======+
+   | (0,0,0)    | 0     |
+   +------------+-------+
+   | (1,0,0)    | 1     |
+   +------------+-------+
+   | (0,1,0)    | 2     |
+   +------------+-------+
+   | (0,0,1)    | 3     |
+   +------------+-------+
+
+.. table:: **TETRA P=2 (10 nodes)**
+
+   +------------+-------+
+   | (i,j,k)    | idx   |
+   +============+=======+
+   | (0,0,0)    | 0     |
+   +------------+-------+
+   | (1,0,0)    | 1     |
+   +------------+-------+
+   | (2,0,0)    | 2     |
+   +------------+-------+
+   | (0,1,0)    | 3     |
+   +------------+-------+
+   | (1,1,0)    | 4     |
+   +------------+-------+
+   | (0,2,0)    | 5     |
+   +------------+-------+
+   | (0,0,1)    | 6     |
+   +------------+-------+
+   | (1,0,1)    | 7     |
+   +------------+-------+
+   | (0,1,1)    | 8     |
+   +------------+-------+
+   | (0,0,2)    | 9     |
+   +------------+-------+
+
+.. important::
+   **Verification Requirement**: Any CGNS implementation claiming high-order support **MUST** reproduce these exact index orderings. Use the tables above as reference test cases.
+
 Node Ordering Visualization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -638,6 +960,116 @@ Solution interpolation metadata is stored in :sidsref:`SolutionInterpolation_t` 
 The actual interpolation orders for solution data are specified in :sidsref:`FlowSolution_t` using the :sidskey:`SpatialOrder` and :sidskey:`TemporalOrder` fields.
 
 See :ref:`Element Interpolation Structure Definition <ElementInterpolation_t>` and :ref:`Solution Interpolation Structure Definition <SolutionInterpolation_t>` for detailed structure definitions.
+
+Minimal Working Example: "Hello World" for High-Order CGNS
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This section provides a complete, minimal example with exact numerical values. This example can be used as a reference implementation test case.
+
+**Scenario**: A single curved quadrilateral element with P=2 solution
+
+Problem Setup
+~~~~~~~~~~~~~
+
+* **Mesh**: 1 quadrilateral element with **linear geometry** (4 vertices, QUAD_4)
+* **Solution**: High-order Lagrange interpolation with **P=2** (9 DOFs per element)
+* **Physical domain**: Unit square :math:`[0, 1] \times [0, 1]`
+
+Mesh Geometry (Linear QUAD_4)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The mesh consists of a single quadrilateral with 4 vertices:
+
+.. code-block:: text
+
+   Vertex coordinates (GridCoordinates):
+   Node 0: (X, Y) = (0.0, 0.0)
+   Node 1: (X, Y) = (1.0, 0.0)
+   Node 2: (X, Y) = (1.0, 1.0)
+   Node 3: (X, Y) = (0.0, 1.0)
+
+   Element connectivity (QUAD_4):
+   Element 0: [0, 1, 2, 3]
+
+Solution Field (P=2 Lagrange)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The solution uses **P=2 Lagrange interpolation** with 9 control points per element following **GLL distribution**.
+
+**Control Points in Parametric Space** :math:`(u, v) \in [-1, 1]^2`:
+
+Using GLL points for P=2: :math:`\{-1.0, 0.0, +1.0\}`
+
+.. code-block:: text
+
+   Index ordering (column-major, j outer loop):
+   Node 0: (u, v) = (-1.0, -1.0)  -> idx = 0
+   Node 1: (u, v) = ( 0.0, -1.0)  -> idx = 1
+   Node 2: (u, v) = (+1.0, -1.0)  -> idx = 2
+   Node 3: (u, v) = (-1.0,  0.0)  -> idx = 3
+   Node 4: (u, v) = ( 0.0,  0.0)  -> idx = 4 (center)
+   Node 5: (u, v) = (+1.0,  0.0)  -> idx = 5
+   Node 6: (u, v) = (-1.0, +1.0)  -> idx = 6
+   Node 7: (u, v) = ( 0.0, +1.0)  -> idx = 7
+   Node 8: (u, v) = (+1.0, +1.0)  -> idx = 8
+
+**Example Solution Values** (Density field :math:`\rho`):
+
+Let the density field be given by the polynomial:
+
+.. math::
+
+   \rho(x, y) = 1.0 + 0.5x + 0.3y + 0.2xy
+
+Evaluating at the 9 GLL control point physical locations (mapped from parametric :math:`(u,v)` to physical :math:`(x,y)`):
+
+.. code-block:: text
+
+   Parametric -> Physical mapping: x = (u+1)/2, y = (v+1)/2
+
+   Solution values (Density array):
+   idx  (u,v)        (x,y)        ρ(x,y)
+   ---  --------     --------     ------
+   0    (-1,-1)   -> (0.0, 0.0) = 1.000
+   1    ( 0,-1)   -> (0.5, 0.0) = 1.250
+   2    (+1,-1)   -> (1.0, 0.0) = 1.500
+   3    (-1, 0)   -> (0.0, 0.5) = 1.150
+   4    ( 0, 0)   -> (0.5, 0.5) = 1.425
+   5    (+1, 0)   -> (1.0, 0.5) = 1.700
+   6    (-1,+1)   -> (0.0, 1.0) = 1.300
+   7    ( 0,+1)   -> (0.5, 1.0) = 1.600
+   8    (+1,+1)   -> (1.0, 1.0) = 1.900
+
+**Storage in CGNS FlowSolution_t**:
+
+.. code-block:: text
+
+   FlowSolution_t "Solution":
+     GridLocation = CellCenter
+     PointList = [[1]]  (Element 0)
+
+     DataArray_t "Density":
+       Data = [1.000, 1.250, 1.500, 1.150, 1.425, 1.700, 1.300, 1.600, 1.900]
+       DataSize = 9 (= 1 element × 9 DOFs/element)
+
+Verification Test
+~~~~~~~~~~~~~~~~~
+
+To verify your implementation:
+
+1. **Read the mesh geometry** (4 vertices for QUAD_4)
+2. **Read the solution data** (9 values in the Density array)
+3. **Reconstruct the field** at an arbitrary point, e.g., :math:`(x, y) = (0.25, 0.75)`
+
+   * Map to parametric: :math:`(u, v) = (2x - 1, 2y - 1) = (-0.5, +0.5)`
+   * Compute the 9 Lagrange basis functions :math:`\lambda_i(u=-0.5, v=+0.5)`
+   * Interpolate: :math:`\rho(0.25, 0.75) = \sum_{i=0}^{8} \rho_i \lambda_i(-0.5, +0.5)`
+   * **Expected result**: :math:`\rho(0.25, 0.75) = 1.0 + 0.5(0.25) + 0.3(0.75) + 0.2(0.25)(0.75) = 1.3875`
+
+4. **Tolerance**: Your computed value must match :math:`1.3875 \pm 10^{-10}`
+
+.. important::
+   **Compliance Test**: If your implementation can correctly read this example and reproduce the interpolated value :math:`\rho(0.25, 0.75) = 1.3875`, you have successfully implemented P=2 Lagrange interpolation for quadrilateral elements.
 
 Validation and Compliance Testing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

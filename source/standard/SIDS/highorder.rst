@@ -179,7 +179,7 @@ Control Point Distribution
 
 **1D Control Point Distributions** (for edges and BAR elements):
 
-For a 1D edge in parametric coordinate :math:`u \in [-1, 1]` with :math:`p+1` control points:
+For a 1D edge in parametric coordinate :math:`u \in [-1, +1]` with :math:`p+1` control points (see :ref:`Reference Element Definitions <parametric_coords>` for complete domain specifications):
 
 * **Equidistant**: :math:`u_i = -1 + \frac{2i}{p}` for :math:`i = 0, 1, \ldots, p`
 
@@ -216,6 +216,62 @@ For a 1D edge in parametric coordinate :math:`u \in [-1, 1]` with :math:`p+1` co
    * Non-portable CGNS files that cannot be reliably read by other software
 
    **Requirement**: Implementations **MUST** use GLL distribution for tensor product elements and Warp & Blend for simplex elements unless explicitly documented otherwise.
+
+**PointDistribution Attribute (MANDATORY)**
+
+.. danger::
+   **Critical Interoperability Requirement**: When using :sidskey:`ParametricLagrange` interpolation, the point distribution **MUST** be explicitly specified. Failure to specify this creates an ambiguous file that cannot be reliably read.
+
+   **Problem**: If a writer uses GLL points but the reader assumes Equidistant, the interpolation error is :math:`O(1)` (catastrophic), not a small numerical error.
+
+**Required Attribute**: :sidskey:`LagrangeControlPointDistribution`
+
+This attribute must be specified as a child of :sidsref:`ElementInterpolation_t` or :sidsref:`SolutionInterpolation_t` when :sidskey:`InterpolationType_t` is :sidskey:`ParametricLagrange`.
+
+**Allowed Values**:
+
+* **GaussLobattoLegendre** (recommended default):
+
+  * 1D points are roots of :math:`(1-u^2) P_p'(u) = 0`
+  * Includes endpoints :math:`u_0 = -1`, :math:`u_p = +1`
+  * Optimal conditioning and quadrature accuracy
+
+* **Equidistant**:
+
+  * 1D points: :math:`u_i = -1 + 2i/p`
+  * Simple uniform spacing
+  * **Discouraged for p > 7** due to poor conditioning
+
+* **GaussLegendre**:
+
+  * 1D points are roots of Legendre polynomial :math:`P_p(u) = 0`
+  * Does **NOT** include endpoints (interior points only)
+  * Rarely used for element interpolation (more common for quadrature)
+
+* **WarpAndBlend** (for simplices only):
+
+  * Specialized distribution for triangles and tetrahedra
+  * Ensures well-conditioned Vandermonde matrices
+  * Reference: Warburton (2006)
+
+**Default Behavior**: If :sidskey:`LagrangeControlPointDistribution` is absent, implementations **SHOULD** assume :sidskey:`GaussLobattoLegendre`, but readers **SHOULD** issue a warning about the ambiguity.
+
+**Storage Format**:
+
+.. code-block:: text
+
+   ElementInterpolation_t "QUAD_P3":
+     ElementType = QUAD_4
+     InterpolationType = ParametricLagrange
+     DataArray_t "LagrangeControlPointDistribution":
+       Data = "GaussLobattoLegendre"  (DataType = Character)
+
+   SolutionInterpolation_t "HighOrderSolution":
+     ElementType = QUAD_4
+     SpatialOrder = 3
+     InterpolationType = ParametricLagrange
+     DataArray_t "LagrangeControlPointDistribution":
+       Data = "GaussLobattoLegendre"  (DataType = Character)
 
 Function Spaces
 ~~~~~~~~~~~~~~~
@@ -699,6 +755,22 @@ For tetrahedra, the ordering follows :math:`i+j+k \leq p` with :math:`i` varying
 .. important::
    **Verification Requirement**: Any CGNS implementation claiming high-order support **MUST** reproduce these exact index orderings. Use the tables above as reference test cases.
 
+.. danger::
+   **Face Orientation for Shared Interfaces**: In high-order unstructured meshes, a shared face between two elements (e.g., Element A and Element B) may have different local coordinate orientations:
+
+   * Element A might traverse the face from local node 0 → p (forward direction)
+   * Element B might traverse the same face from local node p → 0 (reversed direction) or with a rotational permutation
+
+   **Critical Requirement for Solution Data**:
+
+   1. Solution coefficients are **ALWAYS** stored in the element's **local coordinate system**
+   2. When imposing continuity constraints across element interfaces (e.g., for continuous Galerkin methods), readers **MUST** apply orientation transformations to permute coefficients
+   3. For discontinuous methods (DG), no transformation is needed as each element's solution is independent
+
+   **Implementation Guidance**: Use the element connectivity information to determine face orientation. For a shared face with :math:`(p+1)^{d-1}` nodes (where :math:`d` is the element dimension), compute the permutation matrix that maps Element A's face-local indices to Element B's face-local indices.
+
+   **Example**: For a quadrilateral face with P=2 (9 face nodes), if Element A's face has local ordering [0,1,2,3,4,5,6,7,8] and Element B sees the same face reversed, the permutation is [8,7,6,5,4,3,2,1,0].
+
 Node Ordering Visualization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1051,6 +1123,28 @@ Evaluating at the 9 GLL control point physical locations (mapped from parametric
      DataArray_t "Density":
        Data = [1.000, 1.250, 1.500, 1.150, 1.425, 1.700, 1.300, 1.600, 1.900]
        DataSize = 9 (= 1 element × 9 DOFs/element)
+
+.. important::
+   **Array Dimensionality for High-Order Solutions**:
+
+   For high-order solutions, the standard low-order interpretation of ``GridLocation`` is **overridden**:
+
+   * **GridLocation = CellCenter** for high-order data means "per-element storage" (NOT per finite-volume cell centroid)
+   * **Array dimensions**: The ``DataArray_t`` size is ``N_elements × N_DOFs_per_element``
+   * **Data layout**: Coefficients for all DOFs of Element 0 are stored contiguously, followed by all DOFs of Element 1, etc.
+
+   **Explicit formula**:
+
+   .. math::
+
+      \text{Array index} = e \times N_{\text{DOFs}} + \text{local\_dof\_index}
+
+   where :math:`e` is the element index (0-based) and :math:`N_{\text{DOFs}}` depends on the interpolation order and element type.
+
+   **Discontinuous vs Continuous Methods**:
+
+   * **Discontinuous Galerkin (DG)**: Each element has independent DOFs → always use ``GridLocation = CellCenter``
+   * **Continuous Galerkin (CG)**: DOFs may be shared at element boundaries → implementation-defined; some codes still use ``CellCenter`` with duplication, others use ``Vertex`` with global DOF numbering
 
 Verification Test
 ~~~~~~~~~~~~~~~~~

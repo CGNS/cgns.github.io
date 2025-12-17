@@ -48,11 +48,11 @@ Choosing an Interpolation Type
 
 The following flowchart helps determine which interpolation type is appropriate for your application:
 
-.. figure:: ../../images/sids/figs/visual_05_flowchart.svg
+.. figure:: ../../../images/sids/figs/visual_05_flowchart.svg
    :width: 700px
    :align: center
 
-   Decision flowchart for selecting between ParametricLagrange and CartesianMonomials interpolation types. This diagram guides users through the selection process based on whether they need mesh geometry interpolation or solution field interpolation, and whether they prefer nodal (Lagrange) or modal (monomial) basis functions.
+   The decision flowchart illustrates the selection process between ParametricLagrange and CartesianMonomials interpolation types. It delineates criteria based on the requirement for mesh geometry or solution field interpolation, as well as the preference for nodal (Lagrange) or modal (monomial) basis functions.
 
 .. _InterpolationType_t:
 
@@ -135,7 +135,7 @@ The spatial parametric function spaces :math:`\mathcal{V}_p(u,v,w)` for each ele
 
 The function spaces are defined by specific incomplete tensor products or monomial exclusion rules as detailed below.
 
-.. figure:: ../../images/sids/figs/visual_02_tensor_modes.svg
+.. figure:: ../../../images/sids/figs/visual_02_tensor_modes.svg
    :width: 700px
    :align: center
 
@@ -192,7 +192,7 @@ The function spaces are defined by specific incomplete tensor products or monomi
   | Pyramid  | PYRA_5    | See [BergotCohenDurufle2010]_        | n/a                                      | See [BergotCohenDurufle2010]_            |
   +----------+-----------+--------------------------------------+------------------------------------------+------------------------------------------+
 
-.. figure:: ../../images/sids/figs/visual_03_pyramid_map.svg
+.. figure:: ../../../images/sids/figs/visual_03_pyramid_map.svg
    :width: 600px
    :align: center
 
@@ -374,20 +374,20 @@ Node Ordering Visualization
 
 The following figures provide visual atlases of the node ordering for common element types at order p=3:
 
-.. figure:: ../../images/sids/figs/visual_01a_atlas_triangle.svg
+.. figure:: ../../../images/sids/figs/visual_01a_atlas_triangle.svg
    :width: 600px
    :align: center
 
    Triangle P=3 node ordering atlas. Each node is labeled with its linear index and corresponding (i,j) tuple in the Pascal triangle ordering. This visual reference can be used to verify control point generation for triangular elements.
 
-.. figure:: ../../images/sids/figs/visual_01b_atlas_quad.svg
+.. figure:: ../../../images/sids/figs/visual_01b_atlas_quad.svg
    :width: 700px
    :align: center
 
    Quadrilateral P=3 node ordering: Complete (left) vs Edge Serendipity (right). The complete QUAD shows all 16 nodes including interior nodes, while the edge serendipity variant shows only the 12 perimeter nodes (vertices and edges), with interior nodes excluded. Nodes are labeled with linear indices and (i,j) tuples.
 
-.. figure:: ../../images/sids/figs/visual_01c_atlas_tetra.svg
-   :width: 600px
+.. figure:: ../../../images/sids/figs/visual_01c_atlas_tetra.svg
+   :width: 750px
    :align: center
 
    Tetrahedron P=3 node ordering in exploded view. The diagram shows all 20 control points for a complete tetrahedral element, with nodes labeled by their linear index. The exploded view separates vertices, edge nodes, and face nodes for clarity.
@@ -511,7 +511,7 @@ where :math:`\mathbf{R}_i^{\text{vertex}}` are the global coordinates of the pri
 .. warning::
    The barycenter must **NOT** be computed using all nodes of a high-order element (e.g., including edge, face, or interior nodes), as this would shift the origin and invalidate the basis function definitions.
 
-.. figure:: ../../images/sids/figs/visual_06_barycenter.svg
+.. figure:: ../../../images/sids/figs/visual_06_barycenter.svg
    :width: 600px
    :align: center
 
@@ -790,7 +790,7 @@ This section describes the extension of the spatial high-order interpolation fra
 .. important::
    **For users working with static meshes only**: The spatial-only interpolation methods described in the previous sections are complete and self-contained. This space-time section can be safely skipped if you are not using time-dependent mesh motion or space-time formulations.
 
-.. figure:: ../../images/sids/figs/visual_04_spacetime.svg
+.. figure:: ../../../images/sids/figs/visual_04_spacetime.svg
    :width: 700px
    :align: center
 
@@ -1037,4 +1037,4 @@ This maps :math:`\theta \in [-1, 1]`, matching the parametric time convention an
 References
 ^^^^^^^^^^
 
-.. [BergotCohenDurufle2010] M. Bergot, G. Cohen, and M. Duruflé, "Higher-order Finite Elements for Hybrid Meshes Using New Nodal Pyramidal Elements," Journal of Scientific Computing 42, pp. 345-381 (2010), doi: 10.1007/s10915-009-9334-9
+.. [BergotCohenDurufle2010] \ M. Bergot, G. Cohen, and M. Duruflé, "Higher-order Finite Elements for Hybrid Meshes Using New Nodal Pyramidal Elements," Journal of Scientific Computing 42, pp. 345-381 (2010), doi: 10.1007/s10915-009-9334-9

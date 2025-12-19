@@ -382,6 +382,9 @@ where the standard function spaces of order :math:`p` are:
   * :math:`\mathcal{P}_p^3(u,v,w) = \text{span}\{u^i v^j w^k, 0 \leq i+j+k \leq p\}`
 
 .. note::
+   **Programmatic Node Count Calculation**: Instead of hard-coding node counts for every possible combination (HEXA_125, HEXA_216, etc.), implementations should use the MLL function ``cg_npe_ho(basicType, order, &npe)`` which computes :math:`N` programmatically using the formulas in the table above. This avoids the need for extensive switch statements and supports arbitrary polynomial orders.
+
+.. note::
    For space-time interpolation (e.g., ALE meshes), see :ref:`Space-Time Extensions <spacetime_extensions>` for the extension to temporal interpolation with order :math:`q`.
 
 Reference Control Point Locations
@@ -793,6 +796,24 @@ The following figures provide visual atlases of the node ordering for common ele
    :align: center
 
    Tetrahedron P=3 node ordering in exploded view. The diagram shows all 20 control points for a complete tetrahedral element, with nodes labeled by their linear index. The exploded view separates vertices, edge nodes, and face nodes for clarity.
+
+.. figure:: ../../../images/sids/figs/PYRA_30_Layout.svg
+   :width: 700px
+   :align: center
+
+   Pyramid P=3 (PYRA_30) node ordering showing layer-by-layer structure. The diagram illustrates all 30 control points organized from the quadrilateral base to the apex, with nodes labeled by their linear index. This addresses the implementation challenge of quartic pyramids where the singularity at the apex requires careful node placement and the tensor product degenerates to a point.
+
+.. figure:: ../../../images/sids/figs/PENTA_40_Layout.svg
+   :width: 700px
+   :align: center
+
+   Prism P=3 (PENTA_40) node ordering showing triangular layers. The diagram shows all 40 control points organized by w-planes (triangular cross-sections stacked along the prism axis), with nodes labeled to clarify the tensor product structure of Pascal triangle ⊗ linear space. Each triangular layer contains (p+1)(p+2)/2 nodes.
+
+.. figure:: ../../../images/sids/figs/PENTA_66_Layout.svg
+   :width: 700px
+   :align: center
+
+   Prism PENTA_66 node ordering showing high-order triangular layers. This higher-order prism demonstrates the layer-by-layer structure with all control points labeled by their linear index, providing essential guidance for implementing complex prismatic elements where manual index calculation becomes error-prone.
 
 Parametric Modal Interpolation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

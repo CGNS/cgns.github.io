@@ -336,7 +336,9 @@ Quartic Elements
    
 .. note::
 
-   Nodes are uniformly spaced on all edges for all higher order elements.
+   **For standard element definitions** (HEXA_27, QUAD_9, etc. as defined in CGNS versions prior to CPEX 45), nodes are uniformly spaced on edges.
+
+   **For CPEX 45 high-order elements** with flexible polynomial orders, the node distribution is **NOT** restricted to uniform spacing. The control point distribution (e.g., Gauss-Lobatto-Legendre, Equidistant, Warp & Blend) must be explicitly specified. See :ref:`High-Order Interpolation <HighOrderInterpolation>` for complete specifications including GLL and other non-uniform distributions.
 
 2D (Surface) Elements
 ~~~~~~~~~~~~~~~~~~~~~

@@ -813,7 +813,7 @@ The following figures provide visual atlases of the node ordering for common ele
    :width: 700px
    :align: center
 
-   Prism PENTA_66 node ordering showing high-order triangular layers. This higher-order prism demonstrates the layer-by-layer structure with all control points labeled by their linear index, providing essential guidance for implementing complex prismatic elements where manual index calculation becomes error-prone.
+   The node ordering of the Prism PENTA_66 element, which illustrates high-order triangular layers, is shown. The figure highlights the layer-by-layer construction of the element, with control points labeled according to their linear index.
 
 Parametric Modal Interpolation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -189,7 +189,7 @@ For structured zones, :sidskey:`IFaceCenter` is the center of a face in 3-D whos
 :sidskey:`FaceCenter` is the center of a generic face that can point in any coordinate direction.
 These are also appropriate for entities associated with a face, but not located at a specific place on the face.
 :sidskey:`EdgeCenter` is the center of an edge.
-:sidskey:`InterpolationPoints` denotes data stored at high-order Lagrange control points or modal expansion coefficients, as defined by the associated :sidsref:`ElementInterpolation_t` or :sidsref:`SolutionInterpolation_t` node. The data values correspond 1:1 with the :sidskey:`InterpolationValues` array ordering specified in the interpolation definition (see :ref:`High-Order Interpolation<HighOrderInterpolation>`).
+:sidskey:`InterpolationPoints` denotes data stored at high-order Lagrange control points or modal expansion coefficients, as defined by the associated :sidsref:`ElementInterpolation_t` or :sidsref:`SolutionInterpolation_t` node. The data values correspond 1:1 with the :sidskey:`InterpolationValues` array ordering specified in the interpolation definition. **Data size contract**: For high-order solutions, the array size is N_elements × N_DOFs_per_element, where N_DOFs depends on the polynomial order and element type (see :ref:`High-Order Interpolation<HighOrderInterpolation>`).
 See :ref:`Structured Grid Notation and Indexing Conventions<structgrid>` for descriptions of cells, faces and edges.
 
 All of the entities of type :sidskey:`GridLocation_t` defined in this document use a default value of :sidskey:`Vertex`.

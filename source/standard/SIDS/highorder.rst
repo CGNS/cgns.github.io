@@ -1168,8 +1168,18 @@ Evaluating at the 9 GLL control point physical locations (mapped from parametric
    * **Discontinuous Galerkin (DG)**: Each element has independent DOFs → always use ``GridLocation = InterpolationPoints``
    * **Continuous Galerkin (CG)**: DOFs may be shared at element boundaries → implementation-defined; some codes still use ``InterpolationPoints`` with duplication, others use ``Vertex`` with global DOF numbering
 
-   .. note::
-      **Legacy Compatibility**: Prior to the introduction of ``InterpolationPoints``, high-order data was stored using ``GridLocation = CellCenter`` with the understanding that it meant "per-element storage". New implementations should use ``InterpolationPoints`` for clarity and semantic correctness.
+   .. danger::
+      **DO NOT Use CellCenter for High-Order Data**:
+
+      Using ``GridLocation = CellCenter`` for high-order solutions **violates the SIDS data size contract** and will cause failures in standard CGNS readers:
+
+      * **CellCenter contract**: Data array size = CellSize (number of elements)
+      * **High-order data size**: N_elements × N_DOFs_per_element
+      * **Result**: Array size mismatch causes segfaults, memory corruption, or silent data corruption in tools expecting CellCenter semantics
+
+      **Historical Context**: Some early high-order implementations misused ``CellCenter`` to mean "per-element storage". This was a logical defect. The correct approach is ``GridLocation = InterpolationPoints``, which explicitly signals that data size and location are defined by the associated interpolation specification.
+
+      **Mandatory for CPEX 45 Compliance**: All high-order solutions **MUST** use ``GridLocation = InterpolationPoints``.
 
 Verification Test
 ~~~~~~~~~~~~~~~~~

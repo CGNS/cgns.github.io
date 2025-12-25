@@ -322,19 +322,19 @@ The function spaces are defined by specific incomplete tensor products or monomi
   +----------+---------+--------------------------------------+------------------------------------------+------------------------------------------+
   | Hexa     | HEXA_8  | :math:`\mathcal{Q}_p^3(u,v,w)`       | :math:`\mathcal{L}_p(u) \otimes          | :math:`\mathcal{Q}_p^3(u,v,w) \setminus  |
   |          |         |                                      | \mathcal{L}_1(v) \otimes                 | \text{span}\{u^i v^j w^k :               |
-  |          |         | :math:`N = (p+1)^3`                  | \mathcal{L}_1(w) \oplus                  | 2 \leq i,j,k \leq p-1\}`                 |
-  |          |         |                                      | \mathcal{L}_1(u) \otimes                 |                                          |
+  |          |         | :math:`N = (p+1)^3`                  | \mathcal{L}_1(w) \oplus`                 | 2 \leq i,j,k \leq p-1\}`                 |
+  |          |         |                                      | :math:`\mathcal{L}_1(u) \otimes          |                                          |
   |          |         |                                      | \mathcal{L}_p(v) \otimes                 | :math:`N = (p+1)^3`                      |
-  |          |         |                                      | \mathcal{L}_1(w) \oplus                  | :math:`- (p-1)^3`                        |
-  |          |         |                                      | \mathcal{L}_1(u) \otimes                 |                                          |
-  |          |         |                                      | \mathcal{L}_1(v)`                        |                                          |
-  |          |         |                                      | :math:`\otimes \mathcal{L}_p(w)`         |                                          |
+  |          |         |                                      | \mathcal{L}_1(w) \oplus`                 | :math:`- (p-1)^3`                        |
+  |          |         |                                      | :math:`\mathcal{L}_1(u) \otimes          |                                          |
+  |          |         |                                      | \mathcal{L}_1(v)                         |                                          |
+  |          |         |                                      | \otimes \mathcal{L}_p(w)`                |                                          |
   |          |         |                                      |                                          |                                          |
   |          |         |                                      | :math:`N = 12(p-1) + 8`                  |                                          |
   +----------+---------+--------------------------------------+------------------------------------------+------------------------------------------+
   | Triangle | TRI_3   | :math:`\mathcal{P}_p^2(u,v)`         | n/a                                      | n/a                                      |
   |          |         |                                      |                                          |                                          |
-  |          |         | :math:`N = (p+1)(p+2)/2`             |                                          |                                          |
+  |          |         | :math:`N = \frac{(p+1)(p+2)}{2}`     |                                          |                                          |
   +----------+---------+--------------------------------------+------------------------------------------+------------------------------------------+
   | Tetra    | TETRA_4 | :math:`\mathcal{P}_p^3(u,v,w)`       | n/a                                      | :math:`\mathcal{P}_p^3(u,v,w) \setminus` |
   |          |         |                                      |                                          | :math:`\text{span}\{u^i v^j w^k :        |
@@ -1138,7 +1138,7 @@ Evaluating at the 9 GLL control point physical locations (mapped from parametric
 .. code-block:: text
 
    FlowSolution_t "Solution":
-     GridLocation = CellCenter
+     GridLocation = InterpolationPoints
      PointList = [[1]]  (Element 0)
 
      DataArray_t "Density":
@@ -1148,24 +1148,28 @@ Evaluating at the 9 GLL control point physical locations (mapped from parametric
 .. important::
    **Array Dimensionality for High-Order Solutions**:
 
-   For high-order solutions, the standard low-order interpretation of ``GridLocation`` is **overridden**:
+   For high-order solutions with Lagrange or modal interpolation:
 
-   * **GridLocation = CellCenter** for high-order data means "per-element storage" (NOT per finite-volume cell centroid)
+   * **GridLocation = InterpolationPoints** indicates data stored at control points or modal coefficients as defined by the associated :sidskey:`SolutionInterpolation_t` node
    * **Array dimensions**: The ``DataArray_t`` size is ``N_elements × N_DOFs_per_element``
    * **Data layout**: Coefficients for all DOFs of Element 0 are stored contiguously, followed by all DOFs of Element 1, etc.
+   * **1:1 Mapping**: Data values correspond exactly to the ordering specified in the :sidskey:`InterpolationValues` array
 
    **Explicit formula**:
 
    .. math::
 
-      \text{Array index} = e \times N_{\text{DOFs}} + \text{local\_dof\_index}
+      \text{Array index} = e \times N_{\text{DOFs}} + \text{local_dof_index}
 
    where :math:`e` is the element index (0-based) and :math:`N_{\text{DOFs}}` depends on the interpolation order and element type.
 
    **Discontinuous vs Continuous Methods**:
 
-   * **Discontinuous Galerkin (DG)**: Each element has independent DOFs → always use ``GridLocation = CellCenter``
-   * **Continuous Galerkin (CG)**: DOFs may be shared at element boundaries → implementation-defined; some codes still use ``CellCenter`` with duplication, others use ``Vertex`` with global DOF numbering
+   * **Discontinuous Galerkin (DG)**: Each element has independent DOFs → always use ``GridLocation = InterpolationPoints``
+   * **Continuous Galerkin (CG)**: DOFs may be shared at element boundaries → implementation-defined; some codes still use ``InterpolationPoints`` with duplication, others use ``Vertex`` with global DOF numbering
+
+   .. note::
+      **Legacy Compatibility**: Prior to the introduction of ``InterpolationPoints``, high-order data was stored using ``GridLocation = CellCenter`` with the understanding that it meant "per-element storage". New implementations should use ``InterpolationPoints`` for clarity and semantic correctness.
 
 Verification Test
 ~~~~~~~~~~~~~~~~~

@@ -171,7 +171,7 @@ Definition ``GridLocation_t``
 
 .. code-block:: sids
 
-  GridLocation_t := Enumeration( 
+  GridLocation_t := Enumeration(
     GridLocationNull,
     GridLocationUserDefined,
     Vertex,
@@ -180,7 +180,8 @@ Definition ``GridLocation_t``
     IFaceCenter,
     JFaceCenter,
     KFaceCenter,
-    EdgeCenter ) ;
+    EdgeCenter,
+    InterpolationPoints ) ;
 
 :sidskey:`Vertex` is coincident with the grid vertices. :sidskey:`CellCenter` is the center of a cell; this is also appropriate for entities associated with cells but not necessarily with a given location in a cell.
 For structured zones, :sidskey:`IFaceCenter` is the center of a face in 3-D whose computational normal points in the i direction.
@@ -188,6 +189,7 @@ For structured zones, :sidskey:`IFaceCenter` is the center of a face in 3-D whos
 :sidskey:`FaceCenter` is the center of a generic face that can point in any coordinate direction.
 These are also appropriate for entities associated with a face, but not located at a specific place on the face.
 :sidskey:`EdgeCenter` is the center of an edge.
+:sidskey:`InterpolationPoints` denotes data stored at high-order Lagrange control points or modal expansion coefficients, as defined by the associated :sidsref:`ElementInterpolation_t` or :sidsref:`SolutionInterpolation_t` node. The data values correspond 1:1 with the :sidskey:`InterpolationValues` array ordering specified in the interpolation definition (see :ref:`High-Order Interpolation<HighOrderInterpolation>`).
 See :ref:`Structured Grid Notation and Indexing Conventions<structgrid>` for descriptions of cells, faces and edges.
 
 All of the entities of type :sidskey:`GridLocation_t` defined in this document use a default value of :sidskey:`Vertex`.

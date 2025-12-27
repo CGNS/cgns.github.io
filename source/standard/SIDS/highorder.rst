@@ -301,7 +301,13 @@ The function spaces are defined by specific incomplete tensor products or monomi
    :width: 700px
    :align: center
 
-   Visualization of Complete, Face Serendipity, and Edge Serendipity elements. The diagram shows how serendipity elements progressively "hollow out" the interior: Complete elements have all nodes (vertices, edges, faces, and interior), Face Serendipity excludes volume-interior nodes, and Edge Serendipity excludes both face-interior and volume-interior nodes, retaining only vertices and edges.
+   Visualization of Complete, Face Serendipity, and Edge Serendipity elements for a 3D hexahedron at P=2. The diagram shows how serendipity elements progressively "hollow out" the interior:
+
+   * **Complete** (HEXA_27): All 27 nodes present (8 vertices + 12 edges + 6 faces + 1 volume interior)
+   * **Face Serendipity** (HEXA_26): Excludes volume-interior nodes → 8 vertices + 12 edges + 6 faces = 26 nodes
+   * **Edge Serendipity** (HEXA_20): Excludes both face-interior and volume-interior nodes → 8 vertices + 12 edges = 20 nodes
+
+   **Visual Markers**: In the SVG diagram, different node types are distinguished by color/shape to clarify which nodes are removed at each serendipity level. Vertices (corners) are retained in all three variants, edge midpoints are retained in Face and Edge serendipity, face centers are retained only in Face serendipity, and the volume center is retained only in the Complete element.
 
 .. table:: **Lagrange Function Spaces by Element Type**
 
@@ -538,6 +544,80 @@ Total: :math:`N = (2+1)^3 = 27`
    Node 19: u=-1.0, v= 1.0, w= 0.0  (vertical edge, front-left)
 
 Total: :math:`N = 12(2-1) + 8 = 20`
+
+**Prism (PENTA) - Order p=2**
+
+15 control points in parametric space :math:`(u, v, w)` using tensor product of triangular base and linear height:
+
+.. code-block:: text
+
+   // Bottom triangle (w=-1):
+   Node 0: u=-1.0, v=-1.0, w=-1.0  (vertex, bottom-left)
+   Node 1: u= 1.0, v=-1.0, w=-1.0  (vertex, bottom-right)
+   Node 2: u=-1.0, v= 1.0, w=-1.0  (vertex, bottom-top)
+
+   // Top triangle (w=1):
+   Node 3: u=-1.0, v=-1.0, w= 1.0  (vertex, top-left)
+   Node 4: u= 1.0, v=-1.0, w= 1.0  (vertex, top-right)
+   Node 5: u=-1.0, v= 1.0, w= 1.0  (vertex, top-top)
+
+   // Edge midpoints on bottom triangle (w=-1):
+   Node 6: u= 0.0, v=-1.0, w=-1.0  (edge 0-1)
+   Node 7: u= 0.0, v= 0.0, w=-1.0  (edge 1-2)
+   Node 8: u=-1.0, v= 0.0, w=-1.0  (edge 2-0)
+
+   // Edge midpoints on top triangle (w=1):
+   Node 9:  u= 0.0, v=-1.0, w= 1.0  (edge 3-4)
+   Node 10: u= 0.0, v= 0.0, w= 1.0  (edge 4-5)
+   Node 11: u=-1.0, v= 0.0, w= 1.0  (edge 5-3)
+
+   // Edge midpoints on vertical edges:
+   Node 12: u=-1.0, v=-1.0, w= 0.0  (edge 0-3)
+   Node 13: u= 1.0, v=-1.0, w= 0.0  (edge 1-4)
+   Node 14: u=-1.0, v= 1.0, w= 0.0  (edge 2-5)
+
+Total: :math:`N = (2+1)(2+2)/2 \times 2 + 3 = 15`
+
+**Pyramid (PYRA) - Order p=2**
+
+14 control points in parametric space :math:`(u, v, w)`:
+
+.. code-block:: text
+
+   // Quadrilateral base vertices (w=-1):
+   Node 0: u=-1.0, v=-1.0, w=-1.0  (vertex, base bottom-left)
+   Node 1: u= 1.0, v=-1.0, w=-1.0  (vertex, base bottom-right)
+   Node 2: u= 1.0, v= 1.0, w=-1.0  (vertex, base top-right)
+   Node 3: u=-1.0, v= 1.0, w=-1.0  (vertex, base top-left)
+
+   // Apex (w=1):
+   Node 4: u= 0.0, v= 0.0, w= 1.0  (vertex, apex)
+
+   // Edge midpoints on base (w=-1):
+   Node 5: u= 0.0, v=-1.0, w=-1.0  (edge 0-1, base bottom)
+   Node 6: u= 1.0, v= 0.0, w=-1.0  (edge 1-2, base right)
+   Node 7: u= 0.0, v= 1.0, w=-1.0  (edge 2-3, base top)
+   Node 8: u=-1.0, v= 0.0, w=-1.0  (edge 3-0, base left)
+
+   // Edge midpoints from base to apex:
+   Node 9:  u=-0.5, v=-0.5, w= 0.0  (edge 0-4)
+   Node 10: u= 0.5, v=-0.5, w= 0.0  (edge 1-4)
+   Node 11: u= 0.5, v= 0.5, w= 0.0  (edge 2-4)
+   Node 12: u=-0.5, v= 0.5, w= 0.0  (edge 3-4)
+
+   // Face center on base (w=-1):
+   Node 13: u= 0.0, v= 0.0, w=-1.0  (face center, quadrilateral base)
+
+Total: :math:`N = (2+1)(2+2)/2 \times 2 + 4 = 14`
+
+.. warning::
+   **Pyramid Apex Singularity**: The pyramid element has a geometric singularity at the apex (w=1) where the quadrilateral face collapses to a point. This requires special care in implementation:
+
+   - Basis functions must degenerate properly at the apex
+   - Numerical quadrature near the apex requires specialized rules
+   - The parametric coordinates for edge midpoints from base to apex (Nodes 9-12) use the midpoint at w=0, where u and v are linearly interpolated between the base vertex and the apex
+
+   See [BergotCohenDurufle2010]_ for rigorous treatment of pyramid polynomial spaces that avoid the singularity issues.
 
 .. note::
    **Implementation Validation**: Use these reference values to verify your control point generation and ordering logic. If your implementation produces different coordinates for the same element type and order, it is **not** CGNS-compliant.
@@ -916,12 +996,20 @@ For Cartesian modal interpolation, a local Cartesian coordinate system is define
 **Principal Vertices Definition**: The principal vertices of a high-order element are the vertex nodes of the associated linear sub-element. Specifically:
 
 * For a high-order element of type :sidskey:`ElementType_t`, the principal vertices are the first :math:`N_v` nodes in the element's connectivity list, where :math:`N_v` is the number of vertices of the corresponding linear element.
+
+.. warning::
+   **CGNS Node Ordering Assumption**: This definition assumes that the element connectivity follows the standard :ref:`CGNS unstructured grid element numbering conventions <unstructgrid>`, where corner vertices are always listed first in the connectivity array, followed by edge nodes, face nodes, and interior nodes.
+
+   **Critical**: Implementations must **NOT** reorder nodes arbitrarily. The node ordering specified in :ref:`Unstructured Grid Element Numbering Conventions <unstructgrid>` is mandatory for CGNS compliance.
+
 * Examples:
 
-  * TETRA_10: principal vertices are nodes 1-4 (corresponding to TETRA_4)
-  * HEXA_20 or HEXA_27: principal vertices are nodes 1-8 (corresponding to HEXA_8)
-  * TRI_6: principal vertices are nodes 1-3 (corresponding to TRI_3)
-  * QUAD_8 or QUAD_9: principal vertices are nodes 1-4 (corresponding to QUAD_4)
+  * TETRA_10: principal vertices are nodes 1-4 (corresponding to TETRA_4) - see :ref:`Tetrahedral Elements <unst_tetra>`
+  * HEXA_20 or HEXA_27: principal vertices are nodes 1-8 (corresponding to HEXA_8) - see :ref:`Hexahedral Elements <unst_hexa>`
+  * TRI_6: principal vertices are nodes 1-3 (corresponding to TRI_3) - see :ref:`Triangular Elements <unst_tri>`
+  * QUAD_8 or QUAD_9: principal vertices are nodes 1-4 (corresponding to QUAD_4) - see :ref:`Quadrilateral Elements <unst_quad>`
+  * PENTA_15 or PENTA_18: principal vertices are nodes 1-6 (corresponding to PENTA_6) - see :ref:`Pentahedral Elements <unst_penta>`
+  * PYRA_14: principal vertices are nodes 1-5 (corresponding to PYRA_5) - see :ref:`Pyramid Elements <unst_pyra>`
 
 The element barycenter is then computed as:
 
@@ -994,6 +1082,16 @@ The interpolation space for Cartesian modal interpolations uses ordered sets of 
           f[idx++] = xi^i * eta^j * zeta^k;
 
   **Total basis functions**: :math:`N = (p+1)^3`
+
+  .. note::
+     **Column-Major Ordering Convention**: This loop ordering results in **Column-Major (Fortran-style)** memory layout where the **'i' index varies fastest** in the linear array. This is consistent with CGNS/Fortran-order conventions used throughout the CGNS standard.
+
+     **Memory layout**: For a P=2 HEXA element, the linear array ordering is:
+     ``[f(0,0,0), f(1,0,0), f(2,0,0), f(0,1,0), f(1,1,0), ..., f(2,2,2)]``
+
+     **Equivalently**: ``idx = k*(p+1)² + j*(p+1) + i``
+
+     This ordering is **mandatory** for CGNS compliance and differs from C's default row-major ordering.
 
 **Simplex Elements** (Triangles, Tetrahedra):
 
@@ -1133,7 +1231,7 @@ Evaluating at the 9 GLL control point physical locations (mapped from parametric
    7    ( 0,+1)   -> (0.5, 1.0) = 1.600
    8    (+1,+1)   -> (1.0, 1.0) = 1.900
 
-**Storage in CGNS FlowSolution_t**:
+**Storage in CGNS** :sidsref:`FlowSolution_t`:
 
 .. code-block:: text
 
@@ -1199,6 +1297,99 @@ To verify your implementation:
 
 .. important::
    **Compliance Test**: If your implementation can correctly read this example and reproduce the interpolated value :math:`\rho(0.25, 0.75) = 1.3875`, you have successfully implemented P=2 Lagrange interpolation for quadrilateral elements.
+
+Modal Interpolation Example
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Unlike Lagrange interpolation where data values represent physical field values at control points, **Modal interpolation** stores abstract expansion coefficients in a monomial or orthogonal polynomial basis. This example demonstrates P=1 Cartesian modal interpolation.
+
+**Scenario**: Linear solution field on a single quadrilateral element using Cartesian modal basis
+
+**Problem Setup**
+
+* **Mesh**: 1 quadrilateral element (QUAD_4) with vertices at :math:`(0,0), (1,0), (1,1), (0,1)`
+* **Solution**: P=1 Cartesian modal interpolation (4 modal coefficients: :math:`\{1, \xi, \eta, \xi\eta\}`)
+* **Field**: Linear density variation :math:`\rho(x, y) = 2.0 + 0.5x + 0.3y`
+
+**Element-Local Coordinate System** (Cartesian Modal)
+
+1. **Compute element barycenter** using principal vertices (nodes 0-3):
+
+   .. math::
+
+      \mathbf{R}^e = \frac{1}{4}[(0,0) + (1,0) + (1,1) + (0,1)] = (0.5, 0.5)
+
+2. **Define local coordinates** :math:`(x', y') = (x - 0.5, y - 0.5)`
+
+3. **Compute characteristic length** :math:`h^e`:
+
+   .. math::
+
+      h^e = \max_{i,j} \|\mathbf{R}_i - \mathbf{R}_j\| = \|(1,1) - (0,0)\| = \sqrt{2}
+
+4. **Normalized coordinates** :math:`(\xi, \eta) = (x'/h^e, y'/h^e)`
+
+**Monomial Basis Functions** (P=1, QUAD)
+
+Ordered tensor product:
+
+.. code-block:: text
+
+   idx=0: f₀(ξ,η) = 1
+   idx=1: f₁(ξ,η) = ξ
+   idx=2: f₂(ξ,η) = η
+   idx=3: f₃(ξ,η) = ξ·η
+
+**Modal Coefficients**
+
+To represent :math:`\rho(x, y) = 2.0 + 0.5x + 0.3y` in the local normalized system:
+
+1. **Transform to local coordinates**: :math:`\rho(x', y') = 2.0 + 0.5(0.5 + x') + 0.3(0.5 + y')`
+2. **Simplify**: :math:`\rho(x', y') = 2.4 + 0.5x' + 0.3y'`
+3. **Normalize**: :math:`\rho(\xi, \eta) = 2.4 + 0.5h^e\xi + 0.3h^e\eta = 2.4 + 0.707\xi + 0.424\eta`
+
+**Modal coefficient array**:
+
+.. code-block:: text
+
+   Coefficient[0] = 2.4      (constant term, f₀ = 1)
+   Coefficient[1] = 0.707    (ξ term, f₁ = ξ)
+   Coefficient[2] = 0.424    (η term, f₂ = η)
+   Coefficient[3] = 0.0      (ξη term, f₃ = ξη - not present in linear field)
+
+**Storage in CGNS** :sidsref:`FlowSolution_t`:
+
+.. code-block:: text
+
+   FlowSolution_t "ModalSolution":
+     GridLocation = InterpolationPoints
+     PointList = [[1]]  (Element 0)
+     SpatialOrder = 1
+
+     DataArray_t "Density":
+       Data = [2.4, 0.707, 0.424, 0.0]
+       DataSize = 4 (= 1 element × 4 modal coefficients for P=1 QUAD)
+
+**Key Differences from Lagrange**:
+
+1. **Abstract Coefficients**: The values ``[2.4, 0.707, 0.424, 0.0]`` are **NOT** physical densities at specific points. They are expansion coefficients in the monomial basis.
+
+2. **Basis Function Ordering**: The coefficient ordering **must match** the tensor product ordering defined in :ref:`Cartesian Monomial Basis Functions <cartesian_modal_basis>`.
+
+3. **Reconstruction**: To evaluate the field at physical point :math:`(x, y) = (0.75, 0.25)`:
+
+   a. Compute local coordinates: :math:`(x', y') = (0.25, -0.25)`
+   b. Normalize: :math:`(\xi, \eta) = (0.25/\sqrt{2}, -0.25/\sqrt{2}) = (0.177, -0.177)`
+   c. Evaluate basis: :math:`[f_0, f_1, f_2, f_3] = [1, 0.177, -0.177, -0.031]`
+   d. Sum weighted contributions:
+
+      .. math::
+
+         \rho = 2.4(1) + 0.707(0.177) + 0.424(-0.177) + 0.0(-0.031) = 2.45
+
+   e. Verify against original formula: :math:`2.0 + 0.5(0.75) + 0.3(0.25) = 2.45` ✓
+
+**Compliance Note**: Modal interpolation applies **only to solution fields**, not to mesh geometry. The mesh geometry for this example remains a linear QUAD_4. See :ref:`High-Order Interpolation <HighOrderInterpolation>` for details on the distinction between geometry and solution interpolation.
 
 Validation and Compliance Testing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1377,6 +1568,17 @@ The mapping from parametric time :math:`\tau` to physical time :math:`T` is:
    T(\tau) = \frac{T_n + T_{n+1}}{2} + \frac{T_{n+1} - T_n}{2} \tau
 
 where :math:`\tau = -1` corresponds to :math:`T = T_n` and :math:`\tau = +1` corresponds to :math:`T = T_{n+1}`.
+
+.. note::
+   **Temporal Mapping Linearity**: The formula above defines a **strictly linear** mapping from parametric time :math:`\tau` to physical time :math:`T`. This is the standard convention for space-time finite element methods.
+
+   **High-Order Temporal Interpolation**: While the **time geometry** is always linear (the time slab boundaries are fixed at :math:`T_n` and :math:`T_{n+1}`), the **solution interpolation** within the time slab can be high-order. For example:
+
+   - **Temporal order q=1**: Linear solution variation in time (2 temporal DOFs per spatial DOF)
+   - **Temporal order q=2**: Quadratic solution variation in time (3 temporal DOFs per spatial DOF)
+   - **Temporal order q=3**: Cubic solution variation in time (4 temporal DOFs per spatial DOF)
+
+   **Clarification**: High-order **solution** polynomials in time (controlled by :sidskey:`TemporalOrder`) are supported and common in space-time DG methods. However, "curved time elements" where the time slab geometry itself is curved are **not supported** in the current SIDS specification. The time domain :math:`[T_n, T_{n+1}]` is always a straight interval.
 
 Space-Time Functional Spaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

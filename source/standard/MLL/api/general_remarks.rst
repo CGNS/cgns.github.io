@@ -221,5 +221,42 @@ rely on your compiler initializing all undefined values to 0 (not always the cas
    a compiler option to promote implicit integers to ``INTEGER*8``, then you MUST compile the CGNS library with the same 
    compiler option to promote implicit integers to ``INTEGER*8``. If you really must promote all integers 
    to ``INTEGER*8`` in your code, and you are not able to compile the CGNS library with the same compiler options, then 
-   it is recommended that all arguments in the CGNS Fortran APIs should be declared as ``INTEGER(C_INT)`` if the 
+   it is recommended that all arguments in the CGNS Fortran APIs should be declared as ``INTEGER(C_INT)`` if the
    corresponding argument in the C API is declared as an ``int``.
+
+****************************************
+    High-Order Solutions and GridLocation
+****************************************
+
+.. _HighOrderGridLocation-ref:
+
+When working with high-order interpolation (using ``cg_sol_interpolation_order_write`` and ``cg_sol_interpolation_order_read``),
+the ``GridLocation`` parameter has special significance and strict requirements:
+
+**Two Modes of Operation:**
+
+1. **Uniform Order** (all elements use the same polynomial order):
+
+   * Use ``GridLocation = InterpolationPoints``
+   * No ``PointRange`` or ``PointList`` required
+   * Entire zone shares the same ``SpatialOrder`` and ``TemporalOrder``
+
+2. **Variable Order / P-Adaptation** (different elements use different orders):
+
+   * Use ``GridLocation = CellCenter``
+   * **REQUIRED**: Must provide ``PointRange`` or ``PointList`` via ``cg_ptset_write``
+   * Create separate ``FlowSolution_t`` nodes for each distinct order
+   * Each node defines interpolation order for its element subset
+
+.. danger::
+   **Validation Error**: Calling ``cg_sol_interpolation_order_write()`` with ``GridLocation = CellCenter``
+   without first writing a ``PointRange`` or ``PointList`` will return ``CG_ERROR``.
+
+   This validation was added in CPEX 0045 to prevent ambiguous p-adaptive configurations.
+
+**Example Usage:**
+
+See the detailed P-Adaptation example in the :ref:`Flow Solution <FlowSolution-ref>` section.
+
+For complete details on high-order interpolation metadata and data layout, refer to
+:ref:`High-Order Interpolation <HighOrderInterpolation>` in the SIDS documentation.

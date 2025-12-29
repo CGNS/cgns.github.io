@@ -510,6 +510,65 @@ ____________________________________________
 
    <p><i>Node</i>:  <code>FlowSolution_t</code>
 
+.. important::
+   **GridLocation Requirements for High-Order Solutions (CPEX 0045)**
+
+   When using high-order interpolation with ``cg_sol_interpolation_order_write`` or ``cg_sol_interpolation_order_read``,
+   the ``GridLocation`` value determines the interpolation order scope:
+
+   **Uniform Order Mode** (All elements use the same polynomial order):
+
+   * Set ``GridLocation`` to ``InterpolationPoints``
+   * The solution applies to the entire zone
+   * No ``PointRange`` or ``PointList`` is required
+   * All elements in the zone share the same ``SpatialOrder`` and ``TemporalOrder``
+
+   **Variable Order Mode (P-Adaptation)** (Different elements use different orders):
+
+   * Set ``GridLocation`` to ``CellCenter``
+   * **REQUIRED**: You **MUST** provide a ``PointRange`` or ``PointList`` specifying which elements have this order
+   * Create separate ``FlowSolution_t`` nodes for each distinct polynomial order
+   * Each node specifies its own ``SpatialOrder`` and ``TemporalOrder`` for the subset of elements
+
+   .. warning::
+      **Validation Error**: Calling ``cg_sol_interpolation_order_write()`` with ``GridLocation = CellCenter``
+      **without** a ``PointRange`` or ``PointList`` will return ``CG_ERROR``. This is enforced by the MLL to
+      prevent ambiguous p-adaptive configurations.
+
+   **Example: P-Adaptation with Variable Orders**
+
+   .. code-block:: c
+
+      /* Example: Zone with 100 elements using two different polynomial orders */
+      int fn, B, Z, S_order3, S_order4;
+      cgsize_t range_1_to_50[2] = {1, 50};
+      cgsize_t range_51_to_100[2] = {51, 100};
+
+      /* 1. Create solution node for Order 3 elements (elements 1-50) */
+      cg_sol_write(fn, B, Z, "Solution_Order3", CellCenter, &S_order3);
+
+      /* CRITICAL: Specify which elements use Order 3 */
+      cg_ptset_write(fn, B, Z, S_order3, PointRange, 2, range_1_to_50);
+
+      /* Write interpolation order for this subset */
+      cg_sol_interpolation_order_write(fn, B, Z, S_order3, 3, 0);
+
+      /* 2. Create solution node for Order 4 elements (elements 51-100) */
+      cg_sol_write(fn, B, Z, "Solution_Order4", CellCenter, &S_order4);
+
+      /* CRITICAL: Specify which elements use Order 4 */
+      cg_ptset_write(fn, B, Z, S_order4, PointRange, 2, range_51_to_100);
+
+      /* Write interpolation order for this subset */
+      cg_sol_interpolation_order_write(fn, B, Z, S_order4, 4, 0);
+
+      /* Write actual solution data to each node */
+      /* Solution_Order3 will have N_DOFs = (3+1)^d per element (element-type dependent) */
+      /* Solution_Order4 will have N_DOFs = (4+1)^d per element (element-type dependent) */
+
+   See :ref:`High-Order Interpolation <HighOrderInterpolation>` in the SIDS for complete details on
+   interpolation metadata and data layout.
+
 .. doxygengroup:: FlowSolution
     :content-only:
 

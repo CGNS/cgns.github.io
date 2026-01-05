@@ -16,7 +16,7 @@ Minutes
 **2025**
 --------
 
-   The detailed minutes from our 2025 meetings are now available on the `CGNS GitHub Wiki page <https://github.com/CGNS/CGNS/wiki/2025`_ .
+   The detailed minutes from our 2025 meetings are now available on the `CGNS GitHub Wiki page <https://github.com/CGNS/CGNS/wiki/2025>`_ .
 
 **2024**
 --------

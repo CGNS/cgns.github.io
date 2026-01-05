@@ -757,10 +757,11 @@ The grid points making up a hole within a zone may be specified by :sidskey:`Poi
 
 The :sidsref:`UserDefinedData_t` data structure allows arbitrary user-defined data to be stored in :sidskey:`Descriptor_t` and :sidskey:`DataArray_t` children without the restrictions or implicit meanings imposed on these node types at other node locations.
 
-.. c:function:: FUNCTION PointListSize()
+**FUNCTION PointListSize()**
 
-   :return value: ``int``
-   :dependencies: :sidskey:`PointList`
+   *Return value:* ``int``
+
+   *Dependencies:* :sidskey:`PointList`
 
    :sidskey:`OversetHoles_t` requires one structure function, :sidskey:`PointListSize`, to identify the length of the :sidskey:`PointList` array. :sidskey:`PointListSize` is a user input. (See the discussion on function :ref:`PointListSize <PointListSize_abut>`.)
 

@@ -333,13 +333,14 @@ If present, these three entities take precedence over all corresponding entities
 
 The :sidsref:`UserDefinedData_t` data structure allows arbitrary user-defined data to be stored in :sidskey:`Descriptor_t` and :sidskey:`DataArray_t` children without the restrictions or implicit meanings imposed on these node types at other node locations.
 
-.. c:function:: FUNCTION ListLength()
+**FUNCTION ListLength()**
 
-   :return value: ``int``
-   :dependencies: :sidskey:`PointRange`, :sidskey:`PointList`
+   *Return value:* ``int``
+
+   *Dependencies:* :sidskey:`PointRange`, :sidskey:`PointList`
 
    :sidskey:`BCDataSet_t` requires the structure function :sidskey:`ListLength`, which is used to specify the length of locally defined Dirichlet and Neumann data arrays when the grid location of these quantities differs from that of the BC patch definition. If :sidskey:`PointRange` is specified, then :sidskey:`ListLength` is obtained from the number of points (inclusive) between the beginning and ending indices of :sidskey:`PointRange`. If :sidskey:`PointList` is specified, then :sidskey:`ListLength` is the number of indices in the list of points. In this situation, :sidskey:`ListLength` becomes a user input along with the indices of the list :sidskey:`PointList`. By user we mean the application code that is generating the CGNS database.
-   
+
    If neither :sidskey:`PointRange` or :sidskey:`PointList` is specified in a particular :sidskey:`BCDataSet_t` substructure, :sidskey:`ListLength` must be passed into it to determine the length of BC data arrays.
 
 

@@ -450,7 +450,7 @@ The third and fourth examples are for an unstructured zone with 15 tetrahedral a
 Example - TETRA_4 Element Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This example uses the simple three-element tetrahedral grid shown below.
+This example uses a simple three-element tetrahedral grid.
 
 .. figure:: ../../../images/sids/figs/ex_tetra.gif
    :width: 400px
@@ -754,17 +754,19 @@ Although intended for edge or face-based solution data for unstructured grids, t
 
 The :sidsref:`UserDefinedData_t` data structure allows arbitrary user-defined data to be stored in :sidskey:`Descriptor_t` and :sidskey:`DataArray_t` children without the restrictions or implicit meanings imposed on these node types at other node locations.
 
-.. c:function:: FUNCTION ListLength()
+**FUNCTION ListLength()**
 
-   :return value: ``int``
-   :dependencies: :sidskey:`PointRange`, :sidskey:`PointList`
+   *Return value:* ``int``
+
+   *Dependencies:* :sidskey:`PointRange`, :sidskey:`PointList`
 
    :sidskey:`FlowSolution_t` requires the structure function :sidskey:`ListLength`, which is used to specify the number of entities (e.g. vertices) corresponding to a given :sidskey:`PointRange` or :sidskey:`PointList`. If :sidskey:`PointRange` is specified, then :sidskey:`ListLength` is obtained from the number of points (inclusive) between the beginning and ending indices of :sidskey:`PointRange`. If :sidskey:`PointList` is specified, then :sidskey:`ListLength` is the number of indices in the list of points. In this situation, :sidskey:`ListLength` becomes a user input along with the indices of the list :sidskey:`PointList`. By user we mean the application code that is generating the CGNS database.
 
-.. c:function:: FUNCTION DataSize()
+**FUNCTION DataSize()**
 
-   :return value: one-dimensional ``int`` array of length :sidskey:`IndexDimension`
-   :dependencies: :sidskey:`IndexDimension`, :sidskey:`VertexSize[]`, :sidskey:`CellSize[]`, :sidskey:`GridLocation`, :sidskey:`Rind`, :sidskey:`ListLength[]`
+   *Return value:* one-dimensional ``int`` array of length :sidskey:`IndexDimension`
+
+   *Dependencies:* :sidskey:`IndexDimension`, :sidskey:`VertexSize[]`, :sidskey:`CellSize[]`, :sidskey:`GridLocation`, :sidskey:`Rind`, :sidskey:`ListLength[]`
 
    The function :sidskey:`DataSize[]` is the size of flow solution data arrays. If :sidskey:`Rind` is absent then :sidskey:`DataSize` represents only the core points; it will be the same as :sidskey:`VertexSize` or :sidskey:`CellSize` depending on :sidskey:`GridLocation`. The definition of the function :sidskey:`DataSize[]` is as follows:
 

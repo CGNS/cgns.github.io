@@ -452,14 +452,12 @@ Example - TETRA_4 Element Types
 
 This example uses a simple three-element tetrahedral grid.
 
-.. .. figure:: ../../../images/sids/figs/ex_tetra.gif
-..    :width: 400px
-..    :align: center
-..    :alt: Unstructured grid consisting of three tetrahedra
-..
-..    *Example Tetrahedral Grid*
-..
-.. (Figure pending - ex_tetra.gif not found)
+.. figure:: ../../../images/sids/figs/ex_tetra.gif
+   :width: 400px
+   :align: center
+   :alt: Unstructured grid consisting of three tetrahedra
+
+   *Example Tetrahedral Grid*
 
 The element type is :sidskey:`TETRA_4`, and the connectivity is defined in :sidskey:`ElementConnectivity` by specifying the four nodes comprising each element, with the order consistent with the :ref:`numbering conventions for tetrahedral elements <unst_tetra>`. The data in :sidskey:`ElementConnectivity` is grouped by element; note that the parentheses are added here for presentation purposes only.
 

@@ -430,6 +430,8 @@ In addition, the data structure :sidsref:`ArbitraryGridMotion_t` is recorded for
   }
 
 
+.. _ex_adaptedunstructuredmesh:
+
 Example - Adapted Unstructured Mesh
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

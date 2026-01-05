@@ -224,9 +224,9 @@ rely on your compiler initializing all undefined values to 0 (not always the cas
    it is recommended that all arguments in the CGNS Fortran APIs should be declared as ``INTEGER(C_INT)`` if the
    corresponding argument in the C API is declared as an ``int``.
 
-****************************************
-    High-Order Solutions and GridLocation
-****************************************
+********************************************
+High-Order Solutions and GridLocation
+********************************************
 
 .. _HighOrderGridLocation-ref:
 

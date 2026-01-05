@@ -32,11 +32,13 @@ This is the concept of "linking."
 
 .. _ExampleNodeDatabase:
 
+.. _example_database:
+
 .. figure:: ../../images/cgio/figs/database.gif
    :width: 600px
    :align: center
    :alt: Example database showing node connections and links.
-    
+
    *Example Database Hierarchy of Nodes*
 	
 

@@ -1257,7 +1257,7 @@ Evaluating at the 9 GLL control point physical locations (mapped from parametric
 
    .. math::
 
-      \text{Array index} = e \times N_{\text{DOFs}} + \text{local_dof_index}
+      \text{Array index} = e \times N_{\text{DOFs}} + \text{local\_dof\_index}
 
    where :math:`e` is the element index (0-based) and :math:`N_{\text{DOFs}}` depends on the interpolation order and element type.
 

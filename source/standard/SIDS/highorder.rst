@@ -109,7 +109,7 @@ Parametric Coordinate Systems (Reference Element Definitions)
 
 **2D Simplex Elements (TRI)**:
 
-* **Domain**: :math:`\{(u, v) : u \geq -1, v \geq -1, u + v \leq 1\}`
+* **Domain**: :math:`\{(u, v) : u \geq -1, v \geq -1, u + v \leq 0\}`
 * **Vertices**:
 
   * Vertex 0: :math:`(u, v) = (-1, -1)` (origin)
@@ -119,7 +119,7 @@ Parametric Coordinate Systems (Reference Element Definitions)
 * **Edge parametrization**:
 
   * Edge 0 (Vertex 0 to 1): :math:`(u, v) = (s, -1)` for :math:`s \in [-1, +1]`
-  * Edge 1 (Vertex 1 to 2): :math:`(u, v) = (1-s, s)` for :math:`s \in [-1, +1]`
+  * Edge 1 (Vertex 1 to 2): :math:`(u, v) = (-s, s)` for :math:`s \in [-1, +1]`
   * Edge 2 (Vertex 2 to 0): :math:`(u, v) = (-1, s)` for :math:`s \in [-1, +1]`
 
 **3D Tensor Product Elements (HEXA)**:
@@ -132,7 +132,7 @@ Parametric Coordinate Systems (Reference Element Definitions)
 
 **3D Simplex Elements (TETRA)**:
 
-* **Domain**: :math:`\{(u, v, w) : u \geq -1, v \geq -1, w \geq -1, u + v + w \leq 1\}`
+* **Domain**: :math:`\{(u, v, w) : u \geq -1, v \geq -1, w \geq -1, u + v + w \leq -1\}`
 * **Vertices**:
 
   * Vertex 0: :math:`(u, v, w) = (-1, -1, -1)` (origin)
@@ -142,7 +142,7 @@ Parametric Coordinate Systems (Reference Element Definitions)
 
 **3D Hybrid Elements (PENTA)**:
 
-* **Domain**: Triangular base :math:`\{(u, v) : u \geq -1, v \geq -1, u + v \leq 1\}` extruded along :math:`w \in [-1, +1]`
+* **Domain**: Triangular base :math:`\{(u, v) : u \geq -1, v \geq -1, u + v \leq 0\}` extruded along :math:`w \in [-1, +1]`
 * **Vertices**:
 
   * Plane :math:`w = -1`: Vertices 0,1,2 (triangle)
@@ -150,7 +150,7 @@ Parametric Coordinate Systems (Reference Element Definitions)
 
 **3D Pyramid Elements (PYRA)**:
 
-* **Domain**: :math:`\{(u, v, w) : -1 \leq u, v \leq 1, -1 \leq w \leq 1, |u| + |v| \leq 1 + w\}`
+* **Domain**: :math:`\{(u, v, w) : -1 \leq w \leq 1, |u| \leq \frac{1-w}{2}, |v| \leq \frac{1-w}{2}\}`
 * **Vertices**:
 
   * Base (:math:`w = -1`): Vertices 0,1,2,3 (square)
@@ -545,7 +545,7 @@ Total: :math:`N = (2+1)^3 = 27`
 
 Total: :math:`N = 12(2-1) + 8 = 20`
 
-**Prism (PENTA) - Order p=2**
+**Prism Edge Serendipity (PENTA_15) - Order p=2**
 
 15 control points in parametric space :math:`(u, v, w)` using tensor product of triangular base and linear height:
 
@@ -608,7 +608,7 @@ Total: :math:`N = (2+1)(2+2)/2 \times 2 + 3 = 15`
    // Face center on base (w=-1):
    Node 13: u= 0.0, v= 0.0, w=-1.0  (face center, quadrilateral base)
 
-Total: :math:`N = (2+1)(2+2)/2 \times 2 + 4 = 14`
+Total: :math:`N = \frac{(p+1)(p+2)(2p+3)}{6} = \frac{(3)(4)(7)}{6} = 14`
 
 .. warning::
    **Pyramid Apex Singularity**: The pyramid element has a geometric singularity at the apex (w=1) where the quadrilateral face collapses to a point. This requires special care in implementation:

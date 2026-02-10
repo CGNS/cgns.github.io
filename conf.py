@@ -59,7 +59,7 @@ extlinks = {
     'version': ('https://github.com/CGNS/CGNS/releases/tag/%s', 'version%s')}
 
 #suppress_warnings = [ 'image.not_readable' ]
-suppress_warnings = ['autosectionlabel.*']
+suppress_warnings = ['autosectionlabel.*', 'ref.ref', 'ref.identifier']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

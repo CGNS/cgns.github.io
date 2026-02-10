@@ -516,7 +516,7 @@ begin with the current Overview document, or, if they require more
 detailed information, the AIAA papers listed above. Beyond that, most
 will find a quick read of the :ref:`SIDS File Mapping Manual <StandardFMM>` (or
 enlightening as to the logical form of the contents of CGNS
-files. Browsing the :ref:`figures in the File Mapping Manual<StandardFMMfigs>`, as well as the
+files. Browsing the :ref:`figures in the File Mapping Manual<StandardFMMFigures>`, as well as the
 :ref:`SIDS <CGNS-SIDS>` itself, will provide some feel for the scope of the system. The
 :ref:`User's Guide to CGNS <DocUserGuide>`, and the CGNS :ref:`Mid-Level Library <StandardMLL>`
 document should indicate what might be required to implement CGNS in a

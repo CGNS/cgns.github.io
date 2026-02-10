@@ -510,7 +510,7 @@ Element Interpolation Structure Definition: :sidskey:`ElementInterpolation_t`
 
 The :sidskey:`ElementInterpolation_t` structure specifies the geometric interpolation of curved high-order elements by defining the location of control points in parametric space or by specifying a modal interpolation basis. This structure is attached to a :sidsref:`Family_t` node and applies to all elements of a given type that reference that family.
 
-For Lagrange-type interpolation, an alternative set of control points can be specified in parametric space, allowing flexibility in the distribution and order of nodes. In the absence of an :sidskey:`ElementInterpolation_t` specification for a given element type, the standard node ordering defined in the :ref:`Elements_t` section applies.
+For Lagrange-type interpolation, an alternative set of control points can be specified in parametric space, allowing flexibility in the distribution and order of nodes. In the absence of an :sidskey:`ElementInterpolation_t` specification for a given element type, the standard node ordering defined in the :ref:`Elements_t <unstructgrid>` section applies.
 
 For modal interpolation, the structure specifies the interpolation coefficients for monomial interpolation bases.
 

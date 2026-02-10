@@ -243,8 +243,8 @@ the ``GridLocation`` parameter has special significance and strict requirements:
 
 2. **Variable Order / P-Adaptation** (different elements use different orders):
 
-   * Use ``GridLocation = CellCenter``
-   * **REQUIRED**: Must provide ``PointRange`` or ``PointList`` via ``cg_ptset_write``
+   * The actual high-order solution data uses ``GridLocation = InterpolationPoints`` (see mode 1)
+   * To specify *which elements* use a particular order, use ``GridLocation = CellCenter`` with a ``PointRange`` or ``PointList`` via ``cg_ptset_write``
    * Create separate ``FlowSolution_t`` nodes for each distinct order
    * Each node defines interpolation order for its element subset
 

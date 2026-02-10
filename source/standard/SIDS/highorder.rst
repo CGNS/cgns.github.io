@@ -159,7 +159,7 @@ Parametric Coordinate Systems (Reference Element Definitions)
 * **Singular Mapping**: The top face :math:`w = +1` collapses to a single point (apex), creating a coordinate singularity
 
 .. danger::
-   **Critical Interoperability Requirement**: Using a different reference coordinate system (e.g., :math:`[0, 1]` instead of :math:`[-1, +1]`, or different vertex orderings) will produce **incompatible** CGNS files. All control point coordinates, basis function evaluations, and quadrature rules **MUST** be defined relative to these exact reference domains.
+   **Critical Interoperability Requirement**: Using a different reference coordinate system (e.g., :math:`[0, 1]` instead of :math:`[-1, +1]`, or different vertex orderings) will produce **incompatible** CGNS files. All control point coordinates, basis function evaluations, and quadrature rules **MUST** be defined relative to these exact reference domains. These conventions follow the standard reference element definitions as described in [HesthavenWarburton2008]_.
 
 .. note::
    For space-time computations, see :ref:`Space-Time Extensions <spacetime_extensions>` for the extension to parametric time :math:`\tau \in [-1, 1]`.
@@ -203,7 +203,7 @@ For a 1D edge in parametric coordinate :math:`u \in [-1, +1]` with :math:`p+1` c
 * **Simplex Elements** (TRI, TETRA): Use **Warp & Blend** or **Fekete** point distributions
 
   * These specialized distributions ensure good conditioning of the Vandermonde matrix
-  * Reference: Warburton (2006), "An explicit construction of interpolation nodes on the simplex"
+  * Reference: [Warburton2006]_
   * **Implementation note**: Exact coordinates for simplex distributions up to :math:`p=10` are tabulated in the CGNS reference implementation
 
 **Serendipity Elements**: Only include control points on edges (Edge Serendipity) or edges and faces (Face Serendipity), excluding interior points. The distribution on each edge/face follows the same rules as above.
@@ -252,7 +252,7 @@ This attribute must be specified as a child of :sidsref:`ElementInterpolation_t`
 
   * Specialized distribution for triangles and tetrahedra
   * Ensures well-conditioned Vandermonde matrices
-  * Reference: Warburton (2006)
+  * Reference: [Warburton2006]_
 
 **Default Behavior**: If :sidskey:`LagrangeControlPointDistribution` is absent, implementations **SHOULD** assume :sidskey:`GaussLobattoLegendre`, but readers **SHOULD** issue a warning about the ambiguity.
 
@@ -1055,6 +1055,8 @@ This ensures :math:`\xi, \eta, \zeta \in \mathcal{O}([-1, 1])`, providing well-c
 
 **Storage Convention**: When using normalized coordinates, the characteristic length :math:`h^e` should be stored alongside the modal coefficients to enable proper reconstruction of physical values.
 
+.. _cartesian_modal_basis:
+
 Cartesian Monomial Basis Functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1426,9 +1428,9 @@ Lagrange basis functions must satisfy the Kronecker delta property: :math:`\lamb
 3. Verify: :math:`\lambda_j(\mathbf{u}_j) = 1.0` within tolerance :math:`\epsilon = 10^{-12}`
 4. Verify: :math:`\lambda_i(\mathbf{u}_j) = 0.0` for all :math:`i \neq j` within tolerance :math:`\epsilon = 10^{-12}`
 
-**Example** (QUAD_8, p=2):
+**Example** (QUAD_8 Edge Serendipity, p=2):
 
-At control point Node 4: :math:`(u, v) = (0.0, -1.0)`:
+At control point Node 4 (bottom edge midpoint): :math:`(u, v) = (0.0, -1.0)`:
 
 .. code-block:: text
 
@@ -1809,3 +1811,7 @@ References
 ^^^^^^^^^^
 
 .. [BergotCohenDurufle2010] \ M. Bergot, G. Cohen, and M. Duruflé, "Higher-order Finite Elements for Hybrid Meshes Using New Nodal Pyramidal Elements," Journal of Scientific Computing 42, pp. 345-381 (2010), doi: 10.1007/s10915-009-9334-9
+
+.. [Warburton2006] \ T. Warburton, "An Explicit Construction of Interpolation Nodes on the Simplex," Journal of Engineering Mathematics 56(3), pp. 247-262 (2006), doi: 10.1007/s10665-006-9086-6
+
+.. [HesthavenWarburton2008] \ J. S. Hesthaven and T. Warburton, "Nodal Discontinuous Galerkin Methods: Algorithms, Analysis, and Applications," Springer Texts in Applied Mathematics 54, Springer (2008), doi: 10.1007/978-0-387-72067-8

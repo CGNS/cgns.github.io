@@ -926,8 +926,8 @@ ____________________________________________
 .. raw:: html
 
    <p><i>Node</i>:  <code>ElementInterpolation_t</code>
-             (<a href="../../SIDS/highorder.html#HighOrderInterpolation">SIDS</a>,
-              <a href="../../FMM/nodes.html#ElementInterpolation">File Mapping</a>)</p>
+
+:ref:`SIDS <HighOrderInterpolation>` | :ref:`Structure Definition <ElementInterpolation_t>`
 
 .. doxygengroup:: ElementInterpolation
     :content-only:
@@ -942,8 +942,8 @@ ____________________________________________
 .. raw:: html
 
    <p><i>Node</i>:  <code>SolutionInterpolation_t</code>
-             (<a href="../../SIDS/highorder.html#HighOrderInterpolation">SIDS</a>,
-              <a href="../../FMM/nodes.html#SolutionInterpolation">File Mapping</a>)</p>
+
+:ref:`SIDS <HighOrderInterpolation>` | :ref:`Structure Definition <SolutionInterpolation_t>`
 
 .. doxygengroup:: SolutionInterpolation
     :content-only:

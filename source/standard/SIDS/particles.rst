@@ -123,7 +123,7 @@ The physical coordinates of the particle centers are described by the
 The particle coordinates data is stored in the list of :sidsref:`DataArray_t` entities; each :sidskey:`DataArray_t` structure entity may contain a single component of the position vector (e.g., three separate :sidskey:`DataArray_t` entities are used for x, y, and z).
 
 Standardized data-name identifiers for the particle coordinates are
-described in :ref:`Conventions for Data-Name Identifiers<convention>`.
+described in :ref:`Conventions for Data-Name Identifiers <dataname>`.
 
 :sidsref:`DataClass` defines the default class for data contained in the :sidsref:`DataArray_t` entities. For dimensional grid coordinates, :sidsref:`DimensionalUnits` may be used to describe the system of units employed. If present, these two entities take precedence over the corresponding entities at higher levels of the CGNS hierarchy, following the standard :ref:`precedence rules<precedence>`. An example that uses these particle-coordinate defaults is shown under :ref:`Particle Coordinates Examples<particleCoordinatesExample>`.
 

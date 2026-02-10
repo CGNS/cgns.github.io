@@ -30,7 +30,7 @@ Note that there are no boundary-condition structures defined for abutting or ove
 
 In the sections to follow, the definitions of boundary-condition structures are presented in the first six sections. :ref:`Boundary-condition types <BCType>` are then discussed in detail, including a description of the boundary-condition equations to be enforced for each type; this section also describes the distinction between boundary-condition types that impose a set of equations regardless of local flow conditions and those that impose different sets of boundary-condition equations depending on the local flow solution. The rules for :ref:`matching boundary-condition types and the appropriate sets of boundary-condition equations <BCType-assoc>` are next discussed.
 Details of :ref:`specifying data to be imposed in boundary-condition equations <BC-specdata>` are provided next.
-Finally, several :ref:`examples of boundary conditions <BCexample>` are presented.
+Finally, several :ref:`examples of boundary conditions <BCExample>` are presented.
 
 Boundary Condition Structures Overview
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -513,6 +513,8 @@ Note that the capture area is usually defined with an outflow boundary condition
 
 The :sidskey:`RegionName` is character identifier, and is needed so that a specific region can span multiple surfaces over multiple zones. 
 
+.. _BCType:
+
 Boundary Condition Type Structure Definition: ``BCType_t``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -565,6 +567,8 @@ In the following tables, :math:`Q` is the solution vector, :math:`\mathbf{q}` is
    :alt: 3-D region with a rectangular front face; all four edges merge to a point at the back 'face'
 
 
+
+.. _BCTypeSimple:
 
 .. table:: **Simple Boundary Condition Types**
 
@@ -665,6 +669,8 @@ In the following tables, :math:`Q` is the solution vector, :math:`\mathbf{q}` is
   |                                                              |  (other than :sidskey:`FamilySpecified`!). If any of these are absent, the boundary condition type is undefined.                                            |
   +--------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
+.. _BCTypeCompound:
+
 .. table:: **Compound Boundary Condition Types**
 
   +---------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
@@ -678,6 +684,8 @@ In the following tables, :math:`Q` is the solution vector, :math:`\mathbf{q}` is
   |                                                               |  :sidskey:`BCInflowSupersonic`, :sidskey:`BCOutflowSubsonic`, :sidskey:`BCOutflowSupersonic`                                                |
   +---------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
 
+
+.. _BCType-assoc:
 
 Matching Boundary Condition Data Sets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -777,6 +785,9 @@ One option is to define a new :sidskey:`BCTypeCompound_t` identifier and provide
 Another option may be to allow some identifiers to be both :sidskey:`BCTypeSimple_t` and :sidskey:`BCTypeCompound_t` and let their appropriate use be based on context. This is still undetermined. 
 
 
+.. _BC-specdata:
+.. _BC_specdata:
+
 Boundary Condition Specification Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -789,6 +800,9 @@ These specified solution data are arranged by "equation type":
     :Neumann:        :math:`\partial Q / \partial n = (\partial Q / \partial n)_{specified}`
 
 The :sidskey:`DirichletData` and :sidskey:`NeumannData` entities of :sidsref:`BCData_t` list both the solution variables involved in the equations (through the :ref:`data-name identifier conventions <dataname>`) and the specified solution data.
+
+.. _globalvslocal:
+.. _global-vs-local:
 
 Two issues need to be addressed for specifying Dirichlet or Neumann boundary-condition data. The first is whether the data is global or local:
 
@@ -864,6 +878,8 @@ An alternative approach to the present design could be to list all the solution 
 We have not taken this approach. We think grouping boundary-condition data by "equation type" as we have done better allows for future extension to other types of boundary conditions (e.g., 2nd-order non-reflecting BC's that result in partial differential equations to be solved at the boundary).
 
 
+.. _BCExample:
+
 Boundary Condition Examples
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -891,6 +907,8 @@ Symmetry plane for a patch on the *i*-min face of a 3-D structured zone.
 
 Since the boundary-condition equations to be enforced are completely defined by the boundary-condition type :sidskey:`BCSymmetryPlane`, no other information needs to be provided, except for the extent of the BC patch.
 The BC patch is specified by :sidskey:`PointRange` with a beginning index of (1,1,1) and an ending index of (1,9,17). By default, these refer to vertices.
+
+.. _ex-bc6:
 
 Example - Viscous Solid Wall I
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

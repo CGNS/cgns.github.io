@@ -113,6 +113,7 @@ Examples that make use of global data are available for both :ref:`grid coordina
 A complete :ref:`two-zone example<twozone>` case also depicts this alternate functionality.
 
 .. _dimensional:
+.. _dim:
 
 Dimensional Data
 ~~~~~~~~~~~~~~~~
@@ -152,6 +153,8 @@ If either :sidskey:`DimensionalUnits` or :sidskey:`DimensionalExponents` is abse
 Note that functionally there is little difference between these first two data classes (:sidskey:`DataClass` = :ref:`Dimensional <dimensional>` and :sidskey:`NormalizedByDimensional`).
 In the first case the data is dimensional, and in the second, the converted raw data is dimensional.
 Also, the equivalent defaults for :sidskey:`DataConversion` produce no changes in the data; hence, it is almost the same as stating the original data is dimensional.
+
+.. _normbyunkdim:
 
 Nondimensional Data Normalized by Unknown Dimensional Quantities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -247,6 +250,8 @@ where :math:`\gamma` is the specific heat ratio (assumes a perfect gas) and :mat
 
 On input, the flow solver should be able to recover its internal normalizations from the data in a nondimensional CGNS database by treating the data as if it were dimensional.
 
+.. _nondimparam:
+
 Nondimensional Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -268,6 +273,8 @@ Examples that satisfy this second constraint are pressure coefficient, where the
 Conversely, Reynolds number is a parameter that violates the second requirement - there are three pieces of raw data rather than one that make up *Re*.
 For nondimensional parameters that satisfy these two requirements, the qualifiers :sidskey:`DimensionalUnits`, :sidskey:`DimensionalExponents` and :sidskey:`DataConversion` may be used as in the section :ref:`Nondimensional Data Normalized by Dimensional Quantities <normbydim>` to recover the raw dimensional data.
 
+
+.. _dimensionless:
 
 Dimensionless Constants
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -418,6 +425,8 @@ The previous example for nondimensional enthalpy is repeated for a completely no
     }} ;
 
 The value of :sidskey:`DataClass` indicates the appropriate class. 
+
+.. _ex_data5:
 
 Example - Data Arrays for Reynolds Number
 """""""""""""""""""""""""""""""""""""""""

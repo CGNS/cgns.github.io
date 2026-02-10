@@ -513,6 +513,8 @@ It is included for backward compatibility to assist implementation of the CGNS s
 Since there are no restrictions on the values contained in :sidskey:`Ordinal` (or that :sidskey:`Ordinal` is even provided), there is no guarantee that the interfaces for a given zone in an existing CGNS database will have sequential values from 1 to N without holes or repetitions.
 Use of :sidskey:`Ordinal` is discouraged and is on a user-beware basis.
 
+.. _PointListSize_abut:
+
 .. c:function:: FUNCTION PointListSize()
 
    :return value: ``int``

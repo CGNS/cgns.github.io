@@ -30,7 +30,7 @@ Glossary
       
    Python
       Programming language, widely used for web tools.
-      See `Python reference site <http:///www.python.org/>`_.
+      See `Python reference site <https://www.python.org/>`_.
 
    ReST
       The **Restructured Text** syntax is a simple documentation syntax.

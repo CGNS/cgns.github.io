@@ -123,7 +123,7 @@ The physical coordinates of the particle centers are described by the
 The particle coordinates data is stored in the list of :sidsref:`DataArray_t` entities; each :sidskey:`DataArray_t` structure entity may contain a single component of the position vector (e.g., three separate :sidskey:`DataArray_t` entities are used for x, y, and z).
 
 Standardized data-name identifiers for the particle coordinates are
-described in :ref:`Conventions for Data-Name Identifiers<convention>`.
+described in :ref:`Conventions for Data-Name Identifiers <dataname>`.
 
 :sidsref:`DataClass` defines the default class for data contained in the :sidsref:`DataArray_t` entities. For dimensional grid coordinates, :sidsref:`DimensionalUnits` may be used to describe the system of units employed. If present, these two entities take precedence over the corresponding entities at higher levels of the CGNS hierarchy, following the standard :ref:`precedence rules<precedence>`. An example that uses these particle-coordinate defaults is shown under :ref:`Particle Coordinates Examples<particleCoordinatesExample>`.
 
@@ -206,10 +206,11 @@ The :sidsref:`UserDefinedData_t` data structure allows arbitrary user-defined da
 
 .. _DataSizeParticle:
 
-.. c:function:: FUNCTION DataSize()
+**FUNCTION DataSize()**
 
-   :return value: ``int``
-   :dependencies: :sidskey:`PointRange`, :sidskey:`PointList`
+   *Return value:* ``int``
+
+   *Dependencies:* :sidskey:`PointRange`, :sidskey:`PointList`
 
    :sidskey:`ParticleSolution_t` requires the structure function :sidskey:`DataSize`, which is used to specify the number of entities corresponding to a given :sidskey:`PointRange` or :sidskey:`PointList`. This will therefore be the size of the :sidskey:`ParticleSolution` data arrays. If :sidskey:`PointRange` is specified, then :sidskey:`DataSize` is obtained from the number of points (inclusive) between the beginning and ending indices of :sidskey:`PointRange`. If :sidskey:`PointList` is specified, then :sidskey:`DataSize` is the number of indices in the list of points. In this situation, :sidskey:`DataSize` becomes a user input along with the indices of the list :sidskey:`PointList`. By "user", we mean the application code that is generating the CGNS database.
 

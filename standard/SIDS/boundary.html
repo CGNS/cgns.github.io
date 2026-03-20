@@ -16,34 +16,37 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=6bab4044" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css?v=2c72f61b" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'standard/SIDS/boundary';</script>
     <link rel="canonical" href="https://cgns.org/standard/SIDS/boundary.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -52,6 +55,7 @@
     <link rel="prev" title="8. Multizone Interface Connectivity" href="multizone.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -67,19 +71,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -87,7 +80,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -95,8 +87,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -112,7 +104,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -140,7 +133,7 @@
     
     
     <img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-light" alt="CGNS Documentation - Home"/>
-    <script>document.write(`<img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark" alt="CGNS Documentation - Home"/>`);</script>
+    <img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark pst-js-only" alt="CGNS Documentation - Home"/>
   
   
 </a></div>
@@ -161,15 +154,11 @@
 </ul></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
@@ -299,6 +288,7 @@
 
 <li class="toctree-l2"><a class="reference internal" href="../../current/CPEX.html">CPEX</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/download.html">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../current/building.html">Build CGNS code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/examples.html">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/softwarelist.html">More CGNS Software</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../doc.html">More documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -323,9 +313,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -407,7 +402,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -421,25 +416,17 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -464,8 +451,14 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-structures-overview">9.1. Boundary Condition Structures Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zonal-boundary-condition-structure-definition-zonebc-t">9.2. Zonal Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneBC_t</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-structure-definition-bc-t">9.3. Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">BC_t</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-data-set-structure-definition-bcdataset-t">9.4. Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCDataSet_t</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-structure-definition-bc-t">9.3. Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">BC_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c.ListLength"><code class="docutils literal notranslate"><span class="pre">ListLength()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-data-set-structure-definition-bcdataset-t">9.4. Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCDataSet_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c.ListLengthBCData"><code class="docutils literal notranslate"><span class="pre">ListLengthBCData()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-data-structure-definition-bcdata-t">9.5. Boundary Condition Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCData_t</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-property-structure-definition-bcproperty-t">9.6. Boundary Condition Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCProperty_t</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wall-function-structure-definition-wallfunction-t">9.6.1. Wall Function Structure Definition: <code class="docutils literal notranslate"><span class="pre">WallFunction_t</span></code></a></li>
@@ -498,26 +491,26 @@ document.write(`
   <section id="boundary-conditions">
 <h1><span class="section-number">9. </span>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading">#</a></h1>
 <p>This section is an attempt to unify boundary-condition specifications within Navier-Stokes codes. The structures and conventions developed are a compromise between simplicity and generality. It is imperative that they be easy to use initially, but that they are general enough to provide future flexibility and extensibility.</p>
-<p>This section may be somewhat daunting initially. It is suggested that the reader refer to the <span class="xref std std-ref">Boundary Condition Examples</span> during study of the following sections to help resolve any questions and confusions that might arise.</p>
+<p>This section may be somewhat daunting initially. It is suggested that the reader refer to the <a class="reference internal" href="#bcexample"><span class="std std-ref">Boundary Condition Examples</span></a> during study of the following sections to help resolve any questions and confusions that might arise.</p>
 <p>The difficulty with boundary conditions is that there is such a wide variety used, and even a single boundary-condition equation is often implemented differently in different codes. Some boundary conditions, such as a symmetry plane, are fairly well defined. Other boundary conditions are much looser in their definition and implementation. An inflow boundary is a good example. It is generally accepted how many solution quantities should be specified at an inflow boundary (from mathematical well-posedness arguments), but what those quantities are will change with the class of flow problems (e.g., internal flows vs. external flows), and they will also change from code to code.</p>
 <p>An additional difficulty for CFD analysis is that in some situations different boundary-condition equations are applied depending on local flow conditions. Any boundary where the flow can change from inflow to outflow or supersonic to subsonic is a candidate for flow-dependent boundary-condition equations.</p>
-<p>These difficulties have molded the design of our boundary-condition specification structures and conventions. We define <span class="xref std std-ref">boundary-condition types</span> that establish the equations to be enforced. However, for those more loosely defined boundary conditions, such as inflow/outflow, the boundary-condition type merely establishes general guidelines on the equations to be imposed. Augmenting (and superseding) the information provided by the boundary-condition type is precisely defined boundary-condition solution data. We rely on our <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">conventions for data-name identifiers</span></a> to identify the exact quantities involved in the boundary conditions.</p>
+<p>These difficulties have molded the design of our boundary-condition specification structures and conventions. We define <a class="reference internal" href="#bctype"><span class="std std-ref">boundary-condition types</span></a> that establish the equations to be enforced. However, for those more loosely defined boundary conditions, such as inflow/outflow, the boundary-condition type merely establishes general guidelines on the equations to be imposed. Augmenting (and superseding) the information provided by the boundary-condition type is precisely defined boundary-condition solution data. We rely on our <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">conventions for data-name identifiers</span></a> to identify the exact quantities involved in the boundary conditions.</p>
 <p>One flexibility that is provided by this approach is that boundary-condition information can easily be built during the course of an analysis. For example, during grid-generation phases minimal information (e.g., the boundary-condition type) may be given. Then prior to running of the flow solver, more specific boundary-condition information, such as Dirichlet or Neumann data, may be added to the database.</p>
 <p>An additional flexibility provided by the structures of this section is that both uniform and non-uniform boundary-condition data can be described within the same framework.</p>
-<p>We realize that most current codes allow little or no flexibility in choosing solution quantities to specify for a given boundary-condition type. We also realize the coding effort involved with checking for consistency between I/O specifications and internal boundary-condition routines. To make these boundary-condition structures more palatable initially, we adopt the convention that if no solution quantities are specified for a given boundary-condition type, then the code is free to enforce any appropriate boundary condition (see <span class="xref std std-ref">Boundary Condition Specification Data</span>).</p>
+<p>We realize that most current codes allow little or no flexibility in choosing solution quantities to specify for a given boundary-condition type. We also realize the coding effort involved with checking for consistency between I/O specifications and internal boundary-condition routines. To make these boundary-condition structures more palatable initially, we adopt the convention that if no solution quantities are specified for a given boundary-condition type, then the code is free to enforce any appropriate boundary condition (see <a class="reference internal" href="#id1"><span class="std std-ref">Boundary Condition Specification Data</span></a>).</p>
 <p>Note that there are no boundary-condition structures defined for abutting or overset interfaces, unless they involve cases of symmetry or degeneracy. In other words, it is a CGNS design intent that a given zone boundary segment or location should at most be defined (or covered) by either a boundary condition or a multizone interface connectivity, but not by both. There is also no separate boundary-condition structure for periodic boundary conditions (i.e., when a zone interfaces with itself). Both of these situations are addressed by <a class="reference internal" href="multizone.html#sids-connectivity"><span class="std std-ref">interface connectivity data structures</span></a>.</p>
-<p>In the sections to follow, the definitions of boundary-condition structures are presented in the first six sections. <span class="xref std std-ref">Boundary-condition types</span> are then discussed in detail, including a description of the boundary-condition equations to be enforced for each type; this section also describes the distinction between boundary-condition types that impose a set of equations regardless of local flow conditions and those that impose different sets of boundary-condition equations depending on the local flow solution. The rules for <span class="xref std std-ref">matching boundary-condition types and the appropriate sets of boundary-condition equations</span> are next discussed.
-Details of <span class="xref std std-ref">specifying data to be imposed in boundary-condition equations</span> are provided next.
-Finally, several <span class="xref std std-ref">examples of boundary conditions</span> are presented.</p>
+<p>In the sections to follow, the definitions of boundary-condition structures are presented in the first six sections. <a class="reference internal" href="#bctype"><span class="std std-ref">Boundary-condition types</span></a> are then discussed in detail, including a description of the boundary-condition equations to be enforced for each type; this section also describes the distinction between boundary-condition types that impose a set of equations regardless of local flow conditions and those that impose different sets of boundary-condition equations depending on the local flow solution. The rules for <a class="reference internal" href="#bctype-assoc"><span class="std std-ref">matching boundary-condition types and the appropriate sets of boundary-condition equations</span></a> are next discussed.
+Details of <a class="reference internal" href="#bc-specdata"><span class="std std-ref">specifying data to be imposed in boundary-condition equations</span></a> are provided next.
+Finally, several <a class="reference internal" href="#bcexample"><span class="std std-ref">examples of boundary conditions</span></a> are presented.</p>
 <section id="boundary-condition-structures-overview">
 <h2><span class="section-number">9.1. </span>Boundary Condition Structures Overview<a class="headerlink" href="#boundary-condition-structures-overview" title="Link to this heading">#</a></h2>
 <p>Prior to presenting the detailed boundary condition structures, we give a brief overview of the hierarchy used to describe boundary conditions.</p>
 <p>Boundary conditions are classified as either fixed or flow-dependent. Fixed boundary conditions enforce a given set of boundary-condition equations regardless of flow conditions; whereas, flow-dependent boundary conditions enforce different sets of boundary-condition equations depending on local flow conditions. We incorporate both fixed and flow-dependent boundary conditions into a uniform framework. This allows all boundary conditions to be described in a similar manner. We consider this functionally superior to separately treating fixed and flow-dependent boundary conditions, even though the latter allows a simpler description mechanism for fixed boundary conditions. The current organization also makes sense considering the fact that flow-dependent boundary conditions are composed of multiple sets of fixed boundary conditions.</p>
-<figure class="align-center" id="id1">
+<figure class="align-center" id="id2">
 <a class="reference internal image-reference" href="../../_images/bctree.gif"><img alt="CGNS hierarchy for a single boundary condition" src="../../_images/bctree.gif" style="width: 600px;" />
 </a>
 <figcaption>
-<p><span class="caption-text"><em>Hierarchy for Boundary Condition Structures</em></span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+<p><span class="caption-text"><em>Hierarchy for Boundary Condition Structures</em></span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The above figure depicts the hierarchy used for prescribing a single boundary condition. Each boundary condition includes a type that describes the general equations to enforce, a patch specification, and a collection of data sets. The minimum required information for any boundary condition is the patch specification and the boundary-condition type (indicated by “BC type (compound)” in the figure). This minimum information is similar to that used in many existing flow solvers.</p>
@@ -528,7 +521,7 @@ For fixed boundary conditions, the hierarchical tree contains a single data set,
 Flow-dependent or compound boundary conditions contain multiple data sets, each to be applied separately depending on local flow conditions.
 The compound boundary-condition type describes the general flow-dependent boundary conditions, and each data set contains associated simple boundary-condition types.
 For example, a farfield boundary condition would contain four data sets, where each applies to the different combinations of subsonic and supersonic inflow and outflow.
-See the sections <span class="xref std std-ref">Boundary Condition Type Structure Definition</span>: <code class="code sidsref docutils literal notranslate"><span class="pre">BCType_t</span></code> and <span class="xref std std-ref">Matching Boundary Condition Data Sets</span> for more details.</p>
+See the sections <a class="reference internal" href="#bctype"><span class="std std-ref">Boundary Condition Type Structure Definition</span></a>: <code class="code sidsref docutils literal notranslate"><span class="pre">BCType_t</span></code> and <a class="reference internal" href="#bctype-assoc"><span class="std std-ref">Matching Boundary Condition Data Sets</span></a> for more details.</p>
 <p>Within a single data set, boundary condition data is grouped by equation type into Dirichlet and Neumann data.
 The lower leaves of the above figure show data for generic flow-solution quantities <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> to be applied in Dirichlet conditions, and data for <span class="math notranslate nohighlight">\(\gamma\)</span> and <span class="math notranslate nohighlight">\(\delta\)</span> to be applied in Neumann boundary conditions.
 <code class="code sidsref docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities are employed to store these data and to identify the specific flow variables they are associated with.</p>
@@ -573,7 +566,7 @@ If present, these three entities take precedence over all corresponding entities
 <p>Reference-state data is useful for situations where boundary-condition data is not provided, and flow solvers are free to enforce any appropriate boundary condition equations.
 The presence of <code class="code sidsref docutils literal notranslate"><span class="pre">ReferenceState</span></code> at this level or below specifies the appropriate flow conditions from which the flow solver should extract its boundary-condition data.
 For example, when computing an external flowfield around an airplane, an engine nozzle exit is often simulated by imposing a stagnation pressure boundary condition (or some other stagnation quantity) different from freestream.
-The nozzle-exit stagnation quantities could be specified in an instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code> at this level or below in lieu of providing explicit Dirichlet or Neumann data. (See <span class="xref std std-ref">Boundary Condition Specification Data.</span>)</p>
+The nozzle-exit stagnation quantities could be specified in an instance of <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code> at this level or below in lieu of providing explicit Dirichlet or Neumann data. (See <a class="reference internal" href="#bc-specdata"><span class="std std-ref">Boundary Condition Specification Data.</span></a>)</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
 </section>
 <section id="boundary-condition-structure-definition-bc-t">
@@ -714,16 +707,16 @@ For exterior faces of a zone in 3-D, <code class="code sidskey docutils literal 
 <code class="code sidskey docutils literal notranslate"><span class="pre">InwardNormalList</span></code> is listed as an optional field because it is not always needed to enforce boundary conditions, and the physical-space normals of a BC patch can usually be constructed from the grid.
 However, there are some situations, such as grid-coordinate singularity lines, where <code class="code sidskey docutils literal notranslate"><span class="pre">InwardNormalList</span></code> becomes a required field, because it cannot be generated from other information.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code> structure provides for a list of boundary-condition data sets, described in the next section.
-In general, the proper <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> instance to impose on the BC patch is determined by the <code class="code sidsref docutils literal notranslate"><span class="pre">BCType</span></code> <span class="xref std std-ref">association table</span>.
-The mechanics of determining the proper data set to impose is described in the section <span class="xref std std-ref">Matching Boundary Condition Data Sets</span>.</p>
+In general, the proper <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> instance to impose on the BC patch is determined by the <code class="code sidsref docutils literal notranslate"><span class="pre">BCType</span></code> <a class="reference internal" href="#bctype-assoc"><span class="std std-ref">association table</span></a>.
+The mechanics of determining the proper data set to impose is described in the section <a class="reference internal" href="#bctype-assoc"><span class="std std-ref">Matching Boundary Condition Data Sets</span></a>.</p>
 <p>For a few boundary conditions, such as a symmetry plane or polar singularity, the value of <code class="code sidsref docutils literal notranslate"><span class="pre">BCType</span></code> completely describes the equations to impose, and no instances of <code class="code sidsref docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> are needed.
 For “simple” boundary conditions, where a single set of Dirichlet and/or Neumann data is applied, a single <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> will likely appear (although this is not a requirement).
-For “compound” boundary conditions, where the equations to impose are dependent on local flow conditions, several instances of <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> will likely appear; the procedure for choosing the proper data set is more complex as described in the section <span class="xref std std-ref">Matching Boundary Condition Data Sets</span>.</p>
+For “compound” boundary conditions, where the equations to impose are dependent on local flow conditions, several instances of <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> will likely appear; the procedure for choosing the proper data set is more complex as described in the section <a class="reference internal" href="#bctype-assoc"><span class="std std-ref">Matching Boundary Condition Data Sets</span></a>.</p>
 <p>A <code class="code sidsref docutils literal notranslate"><span class="pre">BCProperty_t</span></code> data structure may be used to record special properties associated with particular boundary condition patches, such as wall functions or bleed regions.</p>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code> identifies the family to which the boundary belongs. Family names link the mesh boundaries to the CAD surfaces. (See the section on <a class="reference internal" href="../FMM/nodes.html#family"><span class="std std-ref">Family Data Structure Definition</span></a> for more details.)
 Boundary conditions may also be defined directly on families. In this case, the <code class="code sidsref docutils literal notranslate"><span class="pre">BCType</span></code> must be <code class="code sidskey docutils literal notranslate"><span class="pre">FamilySpecified</span></code>.
 If, under a <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code> structure, both <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> are present, and the <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> is not <code class="code sidskey docutils literal notranslate"><span class="pre">FamilySpecified</span></code>, then the <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> that is specified takes precedence over any <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> that might be stored in a <code class="code sidsref docutils literal notranslate"><span class="pre">FamilyBC_t</span></code> structure under the specified <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code>.
-The actual name of the referred-to <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code> can be in the same base or another base, as detailed in <span class="xref std std-ref">Base Level Families</span>.</p>
+The actual name of the referred-to <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code> can be in the same base or another base, as detailed in <a class="reference internal" href="hierarchy.html#baselevelfamilies"><span class="std std-ref">Base Level Families</span></a>.</p>
 <p>Reference data applicable to the boundary conditions of a BC patch is contained in the <code class="code sidsref docutils literal notranslate"><span class="pre">ReferenceState</span></code> structure.
 <code class="code sidsref docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the boundary conditions.
 If the boundary conditions contain dimensional data, <code class="code sidsref docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
@@ -795,8 +788,8 @@ Its intended use is for simple boundary-condition types, where the equations imp
 These are all used to control the grid location and length of data arrays in the <code class="code sidskey docutils literal notranslate"><span class="pre">Dirichlet</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">Neumann</span></code> substructures.
 They are inputs for the structure functions <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength[]</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">ListLengthBCData[]</span></code> defined below.</p>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple</span></code> specifies the boundary-condition type, which gives general information on the boundary-condition equations to be enforced.
-<code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple</span></code> is also used for <span class="xref std std-ref">matching boundary condition data sets</span>.</p>
-<p>Boundary-condition data is separated by equation type into Dirichlet and Neumann conditions. Dirichlet boundary conditions impose the value of the given variables, whereas Neumann boundary conditions impose the normal derivative of the given variables. The mechanics of specifying Dirichlet and Neumann data for boundary conditions is covered in the section <span class="xref std std-ref">Boundary Condition Specification Data</span>.</p>
+<code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple</span></code> is also used for <a class="reference internal" href="#bctype-assoc"><span class="std std-ref">matching boundary condition data sets</span></a>.</p>
+<p>Boundary-condition data is separated by equation type into Dirichlet and Neumann conditions. Dirichlet boundary conditions impose the value of the given variables, whereas Neumann boundary conditions impose the normal derivative of the given variables. The mechanics of specifying Dirichlet and Neumann data for boundary conditions is covered in the section <a class="reference internal" href="#bc-specdata"><span class="std std-ref">Boundary Condition Specification Data</span></a>.</p>
 <p>The substructures <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">NeumannData</span></code> contain boundary-condition data that may be constant over the BC patch, or defined locally at each vertex or edge/face of the patch. Locally defined data may be specified in one of two ways.
 If <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code> are all absent, then the data is defined consistent with the BC patch specification of the parent <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code> structure.
 In this case, the location of the locally defined data is given by <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocationParameter</span></code> and the length of the data arrays are given by <code class="code sidskey docutils literal notranslate"><span class="pre">ListLengthParameter</span></code>.
@@ -805,21 +798,13 @@ If <code class="code sidskey docutils literal notranslate"><span class="pre">Gri
 If the boundary conditions contain dimensional data, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
 If present, these three entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard <a class="reference internal" href="hierarchy.html#precedence"><span class="std std-ref">precedence rules</span></a>.</p>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-<dl class="c function">
-<dt class="sig sig-object c">
-<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ListLength</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return value<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
-</dd>
-<dt class="field-even">Dependencies<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code></p>
-</dd>
-</dl>
+<p><strong>FUNCTION ListLength()</strong></p>
+<blockquote>
+<div><p><em>Return value:</em> <code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+<p><em>Dependencies:</em> <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code></p>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> requires the structure function <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code>, which is used to specify the length of locally defined Dirichlet and Neumann data arrays when the grid location of these quantities differs from that of the BC patch definition. If <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> is specified, then <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code> is obtained from the number of points (inclusive) between the beginning and ending indices of <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>. If <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code> is specified, then <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code> is the number of indices in the list of points. In this situation, <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code> becomes a user input along with the indices of the list <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code>. By user we mean the application code that is generating the CGNS database.</p>
 <p>If neither <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code> is specified in a particular <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> substructure, <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code> must be passed into it to determine the length of BC data arrays.</p>
-</dd></dl>
-
+</div></blockquote>
 <dl class="c function">
 <dt class="sig sig-object c" id="c.ListLengthBCData">
 <span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ListLengthBCData</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.ListLengthBCData" title="Link to this definition">#</a><br /></dt>
@@ -866,7 +851,7 @@ For example, the use of separate <code class="code sidskey docutils literal notr
 <li><p>There are no required elements; all three lists may be empty.</p></li>
 </ol>
 </div>
-<p>This structure definition shows separate lists for <span class="xref std std-ref">global verses local</span> data.
+<p>This structure definition shows separate lists for <a class="reference internal" href="#global-vs-local"><span class="std std-ref">global verses local</span></a> data.
 The global data is essentially scalars, while the local data variables have size determined by the structure parameter <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code>.
 For <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities with <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">standardized data-name identifiers</span></a>, <code class="code sidskey docutils literal notranslate"><span class="pre">DataType</span></code> is determined by convention.
 For user-defined variables, <code class="code sidskey docutils literal notranslate"><span class="pre">DataType</span></code> is a user input.</p>
@@ -970,7 +955,7 @@ Note that the capture area is usually defined with an outflow boundary condition
 </section>
 </section>
 <section id="boundary-condition-type-structure-definition-bctype-t">
-<h2><span class="section-number">9.7. </span>Boundary Condition Type Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCType_t</span></code><a class="headerlink" href="#boundary-condition-type-structure-definition-bctype-t" title="Link to this heading">#</a></h2>
+<span id="bctype"></span><h2><span class="section-number">9.7. </span>Boundary Condition Type Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCType_t</span></code><a class="headerlink" href="#boundary-condition-type-structure-definition-bctype-t" title="Link to this heading">#</a></h2>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> is an enumeration type that identifies the boundary-condition equations to be enforced at a given boundary location.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCType_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">Enumeration</span><span class="p">(</span>
 <span class="w">  </span><span class="n">BCTypeNull</span><span class="p">,</span><span class="w"> </span><span class="n">BCTypeUserDefined</span><span class="p">,</span><span class="w"> </span><span class="n">BCAxisymmetricWedge</span><span class="p">,</span><span class="w"> </span><span class="n">BCDegenerateLine</span><span class="p">.</span>
@@ -998,12 +983,12 @@ Note that the capture area is usually defined with an outflow boundary condition
 </pre></div>
 </div>
 <p>The members of <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> completely identify the equations to impose, while those of <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code> give a general description of the class of boundary-condition equations to impose.
-The specific boundary-condition equations to enforce for each value of <code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> are listed in separate tables for <span class="xref std std-ref">Simple Boundary Condition Types</span> and <span class="xref std std-ref">Compound Boundary Condition Types</span>.</p>
+The specific boundary-condition equations to enforce for each value of <code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> are listed in separate tables for <a class="reference internal" href="#bctypesimple"><span class="std std-ref">Simple Boundary Condition Types</span></a> and <a class="reference internal" href="#bctypecompound"><span class="std std-ref">Compound Boundary Condition Types</span></a>.</p>
 <p>The subdivision of <code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> is based on function. For simple boundary conditions, the equations and data imposed are fixed; whereas, for compound boundary conditions different sets of equations are imposed depending on local flow conditions at the boundary. This distinction requires additional rules for dealing with simple and compound boundary-condition types.</p>
 <p>For the inflow/outflow boundary-condition descriptions, 3-D inviscid compressible flow is assumed; the 2-D equivalent should be obvious. These same boundary conditions are typically used for viscous cases also. This “3-D Euler” assumption will be noted wherever used.</p>
 <p>In the following tables, <span class="math notranslate nohighlight">\(Q\)</span> is the solution vector, <span class="math notranslate nohighlight">\(\mathbf{q}\)</span> is the velocity vector whose magnitude is <span class="math notranslate nohighlight">\(q\)</span>, the unit normal to the boundary is <span class="math notranslate nohighlight">\(\mathbf{n}\)</span>, and <span class="math notranslate nohighlight">\(\partial () / \partial n =\mathbf{n} \cdot \nabla\)</span> is differentiation normal to the boundary.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id2">
-<caption><span class="caption-text"><strong>Simple Boundary Condition Types</strong></span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><span id="bctypesimple"></span><table class="table" id="id3">
+<caption><span class="caption-text"><strong>Simple Boundary Condition Types</strong></span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> Identifier</p></th>
 <th class="head"><p>Boundary Condition Description</p></th>
@@ -1139,8 +1124,8 @@ Under the <code class="code sidskey docutils literal notranslate"><span class="p
 </tbody>
 </table>
 </div>
-<div class="pst-scrollable-table-container"><table class="table" id="id3">
-<caption><span class="caption-text"><strong>Compound Boundary Condition Types</strong></span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><span id="bctypecompound"></span><table class="table" id="id4">
+<caption><span class="caption-text"><strong>Compound Boundary Condition Types</strong></span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code> Identifier</p></th>
 <th class="head"><p>Boundary Condition Description</p></th>
@@ -1162,16 +1147,16 @@ Under the <code class="code sidskey docutils literal notranslate"><span class="p
 </div>
 </section>
 <section id="matching-boundary-condition-data-sets">
-<h2><span class="section-number">9.8. </span>Matching Boundary Condition Data Sets<a class="headerlink" href="#matching-boundary-condition-data-sets" title="Link to this heading">#</a></h2>
+<span id="bctype-assoc"></span><h2><span class="section-number">9.8. </span>Matching Boundary Condition Data Sets<a class="headerlink" href="#matching-boundary-condition-data-sets" title="Link to this heading">#</a></h2>
 <p>The <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code> structure allows for a arbitrary list of boundary-condition data sets, described by the <code class="code sidsref docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> structure.
 For simple boundary conditions, a single data set must be chosen from a list that may contain more than one element.
 Likewise, for a compound boundary condition, a limited number of data sets must be chosen and applied appropriately.
-The mechanism for the proper choice of data sets is controlled by the <code class="code sidsref docutils literal notranslate"><span class="pre">BCType</span></code> field of the <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code> structure, the <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple</span></code> field of the <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> structure, and the <span class="xref std std-ref">boundary-condition type association table</span>.
+The mechanism for the proper choice of data sets is controlled by the <code class="code sidsref docutils literal notranslate"><span class="pre">BCType</span></code> field of the <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code> structure, the <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple</span></code> field of the <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> structure, and the <a class="reference internal" href="#bctype-assoc"><span class="std std-ref">boundary-condition type association table</span></a>.
 In the following discussion, we will use the “/” notation for fields or elements of a structure type.</p>
 <p><code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code> is used for both simple and compound boundary conditions; hence, the field <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code>/<code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> is of type <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code>.
 Conversely, the substructure <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> is intended to enforce a single set of boundary-condition equations independent of local flow conditions (i.e., it is appropriate only for simple boundary conditions).
 This is why the field <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code>/<code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple</span></code> is of type <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> and not <code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code>.
-The appropriate choice of data sets is determined by matching the field <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code>/<code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> with the field <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t/BCTypeSimple</span></code> as specified in the <span class="xref std std-ref">boundary-condition type association table</span>.</p>
+The appropriate choice of data sets is determined by matching the field <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code>/<code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> with the field <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t/BCTypeSimple</span></code> as specified in the <a class="reference internal" href="#bctype-assoc"><span class="std std-ref">boundary-condition type association table</span></a>.</p>
 <p>For simple boundary conditions, a single match from the list of <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> instances is required.
 For all <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> identifiers, except <code class="code sidskey docutils literal notranslate"><span class="pre">BCInflowSupersonic</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCOutflowSupersonic</span></code>, an exact match is necessary. <code class="code sidskey docutils literal notranslate"><span class="pre">BCInflowSupersonic</span></code> will match itself or <code class="code sidskey docutils literal notranslate"><span class="pre">BCDirichlet</span></code>; <code class="code sidskey docutils literal notranslate"><span class="pre">BCOutflowSupersonic</span></code> will match itself or <code class="code sidskey docutils literal notranslate"><span class="pre">BCExtrapolate</span></code>.</p>
 <p>For compound boundary conditions, the association table specifies which simple boundary-condition types are appropriate.
@@ -1180,8 +1165,8 @@ The accompanying rule determines which of the matching data sets to apply at a g
 <p>This provides a general procedure applicable to both <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code> situations.
 For a given <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t/BCType</span></code> use those instances of <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> whose field <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t/BCTypeSimple</span></code> matches according to the following table.
 Apply the matching data set or sets as prescribed by the appropriate usage rule.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id4">
-<caption><span class="caption-text"><strong>Associated Boundary Condition Types and Usage Rules</strong></span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id5">
+<caption><span class="caption-text"><strong>Associated Boundary Condition Types and Usage Rules</strong></span><a class="headerlink" href="#id5" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType_t</span></code> Identifier</p></th>
 <th class="head"><p>Associated <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> Identifiers and Usage Rules</p></th>
@@ -1270,7 +1255,7 @@ One option is to define a new <code class="code sidskey docutils literal notrans
 Another option may be to allow some identifiers to be both <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeCompound_t</span></code> and let their appropriate use be based on context. This is still undetermined.</p>
 </section>
 <section id="boundary-condition-specification-data">
-<h2><span class="section-number">9.9. </span>Boundary Condition Specification Data<a class="headerlink" href="#boundary-condition-specification-data" title="Link to this heading">#</a></h2>
+<span id="id1"></span><span id="bc-specdata"></span><h2><span class="section-number">9.9. </span>Boundary Condition Specification Data<a class="headerlink" href="#boundary-condition-specification-data" title="Link to this heading">#</a></h2>
 <p>For a given simple boundary condition (i.e., one that is not dependent on local flow conditions), the database provides a set of boundary-condition equations to be enforced through the structure definitions for <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCData_t</span></code>.
 Apart from the boundary-condition type, the precise equations to be enforced are described by boundary-condition solution data.
 These specified solution data are arranged by “equation type”:</p>
@@ -1285,7 +1270,7 @@ These specified solution data are arranged by “equation type”:</p>
 </dl>
 </div></blockquote>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">NeumannData</span></code> entities of <code class="code sidsref docutils literal notranslate"><span class="pre">BCData_t</span></code> list both the solution variables involved in the equations (through the <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">data-name identifier conventions</span></a>) and the specified solution data.</p>
-<p>Two issues need to be addressed for specifying Dirichlet or Neumann boundary-condition data. The first is whether the data is global or local:</p>
+<p id="global-vs-local"><span id="globalvslocal"></span>Two issues need to be addressed for specifying Dirichlet or Neumann boundary-condition data. The first is whether the data is global or local:</p>
 <blockquote>
 <div><dl class="field-list simple">
 <dt class="field-odd">Global BC data<span class="colon">:</span></dt>
@@ -1314,7 +1299,7 @@ We are left with the easier task of defining <em>how many</em> Dirichlet or Neum
 </div>
 <p>Basically, this states that <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code> contains four instances of <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> with identifiers or names <code class="code sidskey docutils literal notranslate"><span class="pre">PressureStagnation</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">MassFlow</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">VelocityAngleY</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">VelocityAngleZ</span></code>.
 Each <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> structure entity contains a single floating-point value; these are the Dirichlet data for the BC. Note that <code class="code sidskey docutils literal notranslate"><span class="pre">Data(real,</span> <span class="pre">1,</span> <span class="pre">1)</span></code> means a single floating-point value.</p>
-<p>The <span class="xref std std-ref">global verses local</span> data issue can be easily handled by storing either a scalar, as shown above, for the global BC data case; or storing an array for the local BC data case.
+<p>The <a class="reference internal" href="#globalvslocal"><span class="std std-ref">global verses local</span></a> data issue can be easily handled by storing either a scalar, as shown above, for the global BC data case; or storing an array for the local BC data case.
 Storing an array of local BC data allows the capability for specifying non-constant solution profiles, such as “analytic” boundary-layer profiles or profiles derived from experimental data.
 For the above example, if the stagnation pressure is instead specified at every vertex of the boundary-condition patch the following results:</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">BCData_t</span><span class="o">&lt;</span><span class="n">ListLength</span><span class="o">=</span><span class="mi">99</span><span class="o">&gt;</span><span class="w"> </span><span class="n">DirichletData</span><span class="w"> </span><span class="o">=</span>
@@ -1333,22 +1318,22 @@ This includes situations where entities of <code class="code sidskey docutils li
 By convention, if no <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet</span></code> entities are present, then application codes are free to enforce appropriate BCs for the given value of <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code>.
 Furthermore, if the entities <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">NeumannData</span></code> are not present in an instance of <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code>, or if insufficient data is present in <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">NeumannData</span></code> (e.g., if only one Dirichlet variable is present for a subsonic inflow condition), then application codes are free to fill out the boundary-condition data as appropriate for the <code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple</span></code> identifier.</p>
 <p>The various levels of BC implementation allowed are shown in the following figure, from the lowest level in which the application codes interpret the <code class="code sidsref docutils literal notranslate"><span class="pre">BCType</span></code>, to the fully SIDS-compliant BC implementation that completely defines the BC within the CGNS file.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id5">
-<caption><span class="caption-text"><strong>Boundary Condition Implementation Levels</strong></span><a class="headerlink" href="#id5" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id6">
+<caption><span class="caption-text"><strong>Boundary Condition Implementation Levels</strong></span><a class="headerlink" href="#id6" title="Link to this table">#</a></caption>
 <tbody>
-<tr class="row-odd"><td><figure class="align-center" id="id6">
+<tr class="row-odd"><td><figure class="align-center" id="id7">
 <a class="reference internal image-reference" href="../../_images/bcimpl_low.gif"><img alt="CGNS dataset nodes for lowest boundary condition implementation level allowed" src="../../_images/bcimpl_low.gif" style="width: 170px;" />
 </a>
 <figcaption>
-<p><span class="caption-text"><em>Lowest-level allowed (application code interprets meaning of</em> <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> <em>)</em></span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+<p><span class="caption-text"><em>Lowest-level allowed (application code interprets meaning of</em> <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> <em>)</em></span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </td>
-<td><figure class="align-center" id="id7">
+<td><figure class="align-center" id="id8">
 <a class="reference internal image-reference" href="../../_images/bcimpl_full.gif"><img alt="CGNS dataset nodes for fully SIDS-compliant boundary condition implementation" src="../../_images/bcimpl_full.gif" style="width: 370px;" />
 </a>
 <figcaption>
-<p><span class="caption-text"><em>Fully SIDS-compliant</em></span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+<p><span class="caption-text"><em>Fully SIDS-compliant</em></span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </td>
@@ -1360,9 +1345,9 @@ Furthermore, if the entities <code class="code sidskey docutils literal notransl
 We have not taken this approach. We think grouping boundary-condition data by “equation type” as we have done better allows for future extension to other types of boundary conditions (e.g., 2nd-order non-reflecting BC’s that result in partial differential equations to be solved at the boundary).</p>
 </section>
 <section id="boundary-condition-examples">
-<h2><span class="section-number">9.10. </span>Boundary Condition Examples<a class="headerlink" href="#boundary-condition-examples" title="Link to this heading">#</a></h2>
+<span id="bcexample"></span><h2><span class="section-number">9.10. </span>Boundary Condition Examples<a class="headerlink" href="#boundary-condition-examples" title="Link to this heading">#</a></h2>
 <p>This section contains boundary-condition examples with increasing complexity. Included is the most simple <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code> entity and one of the most complex.
-The examples show situations of <span class="xref std std-ref">local and global</span> boundary-condition data, <span class="xref std std-ref">simple</span> and <span class="xref std std-ref">compound</span> boundary-condition types, and multiple boundary-condition data sets that must be matched with the appropriate boundary-condition type.</p>
+The examples show situations of <a class="reference internal" href="#globalvslocal"><span class="std std-ref">local and global</span></a> boundary-condition data, <a class="reference internal" href="#bctypesimple"><span class="std std-ref">simple</span></a> and <a class="reference internal" href="#bctypecompound"><span class="std std-ref">compound</span></a> boundary-condition types, and multiple boundary-condition data sets that must be matched with the appropriate boundary-condition type.</p>
 <section id="example-symmetry-plane">
 <h3><span class="section-number">9.10.1. </span>Example - Symmetry Plane<a class="headerlink" href="#example-symmetry-plane" title="Link to this heading">#</a></h3>
 <p>Symmetry plane for a patch on the <em>i</em>-min face of a 3-D structured zone.</p>
@@ -1383,7 +1368,7 @@ The examples show situations of <span class="xref std std-ref">local and global<
 The BC patch is specified by <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> with a beginning index of (1,1,1) and an ending index of (1,9,17). By default, these refer to vertices.</p>
 </section>
 <section id="example-viscous-solid-wall-i">
-<h3><span class="section-number">9.10.2. </span>Example - Viscous Solid Wall I<a class="headerlink" href="#example-viscous-solid-wall-i" title="Link to this heading">#</a></h3>
+<span id="ex-bc6"></span><h3><span class="section-number">9.10.2. </span>Example - Viscous Solid Wall I<a class="headerlink" href="#example-viscous-solid-wall-i" title="Link to this heading">#</a></h3>
 <p>A viscous solid wall for a 3-D structured zone, where a Dirichlet condition is enforced for temperature; the wall temperature for the entire wall is specified to be 273 K. The BC patch is on the <em>j</em>-min face and is bounded by the indices (1,1,1) and (33,1,9).</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 3, IndexDimension = 3</span>
 <span class="kt">BC_t</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BC2</span><span class="w"> </span><span class="o">=</span>
@@ -1424,7 +1409,7 @@ The BC patch is specified by <code class="code sidskey docutils literal notransl
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
-<p>This is an example of a <span class="xref std std-ref">simple boundary-condition type</span>, <code class="code sidskey docutils literal notranslate"><span class="pre">BCWallViscousIsothermal</span></code>.
+<p>This is an example of a <a class="reference internal" href="#bctypesimple"><span class="std std-ref">simple boundary-condition type</span></a>, <code class="code sidskey docutils literal notranslate"><span class="pre">BCWallViscousIsothermal</span></code>.
 By default there is a zero Dirichlet condition on the velocity, and <code class="code sidsref docutils literal notranslate"><span class="pre">BCDataSet1</span></code> states there is a Dirichlet condition on temperature with a global value of 273 K.
 The data set contains a single <code class="code sidsref docutils literal notranslate"><span class="pre">BCData_t</span></code> entity, called <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code>, meaning a (possibly empty) collection of Dirichlet conditions should be enforced.
 Within <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code>, there is a single <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entity; this narrows the specification to a single Dirichlet condition.
@@ -1492,7 +1477,7 @@ No dimensional or nondimensional information is provided.</p>
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
-<p>This is another example of a <span class="xref std std-ref">simple boundary-condition type</span>.
+<p>This is another example of a <a class="reference internal" href="#bctypesimple"><span class="std std-ref">simple boundary-condition type</span></a>.
 The primary additional complexity included in this example is multiple Dirichlet conditions with one containing local data.
 <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code> contains three <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> entities named <code class="code sidskey docutils literal notranslate"><span class="pre">EntropyApprox</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">EnthalpyStagnation</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">VelocityY</span></code>.
 This specifies three Dirichlet boundary conditions to be enforced, and the names identify the solution quantities to set.
@@ -1528,7 +1513,7 @@ Note that the beginning and ending indices on the array <code class="code docuti
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
-<p>This is an example of a <span class="xref std std-ref">complex boundary-condition type</span>; the equation set to be enforced depends on the local flow conditions, namely the Mach number normal to the boundary.
+<p>This is an example of a <a class="reference internal" href="#bctypecompound"><span class="std std-ref">complex boundary-condition type</span></a>; the equation set to be enforced depends on the local flow conditions, namely the Mach number normal to the boundary.
 Two data sets are provided, <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSetSubsonic</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSetSupersonic</span></code>; recall the names are unimportant and are user defined.
 The first data set has a boundary-condition type of <code class="code sidskey docutils literal notranslate"><span class="pre">BCOutflowSubsonic</span></code> and prescribes a global Dirichlet condition on static pressure.
 Any additional boundary conditions needed may be applied by a flow solver. The second data set has a boundary-condition type of <code class="code sidskey docutils literal notranslate"><span class="pre">BCOutflowSupersonic</span></code> with no additional boundary-condition equation specification.
@@ -1587,10 +1572,10 @@ None of the extrapolated quantities for the different boundary condition possibi
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
-<p>The farfield boundary-condition type is the most complex of the <span class="xref std std-ref">compound boundary-condition types</span>.
-<code class="code sidskey docutils literal notranslate"><span class="pre">BCFarfield</span></code> requires four data sets; these data sets must contain the <span class="xref std std-ref">simple boundary-condition types</span> <code class="code sidskey docutils literal notranslate"><span class="pre">BCInflowSupersonic</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">BCInflowSubsonic</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">BCOutflowSupersonic</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCOutflowSubsonic</span></code>.
-This example provides four appropriate data sets. The <span class="xref std std-ref">usage rule</span> given for <code class="code sidskey docutils literal notranslate"><span class="pre">BCFarfield</span></code> states which set of boundary-condition equations to be enforced based on the normal velocity and normal Mach number.</p>
-<p>The data set for supersonic-inflow provides no information other than the <span class="xref std std-ref">boundary-condition type</span>.
+<p>The farfield boundary-condition type is the most complex of the <a class="reference internal" href="#bctypecompound"><span class="std std-ref">compound boundary-condition types</span></a>.
+<code class="code sidskey docutils literal notranslate"><span class="pre">BCFarfield</span></code> requires four data sets; these data sets must contain the <a class="reference internal" href="#bctypesimple"><span class="std std-ref">simple boundary-condition types</span></a> <code class="code sidskey docutils literal notranslate"><span class="pre">BCInflowSupersonic</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">BCInflowSubsonic</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">BCOutflowSupersonic</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">BCOutflowSubsonic</span></code>.
+This example provides four appropriate data sets. The <a class="reference internal" href="#bctype-assoc"><span class="std std-ref">usage rule</span></a> given for <code class="code sidskey docutils literal notranslate"><span class="pre">BCFarfield</span></code> states which set of boundary-condition equations to be enforced based on the normal velocity and normal Mach number.</p>
+<p>The data set for supersonic-inflow provides no information other than the <a class="reference internal" href="#bctype"><span class="std std-ref">boundary-condition type</span></a>.
 A flow solver is free to apply any conditions that are appropriate; typically all solution quantities are set to freestream reference state values.
 The data set for subsonic-inflow states that three Dirichlet conditions should be enforced; the three data identifiers provided are from the <a class="reference internal" href="appendix_a.html#dataname"><span class="std std-ref">standard data-name identifier conventions</span></a>.
 The data set for supersonic-outflow only provides the boundary-condition type, and the data set for subsonic-outflow provides one Dirichlet condition on the incoming acoustic characteristic, <code class="code sidskey docutils literal notranslate"><span class="pre">CharacteristicAcousticMinus</span></code>.</p>
@@ -1602,7 +1587,7 @@ This information could also be obtained from the BC patch description given in <
 <section id="example-viscous-solid-wall-ii">
 <h3><span class="section-number">9.10.6. </span>Example - Viscous Solid Wall II<a class="headerlink" href="#example-viscous-solid-wall-ii" title="Link to this heading">#</a></h3>
 <p>There are circumstances when a user may wish to define a BC patch using vertices (under <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code>), but store the BC data at face centers (under <code class="code sidsref docutils literal notranslate"><span class="pre">BCDataSet_t</span></code>).
-The following example is similar to the <span class="xref std std-ref">Viscous Solid Wall</span> example given previously, with the exception that the Dirichlet data for temperature is stored at face centers rather than at vertices.</p>
+The following example is similar to the <a class="reference internal" href="#ex-bc6"><span class="std std-ref">Viscous Solid Wall</span></a> example given previously, with the exception that the Dirichlet data for temperature is stored at face centers rather than at vertices.</p>
 <p>As before, the example is a viscous solid wall in a 3-D structured zone, where a Dirichlet condition is enforced for temperature; the wall temperature for the entire wall is specified to be 273 K.
 The BC patch is on the <em>j</em>-min face and is bounded by the indices (1,1,1) and (33,1,9).</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="c1">!  CellDimension = 3, IndexDimension = 3</span>
@@ -1652,7 +1637,7 @@ The BC patch is on the <em>j</em>-min face and is bounded by the indices (1,1,1)
 <span class="w">  </span><span class="p">}}</span><span class="w"> </span><span class="p">;</span>
 </pre></div>
 </div>
-<p>As in the previous <span class="xref std std-ref">Viscous Solid Wall</span> example, although the boundary-condition data is global, we include in this example structure parameters that are the lengths of potential local-data arrays.
+<p>As in the previous <a class="reference internal" href="#ex-bc6"><span class="std std-ref">Viscous Solid Wall</span></a> example, although the boundary-condition data is global, we include in this example structure parameters that are the lengths of potential local-data arrays.
 In <code class="code sidsref docutils literal notranslate"><span class="pre">BC_t</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> is not specified, and thus is <code class="code sidskey docutils literal notranslate"><span class="pre">Vertex</span></code> by default.
 The structure function <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code> is 297, based on the specification of <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>, and that value is passed to <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code>.</p>
 <p>In this example <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> is specified in <code class="code sidskey docutils literal notranslate"><span class="pre">BCDataSet_t</span></code>, so the <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code> passed into it from <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code> is not used.
@@ -1699,19 +1684,27 @@ The corresponding value of <code class="code sidskey docutils literal notranslat
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-structures-overview">9.1. Boundary Condition Structures Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zonal-boundary-condition-structure-definition-zonebc-t">9.2. Zonal Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">ZoneBC_t</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-structure-definition-bc-t">9.3. Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">BC_t</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-data-set-structure-definition-bcdataset-t">9.4. Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCDataSet_t</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-structure-definition-bc-t">9.3. Boundary Condition Structure Definition: <code class="docutils literal notranslate"><span class="pre">BC_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c.ListLength"><code class="docutils literal notranslate"><span class="pre">ListLength()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-data-set-structure-definition-bcdataset-t">9.4. Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCDataSet_t</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c.ListLengthBCData"><code class="docutils literal notranslate"><span class="pre">ListLengthBCData()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-data-structure-definition-bcdata-t">9.5. Boundary Condition Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCData_t</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-condition-property-structure-definition-bcproperty-t">9.6. Boundary Condition Property Structure Definition: <code class="docutils literal notranslate"><span class="pre">BCProperty_t</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wall-function-structure-definition-wallfunction-t">9.6.1. Wall Function Structure Definition: <code class="docutils literal notranslate"><span class="pre">WallFunction_t</span></code></a></li>
@@ -1770,8 +1763,8 @@ The corresponding value of <code class="code sidskey docutils literal notranslat
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

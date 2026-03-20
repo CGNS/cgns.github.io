@@ -1,27 +1,34 @@
 .. CGNS Documentation files
    See LICENSING/COPYRIGHT at root dir of this documentation sources
 
+.. _hierarchy:
+
 Hierarchical Structures
 +++++++++++++++++++++++
 
 This section presents the structure-type definitions for the top levels of the CGNS hierarchy. As stated in the :ref:`SIDS design philosophy <design>`, the hierarchy is :ref:`topologically based <topology>`, where the overall organization is by zones. All information pertaining to a given zone, including grid coordinates, flow solution, and other related data, is contained within that zone's structure entity. This section describes the :ref:`CGNS version number <CGNS Version>`, defines the :ref:`CGNS database entry level structure <CGNSBase_t>` and the :ref:`zone structure <Zone_t>`, and concludes with a discussion of :ref:`globally applicable data <precedence>`.
+
+.. _CGNSLibraryVersion_t:
+.. _CGNS Version:
 
 CGNS Version
 ^^^^^^^^^^^^
 
 CGNS is an evolving standard. Although great care is taken to make CGNS databases backward-compatible with previous versions whenever possible, new nodes and new features are still being added that make them non-forward-compatible. To address this issue, each new version of the standard is labeled with a version number that should be written in the file. This version number corresponds to the version of the SIDS and is an essential part of the file containing the CGNS database. The file can not be interpreted properly without knowledge of this version number.
 
-Physically, this version number is located directly under the root node of the file. The :ref:`SIDS File Mapping Manual <CGNSLibraryVersion_t>` defines this location more precisely.
+Physically, this version number is located directly under the root node of the file. The :ref:`SIDS File Mapping Manual <CGNSLibraryVersion>` defines this location more precisely.
 
-Historically, the version number was used to describe the version of the :ref:`Mid-Level Library <CGNS_MLL>` used to write or modify the file. The corresponding node was thus named :sidskey:`CGNSLibraryVersion_t`. With the advent of new libraries that can read and write CGNS databases, the node is now defined as the version of the CGNS standard. The Mid-Level Library modifies its interpretation of node data according to the CGNS version number, and other libraries should also.
+Historically, the version number was used to describe the version of the :ref:`Mid-Level Library <StandardMLL>` used to write or modify the file. The corresponding node was thus named :sidskey:`CGNSLibraryVersion_t`. With the advent of new libraries that can read and write CGNS databases, the node is now defined as the version of the CGNS standard. The Mid-Level Library modifies its interpretation of node data according to the CGNS version number, and other libraries should also.
+
+.. _CGNSBase_t:
 
 CGNS Entry Level Structure Definition: ``CGNSBase_t``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The highest level structure in a CGNS database is :sidskey:`CGNSBase_t`. This top level entity is designed to be self-contained, a complete CFD computation can be archived and reproduced using the data defined in the CGNSBase. However a CGNS tree can contain more than one base, these can be related to the same CFD case or not. The behavior of a multi-base CGNS tree is application dependent, even if inter-base relationships are authorized in three cases:
 
- * A reference to another base's zone name (including its sub-nodes' names) as defined in the multi-zone connectivities (see :ref:`Multizone Interface Connectivity <cnct>` and time-dependant pointers :ref:`Time-Dependent Flow <timedep>`);
- * A reference to another base's family name (see :ref:`Family Data Structure Definition <Family_t>`: :sidsref:`Family_t`) as as :sidskey:`FamilyName_t` data;
+ * A reference to another base's zone name (including its sub-nodes' names) as defined in the multi-zone connectivities (see :ref:`Multizone Interface Connectivity <SIDS-connectivity>` and time-dependant pointers :ref:`Time-Dependent Flow <timedep>`);
+ * A reference to another base's family name (see :ref:`Family Data Structure Definition <Family>`: :sidsref:`Family_t`) as as :sidskey:`FamilyName_t` data;
  * A LogicalLink() from one base to another on any kind of node;
 
 Care must be taken on precedence rules and scope in the case of parsing multiple CGNS bases (see :ref:`Precedence Rules and Scope Within the Hierarchy <precedence>`).
@@ -133,6 +140,8 @@ Globally relevant convergence history information is contained in :sidsref:`Glob
 
 Miscellaneous global data may be contained in the :sidsref:`IntegralData_t` list. Candidates for inclusion here are global forces and moments.
 
+.. _BaseLevelFamilies:
+
 Base Level Families
 ~~~~~~~~~~~~~~~~~~~
 
@@ -145,6 +154,8 @@ The actual family name has the pattern :literal:`/<CGNSBase_t>/<FamilyName1>/<Fa
 The family-mesh association is defined under the :sidsref:`Zone_t`, :sidsref:`ZoneSubRegion_t` and :sidsref:`BC_t` data structures by specifying the family name corresponding to a zone, a zone sub-region or a boundary patch in a :sidskey:`FamilyName_t` node. If the value of the :sidskey:`FamilyName_t` node does not have a :literal:`/` character in it, then the name refers to a family being a direct child of its CGNS base. Otherwise, if this value has at least one :literal:`/` in it, the pattern :literal:`/<CGNSBase_t>/<FamilyName1>/<FamilyName2>/.../<FamilyNameN>` is mandatory.
 
 The :sidsref:`UserDefinedData_t` data structure allows arbitrary user-defined data to be stored in :sidsref:`Descriptor_t` and :sidsref:`DataArray_t` children without the restrictions or implicit meanings imposed on these node types at other node locations.
+
+.. _Zone_t:
 
 Zone Structure Definition: ``Zone_t``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

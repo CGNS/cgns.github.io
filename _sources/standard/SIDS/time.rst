@@ -1,6 +1,8 @@
 .. CGNS Documentation files
    See LICENSING/COPYRIGHT at root dir of this documentation sources
 
+.. _timedep:
+
 Time-Dependent Flow
 ===================
 
@@ -329,10 +331,11 @@ Point-by-point grid velocity may also lead to relative motion of grid zones, or 
 However, no attempt is made here to require that the :sidsref:`ZoneGridConnectivity_t` information be updated to be consistent with the new grid locations.
 Whether the :sidskey:`ZoneGridConnectivity_t` information refers to the original connectivity (of :sidsref:`GridCoordinates`) or the latest connectivity (of the moved or deformed grid) is currently left up to the user.
 
-.. c:function:: FUNCTION DataSize()
+**FUNCTION DataSize()**
 
-   :return value: one-dimensional ``int`` array of length :sidskey:`IndexDimension`
-   :dependencies: :sidskey:`IndexDimension`, :sidskey:`VertexSize[]`, :sidskey:`CellSize[]`, :sidskey:`GridLocation`, :sidskey:`Rind`
+   *Return value:* one-dimensional ``int`` array of length :sidskey:`IndexDimension`
+
+   *Dependencies:* :sidskey:`IndexDimension`, :sidskey:`VertexSize[]`, :sidskey:`CellSize[]`, :sidskey:`GridLocation`, :sidskey:`Rind`
 
    The function :sidskey:`DataSize[]` is the size of the DataArrays containing the grid velocity components. It is identical to the function :sidskey:`DataSize[]` defined for :sidsref:`FlowSolution_t`.
 
@@ -428,6 +431,8 @@ In addition, the data structure :sidsref:`ArbitraryGridMotion_t` is recorded for
     }
   }
 
+
+.. _ex_adaptedunstructuredmesh:
 
 Example - Adapted Unstructured Mesh
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

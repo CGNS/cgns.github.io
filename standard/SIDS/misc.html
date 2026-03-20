@@ -16,34 +16,37 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=6bab4044" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/filemap.css?v=2c72f61b" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'standard/SIDS/misc';</script>
     <link rel="canonical" href="https://cgns.org/standard/SIDS/misc.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -52,6 +55,7 @@
     <link rel="prev" title="11. Time-Dependent Flow" href="time.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -67,19 +71,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -87,7 +80,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -95,8 +87,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -112,7 +104,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -140,7 +133,7 @@
     
     
     <img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-light" alt="CGNS Documentation - Home"/>
-    <script>document.write(`<img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark" alt="CGNS Documentation - Home"/>`);</script>
+    <img src="../../_static/CGNS_logo_nobckgrnd.svg" class="logo__image only-dark pst-js-only" alt="CGNS Documentation - Home"/>
   
   
 </a></div>
@@ -161,15 +154,11 @@
 </ul></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
@@ -299,6 +288,7 @@
 
 <li class="toctree-l2"><a class="reference internal" href="../../current/CPEX.html">CPEX</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/download.html">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../current/building.html">Build CGNS code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/examples.html">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../current/softwarelist.html">More CGNS Software</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../doc.html">More documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -323,9 +313,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -407,7 +402,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -421,25 +416,17 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -492,7 +479,7 @@ document.write(`
 <p>This section contains miscellaneous structure types for describing reference states, convergence history, discrete field data, integral or global data, families, and user-defined data.</p>
 <section id="reference-state-structure-definition-referencestate-t">
 <h2><span class="section-number">12.1. </span>Reference State Structure Definition: <code class="docutils literal notranslate"><span class="pre">ReferenceState_t</span></code><a class="headerlink" href="#reference-state-structure-definition-referencestate-t" title="Link to this heading">#</a></h2>
-<p><code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState_t</span></code> describes a reference state, which is a list of geometric or flow-state quantities defined at a common location or condition. Examples of typical reference states associated with CFD calculations are freestream, plenum, stagnation, inlet and exit. Note that providing a <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code> description is particularly important if items elsewhere in the CGNS database are <span class="xref std std-ref">NormalizedByUnknownDimensional</span>.</p>
+<p><code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState_t</span></code> describes a reference state, which is a list of geometric or flow-state quantities defined at a common location or condition. Examples of typical reference states associated with CFD calculations are freestream, plenum, stagnation, inlet and exit. Note that providing a <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code> description is particularly important if items elsewhere in the CGNS database are <a class="reference internal" href="array.html#normbyunkdim"><span class="std std-ref">NormalizedByUnknownDimensional</span></a>.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">ReferenceState_t</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
 <span class="w">  </span><span class="kt">Descriptor_t</span><span class="w"> </span><span class="n">ReferenceStateDescription</span><span class="w"> </span><span class="p">;</span><span class="w">                           </span><span class="kr">(o)</span>
@@ -560,10 +547,10 @@ document.write(`
 </table>
 </div>
 <p>In addition, any flowfield quantities (such as <code class="code sidskey docutils literal notranslate"><span class="pre">Density</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">Pressure</span></code>, etc.) can be included in the <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code>.</p>
-<p>The reference length <span class="math notranslate nohighlight">\(L\)</span> (<code class="code sidskey docutils literal notranslate"><span class="pre">LengthReference</span></code>) may be necessary for <span class="xref std std-ref">NormalizedByUnknownDimensional</span> databases, to define the length scale used for nondimensionalizations.
+<p>The reference length <span class="math notranslate nohighlight">\(L\)</span> (<code class="code sidskey docutils literal notranslate"><span class="pre">LengthReference</span></code>) may be necessary for <a class="reference internal" href="array.html#normbyunkdim"><span class="std std-ref">NormalizedByUnknownDimensional</span></a> databases, to define the length scale used for nondimensionalizations.
 It may be the same or different from the <code class="code sidskey docutils literal notranslate"><span class="pre">Reynolds_Length</span></code> used to define the Reynolds number.</p>
 <p>Because of different definitions for angle of attack and angle of yaw, these quantities are not explicitly defined in the SIDS. Instead, the user can unambigouosly denote the freestream velocity vector direction by giving <code class="code sidskey docutils literal notranslate"><span class="pre">VelocityX</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">VelocityY</span></code>, and <code class="code sidskey docutils literal notranslate"><span class="pre">VelocityZ</span></code> in <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code>, (with the reference state denoting the freestream).</p>
-<p>Care should be taken when defining the reference state quantities to ensure consistency. (See the discussion in the section on <span class="xref std std-ref">Nondimensional Data Normalized by Unknown Dimensional Quantities</span>.) For example, if velocity, length, and time are all defined, then the velocity stored should be length/time.
+<p>Care should be taken when defining the reference state quantities to ensure consistency. (See the discussion in the section on <a class="reference internal" href="array.html#normbyunkdim"><span class="std std-ref">Nondimensional Data Normalized by Unknown Dimensional Quantities</span></a>.) For example, if velocity, length, and time are all defined, then the velocity stored should be length/time.
 If consistency is not followed, different applications could interpret the resulting data in different ways.</p>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the reference state.
 If any reference state quantities are dimensional, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
@@ -573,7 +560,7 @@ If present, these two entities take precedence over all corresponding entities a
 </section>
 <section id="reference-state-example">
 <h2><span class="section-number">12.2. </span>Reference State Example<a class="headerlink" href="#reference-state-example" title="Link to this heading">#</a></h2>
-<p>An example is presented in this section of a reference state entity that contains dimensional data. An additional example of a nondimensional reference state is provided in the <span class="xref std std-ref">Structured Two-Zone Flat Plate Example</span>.</p>
+<p>An example is presented in this section of a reference state entity that contains dimensional data. An additional example of a nondimensional reference state is provided in the <a class="reference internal" href="appendix_b.html#twozone"><span class="std std-ref">Structured Two-Zone Flat Plate Example</span></a>.</p>
 <section id="example-reference-state-with-dimensional-data">
 <h3><span class="section-number">12.2.1. </span>Example - Reference State with Dimensional Data<a class="headerlink" href="#example-reference-state-with-dimensional-data" title="Link to this heading">#</a></h3>
 <p>A freestream reference state where all data quantities are dimensional. Standard atmospheric conditions at sea level are assumed for static quantities, and all stagnation variables are obtained using the isentropic relations.
@@ -757,36 +744,20 @@ They are not required to contain the same number of rind planes or elements. Als
 For dimensional data, <code class="code sidskey docutils literal notranslate"><span class="pre">DimensionalUnits</span></code> may be used to describe the system of dimensional units employed.
 If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard precedence rules.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> data structure allows arbitrary user-defined data to be stored in <code class="code sidskey docutils literal notranslate"><span class="pre">Descriptor_t</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">DataArray_t</span></code> children without the restrictions or implicit meanings imposed on these node types at other node locations.</p>
-<dl class="c function">
-<dt class="sig sig-object c" id="c.ListLength">
-<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ListLength</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return value<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
-</dd>
-<dt class="field-even">Dependencies<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange[]</span></code></p>
-</dd>
-</dl>
+<p><strong>FUNCTION ListLength()</strong></p>
+<blockquote>
+<div><p><em>Return value:</em> <code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+<p><em>Dependencies:</em> <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange[]</span></code></p>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">DiscreteData_t</span></code> requires the structure function <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code>, which is used to specify the number of entities (e.g. vertices) corresponding to a given <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code>. If <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> is specified, then <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code> is obtained from the number of points (inclusive) between the beginning and ending indices of <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>.
 If <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code> is specified, then <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code> is the number of indices in the list of points. In this situation, <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength</span></code> becomes a user input along with the indices of the list <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code>.
 By user we mean the application code that is generating the CGNS database.</p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.DataSize">
-<span class="n"><span class="pre">FUNCTION</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DataSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return value<span class="colon">:</span></dt>
-<dd class="field-odd"><p>one-dimensional <code class="docutils literal notranslate"><span class="pre">int</span></code> array of length <code class="code sidskey docutils literal notranslate"><span class="pre">IndexDimension</span></code></p>
-</dd>
-<dt class="field-even">Dependencies<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="code sidskey docutils literal notranslate"><span class="pre">IndexDimension</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">VertexSize[]</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">CellSize[]</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">Rind</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength[]</span></code></p>
-</dd>
-</dl>
+</div></blockquote>
+<p><strong>FUNCTION DataSize()</strong></p>
+<blockquote>
+<div><p><em>Return value:</em> one-dimensional <code class="docutils literal notranslate"><span class="pre">int</span></code> array of length <code class="code sidskey docutils literal notranslate"><span class="pre">IndexDimension</span></code></p>
+<p><em>Dependencies:</em> <code class="code sidskey docutils literal notranslate"><span class="pre">IndexDimension</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">VertexSize[]</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">CellSize[]</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">Rind</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">ListLength[]</span></code></p>
 <p>The function <code class="code sidskey docutils literal notranslate"><span class="pre">DataSize[]</span></code> is the size of discrete-data arrays. It is identical to the function <code class="code sidskey docutils literal notranslate"><span class="pre">DataSize[]</span></code> defined for <code class="code sidskey docutils literal notranslate"><span class="pre">FlowSolution_t</span></code>.</p>
-</dd></dl>
-
+</div></blockquote>
 </section>
 <section id="integral-data-structure-definition-integraldata-t">
 <h2><span class="section-number">12.5. </span>Integral Data Structure Definition: <code class="docutils literal notranslate"><span class="pre">IntegralData_t</span></code><a class="headerlink" href="#integral-data-structure-definition-integraldata-t" title="Link to this heading">#</a></h2>
@@ -823,7 +794,7 @@ The intermediate objects are in turn linked to nodal regions of the computationa
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code> data structure holds the CFD family data. Each mesh surface is linked to the geometric entities of CAD databases by a name attribute. This attribute corresponds to a family of CAD geometric entities on which the mesh face is projected. Each one of these geometric entities is described in a CAD file and is not redefined within the CGNS file.
 A <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code> data structure may be included in the <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> structure for each CFD family of the model.</p>
 <p>A hierarchy of <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code> nodes can be build by adding a <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code> node as child of an existing <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code> node. One can mimic an existing CAD hierarchy or add another hierarchy for special application purpose.</p>
-<p>In case of a tree of <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code>, the actual reference to a family in the tree should follow the pattern as described in <span class="xref std std-ref">Base Level Families</span>.</p>
+<p>In case of a tree of <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code>, the actual reference to a family in the tree should follow the pattern as described in <a class="reference internal" href="hierarchy.html#baselevelfamilies"><span class="std std-ref">Base Level Families</span></a>.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code> structure contains all information pertinent to a CFD family. This information includes the name attribute or family name, the boundary conditions applicable to these mesh regions, and the referencing to the CAD databases.</p>
 <div class="highlight-sids notranslate"><div class="highlight"><pre><span></span><span class="kt">Family_t</span><span class="w"> </span><span class="o">:=</span>
 <span class="w">  </span><span class="p">{</span>
@@ -927,11 +898,11 @@ The geometry entity or entities within this CAD file that correspond to the fami
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> specifies the boundary-condition type, which gives general information on the boundary-condition equations to be enforced.
 Boundary conditions are to be applied at the locations specified by the <code class="code sidskey docutils literal notranslate"><span class="pre">BC_t</span></code> structure(s) associated with the CFD family.</p>
 <p>The <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBC_t</span></code> structure provides for a list of boundary-condition data sets.
-In general, the proper <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> instance to impose on the CFD family is determined by the <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> <span class="xref std std-ref">association table</span>.
-The mechanics of determining the proper data set to impose is described in the section <span class="xref std std-ref">Matching Boundary Condition Data Sets</span>.</p>
+In general, the proper <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> instance to impose on the CFD family is determined by the <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> <a class="reference internal" href="boundary.html#bctype-assoc"><span class="std std-ref">association table</span></a>.
+The mechanics of determining the proper data set to impose is described in the section <a class="reference internal" href="boundary.html#bctype-assoc"><span class="std std-ref">Matching Boundary Condition Data Sets</span></a>.</p>
 <p>For a few boundary conditions, such as a symmetry plane or polar singularity, the value of <code class="code sidskey docutils literal notranslate"><span class="pre">BCType</span></code> completely describes the equations to impose, and no instances of <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> are needed.
 For “simple” boundary conditions, where a single set of Dirichlet and/or Neumann data is applied, a single <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> will likely appear (although this is not a requirement).
-For “compound” boundary conditions, where the equations to impose are dependent on local flow conditions, several instances of <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> will likely appear; the procedure for choosing the proper data set is more complex as described in the section <span class="xref std std-ref">Matching Boundary Condition Data Sets</span>.</p>
+For “compound” boundary conditions, where the equations to impose are dependent on local flow conditions, several instances of <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code> will likely appear; the procedure for choosing the proper data set is more complex as described in the section <a class="reference internal" href="boundary.html#bctype-assoc"><span class="std std-ref">Matching Boundary Condition Data Sets</span></a>.</p>
 </section>
 <section id="family-boundary-condition-data-set-structure-definition-familybcdataset-t">
 <h2><span class="section-number">12.9. </span>Family Boundary Condition Data Set Structure Definition: <code class="docutils literal notranslate"><span class="pre">FamilyBCDataSet_t</span></code><a class="headerlink" href="#family-boundary-condition-data-set-structure-definition-familybcdataset-t" title="Link to this heading">#</a></h2>
@@ -963,8 +934,8 @@ For “compound” boundary conditions, where the equations to impose are depend
 </ol>
 </div>
 <p><code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple</span></code> specifies the boundary-condition type, which gives general information on the boundary-condition equations to be enforced.
-<code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple</span></code> is also used for matching boundary condition data sets as discussed in the section <span class="xref std std-ref">Matching Boundary Condition Data Sets</span>.</p>
-<p>Boundary-condition data is separated by equation type into Dirichlet and Neumann conditions. Dirichlet boundary conditions impose the value of the given variables, whereas Neumann boundary conditions impose the normal derivative of the given variables. The mechanics of specifying Dirichlet and Neumann data for boundary conditions is covered in section <span class="xref std std-ref">Boundary Condition Specification Data</span>.</p>
+<code class="code sidskey docutils literal notranslate"><span class="pre">BCTypeSimple</span></code> is also used for matching boundary condition data sets as discussed in the section <a class="reference internal" href="boundary.html#bctype-assoc"><span class="std std-ref">Matching Boundary Condition Data Sets</span></a>.</p>
+<p>Boundary-condition data is separated by equation type into Dirichlet and Neumann conditions. Dirichlet boundary conditions impose the value of the given variables, whereas Neumann boundary conditions impose the normal derivative of the given variables. The mechanics of specifying Dirichlet and Neumann data for boundary conditions is covered in section <a class="reference internal" href="boundary.html#bc-specdata"><span class="std std-ref">Boundary Condition Specification Data</span></a>.</p>
 <p>The substructures <code class="code sidskey docutils literal notranslate"><span class="pre">DirichletData</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">NeumannData</span></code> contain boundary-condition data defined as globally constant over the family.</p>
 <p>Reference quantities applicable to the set of boundary-condition data are contained in the <code class="code sidskey docutils literal notranslate"><span class="pre">ReferenceState</span></code> structure.
 <code class="code sidskey docutils literal notranslate"><span class="pre">DataClass</span></code> defines the default for the class of data contained in the boundary condition data.
@@ -1009,7 +980,7 @@ The primary difference is that <code class="code sidskey docutils literal notran
 <li><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> may be set to <code class="code sidskey docutils literal notranslate"><span class="pre">Vertex</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">IFaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">JFaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">KFaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">FaceCenter</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">CellCenter</span></code>, or <code class="code sidskey docutils literal notranslate"><span class="pre">EdgeCenter</span></code>. If <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> is absent, then its default value is <code class="code sidskey docutils literal notranslate"><span class="pre">Vertex</span></code>. When <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> is set to <code class="code sidskey docutils literal notranslate"><span class="pre">Vertex</span></code>, then <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> refer to node indices, for both structured and unstructured grids. When <code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code> is set to <code class="code sidskey docutils literal notranslate"><span class="pre">FaceCenter</span></code>, then <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code> or <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> refer to face elements.</p></li>
 <li><p><code class="code sidskey docutils literal notranslate"><span class="pre">GridLocation</span></code>, <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code>, and <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code> may only be used when <code class="code sidskey docutils literal notranslate"><span class="pre">UserDefinedData_t</span></code> is located below a <code class="code sidskey docutils literal notranslate"><span class="pre">Zone_t</span></code> structure in the database hierarchy.</p></li>
 <li><p>Only one of <code class="code sidskey docutils literal notranslate"><span class="pre">PointRange</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">PointList</span></code> may be specified.</p></li>
-<li><p>Both <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">AdditionalFamilyName</span></code> should refer to a <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> level <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code>, in the parent base or in another sibling base (see <span class="xref std std-ref">Base Level Families</span>).</p></li>
+<li><p>Both <code class="code sidskey docutils literal notranslate"><span class="pre">FamilyName</span></code> and <code class="code sidskey docutils literal notranslate"><span class="pre">AdditionalFamilyName</span></code> should refer to a <code class="code sidskey docutils literal notranslate"><span class="pre">CGNSBase_t</span></code> level <code class="code sidskey docutils literal notranslate"><span class="pre">Family_t</span></code>, in the parent base or in another sibling base (see <a class="reference internal" href="hierarchy.html#baselevelfamilies"><span class="std std-ref">Base Level Families</span></a>).</p></li>
 </ol>
 </div>
 </section>
@@ -1078,14 +1049,16 @@ If present, these two entities take precedence over the corresponding entities a
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-state-structure-definition-referencestate-t">12.1. Reference State Structure Definition: <code class="docutils literal notranslate"><span class="pre">ReferenceState_t</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-state-example">12.2. Reference State Example</a><ul class="nav section-nav flex-column">
@@ -1141,8 +1114,8 @@ If present, these two entities take precedence over the corresponding entities a
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

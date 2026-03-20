@@ -43,7 +43,7 @@ Building libraries and tools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The CGNS libs and tools are hosted on Github; the associated documentation
-can be found on `this page <http://www.github.com/CGNS/CGNS>`_.
+can be found on `this page <https://github.com/CGNS/CGNS>`_.
 
 Building the documentation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

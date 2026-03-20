@@ -270,7 +270,7 @@ The CGNS Steering Committee supports and even encourages
 the evolution of the standard for CGNS to remain useful. Therefore, the committee
 must solicit technical support and "in-kind" contributions. In
 addition, the Steering Committee must follow the policies described in
-the section of this document on :ref:`standard_Changes-ref <Changes or Additions>`
+the section of this document on :ref:`Changes or Additions <standard_Changes-ref>`
 to the Standard regarding the collection and evaluation of technical proposals.
 
 .. _mission_Promote_the_acceptance-ref:

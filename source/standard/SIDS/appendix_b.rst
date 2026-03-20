@@ -7,6 +7,8 @@
 
 .. role:: sidsref(code)
 
+.. _twozone:
+
 Appendix B: Structured Two-Zone Flat Plate Example
 ==================================================
 

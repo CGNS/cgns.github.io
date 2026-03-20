@@ -10,6 +10,7 @@ Resources
    current/news
    current/CPEX
    current/download
+   current/building
    current/examples
    current/softwarelist
    doc

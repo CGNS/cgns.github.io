@@ -1,6 +1,8 @@
 .. CGNS Documentation files
    See LICENSING/COPYRIGHT at root dir of this documentation sources
 
+.. _design:
+
 Design Philosophy of Standard Interface Data Structures
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -18,6 +20,8 @@ The third implication of CFD data sets is that files containing a CFD database a
 It is important to note that the description of information by the SIDS is independent of physical file formats. However, it is targeted toward implementation using the ADF Core library. Some of the language components used to define the SIDS are meant to directly map into elements of an ADF node.
 
 
+.. _topology:
+
 Topologically Based Hierarchical Database
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -32,7 +36,7 @@ There are two major alternatives to organizing a CFD hierarchy: topologically ba
 
    *Sample topologically Based CFD Hierarchy*
 
-The hierarchy described in this document is topologically based; a simplified illustration of the database hierarchy is shown in the above figure. Hanging off the :ref:`root "node"` of the database is a node containing global :ref:`reference-state information <ReferenceState>`, such as freestream conditions, and a list of :ref:`nodes for each zone <Zone>`. The figure shows the nodes that hang off the first zone; similar nodes would hang off of each zone in the database. Nodes containing the physical-coordinate data arrays (x, y and z) for the first zone are shown hanging off the :ref:`"grid coordinates" node <GridCoordinate>`. Likewise, nodes containing the first zone's flow-solution data arrays hang off the :ref:`"flow solution" node <FlowSolution>`. The figure also depicts nodes containing :ref:`multizone interface connectivity <cnct>` and :ref:`boundary condition information <bc>` for the first zone; subnodes hanging off each of these are not pictured.
+The hierarchy described in this document is topologically based; a simplified illustration of the database hierarchy is shown in the above figure. Hanging off the root "node" of the database is a node containing global :ref:`reference-state information <ReferenceState>`, such as freestream conditions, and a list of :ref:`nodes for each zone <Zone>`. The figure shows the nodes that hang off the first zone; similar nodes would hang off of each zone in the database. Nodes containing the physical-coordinate data arrays (x, y and z) for the first zone are shown hanging off the :ref:`"grid coordinates" node <GridCoordinates>`. Likewise, nodes containing the first zone's flow-solution data arrays hang off the :ref:`"flow solution" node <FlowSolution>`. The figure also depicts nodes containing :ref:`multizone interface connectivity <SIDS-connectivity>` and :ref:`boundary condition information <bcgroup>` for the first zone; subnodes hanging off each of these are not pictured.
 
 Additional Design Objectives
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -53,7 +57,7 @@ itself. The SIDS must reflect this cascade of information within the database.
 Another objective is elimination of nonsensical descriptions of the data.
 The SIDS have been carefully developed to avoid data qualifiers and other optional descriptive information that could be inconsistent.
 This has led to the use of specialized structures for certain CFD-related information.
-One example is a single-purpose :ref:`structure for defining physical grid coordinates <GridCoordinate>` of a zone.
+One example is a single-purpose :ref:`structure for defining physical grid coordinates <GridCoordinates>` of a zone.
 It is possible to define the grid coordinates, flow solution and any other field quantities within a zone by a generic discrete-data structure.
 However, this requires the generic structure to include information defining the grid location of the data (e.g., the data is located at vertices or cell centers). Using the generic structure to describe the grid coordinates leads to a possible inconsistency. By definition the physical coordinates
 that define the grid are located at vertices, and including an optional qualifier that states otherwise makes no sense.

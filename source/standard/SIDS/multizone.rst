@@ -513,6 +513,8 @@ It is included for backward compatibility to assist implementation of the CGNS s
 Since there are no restrictions on the values contained in :sidskey:`Ordinal` (or that :sidskey:`Ordinal` is even provided), there is no guarantee that the interfaces for a given zone in an existing CGNS database will have sequential values from 1 to N without holes or repetitions.
 Use of :sidskey:`Ordinal` is discouraged and is on a user-beware basis.
 
+.. _PointListSize_abut:
+
 .. c:function:: FUNCTION PointListSize()
 
    :return value: ``int``
@@ -757,10 +759,11 @@ The grid points making up a hole within a zone may be specified by :sidskey:`Poi
 
 The :sidsref:`UserDefinedData_t` data structure allows arbitrary user-defined data to be stored in :sidskey:`Descriptor_t` and :sidskey:`DataArray_t` children without the restrictions or implicit meanings imposed on these node types at other node locations.
 
-.. c:function:: FUNCTION PointListSize()
+**FUNCTION PointListSize()**
 
-   :return value: ``int``
-   :dependencies: :sidskey:`PointList`
+   *Return value:* ``int``
+
+   *Dependencies:* :sidskey:`PointList`
 
    :sidskey:`OversetHoles_t` requires one structure function, :sidskey:`PointListSize`, to identify the length of the :sidskey:`PointList` array. :sidskey:`PointListSize` is a user input. (See the discussion on function :ref:`PointListSize <PointListSize_abut>`.)
 

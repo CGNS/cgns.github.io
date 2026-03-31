@@ -101,7 +101,7 @@ The physical coordinates of the particle centers are described by the
 
     List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
 
-    List( DataArray_t<DataType, ParticleSize>
+    List( DataArray_t<DataType, 1, ParticleSize>
           DataArray1 ... DataArrayN ) ;                                (o)
 
     DataClass_t DataClass ;                                            (o)
@@ -177,10 +177,10 @@ and correspond to the solution for the entire particle.
     {
     List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
 
-    IndexRange PointRange ;                                            (o)
-    IndexArray<DataSize[], int> PointList ;                            (o)
+    IndexRange_t<1> PointRange ;                                       (o)
+    IndexArray_t<1, DataSize[], int> PointList ;                       (o)
 
-    List( DataArray_t<DataType, DataSize[]>
+    List( DataArray_t<DataType, 1, DataSize[]>
           DataArray1 ... DataArrayN ) ;                                (o)
 
     DataClass_t DataClass ;                                            (o)

@@ -535,36 +535,59 @@ ____________________________________________
       **without** a ``PointRange`` or ``PointList`` will return ``CG_ERROR``. This is enforced by the MLL to
       prevent ambiguous p-adaptive configurations.
 
-   **Example: P-Adaptation with Variable Orders**
+   **Example A: Variable Order Per Cell (P-Adaptation)**
+
+   Different cells use different polynomial orders.  Use ``cg_sol_ptset_write``
+   to create a ``FlowSolution_t`` that includes a ``PointRange`` or ``PointList``
+   in a single call:
 
    .. code-block:: c
 
-      /* Example: Zone with 100 elements using two different polynomial orders */
+      /* Zone with 100 elements using two different polynomial orders */
       int fn, B, Z, S_order3, S_order4;
-      cgsize_t range_1_to_50[2] = {1, 50};
-      cgsize_t range_51_to_100[2] = {51, 100};
+      cgsize_t range_1_to_50[2]    = {1,  50};
+      cgsize_t range_51_to_100[2]  = {51, 100};
 
-      /* 1. Create solution node for Order 3 elements (elements 1-50) */
-      cg_sol_write(fn, B, Z, "Solution_Order3", CellCenter, &S_order3);
-
-      /* CRITICAL: Specify which elements use Order 3 */
-      cg_ptset_write(fn, B, Z, S_order3, PointRange, 2, range_1_to_50);
-
-      /* Write interpolation order for this subset */
+      /* Order-3 elements (cells 1-50): create solution with PointRange in one call */
+      cg_sol_ptset_write(fn, B, Z, "Solution_Order3",
+                         CGNS_ENUMV(CellCenter),
+                         CGNS_ENUMV(PointRange), 2, range_1_to_50, &S_order3);
       cg_sol_interpolation_order_write(fn, B, Z, S_order3, 3, 0);
 
-      /* 2. Create solution node for Order 4 elements (elements 51-100) */
-      cg_sol_write(fn, B, Z, "Solution_Order4", CellCenter, &S_order4);
-
-      /* CRITICAL: Specify which elements use Order 4 */
-      cg_ptset_write(fn, B, Z, S_order4, PointRange, 2, range_51_to_100);
-
-      /* Write interpolation order for this subset */
+      /* Order-4 elements (cells 51-100) */
+      cg_sol_ptset_write(fn, B, Z, "Solution_Order4",
+                         CGNS_ENUMV(CellCenter),
+                         CGNS_ENUMV(PointRange), 2, range_51_to_100, &S_order4);
       cg_sol_interpolation_order_write(fn, B, Z, S_order4, 4, 0);
 
-      /* Write actual solution data to each node */
-      /* Solution_Order3 will have N_DOFs = (3+1)^d per element (element-type dependent) */
-      /* Solution_Order4 will have N_DOFs = (4+1)^d per element (element-type dependent) */
+      /* Write field data to each node using cg_field_write() */
+
+   **Example B: Variable Order Per Field Variable**
+
+   The *same* cells are present in both ``FlowSolution_t`` nodes, but each
+   node carries a different field array stored at a different polynomial order.
+
+   .. code-block:: c
+
+      /* Zone with 100 elements; Density stored at order 2, VelocityX at order 3 */
+      int fn, B, Z, S_density, S_vel;
+      cgsize_t range_all[2] = {1, 100};
+
+      /* Density at spatial order 2 */
+      cg_sol_ptset_write(fn, B, Z, "FS_Density",
+                         CGNS_ENUMV(CellCenter),
+                         CGNS_ENUMV(PointRange), 2, range_all, &S_density);
+      cg_sol_interpolation_order_write(fn, B, Z, S_density, 2, 0);
+      cg_field_write(fn, B, Z, S_density, CGNS_ENUMV(RealDouble),
+                     "Density", density_data, &fld);
+
+      /* VelocityX at spatial order 3 */
+      cg_sol_ptset_write(fn, B, Z, "FS_VelocityX",
+                         CGNS_ENUMV(CellCenter),
+                         CGNS_ENUMV(PointRange), 2, range_all, &S_vel);
+      cg_sol_interpolation_order_write(fn, B, Z, S_vel, 3, 0);
+      cg_field_write(fn, B, Z, S_vel, CGNS_ENUMV(RealDouble),
+                     "VelocityX", velx_data, &fld);
 
    See :ref:`High-Order Interpolation <HighOrderInterpolation>` in the SIDS for complete details on
    interpolation metadata and data layout.

@@ -1137,13 +1137,40 @@ The interpolation space for Cartesian modal interpolations uses ordered sets of 
 IsoParametric Interpolation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:sidskey:`IsoParametric` interpolation indicates that the solution uses the same interpolation functions as the mesh geometry. In this case:
+:sidskey:`IsoParametric` interpolation indicates that the solution uses the same interpolation
+functions as the mesh geometry. This applies to :sidsref:`SolutionInterpolation_t` nodes only.
 
-* The element's own node coordinates from :sidsref:`GridCoordinates_t` serve as control points
-* No :sidskey:`LagrangeControlPoints` need to be specified in :sidsref:`SolutionInterpolation_t`
-* The interpolation type is simply marked as :sidskey:`IsoParametric`
+* The element's own node coordinates from :sidsref:`GridCoordinates_t` serve as the control points.
+* No :sidskey:`LagrangeControlPoints` child shall be present in the :sidsref:`SolutionInterpolation_t` node.
+* An :sidsref:`ElementInterpolation_t` node for the same element type **must** already exist in
+  :sidsref:`Family_t`, defining the geometric interpolation whose basis is inherited.
+* The :sidskey:`InterpolationType_t` child of :sidsref:`SolutionInterpolation_t` is set to
+  :sidskey:`IsoParametric`.
 
-This approach is commonly used in finite element methods where the solution is interpolated using the same basis functions as the geometric mapping.
+This approach is commonly used in finite element methods where the solution is expressed in the same
+basis as the geometric mapping (pure isoparametric elements).
+
+**Example**
+
+.. code-block:: c
+
+   int fam, sn;
+   /* Mesh family already has an ElementInterpolation_t for QUAD_4 */
+   cg_solution_interpolation_write(fn, B, fam, "QUAD4_IsoParam",
+                                   CGNS_ENUMV(QUAD_4), /*spatialOrder=*/1, /*temporalOrder=*/0,
+                                   CGNS_ENUMV(IsoParametric), &sn);
+   /* No cg_solution_interpolation_points_write() call required */
+
+Reading back:
+
+.. code-block:: c
+
+   char name[33];
+   CGNS_ENUMT(ElementType_t)     et;
+   CGNS_ENUMT(InterpolationType_t) it;
+   int os, ot;
+   cg_solution_interpolation_read(fn, B, fam, 1, name, &et, &os, &ot, &it);
+   /* it == IsoParametric, no LagrangeControlPoints child exists */
 
 Usage in CGNS Files
 ^^^^^^^^^^^^^^^^^^^
@@ -1806,6 +1833,68 @@ This maps :math:`\theta \in [-1, 1]`, matching the parametric time convention an
 
 .. important::
    **Storage**: When using normalized coordinates :math:`(\xi, \eta, \zeta, \theta)`, the normalization parameters (characteristic length :math:`h^e` and time slab bounds :math:`T_n, T_{n+1}`) must be stored to enable reconstruction of physical values. This ensures data portability and prevents ambiguity in interpreting modal coefficients.
+
+.. _variable_order_configurations:
+
+Variable-Order Configurations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+CGNS supports two distinct variable-order patterns using :sidsref:`FlowSolution_t` with
+``GridLocation = CellCenter`` and a ``PointRange`` or ``PointList``.
+
+**Pattern A: Variable order per cell (p-adaptation)**
+
+Different cells within the same zone use different polynomial orders.  Create one
+:sidsref:`FlowSolution_t` per distinct order, each with a disjoint
+``PointRange``/``PointList`` identifying its cell subset.  Each node carries an
+``InterpolationOrders`` child (written via ``cg_sol_interpolation_order_write``)
+specifying ``[SpatialOrder, TemporalOrder]`` for that subset.
+
+Example — 8 TETRA_4 elements split at order 2 and order 3:
+
+.. code-block:: c
+
+   cgsize_t lo_range[2] = {1, 4};   /* cells 1-4 at order 2 */
+   cgsize_t hi_range[2] = {5, 8};   /* cells 5-8 at order 3 */
+
+   cg_sol_ptset_write(fn, B, Z, "FS_P2", CGNS_ENUMV(CellCenter),
+                      CGNS_ENUMV(PointRange), 2, lo_range, &S1);
+   cg_sol_interpolation_order_write(fn, B, Z, S1, 2, 0);
+
+   cg_sol_ptset_write(fn, B, Z, "FS_P3", CGNS_ENUMV(CellCenter),
+                      CGNS_ENUMV(PointRange), 2, hi_range, &S2);
+   cg_sol_interpolation_order_write(fn, B, Z, S2, 3, 0);
+
+**Pattern B: Variable order per field variable**
+
+All cells share the same ``PointRange`` (typically the full zone), but individual
+field arrays (``DataArray_t`` children) are stored at different polynomial orders.
+Use a separate :sidsref:`FlowSolution_t` per distinct order, each carrying only the
+field arrays that belong to that order.
+
+Example — ``Density`` at order 2 and ``VelocityX`` at order 3, over all 8 cells:
+
+.. code-block:: c
+
+   cgsize_t all[2] = {1, 8};
+
+   cg_sol_ptset_write(fn, B, Z, "FS_Density", CGNS_ENUMV(CellCenter),
+                      CGNS_ENUMV(PointRange), 2, all, &S1);
+   cg_sol_interpolation_order_write(fn, B, Z, S1, 2, 0);
+   cg_field_write(fn, B, Z, S1, CGNS_ENUMV(RealDouble), "Density", rho, &fld);
+
+   cg_sol_ptset_write(fn, B, Z, "FS_VelocityX", CGNS_ENUMV(CellCenter),
+                      CGNS_ENUMV(PointRange), 2, all, &S2);
+   cg_sol_interpolation_order_write(fn, B, Z, S2, 3, 0);
+   cg_field_write(fn, B, Z, S2, CGNS_ENUMV(RealDouble), "VelocityX", velx, &fld);
+
+.. note::
+   Pattern A and Pattern B can be combined: a file may have some
+   ``FlowSolution_t`` nodes that differ in both cell subset *and* polynomial
+   order, while others share the same cell subset but carry different field
+   variables.  The :sidsref:`Family_t` must contain a
+   :sidsref:`SolutionInterpolation_t` entry for every (ElementType, SpatialOrder,
+   TemporalOrder) triplet that appears in the file.
 
 References
 ^^^^^^^^^^

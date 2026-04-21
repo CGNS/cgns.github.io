@@ -76,7 +76,7 @@ CPEX0050
   * - Contacts
     - M. Scot Breitenfeld
   * - Documentation
-    - :download:`CPEX-0050-SolutionContinuity.pdf <../../proposed_extensions/CPEX_0050_CGNS_SIDS_SolutionContinuity.pdf>`
+    - :download:`CPEX-0050-SolutionContinuity.pdf <../../proposed_extensions/CPEX-0050-SolutionContinuity.pdf>`
   * - Date First Posted
     - April.21.26
   * - Date of Last Revision

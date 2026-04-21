@@ -61,7 +61,7 @@ Comments on proposals should be submitted either to the `CGNSTalk Github Discuss
 
 ..
   _Comment: Below should be listed all CPEX implemented or waiting for review
-.. _CPEX0048:
+.. _CPEX0050:
 
 CPEX0050
 --------
@@ -87,6 +87,33 @@ CPEX0050
     - proposal under review
   * - MLL Status
     - proposal under review
+
+.. _CPEX0049:
+
+CPEX0049
+--------
+
+.. list-table::
+  :stub-columns: 1
+
+  * - CPEX#
+    - 0049
+  * - Scope
+    - Compatibility version control for improved interoperability
+  * - Contacts
+    - M. Scot Breitenfeld
+  * - Documentation
+    - :download:`CPEX-0049-compat-version.pdf <../../proposed_extensions/CPEX-0049-compat-version.pdf>`
+  * - Date First Posted
+    - Mar.28.26
+  * - Date of Last Revision
+    - Mar.28.26
+  * - SIDS Status
+    - proposed
+  * - Filemap Status
+    - proposed
+  * - MLL Status
+    - proposed
 
 .. _CPEX0048:
 

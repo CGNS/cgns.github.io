@@ -171,7 +171,7 @@ In a directory (Noting item #4 of the `Prerequisites`_) download the HDF5 source
 
 .. code-block:: console
 
-  git clone https://bitbucket.hdfgroup.org/scm/hdffv/hdf5.git
+  git clone https://github.com/HDFGroup/hdf5.git
 
 Copy three files in the HDF5 source directory hdf5\config\cmake\scripts to the current directory.
 

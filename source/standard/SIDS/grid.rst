@@ -134,6 +134,8 @@ Grid Coordinates Examples
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 This section contains examples of grid coordinates. These examples show the storage of the grid-coordinate data arrays, as well as different mechanisms for describing the class of data and the system of units or normalization.
 
+.. _ex_grid1:
+
 Example - Cartesian Coordinates for a 2-D Structured Grid
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -795,6 +797,8 @@ The :sidsref:`UserDefinedData_t` data structure allows arbitrary user-defined da
 
    where :code:`RindPlanes = [a,b,...]` (see the :sidsref:`Rind_t` structure for the definition of :sidskey:`RindPlanes`).
 
+.. _flow_example:
+
 Flow Solution Example
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -971,7 +975,7 @@ For both structured and unstructured grids, :sidskey:`GridLocation = Vertex` mea
 
 If the vertices or elements of the subregion are continuously numbered, then :sidskey:`PointRange` may be used. Otherwise, :sidskey:`PointList` should be used to list the vertices/elements. Alternatively, if the data locations and range of the subregion coincide with an existing BC region or zone-to-zone GridConnectivity region, then :sidskey:`BCRegionName` or :sidskey:`GridConnectivityRegionName` may be used. :sidskey:`BCRegionName` is a string giving the name of an existing :sidsref:`BC_t` node of the current zone. :sidskey:`GridConnectivityRegionName` is a string giving the name of an existing :sidsref:`GridConnectivity1to1_t` or :sidsref:`GridConnectivity_t` node of the current zone. The name referred to should be unambiguous.
 
-Consistent with :sidsref:`FlowSolution_t`, the subregion's solution data is stored in the list of :sidsref:`DataArray_t` entities; each :sidskey:`DataArray_t` structure entity contains a single quantity. Standardized data-name identifiers for solution quantities are described in the section :ref:`Conventions for Data-Name Identifiers`. As noted above, all solution data within a given subregion must reside at the same grid location.
+Consistent with :sidsref:`FlowSolution_t`, the subregion's solution data is stored in the list of :sidsref:`DataArray_t` entities; each :sidskey:`DataArray_t` structure entity contains a single quantity. Standardized data-name identifiers for solution quantities are described in the section :ref:`Conventions for Data-Name Identifiers <dataname>`. As noted above, all solution data within a given subregion must reside at the same grid location.
 
 :sidsref:`DataClass` defines the default class for data contained in the :sidskey:`DataArray_t` entities. For dimensional flow solution data, :sidsref:`DimensionalUnits` may be used to describe the system of units employed. If present, these two entities take precedence over the corresponding entities at higher levels of the CGNS hierarchy, following the standard :ref:`precedence rules <precedence>`.
 

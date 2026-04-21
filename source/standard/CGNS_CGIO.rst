@@ -118,7 +118,7 @@ Glossary of Terms
 
 :Parent:		A node that has subnodes directly associated with it.
  
-:Pathname:		Within a database, nodes can be referenced using the name of a node along with its parent ID, or by using a "pathname" whose syntax is roughly the same as a path name in the UNIX environment. A pathname that begins with a leading slash "/" is assumed to begin at the root node of the file. If no leading slash is given, the name is assumed to begin at the node specified by the parent ID. Although there is a 32-character limitation on the node Name, there is no restriction on the length of the pathname. For example, equivalent ways to refer to node N8 in the hierarchy in the :ref:`example database` figure are:
+:Pathname:		Within a database, nodes can be referenced using the name of a node along with its parent ID, or by using a "pathname" whose syntax is roughly the same as a path name in the UNIX environment. A pathname that begins with a leading slash "/" is assumed to begin at the root node of the file. If no leading slash is given, the name is assumed to begin at the node specified by the parent ID. Although there is a 32-character limitation on the node Name, there is no restriction on the length of the pathname. For example, equivalent ways to refer to node N8 in the hierarchy in the :ref:`example database <ExampleNodeDatabase>` figure are:
 
                      - Node-ID for N6 and name = "N8"
                      - Node-ID for N4 and name = "N6/N8"

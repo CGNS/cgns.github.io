@@ -29,7 +29,7 @@ participants from 20 different countries and at least 79 different
 organizations.
 
 The software continues to be actively develop by many contributors
-to the CGNS git repository on `Github <http://www.github.com/CGNS/CGNS>`_
+to the CGNS git repository on `Github <https://github.com/CGNS/CGNS>`_
 
 Several extensions to CGNS have been formally proposed. Documentation
 supporting these extensions, and information on their current status,

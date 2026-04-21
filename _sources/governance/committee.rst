@@ -532,7 +532,6 @@ The CGNS Steering Committee has had the following chairs:
 
 The current members of the committee are:
 
-- Airbus
 - ANSYS
 - BETA CAE Systems
 - Boeing Commercial
@@ -546,11 +545,11 @@ The current members of the committee are:
 - ONERA
 - Pointwise, Inc. (Cadence)
 - SAFRAN
-- Sandia National Laboratories
 - Tecplot, Inc.
 - TTC Technologies
 - TU Delft
 - University of Kansas
+- University of Virginia
 
 .. note::
   The general responsibility of the CGNS Steering Committee as a whole is to actively participate in the development, maintenance, distribution and use of the CGNS Standard, through:

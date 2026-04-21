@@ -61,6 +61,32 @@ Comments on proposals should be submitted either to the `CGNSTalk Github Discuss
 
 ..
   _Comment: Below should be listed all CPEX implemented or waiting for review
+.. _CPEX0050:
+
+CPEX0050
+--------
+
+.. list-table::
+  :stub-columns: 1
+
+  * - CPEX#
+    - 0050
+  * - Scope
+    - Support Solution Continuity Type in CGNS
+  * - Contacts
+    - M. Scot Breitenfeld
+  * - Documentation
+    - :download:`CPEX-0050-SolutionContinuity.pdf <../../proposed_extensions/CPEX_0050_CGNS_SIDS_SolutionContinuity.pdf>`
+  * - Date First Posted
+    - April.21.26
+  * - Date of Last Revision
+    - April.21.26
+  * - SIDS Status
+    - proposal under review
+  * - Filemap Status
+    - proposal under review
+  * - MLL Status
+    - proposal under review
 
 .. _CPEX0049:
 

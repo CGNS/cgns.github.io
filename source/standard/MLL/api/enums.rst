@@ -17,6 +17,7 @@ List of enumerated values (key words) for each of these variable types (typedefs
  .. doxygenenum:: GridLocation_t
  .. doxygenenum:: GridConnectivityType_t
  .. doxygenenum:: InterpolationType_t
+ .. doxygenenum:: LagrangeControlPointDistribution_t
  .. doxygenenum:: LengthUnits_t
  .. doxygenenum:: LuminousIntensityUnits_t
  .. doxygenenum:: MassUnits_t

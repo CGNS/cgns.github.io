@@ -139,6 +139,7 @@ Typedef Name Access Functions
 .. doxygenfunction:: cg_WallFunctionTypeName
 .. doxygenfunction:: cg_AreaTypeName
 .. doxygenfunction:: cg_AverageInterfaceTypeName
+.. doxygenfunction:: cg_LagrangeControlPointDistributionName
 
 ****************************************
     64-bit C Portability and Issues

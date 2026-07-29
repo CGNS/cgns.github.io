@@ -72,15 +72,15 @@ CPEX0050
   * - CPEX#
     - 0050
   * - Scope
-    - Support Solution Continuity Type in CGNS
+    - Record DOF storage layout: shared or independent
   * - Contacts
     - M. Scot Breitenfeld
   * - Documentation
-    - :download:`CPEX-0050-SolutionContinuity.pdf <../../proposed_extensions/CPEX-0050-SolutionContinuity.pdf>`
+    - :download:`CPEX-0050-dof-storage.pdf <../../proposed_extensions/CPEX-0050-dof-storage.pdf>`
   * - Date First Posted
     - April.21.26
   * - Date of Last Revision
-    - April.21.26
+    - July.29.26
   * - SIDS Status
     - proposal under review
   * - Filemap Status

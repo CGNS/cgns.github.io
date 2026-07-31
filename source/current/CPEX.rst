@@ -211,17 +211,17 @@ CPEX0045
   * - Contacts
     - `Koen Hillewaert <koen.hillewaert@cenaero.be>`_
   * - Documentation
-    - `CPEX-0045 High Order <https://cgnsorg.atlassian.net/browse/CGNS-182>`_
+    - :download:`CPEX0045_HighOrder_v3.pdf <../../proposed_extensions/CPEX0045_HighOrder_v3.pdf>`
   * - Date First Posted
     - Mar.26.19
   * - Date of Last Revision
-    - Jun.25.19
+    - Jul.30.26
   * - SIDS Status
-    - accepted; awaiting implementation
+    - v2 accepted; v3 amendment under review
   * - Filemap Status
-    - accepted; awaiting implementation
+    - v2 accepted; v3 amendment under review
   * - MLL Status
-    - accepted; awaiting implementation
+    - v2 accepted; v3 amendment under review
 
 .. _CPEX0044:
 

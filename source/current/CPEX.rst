@@ -72,7 +72,7 @@ CPEX0050
   * - CPEX#
     - 0050
   * - Scope
-    - Record DOF storage layout: shared or independent
+    - Record DOF storage layout (shared or independent) and interface continuity of the represented field
   * - Contacts
     - M. Scot Breitenfeld
   * - Documentation

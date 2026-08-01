@@ -107,13 +107,13 @@ CPEX0049
   * - Date First Posted
     - Mar.28.26
   * - Date of Last Revision
-    - Mar.28.26
+    - Aug.01.26
   * - SIDS Status
-    - proposed
+    - proposal under review
   * - Filemap Status
-    - proposed
+    - proposal under review
   * - MLL Status
-    - proposed
+    - proposal under review
 
 .. _CPEX0048:
 

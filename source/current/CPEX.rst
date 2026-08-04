@@ -80,13 +80,13 @@ CPEX0050
   * - Date First Posted
     - April.21.26
   * - Date of Last Revision
-    - August.1.26
+    - Aug.04.26
   * - SIDS Status
-    - proposal under review
+    - accepted; awaiting implementation
   * - Filemap Status
-    - proposal under review
+    - accepted; awaiting implementation
   * - MLL Status
-    - proposal under review
+    - accepted; awaiting implementation
 
 .. _CPEX0049:
 
@@ -107,13 +107,13 @@ CPEX0049
   * - Date First Posted
     - Mar.28.26
   * - Date of Last Revision
-    - Aug.01.26
+    - Aug.04.26
   * - SIDS Status
-    - proposal under review
+    - accepted; awaiting implementation
   * - Filemap Status
-    - proposal under review
+    - accepted; awaiting implementation
   * - MLL Status
-    - proposal under review
+    - accepted; awaiting implementation
 
 .. _CPEX0048:
 
@@ -215,13 +215,13 @@ CPEX0045
   * - Date First Posted
     - Mar.26.19
   * - Date of Last Revision
-    - Aug.1.26
+    - Aug.04.26
   * - SIDS Status
-    - v2 accepted; v3 amendment under review
+    - accepted; awaiting implementation
   * - Filemap Status
-    - v2 accepted; v3 amendment under review
+    - accepted; awaiting implementation
   * - MLL Status
-    - v2 accepted; v3 amendment under review
+    - accepted; awaiting implementation
 
 .. _CPEX0044:
 

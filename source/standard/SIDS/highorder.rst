@@ -326,6 +326,19 @@ At :math:`p \le 2` several named distributions coincide exactly — GaussLobatto
 
 The node name is ``ControlPointDistribution``, its label is ``ControlPointDistribution_t``, and its payload is the enumerator's name as a ``C1`` character string — exactly as :sidsref:`GridLocation_t` and :sidsref:`DataClass_t` are stored.
 
+Stored Point Count
+~~~~~~~~~~~~~~~~~~~
+
+On a :sidsref:`SolutionInterpolation_t` the :sidskey:`LagrangeControlPoints` array is optional, and both cases are defined.
+
+**Absent.** The basis is the **complete** space of the declared degree, with the control points at the standard lattice on the element's reference domain, traversed in the standard node order. Both are normative, so the basis is fully determined without the array, and :math:`N_\text{DOFs}` is ``cg_npe_ho`` of the basic tag at degree :math:`p`, times :math:`q+1`.
+
+**Present.** The stored coordinates are the basis, wherever they lie, and the number of them is normative data rather than a consequence of the key. A solution node is keyed by (basic element type, :math:`p`, :math:`q`), and that key does **not** determine the space: at :math:`p=2` a QUAD has :math:`(p+1)^2 = 9` control points in the complete space and :math:`4p = 8` in the edge-serendipity space, under the same key. The stored count is the only record of the difference, so a reader takes :math:`N_\text{DOFs}` from the array and never from :math:`(p, q)`.
+
+``cg_solution_interpolation_npoints_read`` reports the stored count. A writer states it, as the ``npts`` argument of ``cg_solution_interpolation_points_write``, which also bounds the read of the caller's buffers.
+
+This is the same fact that makes the extent check an upper bound rather than an equality.
+
 Function Spaces
 ~~~~~~~~~~~~~~~
 
@@ -439,6 +452,81 @@ where the standard function spaces of order :math:`p` are:
 
   * :math:`\mathcal{P}_p^2(u,v) = \text{span}\{u^i v^j, 0 \leq i+j \leq p\}`
   * :math:`\mathcal{P}_p^3(u,v,w) = \text{span}\{u^i v^j w^k, 0 \leq i+j+k \leq p\}`
+
+Element Tags for Serendipity Spaces
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Write :math:`c`, :math:`e` and :math:`f` for the complete, edge-serendipity and face-serendipity cardinalities at degree :math:`p`. Edge serendipity keeps the corner and edge nodes only; face serendipity keeps everything except the nodes strictly interior to the element volume.
+
+.. math::
+
+   \begin{aligned}
+   \text{HEXA}: \quad & c = (p+1)^3, & e &= 8 + 12(p-1), & f &= c - (p-1)^3 \\
+   \text{PENTA}: \quad & c = \tfrac{(p+1)^2(p+2)}{2}, & e &= 6 + 9(p-1), & f &= c - \tfrac{(p-1)^2(p-2)}{2} \\
+   \text{TETRA}: \quad & c = \tfrac{(p+1)(p+2)(p+3)}{6}, & e &= 4 + 6(p-1), & f &= c - \tfrac{(p-1)(p-2)(p-3)}{6}
+   \end{aligned}
+
+QUAD is two-dimensional and has no face-serendipity space; its edge cardinality :math:`4p` is given in the table above. A tag exists for every space that is distinct from the others at that degree; where two coincide, none is defined and none is needed.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 14 8 26 26 26
+
+   * - Type
+     - :math:`p`
+     - Complete
+     - Edge serendipity
+     - Face serendipity
+   * - HEXA
+     - 2
+     - 27 (``HEXA_27``)
+     - 20 (``HEXA_20``)
+     - 26 — no tag
+   * - HEXA
+     - 3
+     - 64 (``HEXA_64``)
+     - 32 (``HEXA_32``)
+     - 56 (``HEXA_56``)
+   * - HEXA
+     - 4
+     - 125 (``HEXA_125``)
+     - 44 (``HEXA_44``)
+     - 98 (``HEXA_98``)
+   * - PENTA
+     - 2
+     - 18 (``PENTA_18``)
+     - 15 (``PENTA_15``)
+     - 18 — equals complete
+   * - PENTA
+     - 3
+     - 40 (``PENTA_40``)
+     - 24 (``PENTA_24``)
+     - 38 (``PENTA_38``)
+   * - PENTA
+     - 4
+     - 75 (``PENTA_75``)
+     - 33 (``PENTA_33``)
+     - 66 (``PENTA_66``)
+   * - TETRA
+     - 2
+     - 10 (``TETRA_10``)
+     - 10 — equals complete
+     - 10 — equals complete
+   * - TETRA
+     - 3
+     - 20 (``TETRA_20``)
+     - 16 (``TETRA_16``)
+     - 20 — equals complete
+   * - TETRA
+     - 4
+     - 35 (``TETRA_35``)
+     - 22 (``TETRA_22``)
+     - 34 (``TETRA_34``)
+
+.. warning::
+   ``HEXA_56`` and ``HEXA_98`` are the **face**-serendipity tags at :math:`p=3` and :math:`p=4`; the edge-serendipity tags at those degrees are ``HEXA_32`` and ``HEXA_44``. Reading ``HEXA_56`` as edge serendipity mis-sizes the block by 24 control points.
+
+Face serendipity on a HEXA at :math:`p=2` excludes exactly one node, giving 26 against the complete 27. No :sidsref:`ElementType_t` value denotes it and this standard does not add one: the saving is 3.7 % of the control points, against 12.5 % at :math:`p=3` and 21.6 % at :math:`p=4`, and a newly assigned tag cannot be read by any existing library. A writer needing that space stores the complete ``HEXA_27``, or writes an explicit 26-point :sidskey:`LagrangeControlPoints` array on a :sidsref:`SolutionInterpolation_t`.
 
 .. note::
    **Programmatic Node Count Calculation**: Instead of hard-coding node counts for every possible combination (HEXA_125, HEXA_216, etc.), implementations should use the MLL function ``cg_npe_ho(basicType, order, &npe)`` which computes :math:`N` programmatically using the formulas in the table above. This avoids the need for extensive switch statements and supports arbitrary polynomial orders.
@@ -1185,6 +1273,176 @@ Reading back:
    cg_solution_interpolation_read(fn, B, fam, 1, name, &et, &os, &ot, &it);
    /* it == IsoParametric, no LagrangeControlPoints child exists */
 
+Node Resolution
+^^^^^^^^^^^^^^^^
+
+The interpolation nodes hang off :sidsref:`Family_t`, so every lookup begins by resolving a zone to its family: a :sidsref:`Zone_t` names its family in a :sidsref:`FamilyName_t` child, and the named family is sought among the :sidsref:`Family_t` children of the :sidsref:`CGNSBase_t`. The resolution is **zone-level**; a :sidsref:`FamilyName_t` on an individual :sidsref:`Elements_t` section does not select a different interpolation family for that section. A zone with no family, or one naming a family that carries no interpolation nodes, has no override and the standard element definitions apply.
+
+.. note::
+   Because the family is the only carrier for interpolation descriptions, a producer that writes no zone-level :sidsref:`FamilyName_t` must begin to. One :sidsref:`Family_t` per base, holding the interpolation nodes and nothing else, is sufficient. A family may carry interpolation nodes, :sidsref:`FamilyBC_t` and geometry references at once — they occupy different children and do not interact.
+
+Uniqueness
+~~~~~~~~~~~
+
+At most one :sidsref:`ElementInterpolation_t` per **exact** :sidsref:`ElementType_t` tag is permitted within a family. Tags differing only in geometric order are distinct, so a single family may carry separate ``QUAD_4`` and ``QUAD_9`` nodes.
+
+At most one :sidsref:`SolutionInterpolation_t` per (basic element type, :sidskey:`SpatialDegree`, :sidskey:`TemporalDegree`) triplet is permitted within a family.
+
+Both constraints are enforced on write and on read.
+
+The Stored Tag Is the Basic Tag
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The element type in a :sidsref:`SolutionInterpolation_t` payload is **normalised to the basic (linear) tag** of the element family when the node is written: a writer given ``TETRA_10`` or ``TETRA_35`` stores ``TETRA_4``. This is what makes the uniqueness rule well defined, and what allows one basis description to serve every geometric order of the same family.
+
+A query is therefore resolved in two steps — an exact comparison against the stored tag, then a comparison against the basic tag of the queried type. Both must be tried, because a caller may legitimately present either form. Because writers normalise, the first step succeeds only for a basic-tag query, so the fallback is the operative path for any high-order tag. ``cg_solution_interpolation_find`` performs both steps.
+
+A triplet matching neither is reported as :sidskey:`CG_NODE_NOT_FOUND`. For a query that is a normal result, not an error.
+
+Resolving IsoParametric
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Normalisation discards precisely the distinction :sidskey:`IsoParametric` depends on: the stored tag is ``TETRA_4``, while the :sidsref:`ElementInterpolation_t` nodes it points at are keyed by exact tag, and a family may hold both ``TETRA_10`` and ``TETRA_35``. Two rules close this.
+
+**Resolution is per element, by exact tag.** The :sidsref:`ElementInterpolation_t` an :sidskey:`IsoParametric` solution refers to is the one whose tag equals the :sidsref:`ElementType_t` of the element being read, not the basic tag stored in the solution node. One such node therefore serves every geometric order of its family and yields a different :math:`N_\text{DOFs}` for a ``TETRA_10`` cell than for a ``TETRA_35`` cell in the same zone. Where no node carries the element's exact tag, the standard node layout applies and :math:`N_\text{DOFs}` is ``cg_npe`` of that tag.
+
+**SpatialDegree does not select the basis.** The basis is fixed entirely by the resolved mesh node, so the degree in the triple is a key, not a parameter. A writer must set it to the geometric degree of the element family the node serves, and must not use it to request a degree the mesh basis does not have. A reader takes the count from the resolved mesh node, ignores the stored degree if the two disagree, and should warn. :sidskey:`TemporalDegree` must be 0, mesh interpolation being spatial only.
+
+``cg_solution_interpolation_points_read`` addresses a solution node by index and so has no element. Where the family holds more than one :sidsref:`ElementInterpolation_t` sharing the basic tag, the question has no single answer and the call reports :sidskey:`CG_ERROR` identifying the ambiguity rather than returning one of them — picking the first found would make the result depend on a child order the SIDS does not constrain. A caller wanting a particular geometric order reads that mesh node directly, by its exact tag.
+
+Degree-of-Freedom Counts and Data Sizing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _ndofs:
+
+Every sizing rule in this standard is expressed through the per-element degree-of-freedom count :math:`N_\text{DOFs}(e)`, so it is fixed here. Let :math:`S` be the :sidsref:`SolutionInterpolation_t` that the lookup resolves for element :math:`e`, let :math:`p` and :math:`q` be its :sidskey:`SpatialDegree` and :sidskey:`TemporalDegree`, and let :math:`d` be the dimension of :math:`e`.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 34 66
+
+   * - :sidskey:`InterpolationType` of :math:`S`
+     - :math:`N_\text{DOFs}(e)`
+   * - :sidskey:`ParametricLagrange`
+     - ``NumberOfPoints``, the slow axis of :math:`S`'s :sidskey:`LagrangeControlPoints`. Where that array is absent, ``cg_npe_ho`` of the basic tag at degree :math:`p`, times :math:`(q+1)`.
+   * - :sidskey:`ParametricMonomialsPascal`
+     - :math:`\binom{p+d}{d} \times (q+1)`
+   * - :sidskey:`CartesianMonomialsPascal`
+     - :math:`\binom{p+d}{d} \times (q+1)`
+   * - :sidskey:`IsoParametric`
+     - :math:`N_\text{DOFs}` of the :sidsref:`ElementInterpolation_t` resolved for :math:`e`
+
+The :sidskey:`ParametricLagrange` entry is read off the stored array and already carries the :math:`(q+1)` space-time factor; it is not recomputed from :math:`p`, so an incomplete space needs no separate rule. Only where the array is absent is the count computed, and it is then the complete space by definition.
+
+.. warning::
+   :math:`N_\text{DOFs}` is **not** a function of the element type and degree alone. At :math:`p=2` a QUAD carries 9 Lagrange degrees of freedom but only :math:`\binom{4}{2} = 6` modal ones, so a reader that sizes from the element type without consulting :sidskey:`InterpolationType` over-reads every modal block by half again.
+
+Field-Array Length
+~~~~~~~~~~~~~~~~~~~
+
+Under :sidskey:`GridLocation` = :sidskey:`InterpolationPoints`, each field :sidsref:`DataArray_t` child of :sidsref:`FlowSolution_t` has length
+
+.. math::
+
+   L = \sum_{e \in \mathcal{E}} N_\text{DOFs}(e)
+
+where :math:`\mathcal{E}` is the set of elements the block covers: all **cells** of the zone when no :sidskey:`PointRange` or :sidskey:`PointList` is present, or the listed elements otherwise. A cell is an element whose dimension equals the base's :sidskey:`CellDimension`; boundary faces and edges are not part of the location domain and contribute no degrees of freedom. The test is per **element**, not per section — a ``MIXED`` section may hold faces alongside cells, and it applies within such a section as it does between sections. Naming a non-cell in a point set is a writer error.
+
+The degrees of freedom of the first listed element are stored contiguously, followed by those of the second, and so on:
+
+.. math::
+
+   \text{array index} = \left( \sum_{k<i} N_\text{DOFs}(e_k) \right) + \textit{local\_dof\_index}
+
+where :math:`e_i` is the :math:`i`-th listed element (0-based) and the local index runs over the ordering established by the associated :sidsref:`SolutionInterpolation_t` — the control points as listed in :sidskey:`LagrangeControlPoints`, or the Pascal traversal for the modal types.
+
+Interpolation metadata is not a solution field and is not stored as one: :sidskey:`CharacteristicLength` lives in the :sidskey:`InterpolationMetadata` container, one level below. A reader building its field list by enumerating :sidsref:`DataArray_t` children therefore needs no exception, and the rule that every such child has length :math:`L` holds without qualification.
+
+When No SolutionInterpolation_t Resolves
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the lookup finds no node for an element covered by a high-order :sidsref:`FlowSolution_t`, neither :math:`N_\text{DOFs}(e)` nor :math:`L` can be derived.
+
+A **writer** must provide, in the zone's family, a :sidsref:`SolutionInterpolation_t` for every (basic element type, :sidskey:`SpatialDegree`, :sidskey:`TemporalDegree`) triplet arising among the elements the block covers; a write that cannot resolve one must be rejected.
+
+A **reader** that meets such a file must report which cause applies — the zone binds to no family, the named family does not exist or carries no interpolation nodes, or no node matches the triplet — and continue with field-length validation disabled. It must not reject the file: the stored extents are on disk, so what is lost is the ability to *check* the length, not the ability to read the arrays. It must not assume a default count either; assuming :math:`N_\text{DOFs} = 1` mis-sizes every field in the block while appearing to succeed, which is worse than declining to validate.
+
+Implementation Requirements
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Degree Limits
+~~~~~~~~~~~~~~
+
+* **Geometric order**, encoded via :sidsref:`ElementType_t`, is bounded by the available high-order tags — currently degree four, e.g. ``HEXA_125`` and ``TETRA_35``. This is the pre-existing element-type concept, not :sidskey:`SpatialDegree`.
+* **Solution spatial degree** is any non-negative integer. ``cgnscheck`` warns outside :math:`[0, 100]` and, under ``-s``, reports values outside that range as errors.
+* **Solution temporal degree** is any non-negative integer. ``cgnscheck`` warns outside :math:`[0, 10]`, errors under ``-s``.
+* **No constraint couples the two.**
+
+.. important::
+   :sidskey:`SpatialDegree` = 0 is valid and must be accepted. It denotes a single spatial degree of freedom per element — a solution constant over the element — which is the natural representation of a finite-volume cell average. For a modal basis it is the single constant monomial, :math:`\binom{0+d}{d} = 1`; for a Lagrange basis it is the one control point recorded in :sidskey:`LagrangeControlPoints`, whose nodal function is identically one.
+
+   Consequently :sidskey:`TemporalDegree` > 0 with :sidskey:`SpatialDegree` = 0 is also valid, describing a per-element value constant in space and varying in time, with :math:`N_\text{DOFs} = q+1`. Neither a writer nor ``cgnscheck`` may reject these configurations.
+
+Reader Validation
+~~~~~~~~~~~~~~~~~~
+
+A conforming reader must reject:
+
+* :sidsref:`ElementInterpolation_t` payloads that are not ``I4`` scalar;
+* :sidsref:`SolutionInterpolation_t` payloads that are not ``I4``, rank 1, with three values;
+* :sidskey:`LagrangeControlPoints` whose data type is not ``R8`` or whose rank is not 2;
+* :sidskey:`LagrangeControlPoints` whose **extents** contradict the node declaring them (below);
+* any :sidsref:`DataArray_t` child of either node named anything other than :sidskey:`LagrangeControlPoints` — in particular a :sidskey:`MonomialCoefficients` child, which is withdrawn;
+* a :sidskey:`LagrangeControlPoints` child on a :sidsref:`SolutionInterpolation_t` whose type is :sidskey:`ParametricMonomialsPascal`, :sidskey:`CartesianMonomialsPascal` or :sidskey:`IsoParametric`, none of which stores one;
+* a :sidsref:`SolutionInterpolation_t` not containing exactly one :sidskey:`InterpolationType_t` child named :sidskey:`InterpolationType`;
+* more than one :sidskey:`ControlPointDistribution_t` child under a single parent, or one whose data is not a named value;
+* duplicate nodes violating the uniqueness rules;
+* :sidskey:`CharacteristicLength` whose data type is not ``R8``, whose rank is neither 1 nor 2, whose ``nscale`` is neither 1 nor :sidskey:`PhysDim`, whose element count disagrees with the block, or which contains a non-positive factor;
+* a :sidskey:`CharacteristicLength` array directly under a :sidsref:`FlowSolution_t` rather than under :sidskey:`InterpolationMetadata`;
+* an :sidskey:`InterpolationMetadata` container lacking its :sidskey:`CharacteristicLength` child, or holding any other :sidsref:`DataArray_t` child. The descriptive children the SIDS permits under any :sidsref:`UserDefinedData_t` are not grounds for rejection.
+
+A mismatch between :sidskey:`ControlPointDistribution` and the stored coordinates is **not** grounds for rejection; the coordinates are authoritative and the reader should warn.
+
+**Extent rules.** On a :sidsref:`SolutionInterpolation_t`, three conditions are exactly checkable: the fast axis equals the element dimension :math:`d`, or :math:`d+1` when :math:`q > 0`; the slow axis is a positive multiple of :math:`q+1`; and the resulting spatial count does not exceed the cardinality of the **complete** space of degree :math:`p`.
+
+The last is an upper bound, not an equality, and the distinction is the whole of the rule: an edge-serendipity QUAD at :math:`p=2` carries :math:`4p = 8` control points where the complete space has 9, and requiring equality would reject such files. A set *larger* than the complete space cannot be unisolvent for a degree-:math:`p` space and is always an error.
+
+On an :sidsref:`ElementInterpolation_t` the rule reads differently, that node carrying neither degree: the fast axis equals the element dimension and the slow axis equals ``cg_npe`` of the node's own tag — **exactly**, since the tag itself names the space (``QUAD_8`` and ``QUAD_9`` are distinct tags) and the count must match the connectivity entry.
+
+Writer Cross-Validation
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* ``cg_solution_interpolation_points_write`` is rejected when the parent node's type is either monomial type.
+* ``cg_element_isoparametric_write`` must not be followed by ``cg_element_interpolation_points_write`` on the same node.
+* Re-writing an existing :sidskey:`LagrangeControlPoints` array requires ``CG_MODE_MODIFY``; in ``CG_MODE_WRITE`` the second write is rejected.
+* A writer must not record a :sidskey:`ControlPointDistribution` that disagrees with the coordinates written on the same node.
+* ``cg_sol_interpolation_degree_write`` requires :sidskey:`GridLocation` = :sidskey:`InterpolationPoints` on the parent. For backward compatibility the library also accepts :sidskey:`CellCenter` when a point set is present, but ``cgnscheck -s`` flags that combination and conformant writers must use :sidskey:`InterpolationPoints` exclusively.
+
+Error Codes
+~~~~~~~~~~~~
+
+.. list-table::
+   :header-rows: 1
+   :widths: 26 74
+
+   * - Code
+     - Meaning
+   * - ``CG_OK``
+     - Operation succeeded.
+   * - ``CG_NODE_NOT_FOUND``
+     - Returned by ``cg_element_interpolation_points_read`` and ``cg_solution_interpolation_points_read`` when the node has no :sidskey:`LagrangeControlPoints` child, and by ``cg_sol_interpolation_degree_read`` when the :sidsref:`FlowSolution_t` has no :sidskey:`InterpolationDegrees` child. **Callers must treat this as normal control flow, not an error.**
+   * - ``CG_ERROR``
+     - Validation failure or I/O error. Use ``cg_get_error()`` for the diagnostic.
+
+To detect the interpolation type at runtime, call ``cg_element_interpolation_type_read`` for a mesh node — the result is only ever :sidskey:`ParametricLagrange` or :sidskey:`IsoParametric` — or read the :sidskey:`InterpolationType` child through ``cg_solution_interpolation_read`` for a solution node.
+
+Scope of the InterpolationPoints Location
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:sidskey:`InterpolationPoints` is valid only on :sidsref:`FlowSolution_t`, and only on :sidskey:`Unstructured` zones — the sizing rule is defined over an element list, which a structured zone does not have. :sidsref:`ArbitraryGridMotion_t`, :sidsref:`DiscreteData_t` and :sidsref:`ZoneSubRegion_t` must not use it; neither is sized by the location domain the way a :sidsref:`FlowSolution_t` is, so the length rule has nothing to attach to. A consequence worth stating: derived quantities such as gradients, sensors and wall distance have no high-order representation under this version.
+
+:sidsref:`Rind_t` has no defined meaning under this location — rind planes are an index-space concept while the field array is a flat degree-of-freedom list — and a conforming writer must not emit one. A validator reports its presence; a reader may ignore it, the node carrying no field data of its own.
+
 Usage in CGNS Files
 ^^^^^^^^^^^^^^^^^^^
 
@@ -1907,6 +2165,68 @@ Example — ``Density`` at order 2 and ``VelocityX`` at order 3, over all 8 cell
    variables.  The :sidsref:`Family_t` must contain a
    :sidsref:`SolutionInterpolation_t` entry for every (ElementType, SpatialDegree,
    TemporalDegree) triplet that appears in the file.
+
+Parallel I/O
+^^^^^^^^^^^^^
+
+High-order data is the case that most needs parallel I/O: the field arrays are the largest objects in the file and grow as :math:`N_\text{DOFs}` per cell rather than one.
+
+The division follows the existing ``pcgns`` rule and this standard adds no exception to it: **structure is collective, bulk data is not.**
+
+* **Collective**, with identical arguments on every rank: everything that creates or modifies a node. All family-level interpolation writes, ``cg_sol_write``, ``cg_sol_ptset_write``, ``cg_sol_interpolation_degree_write``, and ``cgp_field_write``, which creates the field array without writing to it.
+* **Independent**: ``cgp_field_write_data`` and ``cgp_field_read_data``, each rank supplying the hyperslab of the flat degree-of-freedom array corresponding to the elements it owns.
+
+The interpolation descriptions are small, live in :sidsref:`Family_t` and are shared by every zone bound to that family, so they are replicated on every rank. There is no partitioned interpolation metadata and no distributed writer for it.
+
+Computing a Rank's Hyperslab
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At uniform order the offset is computable locally: every element contributes the same :math:`N_\text{DOFs}`, so a rank owning elements :math:`[e_0, e_1)` writes at :math:`e_0 \cdot N_\text{DOFs}`. Variable order breaks that — the inner sum runs over elements that may belong to other ranks, so no rank can determine where its own block begins from local information alone.
+
+The offset of a rank's first element is the exclusive prefix sum of the per-element DOF counts over the global element ordering. In practice each rank totals the DOFs it owns, an exclusive scan (``MPI_Exscan`` with ``MPI_SUM``) turns those totals into the rank's starting offset, and the within-rank offsets follow locally. The result is one contiguous hyperslab per rank, provided each rank owns a contiguous run of the element ordering the field array uses. A partitioner handing out non-contiguous element sets produces a strided pattern instead, which is legal but performs poorly.
+
+Two things matter. The scan must run over the same element ordering the field array uses — the zone's cells for a whole-zone block, or the point-set order for a subset block. And the DOF counts must come from the interpolation type declared for each element, not from its element type and degree, which do not determine the count on their own.
+
+CharacteristicLength in Parallel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The normalisation factors are per-element data, so at :sidskey:`PhysDim` factors per cell they are the same order of magnitude as a solution field. ``cg_sol_characteristic_length_write`` takes the whole array in one call, and no distributed rank holds the whole array. Two calls serve this, and the split between them is not cosmetic:
+
+* ``cg_sol_characteristic_length_create`` declares the array at its full extent with its contents unwritten. Node creation is collective, so every rank calls it with identical arguments, including a rank that owns no elements of the block, and it must precede any range write.
+* ``cgp_sol_characteristic_length_write_data`` then writes one rank's range, taking ``rmin`` and ``rmax`` over the element axis. Because ``nscale`` is the fast-varying axis an element range is contiguous in storage, so a rank holding a contiguous run writes a single hyperslab. The range writes are independent.
+
+The serial ``cg_sol_characteristic_length_partial_write`` writes a range through the serial path. It likewise requires the array to exist and does not create one.
+
+.. warning::
+   The array must be stored **contiguously**. A compact dataset — the HDF5 default for anything under 64 KiB — keeps its data inside the object header, so each rank rewrites the whole object instead of its own hyperslab and only the last writer's factors survive. Getting this wrong is silent rather than diagnosed.
+
+Given contiguous storage the range writes compose through either path, HDF5 independent writes to disjoint hyperslabs of a contiguous dataset being well defined. A parallel writer should still prefer ``cgp_sol_characteristic_length_write_data``, which uses the collective-capable path the field arrays use; the choice is one of performance rather than correctness. Ranges must together cover :math:`[1, |E|]` — an element left unwritten has undefined factors, which ``cgnscheck`` reports rather than silently reading as zero.
+
+Compatibility
+^^^^^^^^^^^^^^
+
+Backward Compatibility
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Nothing in this extension modifies or restricts an existing, legally written CGNS node. Every addition is optional at its point of insertion: :sidsref:`Family_t` gains two optional lists, :sidsref:`FlowSolution_t` two optional children, :sidsref:`GridLocation_t` a value without disturbing the existing ones, and the :sidsref:`Elements_t` reading changes only for an element type that has an :sidsref:`ElementInterpolation_t`. A file written before this extension existed remains conformant and reads unchanged.
+
+Forward Compatibility
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. danger::
+   A library predating this extension **does not skip the high-order solution — it fails to open the file.** The usual expectation that a CGNS reader ignores what it does not recognise holds for unknown *nodes*, and not for an unknown :sidsref:`GridLocation_t` value.
+
+The path is this. The string is not in the reader's ``GridLocationName[]`` table, so the enumeration lookup fails; because the file records a newer library version, the reader substitutes :sidskey:`GridLocationUserDefined` with a warning rather than erroring there. It then computes the expected field-array shape from that location — unconditionally, before looking for a point set — no case matches, and the sizing routine returns an error. That error propagates out of the tree read :sidskey:`cg_open` performs eagerly, and the open fails.
+
+The consequence is that the **entire file** becomes unreadable to that library, not merely the high-order solution: the grid coordinates, the boundary conditions and every other zone go with it, because the whole tree is built at open time.
+
+This is a consequence of extending :sidsref:`GridLocation_t` at all rather than a defect in the design — any new value behaves this way against a reader that predates it — but it sets a hard floor:
+
+* A file containing a high-order :sidsref:`FlowSolution_t` requires a library implementing CPEX-0045 **to open at all**. There is no partial-read or degraded-read path.
+* The failure is a clean error at :sidskey:`cg_open`, not a silent misread. No pre-extension reader returns wrong numbers for high-order data; it returns nothing.
+* A producer serving both new and old consumers should write the high-order solutions into a **separate file referenced by a CGNS link**. A reader that does not follow the link opens the base file normally.
+
+``cgnscheck`` from an earlier release reports the high-order nodes as unrecognised; this is expected and is not evidence of a malformed file.
 
 References
 ^^^^^^^^^^

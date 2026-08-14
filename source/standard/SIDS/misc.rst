@@ -542,6 +542,7 @@ For modal interpolation, the structure specifies the interpolation coefficients 
   #. :sidskey:`ElementType` is the only required field, specifying which element type this interpolation applies to (e.g., QUAD_9, HEXA_27).
   #. :sidskey:`InterpolationType` specifies the interpolation method. If absent, :sidskey:`ParametricLagrange` is assumed as the default.
   #. For :sidskey:`ParametricLagrange` interpolation, :sidskey:`LagrangeControlPoints` must be provided, specifying the parametric coordinates of control points. The first dimension is :sidskey:`IndexDimension` (1, 2, or 3 for line, surface, or volume elements), and the second dimension is the number of control points.
+  #. At most one :sidskey:`ElementInterpolation_t` per **exact** :sidsref:`ElementType_t` tag is permitted within a family; tags differing only in geometric order are distinct, so ``QUAD_4`` and ``QUAD_9`` nodes may coexist. The constraint is enforced on write and on read.
   #. Mesh interpolation is nodal only: neither modal type may be attached to an :sidskey:`ElementInterpolation_t`, so the interpolation type is either :sidskey:`ParametricLagrange` or :sidskey:`IsoParametric`.
   #. For :sidskey:`IsoParametric` interpolation, :sidskey:`LagrangeControlPoints` is absent and the element uses its geometric nodes directly.
   #. :sidskey:`LagrangeControlPoints` is the only :sidsref:`DataArray_t` child permitted; a reader must reject any other, in particular a :sidskey:`MonomialCoefficients` child, which is withdrawn.
@@ -600,6 +601,7 @@ The :sidskey:`SolutionInterpolation_t` structure specifies the interpolation fun
   #. :sidskey:`TemporalDegree` defaults to 0 if absent, indicating no temporal interpolation (steady or time-accurate with no intra-timestep interpolation).
   #. The combination of :sidskey:`ElementType` and :sidskey:`SpatialDegree` (and :sidskey:`TemporalDegree` for space-time methods) uniquely identifies which solution interpolation to use. The :sidskey:`ElementType` may refer to either the actual element type or its corresponding linear element type (e.g., TETRA_4 for all tetrahedral elements).
   #. For :sidskey:`ParametricLagrange` interpolation, :sidskey:`LagrangeControlPoints` must be provided.
+  #. The element type in the payload is normalised to the **basic (linear)** tag on write: a writer given ``TETRA_10`` or ``TETRA_35`` stores ``TETRA_4``. At most one :sidskey:`SolutionInterpolation_t` per (basic element type, :sidskey:`SpatialDegree`, :sidskey:`TemporalDegree`) triplet is permitted within a family. See :ref:`Node Resolution <HighOrderInterpolation>` for the two-step lookup this implies.
   #. A modal basis stores no data array. Both monomial types are determined completely by the element dimension, the two degrees and the Pascal traversal order, so :sidskey:`LagrangeControlPoints` must be absent for :sidskey:`ParametricMonomialsPascal`, :sidskey:`CartesianMonomialsPascal` and :sidskey:`IsoParametric`.
   #. :sidskey:`LagrangeControlPoints` is the only :sidsref:`DataArray_t` child permitted; a reader must reject any other, in particular a :sidskey:`MonomialCoefficients` child, which is withdrawn.
 

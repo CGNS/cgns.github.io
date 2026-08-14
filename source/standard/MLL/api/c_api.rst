@@ -513,7 +513,7 @@ ____________________________________________
 .. important::
    **GridLocation Requirements for High-Order Solutions (CPEX 0045)**
 
-   When using high-order interpolation with ``cg_sol_interpolation_order_write`` or ``cg_sol_interpolation_order_read``,
+   When using high-order interpolation with ``cg_sol_interpolation_degree_write`` or ``cg_sol_interpolation_degree_read``,
    the ``GridLocation`` value determines the interpolation order scope:
 
    **Uniform Order Mode** (All elements use the same polynomial order):
@@ -521,17 +521,17 @@ ____________________________________________
    * Set ``GridLocation`` to ``InterpolationPoints``
    * The solution applies to the entire zone
    * No ``PointRange`` or ``PointList`` is required
-   * All elements in the zone share the same ``SpatialOrder`` and ``TemporalOrder``
+   * All elements in the zone share the same ``SpatialDegree`` and ``TemporalDegree``
 
    **Variable Order Mode (P-Adaptation)** (Different elements use different orders):
 
    * Set ``GridLocation`` to ``CellCenter``
    * **REQUIRED**: You **MUST** provide a ``PointRange`` or ``PointList`` specifying which elements have this order
    * Create separate ``FlowSolution_t`` nodes for each distinct polynomial order
-   * Each node specifies its own ``SpatialOrder`` and ``TemporalOrder`` for the subset of elements
+   * Each node specifies its own ``SpatialDegree`` and ``TemporalDegree`` for the subset of elements
 
    .. warning::
-      **Validation Error**: Calling ``cg_sol_interpolation_order_write()`` with ``GridLocation = CellCenter``
+      **Validation Error**: Calling ``cg_sol_interpolation_degree_write()`` with ``GridLocation = CellCenter``
       **without** a ``PointRange`` or ``PointList`` will return ``CG_ERROR``. This is enforced by the MLL to
       prevent ambiguous p-adaptive configurations.
 
@@ -552,13 +552,13 @@ ____________________________________________
       cg_sol_ptset_write(fn, B, Z, "Solution_Order3",
                          CGNS_ENUMV(CellCenter),
                          CGNS_ENUMV(PointRange), 2, range_1_to_50, &S_order3);
-      cg_sol_interpolation_order_write(fn, B, Z, S_order3, 3, 0);
+      cg_sol_interpolation_degree_write(fn, B, Z, S_order3, 3, 0);
 
       /* Order-4 elements (cells 51-100) */
       cg_sol_ptset_write(fn, B, Z, "Solution_Order4",
                          CGNS_ENUMV(CellCenter),
                          CGNS_ENUMV(PointRange), 2, range_51_to_100, &S_order4);
-      cg_sol_interpolation_order_write(fn, B, Z, S_order4, 4, 0);
+      cg_sol_interpolation_degree_write(fn, B, Z, S_order4, 4, 0);
 
       /* Write field data to each node using cg_field_write() */
 
@@ -577,7 +577,7 @@ ____________________________________________
       cg_sol_ptset_write(fn, B, Z, "FS_Density",
                          CGNS_ENUMV(CellCenter),
                          CGNS_ENUMV(PointRange), 2, range_all, &S_density);
-      cg_sol_interpolation_order_write(fn, B, Z, S_density, 2, 0);
+      cg_sol_interpolation_degree_write(fn, B, Z, S_density, 2, 0);
       cg_field_write(fn, B, Z, S_density, CGNS_ENUMV(RealDouble),
                      "Density", density_data, &fld);
 
@@ -585,7 +585,7 @@ ____________________________________________
       cg_sol_ptset_write(fn, B, Z, "FS_VelocityX",
                          CGNS_ENUMV(CellCenter),
                          CGNS_ENUMV(PointRange), 2, range_all, &S_vel);
-      cg_sol_interpolation_order_write(fn, B, Z, S_vel, 3, 0);
+      cg_sol_interpolation_degree_write(fn, B, Z, S_vel, 3, 0);
       cg_field_write(fn, B, Z, S_vel, CGNS_ENUMV(RealDouble),
                      "VelocityX", velx_data, &fld);
 

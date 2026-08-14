@@ -527,8 +527,7 @@ For modal interpolation, the structure specifies the interpolation coefficients 
     DataArray_t<real, 2, [IndexDimension, NumberOfControlPoints]>
       LagrangeControlPoints ;                                          (o)
 
-    DataArray_t<real, 1, NumberOfCoefficients>
-      MonomialCoefficients ;                                           (o)
+    ControlPointDistribution_t ControlPointDistribution ;              (o)
 
     DataClass_t DataClass ;                                            (o)
 
@@ -539,12 +538,13 @@ For modal interpolation, the structure specifies the interpolation coefficients 
 
 .. note::
 
-  #. Default names for the :sidsref:`Descriptor_t` and :sidsref:`UserDefinedData_t` lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of :sidskey:`ElementInterpolation_t` and shall not include the names :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`ElementType`, :sidskey:`InterpolationType`, :sidskey:`LagrangeControlPoints`, or :sidskey:`MonomialCoefficients`.
+  #. Default names for the :sidsref:`Descriptor_t` and :sidsref:`UserDefinedData_t` lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of :sidskey:`ElementInterpolation_t` and shall not include the names :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`ElementType`, :sidskey:`InterpolationType`, :sidskey:`LagrangeControlPoints`, or :sidskey:`ControlPointDistribution`.
   #. :sidskey:`ElementType` is the only required field, specifying which element type this interpolation applies to (e.g., QUAD_9, HEXA_27).
   #. :sidskey:`InterpolationType` specifies the interpolation method. If absent, :sidskey:`ParametricLagrange` is assumed as the default.
   #. For :sidskey:`ParametricLagrange` interpolation, :sidskey:`LagrangeControlPoints` must be provided, specifying the parametric coordinates of control points. The first dimension is :sidskey:`IndexDimension` (1, 2, or 3 for line, surface, or volume elements), and the second dimension is the number of control points.
-  #. For :sidskey:`ParametricMonomialsPascal` or :sidskey:`CartesianMonomialsPascal` interpolation, :sidskey:`MonomialCoefficients` must be provided.
-  #. For :sidskey:`IsoParametric` interpolation, neither :sidskey:`LagrangeControlPoints` nor :sidskey:`MonomialCoefficients` should be present, as the element uses its geometric nodes directly.
+  #. Mesh interpolation is nodal only: neither modal type may be attached to an :sidskey:`ElementInterpolation_t`, so the interpolation type is either :sidskey:`ParametricLagrange` or :sidskey:`IsoParametric`.
+  #. For :sidskey:`IsoParametric` interpolation, :sidskey:`LagrangeControlPoints` is absent and the element uses its geometric nodes directly.
+  #. :sidskey:`LagrangeControlPoints` is the only :sidsref:`DataArray_t` child permitted; a reader must reject any other, in particular a :sidskey:`MonomialCoefficients` child, which is withdrawn.
   #. It is assumed that the first control points correspond to the principal vertices of the corresponding linear element, in the same order as defined in the standard element ordering.
 
 :sidskey:`ElementType` identifies the element type (e.g., QUAD_9, HEXA_27) for which this interpolation specification applies. The element type implicitly defines both the element topology and, for standard elements, the interpolation order.
@@ -552,8 +552,6 @@ For modal interpolation, the structure specifies the interpolation coefficients 
 :sidskey:`InterpolationType` specifies the type of interpolation being used. See :ref:`Interpolation Type Enumeration <InterpolationType_t>` for the list of supported types and :ref:`High-Order Interpolation <HighOrderInterpolation>` for detailed descriptions of each interpolation method.
 
 :sidskey:`LagrangeControlPoints` contains the parametric coordinates of the Lagrange control points. The data is stored as a 2D array where the first dimension corresponds to the parametric coordinates (:math:`u`, :math:`uv`, or :math:`uvw` depending on element dimensionality) and the second dimension is the number of control points. These coordinates are in the element's parametric space as defined in :ref:`Parametric Coordinate Systems <parametric_coords>`.
-
-:sidskey:`MonomialCoefficients` contains the interpolation coefficients for modal bases using monomial functions. See :ref:`High-Order Interpolation <HighOrderInterpolation>` for details on the ordering and definition of monomial bases.
 
 :sidskey:`DataClass` defines the default for the class of data contained in the control points or coefficients. For dimensional coordinate data, :sidskey:`DimensionalUnits` may be used to describe the system of units employed. If present, these two entities take precedence over all corresponding entities at higher levels of the hierarchy, following the standard :ref:`precedence rules <precedence>`.
 
@@ -577,17 +575,16 @@ The :sidskey:`SolutionInterpolation_t` structure specifies the interpolation fun
 
     ElementType_t ElementType ;                                        (r)
 
-    int SpatialOrder ;                                                 (r)
+    int SpatialDegree ;                                                 (r)
 
-    int TemporalOrder ;                                                (o/d)
+    int TemporalDegree ;                                                (o/d)
 
     InterpolationType_t InterpolationType ;                            (r)
 
     DataArray_t<real, 2, [IndexDimension, NumberOfControlPoints]>
       LagrangeControlPoints ;                                          (o)
 
-    DataArray_t<real, 1, NumberOfCoefficients>
-      MonomialCoefficients ;                                           (o)
+    ControlPointDistribution_t ControlPointDistribution ;              (o)
 
     DataClass_t DataClass ;                                            (o)
 
@@ -598,29 +595,29 @@ The :sidskey:`SolutionInterpolation_t` structure specifies the interpolation fun
 
 .. note::
 
-  #. Default names for the :sidsref:`Descriptor_t` and :sidsref:`UserDefinedData_t` lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of :sidskey:`SolutionInterpolation_t` and shall not include the names :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`ElementType`, :sidskey:`InterpolationType`, :sidskey:`LagrangeControlPoints`, :sidskey:`MonomialCoefficients`, :sidskey:`SpatialOrder`, or :sidskey:`TemporalOrder`.
-  #. The required fields are :sidskey:`ElementType`, :sidskey:`SpatialOrder`, and :sidskey:`InterpolationType`.
-  #. :sidskey:`TemporalOrder` defaults to 0 if absent, indicating no temporal interpolation (steady or time-accurate with no intra-timestep interpolation).
-  #. The combination of :sidskey:`ElementType` and :sidskey:`SpatialOrder` (and :sidskey:`TemporalOrder` for space-time methods) uniquely identifies which solution interpolation to use. The :sidskey:`ElementType` may refer to either the actual element type or its corresponding linear element type (e.g., TETRA_4 for all tetrahedral elements).
+  #. Default names for the :sidsref:`Descriptor_t` and :sidsref:`UserDefinedData_t` lists are as shown; users may choose other legitimate names. Legitimate names must be unique within a given instance of :sidskey:`SolutionInterpolation_t` and shall not include the names :sidskey:`DataClass`, :sidskey:`DimensionalUnits`, :sidskey:`ElementType`, :sidskey:`InterpolationType`, :sidskey:`LagrangeControlPoints`, :sidskey:`ControlPointDistribution`, :sidskey:`SpatialDegree`, or :sidskey:`TemporalDegree`.
+  #. The required fields are :sidskey:`ElementType`, :sidskey:`SpatialDegree`, and :sidskey:`InterpolationType`.
+  #. :sidskey:`TemporalDegree` defaults to 0 if absent, indicating no temporal interpolation (steady or time-accurate with no intra-timestep interpolation).
+  #. The combination of :sidskey:`ElementType` and :sidskey:`SpatialDegree` (and :sidskey:`TemporalDegree` for space-time methods) uniquely identifies which solution interpolation to use. The :sidskey:`ElementType` may refer to either the actual element type or its corresponding linear element type (e.g., TETRA_4 for all tetrahedral elements).
   #. For :sidskey:`ParametricLagrange` interpolation, :sidskey:`LagrangeControlPoints` must be provided.
-  #. For :sidskey:`ParametricMonomialsPascal` or :sidskey:`CartesianMonomialsPascal` interpolation, :sidskey:`MonomialCoefficients` must be provided.
-  #. For :sidskey:`IsoParametric` interpolation, neither :sidskey:`LagrangeControlPoints` nor :sidskey:`MonomialCoefficients` should be present.
+  #. A modal basis stores no data array. Both monomial types are determined completely by the element dimension, the two degrees and the Pascal traversal order, so :sidskey:`LagrangeControlPoints` must be absent for :sidskey:`ParametricMonomialsPascal`, :sidskey:`CartesianMonomialsPascal` and :sidskey:`IsoParametric`.
+  #. :sidskey:`LagrangeControlPoints` is the only :sidsref:`DataArray_t` child permitted; a reader must reject any other, in particular a :sidskey:`MonomialCoefficients` child, which is withdrawn.
 
-:sidskey:`ElementType` identifies the base element topology for which this solution interpolation applies. This may be either a specific high-order element type (e.g., TETRA_10) or the corresponding linear element type (e.g., TETRA_4). When using the linear element type, the :sidskey:`SpatialOrder` field specifies the actual interpolation order.
+:sidskey:`ElementType` identifies the base element topology for which this solution interpolation applies. This may be either a specific high-order element type (e.g., TETRA_10) or the corresponding linear element type (e.g., TETRA_4). When using the linear element type, the :sidskey:`SpatialDegree` field specifies the actual interpolation order.
 
-:sidskey:`SpatialOrder` specifies the polynomial order of the spatial interpolation (e.g., 1 for linear, 2 for quadratic, 3 for cubic). This field is required and works in conjunction with :sidskey:`ElementType` to define the interpolation space.
+:sidskey:`SpatialDegree` specifies the polynomial order of the spatial interpolation (e.g., 1 for linear, 2 for quadratic, 3 for cubic). This field is required and works in conjunction with :sidskey:`ElementType` to define the interpolation space.
 
-:sidskey:`TemporalOrder` specifies the polynomial order of temporal interpolation for space-time methods or ALE computations. A value of 0 (the default) indicates no temporal interpolation. For space-time discontinuous Galerkin methods, this would typically be non-zero.
+:sidskey:`TemporalDegree` specifies the polynomial order of temporal interpolation for space-time methods or ALE computations. A value of 0 (the default) indicates no temporal interpolation. For space-time discontinuous Galerkin methods, this would typically be non-zero.
 
 :sidskey:`InterpolationType` specifies the type of interpolation being used. See :ref:`Interpolation Type Enumeration <InterpolationType_t>` for the list of supported types. This field is required to properly interpret the control points or coefficients.
 
-:sidskey:`LagrangeControlPoints` and :sidskey:`MonomialCoefficients` serve the same purposes as described for :sidsref:`ElementInterpolation_t`. For space-time interpolation, the control points include an additional temporal dimension.
+:sidskey:`LagrangeControlPoints` serves the same purpose as described for :sidsref:`ElementInterpolation_t`. For space-time interpolation, the control points include an additional temporal dimension, and the point count is :math:`N_\text{spatial} \times (q+1)`.
 
 :sidskey:`DataClass` and :sidskey:`DimensionalUnits` function as described for :sidsref:`ElementInterpolation_t`.
 
 The :sidsref:`UserDefinedData_t` data structure allows arbitrary user-defined data to be stored in :sidskey:`Descriptor_t` and :sidskey:`DataArray_t` children without the restrictions or implicit meanings imposed on these node types at other node locations.
 
-The actual interpolation orders for solution data in specific zones are specified in :sidsref:`FlowSolution_t` structures using :sidskey:`SpatialOrder` and :sidskey:`TemporalOrder` fields. These refer back to the appropriate :sidskey:`SolutionInterpolation_t` definition in the family.
+The actual interpolation orders for solution data in specific zones are specified in :sidsref:`FlowSolution_t` structures using :sidskey:`SpatialDegree` and :sidskey:`TemporalDegree` fields. These refer back to the appropriate :sidskey:`SolutionInterpolation_t` definition in the family.
 
 
 User-Defined Data Structure Definition: ``UserDefinedData_t``

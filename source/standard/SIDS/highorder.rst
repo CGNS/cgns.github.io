@@ -175,103 +175,156 @@ Parametric Lagrange interpolation can be used for specifying both curved mesh el
 Control Point Distribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**CRITICAL REQUIREMENT**: For Lagrange interpolation to be unambiguous and interoperable, the distribution of control points in parametric space must be explicitly defined. The CGNS standard specifies the following control point distributions:
+The parametric coordinates of the control points are stored explicitly in :sidskey:`LagrangeControlPoints`. Together with the reference domain, fixed by the element type, and the polynomial space, fixed by the element type and degree, those coordinates determine the nodal basis uniquely: the functions :math:`\lambda_i` satisfying :math:`\lambda_i(\mathbf{u}_j) = \delta_{ij}` are the solution of a standard multivariate polynomial interpolation problem, and exist and are unique whenever the stored point set is unisolvent for that space.
 
-**1D Control Point Distributions** (for edges and BAR elements):
+.. important::
+   A reader therefore never has to **assume** a distribution, and recording one is not required in order to interpret the file correctly. The stored coordinates are authoritative; the distribution name is advisory metadata.
 
-For a 1D edge in parametric coordinate :math:`u \in [-1, +1]` with :math:`p+1` control points (see :ref:`Reference Element Definitions <parametric_coords>` for complete domain specifications):
+Recording the distribution is nonetheless **recommended**, for three reasons:
 
-* **Equidistant**: :math:`u_i = -1 + \frac{2i}{p}` for :math:`i = 0, 1, \ldots, p`
+* **Conditioning**: a reader that knows the points are Gauss-Lobatto-Legendre, Gauss-Legendre or Warp & Blend can build the basis from the closed-form barycentric weights of that family, which stays stable at high degree, rather than inverting a Vandermonde matrix whose conditioning degrades rapidly as :math:`p` grows.
+* **Precision**: the stored coordinates are ``R8``-rounded, whereas the interior nodes of these families are irrational at all but the lowest degrees. Naming the family lets a reader regenerate the nodes at its own working precision.
+* **Validation**: ``cgnscheck`` can compare the stored coordinates against the named family and so flag writer errors — a permuted point list, or a :math:`[0,1]`-versus-:math:`[-1,1]` domain convention — that are otherwise invisible.
 
-  * Simple uniform spacing
-  * **Warning**: Poor conditioning for :math:`p > 5`; strongly discouraged for :math:`p > 7`
+Recommended Attribute: ControlPointDistribution_t
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* **Gauss-Lobatto-Legendre (GLL)**: Roots of :math:`(1-u^2) P_p'(u) = 0` where :math:`P_p` is the Legendre polynomial of degree :math:`p`
-
-  * **Default and strongly recommended** for all polynomial orders
-  * Includes endpoints :math:`u_0 = -1`, :math:`u_p = +1`
-  * Optimal for spectral element methods and numerical quadrature
-  * Well-conditioned Vandermonde matrices for all practical :math:`p`
-
-**Multi-Dimensional Control Points** (for 2D and 3D elements):
-
-* **Tensor Product Elements** (QUAD, HEXA): Apply the chosen 1D distribution independently in each parametric direction
-
-  * QUAD: :math:`(u_i, v_j)` for all combinations of :math:`i, j`
-  * HEXA: :math:`(u_i, v_j, w_k)` for all combinations of :math:`i, j, k`
-
-* **Simplex Elements** (TRI, TETRA): Use **Warp & Blend** or **Fekete** point distributions
-
-  * These specialized distributions ensure good conditioning of the Vandermonde matrix
-  * Reference: [Warburton2006]_
-  * **Implementation note**: Exact coordinates for simplex distributions up to :math:`p=10` are tabulated in the CGNS reference implementation
-
-**Serendipity Elements**: Only include control points on edges (Edge Serendipity) or edges and faces (Face Serendipity), excluding interior points. The distribution on each edge/face follows the same rules as above.
-
-.. danger::
-   **Non-Standard Point Distributions**: Using non-standard control point locations (e.g., arbitrary positions) will result in:
-
-   * Ill-conditioned Vandermonde matrices
-   * Numerical instability during interpolation
-   * Non-portable CGNS files that cannot be reliably read by other software
-
-   **Requirement**: Implementations **MUST** use GLL distribution for tensor product elements and Warp & Blend for simplex elements unless explicitly documented otherwise.
-
-**PointDistribution Attribute (MANDATORY)**
-
-.. danger::
-   **Critical Interoperability Requirement**: When using :sidskey:`ParametricLagrange` interpolation, the point distribution **MUST** be explicitly specified. Failure to specify this creates an ambiguous file that cannot be reliably read.
-
-   **Problem**: If a writer uses GLL points but the reader assumes Equidistant, the interpolation error is :math:`O(1)` (catastrophic), not a small numerical error.
-
-**Required Attribute**: :sidskey:`LagrangeControlPointDistribution`
-
-This attribute must be specified as a child of :sidsref:`ElementInterpolation_t` or :sidsref:`SolutionInterpolation_t` when :sidskey:`InterpolationType_t` is :sidskey:`ParametricLagrange`.
+An enumeration, stored as a labelled child node named :sidskey:`ControlPointDistribution` of :sidsref:`ElementInterpolation_t` or :sidsref:`SolutionInterpolation_t` when :sidskey:`InterpolationType` is :sidskey:`ParametricLagrange`. This is the same convention used for :sidskey:`InterpolationType_t`, and deliberately **not** the name-matched :sidsref:`DataArray_t` convention used for the sibling :sidskey:`LagrangeControlPoints` child. As with every CGNS enumeration, ``Null`` and ``UserDefined`` members exist for completeness, though in practice the node is simply omitted rather than written as ``Null``.
 
 **Allowed Values**:
 
 * **GaussLobattoLegendre** (recommended default):
 
-  * 1D points are roots of :math:`(1-u^2) P_p'(u) = 0`
-  * Includes endpoints :math:`u_0 = -1`, :math:`u_p = +1`
+  * 1D points are roots of :math:`(1-u^2) P_p'(u) = 0`, where :math:`P_p` is the Legendre polynomial of degree :math:`p`
+  * Includes endpoints :math:`u_0 = -1`, :math:`u_p = +1`, giving :math:`p+1` points
   * Optimal conditioning and quadrature accuracy
 
 * **Equidistant**:
 
-  * 1D points: :math:`u_i = -1 + 2i/p`
-  * Simple uniform spacing
-  * **Discouraged for p > 7** due to poor conditioning
+  * On a tensor-product direction, :math:`u_i = -1 + 2i/p`
+  * On a **simplex** the 1D formula does not apply. The nodes are the equispaced *barycentric* lattice: the points whose barycentric coordinates are :math:`(i_0/p, \ldots, i_d/p)` over all non-negative integers :math:`i_k` summing to :math:`p`, mapped into the reference domain. This reduces to :math:`u_i = -1 + 2i/p` on an edge, but is not obtainable from the 1D formula by tensor product.
+  * Simple uniform spacing; discouraged for :math:`p > 7` due to poor conditioning of the Vandermonde matrix
 
 * **GaussLegendre**:
 
-  * 1D points are roots of Legendre polynomial :math:`P_p(u) = 0`
-  * Does **NOT** include endpoints (interior points only)
-  * Rarely used for element interpolation (more common for quadrature)
+  * 1D points are roots of :math:`P_{p+1}(u) = 0`, giving :math:`p+1` points
+  * Does **not** include the endpoints
+  * Rarely used for element interpolation
 
-* **WarpAndBlend** (for simplices only):
+* **WarpAndBlend** (simplices only):
 
-  * Specialized distribution for triangles and tetrahedra
-  * Ensures well-conditioned Vandermonde matrices
+  * Specialized distribution for triangles and tetrahedra ensuring well-conditioned Vandermonde matrices
   * Reference: [Warburton2006]_
+  * The blending parameter :math:`\alpha` is fixed by the table below
 
-**Default Behavior**: If :sidskey:`LagrangeControlPointDistribution` is absent, implementations **SHOULD** assume :sidskey:`GaussLobattoLegendre`, but readers **SHOULD** issue a warning about the ambiguity.
+**Multi-Dimensional Construction**: for tensor-product elements (QUAD, HEXA) the chosen 1D distribution is applied independently in each parametric direction. For simplex elements (TRI, TETRA), Warp & Blend or Fekete distributions are recommended for :math:`p > 2`; equidistant points may be used at :math:`p = 2` but become poorly conditioned at higher degrees. This is a recommendation about conditioning, not about conformance — a simplex at :math:`p > 2` with equidistant nodes is a poorly conditioned file, not an invalid one, and a reader must not reject it.
+
+Fekete nodes have no enumerator of their own. A writer using them records :sidskey:`ControlPointDistributionUserDefined`, or omits the attribute entirely, which is equivalent in effect since the stored coordinates are authoritative either way.
+
+Determinacy of WarpAndBlend
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The other three families are each fixed by a closed-form rule, so any two readers reproduce them identically. Warp & Blend is a *construction* rather than a formula, and carries a free blending parameter :math:`\alpha` which moves the interior nodes. Three things are therefore fixed, so that the family denotes one point set and only one.
+
+**(a) The blending parameter.** :math:`\alpha` takes the values below, which differ between the triangle and the tetrahedron. For degrees beyond the table, :math:`\alpha = 5/3` for the triangle and :math:`\alpha = 1` for the tetrahedron. At :math:`p \le 2` (TRI) and :math:`p \le 3` (TETRA), :math:`\alpha` has no effect by symmetry, so those entries are informative only.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 12 11 11 11 11 11 11 11 11
+
+   * - degree :math:`p`
+     - 1
+     - 2
+     - 3
+     - 4
+     - 5
+     - 6
+     - 7
+     - 8
+   * - TRI
+     - 0
+     - 0
+     - 1.4152
+     - 0.1001
+     - 0.2751
+     - 0.9800
+     - 1.0999
+     - 1.2832
+   * - TETRA
+     - 0
+     - 0
+     - 0
+     - 0.1002
+     - 1.1332
+     - 1.5608
+     - 1.3413
+     - 1.2577
+
+.. list-table::
+   :header-rows: 1
+   :widths: 12 11 11 11 11 11 11 11 11
+
+   * - degree :math:`p`
+     - 9
+     - 10
+     - 11
+     - 12
+     - 13
+     - 14
+     - 15
+     - > 15
+   * - TRI
+     - 1.3648
+     - 1.4773
+     - 1.4959
+     - 1.5743
+     - 1.5770
+     - 1.6223
+     - 1.6258
+     - 5/3
+   * - TETRA
+     - 1.1603
+     - 1.10153
+     - 0.6080
+     - 0.4523
+     - 0.8856
+     - 0.8717
+     - 0.9655
+     - 1
+
+**(b) The comparison tolerance.** Wherever a stored point set is compared against a named family, the sets agree when a bijection exists pairing each stored point with a generated point at a distance of at most :math:`10^{-8}` in the parametric coordinates. Because the on-disk traversal order of :sidskey:`LagrangeControlPoints` is a writer convention, the comparison matches the two as *sets* — a nearest-neighbour bijection within tolerance, not an index-by-index comparison.
+
+**(c) When the family cannot be reproduced.** An implementation that does not generate a named family **must** report the comparison as *not performed* and **must not** report a mismatch. Reporting it as a disagreement would be a false accusation against a conformant file, and the coordinates are authoritative in any case.
+
+Precedence and Absence
+~~~~~~~~~~~~~~~~~~~~~~
+
+:sidskey:`LagrangeControlPoints` and :sidskey:`ControlPointDistribution` are deliberately redundant, and the redundancy is resolved in favour of the data. A reader **must** construct a basis that interpolates at the coordinates actually present in :sidskey:`LagrangeControlPoints`. It **may** use the named family to obtain those nodes by the better-conditioned or higher-precision route above, but only after confirming that the family's nodes agree with the stored coordinates to within the tolerance. If they do not, it **must** fall back to the stored coordinates and **should** warn. It must never silently substitute the named family's nodes for the stored ones.
+
+Correspondingly, a writer **must not** record a distribution name that disagrees with the coordinates it writes. ``cgnscheck`` compares the two whenever both are present and reports a mismatch: an error under ``cgnscheck -s``, a warning otherwise. Because the coordinates are authoritative, the remedy is to correct or omit the name, never to alter the coordinates to match it. A mismatch is **not** grounds for rejecting the file.
+
+.. important::
+   **If the attribute is absent**, a reader **must** construct the basis from the stored :sidskey:`LagrangeControlPoints` coordinates directly. It **must not** substitute an assumed distribution, and no warning is warranted, because nothing is ambiguous. An implementation **may** try to recognise the stored points as one of the named families in order to take the better-conditioned path, but must fall back to the general construction when no family matches within the tolerance.
+
+At :math:`p \le 2` several named distributions coincide exactly — GaussLobattoLegendre and Equidistant both reduce to :math:`\{-1, 0, 1\}` at :math:`p = 2` — so the comparison is inherently non-discriminating at low degree. This is a property of the mathematics, not a defect in the check.
 
 **Storage Format**:
 
 .. code-block:: text
 
-   ElementInterpolation_t "QUAD_P3":
-     ElementType = QUAD_4
-     InterpolationType = ParametricLagrange
-     DataArray_t "LagrangeControlPointDistribution":
-       Data = "GaussLobattoLegendre"  (DataType = Character)
+   ElementInterpolation_t "QUAD_P3":            I4  rank 1  [1]   data: QUAD_4
+     DataArray_t "LagrangeControlPoints":       R8  rank 2  [2, 16]
+     ControlPointDistribution_t "ControlPointDistribution":
+       C1  "GaussLobattoLegendre"
 
-   SolutionInterpolation_t "HighOrderSolution":
-     ElementType = QUAD_4
-     SpatialOrder = 3
-     InterpolationType = ParametricLagrange
-     DataArray_t "LagrangeControlPointDistribution":
-       Data = "GaussLobattoLegendre"  (DataType = Character)
+   SolutionInterpolation_t "HighOrderSolution": I4  rank 1  [3]
+                                                data: [QUAD_4, 3, 0]
+     InterpolationType_t "InterpolationType":   C1  "ParametricLagrange"
+     DataArray_t "LagrangeControlPoints":       R8  rank 2  [2, 16]
+     ControlPointDistribution_t "ControlPointDistribution":
+       C1  "GaussLobattoLegendre"
+
+The node name is ``ControlPointDistribution``, its label is ``ControlPointDistribution_t``, and its payload is the enumerator's name as a ``C1`` character string — exactly as :sidsref:`GridLocation_t` and :sidsref:`DataClass_t` are stored.
 
 Function Spaces
 ~~~~~~~~~~~~~~~
@@ -906,52 +959,33 @@ Parametric modal interpolation applies only to solution fields, not to mesh geom
 Monomial Basis Functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For modal interpolation, the interpolation functions are based on an ordered set of monomials in parametric coordinates. The ordering depends on the element topology:
+For modal interpolation the interpolation functions are an ordered set of monomials in parametric coordinates, spanning the classical **Pascal** spaces.
 
-**Tensor Product Elements** (Quadrilaterals, Hexahedra):
+.. important::
+   The cardinality of the modal basis depends only on the **element dimension** :math:`d`, not on the element shape:
 
-* **1D** (BAR): The monomials :math:`1, u, u^2, u^3, \ldots, u^p`
+   .. math::
 
-* **2D** (QUAD): Tensor product ordered as::
+      N_\text{modal} = \binom{p+d}{d}
 
-    idx = 0;
-    for (int j=0; j<=p; j++)        // v direction (outer loop)
-      for (int i=0; i<=p; i++)      // u direction (inner loop)
-        f[idx++] = u^i * v^j;
+   Every element shape of a given dimension carries the same number of modal coefficients: a QUAD and a TRI at degree :math:`p` both carry :math:`\binom{p+2}{2}`, and a HEXA, TETRA, PENTA and PYRA all carry :math:`\binom{p+3}{3}`.
 
-  This produces the ordering: :math:`\{u^i v^j : 0 \leq i,j \leq p\}` in **column-major** order.
+   In particular a QUAD at :math:`p=2` stores :math:`\binom{4}{2} = 6` monomial coefficients, **not** 9. Nine is the Lagrange-basis cardinality of the tensor-product space :math:`\mathcal{Q}_2`; the two are different numbers for the same element and degree, and the block is sized from the declared :sidskey:`InterpolationType`, never from the element type alone.
 
-  **Total basis functions**: :math:`N = (p+1)^2`
+* **1D** (:math:`d = 1`): the monomials :math:`1, u, u^2, u^3, \ldots, u^p`, giving :math:`N = p+1`
 
-* **3D** (HEXA): Tensor product ordered as::
-
-    idx = 0;
-    for (int k=0; k<=p; k++)        // w direction (outermost loop)
-      for (int j=0; j<=p; j++)      // v direction (middle loop)
-        for (int i=0; i<=p; i++)    // u direction (innermost loop)
-          f[idx++] = u^i * v^j * w^k;
-
-  This produces the ordering: :math:`\{u^i v^j w^k : 0 \leq i,j,k \leq p\}` in **column-major** order.
-
-  **Total basis functions**: :math:`N = (p+1)^3`
-
-.. danger::
-   **Critical Loop Ordering Error**: Do **NOT** use simplex (Pascal) loop ordering for tensor product elements. Using the wrong loop order will produce an incorrect basis that is incompatible with the CGNS standard.
-
-**Simplex Elements** (Triangles, Tetrahedra):
-
-* **2D** (TRI): Pascal triangle ordered as::
+* **2D** (:math:`d = 2`) — Pascal triangle, ordered as::
 
     idx = 0;
     for (int i=0; i<=p; i++)
       for (int j=0; j<=i; j++)
         f[idx++] = u^(i-j) * v^j;
 
-  This produces the ordering: :math:`\{u^i v^j : 0 \leq i+j \leq p\}`.
+  This produces the ordering :math:`\{u^i v^j : 0 \leq i+j \leq p\}`.
 
-  **Total basis functions**: :math:`N = (p+1)(p+2)/2`
+  **Total basis functions**: :math:`N = \binom{p+2}{2} = (p+1)(p+2)/2`
 
-* **3D** (TETRA): Pascal tetrahedron ordered as::
+* **3D** (:math:`d = 3`) — Pascal tetrahedron, ordered as::
 
     idx = 0;
     for (int i=0; i<=p; i++)
@@ -959,23 +993,17 @@ For modal interpolation, the interpolation functions are based on an ordered set
         for (int k=0; k<=i-j; k++)
           f[idx++] = u^(i-j-k) * v^k * w^j;
 
-  This produces the ordering: :math:`\{u^i v^j w^k : 0 \leq i+j+k \leq p\}`.
+  This produces the ordering :math:`\{u^i v^j w^k : 0 \leq i+j+k \leq p\}`.
 
-  **Total basis functions**: :math:`N = (p+1)(p+2)(p+3)/6`
+  **Total basis functions**: :math:`N = \binom{p+3}{3} = (p+1)(p+2)(p+3)/6`
 
-**Hybrid Elements** (Prisms):
+.. danger::
+   **Do not use a tensor-product traversal for the modal types.** :sidskey:`ParametricMonomialsPascal` and :sidskey:`CartesianMonomialsPascal` are Pascal spaces for every element shape. A tensor-product loop over :math:`0 \leq i,j \leq p` produces :math:`(p+1)^2` functions where the standard defines :math:`\binom{p+2}{2}`, which both mis-sizes the block and mis-orders it.
 
-* **3D** (PENTA): Tensor product of Pascal triangle with linear space::
+   The tensor-product spaces :math:`\mathcal{Q}_p` and :math:`\mathcal{Q}^3_p` do appear in this standard, but as **Lagrange** function spaces for :sidskey:`ParametricLagrange` on QUAD and HEXA — see the function-space table above — not as modal bases.
 
-    idx = 0;
-    for (int h=0; h<=p; h++)        // w direction (tensor product axis)
-      for (int i=0; i<=p; i++)      // Pascal triangle in (u,v)
-        for (int j=0; j<=i; j++)
-          f[idx++] = u^(i-j) * v^j * w^h;
-
-  This produces: :math:`\mathcal{P}_p^2(u,v) \otimes \mathcal{L}_p(w)`.
-
-  **Total basis functions**: :math:`N = (p+1)^2(p+2)/2`
+.. note::
+   The helper ``cg_solution_monomial_size`` returns :math:`N_\text{modal}` for any supported element type and degree pair, and is the intended way to size a modal block.
 
 .. note::
    For space-time formulations, see :ref:`Space-Time Extensions <spacetime_extensions>` for the extension to parametric time :math:`\tau`.
@@ -1033,80 +1061,72 @@ The element-local coordinates are then defined as :math:`\mathbf{r} = \mathbf{R}
 **Normalization for Numerical Stability**
 
 .. danger::
-   **Critical Numerical Stability Requirement**: Using physical coordinates directly in monomial basis functions can lead to catastrophic floating-point overflow or underflow, especially for high polynomial orders.
+   Using un-normalized element-local coordinates in monomial basis functions causes catastrophic floating-point overflow or underflow when the physical element size differs greatly from 1 — kilometres or micrometres — and produces a badly conditioned element mass matrix when the element is strongly stretched.
 
-   **Problem**: If spatial coordinates span kilometers or micrometers, monomials like :math:`x^p`, :math:`y^p`, :math:`z^p` with :math:`p \geq 3` will cause numerical issues.
+   **Requirement**: conformant writers **must** non-dimensionalise the element-local coordinates before forming the modal coefficients they write into the :sidsref:`FlowSolution_t` field arrays.
 
-   **Requirement**: Implementations **MUST** normalize spatial coordinates to a reference domain to ensure numerical stability and data portability.
+Two normalisations are permitted, and they are distinguished on disk by the **rank** of the stored factor array.
 
-**Recommended Normalization**: Define normalized element-local coordinates :math:`(\xi, \eta, \zeta)` by scaling with a characteristic element length :math:`h^e`:
-
-.. math::
-
-   \xi = \frac{x}{h^e}, \quad \eta = \frac{y}{h^e}, \quad \zeta = \frac{z}{h^e}
-
-where the characteristic length :math:`h^e` is computed as:
+*Isotropic* — a single scale factor per element:
 
 .. math::
 
-   h^e = \max_{i,j \in \{1, \ldots, N_v\}} \|\mathbf{R}_i^{\text{vertex}} - \mathbf{R}_j^{\text{vertex}}\|
+   \xi = x/h^e, \quad \eta = y/h^e, \quad \zeta = z/h^e
 
-This ensures :math:`\xi, \eta, \zeta \in \mathcal{O}([-1, 1])`, providing well-conditioned Vandermonde matrices and preventing overflow/underflow.
+This suits near-equilateral elements, and general polygonal or polyhedral cells for which axis-aligned extents are not meaningful.
 
-**Storage Convention**: When using normalized coordinates, the characteristic length :math:`h^e` should be stored alongside the modal coefficients to enable proper reconstruction of physical values.
+*Per-axis* (recommended for stretched elements) — one factor per coordinate direction:
+
+.. math::
+
+   \xi = x/h^e_x, \quad \eta = y/h^e_y, \quad \zeta = z/h^e_z
+
+This is the directional non-dimensionalisation used by the Taylor-basis discontinuous-Galerkin family. It is what keeps the modal mass matrix well conditioned on high-aspect-ratio cells such as those in wall-resolved boundary layers: under a single isotropic :math:`h^e` dominated by the long axis, the short-direction coordinate collapses toward zero and its higher powers lose relative precision, even though no overflow occurs. The natural choice is the extent of the element along each axis,
+
+.. math::
+
+   h^e_k = \max_{i,j} \left| \mathbf{e}_k \cdot (\mathbf{R}_i^{\text{vertex}} - \mathbf{R}_j^{\text{vertex}}) \right|
+
+In both cases the axes remain **parallel to the global Cartesian axes**, as the definition of :sidskey:`CartesianMonomialsPascal` requires; only the scaling differs. Rotated or otherwise oriented local frames are not permitted, because the modal coefficients of this basis are interpretable as scaled directional derivatives at the element barycentre, and slope limiters in the Taylor-basis family act on them component-wise along the global axes.
+
+.. important::
+   **Recorded, not recomputed.** Writers **must record the scale factors they actually used**, and readers **must use the recorded values** rather than recomputing any geometric formula. The expressions above are recommended defaults, not requirements: a writer whose solver already works in a normalised frame records its own factors and dumps its coefficient blocks unchanged. Mandating a formula instead of a record would force such a writer to rescale on output, and would leave the reconstruction exposed to any disagreement between the writer's and the reader's evaluation of that formula.
+
+**Storage**: the factors are recorded in an ``R8`` :sidsref:`DataArray_t` named :sidskey:`CharacteristicLength`, held in a :sidsref:`UserDefinedData_t` child of the parent :sidsref:`FlowSolution_t` named :sidskey:`InterpolationMetadata`. The container is required: the factors are **not** a :sidsref:`DataArray_t` child of :sidsref:`FlowSolution_t`, because such children are the solution fields and are enumerated as such by label. Rank 1 with shape :math:`[|E|]` is the isotropic encoding; rank 2 with shape :math:`[\text{PhysDim}, |E|]` is the per-axis encoding, with :sidskey:`PhysDim` fast-varying so that one element's factors are contiguous. All factors must be strictly positive, and the element ordering matches that of the field arrays. Both the container and the array are required when the associated :sidsref:`SolutionInterpolation_t` uses :sidskey:`CartesianMonomialsPascal`, and absent otherwise.
+
+The factors are lengths in the coordinate system of :sidsref:`GridCoordinates_t`. The :sidskey:`DataClass` and :sidskey:`DimensionalUnits` of the enclosing :sidsref:`FlowSolution_t` do **not** apply to them — those describe the solution fields, which are densities, pressures and the like. A writer wanting the factors self-describing should attach :sidsref:`DimensionalUnits_t`, and where appropriate :sidsref:`DimensionalExponents_t`, to the container or to the array itself.
+
+.. note::
+   :sidskey:`CartesianMonomialsPascal` requires the base to have :sidskey:`CellDimension` = :sidskey:`PhysDim`, and a writer **must not** use it otherwise. The basis is built in the physical frame while its cardinality counts monomials in the *element* dimension. On a surface mesh those disagree, and not merely by convention: monomials in three global coordinates restricted to a two-dimensional manifold are linearly dependent, so no subset of them spans a determined space, and nothing selects which two axes the element-local frame retains. The parametric types carry no such restriction — they live on the reference domain, whose dimension is the element dimension by construction.
 
 .. _cartesian_modal_basis:
 
 Cartesian Monomial Basis Functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The interpolation space for Cartesian modal interpolations uses ordered sets of monomials in the **normalized** element-local Cartesian coordinates :math:`(\xi, \eta, \zeta)` (or :math:`(x, y, z)` if physical coordinates are pre-normalized). The monomial ordering depends on the element topology and **must match** the parametric modal ordering:
+The interpolation space for Cartesian modal interpolation follows the same approach as parametric modal interpolation: ordered sets of monomials spanning the standard **Pascal** spaces. The only difference is that the monomials are in the normalized element-local Cartesian coordinates :math:`(\xi, \eta, \zeta)` rather than in parametric coordinates.
 
-**Tensor Product Elements** (Quadrilaterals, Hexahedra):
+.. important::
+   The traversal is a **Pascal** traversal, not a column-major tensor product, and the cardinality depends only on the **element dimension** :math:`d` — not on the element shape:
 
-* **1D** (BAR): The monomials :math:`1, \xi, \xi^2, \xi^3, \ldots, \xi^p`
+   .. math::
 
-* **2D** (QUAD): Tensor product ordered as::
+      N_\text{modal} = \binom{p+d}{d}
 
-    idx = 0;
-    for (int j=0; j<=p; j++)        // eta direction (outer loop)
-      for (int i=0; i<=p; i++)      // xi direction (inner loop)
-        f[idx++] = xi^i * eta^j;
+   A QUAD at :math:`p=2` therefore carries :math:`\binom{4}{2} = 6` modal coefficients, **not** 9. Nine is the Lagrange-basis cardinality of the tensor-product space :math:`\mathcal{Q}_2`, and the two must not be confused: an implementation that sizes a modal block from the element type without consulting :sidskey:`InterpolationType` over-reads it by half again.
 
-  **Total basis functions**: :math:`N = (p+1)^2`
+* **1D** (:math:`d = 1`): the monomials :math:`1, \xi, \xi^2, \ldots, \xi^p`, giving :math:`N = p+1`
 
-* **3D** (HEXA): Tensor product ordered as::
-
-    idx = 0;
-    for (int k=0; k<=p; k++)        // zeta direction (outermost loop)
-      for (int j=0; j<=p; j++)      // eta direction (middle loop)
-        for (int i=0; i<=p; i++)    // xi direction (innermost loop)
-          f[idx++] = xi^i * eta^j * zeta^k;
-
-  **Total basis functions**: :math:`N = (p+1)^3`
-
-  .. note::
-     **Column-Major Ordering Convention**: This loop ordering results in **Column-Major (Fortran-style)** memory layout where the **'i' index varies fastest** in the linear array. This is consistent with CGNS/Fortran-order conventions used throughout the CGNS standard.
-
-     **Memory layout**: For a P=2 HEXA element, the linear array ordering is:
-     ``[f(0,0,0), f(1,0,0), f(2,0,0), f(0,1,0), f(1,1,0), ..., f(2,2,2)]``
-
-     **Equivalently**: ``idx = k*(p+1)² + j*(p+1) + i``
-
-     This ordering is **mandatory** for CGNS compliance and differs from C's default row-major ordering.
-
-**Simplex Elements** (Triangles, Tetrahedra):
-
-* **2D** (TRI): Pascal triangle ordered as::
+* **2D** (:math:`d = 2`) — Pascal triangle, ordered as::
 
     idx = 0;
     for (int i=0; i<=p; i++)
       for (int j=0; j<=i; j++)
         f[idx++] = xi^(i-j) * eta^j;
 
-  **Total basis functions**: :math:`N = (p+1)(p+2)/2`
+  **Total basis functions**: :math:`N = \binom{p+2}{2} = (p+1)(p+2)/2`
 
-* **3D** (TETRA): Pascal tetrahedron ordered as::
+* **3D** (:math:`d = 3`) — Pascal tetrahedron, ordered as::
 
     idx = 0;
     for (int i=0; i<=p; i++)
@@ -1114,19 +1134,12 @@ The interpolation space for Cartesian modal interpolations uses ordered sets of 
         for (int k=0; k<=i-j; k++)
           f[idx++] = xi^(i-j-k) * eta^k * zeta^j;
 
-  **Total basis functions**: :math:`N = (p+1)(p+2)(p+3)/6`
+  **Total basis functions**: :math:`N = \binom{p+3}{3} = (p+1)(p+2)(p+3)/6`
 
-**Hybrid Elements** (Prisms):
+This applies uniformly to every element shape of a given dimension: a QUAD and a TRI at the same degree carry the same number of modal coefficients, as do a HEXA, a TETRA, a PENTA and a PYRA.
 
-* **3D** (PENTA): Tensor product of Pascal triangle with linear space::
-
-    idx = 0;
-    for (int h=0; h<=p; h++)        // zeta direction (tensor product axis)
-      for (int i=0; i<=p; i++)      // Pascal triangle in (xi,eta)
-        for (int j=0; j<=i; j++)
-          f[idx++] = xi^(i-j) * eta^j * zeta^h;
-
-  **Total basis functions**: :math:`N = (p+1)^2(p+2)/2`
+.. note::
+   **Practical degree ceiling.** Both monomial types use raw monomials, whose mass matrix on :math:`[-1,1]` is Hilbert-like: its condition number grows exponentially with :math:`p`, and normalisation cannot remove that growth — it removes the scale disparity between directions and prevents overflow only. Modal formulations built on monomials are therefore generally applied at :math:`p \le 2` or :math:`p \le 3` in double precision. Methods needing higher degree use :math:`L^2`-orthogonal bases, which this version of the standard has no way to name; writers requiring high-degree modal data should use :sidskey:`ParametricLagrange` with an appropriate control point distribution instead.
 
 .. note::
    **Notation**: The symbols :math:`\xi, \eta, \zeta` represent normalized coordinates. If the documentation or implementation uses :math:`x, y, z`, these should be understood as already-normalized coordinates scaled to :math:`\mathcal{O}([-1, 1])`.
@@ -1177,7 +1190,7 @@ Usage in CGNS Files
 
 Element interpolation metadata is stored in :sidsref:`ElementInterpolation_t` nodes within :sidsref:`Family_t`.
 Solution interpolation metadata is stored in :sidsref:`SolutionInterpolation_t` nodes within :sidsref:`Family_t`.
-The actual interpolation orders for solution data are specified in :sidsref:`FlowSolution_t` using the :sidskey:`SpatialOrder` and :sidskey:`TemporalOrder` fields.
+The actual interpolation orders for solution data are specified in :sidsref:`FlowSolution_t` using the :sidskey:`SpatialDegree` and :sidskey:`TemporalDegree` fields.
 
 See :ref:`Element Interpolation Structure Definition <ElementInterpolation_t>` and :ref:`Solution Interpolation Structure Definition <SolutionInterpolation_t>` for detailed structure definitions.
 
@@ -1280,7 +1293,7 @@ Evaluating at the 9 GLL control point physical locations (mapped from parametric
    * **GridLocation = InterpolationPoints** indicates data stored at control points or modal coefficients as defined by the associated :sidskey:`SolutionInterpolation_t` node
    * **Array dimensions**: The ``DataArray_t`` size is ``N_elements × N_DOFs_per_element``
    * **Data layout**: Coefficients for all DOFs of Element 0 are stored contiguously, followed by all DOFs of Element 1, etc.
-   * **1:1 Mapping**: Data values correspond exactly to the ordering specified in the :sidskey:`InterpolationValues` array
+   * **1:1 Mapping**: Data values correspond exactly to the ordering of the :sidskey:`LagrangeControlPoints` array, or to the Pascal traversal order for the modal types
 
    **Explicit formula**:
 
@@ -1393,7 +1406,7 @@ To represent :math:`\rho(x, y) = 2.0 + 0.5x + 0.3y` in the local normalized syst
    FlowSolution_t "ModalSolution":
      GridLocation = InterpolationPoints
      PointList = [[1]]  (Element 0)
-     SpatialOrder = 1
+     SpatialDegree = 1
 
      DataArray_t "Density":
        Data = [2.4, 0.707, 0.424, 0.0]
@@ -1475,24 +1488,23 @@ Modal Coefficient Orthogonality Test (for Modal Interpolations)
 
 For modal interpolations, verify that the basis ordering matches the specification by computing modal coefficients for a known function.
 
-**Test Case**: Represent the polynomial :math:`f(u,v) = u^2 + v` using QUAD p=2 modal basis.
+**Test Case**: Represent the polynomial :math:`f(u,v) = u^2 + v` in the QUAD :math:`p=2` modal basis.
 
-**Expected Modal Coefficients** (column-major ordering):
+A QUAD at :math:`p=2` has :math:`\binom{4}{2} = 6` modal coefficients, in the Pascal traversal — **not** 9 in a tensor-product order. Reading the traversal, the :math:`u^2` term lands at index 3 and the :math:`v` term at index 2:
 
 .. code-block:: text
 
-   // for j=0,1,2; i=0,1,2
+   // for i=0..p; for j=0..i:  f[idx++] = u^(i-j) * v^j
    c[0] = coefficient of u⁰v⁰ = 0.0
    c[1] = coefficient of u¹v⁰ = 0.0
-   c[2] = coefficient of u²v⁰ = 1.0  ← u² term
-   c[3] = coefficient of u⁰v¹ = 1.0  ← v term
+   c[2] = coefficient of u⁰v¹ = 1.0  ← v term
+   c[3] = coefficient of u²v⁰ = 1.0  ← u² term
    c[4] = coefficient of u¹v¹ = 0.0
-   c[5] = coefficient of u²v¹ = 0.0
-   c[6] = coefficient of u⁰v² = 0.0
-   c[7] = coefficient of u¹v² = 0.0
-   c[8] = coefficient of u²v² = 0.0
+   c[5] = coefficient of u⁰v² = 0.0
 
-If your modal ordering produces different indices for the u² or v terms, your implementation is **not CGNS-compliant**.
+An implementation placing them elsewhere, or producing nine coefficients, is **not CGNS-compliant**.
+
+For :sidskey:`CartesianMonomialsPascal` the same check must be stated in the **normalized** coordinates :math:`\xi = (x - x^e_c)/h^e_x`, :math:`\eta = (y - y^e_c)/h^e_y`, because normalisation is mandatory and the stored coefficients are those of the normalised basis. Testing :math:`f = \xi^2 + \eta` gives the unit coefficients above. Testing the *physical* polynomial :math:`f(x,y) = x^2 + y` about the barycentre does not: its coefficients are :math:`(h^e_x)^2` and :math:`h^e_y`, so a test written against unit values silently requires :math:`h^e = 1` and passes only on an element of unit size — which is the very error the test exists to catch.
 
 Geometry Reconstruction Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1557,7 +1569,7 @@ An implementation is CGNS-compliant for high-order interpolation if it passes AL
 
 ☐ Kronecker delta property for all control points
 
-☐ Correct modal coefficient ordering (column-major for tensor products, Pascal ordering for simplices)
+☐ Correct modal coefficient ordering (Pascal traversal, for every element shape of a given dimension)
 
 ☐ Geometry reconstruction within tolerance :math:`\epsilon < 10^{-10}`
 
@@ -1607,7 +1619,7 @@ where :math:`\tau = -1` corresponds to :math:`T = T_n` and :math:`\tau = +1` cor
    - **Temporal order q=2**: Quadratic solution variation in time (3 temporal DOFs per spatial DOF)
    - **Temporal order q=3**: Cubic solution variation in time (4 temporal DOFs per spatial DOF)
 
-   **Clarification**: High-order **solution** polynomials in time (controlled by :sidskey:`TemporalOrder`) are supported and common in space-time DG methods. However, "curved time elements" where the time slab geometry itself is curved are **not supported** in the current SIDS specification. The time domain :math:`[T_n, T_{n+1}]` is always a straight interval.
+   **Clarification**: High-order **solution** polynomials in time (controlled by :sidskey:`TemporalDegree`) are supported and common in space-time DG methods. However, "curved time elements" where the time slab geometry itself is curved are **not supported** in the current SIDS specification. The time domain :math:`[T_n, T_{n+1}]` is always a straight interval.
 
 Space-Time Functional Spaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1847,8 +1859,8 @@ CGNS supports two distinct variable-order patterns using :sidsref:`FlowSolution_
 Different cells within the same zone use different polynomial orders.  Create one
 :sidsref:`FlowSolution_t` per distinct order, each with a disjoint
 ``PointRange``/``PointList`` identifying its cell subset.  Each node carries an
-``InterpolationOrders`` child (written via ``cg_sol_interpolation_order_write``)
-specifying ``[SpatialOrder, TemporalOrder]`` for that subset.
+``InterpolationDegrees`` child (written via ``cg_sol_interpolation_degree_write``)
+specifying ``[SpatialDegree, TemporalDegree]`` for that subset.
 
 Example — 8 TETRA_4 elements split at order 2 and order 3:
 
@@ -1859,11 +1871,11 @@ Example — 8 TETRA_4 elements split at order 2 and order 3:
 
    cg_sol_ptset_write(fn, B, Z, "FS_P2", CGNS_ENUMV(CellCenter),
                       CGNS_ENUMV(PointRange), 2, lo_range, &S1);
-   cg_sol_interpolation_order_write(fn, B, Z, S1, 2, 0);
+   cg_sol_interpolation_degree_write(fn, B, Z, S1, 2, 0);
 
    cg_sol_ptset_write(fn, B, Z, "FS_P3", CGNS_ENUMV(CellCenter),
                       CGNS_ENUMV(PointRange), 2, hi_range, &S2);
-   cg_sol_interpolation_order_write(fn, B, Z, S2, 3, 0);
+   cg_sol_interpolation_degree_write(fn, B, Z, S2, 3, 0);
 
 **Pattern B: Variable order per field variable**
 
@@ -1880,12 +1892,12 @@ Example — ``Density`` at order 2 and ``VelocityX`` at order 3, over all 8 cell
 
    cg_sol_ptset_write(fn, B, Z, "FS_Density", CGNS_ENUMV(CellCenter),
                       CGNS_ENUMV(PointRange), 2, all, &S1);
-   cg_sol_interpolation_order_write(fn, B, Z, S1, 2, 0);
+   cg_sol_interpolation_degree_write(fn, B, Z, S1, 2, 0);
    cg_field_write(fn, B, Z, S1, CGNS_ENUMV(RealDouble), "Density", rho, &fld);
 
    cg_sol_ptset_write(fn, B, Z, "FS_VelocityX", CGNS_ENUMV(CellCenter),
                       CGNS_ENUMV(PointRange), 2, all, &S2);
-   cg_sol_interpolation_order_write(fn, B, Z, S2, 3, 0);
+   cg_sol_interpolation_degree_write(fn, B, Z, S2, 3, 0);
    cg_field_write(fn, B, Z, S2, CGNS_ENUMV(RealDouble), "VelocityX", velx, &fld);
 
 .. note::
@@ -1893,8 +1905,8 @@ Example — ``Density`` at order 2 and ``VelocityX`` at order 3, over all 8 cell
    ``FlowSolution_t`` nodes that differ in both cell subset *and* polynomial
    order, while others share the same cell subset but carry different field
    variables.  The :sidsref:`Family_t` must contain a
-   :sidsref:`SolutionInterpolation_t` entry for every (ElementType, SpatialOrder,
-   TemporalOrder) triplet that appears in the file.
+   :sidsref:`SolutionInterpolation_t` entry for every (ElementType, SpatialDegree,
+   TemporalDegree) triplet that appears in the file.
 
 References
 ^^^^^^^^^^

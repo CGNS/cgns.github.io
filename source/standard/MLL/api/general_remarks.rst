@@ -139,7 +139,7 @@ Typedef Name Access Functions
 .. doxygenfunction:: cg_WallFunctionTypeName
 .. doxygenfunction:: cg_AreaTypeName
 .. doxygenfunction:: cg_AverageInterfaceTypeName
-.. doxygenfunction:: cg_LagrangeControlPointDistributionName
+.. doxygenfunction:: cg_ControlPointDistributionName
 
 ****************************************
     64-bit C Portability and Issues
@@ -231,7 +231,7 @@ High-Order Solutions and GridLocation
 
 .. _HighOrderGridLocation-ref:
 
-When working with high-order interpolation (using ``cg_sol_interpolation_order_write`` and ``cg_sol_interpolation_order_read``),
+When working with high-order interpolation (using ``cg_sol_interpolation_degree_write`` and ``cg_sol_interpolation_degree_read``),
 the ``GridLocation`` parameter has special significance and strict requirements:
 
 **Two Modes of Operation:**
@@ -240,7 +240,7 @@ the ``GridLocation`` parameter has special significance and strict requirements:
 
    * Use ``GridLocation = InterpolationPoints``
    * No ``PointRange`` or ``PointList`` required
-   * Entire zone shares the same ``SpatialOrder`` and ``TemporalOrder``
+   * Entire zone shares the same ``SpatialDegree`` and ``TemporalDegree``
 
 2. **Variable Order / P-Adaptation** (different elements use different orders):
 
@@ -250,7 +250,7 @@ the ``GridLocation`` parameter has special significance and strict requirements:
    * Each node defines interpolation order for its element subset
 
 .. danger::
-   **Validation Error**: Calling ``cg_sol_interpolation_order_write()`` with ``GridLocation = CellCenter``
+   **Validation Error**: Calling ``cg_sol_interpolation_degree_write()`` with ``GridLocation = CellCenter``
    without first writing a ``PointRange`` or ``PointList`` will return ``CG_ERROR``.
 
    This validation was added in CPEX 0045 to prevent ambiguous p-adaptive configurations.

@@ -7,7 +7,7 @@ Support
 =======
 
 The CGNS community can help you to understand, use and even participate
-to the CGNS standard. There are various means.
+in the CGNS standard. There are various means.
 As a **user** of the CGNS files and tools,
 you can 
 ask questions to the :ref:`CGNS Discussion Forum <SupportDiscussionForum>` or
@@ -45,19 +45,23 @@ Building libraries and tools
 The CGNS libs and tools are hosted on Github; the associated documentation
 can be found on `this page <https://github.com/CGNS/CGNS>`_.
 
+To contribute to the CGNS library or tools, read the
+`contributing guide <https://github.com/CGNS/CGNS/blob/develop/CONTRIBUTING.md>`_
+before opening an issue or pull request.
+
 Building the documentation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The documentation is generated from files found
-in `this <https://github.com/CGNS/cgns-modern.github.io>`_ repository. We use
+in `this <https://github.com/CGNS/cgns.github.io>`_ repository. We use
 **Sphinx** to produce the web pages from these files.
 Additionally, Doxygen and Breathe generate the MLL API documentation from the CGNS
 source code. The documentation website should be cloned with the CGNS source submodule
-in orrder to generate the Doxygen documentation by using:
+in order to generate the Doxygen documentation by using:
 
 .. code-block:: shell
 
-   $ git clone --recurse-submodules https://github.com/CGNS/cgns-modern.github.io.git
+   $ git clone --recurse-submodules https://github.com/CGNS/cgns.github.io.git
 
 The theme we use for CGNS is a custom version of the **Sphinx Book Theme**.
 The modifications include specific changes made to the theme, such as color schemes,
@@ -198,7 +202,7 @@ comment and you push it to the repository:
 
 .. note::
 
-   If some modifications have been applied since you where editing, you have to
+   If some modifications have been applied since you were editing, you have to
    perform a merge by yourself after a ``git pull``
 
 Documentation editing
@@ -224,7 +228,7 @@ Documentation conventions for these CGNS web pages are as follows:
   ++++++++++++++++++++++++++++++
 
 The index is generated, you just have to mention an index entry in the text.
-For example, if you wan to add a reference to *boundary condition* in the index,
+For example, if you want to add a reference to *boundary condition* in the index,
 you add:
 
 .. code-block:: rest
@@ -261,7 +265,7 @@ An *anchor* is defined with:
 
    .. _ThisIsThePlaceYouWantToJumpTo:
 
-Note the leading underscode and the single colon. The anchor test
+Note the leading underscore and the single colon. The anchor text
 should be contiguous and we suggest using the camel case syntax.
 
 The actual link is inserted with:
@@ -271,7 +275,7 @@ The actual link is inserted with:
    You read this text with your eyes but you
    can also :ref:`click on to jump elsewhere <ThisIsThePlaceYouWantToJumpTo>`.
 
-The anchor in into angular brackets, the clickable text is user defined.   
+The anchor is in angular brackets, the clickable text is user defined.   
 
 External link
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
